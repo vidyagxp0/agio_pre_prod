@@ -198,8 +198,7 @@ class RiskManagementController extends Controller
         $data->assign_department = $request->assign_department;
         $data->r_a_conclussion = $request->r_a_conclussion;
         $data->hod_des_rev_comm = $request->hod_des_rev_comm;
-
-
+        // $data->reviewer_person_value = $request->reviewer_person_value;
 
         if (!empty($request->risk_attachment)) {
             $files = [];
@@ -2664,6 +2663,12 @@ class RiskManagementController extends Controller
         $data->assign_department = $request->assign_department;
         $data->r_a_conclussion = $request->r_a_conclussion;
         $data->hod_des_rev_comm = $request->hod_des_rev_comm;
+        // $data->reviewer_person_value = $request->reviewer_person_value;
+        if (is_array($request->reviewer_person_value)) {
+            $data->reviewer_person_value = implode(',', $request->reviewer_person_value);
+        } else {
+            $data->reviewer_person_value = $request->reviewer_person_value;
+        }
 
 
         if (!empty($request->reference)) {
@@ -6705,26 +6710,6 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        // if ($lastDocument->team_members != $data->team_members || !empty($request->team_members_comment)) {
-
-        //     $history = new RiskAuditTrail();
-        //     $history->risk_id = $id;
-        //     $history->activity_type = 'Team Members';
-        //     $history->previous = $lastDocument->team_members;
-        //     $history->current = $data->team_members;
-        //     $history->comment = $request->team_members_comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->save();
-        // }
-
-
-
-
-
-
 
         if ($lastDocument->zone != $data->zone || !empty($request->zone_comment)) {
 
@@ -8231,7 +8216,7 @@ class RiskManagementController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Risk Analysis & Work Group Assignment";
+                    $history->change_to =   "HOD Review";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     if(is_null($lastDocument->submitted_by) || $lastDocument->submitted_on == '')
@@ -9427,7 +9412,7 @@ class RiskManagementController extends Controller
             }
             if ($riskAssement->stage == 3) {
                 $riskAssement->stage = "2";
-                $riskAssement->status = "Risk Analysis & Work Group Assignment";
+                $riskAssement->status = "HOD Review";
 
                 $riskAssement->CFT_Review_Complete_By = "Not Applicable";
                 $riskAssement->CFT_Review_Complete_On = "Not Applicable";
@@ -9449,7 +9434,7 @@ class RiskManagementController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Risk Analysis & Work Group Assignment";
+                $history->change_to =   "HOD Review";
                 $history->change_from = "CFT review";
                 $history->action_name = "More Information Required";
                 $history->stage = 'Cancelled';
@@ -9488,7 +9473,7 @@ class RiskManagementController extends Controller
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->change_to =   "Opened";
-                $history->change_from = "Risk Analysis & Work Group Assignment";
+                $history->change_from = "HOD Review";
                 $history->action_name = "More Information Required";
                 $history->stage = 'Cancelled';
                 // if(is_null($lastDocument->risk_analysis_completed_by) || $lastDocument->risk_analysis_completed_on == ''){

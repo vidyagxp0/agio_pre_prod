@@ -457,16 +457,10 @@
                                     </div>
 
                                     <div id="typeOfErrorBlock" class="group-input col-6" style="display: none;">
-                                        <label for="otherFieldsUser">Other</label>
+                                        <label for="otherFieldsUser">Other(Source of Risk/Opportunity)</label>
                                         <input type="text" name="source_of_risk" class="form-control"/>
                                     </div>
 
-                                    {{-- <div class="col-12">
-                                        <div class="group-input">
-                                            <label class="mt-4" for="Correction Of Error">Correction Of Error</label>
-                                            <textarea class="summernote" name="Correction_Of_Error" id="summernote-16"></textarea>
-                                        </div>
-                                    </div> --}}
 
                                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -497,16 +491,47 @@
                                             <label for="Type..">Type</label>
                                             <select name="type" id="type">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="Other">Other</option>
                                                 <option value="Business_Risk">Business Risk</option>
                                                 <option value="custumer_Related">Customer-Related Risk(Complaint)</option>
                                                 <option value="Opportunity">Opportunity</option>
                                                 <option value="Market">Market</option>
                                                 <option value="Operational_Risk">Operational Risk</option>
                                                 <option value="Strategic_Risk">Strategic Risk</option>
+                                                <option value="Other_data">Other</option>
                                             </select>
                                         </div>
                                     </div>
+
+                                    <div id="typeOfError" class="group-input col-6" style="display: none;">
+                                        <label for="otherFieldsUser">Other(Type)</label>
+                                        <input type="text" name="type" class="form-control"/>
+                                    </div>
+
+
+                                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+                                    <script>
+                                        $(document).ready(function() {
+                                            // Initially hide the field
+                                            $('#typeOfError').hide();
+
+                                            $('select[name=type]').change(function() {
+                                                const selectedVal = $(this).val();
+                                                if (selectedVal === 'Other_data') {
+                                                    $('#typeOfError').show();
+                                                } else {
+                                                    $('#typeOfError').hide();
+                                                }
+                                            });
+
+                                            // Optionally, check the current value when the page loads in case of form errors
+                                            if ($('select[name=type]').val() === 'Other_data') {
+                                                $('#typeOfError').show();
+                                            }
+                                        });
+                                    </script>
+
+
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Priority Level">Priority Level</label>
@@ -568,11 +593,10 @@
 
                                     {{-- <div class="col-6">
                                         <div class="group-input">
-                                            <label for="Description"> Opportunity Description</label>
-                                            <textarea name=" Opportunity_description" id="Opportunitydescription"></textarea>
+                                            <label for="Description">Other</label>
+                                            <textarea name="others_comment" id="others_comment"></textarea>
                                         </div>
                                     </div> --}}
-
 
 
                                     <div class="col-12">
@@ -648,10 +672,9 @@
                         <div id="CCForm2" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="sub-head">
-                                    RCA Results
+                                    Risk Assesment
                                 </div>
                                 <div class="row">
-
 
                                  <div class="col-12">
                                     <div class="group-input">
@@ -659,11 +682,41 @@
                                         <select name="root_cause_methodology[]" multiple data-search="false" data-silent-initial-value-set="true" id="root-cause-methodology">
                                             <option value="Why-Why Chart">Why-Why Chart</option>
                                             <option value="Failure Mode and Effect Analysis">Failure Mode and Effect Analysis</option>
+                                            <option value="other_detail">Other</option>
                                             {{-- <option value="Fishbone or Ishikawa Diagram">Fishbone or Ishikawa Diagram</option> --}}
                                             {{-- <option value="Is/Is Not Analysis">Is/Is Not Analysis</option> --}}
                                         </select>
                                     </div>
                                 </div>
+
+                                <div id="rootCause" class="group-input" style="display: none;">
+                                    <label for="otherFieldsUser">Other(Root Cause Methodology)</label>
+                                    <input type="text" name="root_cause_methodology" class="form-control"/>
+                                </div>
+
+
+                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+                                <script>
+                                    $(document).ready(function() {
+                                        // Initially hide the field
+                                        $('#rootCause').hide();
+
+                                        $('select[name=root_cause_methodology]').change(function() {
+                                            const selectedVal = $(this).val();
+                                            if (selectedVal === 'other_detail') {
+                                                $('#rootCause').show();
+                                            } else {
+                                                $('#rootCause').hide();
+                                            }
+                                        });
+
+                                        // Optionally, check the current value when the page loads in case of form errors
+                                        if ($('select[name=root_cause_methodology]').val() === 'other_detail') {
+                                            $('#rootCause').show();
+                                        }
+                                    });
+                                </script>
 
 
                                      <div class="col-12 mb-4 "id="fmea-section" style="display:none;">
@@ -958,8 +1011,9 @@
                                             <textarea name="r_a_conclussion"></textarea>
                                         </div>
                                     </div>
+
                                 </div>
-                                <div class="sub-head">
+                                {{-- <div class="sub-head">
                                     Risk Analysis
                                 </div>
                                 <div class="row">
@@ -1002,55 +1056,31 @@
                                         </select>
                                     </div>
                                 </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="RPN">RPN</label>
-                                    <div><small class="text-primary">Auto - Calculated</small></div>
-                                    <input type="text" name="rpn" id="analysisRPN" value="" readonly>
-                                </div>
-                            </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="RPN">RPN</label>
+                                        <div><small class="text-primary">Auto - Calculated</small></div>
+                                        <input type="text" name="rpn" id="analysisRPN" value="" readonly>
+                                    </div>
+                                </div> --}}
 
 
-                            {{-- <div class="col-12">
-                                <div class="group-input">
-                                    <label for="CAPA Attachments"> Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small></div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="risk_ana_attach"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="risk_ana_attach[]"
-                                                oninput="addMultipleFiles(this, 'risk_ana_attach')" multiple>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="CAPA Attachments">Risk Assesment Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="risk_ana_attach"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="risk_ana_attach[]"
+                                                    oninput="addMultipleFiles(this, 'risk_ana_attach')" multiple>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div> --}}
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="CAPA Attachments">Risk Assesment Attachments</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small></div>
-                                    {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="risk_ana_attach"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="risk_ana_attach[]"
-                                                oninput="addMultipleFiles(this, 'risk_ana_attach')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="">Risk Level</label>
-                                    <input type="text" name="risk_level" id="riskLevel" readonly>
-                                </div>
-                            </div> --}}
-
 
                               </div>
                                 <div class="button-block">
@@ -1069,6 +1099,20 @@
                         <div class="inner-block-content">
                             <div class="sub-head">
                                 HOD/Designee
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Microbiology-Person">CFT Reviewer Selection</label>
+                                    <select multiple name="cft_reviewer[]" placeholder="Select CFT Reviewers" data-search="false"
+                                        data-silent-initial-value-set="true" id="cft_reviewer">
+                                        <option value="">-- Select --</option>
+                                        @foreach ($cft as $data1)
+                                            @if (Helpers::checkUserRolesMicrobiology_Person($data1))
+                                                <option value="{{ $data1->id }}"> {{ $data1->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12 mb-3">
@@ -1154,7 +1198,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Tablet"> Production Tablet</label>
+                                        <label for="Production Tablet">Production Tablet/Capsule/Powder Review Required?</label>
                                         <select name="Production_Table_Review" id="Production_Table_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -1179,7 +1223,7 @@
                                 @endphp
                                 <div class="col-lg-6 productionTable">
                                     <div class="group-input">
-                                        <label for="Production Tablet notification">Production Tablet Person</label>
+                                        <label for="Production Tablet notification">Production Tablet/Capsule/Powder Person</label>
                                         <select name="Production_Table_Person" class="Production_Table_Person"
                                             id="Production_Table_Person">
                                             <option value="">-- Select --</option>
@@ -1191,8 +1235,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 productionTable">
                                     <div class="group-input">
-                                        <label for="Production Tablet assessment">Impact Assessment (By Production
-                                            Tablet)</label>
+                                        <label for="Production Tablet assessment">Impact Assessment (By Production Tablet/Capsule/Powder)</label>
                                         <textarea class="summernote Production_Table_Assessment" name="Production_Table_Assessment" id="summernote-17"></textarea>
                                     </div>
                                 </div>
@@ -1204,7 +1247,7 @@
                                 </div>
                                 <div class="col-12 productionTable">
                                     <div class="group-input">
-                                        <label for="Production Tablet attachment">Production Tablet Attachments</label>
+                                        <label for="Production Tablet attachment">Production Tablet/Capsule/Powder Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -1220,14 +1263,14 @@
                                 </div>
                                 <div class="col-md-6 mb-3 productionTable">
                                     <div class="group-input">
-                                        <label for="Production Tablet Completed By">Production Tablet Completed By</label>
+                                        <label for="Production Tablet Completed By">Production Tablet/Capsule/Powder Completed By</label>
                                         <input readonly type="text" name="Production_Table_By"
                                             id="Production_Table_By">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 productionTable">
                                     <div class="group-input ">
-                                        <label for="Production Tablet Completed On">Production Tablet Completed On</label>
+                                        <label for="Production Tablet Completed On">Production Tablet/Capsule/Powder Completed On</label>
                                         <input type="date" id="Production_Table_On" name="Production_Table_On">
                                     </div>
                                 </div>
@@ -1360,7 +1403,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Research Development"> Research Development Required ?</label>
+                                        <label for="Research Development"> Research & Development Required ?</label>
                                         <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review"
                                             disabled>
                                             <option value="">-- Select --</option>
@@ -1386,7 +1429,7 @@
                                 @endphp
                                 <div class="col-lg-6 researchDevelopment">
                                     <div class="group-input">
-                                        <label for="Research Development notification">Research Development Person</label>
+                                        <label for="Research Development notification">Research & Development Person</label>
                                         <select name="ResearchDevelopmentStore_Person" class="ResearchDevelopment_Person"
                                             id="ResearchDevelopment_Person">
                                             <option value="">-- Select --</option>
@@ -1398,20 +1441,20 @@
                                 </div>
                                 <div class="col-md-12 mb-3 researchDevelopment">
                                     <div class="group-input">
-                                        <label for="Research Development assessment">Impact Assessment (By Research
+                                        <label for="Research Development assessment">Impact Assessment (By Research &
                                             Development)</label>
                                         <textarea class="summernote ResearchDevelopment_assessment" name="ResearchDevelopment_assessment" id="summernote-17"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 researchDevelopment">
                                     <div class="group-input">
-                                        <label for="Research Development feedback">Research Development Feedback</label>
+                                        <label for="Research Development feedback">Research & Development Feedback</label>
                                         <textarea class="summernote ResearchDevelopment_feedback" name="ResearchDevelopment_feedback" id="summernote-18"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 researchDevelopment">
                                     <div class="group-input">
-                                        <label for="Research Development attachment">Research Development
+                                        <label for="Research Development attachment">Research & Development
                                             Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
@@ -1429,7 +1472,7 @@
                                 </div>
                                 <div class="col-md-6 mb-3 researchDevelopment">
                                     <div class="group-input">
-                                        <label for="Research Development Completed By">Research Development Completed
+                                        <label for="Research Development Completed By">Research & Development Completed
                                             By</label>
                                         <input readonly type="text" name="ResearchDevelopment_by"
                                             id="ResearchDevelopment_by">
@@ -1437,7 +1480,7 @@
                                 </div>
                                 <div class="col-lg-6 researchDevelopment">
                                     <div class="group-input ">
-                                        <label for="Research Development Completed On">Research Development Complete
+                                        <label for="Research Development Completed On">Research & Development Complete
                                             On</label>
                                         <input type="date" id="ResearchDevelopment_on" name="ResearchDevelopment_on">
                                     </div>
@@ -2093,7 +2136,7 @@
 
 
                                 <div class="sub-head">
-                                    Production (Liquid/Ointment)
+                                    Production (Liquid/Externa Preparation)
                                 </div>
                                 <script>
                                     $(document).ready(function() {
@@ -2113,7 +2156,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Liquid"> Production Liquid </label>
+                                        <label for="Production Liquid"> Production Liquid/Externa Preparation Required </label>
                                         <select name="ProductionLiquid_Review" id="ProductionLiquid_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -2151,19 +2194,19 @@
                                 <div class="col-md-12 mb-3 productionLiquid">
                                     <div class="group-input">
                                         <label for="Production Liquid assessment">Impact Assessment (By Production
-                                            Liquid)</label>
+                                            Liquid/Externa Preparation)</label>
                                         <textarea class="summernote ProductionLiquid_assessment" name="ProductionLiquid_assessment" id="summernote-17"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 productionLiquid">
                                     <div class="group-input">
-                                        <label for="Production Liquid feedback">Production Liquid Feedback</label>
+                                        <label for="Production Liquid feedback">Production Liquid/Externa Preparation Feedback</label>
                                         <textarea class="summernote ProductionLiquid_feedback" name="ProductionLiquid_feedback" id="summernote-18"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 productionLiquid">
                                     <div class="group-input">
-                                        <label for="Production Liquid attachment">Production Liquid Attachments</label>
+                                        <label for="Production Liquid attachment">Production Liquid/Externa Preparation  Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div> ProductionLiquid_attachment
                                         <div class="file-attachment-field">
@@ -2180,14 +2223,14 @@
                                 </div>
                                 <div class="col-md-6 mb-3 productionLiquid">
                                     <div class="group-input">
-                                        <label for="Production Liquid Completed By">Production Liquid Completed By</label>
+                                        <label for="Production Liquid Completed By">Production Liquid/Externa preparation Completed By</label>
                                         <input readonly type="text" name="ProductionLiquid_by"
                                             id="ProductionLiquid_by">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 productionLiquid">
                                     <div class="group-input ">
-                                        <label for="Production Liquid Completed On">Production Liquid Completed On</label>
+                                        <label for="Production Liquid Completed On">Production Liquid/Externa Preparation Completed On</label>
                                         <input type="date" id="ProductionLiquid_on" name="ProductionLiquid_on">
                                     </div>
                                 </div>
@@ -2505,7 +2548,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="sub-head">
+                                {{-- <div class="sub-head">
                                     Contract Giver
                                 </div>
                                 <script>
@@ -2603,13 +2646,7 @@
                                         <label for="Contract Giver Completed On">Contract Giver Completed On</label>
                                         <input type="date"id="ContractGiver_on" name="ContractGiver_on">
                                     </div>
-                                </div>
-
-
-
-
-
-
+                                </div> --}}
 
                                 <script>
                                     $(document).ready(function() {
@@ -3286,16 +3323,15 @@
 
 
                      <!--------- CQA /QA review---- --->
-
                      <div id="CCForm9" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
-                                CQA/QA Review
+                                QA/CQA Review
                             </div>
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Closure Comment">CQA/QA Review Comment</label>
+                                        <label for="Closure Comment">QA/CQA Review Comment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                 require completion</small></div>
                                         <textarea class="summernote" name="qa_cqa_comments" id="qa_cqa_comments"> </textarea>
@@ -3305,7 +3341,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">CQA/QA Attachment</label>
+                                        <label for="Inv Attachments">QA/CQA Review Attachment</label>
                                         <div>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents
@@ -3333,18 +3369,17 @@
                         </div>
                     </div>
 
-
                      <!-------------------------------------------QA/CQA Head Approval------------------------------------------>
 
                      <div id="CCForm11" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
-                                CQA/QA Head
+                                QA/CQA Head Approval
                             </div>
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Closure Comment">CQA/QA Head Review Comment</label>
+                                        <label for="Closure Comment">QA/CQA Head Approval Comment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                 require completion</small></div>
                                         <textarea class="summernote" name="qa_cqa_head_comm" id="qa_cqa_head_comm">
@@ -3354,7 +3389,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">CQA/QA Head  Attachment</label>
+                                        <label for="Inv Attachments">QA/CQA Head  Attachment</label>
                                         <div>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents
@@ -3381,6 +3416,186 @@
                             </div>
                         </div>
                     </div>
+
+
+                    <div id="CCForm7" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+
+                                <div class="col-12 sub-head" style="font-size: 16px">
+                                    Opened
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted By..">Submit By:</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted On">Submit On:</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comments">Comments:</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 sub-head" style="font-size: 16px">
+                                    HOD Review
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Evaluated By">HOD Review Complete By:</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Evaluated On">HOD Review Complete On:</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comments">Comments:</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 sub-head" style="font-size: 16px">
+                                    CFT Review
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Plan Approved By">CFT Review Complete By:</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Plan Approved On">CFT Review Complete On:</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comments">Comments:</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 sub-head" style="font-size: 16px">
+                                    In QA/CQA Review
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Plan Approved By">QA/CQA Review Complete By:</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Plan Approved On">QA/CQA Review Complete On:</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comments">Comments:</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 sub-head" style="font-size: 16px">
+                                    In Approval
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Plan Approved By">Approved By:</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Plan Approved On">Approved On:</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comments">Comments:</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                {{-- <div class="col-12 sub-head" style="font-size: 16px">
+                                    Closed-Done
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Plan Approved By">Close Done By:-</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Plan Approved On">Close Done On:-</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comments">Comments:-</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div> --}}
+
+                                <div class="col-12 sub-head" style="font-size: 16px">
+                                    Cancel
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Plan Approved By">Cancel By:</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Plan Approved On">Cancel On:</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comments">Cancel Comments:</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="submit">Submit</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
 
                         <!-- Risk Details content -->
                         <div id="CCForm4" class="inner-block cctabcontent">
@@ -3944,8 +4159,8 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
+          </div>
+                                     </div>
                                     <div class="col-12">
                                         <div class="sub-head">Risk Mitigation</div>
                                     </div>
@@ -4106,118 +4321,6 @@
                             </div>
                         </div>
 
-                        <!-- Signatures content -->
-                        <div id="CCForm7" class="inner-block cctabcontent">
-                            <div class="inner-block-content">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Submitted By..">Submitted By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Submitted On">Submitted On</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Evaluated By">Evaluated By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Evaluated On">Evaluated On</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    {{-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Plan Approved By">Approved By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div> --}}
-                                    {{-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Plan Approved On">Approved On</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div> --}}
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Risk Analysis Completed By">More Information Required(Risk Analysis & Work Group Assignment) By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Risk Analysis Completed On">More Information Required(Risk Analysis & Work Group Assignment) On</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Risk Analysis Completed On">CFT Review Complete By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Risk Analysis Completed On">CFT Review Complete On</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    {{-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Risk Analysis Completed On">Risk Processing & Action Plan (Request more info) By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div> --}}
-                                    {{-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Risk Analysis Completed On">Risk Processing & Action Plan (Request More Info) On</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div> --}}
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Risk Analysis Completed On">QA Initial Review Complete By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Risk Analysis Completed On">QA Initial Review Cancle On</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Risk Analysis Completed On">In  Approve By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Risk Analysis Completed On">In  Approve On</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
-                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                    <button type="submit">Submit</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </form>
 
@@ -4356,47 +4459,47 @@
             });
         </script>
 
-    <script>
-        $(document).ready(function() {
+            <script>
+                $(document).ready(function() {
 
 
-        });
-    </script>
+                });
+            </script>
 
-    {{--  <script>
-    $(document).on('click', '.removeRowBtn', function() {
-        $(this).closest('tr').remove();
-    })
-    </script>  --}}
+            {{--  <script>
+            $(document).on('click', '.removeRowBtn', function() {
+                $(this).closest('tr').remove();
+            })
+            </script>  --}}
 
-    <script>
-        var maxLength = 255;
-        $('#docname').keyup(function() {
-            var textlen = maxLength - $(this).val().length;
-            $('#rchars').text(textlen);});
-    </script>
+            <script>
+                var maxLength = 255;
+                $('#docname').keyup(function() {
+                    var textlen = maxLength - $(this).val().length;
+                    $('#rchars').text(textlen);});
+            </script>
 
-    <script>
-    document.getElementById('action_plan').addEventListener('click', function() {
-        var table = document.getElementById('action_plan_details').getElementsByTagName('tbody')[0];
-        var rowCount = table.rows.length;
-        var newRow = table.insertRow(rowCount);
-        var serialNumber = rowCount + 1;
+            <script>
+            document.getElementById('action_plan').addEventListener('click', function() {
+                var table = document.getElementById('action_plan_details').getElementsByTagName('tbody')[0];
+                var rowCount = table.rows.length;
+                var newRow = table.insertRow(rowCount);
+                var serialNumber = rowCount + 1;
 
-        var cell1 = newRow.insertCell(0);
-        var cell2 = newRow.insertCell(1);
-        var cell3 = newRow.insertCell(2);
-        var cell4 = newRow.insertCell(3);
-        var cell5 = newRow.insertCell(4);
-        var cell6 = newRow.insertCell(5);
+                var cell1 = newRow.insertCell(0);
+                var cell2 = newRow.insertCell(1);
+                var cell3 = newRow.insertCell(2);
+                var cell4 = newRow.insertCell(3);
+                var cell5 = newRow.insertCell(4);
+                var cell6 = newRow.insertCell(5);
 
-        cell1.innerHTML = '<input type="text" name="serial_number[]" value="' + serialNumber + '" disabled>';
-        cell2.innerHTML = '<input type="text" name="action[]">';
-        cell3.innerHTML = '<select id="select-state" placeholder="Select..." name="responsible[]"><option value="">Select a value</option>@foreach ($users as $user)<option value="{{ $user->id }}">{{ $user->name }}</option>@endforeach</select>';
-        cell4.innerHTML = '<div class="group-input new-date-data-field mb-0"><div class="input-date"><div class="calenderauditee"><input type="text" id="deadline' + serialNumber + '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, \'deadline' + serialNumber + '\')" /></div></div></div>';
-        cell5.innerHTML = '<input type="text" name="item_static[]">';
-        cell6.innerHTML = '<button type="button" class="removeRowBtn">Remove</button>';
-    });
+                cell1.innerHTML = '<input type="text" name="serial_number[]" value="' + serialNumber + '" disabled>';
+                cell2.innerHTML = '<input type="text" name="action[]">';
+                cell3.innerHTML = '<select id="select-state" placeholder="Select..." name="responsible[]"><option value="">Select a value</option>@foreach ($users as $user)<option value="{{ $user->id }}">{{ $user->name }}</option>@endforeach</select>';
+                cell4.innerHTML = '<div class="group-input new-date-data-field mb-0"><div class="input-date"><div class="calenderauditee"><input type="text" id="deadline' + serialNumber + '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, \'deadline' + serialNumber + '\')" /></div></div></div>';
+                cell5.innerHTML = '<input type="text" name="item_static[]">';
+                cell6.innerHTML = '<button type="button" class="removeRowBtn">Remove</button>';
+            });
 
     document.addEventListener('click', function(e) {
         if (e.target && e.target.classList.contains('removeRowBtn')) {

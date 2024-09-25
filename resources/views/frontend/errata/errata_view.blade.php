@@ -562,7 +562,8 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Document title">Document title</label>
+                                        <label class="mt-4" for="Document title">Document title <span
+                                        class="text-danger">*</span></label>
                                         <input type="text" name="document_title" maxlength="255"
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             value="{{ $showdata->document_title }}">
@@ -575,7 +576,8 @@
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Type Of Error<span class="text-danger"></span>
+                                            Type Of Error<span
+                                            class="text-danger">*</span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="type_of_error"
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>
