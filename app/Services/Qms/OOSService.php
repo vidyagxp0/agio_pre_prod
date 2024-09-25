@@ -3177,7 +3177,7 @@ class OOSService
 
         try {
 
-            $input = $request->all();
+            $input = $request->except(['division_code', 'division_id', 'record','Form_type','intiation_date']);
 
              // ===================== update(Audit Trail) ===========
             // $lastOosRecod = OOS::find($id);

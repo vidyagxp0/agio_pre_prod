@@ -710,6 +710,17 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th class="w-20">
+                                        Details of instrument out of order</th>
+                                    <td class="w-80">
+                                        @if ($data->details_of_instrument_out_of_order)
+                                            {{ $data->details_of_instrument_out_of_order }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th class="w-20">Proposed By</th>
                                     <td class="w-80">
                                         @if ($data->is_repeat_proposed_stage_ooc)
@@ -762,6 +773,16 @@
                                     <td class="w-80">
                                         @if ($data->initiated_through_stageii_ooc)
                                             {!! $data->initiated_through_stageii_ooc !!}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="w-20">Justification for Recalibration</th>
+                                    <td class="w-80">
+                                        @if ($data->justification_for_recalibration)
+                                            {!! $data->justification_for_recalibration !!}
                                         @else
                                             Not Applicable
                                         @endif

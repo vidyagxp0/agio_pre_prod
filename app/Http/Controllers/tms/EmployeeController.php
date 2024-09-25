@@ -64,6 +64,7 @@ class EmployeeController extends Controller
         $employee->start_date = $request->start_date;
         $employee->joining_date = $request->joining_date;
         $employee->prefix = $request->prefix;
+        $employee->other = $request->other;
         $employee->emp_id = $request->emp_id;
         $employee->employee_id = $newEmployeeId;
         $employee->employee_name = $request->employee_name;
@@ -72,7 +73,8 @@ class EmployeeController extends Controller
         $employee->qualification = $request->qualification;
         $employee->experience = $request->experience;
         $employee->job_title = $request->job_title;
-
+        $employee->other_department = $request->other_department;
+        $employee->other_designation = $request->other_designation;
         $fullEmployeeId = $request->prefix . $request->emp_id;
 
         $employee->full_employee_id = $fullEmployeeId;
@@ -199,7 +201,23 @@ class EmployeeController extends Controller
             // $validation2->comment = "Not Applicable";
             $validation2->save();
         }
+        if (!empty($request->other)) {
+            $validation2 = new EmployeeAudit();
+            $validation2->emp_id = $employee->id;
+            $validation2->activity_type = 'Other';
+            $validation2->previous = "Null";
+            $validation2->current = $request->other;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 
+            $validation2->change_to =   "Opened";
+            $validation2->change_from = "Initiation";
+            $validation2->action_name = 'Create';
+
+            $validation2->save();
+        }
 
         if (!empty($request->assigned_to)) {
             $validation2 = new EmployeeAudit();
@@ -331,6 +349,42 @@ class EmployeeController extends Controller
             $validation2->activity_type = 'Job Title';
             $validation2->previous = "Null";
             $validation2->current = $request->job_title;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Opened";
+            $validation2->change_from = "Initiation";
+            $validation2->action_name = 'Create';
+
+            $validation2->save();
+        }
+
+        if (!empty($request->other_department)) {
+            $validation2 = new EmployeeAudit();
+            $validation2->emp_id = $employee->id;
+            $validation2->activity_type = 'Other Department';
+            $validation2->previous = "Null";
+            $validation2->current = $request->other_department;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Opened";
+            $validation2->change_from = "Initiation";
+            $validation2->action_name = 'Create';
+
+            $validation2->save();
+        }
+
+        if (!empty($request->other_designation)) {
+            $validation2 = new EmployeeAudit();
+            $validation2->emp_id = $employee->id;
+            $validation2->activity_type = 'Other Designation';
+            $validation2->previous = "Null";
+            $validation2->current = $request->other_designation;
             $validation2->comment = "NA";
             $validation2->user_id = Auth::user()->id;
             $validation2->user_name = Auth::user()->name;
@@ -714,11 +768,14 @@ class EmployeeController extends Controller
         $employee->qualification = $request->qualification;
         $employee->experience = $request->experience;
         $employee->job_title = $request->job_title;
+        $employee->other_department = $request->other_department;
+        $employee->other_designation = $request->other_designation;
+        // dd($employee->other_designation);
         $employee->induction_comment = $request->induction_comment;
         $employee->prefix = $request->input('prefix');
 
         $fullEmployeeId = $request->prefix . $request->employee_id;
-
+        $employee->other = $request->other;
         $employee->full_employee_id = $fullEmployeeId;
 
         if ($request->input('has_additional_document') === 'Yes') {
@@ -919,7 +976,28 @@ class EmployeeController extends Controller
             }
             $validation2->save();
         }
+                
+        if ($lastDocument->other != $request->other) {
+            $validation2 = new EmployeeAudit();
+            $validation2->emp_id = $employee->id;
+            $validation2->activity_type = 'Other Designation';
+            $validation2->previous = $lastDocument->other;
+            $validation2->current = $request->other;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 
+            $validation2->change_to =   "Not Applicable";
+            $validation2->change_from = $lastDocument->status;
+            if (is_null($lastDocument->other) || $lastDocument->other === '') {
+                $validation2->action_name = 'New';
+            } else {
+                $validation2->action_name = 'Update';
+            }
+
+            $validation2->save();
+        }
         if ($lastDocument->joining_date != $request->joining_date) {
             $validation2 = new EmployeeAudit();
             $validation2->emp_id = $employee->id;
@@ -1045,6 +1123,51 @@ class EmployeeController extends Controller
             }
             $validation2->save();
         }
+
+        if ($lastDocument->other_department != $request->other_department) {
+            $validation2 = new EmployeeAudit();
+            $validation2->emp_id = $employee->id;
+            $validation2->activity_type = 'Other Department';
+            $validation2->previous = $lastDocument->other_department;
+            $validation2->current = $request->other_department;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Not Applicable";
+            $validation2->change_from = $lastDocument->status;
+            if (is_null($lastDocument->other_department) || $lastDocument->other_department === '') {
+                $validation2->action_name = 'New';
+            } else {
+                $validation2->action_name = 'Update';
+            }
+
+            $validation2->save();
+        }
+
+        if ($lastDocument->other_designation != $request->other_designation) {
+            $validation2 = new EmployeeAudit();
+            $validation2->emp_id = $employee->id;
+            $validation2->activity_type = 'Other Designation';
+            $validation2->previous = $lastDocument->other_designation;
+            $validation2->current = $request->other_designation;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Not Applicable";
+            $validation2->change_from = $lastDocument->status;
+            if (is_null($lastDocument->other_designation) || $lastDocument->other_designation === '') {
+                $validation2->action_name = 'New';
+            } else {
+                $validation2->action_name = 'Update';
+            }
+
+            $validation2->save();
+        }
+
         if ($lastDocument->attached_cv != $request->attached_cv) {
             $validation2 = new EmployeeAudit();
             $validation2->emp_id = $employee->id;

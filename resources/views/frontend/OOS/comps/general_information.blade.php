@@ -59,7 +59,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Short Description">Initiator <span class="text-danger"></span></label>
-                    <input disabled type="text" name="initiator" value="{{ Auth::user()->name }}">
+                    <input disabled type="text" name="initiator" value="{{ App\Models\User::find($data->initiator_id)?->name }}">
                 </div>
             </div>
             
