@@ -471,7 +471,7 @@ $users = DB::table('users')->get();
                                     <textarea class="summernote" name="initiated_if_other" id="summernote-1"></textarea>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="affected documents closed"><b>Affected Documents Closed</b></label>
                                     <select name="affected_document_closure" id="affected_document_closure">
@@ -482,7 +482,7 @@ $users = DB::table('users')->get();
                                       
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -774,7 +774,7 @@ $(document).ready(function() {
                             
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Initial Attachments">HOD Primary Attachment</label>
+                                    <label for="Initial Attachments">HOD Primary Attachments</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                     <div class="file-attachment-field">
@@ -797,13 +797,13 @@ $(document).ready(function() {
                                 </div>
                             </div> -->
 
-                            <div class="col-md-12 mb-3">
+                            {{-- <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Preliminary Investigation">Preliminary Investigation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     <textarea class="summernote" name="Preliminary_Investigation_ooc" id="summernote-1"></textarea>
                                 </div>
-                            </div>
+                            </div> --}}
 
 
 
@@ -1167,7 +1167,7 @@ $(document).ready(function() {
                                 <textarea class="summernote" name="calibration_results_stage_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
-                        <div class="col-lg-12">
+                        {{-- <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Results Naturey</label>
                                 <select name="is_repeat_result_naturey_ooc" onchange="">
@@ -1177,7 +1177,7 @@ $(document).ready(function() {
 
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
 
 
 
@@ -1210,7 +1210,7 @@ $(document).ready(function() {
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Results Criteria">Results Criteria</label>
+                                <label for="Results Criteria">Result Criteria</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                 <textarea class="summernote" name="results_criteria_stage_ooc" id="summernote-1"></textarea>
                             </div>
@@ -1228,7 +1228,7 @@ $(document).ready(function() {
                         
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Additinal Remarks (if any)">Additinal Remarks (if any)</label>
+                                <label for="Additinal Remarks (if any)">Additional Remarks (if any)</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                 <textarea class="summernote" name="additional_remarks_stage_ooc" id="summernote-1"></textarea>
                             </div>

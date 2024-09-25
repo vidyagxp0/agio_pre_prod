@@ -340,7 +340,7 @@
                                     :{{ $auditrecord->initiator ? $auditrecord->initiator : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $auditrecord->description_ooc }}</div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $auditrecord->due_date }}</div>
+                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ Helpers::getdateFormat($auditrecord->due_date) }}</div>
 
                         </div>
         </div>
