@@ -9,6 +9,7 @@
         display: none;
     }
 </style>
+
 @php
     $users = DB::table('users')->select('id', 'name')->get();
 @endphp
@@ -733,8 +734,7 @@ DATA FIELDS
                             <label for="audit-agenda-grid">
                                 Self Inspection Planner
                                 <button type="button" name="audit-agenda-grid" id="Self_Inspection">+</button>
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#observation-field-instruction-modal"
+                                <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                     (Launch Instruction)
                                 </span>
@@ -751,57 +751,165 @@ DATA FIELDS
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td><input disabled type="text" name="serial[]" value="1">
-                                        </td>
-                                        <td>
-
-                                            <select name="Self_Inspection[0][department]" id="department" {{ isset($data->stage) && ($data->stage == 0 || $data->stage == 8) ? 'disabled' : '' }}>
-                                                <option selected disabled value="">---select---
-                                                </option>
-                                                @foreach (Helpers::getDepartments() as $department)
+                                        <tr>
+                                            <td><input disabled type="text" name="serial[]" value="1"></td>
+                                            <td>
+                                                <select name="Self_Inspection[0][department]" id="department">
+                                                    <option selected disabled value="">---select---</option>
+                                                    @foreach (Helpers::getDepartments() as $department)
                                                     <option value="{{ $department }}" @if (isset($data->department) && $data->department == $department) selected @endif>
                                                         {{ $department }}
                                                     </option>
-                                                @endforeach
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select id="Months" multiple placeholder="Select..." data-search="false"
-                                                data-silent-initial-value-set="true" name="Self_Inspection[0][Months]">
-                                                {{-- <option value="">Select a months</option> --}}
-                                                <option value="Jan">January</option>
-                                                <option value="Feb">February</option>
-                                                <option value="March">March
-                                                </option>
-                                                <option value="April">April
-                                                </option>
-                                                <option value="May">May
-                                                </option>
-                                                <option value="June">June
-                                                </option>
-                                                <option value="July">July
-                                                </option>
-                                                <option value="Aug">August
-                                                </option>
-                                                <option value="Sept">September
-                                                </option>
-                                                <option value="Oct">October
-                                                </option>
-                                                <option value="Nov">November
-                                                </option>
-                                                <option value="Dec">December
-                                                </option>
-                                            </select>
-                                        </td>
-                                        <td><input type="text" name="Self_Inspection[0][Remarked]">
-                                        </td>
-                                        <td>
-                                            <button type="button" class="removeBtn">remove</button>
-                                        </td>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select id="Months" multiple name="Self_Inspection[0][Months]">
+                                                    <option value="Jan">January</option>
+                                                    <option value="Feb">February</option>
+                                                    <option value="March">March</option>
+                                                    <option value="April">April</option>
+                                                    <option value="May">May</option>
+                                                    <option value="June">June</option>
+                                                    <option value="July">July</option>
+                                                    <option value="Aug">August</option>
+                                                    <option value="Sept">September</option>
+                                                    <option value="Oct">October</option>
+                                                    <option value="Nov">November</option>
+                                                    <option value="Dec">December</option>
+                                                </select>
+                                            </td>
+                                            <td><input type="text" name="Self_Inspection[0][Remarked]"></td>
+                                            <td><button type="button" class="removeBtn">Remove</button></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                        <script>
+                            $(document).ready(function () {
+                                // Function to generate a new row in the Self Inspection Planner table
+                                function generateOptions() {
+                                    var options = '<option selected disabled value="">---select---</option>';
+                                    @foreach (Helpers::getDepartments() as $department)
+                                    options += '<option value="{{ $department }}">{{ $department }}</option>';
+                                    @endforeach
+                                    return options;
+                                }
+                        
+                                // Function to generate a new row in the table
+                                function generateTableRow(serialNumber) {
+                                    var departmentOptions = generateOptions(); // Call to get the department options
+                        
+                                    var html = '<tr>' +
+                                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                                        '<td>' +
+                                        '<select name="Self_Inspection[' + serialNumber + '][department]" id="department' + serialNumber + '">' +
+                                        departmentOptions +
+                                        '</select>' +
+                                        '</td>' +
+                                        '<td>' +
+                                        '<select id="Months' + serialNumber + '" multiple name="Self_Inspection[' + serialNumber + '][Months]">' +
+                                        '<option value="Jan">January</option>' +
+                                        '<option value="Feb">February</option>' +
+                                        '<option value="Mar">March</option>' +
+                                        '<option value="Apr">April</option>' +
+                                        '<option value="May">May</option>' +
+                                        '<option value="Jun">June</option>' +
+                                        '<option value="Jul">July</option>' +
+                                        '<option value="Aug">August</option>' +
+                                        '<option value="Sep">September</option>' +
+                                        '<option value="Oct">October</option>' +
+                                        '<option value="Nov">November</option>' +
+                                        '<option value="Dec">December</option>' +
+                                        '</select>' +
+                                        '</td>' +
+                                        '<td><input type="text" name="Self_Inspection[' + serialNumber + '][Remarked]"></td>' +
+                                        '<td><button type="button" class="removeBtn">Remove</button></td>' +
+                                        '</tr>';
+                                    return html;
+                                }
+                        
+                                // Event listener for adding new rows
+                                $('#Self_Inspection').click(function (e) {
+                                    e.preventDefault();
+                        
+                                    var tableBody = $('#Self_Inspection-field-instruction-modal tbody');
+                                    var rowCount = tableBody.children('tr').length;
+                                    var newRow = generateTableRow(rowCount + 1); // Pass the correct serial number
+                                    tableBody.append(newRow);
+                        
+                                    // Initialize VirtualSelect only for the new Months select
+                                    VirtualSelect.init({
+                                        ele: '#Months' + (rowCount + 1) // Initialize only for the new row's select box
+                                    });
+                                });
+                        
+                                // Event delegation for remove button
+                                $('#Self_Inspection-field-instruction-modal').on('click', '.removeBtn', function () {
+                                    $(this).closest('tr').remove();
+                                });
+                            });
+                        </script>
+                        
+                        
+                        {{-- <script>
+                            document.getElementById('Self_Inspection').addEventListener('click', function() {
+                                const tableBody = document.querySelector('#Self_Inspection-field-instruction-modal tbody');
+                                const newRow = document.createElement('tr');
+                        
+                                const rowCount = tableBody.rows.length + 1;
+                        
+                                // Get the department dropdown from the first row
+                                const departmentDropdown = document.querySelector('#Self_Inspection-field-instruction-modal tbody tr td select[name^="Self_Inspection[0][department]"]').outerHTML;
+                        
+                                newRow.innerHTML = `
+                                    <td><input disabled type="text" name="serial[]" value="${rowCount}"></td>
+                                    <td>${departmentDropdown.replace('Self_Inspection[0][department]', `Self_Inspection[${rowCount - 1}][department]`)}</td>
+                                    <td>
+                                        <select id="Months" multiple name="Self_Inspection[${rowCount - 1}][Months]">
+                                            <option value="Jan">January</option>
+                                            <option value="Feb">February</option>
+                                            <option value="March">March</option>
+                                            <option value="April">April</option>
+                                            <option value="May">May</option>
+                                            <option value="June">June</option>
+                                            <option value="July">July</option>
+                                            <option value="Aug">August</option>
+                                            <option value="Sept">September</option>
+                                            <option value="Oct">October</option>
+                                            <option value="Nov">November</option>
+                                            <option value="Dec">December</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="text" name="Self_Inspection[${rowCount - 1}][Remarked]"></td>
+                                    <td><button type="button" class="removeBtn">Remove</button></td>
+                                `;
+                        
+                                tableBody.appendChild(newRow);
+                                updateRemoveBtnListeners();
+                            });
+                        
+                            function updateRemoveBtnListeners() {
+                                document.querySelectorAll('.removeBtn').forEach(button => {
+                                    button.addEventListener('click', function() {
+                                        this.closest('tr').remove();
+                                        updateRowNumbers();
+                                    });
+                                });
+                            }
+                        
+                            function updateRowNumbers() {
+                                document.querySelectorAll('#Self_Inspection-field-instruction-modal tbody tr').forEach((row, index) => {
+                                    row.querySelector('input[name="serial[]"]').value = index + 1;
+                                });
+                            }
+                        
+                            // Initial call to set up the listeners for the existing row
+                            updateRemoveBtnListeners();
+                        </script> --}}
+                        
+                        
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="comments">Comments</label>
@@ -1430,88 +1538,7 @@ DATA FIELDS
     });
 </script>
 
-<script>
-    $(document).ready(function () {
-        // Function to generate a new row in the Self Inspection Planner table
-        function generateOptions(users) {
-                var options = '<option value="">Select a value</option>';
-                users.forEach(function(user) {
-                    options += '<option value="' + user.id + '">' + user.name + '</option>';
-                });
-                return options;
-            }
 
-            // Function to generate a new row in the CAPA Details table
-            function generateTableRow(serialNumber, users) {
-                var options = generateOptions(users);
-
-            var html = '<tr>' +
-                '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
-                '<td>' +
-                '<select name="Self_Inspection[' + serialNumber + '][department]" id="department' +
-                serialNumber + '"' + (disabled ? ' disabled' : '') + '>' +
-                departmentOptions +
-                '</select>' +
-                '</td>' +
-                '<td>' +
-                '<select id="Months' + serialNumber + '" multiple placeholder="Select..." ' +
-                'data-search="false" data-silent-initial-value-set="true" ' +
-                'name="Self_Inspection[' + serialNumber + '][Months]">' +
-                '<option value="Jan">January</option>' +
-                '<option value="Feb">February</option>' +
-                '<option value="Mar">March</option>' +
-                '<option value="Apr">April</option>' +
-                '<option value="May">May</option>' +
-                '<option value="Jun">June</option>' +
-                '<option value="Jul">July</option>' +
-                '<option value="Aug">August</option>' +
-                '<option value="Sep">September</option>' +
-                '<option value="Oct">October</option>' +
-                '<option value="Nov">November</option>' +
-                '<option value="Dec">December</option>' +
-                '</select>' +
-                '</td>' +
-                '<td><input type="text" name="Self_Inspection[' + serialNumber + '][Remarked]"></td>' +
-                '<td><button type="button" class="removeBtn">Remove</button></td>' +
-                '</tr>';
-            return html;
-        }
-            // Initial users data - Replace with your actual data
-            var users = @json($users);
-
-            // Event listener for adding new rows
-            $('#Self_Inspection').click(function(e) {
-                e.preventDefault();
-
-                var tableBody = $('#Self_Inspection-field-instruction-modal tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1, users);
-                tableBody.append(newRow);
-
-                // Initialize VirtualSelect after adding the new row
-                VirtualSelect.init({
-                    ele: '[id^=Months], #team_members, #training-require, #impacted_objects'
-                });
-            });
-
-            // Event delegation for remove button
-            $('#Self_Inspection-field-instruction-modal').on('click', '.removeBtn', function() {
-                $(this).closest('tr').remove();
-            });
-
-            // Function to handle date input change
-            window.handleDateInput = function(dateInput, displayInputId) {
-                var date = new Date(dateInput.value);
-                var options = {
-                    day: '2-digit',
-                    month: 'short',
-                    year: 'numeric'
-                };
-                var formattedDate = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
-                $('#' + displayInputId).val(formattedDate);
-            };
-        });
-</script>
 
 
 
