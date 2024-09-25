@@ -293,7 +293,7 @@
 
                     </tr>
                     <tr>{{-- <th class="w-20">Additional Investigators</th> <td class="w-30">@if ($data->investigators){{ $data->investigators }}@else Not Applicable @endif</td> --}}
-                        <th class="w-20">Responsible department Head</th>
+                        <th class="w-20"> Name of Responsible department Head</th>
                         <td class="w-30">
                             @if ($data->assign_to)
                                 {{ Helpers::getInitiatorName($data->assign_to) }}
@@ -1291,11 +1291,11 @@ Not Applicable
         </div>
         <div class="block">
             <div class="block-head">
-                QA Review
+                Initial QA/CQA Review       
             </div>
             <div class="inner-block">
                 <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
-                    QA Review Comments</label>
+                    Initial QA/CQA Review  Comments</label>
                 <span style="font-size: 0.8rem; margin-left: 60px;">
                     @if ($data->cft_comments_new)
                         {{ $data->cft_comments_new }}
@@ -1306,7 +1306,7 @@ Not Applicable
             </div>
             <div class="border-table">
                 <div class="block-head">
-                    QA Review Attachment
+                    Initial QA/CQA Review  Attachment
 
                 </div>
                 <table>
@@ -1381,11 +1381,11 @@ Not Applicable
         </div>
         <div class="block">
             <div class="block-head">
-                QA Final Review
+                QA/CQA Final Review
             </div>
             <div class="inner-block">
                 <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
-                    QA Final Review Comments</label>
+                    QA/CQA Final Review Comments</label>
                 <span style="font-size: 0.8rem; margin-left: 60px;">
                     @if ($data->qa_final_comments)
                         {{ $data->qa_final_comments }}
@@ -1396,7 +1396,7 @@ Not Applicable
             </div>
             <div class="border-table">
                 <div class="block-head">
-                    QA Final Review Attachment
+                    QA/CQA Final Review Attachment
 
                 </div>
                 <table>
