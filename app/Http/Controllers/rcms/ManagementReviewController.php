@@ -1674,7 +1674,7 @@ class ManagementReviewController extends Controller
         //     $management->inv_attachment = json_encode($files);
         // }
 
-       $attachments = json_decode($management->inv_attachment, true) ?? [];
+    //    $attachments = json_decode($management->inv_attachment, true) ?? [];
         // Handle file removals
 
             if($management->stage == 3 || $management->stage == 4 ){
@@ -2695,7 +2695,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
                     }
                 }
             }
-
+ $attachments = json_decode($management->inv_attachment, true) ?? [];
 
 
             if (!empty ($request->Initial_attachment)) {
@@ -2748,40 +2748,115 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
 
 
 
-         if (!empty($request->inv_attachment)) {
-            $files = [];
-            if ($request->hasfile('inv_attachment')) {
-                foreach ($request->file('inv_attachment') as $file) {
-                    $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $management->inv_attachment = json_encode($files);
-        }
+        //  if (!empty($request->inv_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('inv_attachment')) {
+        //         foreach ($request->file('inv_attachment') as $file) {
+        //             $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $management->inv_attachment = json_encode($files);
+        // }
+        if (!empty($request->inv_attachment) || !empty($request->deleted_inv_attachment)) {
+    $existingFiles = json_decode($management->inv_attachment, true) ?? [];
 
-        if (!empty($request->file_attchment_if_any)) {
-            $files = [];
-            if ($request->hasfile('file_attchment_if_any')) {
-                foreach ($request->file('file_attchment_if_any') as $file) {
-                    $name = $request->name . 'file_attchment_if_any' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $management->file_attchment_if_any = json_encode($files);
+    // Handle deleted files
+    if (!empty($request->deleted_inv_attachment)) {
+        $filesToDelete = explode(',', $request->deleted_inv_attachment);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('inv_attachment')) {
+        foreach ($request->file('inv_attachment') as $file) {
+            $name = $request->name . 'inv_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
         }
-        if (!empty($request->closure_attachments)) {
-            $files = [];
-            if ($request->hasfile('closure_attachments')) {
-                foreach ($request->file('closure_attachments') as $file) {
-                    $name = $request->name . 'closure_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $management->closure_attachments = json_encode($files);
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $management->inv_attachment = json_encode($allFiles);
+}
+
+        // if (!empty($request->file_attchment_if_any)) {
+        //     $files = [];
+        //     if ($request->hasfile('file_attchment_if_any')) {
+        //         foreach ($request->file('file_attchment_if_any') as $file) {
+        //             $name = $request->name . 'file_attchment_if_any' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $management->file_attchment_if_any = json_encode($files);
+        // }
+        if (!empty($request->file_attchment_if_any) || !empty($request->deleted_file_attchment_if_any)) {
+    $existingFiles = json_decode($management->file_attchment_if_any, true) ?? [];
+
+    // Handle deleted files
+    if (!empty($request->deleted_file_attchment_if_any)) {
+        $filesToDelete = explode(',', $request->deleted_file_attchment_if_any);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('file_attchment_if_any')) {
+        foreach ($request->file('file_attchment_if_any') as $file) {
+            $name = $request->name . 'file_attchment_if_any' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
         }
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $management ->file_attchment_if_any = json_encode($allFiles);
+}
+        // if (!empty($request->closure_attachments)) {
+        //     $files = [];
+        //     if ($request->hasfile('closure_attachments')) {
+        //         foreach ($request->file('closure_attachments') as $file) {
+        //             $name = $request->name . 'closure_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $management->closure_attachments = json_encode($files);
+        // }
+        if (!empty($request->closure_attachments) || !empty($request->deleted_closure_attachments)) {
+    $existingFiles = json_decode($management->closure_attachments, true) ?? [];
+
+    // Handle deleted files
+    if (!empty($request->deleted_closure_attachments)) {
+        $filesToDelete = explode(',', $request->deleted_closure_attachments);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('closure_attachments')) {
+        foreach ($request->file('closure_attachments') as $file) {
+            $name = $request->name . 'closure_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
+        }
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $management->closure_attachments = json_encode($allFiles);
+}
              if (!empty($request->cft_hod_attach)) {
             $files = [];
             if ($request->hasfile('cft_hod_attach')) {
@@ -2794,18 +2869,43 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
 
             $management->cft_hod_attach= json_encode($files);
         }
-        if (!empty($request->qa_verification_file)) {
-            $files = [];
-            if ($request->hasfile('qa_verification_file')) {
-                foreach ($request->file('qa_verification_file') as $file) {
-                    $name = $request->name . 'qa_verification_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
+        // if (!empty($request->qa_verification_file)) {
+        //     $files = [];
+        //     if ($request->hasfile('qa_verification_file')) {
+        //         foreach ($request->file('qa_verification_file') as $file) {
+        //             $name = $request->name . 'qa_verification_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
 
-            $management->qa_verification_file= json_encode($files);
+        //     $management->qa_verification_file= json_encode($files);
+        // }
+        if (!empty($request->qa_verification_file) || !empty($request->deleted_qa_verification_file)) {
+    $existingFiles = json_decode($management->qa_verification_file, true) ?? [];
+
+    // Handle deleted files
+    if (!empty($request->deleted_qa_verification_file)) {
+        $filesToDelete = explode(',', $request->deleted_qa_verification_file);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('qa_verification_file')) {
+        foreach ($request->file('qa_verification_file') as $file) {
+            $name = $request->name . 'qa_verification_file' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
         }
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $management->qa_verification_file = json_encode($allFiles);
+}
 
         $management->update();
 
@@ -3140,6 +3240,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
             }
             $history->save();
         }
+
         if ($lastCft->QualityAssurance_person != $request->QualityAssurance_person && $request->QualityAssurance_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
@@ -5455,7 +5556,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Other1_Department_person != $request->Other1_Department_person && $request->Other1_Department_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Other 1 Review Required';
+            $history->activity_type = 'Other 1 Department';
             $history->previous = $lastCft->Other1_Department_person;
             $history->current = $request->Other1_Department_person;
             $history->comment = "Not Applicable";
