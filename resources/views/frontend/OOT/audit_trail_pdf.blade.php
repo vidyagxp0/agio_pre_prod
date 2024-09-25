@@ -155,7 +155,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -166,10 +166,10 @@
                     <strong>OOT No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::getDivisionName($doc->division_id) }}/OOT/{{ Helpers::year($doc->created_at)}}/ {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::getDivisionName($doc->division_id) }}/OOT/{{ Helpers::year($doc->created_at)}}/ {{ str_pad($doc->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Record No.</strong> {{ str_pad($doc->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
             </tr>
         </table>
@@ -178,9 +178,6 @@
     <div class="inner-block">
 
         <div class="head">Audit Trial Histroy Configuration Report</div>
-
-
-
         <div class="first-table">
             <table>
                 <tr>
@@ -202,7 +199,7 @@
                         @endif
                     </td>
                 </tr>
-               
+
             </table>
         </div>
 
@@ -246,7 +243,7 @@
                                 @if($datas->activity_type == "Activity Log")
                                     <div><strong>Changed To :</strong></div>
                                     @if(!empty($datas->change_to))
-                                        <div>{{ $datas->change_to }}</div>
+                                        <div>{{ strip_tags($datas->change_to) }}</div>
                                     @else
                                         <div>Not Applicable</div>
                                     @endif
@@ -275,7 +272,6 @@
                 @endforeach
             </table>
         </div>
-
     </div>
 
     <footer>

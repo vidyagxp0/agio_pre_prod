@@ -63,9 +63,9 @@ class DocumentDetailsController extends Controller
         $lastDocument = Document::withTrashed()->find($request->document_id);
         // $fullPermission = UserRole::where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $document->division_id])->get();
         // $fullPermissionIds = $fullPermission->pluck('q_m_s_roles_id')->toArray();
-        
+
         if (Helpers::checkRoles(3) && $document->originator_id == Auth::user()->id && $request->stage_id == 2 || $request->stage_id == 6 || $request->stage_id == 8 || $request->stage_id == 11) {
-          
+
           $stage = new StageManage;
           $stage->document_id = $request->document_id;
           $stage->user_id = Auth::user()->id;
@@ -73,8 +73,8 @@ class DocumentDetailsController extends Controller
           $stage->stage = Stage::where('id', $request->stage_id)->value('name');
           $stage->comment = $request->comment;
 
-          
-        if ($stage->stage == "In-Review") {
+
+          if ($stage->stage == "In-Review") {
             $deletePreviousApproval = StageManage::where('document_id', $request->document_id)->get();
             if ($deletePreviousApproval) {
               foreach ($deletePreviousApproval as $updateRecords) {
@@ -105,6 +105,31 @@ class DocumentDetailsController extends Controller
           $stage->stage = $request->stage_id;
           $stage->comment = $request->comment;
           $stage->save();
+
+          if ($request->stage_id == 'Close-by-HOD') {
+            $stage = new StageManage;
+            $stage->document_id = $request->document_id;
+            $stage->user_id = Auth::user()->id;
+            $stage->role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $stage->stage = 'Close-by-HOD';
+            $stage->comment = $request->comment;
+            $stage->save();
+
+            $history = new DocumentHistory();
+            $history->document_id = $request->document_id;
+            $history->activity_type = 'Close-by-HOD';
+            $history->previous = '';
+            $history->current = '';
+            $history->comment = $request->comment;
+            $history->action_name = 'Submit';
+            $history->change_from = 'In-HOD Review';
+            $history->change_to = 'Closed/Cancel';
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = 'In-HOD Review';
+            $history->save();
+          }
 
           if ($request->stage_id == 'HOD Review Complete') {
             $stage = new StageManage;
@@ -179,58 +204,75 @@ class DocumentDetailsController extends Controller
             $history->origin_state = 'For-Approval';
             $history->save();
           }
-          
+
           if ($request->stage_id == 'Cancel-by-HOD') {
             StageManage::where('document_id', $request->document_id)
-              // ->where('user_id', Auth::user()->id)
               ->where('stage', 'In-HOD Review')
               ->delete();
           }
 
+          if ($request->stage_id == 'Cancel-by-Reviewer') {
+            StageManage::where('document_id', $request->document_id)
+              ->where('stage', 'HOD Review Complete')
+              ->delete();
+              StageManage::where('document_id', $request->document_id)
+              ->where('stage', 'HOD Review-Submit')
+              ->delete();
+              
+          }
+
           if ($request->stage_id == 'Cancel-by-Approver') {
             StageManage::where('document_id', $request->document_id)
-              // ->where('user_id', Auth::user()->id)
-              ->where('stage', 'In-Review')
+              ->where('stage', 'Reviewed')
               ->delete();
-          }   
+
+              StageManage::where('document_id', $request->document_id)
+              ->where('stage', 'Review-Submit')
+              ->delete();
+          }
 
         }
 
-        
         if (Helpers::checkRoles(2) && in_array(Auth::user()->id, explode(",", $document->reviewers)) && ($document->stage == 4 || $document->stage == 5)) {
           if ($request->stage_id == "Cancel-by-Reviewer") {
-              $document->stage = 1;
-              $document->status = "Draft";
-              $history = new DocumentHistory();
-              $history->document_id = $request->document_id;
-              $history->activity_type = 'Cancel-by-Reviewer';
-              $history->previous = '';
-              $history->current = '';
-              $history->comment = $request->comment;
-              $history->action_name = 'Submit';
-              $history->change_from = 'In-Review';
-              $history->change_to = 'Draft';
-              $history->user_id = Auth::user()->id;
-              $history->user_name = Auth::user()->name;
-              $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = 'In-Review';
-              $history->save();
+            $document->stage = 3;
+            $document->status = "HOD Review Complete";
+            $history = new DocumentHistory();
+            $history->document_id = $request->document_id;
+            $history->activity_type = 'Cancel-by-Reviewer';
+            $history->previous = '';
+            $history->current = '';
+            $history->comment = $request->comment;
+            $history->action_name = 'Submit';
+            $history->change_from = 'In-Review';
+            $history->change_to = 'HOD Review Complete';
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = 'In-Review';
+            $history->save();
             try {
-              Mail::send('mail.review-reject', ['document' => $document],
-              function ($message) use ($originator) {
-                      $message->to($originator->email)
-                              ->subject('Rejected By'.Auth::user()->name.'(Reviewer)');
-              });
+              Mail::send(
+                'mail.review-reject',
+                ['document' => $document],
+                function ($message) use ($originator) {
+                  $message->to($originator->email)
+                    ->subject('Rejected By' . Auth::user()->name . '(Reviewer)');
+                }
+              );
             } catch (\Exception $e) {
               // 
             }
           } else {
             try {
-                Mail::send('mail.reviewed', ['document' => $document],
+              Mail::send(
+                'mail.reviewed',
+                ['document' => $document],
                 function ($message) use ($originator) {
-                        $message->to($originator->email)
-                                ->subject('Reviewed By'.Auth::user()->name.'(Reviewer)');
-                });
+                  $message->to($originator->email)
+                    ->subject('Reviewed By' . Auth::user()->name . '(Reviewer)');
+                }
+              );
             } catch (\Exception $e) {
               // 
             }
@@ -247,11 +289,9 @@ class DocumentDetailsController extends Controller
               }
               if ($review == count($data)) {
                 $reviewersData = 1;
-
               }
-
             }
-            if ($document->reviewers_group) {
+             if ($document->reviewers_group) {
               $groupData = Grouppermission::where('id', $document->reviewers_group)->value('user_ids');
               $dataforgroup = explode(',', $groupData);
               $reviewforgroup = 0;
@@ -316,7 +356,7 @@ class DocumentDetailsController extends Controller
                   } catch (\Exception $e) {
                     // 
                   }
-                } 
+                }
               } else {
                 if ($reviewersData == 1) {
                   $document->stage = 5;
@@ -337,27 +377,26 @@ class DocumentDetailsController extends Controller
               }
             }
           }
-
         }
-        
+
         if (Helpers::checkRoles(1) && in_array(Auth::user()->id, explode(",", $document->approvers)) && ($document->stage == 6 || $document->stage == 7)) {
           if ($request->stage_id == "Cancel-by-Approver") {
-            $document->status = "Draft";
-            $document->stage = 1;
-              $history = new DocumentHistory();
-              $history->document_id = $request->document_id;
-              $history->activity_type = 'Cancel-by-Approver';
-              $history->previous = '';
-              $history->current = '';
-              $history->comment = $request->comment;
-              $history->action_name = 'Submit';
-              $history->change_from = 'In-Approver';
-              $history->change_to = 'Draft';
-              $history->user_id = Auth::user()->id;
-              $history->user_name = Auth::user()->name;
-              $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = 'In-Approver';
-              $history->save();
+            $document->status = "Reviewed";
+            $document->stage = 5;
+            $history = new DocumentHistory();
+            $history->document_id = $request->document_id;
+            $history->activity_type = 'Cancel-by-Approver';
+            $history->previous = '';
+            $history->current = '';
+            $history->comment = $request->comment;
+            $history->action_name = 'Submit';
+            $history->change_from = 'Reviewed';
+            $history->change_to = 'In-Review';
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = 'In-Approver';
+            $history->save();
             try {
               Mail::send(
                 'mail.approve-reject',
@@ -378,7 +417,6 @@ class DocumentDetailsController extends Controller
                 function ($message) use ($originator) {
                   $message->to($originator->email)
                     ->subject('Approved by' . Auth::user()->name . '(Approver)');
-  
                 }
               );
             } catch (\Exception $e) {
@@ -397,9 +435,7 @@ class DocumentDetailsController extends Controller
               }
               if ($review == count($data)) {
                 $reviewersData = 1;
-
               }
-
             }
             if ($document->approver_group) {
               $groupData = Grouppermission::where('id', $document->approver_group)->value('user_ids');
@@ -424,7 +460,6 @@ class DocumentDetailsController extends Controller
                         function ($message) use ($originator) {
                           $message->to($originator->email)
                             ->subject("Document is now Approved");
-  
                         }
                       );
                     } catch (\Exception $e) {
@@ -441,7 +476,6 @@ class DocumentDetailsController extends Controller
                       function ($message) use ($originator) {
                         $message->to($originator->email)
                           ->subject("Document is now Approved");
-  
                       }
                     );
                   } catch (\Exception $e) {
@@ -462,7 +496,6 @@ class DocumentDetailsController extends Controller
                       function ($message) use ($originator) {
                         $message->to($originator->email)
                           ->subject("Document is now Approved.");
-  
                       }
                     );
                   } catch (\Exception $e) {
@@ -480,7 +513,6 @@ class DocumentDetailsController extends Controller
                       function ($message) use ($originator) {
                         $message->to($originator->email)
                           ->subject("Document is now Approved");
-  
                       }
                     );
                   } catch (\Exception $e) {
@@ -493,23 +525,48 @@ class DocumentDetailsController extends Controller
         }
 
         if (Helpers::checkRoles(4) && in_array(Auth::user()->id, explode(",", $document->hods)) && ($document->stage == 2 || $document->stage == 3)) {
+          if ($request->stage_id == "Close-by-HOD") {
+
+            $document->status = "Closed/Cancel";
+            $document->stage = 13;
+
+            $history = new DocumentHistory();
+            $history->document_id = $request->document_id;
+            $history->activity_type = 'Close-by-HOD';
+            $history->previous = '';
+            $history->current = '';
+            $history->comment = $request->comment;
+            $history->action_name = 'Submit';
+            $history->change_from = 'In-HOD Review';
+            $history->change_to = 'Closed/Cancel';
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = 'In-HOD Review';
+            $history->save();
+
+            $document->save();
+
+            return redirect()->back();
+          }
+
           if ($request->stage_id == "Cancel-by-HOD") {
             $document->status = "Draft";
             $document->stage = 1;
-              $history = new DocumentHistory();
-              $history->document_id = $request->document_id;
-              $history->activity_type = 'Cancel-by-HOD';
-              $history->previous = '';
-              $history->current = '';
-              $history->comment = $request->comment;
-              $history->action_name = 'Submit';
-              $history->change_from = 'In-HOD Review';
-              $history->change_to = 'Draft';
-              $history->user_id = Auth::user()->id;
-              $history->user_name = Auth::user()->name;
-              $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = 'In-HOD Review';
-              $history->save();
+            $history = new DocumentHistory();
+            $history->document_id = $request->document_id;
+            $history->activity_type = 'Cancel-by-HOD';
+            $history->previous = '';
+            $history->current = '';
+            $history->comment = $request->comment;
+            $history->action_name = 'Submit';
+            $history->change_from = 'In-HOD Review';
+            $history->change_to = 'Draft';
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = 'In-HOD Review';
+            $history->save();
             try {
               Mail::send(
                 'mail.approve-reject',
@@ -530,7 +587,6 @@ class DocumentDetailsController extends Controller
                 function ($message) use ($originator) {
                   $message->to($originator->email)
                     ->subject('HOD Review completed by' . Auth::user()->name . '(HOD)');
-  
                 }
               );
             } catch (\Exception $e) {
@@ -556,28 +612,26 @@ class DocumentDetailsController extends Controller
             // }
 
             if ($document->hods) {
-                $document->stage = 3;
-                $document->status = Stage::where('id', 3)->value('name');
-                try {
-                  Mail::send(
-                    'mail.approved',
-                    ['document' => $document],
-                    function ($message) use ($originator) {
-                      $message->to($originator->email)
-                        ->subject("Document is now Approved");
-
-                    }
-                  );
-                } catch (\Exception $e) {
-                  // 
-                }
+              $document->stage = 3;
+              $document->status = Stage::where('id', 3)->value('name');
+              try {
+                Mail::send(
+                  'mail.approved',
+                  ['document' => $document],
+                  function ($message) use ($originator) {
+                    $message->to($originator->email)
+                      ->subject("Document is now Approved");
+                  }
+                );
+              } catch (\Exception $e) {
+                // 
+              }
             }
           }
-
         }
 
         if (Helpers::checkRoles(3) && $document->originator_id == Auth::user()->id && $request->stage_id == 2 || $request->stage_id == 4 || $request->stage_id == 6 ||  $request->stage_id == 8 || $request->stage_id == 10 || $request->stage_id == 11) {
-          
+
           if ($request->stage_id) {
             $document->stage = $request->stage_id;
             $document->status = Stage::where('id', $request->stage_id)->value('name');
@@ -589,16 +643,18 @@ class DocumentDetailsController extends Controller
 
                   $temp_user->fromMain = User::find($document->originator_id);
 
-                            try {
-                              Mail::send('mail.for_review',['document' => $document],
-                              function ($message) use ($temp_user) {
-                                      $message->to($temp_user->email)
-                                              ->subject('Document is for Review');
-                              });
-                            } catch (\Exception $e) {
-                              // 
-                            }
-
+                  try {
+                    Mail::send(
+                      'mail.for_review',
+                      ['document' => $document],
+                      function ($message) use ($temp_user) {
+                        $message->to($temp_user->email)
+                          ->subject('Document is for Review');
+                      }
+                    );
+                  } catch (\Exception $e) {
+                    // 
+                  }
                 }
               }
             }
@@ -610,13 +666,13 @@ class DocumentDetailsController extends Controller
                 $document->update();
                 $history = new DocumentHistory();
                 $history->document_id = $request->document_id;
-                $history->activity_type = 'Send for Approver';
+                $history->activity_type = 'Send for Review';
                 $history->previous = '';
                 $history->current = '';
                 $history->comment = $request->comment;
-                $history->action_name = 'Submit'; 
-                $history->change_from = 'Reviewed';
-                $history->change_to = 'For-Approval';
+                $history->action_name = 'Submit';
+                $history->change_from = 'HOD-Review Complete';
+                $history->change_to = 'In-Review';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -642,8 +698,26 @@ class DocumentDetailsController extends Controller
               }
             }
             if ($request->stage_id == 6) {
+              $document['stage'] = $request->stage_id;
+              $document['status'] = Stage::where('id', $request->stage_id)->value('name');
+              $document->update();
+              $history = new DocumentHistory();
+              $history->document_id = $request->document_id;
+              $history->activity_type = 'Send for Approver';
+              $history->previous = '';
+              $history->current = '';
+              $history->comment = $request->comment;
+              $history->action_name = 'Submit';
+              $history->change_from = 'Reviewed';
+              $history->change_to = 'For-Approval';
+              $history->user_id = Auth::user()->id;
+              $history->user_name = Auth::user()->name;
+              $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+              $history->origin_state = 'Reviewed';
+              $history->save();
+
               $traning = DocumentTraining::where('document_id', $document->id)->first();
-              if ($traning){
+              if ($traning) {
                 $traning->trainer = User::find($traning->trainer);
                 try {
                   Mail::send(
@@ -655,18 +729,14 @@ class DocumentDetailsController extends Controller
                     }
                   );
                 } catch (\Exception $e) {
-
                 }
-              } 
-
+              }
             }
 
             if ($request->stage_id == 10) {
               $document->effective_date = Carbon::now()->format('Y-m-d');
-              // $document->review_period = 3; //3 year
-            
-              if ($document->revised == 'Yes')
-              {
+
+              if ($document->revised == 'Yes') {
                 $old_document = Document::where([
                   'document_number' => $document->document_number,
                   'status' => 'Effective'
@@ -680,15 +750,15 @@ class DocumentDetailsController extends Controller
               }
 
               try {
-                  $next_review_date = Carbon::parse($document->effective_date)->addYears($document->review_period)->format('Y-m-d');
-                  $document->next_review_date = $next_review_date;
+                $next_review_date = Carbon::parse($document->effective_date)->addYears($document->review_period)->format('Y-m-d');
+                $document->next_review_date = $next_review_date;
               } catch (\Exception $e) {
-                  // 
+                // 
               }
             }
-            if ($request->stage_id == 11) { 
-                $document['stage'] = $request->stage_id;
-                $document['status'] = Stage::where('id', $request->stage_id)->value('name');
+            if ($request->stage_id == 11) {
+              $document['stage'] = $request->stage_id;
+              $document['status'] = Stage::where('id', $request->stage_id)->value('name');
             }
           }
         }
@@ -704,7 +774,6 @@ class DocumentDetailsController extends Controller
       toastr()->error('Username is not matched.');
       return redirect()->back();
     }
-
   }
 
   function auditTrial($id)
@@ -858,7 +927,6 @@ class DocumentDetailsController extends Controller
       toastr()->error('Somthing went wrong');
     }
     return back();
-
   }
 
   function notification($id)
@@ -868,7 +936,6 @@ class DocumentDetailsController extends Controller
     $document->process = Process::find($document->process_id);
     $document->oreginator = User::find($document->originator_id);
     return view('frontend.notification', compact('document'));
-
   }
 
   public function getData(Request $request)
@@ -898,7 +965,6 @@ class DocumentDetailsController extends Controller
     );
     toastr()->success('Mail sent');
     return back();
-
   }
 
   public function search(Request $request)
@@ -1023,7 +1089,6 @@ class DocumentDetailsController extends Controller
       ->orderByDesc('documents.id')->paginate(10);
 
     return view('frontend.documents.index', compact('documents', 'count'));
-
   }
 
   public function searchAdvance(Request $request)
@@ -1057,27 +1122,26 @@ class DocumentDetailsController extends Controller
       })
       ->orwhere(function ($query) use ($request) {
         if (!empty($request->field)) {
-          foreach ($request->value as $value)
-          {
-            $query->where('documents.short_description', 'LIKE', '%'. $value .'%');
+          foreach ($request->value as $value) {
+            $query->where('documents.short_description', 'LIKE', '%' . $value . '%');
           }
         }
       })
       ->orderByDesc('documents.id')->paginate(10);
 
-      $divisions = QMSDivision::where('status', '1')->select('id', 'name')->get();
-        // $divisions = QMSDivision::where('status', '1')->select('id', 'name')->get();
-        $documentValues = Document::withoutTrashed()->select('id', 'document_type_id')->get();
-        $documentTypeIds = $documentValues->pluck('document_type_id')->unique()->toArray();
-        $documentTypes = DocumentType::whereIn('id', $documentTypeIds)->select('id', 'name')->get();
+    $divisions = QMSDivision::where('status', '1')->select('id', 'name')->get();
+    // $divisions = QMSDivision::where('status', '1')->select('id', 'name')->get();
+    $documentValues = Document::withoutTrashed()->select('id', 'document_type_id')->get();
+    $documentTypeIds = $documentValues->pluck('document_type_id')->unique()->toArray();
+    $documentTypes = DocumentType::whereIn('id', $documentTypeIds)->select('id', 'name')->get();
 
-        $documentStatus = Document::withoutTrashed()->select('id', 'status')->get();
-        $documentStatusIds = $documentValues->pluck('document_type_id')->unique()->toArray();
-        // dd($documentStatus);
+    $documentStatus = Document::withoutTrashed()->select('id', 'status')->get();
+    $documentStatusIds = $documentValues->pluck('document_type_id')->unique()->toArray();
+    // dd($documentStatus);
 
-        $OriValues = Document::withoutTrashed()->select('id', 'originator_id')->get();
-        $OriTypeIds = $OriValues->pluck('originator_id')->unique()->toArray();
-        $originator = User::whereIn('id', $OriTypeIds)->select('id', 'name')->get();
+    $OriValues = Document::withoutTrashed()->select('id', 'originator_id')->get();
+    $OriTypeIds = $OriValues->pluck('originator_id')->unique()->toArray();
+    $originator = User::whereIn('id', $OriTypeIds)->select('id', 'name')->get();
 
     return view('frontend.documents.index', compact('documents', 'count', 'divisions', 'originator', 'documentTypes', 'documentStatus'));
 

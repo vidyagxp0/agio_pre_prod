@@ -18,6 +18,18 @@
         min-height: 100vh;
     }
 
+    .w-5 {
+        width: 5%;
+    }
+
+    .w-10 {
+        width: 10%;
+    }
+
+    .w-15 {
+        width: 15%;
+    }
+
     .w-10 {
         width: 10%;
     }
@@ -62,21 +74,20 @@
         height: 100%;
     }
 
-    table,
-    th,
-    td {
+    table, th, td {
         border: 1px solid black;
         border-collapse: collapse;
         font-size: 0.9rem;
+        vertical-align: top;
+        word-wrap: break-word; /* Ensure text breaks and wraps inside the cell */
     }
 
     table {
         width: 100%;
     }
 
-    th,
-    td {
-        padding: 10px;
+    th, td {
+        padding: 8px;
         text-align: left;
     }
 
@@ -111,37 +122,12 @@
         padding: 10px;
     }
 
-    .inner-block .head {
-        font-weight: bold;
-        font-size: 1.2rem;
-        margin-bottom: 5px;
-    }
-
-    .inner-block .division {
-        margin-bottom: 10px;
-    }
-
-    .first-table {
-        border-top: 1px solid black;
-        margin-bottom: 20px;
-    }
-
-    .first-table table td,
-    .first-table table th,
-    .first-table table {
-        border: 0;
-    }
-
-    .second-table td:nth-child(1)>div {
-        margin-bottom: 10px;
-    }
-
-    .second-table td:nth-child(1)>div:nth-last-child(1) {
-        margin-bottom: 0px;
-    }
-
     .table_bg {
-        background: #4274da57;
+        background-color: #4274da57;
+    }
+    .allow-wb {
+        word-break: break-all;
+        word-wrap: break-word;
     }
 </style>
 
@@ -150,122 +136,91 @@
     <header>
         <table>
             <tr>
-                <td class="w-70 head">
-                  Lab Incident Audit Trial Report
-                </td>
+                <td class="w-70 head">Lab Incident Audit Trail Report</td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-100">
+                        <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
         </table>
         <table>
             <tr>
-                <td class="w-30">
-                    <strong>  Lab Incident No.</strong>
-                </td>
-                <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($doc->division_code) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->id, 4, '0', STR_PAD_LEFT) }}
-                </td>
-                <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
-                </td>
+                <td class="w-30"><strong>Lab Incident No.</strong></td>
+                <td class="w-40">{{ Helpers::getDivisionName($doc->division_id) }}/LI/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}</td>
+                <td class="w-30"><strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}</td>
             </tr>
         </table>
     </header>
 
     <div class="inner-block">
-
-        <div class="head">Audit Trial Histroy Configuration Report</div>
-
-        <div class="division">
-            {{ Helpers::divisionNameForQMS($doc->division_code) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->id, 4, '0', STR_PAD_LEFT) }}
-        </div>
-
-        <div class="first-table">
-            <table>
-                <tr>
-                    <td class="w-50">
-                        <strong>Config Area :</strong> All - No Filter
-                    </td>
-                    <td class="w-50">
-                        <strong>Start Date (GMT) :</strong> {{ $doc->created_at }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="w-50">
-                        <strong>Config Sub Area :</strong> All - No Filter
-                    </td>
-                    <td class="w-50">
-                        <strong>End Date (GMT) :</strong>
-                        @if ($doc->stage >= 9)
-                            {{ $doc->updated_at }}
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <td class="w-50">&nbsp;</td>
-                    <td class="w-50">
-                        <strong>Person Responsible : {{ $doc->originator }}</strong>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
         <div class="second-table">
-            <table>
-                <tr class="table_bg">
-                    <th>Field History</th>
-                    <th>Date Performed</th>
-                    <th>Person Responsible</th>
-                    <th>Change Type</th>
-                </tr>
-                @foreach ($data as $datas)
+        <table class="allow-wb" style="table-layout: fixed; width: 700px;">
+                <thead>
+                    <tr class="table_bg">
+                        <th class="w-5">S.No</th>
+                        <th class="w-15">Flow Changed From</th>
+                        <th class="w-15">Flow Changed To</th>
+                        <th class="w-30">Data Field</th>
+                        <th class="w-15" style="word-break: break-all;">Action Type</th>
+                        <th class="w-15" style="word-break: break-all;">Performer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ( $data as $index => $dataDemo)
                     <tr>
+                        <td>{{ $loop->iteration }}</td>
                         <td>
-                            <div>{{ $datas->activity_type }}</div>
-                            <div>
-                                <div><strong>Changed From :</strong></div>
-                                @if(!empty($datas->previous))
-                                <div>{{ $datas->previous }}</div>
+                            <div><strong>Changed From :</strong> {{ $dataDemo->change_from ?: 'Not Applicable' }}</div>
+                        </td>
+                        <td>
+                            <div><strong>Changed To :</strong> {{ $dataDemo->change_to ?: 'Not Applicable' }}</div>
+                        </td>
+                        <td>
+                            <div><strong>Data Field Name :</strong> {{ $dataDemo->activity_type ?: 'Not Applicable' }}</div>
+                            <div style="margin-top: 5px;">
+                                @if ($dataDemo->activity_type == 'Activity Log')
+                                    <strong>Change From :</strong>
+                                    {{str_replace(',', ', ', $dataDemo->change_from )?: 'Not Applicable' }}
                                 @else
-                                <div>Null</div>
+                                    <strong>Change From :</strong> {{str_replace(',', ', ', $dataDemo->previous) ?: 'Null' }}
                                 @endif
                             </div>
-                            <div>
-                                <div><strong>Changed To :</strong></div>
-                                <div>{{ $datas->current }}</div>
+                            <div style="margin-top: 5px;">
+                                @if ($dataDemo->activity_type == 'Activity Log')
+                                    <strong>Change To :</strong> {{ str_replace(',', ', ',$dataDemo->change_to )?: 'Not Applicable' }}
+                                @else
+                                    <strong>Change To :</strong> {{ str_replace(',', ', ',$dataDemo->current) ?: 'Not Applicable' }}
+                                @endif
+                            </div>
+                            <div style="margin-top: 5px;">
+                                <strong>Change Type :</strong> {{ $dataDemo->action_name ?: 'Not Applicable' }}
                             </div>
                         </td>
-                        <td>{{ $datas->created_at }}</td>
-                        <td>{{ $datas->user_name }}</td>
                         <td>
-                            @if ($datas->previous == "NULL")
-                                Modify
-                            @else
-                                New
-                            @endif
+                            <div><strong>Action Name :</strong> {{ $dataDemo->action ?: 'Not Applicable' }}</div>
+                        </td>
+                        <td>
+                            <div><strong>Performed By :</strong> {{ $dataDemo->user_name ?: 'Not Applicable' }}</div>
+                            <div style="margin-top: 5px;">
+                                <strong>Performed On :</strong> {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('j F Y H:i') : 'Not Applicable' }}
+                            </div>
+                            <div style="margin-top: 5px;">
+                                <strong>Comments :</strong> {{ $dataDemo->comment ?: 'Not Applicable' }}
+                            </div>
                         </td>
                     </tr>
-                @endforeach
+                    @endforeach
+                </tbody>
             </table>
         </div>
-
     </div>
 
     <footer>
         <table>
             <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-                <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td>
+                <td class="w-30"><strong>Printed On :</strong> {{ date('d-M-Y') }}</td>
+                <td class="w-40"><strong>Printed By :</strong> {{ Auth::user()->name }}</td>
             </tr>
         </table>
     </footer>

@@ -20,8 +20,17 @@ function addMultipleFiles(input, block_id) {
         viewLink.addEventListener('click',function(e){
             e.preventDefault();
             window.open(viewLink.href,'_blank');
+
+        });
+
+        let removeLink = document.createElement("a");
+        removeLink.className = 'remove-file';
+        removeLink.textContent = "<Remove>";
+        removeLink.addEventListener('click', function() {
+            div.remove(); // Remove the parent div when remove link is clicked
         });
         div.appendChild(viewLink);
+        div.appendChild(removeLink);
         block.appendChild(div);
     }
 }
@@ -355,69 +364,120 @@ function addRiskAssessment(tableId) {
     var currentRowCount = table.rows.length;
     var newRow = table.insertRow(currentRowCount);
     newRow.setAttribute("id", "row" + currentRowCount);
+
     var cell1 = newRow.insertCell(0);
     cell1.innerHTML = currentRowCount;
 
     var cell2 = newRow.insertCell(1);
     cell2.innerHTML = "<input name='risk_factor[]' type='text'>";
 
-    var cell3 = newRow.insertCell(2);
-    cell3.innerHTML = "<input name='risk_element[]' type='text'>";
-
-    var cell4 = newRow.insertCell(3);
+    var cell4 = newRow.insertCell(2);
     cell4.innerHTML = "<input name='problem_cause[]' type='text'>";
 
-    var cell5 = newRow.insertCell(4);
+    var cell5 = newRow.insertCell(3);
     cell5.innerHTML = "<input name='existing_risk_control[]' type='text'>";
 
-    var cell6 = newRow.insertCell(5);
+    var cell6 = newRow.insertCell(4);
     cell6.innerHTML =
-        "<select onchange='calculateInitialResult(this)' class='fieldR' name='initial_severity[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+        "<select onchange='calculateInitialResult(this)' class='fieldR' name='initial_severity[]'>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='1'>1-Insignificant</option>" +
+        "<option value='2'>2-Minor</option>" +
+        "<option value='3'>3-Major</option>" +
+        "<option value='4'>4-Critical</option>" +
+        "<option value='5'>5-Catastrophic</option>" +
+        "</select>";
 
-    var cell7 = newRow.insertCell(6);
+    var cell7 = newRow.insertCell(5);
     cell7.innerHTML =
-        "<select onchange='calculateInitialResult(this)' class='fieldP' name='initial_probability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+        "<select onchange='calculateInitialResult(this)' class='fieldP' name='initial_probability[]'>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='1'>1-Very rare</option>" +
+        "<option value='2'>2-Unlikely</option>" +
+        "<option value='3'>3-Possibly</option>" +
+        "<option value='4'>4-Likely</option>" +
+        "<option value='5'>5-Almost certain (every time)</option>" +
+        "</select>";
 
-    var cell8 = newRow.insertCell(7);
+    var cell8 = newRow.insertCell(6);
     cell8.innerHTML =
-        "<select onchange='calculateInitialResult(this)' class='fieldN' name='initial_detectability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+        "<select onchange='calculateInitialResult(this)' class='fieldN' name='initial_detectability[]'>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='1'>1-Always detected</option>" +
+        "<option value='2'>2-Likely to detect</option>" +
+        "<option value='3'>3-Possible to detect</option>" +
+        "<option value='4'>4-Unlikely to detect</option>" +
+        "<option value='5'>5-Not detectable</option>" +
+        "</select>";
 
-    var cell9 = newRow.insertCell(8);
-    cell9.innerHTML = "<input name='initial_rpn[]' ='text' class='initial-rpn'>";
+    var cell9 = newRow.insertCell(7);
+    cell9.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn'>";
 
-    var cell10 = newRow.insertCell(9);
-    cell10.innerHTML =
-        "<select name='risk_acceptance[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
-
-    var cell11 = newRow.insertCell(10);
+    var cell11 = newRow.insertCell(8);
     cell11.innerHTML = "<input name='risk_control_measure[]' type='text'>";
 
-    var cell12 = newRow.insertCell(11);
+    var cell12 = newRow.insertCell(9);
     cell12.innerHTML =
-        "<select onchange='calculateResidualResult(this)' class='residual-fieldR' name='residual_severity[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+        "<select onchange='calculateResidualResult(this)' class='residual-fieldR' name='residual_severity[]'>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='1'>1-Insignificant</option>" +
+        "<option value='2'>2-Minor</option>" +
+        "<option value='3'>3-Major</option>" +
+        "<option value='4'>4-Critical</option>" +
+        "<option value='5'>5-Catastrophic</option>" +
+        "</select>";
 
-    var cell13 = newRow.insertCell(12);
+    var cell13 = newRow.insertCell(10);
     cell13.innerHTML =
-        "<select onchange='calculateResidualResult(this)' class='residual-fieldP' name='residual_probability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+        "<select onchange='calculateResidualResult(this)' class='residual-fieldP' name='residual_probability[]'>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='1'>1-Very rare</option>" +
+        "<option value='2'>2-Unlikely</option>" +
+        "<option value='3'>3-Possibly</option>" +
+        "<option value='4'>4-Likely</option>" +
+        "<option value='5'>5-Almost certain (every time)</option>" +
+        "</select>";
 
-    var cell14 = newRow.insertCell(13);
+    var cell14 = newRow.insertCell(11);
     cell14.innerHTML =
-        "<select onchange='calculateResidualResult(this)' class='residual-fieldN' name='residual_detectability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+        "<select onchange='calculateResidualResult(this)' class='residual-fieldN' name='residual_detectability[]'>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='1'>1-Always detected</option>" +
+        "<option value='2'>2-Likely to detect</option>" +
+        "<option value='3'>3-Possible to detect</option>" +
+        "<option value='4'>4-Unlikely to detect</option>" +
+        "<option value='5'>5-Not detectable</option>" +
+        "</select>";
 
-    var cell15 = newRow.insertCell(14);
-    cell15.innerHTML = "<input name='residual_rpn[]'  type='text' class='residual-rpn' >";
+    var cell15 = newRow.insertCell(12);
+    cell15.innerHTML = "<input name='residual_rpn[]' type='text' class='residual-rpn' readonly>";
 
-    var cell16 = newRow.insertCell(15);
+    var cell10 = newRow.insertCell(13);
+    cell10.innerHTML =
+        "<select name='risk_acceptance[]' class='risk-acceptance' readonly>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='Low'>Low</option>" +
+        "<option value='Medium'>Medium</option>" +
+        "<option value='High'>High</option>" +
+        "</select>";
+
+    var cell16 = newRow.insertCell(14);
     cell16.innerHTML =
         "<select name='risk_acceptance2[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
 
-    var cell17 = newRow.insertCell(16);
+    var cell17 = newRow.insertCell(15);
     cell17.innerHTML = "<input name='mitigation_proposal[]' type='text'>";
-    for (var i = 1; i < currentRowCount; i++) {
 
+    var cell18 = newRow.insertCell(16);
+    cell18.innerHTML = "<button class='btn btn-dark removeBtn' onclick='removeRow(this)'>Remove</button>";
+
+    // Update row numbers
+    for (var i = 1; i <= currentRowCount; i++) {
         var row = table.rows[i];
         row.cells[0].innerHTML = i;
     }
+
+    initializeRiskAcceptance();
 }
 
 // ================================ EIGHT INPUTS
@@ -623,6 +683,9 @@ function addManagementReviewParticipants(tableId) {
     cell7.innerHTML = "<input type='text' name='designee_Department[]'>";
     let cell8 = newRow.insertCell(7);
     cell8.innerHTML = "<input type='text' name='remarks[]'>";
+    let cell9 = newRow.insertCell(8);
+    cell9.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
+
 
     for (let i = 1; i < currentRowCount; i++) {
         let row = table.rows[i];
@@ -1009,7 +1072,7 @@ function openDivision(evt, cityName) {
     evt.currentTarget.className += " active";
 }
 
- 
+
 function handleDateInput(element, textInputID) {
     let textInput = document.getElementById(textInputID)
     const date = new Date(element.value);
@@ -1019,20 +1082,20 @@ function handleDateInput(element, textInputID) {
     const year = date.getFullYear();
     textInput.setAttribute('value', `${day}-${month}-${year}`)
   }
- 
+
   function isStartDateLessThanEndDate(startDate, endDate) {
     // Convert date strings to Date objects
     const startDateObj = new Date(startDate);
-    const endDateObj = new Date(endDate); 
+    const endDateObj = new Date(endDate);
     // Compare the dates
     return startDateObj <= endDateObj;
   }
-  
+
   function checkDate(textInputID,textInputID2){
     const startDate = $('#'+textInputID).val();  // Replace with your start date
-    const endDate = $('#'+textInputID2).val();    // Replace with your end date 
+    const endDate = $('#'+textInputID2).val();    // Replace with your end date
     if ((startDate.trim() !== '') && (endDate.trim() !== '')) {
-        let endDataStr = textInputID2.replace(/_checkdate/g, ""); 
+        let endDataStr = textInputID2.replace(/_checkdate/g, "");
         if (isStartDateLessThanEndDate(startDate, endDate)) {
             console.log("Start date is less than end date.");
             //let textInput = document.getElementById(endDataStr)
@@ -1042,7 +1105,7 @@ function handleDateInput(element, textInputID) {
             // const day = date.getDate();
             // const year = date.getFullYear();
             // textInput.setAttribute('value', `${day}-${month}-${year}`)
-        } else { 
+        } else {
         alert("Start date is not less than end date.");
         let textInput = document.getElementById(endDataStr)
         textInput.setAttribute('value', ``)
@@ -1050,3 +1113,223 @@ function handleDateInput(element, textInputID) {
       }
     }
   }
+
+  function calculateResidualResult(element) {
+    var row = element.closest('tr');
+    var severity = parseInt(row.querySelector('.residual-fieldR').value) || 0;
+    var probability = parseInt(row.querySelector('.residual-fieldP').value) || 0;
+    var detectability = parseInt(row.querySelector('.residual-fieldN').value) || 0;
+
+    var rpn = severity * probability * detectability;
+
+    row.querySelector('.residual-rpn').value = rpn;
+
+    // Update risk acceptance based on the new RPN value
+    updateRiskAcceptance(row);
+}
+
+function updateRiskAcceptance(row) {
+    var rpnValue = parseInt(row.querySelector('.residual-rpn').value, 10);
+    var selectElement = row.querySelector('.risk-acceptance');
+
+    if (!isNaN(rpnValue)) {
+        if (rpnValue >= 1 && rpnValue <= 24) {
+            selectElement.value = 'Low';
+        } else if (rpnValue >= 25 && rpnValue <= 74) {
+            selectElement.value = 'Medium';
+        } else if (rpnValue >= 75 && rpnValue <= 125) {
+            selectElement.value = 'High';
+        } else {
+            selectElement.value = '';
+        }
+    } else {
+        selectElement.value = '';
+    }
+}
+
+// Function to ensure risk acceptance is properly initialized
+function initializeRiskAcceptance() {
+    var riskAcceptanceElements = document.querySelectorAll('.risk-acceptance');
+    riskAcceptanceElements.forEach(function(element) {
+        var row = element.closest('tr');
+        updateRiskAcceptance(row);
+    });
+}
+
+function handleMonthInput(element, textInputID) {
+    let textInput = document.getElementById(textInputID)
+    const date = new Date(element.value);
+    const months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",];
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    textInput.setAttribute('value', `${month}-${year}`)
+  }
+
+
+function addRiskAssessmentdata(tableId) {
+    var table = document.getElementById(tableId);
+    var currentRowCount = table.rows.length;
+    var newRow = table.insertRow(currentRowCount);
+    newRow.setAttribute("id", "row" + currentRowCount);
+
+    var cell1 = newRow.insertCell(0);
+    cell1.innerHTML = currentRowCount;
+
+    var cell2 = newRow.insertCell(1);
+    cell2.innerHTML = "<input name='risk_factor[]' type='text'>";
+
+    var cell4 = newRow.insertCell(2);
+    cell4.innerHTML = "<input name='problem_cause[]' type='text'>";
+
+    var cell5 = newRow.insertCell(3);
+    cell5.innerHTML = "<input name='existing_risk_control[]' type='text'>";
+
+    var cell6 = newRow.insertCell(4);
+    cell6.innerHTML =
+        "<select onchange='calculateInitialResult(this)' class='fieldR' name='initial_severity[]'>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='1'>1-Insignificant</option>" +
+        "<option value='2'>2-Minor</option>" +
+        "<option value='3'>3-Major</option>" +
+        "<option value='4'>4-Critical</option>" +
+        "<option value='5'>5-Catastrophic</option>" +
+        "</select>";
+
+    var cell7 = newRow.insertCell(5);
+    cell7.innerHTML =
+        "<select onchange='calculateInitialResult(this)' class='fieldP' name='initial_probability[]'>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='1'>1-Very rare</option>" +
+        "<option value='2'>2-Unlikely</option>" +
+        "<option value='3'>3-Possibly</option>" +
+        "<option value='4'>4-Likely</option>" +
+        "<option value='5'>5-Almost certain (every time)</option>" +
+        "</select>";
+
+    var cell8 = newRow.insertCell(6);
+    cell8.innerHTML =
+        "<select onchange='calculateInitialResult(this)' class='fieldN' name='initial_detectability[]'>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='1'>1-Always detected</option>" +
+        "<option value='2'>2-Likely to detect</option>" +
+        "<option value='3'>3-Possible to detect</option>" +
+        "<option value='4'>4-Unlikely to detect</option>" +
+        "<option value='5'>5-Not detectable</option>" +
+        "</select>";
+
+    var cell9 = newRow.insertCell(7);
+    cell9.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn' readonly>";
+
+    var cell11 = newRow.insertCell(8);
+    cell11.innerHTML = "<input name='risk_control_measure[]' type='text'>";
+
+    var cell12 = newRow.insertCell(9);
+    cell12.innerHTML =
+        "<select onchange='calculateResidualResult(this)' class='residual-fieldR' name='residual_severity[]'>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='1'>1-Insignificant</option>" +
+        "<option value='2'>2-Minor</option>" +
+        "<option value='3'>3-Major</option>" +
+        "<option value='4'>4-Critical</option>" +
+        "<option value='5'>5-Catastrophic</option>" +
+        "</select>";
+
+    var cell13 = newRow.insertCell(10);
+    cell13.innerHTML =
+        "<select onchange='calculateResidualResult(this)' class='residual-fieldP' name='residual_probability[]'>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='1'>1-Very rare</option>" +
+        "<option value='2'>2-Unlikely</option>" +
+        "<option value='3'>3-Possibly</option>" +
+        "<option value='4'>4-Likely</option>" +
+        "<option value='5'>5-Almost certain (every time)</option>" +
+        "</select>";
+
+    var cell14 = newRow.insertCell(11);
+    cell14.innerHTML =
+        "<select onchange='calculateResidualResult(this)' class='residual-fieldN' name='residual_detectability[]'>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='1'>1-Always detected</option>" +
+        "<option value='2'>2-Likely to detect</option>" +
+        "<option value='3'>3-Possible to detect</option>" +
+        "<option value='4'>4-Unlikely to detect</option>" +
+        "<option value='5'>5-Not detectable</option>" +
+        "</select>";
+
+    var cell15 = newRow.insertCell(12);
+    cell15.innerHTML = "<input name='residual_rpn[]' type='text' class='residual-rpn' readonly>";
+
+    var cell10 = newRow.insertCell(13);
+    cell10.innerHTML =
+        "<select name='risk_acceptance[]' class='risk-acceptance' readonly>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='Low'>Low</option>" +
+        "<option value='Medium'>Medium</option>" +
+        "<option value='High'>High</option>" +
+        "</select>";
+
+    var cell16 = newRow.insertCell(14);
+    cell16.innerHTML =
+        "<select name='risk_acceptance2[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
+
+    var cell17 = newRow.insertCell(15);
+    cell17.innerHTML = "<input name='mitigation_proposal[]' type='text'>";
+
+    var cell18 = newRow.insertCell(16);
+    cell18.innerHTML = "<button class='btn btn-dark removeBtn' onclick='removeRow(this)'>Remove</button>";
+
+    // Update row numbers
+    for (var i = 1; i <= currentRowCount; i++) {
+        var row = table.rows[i];
+        row.cells[0].innerHTML = i;
+    }
+
+    initializeRiskAcceptance();
+}
+function calculateResidualResult(element) {
+    var row = element.closest('tr');
+    var severity = parseInt(row.querySelector('.residual-fieldR').value) || 0;
+    var probability = parseInt(row.querySelector('.residual-fieldP').value) || 0;
+    var detectability = parseInt(row.querySelector('.residual-fieldN').value) || 0;
+
+    var rpn = severity * probability * detectability;
+
+    row.querySelector('.residual-rpn').value = rpn;
+
+    // Update risk acceptance based on the new RPN value
+    updateRiskAcceptance(row);
+}
+
+function updateRiskAcceptance(row) {
+    var rpnValue = parseInt(row.querySelector('.residual-rpn').value, 10);
+    var riskAcceptanceField = row.querySelector('.risk-acceptance');
+
+    if (!isNaN(rpnValue)) {
+        if (rpnValue >= 1 && rpnValue <= 24) {
+            riskAcceptanceField.value = 'Low';
+        } else if (rpnValue >= 25 && rpnValue <= 74) {
+            riskAcceptanceField.value = 'Medium';
+        } else if (rpnValue >= 75 && rpnValue <= 125) {
+            riskAcceptanceField.value = 'High';
+        } else {
+            riskAcceptanceField.value = '';
+        }
+    } else {
+        riskAcceptanceField.value = '';
+    }
+}
+
+// Function to ensure risk acceptance is properly initialized
+function initializeRiskAcceptance() {
+    var riskAcceptanceElements = document.querySelectorAll('.risk-acceptance');
+    riskAcceptanceElements.forEach(function(element) {
+        var row = element.closest('tr');
+        updateRiskAcceptance(row);
+    });
+}
+
+// Call initializeRiskAcceptance when the document is ready
+document.addEventListener('DOMContentLoaded', function() {
+    initializeRiskAcceptance();
+});
+

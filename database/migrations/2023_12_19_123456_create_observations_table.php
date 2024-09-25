@@ -30,6 +30,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->text('attach_files1')->nullable();
             $table->string('recomendation_capa_date_due')->nullable();
+            $table->string('audit_response_date')->nullable();
             $table->text('non_compliance')->nullable();
             $table->text('recommend_action')->nullable();
             $table->text('related_observations')->nullable();
@@ -50,16 +51,55 @@ return new class extends Migration
             $table->string('date_response_due1')->nullable();
             $table->string('response_date')->nullable();
             $table->text('attach_files2')->nullable();
+            $table->text('attach_files_gi')->nullable();
             $table->text('related_url')->nullable();
             $table->text('response_summary')->nullable();
-            $table->string('Completed_By')->nullable();
-            $table->string('completed_on')->nullable();
+            // $table->string('Completed_By')->nullable();
+            // $table->string('completed_on')->nullable();
             $table->string('QA_Approved_By')->nullable();
             $table->string('QA_Approved_on')->nullable();
-            $table->string('Final_Approval_By')->nullable();
-            $table->string('Final_Approval_on')->nullable();
+            // $table->string('Final_Approval_By')->nullable();
+            // $table->string('Final_Approval_on')->nullable();
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();
+            $table->longtext('action')->nullable();
+
+            $table->text('report_issued_by')->nullable();
+            $table->text('report_issued_on')->nullable();
+            $table->text('report_issued_comment')->nullable();
+
+            $table->text('complete_By')->nullable();
+            $table->text('complete_on')->nullable();
+            $table->text('complete_comment')->nullable();
+
+            $table->text('cancel_by')->nullable();
+            $table->text('cancel_on')->nullable();
+            $table->text('cancel_comment')->nullable();
+
+            $table->text('more_info_required_by')->nullable();
+            $table->text('more_info_required_on')->nullable();
+            $table->text('more_info_required_comment')->nullable();
+
+            $table->text('reject_capa_plan_by')->nullable();
+            $table->text('reject_capa_plan_on')->nullable();
+            $table->text('reject_capa_plan_comment')->nullable();
+
+            $table->text('qa_approval_without_capa_by')->nullable();
+            $table->text('qa_approval_without_capa_on')->nullable();
+            $table->text('qa_approval_without_capa_comment')->nullable();
+
+            $table->text('qa_appproval_by')->nullable();
+            $table->text('qa_appproval_on')->nullable();
+            $table->text('qa_appproval_comment')->nullable();
+
+            $table->text('all_capa_closed_by')->nullable();
+            $table->text('all_capa_closed_on')->nullable();
+            $table->text('all_capa_closed_comment')->nullable();
+
+            $table->text('Final_Approval_by')->nullable();
+            $table->text('Final_Approval_on')->nullable();
+            $table->text('Final_Approval_comment')->nullable();
+
             $table->timestamps();
 
         });

@@ -24,93 +24,91 @@
 
                         </div>
                         <div class="inner-block table-block">
-                                <div style="display:flex; justify-content:space-around;" class=" main-filter">
+                            <div style="display:flex; justify-content:space-around;" class=" main-filter">
 
-                                    <div class="filter-block">
-                                        <div class="drop-filter-block">
-                                            <div class="icon">
-                                                <i class="fa-solid fa-gauge-high"></i>
-                                            </div>
-                                            <div class="right">
-                                                <label for="status">Status</label>
-                                                <select name="status" class="filterSelect"> 
-                                                    <option value="">All</option>
-                                                    @php
-                                                        $uniqueStatus = $documentStatus->pluck('status')->unique();
-                                                    @endphp
-                                                    @foreach ($uniqueStatus as $status)
-                                                        <option value="{{ $status }}">{{ $status }}</option> 
-                                                    @endforeach
-                                                    
-                                                </select>
-                                            </div>
+                                <div class="filter-block">
+                                    <div class="drop-filter-block">
+                                        <div class="icon">
+                                            <i class="fa-solid fa-gauge-high"></i>
                                         </div>
-                                        {{-- <div class="search-bar">
+                                        <div class="right">
+                                            <label for="status">Status</label>
+                                            <select name="status" class="filterSelect">
+                                                <option value="">All</option>
+                                                @php
+                                                $uniqueStatus = $documentStatus->pluck('status')->unique();
+                                                @endphp
+                                                @foreach ($uniqueStatus as $status)
+                                                <option value="{{ $status }}">{{ $status }}</option>
+                                                @endforeach
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    {{-- <div class="search-bar">
                                             <input id="searchInput" type="text" name="search"
                                                 placeholder="Search from the list...">
                                             <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
                                         </div> --}}
-                                    </div>
-    
-                                    <div class="filter-block">
-                                        <div class="drop-filter-block">
-                                            <div class="icon">
-                                                <i class="fa-solid fa-file"></i>
-                                            </div>
-                                            <div class="right">
-                                                <label for="document_type_id">Document Type</label>
-                                                <select name="document_type_id" class="filterSelect">
+                                </div>
+
+                                <div class="filter-block">
+                                    <div class="drop-filter-block">
+                                        <div class="icon">
+                                            <i class="fa-solid fa-file"></i>
+                                        </div>
+                                        <div class="right">
+                                            <label for="document_type_id">Document Type</label>
+                                            <select name="document_type_id" class="filterSelect">
                                                 <option value="">All</option>
-                                                @foreach ($documentTypes as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}
+                                                @foreach ( Helpers::getDocumentTypes() as $code => $name)
+                                                <option value="{{ $code }}"> {{ $name }}
                                                 </option>
                                                 @endforeach
-                                                </select>
-                                            </div>
+                                            </select>
                                         </div>
                                     </div>
-    
-    
-    
-    
-                                    <div class="filter-block">
-                                        <div class="drop-filter-block">
-                                            <div class="icon">
-                                                <i class="fa-solid fa-sitemap"></i>
-                                            </div>
-                                            <div class="right">
-                                                <label for="division_id">Division</label>
-                                                <select name="division_id" class="filterSelect">
+                                </div>
+
+
+                                <div class="filter-block">
+                                    <div class="drop-filter-block">
+                                        <div class="icon">
+                                            <i class="fa-solid fa-sitemap"></i>
+                                        </div>
+                                        <div class="right">
+                                            <label for="division_id">Division</label>
+                                            <select name="division_id" class="filterSelect">
                                                 <option value="">All</option>
                                                 @foreach ($divisions as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}
                                                 </option>
                                                 @endforeach
-                                                </select>
-                                            </div>
+                                            </select>
                                         </div>
                                     </div>
-    
-                                    <div class="filter-block">
-                                        <div class="drop-filter-block">
-                                            <div class="icon">
-                                                <i class="fa-solid fa-user"></i>
-                                            </div>
-                                            <div class="right">
-                                                <label for="originator_id">Originator</label>
-                                                <select name="originator_id" class="filterSelect">
+                                </div>
+
+                                <div class="filter-block">
+                                    <div class="drop-filter-block">
+                                        <div class="icon">
+                                            <i class="fa-solid fa-user"></i>
+                                        </div>
+                                        <div class="right">
+                                            <label for="originator_id">Originator</label>
+                                            <select name="originator_id" class="filterSelect">
                                                 <option value="">All</option>
                                                 @foreach ($originator as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}
                                                 </option>
                                                 @endforeach
-                                                </select>
-                                            </div>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
-    
-                           
+                            </div>
+
+
                             <div class="loadingRecords">
                                 <p>Fetching records...</p>
                             </div>
@@ -274,8 +272,7 @@
     $(document).ready(function() {
         let postUrl = "{{ route('record.filter') }}";
         $('.loadingRecords').hide();
-        async function updateRecords()
-        {
+        async function updateRecords() {
             $('.loadingRecords').show();
             let data = {
                 status: $('select[name=status]').val(),
@@ -291,9 +288,9 @@
 
         $('.filterSelect').change(function() {
             try {
-                updateRecords()            
+                updateRecords()
             } catch (err) {
-            console.log("Error", err.message);
+                console.log("Error", err.message);
             }
         })
     })

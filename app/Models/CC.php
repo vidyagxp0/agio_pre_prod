@@ -9,8 +9,12 @@ class CC extends Model
 {
     use HasFactory;
 
-    public function record_number()
+    public function division()
     {
-        return $this->morphOne(QmsRecordNumber::class, 'recordable');
+        return $this->belongsTo(QMSDivision::class,'division_id');
+    }
+    public function initiator()
+    {
+        return $this->belongsTo(User::class,'initiator_id');
     }
 }

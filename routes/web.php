@@ -13,10 +13,11 @@ use App\Http\Controllers\ChangeControlController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DocumentDetailsController;
 use App\Http\Controllers\rcms\DesktopController;
+use App\Http\Controllers\rcms\MarketComplaintController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\MytaskController;
 use App\Http\Controllers\CabinateController;
-use App\Http\Controllers\rcms\{CCController,DeviationController};
+use App\Http\Controllers\rcms\{CCController,DeviationController, IncidentController};
 use App\Http\Controllers\rcms\EffectivenessCheckController;
 use App\Http\Controllers\rcms\ObservationController;
 use App\Http\Controllers\DashboardController;
@@ -24,9 +25,13 @@ use App\Http\Controllers\DocumentContentController;
 use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\ExtensionNewController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\ResamplingController;
+use App\Http\Controllers\InductionTrainingcontroller;
 use App\Http\Controllers\OOSMicroController;
 use App\Http\Controllers\rcms\AuditeeController;
+use App\Http\Controllers\rcms\NonConformaceController;
 use App\Http\Controllers\rcms\CapaController;
+use App\Http\Controllers\rcms\FailureInvestigationController;
 use App\Http\Controllers\rcms\LabIncidentController;
 use App\Http\Controllers\rcms\AuditProgramController;
 use App\Http\Controllers\rcms\ExtensionController;
@@ -35,14 +40,18 @@ use App\Http\Controllers\rcms\OOCController;
 use App\Http\Controllers\rcms\OOSController;
 use App\Http\Controllers\rcms\RcmsDashboardController;
 use App\Http\Controllers\tms\EmployeeController;
+// use App\Http\Controllers\tms\JobTrainingController;
+
 use App\Http\Controllers\tms\QuestionBankController;
 use App\Http\Controllers\tms\QuestionController;
 use App\Http\Controllers\tms\QuizeController;
-use App\Http\Controllers\tms\TrainerController;
 use App\Http\Controllers\rcms\OOTController;
+use App\Http\Controllers\tms\TrainerController;
+use App\Http\Controllers\tms\TNIController;
+
 use App\Imports\DocumentsImport;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\tms\JobTrainingController;
 use Maatwebsite\Excel\Facades\Excel;
 
 /*
@@ -61,6 +70,7 @@ Route::get('/login', [UserLoginController::class, 'userlogin'])->name('login');
 Route::post('/logincheck', [UserLoginController::class, 'logincheck']);
 Route::get('/logout', [UserLoginController::class, 'logout'])->name('logout');
 Route::post('/rcms_check', [UserLoginController::class, 'rcmscheck']);
+Route::post('CC-effectiveness-check/{id}', [CCController::class, 'changeControlEffectivenessCheck'])->name('CC-effectiveness-check');
 //Route::get('/', [UserLoginController::class, 'userlogin']);
 Route::get('/error', function () {
     return view('error');
@@ -71,6 +81,7 @@ Route::get('/error', function () {
 Route::get('/', [UserLoginController::class, 'userlogin']);
 Route::view('forgot-password', 'frontend.forgot-password');
 // Route::view('dashboard', 'frontend.dashboard');
+
 
 Route::get('data-fields', function () {
     return view('frontend.change-control.data-fields');
@@ -93,7 +104,8 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::get('documents/generatePdf/{id}', [DocumentController::class, 'createPDF']);
 
     Route::get('documents/reviseCreate/{id}', [DocumentController::class, 'revise_create']);
-
+    Route::get('documents/printPDFAnx/{id}', [DocumentController::class, 'printPDFAnx'])->name('document.print.pdf');
+    Route::get('documents/printAnnexure/{document}/{annexure}', [DocumentController::class, 'printAnnexure'])->name('document.print.annexure');
     Route::get('documents/printPDF/{id}', [DocumentController::class, 'printPDF']);
     Route::get('documents/viewpdf/{id}', [DocumentController::class, 'viewPdf']);
     Route::resource('documentsContent', DocumentContentController::class);
@@ -167,9 +179,11 @@ Route::get('manageshow/{id}', [ManagementReviewController::class, 'manageshow'])
 Route::post('manage/stage/{id}', [ManagementReviewController::class, 'manage_send_stage'])->name('manage_send_stage');
 Route::post('manage/cancel/{id}', [ManagementReviewController::class, 'manageCancel'])->name('manageCancel');
 Route::post('manage/reject/{id}', [ManagementReviewController::class, 'manage_reject'])->name('manage_reject');
+Route::post('manage_send_more_require_stage/{id}', [ManagementReviewController::class, 'manage_send_more_require_stage'])->name('manage_send_more_require_stage');
 Route::post('manage/Qa/{id}', [ManagementReviewController::class, 'manage_qa_more_info'])->name('manage_qa_more_info');
 Route::get('ManagementReviewAuditTrial/{id}', [ManagementReviewController::class, 'ManagementReviewAuditTrial']);
 Route::get('ManagementReviewAuditDetails/{id}', [ManagementReviewController::class, 'ManagementReviewAuditDetails']);
+Route::get('/management/{id}',[ManagementReviewController::class,'audit_trail_managementReview_filter'])->name('api.management-review.filter');
 
 
 /********************************************* Deviation Starts *******************************************/
@@ -178,7 +192,15 @@ Route::post('deviation_child/{id}', [DeviationController::class, 'deviation_chil
 
 Route::get('DeviationAuditTrial/{id}', [DeviationController::class, 'DeviationAuditTrial']);
 Route::post('DeviationAuditTrial/{id}', [DeviationController::class, 'store_audit_review'])->name('store_audit_review');
+Route::get('/Deviation/{id}',[DeviationController::class,'audit_trail_filter'])->name('api.Deviation.filter');
 
+/********************************************* Deviation Ends *******************************************/
+
+/********************************************* Deviation Starts *******************************************/
+
+Route::post('failure_investigation_child_1/{id}', [FailureInvestigationController::class, 'failure_investigation_child_1'])->name('failure_investigation_child_1');
+Route::post('non_conformances_child_1/{id}', [NonConformaceController::class, 'non_conformances_child_1'])->name('non_conformances_child_1');
+Route::post('incident_child_1/{id}', [IncidentController::class, 'incident_child_1'])->name('incident_child_1');
 /********************************************* Deviation Ends *******************************************/
 
 // ==============================end ==============================
@@ -195,6 +217,12 @@ Route::post('reject_Risk/{id}', [RiskManagementController::class, 'RejectStateCh
 Route::get('riskAuditTrial/{id}', [RiskManagementController::class, 'riskAuditTrial']);
 Route::get('auditDetailsrisk/{id}', [RiskManagementController::class, 'auditDetailsrisk'])->name('showriskAuditDetails');
 Route::post('child/{id}', [RiskManagementController::class, 'child'])->name('riskAssesmentChild');
+Route::post('riskassesmentCancel/{id}', [RiskManagementController::class, 'riskassesmentCancel'])->name('riskassesmentCancel');
+
+Route::post('RMAuditReview/{id}', [RiskManagementController::class, 'rm_AuditReview'])->name('RMAuditReview');
+Route::get('ra_filter/{id}', [RiskManagementController::class, 'audit_filter'])->name('ra_filter');
+
+
 
 
 
@@ -216,9 +244,11 @@ Route::get('auditDetailsRoot/{id}', [RootCauseController::class, 'auditDetailsro
 
 // ====================================InternalauditController=======================
 Route::post('internalauditreject/{id}', [InternalauditController::class, 'RejectStateChange']);
+Route::post('nocapastate/{id}', [InternalauditController::class, 'noCapastate']);
 Route::post('InternalAuditCancel/{id}', [InternalauditController::class, 'InternalAuditCancel']);
 Route::post('InternalAuditChild/{id}', [InternalauditController::class, 'internal_audit_child'])->name('internal_audit_child');
-
+Route::post('multiple_child/{id}', [InternalauditController::class, 'multiple_child'])->name('multiple_child');
+Route::post('internalAuditReview/{id}', [InternalauditController::class, 'internalAuditReview'])->name('internalAuditReview');
 // external audit----------------------------
 
 Route::get('show/{id}', [AuditeeController::class, 'show'])->name('showExternalAudit');
@@ -230,6 +260,7 @@ Route::post('CancelStateExternalAudit/{id}', [AuditeeController::class, 'externa
 Route::get('ExternalAuditTrialShow/{id}', [AuditeeController::class, 'AuditTrialExternalShow'])->name('ShowexternalAuditTrial');
 Route::get('ExternalAuditTrialDetails/{id}', [AuditeeController::class, 'AuditTrialExternalDetails'])->name('ExternalAuditTrialDetailsShow');
 Route::post('child_external/{id}', [AuditeeController::class, 'child_external'])->name('childexternalaudit');
+Route::post('UpdateStateAuditee/{id}', [AuditeeController::class, 'UpdateStateChange'])->name('UpdateStateAuditee');
 
 //----------------------Lab Incident view-----------------
 Route::get('lab-incident', [LabIncidentController::class, 'labincident']);
@@ -239,8 +270,17 @@ Route::get('lab-incident', [LabIncidentController::class, 'labincident']);
 Route::post('RejectStateChange/{id}', [LabIncidentController::class, 'RejectStateChange']);
 Route::post('StageChangeLabIncident/{id}', [LabIncidentController::class, 'LabIncidentStateChange']);
 Route::post('LabIncidentCancel/{id}', [LabIncidentController::class, 'LabIncidentCancelStage']);
-
+Route::get('/labincident/{id}',[LabIncidentController::class,'audit_trail_filter_lab_incident'])->name('lab_incident_filter');
+Route::post('storereview/{id}', [LabIncidentController::class, 'store_audit_review_lab'])->name('store_audit_reviewlab');
 Route::get('audit-program', [AuditProgramController::class, 'auditprogram']);
+
+//---------------------------Market Complaint  -------------------------//
+
+Route::post('McAuditTrial/{id}', [MarketComplaintController::class, 'mc_AuditReview'])->name('McAuditTrial');
+Route::get('mcFilter/{id}',[MarketComplaintController::class,'audit_filter'])->name('mc_filter');
+Route::post('mC/cftnotrequired/{id}', [MarketComplaintController::class, 'MarkComplaintCFTRequired'])->name('MarkComplaintCFTRequired');
+
+
 
 
 
@@ -308,8 +348,34 @@ Route::get("new-change-control", [CCController::class, "changecontrol"]);
 
 Route::view('audit-pdf', 'frontend.documents.audit-pdf');
 
-Route::view('employee_new', 'frontend.TMS.Employee.employee_new')->name('employee_new');
+// Route::view('employee_new', 'frontend.TMS.Employee.employee_new')->name('employee_new');
+
 Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer_qualification')->name('trainer_qualification');
+
+// ====================induction training =================
+
+// // Route::view('induction_training', 'frontend.TMS.Induction_training.induction_training')->name('induction_training');
+// Route::view('job_training', 'frontend.TMS.Job_Training.job_training')->name('job_training');
+Route::get('job_training',[JobTrainingController::class ,'index'])->name('job_training');
+Route::get('job_training/show/{id}',[JobTrainingController::class ,'edit'])->name('job_training_view');
+Route::post('tms/jobTraining/cancelstage/{id}',[JobTrainingController::class ,'cancelStage']);
+Route::get('/get-sop-description/{id}', [JobTrainingController::class, 'getSopDescription']);
+
+
+Route::post('job_trainingcreate', [JobTrainingController::class, 'store'])->name('job_trainingcreate');
+Route::put('job_trainingupdate/{id}', [JobTrainingController::class, 'update'])->name('job_trainingupdate');
+Route::get('/employees/{id}', [JobTrainingController::class, 'getEmployeeDetail']);
+
+
+
+
+
+Route::get('induction_training', [InductionTrainingcontroller::class, 'index'])->name('induction_training.index');
+Route::get('induction_training/show/{id}', [InductionTrainingcontroller::class, 'edit'])->name('induction_training_view');
+Route::post('induction_training', [InductionTrainingcontroller::class, 'store'])->name('induction_training.store');
+Route::put('induction_training/{id}', [InductionTrainingcontroller::class, 'update'])->name('induction_training.update');
+//new route 
+Route::get('/employees/{id}', [InductionTrainingController::class, 'getEmployeeDetails']);
 
 
 //! ============================================
@@ -425,19 +491,43 @@ Route::view('OOT_form', 'frontend.OOT.OOT_form');
 Route::get('out_of_calibration', [OOCController::class, 'index'])->name('ooc.index');
 Route::get('OOC/view', [OOCController::class, 'edit'])->name('ooc.edit');
 Route::post('ooccreate', [OOCController::class, 'create'])->name('oocCreate');
+Route::get('OutofCalibrationShow/{id}', [OOCController::class, 'OutofCalibrationShow'])->name('ShowOutofCalibration');
+Route::post('updateOutOfCalibration/{id}', [OOCController::class, 'updateOutOfCalibration'])->name('OutOfCalibrationUpdate');
+Route::post('OOCStateChange/{id}', [OOCController::class, 'OOCStateChange'])->name('StageChangeOOC');
+Route::post('OOCStateChangetwo/{id}', [OOCController::class, 'OOCStateChangetwo'])->name('StageChangeOOCtwo');
+Route::post('OOCStateCancel/{id}', [OOCController::class, 'OOCStateCancel'])->name('OOCCancel');
+Route::post('RejectoocStateChange/{id}', [OOCController::class, 'RejectoocStateChange'])->name('RejectStateChangeOOC');
+Route::post('RejectStateChangeTwo/{id}', [OOCController::class, 'RejectStateChangeTwo'])->name('RejectStateChangeTwo');
+Route::post('OOCChildRoot/{id}', [OOCController::class, 'OOCChildRoot'])->name('o_o_c_root_child');
+Route::post('OOCChildCapa/{id}', [OOCController::class, 'oo_c_capa_child'])->name('oo_c_capa_child');
+Route::post('OOCChildExtension/{id}', [OOCController::class, 'OOCChildExtension'])->name('OOCChildExtension');
+Route::post('OOCChildAction/{id}', [OOCController::class, 'OOCChildAction'])->name('OOCChildAction');
+Route::get('OOCAuditTrial/{id}', [OOCController::class, 'OOCAuditTrial'])->name('audittrialooc');
+Route::get('auditDetailsooc/{id}', [OOCController::class, 'auditDetailsooc'])->name('OOCauditDetails');
+Route::get('/rcms/ooc_Audit_Report/{id}', [OOCController::class, 'auditReportooc'])->name('ooc_Audit_Report');
+Route::post('OOCAuditReview/{id}', [OOCController::class, 'OOCAuditReview'])->name('OOCAuditReview');
+
+
+
+
+
+
 Route::get('out_of_calibration_ooc', [OOCController::class, 'ooc']);
 
 
 // Route::get('oos_form', [OOSController::class, 'index'])->name('oos.index');
 // Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
-Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
 
+
+
+//============================================ OOS MICRO ROUTE CLOSE ===================================
 // Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_new')->name('market_complaint_new');
 
 
 // ====================OOS/OOT======================================
 Route::view('oos_oot_form', 'frontend.forms.OOS\OOT.oos_oot');
 // ====================OOS/OOT======================================
+
 
 
 // =================LOGS=========================================
@@ -474,16 +564,36 @@ Route::view('oos_oot_form', 'frontend.forms.OOS\OOT.oos_oot');
 Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->name('sop_training_users');
 
 // ========================Errata==================================
-Route::view('errata_new', 'frontend.errata.errata_new')->name('errata_new');
+// Route::view('errata_new', 'frontend.errata.errata_new')->name('errata_new');
 Route::view('errata_view', 'frontend.errata.errata_view');
 
 // <<<<<<< HEAD
 
 // ================EMPLOYEE & TRAINER===================
-
+Route::get('employee_new', [EmployeeController::class, 'createEmp'])->name('employee_new');
 Route::post('/tms/employee', [EmployeeController::class, 'store'])->name('employee.store');
 Route::post('/tms/trainer', [TrainerController::class, 'store'])->name('trainer.store');
+Route::post('/tms/employee/{id}', [EmployeeController::class, 'update'])->name('employee.update');
+Route::post('/tms/trainer/{id}', [TrainerController::class, 'update'])->name('trainer.update');
+Route::get('employee_view/{id}', [EmployeeController::class, 'show'])->name('employee.show');
+Route::get('trainer_qualification_view/{id}', [TrainerController::class, 'show'])->name('trainer_qualification.show');
+Route::post('/tms/employee/sendstage/{id}', [EmployeeController::class, 'sendStage']);
+Route::post('/tms/trainer/sendstage/{id}', [TrainerController::class, 'sendStage']);
+Route::post('/tms/trainer/rejectStage/{id}', [TrainerController::class, 'rejectStage']);
+Route::get('/getEmployeeDetails/{id}', [TrainerController::class, 'getEmployeeDetails']);
+
+//new one
+Route::post('tms/induction/sendstage/{id}', [InductionTrainingController::class, 'sendStage']);
+Route::post('tms/induction/cancelstage/{id}', [InductionTrainingController::class, 'cancelStage']);
+
 // =======
+Route::post('tni', [TNIController::class, 'store'])->name('tni.store');
+Route::get('Tni_create', [TNIController::class, 'index'])->name('Tni_create');
+// Route::get('Tni_view/{id}', [EmployeeController::class, 'show'])->name('employee.show');
+// Route::post('/tms/employee/{id}', [TNIController::class, 'update'])->name('employee.update');
+Route::view('Tni_view', 'frontend.TMS.TNI_TNA.Tni_view');
+
+//=== 
 Route::post('errata/create{id}', [ErrataController::class, 'create'])->name('errata.create');
 Route::post('errata/store', [ErrataController::class, 'store'])->name('errata.store');
 Route::get('errata/show/{id}', [ErrataController::class, 'show'])->name('errata.show');
@@ -492,9 +602,9 @@ Route::put('errata/update/{id}', [Erratacontroller::class, 'update'])->name('err
 Route::get('errataaudittrail/{id}', [ErrataController::class, 'AuditTrial'])->name('errata.audittrail');
 Route::get('errataAuditInner/{id}', [ErrataController::class, 'auditDetailsErrata'])->name('errataauditdetails');
 Route::post('/errata/cancel/{id}', [ErrataController::class, 'erratacancelstage'])->name('errata.cancel');
-
+Route::get('errata_new', [ErrataController::class, 'index'])->name('errata_new');
+Route::get('/errata/{id}',[Erratacontroller::class,'audit_trail_filter'])->name('api.ERRATA.filter');
 // ----------------------Stages----------------------------------------
-
 
 // extensionchild========================
 // Route::view('extension_new', 'frontend.extension.extension_new');
@@ -505,8 +615,29 @@ Route::get('extension_newshow/{id}', [ExtensionNewController::class, 'show']);
 
 Route::put('extension_new/{id}', [ExtensionNewController::class, 'update'])->name('extension_new.update');
 Route::post('extension_send_stage/{id}', [ExtensionNewController::class, 'sendstage'])->name('extension_send_stage');
+Route::post('moreinfoState_extension/{id}', [ExtensionNewController::class, 'moreinfoStateChange'])->name('moreinfoState_extension');
+Route::post('RejectState_extension/{id}', [ExtensionNewController::class, 'reject'])->name('RejectState_extension');
+Route::post('send-cqa/{id}', [ExtensionNewController::class, 'sendCQA'])->name('send-cqa');
+Route::post('send-approved/{id}', [ExtensionNewController::class, 'sendApproved'])->name('send-approved');
+// Route::get('RejectState_extension/{id}', [ExtensionNewController::class, 'reject'])->name('RejectState_extension');
 
 
+Route::get('trainer_qualification', [TrainerController::class, 'index'])->name('trainer_qualification');
 
 //=====================================================================
 // >>>>>>> B-backup
+
+Route::post('RCAChildRoot/{id}', [RootCauseController::class, 'RCAChildRoot'])->name('R_C_A_root_child');
+
+// =====================resampling========
+Route::get('resampling-action-task-create', [ResamplingController::class, 'showAction']);
+Route::get('resampling_view/{id}', [ResamplingController::class, 'show']);
+Route::post('resampling' , [ResamplingController::class,'store'])->name('resampling_create');
+Route::post('resampling-actionView/{id}' , [ResamplingController::class,'update'])->name('resampling-update');
+Route::post('resapling-stage-cancel/{id}', [ResamplingController::class, 'resamplingStageCancel'])->name('resapling-stage-cancel');
+Route::get('resampling-audittrialshow/{id}', [ResamplingController::class, 'resamplingAuditTrialShow'])->name('resampling-audittrialshow');
+Route::post('send-resampling/{id}', [ResamplingController::class, 'stageChange'])->name('send-resampling');
+Route::post('moreinfoState_resampling/{id}', [ResamplingController::class, 'resamplingmoreinfo'])->name('moreinfoState_resampling');
+
+
+// ============================================

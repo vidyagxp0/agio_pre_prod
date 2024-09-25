@@ -28,41 +28,10 @@ class ProcessSeeder extends Seeder
         $process->save();
 
 
-        $process  = new Process();
-        $process->division_id = 3;
-        $process->process_name = "New Document";
-        $process->save();
-
-        $process  = new Process();
-        $process->division_id = 4;
-        $process->process_name = "New Document";
-        $process->save();
-
-
-        $process  = new Process();
-        $process->division_id = 5;
-        $process->process_name = "New Document";
-        $process->save();
-
-
-        $process  = new Process();
-        $process->division_id = 6;
-        $process->process_name = "New Document";
-        $process->save();
-
-        $process  = new Process();
-        $process->division_id = 7;
-        $process->process_name = "New Document";
-        $process->save();
-
-        $process  = new Process();
-        $process->division_id = 8;
-        $process->process_name = "New Document";
-        $process->save();
-
         $processNames = [
             "Extension",
             "Action Item",
+            "Resampling",
             "Observation",
             "Root Cause Analysis",
             "Risk Assessment",
@@ -75,8 +44,8 @@ class ProcessSeeder extends Seeder
             "New Document",
             "Lab Incident",
             "Effectiveness Check",
-            "OOS Chemical",
-            "OOT",
+            "OOS/OOT",
+            // "OOT",
             "OOC",
             "Deviation",
             //new added
@@ -85,12 +54,12 @@ class ProcessSeeder extends Seeder
             "Incident",
             "Failure Investigation",
             "ERRATA",
-            "OOS Microbiology"
+            // "OOS Microbiology"
         ];
 
         // Loop through each process name
         foreach ($processNames as $index => $processName) {
-            for ($divisionId = 1; $divisionId <= 13; $divisionId++) {
+            for ($divisionId = 1; $divisionId <= 2; $divisionId++) {
                 $process = new QMSProcess();
                 $process->division_id = $divisionId;
                 $process->process_name = $processName;

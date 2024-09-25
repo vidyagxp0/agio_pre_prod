@@ -1,4 +1,4 @@
-<div id="CCForm9" class="inner-block cctabcontent">
+{{-- <div id="CCForm9" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="sub-head">
             Conclusion Review Comments
@@ -19,7 +19,7 @@
             <div class="group-input">
                 <label for="audit-agenda-grid">
                     Summary of OOS Test Results
-                    <button type="button" name="audit-agenda-grid" id="oosconclusion_review">+</button>
+                    <button type="button" name="audit-agenda-grid" id="oos_conclusion_review">+</button>
                     <span class="text-primary" data-bs-toggle="modal"
                         data-bs-target="#document-details-field-instruction-modal"
                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -27,7 +27,7 @@
                     </span>
                 </label>
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="oosconclusion_review_details" style="width: 100%;">
+                    <table class="table table-bordered" id="oos_conclusion_review_details" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th style="width: 4%">Row#</th>
@@ -38,8 +38,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if ($oos_conclusion_reviews)
-                                @foreach ($oos_conclusion_reviews->data as $oos_conclusion_review)
+                            @if ($oos_conclusion_review)
+                                @foreach ($oos_conclusion_review->data as $oos_conclusion_review)
                                     <tr>
                                         <td><input disabled type="text" name="oos_conclusion_review[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}"></td>
                                         <td><input type="text" name="oos_conclusion_review[{{ $loop->index }}][conclusion_review_product_name]" value="{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_product_name') }}"></td>
@@ -144,4 +144,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}

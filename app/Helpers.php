@@ -1,9 +1,17 @@
 <?php
+// namespace App;
 
+use App\Http\Controllers\ExtensionNewController;
 use App\Models\ActionItem;
 use App\Models\Division;
+use App\Models\extension_new;
 use App\Models\QMSDivision;
+use App\Models\QMSProcess;
 use App\Models\User;
+use App\Models\Deviation;
+use App\Models\LabIncident;
+use App\Models\OOS_micro;
+use App\Models\OOS;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -13,7 +21,6 @@ class Helpers
 {
     public static function getArrayKey(array $array, $key)
     {
-        return $array && is_array($array) && array_key_exists($key, $array) ? $array[$key] : '';
         return $array && is_array($array) && array_key_exists($key, $array) ? $array[$key] : '';
     }
 
@@ -46,23 +53,38 @@ class Helpers
     //     $formatted_date = $date->format("d-M-Y");
     //     return $formatted_date;
     // }
-    public static function getdateFormat($date)
-    {
-        if(empty($date)) {
-            return ''; // or any default value you prefer
-        }
-        // else{
-        else{
-            $date = Carbon::parse($date);
-            $formatted_date = $date->format("d-M-Y");
-            return $formatted_date;
-        }
+    // public static function getdateFormat($date)
+    // {
+    //     if(empty($date)) {
+    //         return ''; // or any default value you prefer
+    //     }
+    //     // else{
+    //     else{
+    //         $date = Carbon::parse($date);
+    //         $formatted_date = $date->format("d-M-Y");
+    //         return $formatted_date;
+    //     }
 
+    // }
+
+    public static function getdateFormat($date)
+{
+    if (empty($date) || !strtotime($date)) {
+        return ''; // or any default value you prefer
     }
+    try {
+        $date = Carbon::parse($date);
+        $formatted_date = $date->format("d-M-Y");
+        return $formatted_date;
+    } catch (\Exception $e) {
+        // Log error or handle exception
+        return ''; // or any default value you prefer
+    }
+}
 
     public static function getdateFormat1($date)
     {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-M-Y');
+        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-M-Y H:i:s');
     }
 
     public static function isRevised($data)
@@ -73,30 +95,37 @@ class Helpers
         }else{
             return  '';
         }
-
-
     }}
-    // public static function getHodUserList(){
 
+    public static function isRiskAssessment($data)
+    {
+        if($data == 0 || $data  >= 7){
+            return 'disabled';
+        }else{
+            return  '';
+        }
+    }
+
+
+    public static function showStage($parentType, $model, $count)
+    {
+        $existingRecordsCount = $model::where('parent_type', $parentType)->count();
+        return $existingRecordsCount > $count;
+    }
+    // public static function getHodUserList(){
     //     return $hodUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'4'])->get();
     // }
     // public static function getQAUserList(){
 
     //     return $QAUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'7'])->get();
     // }
-    // public static function getInitiatorUserList(){
-
-
+    // public static function getInitiatorUserList(){\
     //     return $InitiatorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'3'])->get();
     // }
     // public static function getApproverUserList(){
-
-
     //     return $ApproverUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'1'])->get();
     // }
     // public static function getReviewerUserList(){
-
-
     //     return $ReviewerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'2'])->get();
     // }
     // public static function getCFTUserList(){
@@ -239,7 +268,7 @@ class Helpers
     public static function checkRoles_check_hods($document)
     {
         if ($document->hods) {
-            $datauser = explode(',', $document->approvers);
+            $datauser = explode(',', $document->hods);
             for ($i = 0; $i < count($datauser); $i++) {
                 if ($datauser[$i] == Auth::user()->id) {
                     if($document->stage >= 2){
@@ -249,9 +278,8 @@ class Helpers
                     }
                 }
             }
-        } else {
-            return false;
         }
+        return false;
     }
 
     public static function checkUserRolesApprovers($data)
@@ -300,6 +328,24 @@ class Helpers
         }
     }
 
+    // $parent ? $parent->record : '' blade file after getting parent from this function
+    public static function getParentRecord($type, $id)
+    {
+        $parent_record = null;
+
+        switch ($type) {
+            case 'lab_incident':
+                $parent_record = LabIncident::find($id);
+                break;
+
+            default:
+                # code...
+                break;
+        }
+
+        return $parent_record;
+    }
+
     public static function divisionNameForQMS($id)
     {
         return QMSDivision::where('id', $id)->value('name');
@@ -325,36 +371,149 @@ class Helpers
     }
     public static function record($id)
     {
-        return   str_pad($id, 5, '0', STR_PAD_LEFT);
+        return   str_pad($id, 4, '0', STR_PAD_LEFT);
     }
 
-    public static function getHodUserList(){
 
-        return $hodUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'4'])->get();
+
+    /************ New Roles Starts **************/
+    public static function getHodUserList($division = null){
+        if (!$division) {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '4'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '4', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
     }
-    public static function getQAUserList(){
 
-        return $QAUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'7'])->get();
+    public static function getQAUserList($division = null){
+        if (!$division) {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '7'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '7', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
     }
-    public static function getInitiatorUserList(){
 
-        return $InitiatorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'3'])->get();
+    public static function getQAHeadUserList($division = null){
+        if (!$division) {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '42'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '42', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
     }
-    public static function getApproverUserList(){
 
-        return $ApproverUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'1'])->get();
+    public static function getInitiatorUserList($division = null){
+        if (!$division) {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '3'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '3', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
     }
-    public static function getReviewerUserList(){
 
-        return $ReviewerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'2'])->get();
+    public static function getApproverUserList($division = null){
+        if (!$division) {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '1'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '1', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
     }
-    public static function getCFTUserList(){
 
-        return $CFTUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'5'])->get();
+    public static function getReviewerUserList($division = null){
+        if (!$division) {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '2'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '2', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
     }
-    public static function getTrainerUserList(){
 
-        return $TrainerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'6'])->get();
+    public static function getRAUsersList($division = null){
+        if (!$division) {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '50'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '50', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getCftUserList($division = null){
+        if (!$division) {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '5'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '5', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getTrainerUserList($division = null){
+        if (!$division) {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '6'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '6', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getProductionUserList($division = null){
+        if (!$division) {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '22'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '22', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getProductionHeadUserList($division = null){
+        if (!$division) {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '61'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '61', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getCQAUsersList($division = null){
+        if (!$division) {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '66'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '66', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getCQAHeadDesignUsersList($division = null){
+        if (!$division) {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '43'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '43', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getCQAReviewerUsersList($division = null){
+        if (!$division) {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '63'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '63', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getCQAApproverUsersList($division = null){
+        if (!$division) {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '64'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '64', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getCQAHeadUsersList($division = null){
+        if (!$division) {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '65'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '65', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+    /************ Updated User List Data End ***********/
+
+    public static function getUserEmail($id){
+        $email = null;
+        try {
+            $email  = User::find($id)->email;            
+        } catch (\Exception $e) {
+            \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
+        }
+        return $email;
     }
 
     static function getFullDepartmentName($code)
@@ -365,44 +524,65 @@ class Helpers
             case 'CQA':
                 $full_department_name = "Corporate Quality Assurance";
                 break;
-            case 'QAB':
-                $full_department_name = "Quality Assurance Biopharma";
+            case 'QA':
+                $full_department_name = "Quality Assurance";
                 break;
-            case 'CQC':
-                $full_department_name = "Central Quality Control";
+            case 'QC':
+                $full_department_name = "Quality Control";
                 break;
-            case 'MANU':
-                $full_department_name = "Manufacturing";
+            case 'QM':
+                $full_department_name = "Quality Control (Microbiology department)";
                 break;
-            case 'PSG':
-                $full_department_name = "Plasma Sourcing Group";
+            case 'PG':
+                $full_department_name = "Production General";
                 break;
-            case 'CS':
-                $full_department_name = "Central Stores";
+            case 'PL':
+                $full_department_name = "Production Liquid Orals";
                 break;
-            case 'ITG':
-                $full_department_name = "Information Technology Group";
+            case 'PT':
+                $full_department_name = "Production Tablet and Powder";
                 break;
-            case 'MM':
-                $full_department_name = "Molecular Medicine";
+            case 'PE':
+                $full_department_name = "Production External (Ointment, Gels, Creams and Liquid)";
                 break;
-            case 'CL':
-                $full_department_name = "Central Laboratory";
+            case 'PC':
+                $full_department_name = "Production Capsules";
                 break;
-            case 'TT':
-                $full_department_name = "Tech team";
+            case 'PI':
+                $full_department_name = "Production Injectable";
                 break;
-            case 'ACC':
-                $full_department_name = "Accounting";
+            case 'EN':
+                $full_department_name = "Engineering";
                 break;
-            case 'LOG':
-                $full_department_name = "Logistics";
+            case 'HR':
+                $full_department_name = "Human Resource";
                 break;
-            case 'SM':
-                $full_department_name = "Senior Management";
+            case 'ST':
+                $full_department_name = "Store";
                 break;
-            case 'BA':
-                $full_department_name = "Business Administration";
+            case 'IT':
+                $full_department_name = "Electronic Data Processing";
+                break;
+            case 'FD':
+                $full_department_name = "Formulation  Development";
+                break;
+            case 'AL':
+                $full_department_name = "Analytical research and Development Laboratory";
+                break;
+            case 'PD':
+                $full_department_name = "Packaging Development";
+                break;
+            case 'PU':
+                $full_department_name = "Purchase Department";
+                break;
+            case 'DC':
+                $full_department_name = "Document Cell";
+                break;
+            case 'RA':
+                $full_department_name = "Regulatory Affairs";
+                break;
+            case 'PV':
+                $full_department_name = "Pharmacovigilance";
                 break;
 
             default:
@@ -413,22 +593,73 @@ class Helpers
 
     }
 
+    static function getDepartments()
+    {
+        $departments = [
+            'CQA' => 'Corporate Quality Assurance',
+            'QA' => 'Quality Assurance',
+            'QC' => 'Quality Control',
+            'QM' => 'Quality Control (Microbiology department)',
+            'PG' => 'Production General',
+            'PL' => 'Production Liquid Orals',
+            'PT' => 'Production Tablet and Powder',
+            'PE' => 'Production External (Ointment, Gels, Creams and Liquid)',
+            'PC' => 'Production Capsules',
+            'PI' => 'Production Injectable',
+            'EN' => 'Engineering',
+            'HR' => 'Human Resource',
+            'ST' => 'Store',
+            'IT' => 'Electronic Data Processing',
+            'FD' => 'Formulation Development',
+            'AL' => 'Analytical research and Development Laboratory',
+            'PD' => 'Packaging Development',
+            'PU' => 'Purchase Department',
+            'DC' => 'Document Cell',
+            'RA' => 'Regulatory Affairs',
+            'PV' => 'Pharmacovigilance',
+        ];
 
-     public static function getDueDate123($date, $addDays = false, $format = null)
-        {
-            try {
-                if ($date) {
-                    $format = $format ? $format : 'd M Y';
-                    $dateInstance = Carbon::parse($date);
-                    if ($addDays) {
-                        $dateInstance->addDays(30);
-                    }
-                    return $dateInstance->format($format);
-            }
-            } catch (\Exception $e) {
-                return 'NA';
-            }
-        }
+        return $departments;
+    }
+
+
+    static function getDocumentTypes()
+    {
+        $document_types = [
+            'SOP' => 'SOP’s (All types)',
+            'BOM' => 'Bill of Material',
+            'BMR' => 'Batch Manufacturing Record',
+            'BPR' => 'Batch Packing Record',
+            'SPEC' => 'Specification (All types)',
+            'STP' => 'Standard Testing Procedure (All types)',
+            'TDS' => 'Test Data Sheet',
+            'GTP' => 'General Testing Procedure',
+            'PROTO' => 'Protocols (All types)',
+            'REPORT' => 'Reports (All types)',
+            'SMF' => 'Site Master File',
+            'VMP' => 'Validation Master Plan',
+            'QM' => 'Quality Manual',
+        ];
+
+        return $document_types;
+    }
+
+
+    //  public static function getDueDate123($date, $addDays = false, $format = null)
+    //     {
+    //         try {
+    //             if ($date) {
+    //                 $format = $format ? $format : 'd M Y';
+    //                 $dateInstance = Carbon::parse($date);
+    //                 if ($addDays) {
+    //                     $dateInstance->addDays(30);
+    //                 }
+    //                 return $dateInstance->format($format);
+    //         }
+    //         } catch (\Exception $e) {
+    //             return 'NA';
+    //         }
+    //     }
 
 
     public static function getDepartmentWithString($id)
@@ -484,28 +715,34 @@ class Helpers
     {
         $initiator_groups = [
             'CQA' => 'Corporate Quality Assurance',
-            'QAB' => 'Quality Assurance Biopharma',
-            'CQC' => 'Central Quality Control',
-            'MANU' => 'Manufacturing',
-            'PSG' => 'Plasma Sourcing Group',
-            'CS' => 'Central Stores',
-            'ITG' => 'Information Technology Group',
-            'MM' => 'Molecular Medicine',
-            'CL' => 'Central Laboratory',
-            'TT' => 'Tech team',
             'QA' => 'Quality Assurance',
-            'QM' => 'Quality Management',
-            'IA' => 'IT Administration',
-            'ACC' => 'Accounting',
-            'LOG' => 'Logistics',
-            'SM' => 'Senior Management',
-            'BA' => 'Business Administration'
+            'QC' => 'Quality Control',
+            'QM' => 'Quality Control (Microbiology department)',
+            'PG' => 'Production General',
+            'PL' => 'Production Liquid Orals',
+            'PT' => 'Production Tablet and Powder',
+            'PE' => 'Production External (Ointment, Gels, Creams and Liquid)',
+            'PC' => 'Production Capsules',
+            'PI' => 'Production Injectable',
+            'EN' => 'Engineering',
+            'HR' => 'Human Resource',
+            'ST' => 'Store',
+            'IT' => 'Electronic Data Processing',
+            'FD' => 'Formulation  Development',
+            'AL' => 'Analytical research and Development Laboratory',
+            'PD' => 'Packaging Development',
+            'PU' => 'Purchase Department',
+            'DC' => 'Document Cell',
+            'RA' => 'Regulatory Affairs',
+            'PV' => 'Pharmacovigilance'
         ];
 
         return $initiator_groups;
 
 
     }
+
+
 
     public static function getInitiatorGroupFullName($shortName)
     {
@@ -589,19 +826,35 @@ class Helpers
         return $isQA;
     }
 
+    // Helpers::getMicroGridData($micro, 'analyst_training', true, 'response', true, 0)
+    public static function getMicroGridData(OOS_micro $micro, $identifier, $getKey = false, $keyName = null, $byIndex = false, $index = 0)
+    {
+        $res = $getKey ? '' : [];
+            try {
+                $grid = $micro->grids()->where('identifier', $identifier)->first();
 
-    // public static function hodMail($data)
-    // {
-    //     Mail::send('hod-mail',['data' => $data],
-    // function ($message){
-    //         $message->to("shaleen.mishra@mydemosoftware.com")
-    //                 ->subject('Record is for Review');
-    //     });
-    // }
+                if($grid && is_array($grid->data)){
+
+                    $res = $grid->data;
+
+                    if ($getKey && !$byIndex) {
+                        $res = array_key_exists($keyName, $grid->data) ? $grid->data[$keyName] : '';
+                    }
+
+                    if ($getKey && $byIndex && is_array($grid->data[$index])) {
+                        $res = array_key_exists($keyName, $grid->data[$index]) ? $grid->data[$index][$keyName] : '';
+                    }
+                }
+
+            } catch(\Exception $e){
+
+            }
+        return $res;
+    }
 
     public static function disabledErrataFields($data)
     {
-        if($data == 0 || $data > 5){
+        if($data == 0 || $data > 8){
             return 'disabled';
         }else{
             return  '';
@@ -619,4 +872,555 @@ class Helpers
 
     }
 
+    public static function getDocStatusByStage($stage, $document_training = 'no')
+    {
+        $status = '';
+        $training_required = $document_training == 'yes' ? true : false;
+        switch ($stage) {
+            case '1':
+                $status = 'Draft';
+                break;
+            case '2':
+                $status = 'In-HOD Review';
+                break;
+            case '3':
+                $status = 'HOD Review Complete';
+                break;
+            case '4':
+                $status = 'In-Review';
+                break;
+            case '5':
+                $status = 'Reviewed';
+                break;
+            case '6':
+                $status = 'For-Approval';
+                break;
+            case '7':
+                $status = 'Approved';
+                break;
+            case '8':
+                $status = $training_required ? 'Pending-Traning' : 'Effective';
+                break;
+            case '9':
+                $status = $training_required ? 'Traning-Complete' : 'Obsolete';
+                break;
+            case '10':
+                $status = $training_required ? 'Effective' : 'Effective';
+                break;
+            case '11':
+                $status = 'Obsolete';
+                break;
+            case '13':
+                $status = 'Closed/Cancel';
+                break;
+            default:
+                # code...
+                break;
+        }
+
+        return $status;
+    }
+
+    // Kuldeep Patel
+    public static function getDueDate123($date = null, $addDays = false, $format = 'd M Y')
+    {
+        try {
+            $dateInstance = $date ? Carbon::parse($date) : Carbon::now();
+            if ($addDays) {
+                $dateInstance->addDays(30);
+            }
+            return $dateInstance->format($format);
+        } catch (\Exception $e) {
+            return 'NA';
+        }
+    }
+
+    // SONALI SHARMA
+    public static function isOOSChemical($data)
+    {
+        // if($data == 0 || $data  >= 15){
+        //     return 'disabled';
+        // }else{
+        //     return  '';
+        // }
+
+    }
+
+    public static function isOOSMicro($micro_data)
+    {
+        if($micro_data == 0 || $micro_data  >= 14){
+            return 'disabled';
+        }else{
+            return  '';
+        }
+    }
+
+    public static function getDueDatemonthly($date = null, $addDays = false, $format = null)
+    {
+        try {
+            $format = $format ? $format : 'd-M-Y';
+            $dateInstance = $date ? Carbon::parse($date) : Carbon::now();
+
+            if ($addDays) {
+                $dateInstance->addDays($addDays);
+            } else {
+                // Add 30 days instead of adding a month
+                $dateInstance->addDays(30);
+            }
+
+            return $dateInstance->format($format);
+        } catch (\Exception $e) {
+            return 'NA';
+        }
+    }
+    public static function getmonthFormat($date)
+    {
+        if(empty($date)) {
+            return ''; // or any default value you prefer
+        }
+       else{
+            $date = Carbon::parse($date);
+            $formatted_date = $date->format("M-Y");
+            return $formatted_date;
+        }
+
+    }
+
+    public static function getChemicalGridData(OOS $data , $identifier, $getKey = false, $keyName = null, $byIndex = false, $index = 0)
+    {
+        $res = $getKey ? '' : [];
+            try {
+                $grid = $data->grids()->where('identifier', $identifier)->first();
+
+                if($grid && is_array($grid->data)){
+
+                    $res = $grid->data;
+
+                    if ($getKey && !$byIndex) {
+                        $res = array_key_exists($keyName, $grid->data) ? $grid->data[$keyName] : '';
+                    }
+
+                    if ($getKey && $byIndex && is_array($grid->data[$index])) {
+                        $res = array_key_exists($keyName, $grid->data[$index]) ? $grid->data[$index][$keyName] : '';
+                    }
+                }
+
+            } catch(\Exception $e){
+
+            }
+        return $res;
+    }
+    public function getChecklistData(){
+        $checklists = [
+            '1' => 'Checklist - Tablet Dispensing & Granulation',
+            '2' => 'Checklist - Tablet Compression',
+            '3' => 'Checklist - Tablet Coating',
+            '4' => 'Checklist - Tablet/Capsule Packing',
+            '5' => 'Checklist - Capsule',
+            '6' => 'Checklist - Liquid/Ointment Dispensing & Manufacturing',
+            '7' => 'Checklist - Liquid/Ointment Packing',
+            '8' => 'Checklist - Quality Assurance',
+            '9' => 'Checklist - Engineering',
+            '10' => 'Checklist - Quality Control',
+            '11' => 'Checklist - Stores',
+            '12' => 'Checklist - Human Resource',
+            '13' => 'Checklist - Production (Injection Dispensing & Manufacturing)',
+            '14' => 'Checklist - Production (Injection Packing)',
+            '15' => 'Checklist - Production (Powder Manufacturing and Packing)',
+            '16' => 'Checklist - Analytical Research and Development',
+            '17' => 'Checklist - Formulation Research and Development',
+            '18' => 'Checklist - LL / P2P',
+        ];
+
+        return $checklists;
+
+    }
+
+    public static function getInitiatorGroupData($shortName)
+    {
+        $full_department_name = '';
+
+        switch ($shortName) {
+            case 'Corporate Quality Assurance':
+                $full_department_name = 'Corporate Quality Assurance';
+                break;
+            case 'QAB':
+                $full_department_name = 'Quality Assurance Biopharma';
+                break;
+            case 'CQC':
+                $full_department_name = 'Central Quality Control';
+                break;
+            case 'MANU':
+                $full_department_name = 'Manufacturing';
+                break;
+            case 'PSG':
+                $full_department_name = 'Plasma Sourcing Group';
+                break;
+            case 'CS':
+                $full_department_name = 'Central Stores';
+                break;
+            case 'ITG':
+                $full_department_name = 'Information Technology Group';
+                break;
+            case 'MM':
+                $full_department_name = 'Molecular Medicine';
+                break;
+            case 'CL':
+                $full_department_name = 'Central Laboratory';
+                break;
+            case 'TT':
+                $full_department_name = 'Tech Team';
+                break;
+            case 'QA':
+                $full_department_name = 'Quality Assurance';
+                break;
+            case 'QM':
+                $full_department_name = 'Quality Management';
+                break;
+            case 'IA':
+                $full_department_name = 'IT Administration';
+                break;
+            case 'ACC':
+                $full_department_name = 'Accounting';
+                break;
+            case 'LOG':
+                $full_department_name = 'Logistics';
+                break;
+            case 'SM':
+                $full_department_name = 'Senior Management';
+                break;
+            case 'BA':
+                $full_department_name = 'Business Administration';
+                break;
+            default:
+                $full_department_name = '';
+                break;
+        }
+
+        return $full_department_name;
+
+    }
+
+    static function getfullnameChecklist($check){
+        $checklist = '';
+
+        switch($check){
+            case'1':
+            $checklist = "Checklist - Tablet Dispensing & Granulation";
+            break;
+            case'2':
+            $checklist = "Checklist - Tablet Compression";
+            break;
+            case'3':
+            $checklist = "Checklist - Tablet Coating";
+            break;
+            case'4':
+            $checklist = "Checklist - Tablet/Capsule Packing";
+            break;
+            case'5':
+            $checklist = "Checklist - Capsule";
+            break;
+            case'6':
+            $checklist = "Checklist - Liquid/Ointment Dispensing & Manufacturing";
+            break;
+            case'7':
+            $checklist = "Checklist - Liquid/Ointment Packing";
+            break;
+            case'8':
+            $checklist = "Checklist - Quality Assurance";
+            break;
+            case'9':
+            $checklist = "Checklist - Engineering";
+            break;
+            case'10':
+            $checklist = "Checklist - Quality Control";
+            break;
+            case'11':
+            $checklist = "Checklist - Stores";
+            break;
+            case'12':
+            $checklist = "Checklist - Human Resource";
+            break;
+            case'13':
+            $checklist = "Checklist - Production (Injection Dispensing & Manufacturing)";
+            break;
+            case'14':
+            $checklist = "Checklist - Production (Injection Packing)";
+            break;
+            case'15':
+            $checklist = "Checklist - Production (Powder Manufacturing and Packing)";
+            break;
+            case'16':
+            $checklist = "Checklist - Analytical Research and Development";
+            break;
+            case'17':
+            $checklist = "Checklist - Formulation Research and Development";
+            break;
+            case'18':
+            $checklist = "Checklist - LL / P2P";
+        break;
+        }
+        return $checklist;
+    }
+
+    public static function getChildData($id, $parent_type){
+        $count = 0;
+        if($parent_type == 'LabIncident')
+       {
+        $count = extension_new::where('parent_type', 'LabIncident')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Deviation')
+       {
+        $count = extension_new::where('parent_type', 'Deviation')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'OOC')
+       {
+        $count = extension_new::where('parent_type', 'OOC')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'OOT')
+       {
+        $count = extension_new::where('parent_type', 'OOT')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Management Review')
+       {
+        $count = extension_new::where('parent_type', 'Management Review')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'CAPA')
+       {
+        $count = extension_new::where('parent_type', 'CAPA')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Action Item')
+       {
+        $count = extension_new::where('parent_type', 'Action Item')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Resampling')
+       {
+        $count = extension_new::where('parent_type', 'Resampling')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Observation')
+       {
+        $count = extension_new::where('parent_type', 'Observation')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'RCA')
+       {
+        $count = extension_new::where('parent_type', 'RCA')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Risk Assesment')
+       {
+        $count = extension_new::where('parent_type', 'Risk Assesment')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Management Review')
+       {
+        $count = extension_new::where('parent_type', 'Management Review')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'External Audit')
+       {
+        $count = extension_new::where('parent_type', 'External Audit')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Internal Audit')
+       {
+        $count = extension_new::where('parent_type', 'Internal Audit')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Audit Program')
+       {
+        $count = extension_new::where('parent_type', 'Audit Program')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'CC')
+       {
+        $count = extension_new::where('parent_type', 'CC')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'New Documnet')
+       {
+        $count = extension_new::where('parent_type', 'New Documnet')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Effectiveness Check')
+       {
+        $count = extension_new::where('parent_type', 'Effectiveness Check')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'OOS Micro')
+       {
+        $count = extension_new::where('parent_type', 'OOS Micro')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'OOS Chemical')
+       {
+        $count = extension_new::where('parent_type', 'OOS Chemical')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Market Complaint')
+       {
+        $count = extension_new::where('parent_type', 'Market Complaint')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Failure Investigation')
+       {
+        $count = extension_new::where('parent_type', 'Failure Investigation')
+        ->where('parent_id', $id)
+        ->count();
+       }
+
+        return $count;
+    }
+
+    public static function check_roles($division_id, $process_name, $role_id, $user_id = null)
+    {
+
+        $process = QMSProcess::where([
+            'division_id' => $division_id,
+            'process_name' => $process_name
+        ])->first();
+
+        $roleExists = DB::table('user_roles')->where([
+            'user_id' => $user_id ? $user_id : Auth::user()->id,
+            'q_m_s_divisions_id' => $division_id,
+            'q_m_s_processes_id' => $process ? $process->id : 0,
+            'q_m_s_roles_id' => $role_id
+        ])->first();
+
+        return $roleExists ? true : false;
+    }
+
+
+    public static function getHODDropdown() {
+        $hodUserList = DB::table('user_roles')
+            ->join('users', 'user_roles.user_id', '=', 'users.id')
+            ->where('user_roles.q_m_s_roles_id', '4')
+            ->select('users.id', 'users.name')
+            ->distinct()
+            ->get();
+
+        $dropdown = [];
+        foreach ($hodUserList as $hodUser) {
+            $dropdown[] = ['id' => $hodUser->id, 'name' => $hodUser->name];
+        }
+
+        return $dropdown;
+    }
+
+    public static function getProductionDropdown() {
+        $ProductionUserList = DB::table('user_roles')
+            ->join('users', 'user_roles.user_id', '=', 'users.id')
+            ->where('user_roles.q_m_s_roles_id', '22')
+            ->select('users.id', 'users.name')
+            ->distinct()
+            ->get();
+
+        $dropdown = [];
+        foreach ($ProductionUserList as $productionUser) {
+            $dropdown[] = ['id' => $productionUser->id, 'name' => $productionUser->name];
+        }
+
+        return $dropdown;
+    }
+
+    public static function getProductionHeadDropdown() {
+        $ProductionHeadUserList = DB::table('user_roles')
+            ->join('users', 'user_roles.user_id', '=', 'users.id')
+            ->where('user_roles.q_m_s_roles_id', '61')
+            ->select('users.id', 'users.name')
+            ->distinct()
+            ->get();
+
+        $dropdown = [];
+        foreach ($ProductionHeadUserList as $productionHeadUser) {
+            $dropdown[] = ['id' => $productionHeadUser->id, 'name' => $productionHeadUser->name];
+        }
+
+        return $dropdown;
+    }
+
+
+    public static function getAllRelatedRecords()
+    {
+        $pre = [
+            'DEV' => \App\Models\Deviation::class,
+            'AP' => \App\Models\AuditProgram::class,
+            'AI' => \App\Models\ActionItem::class,
+            'Exte' => \App\Models\extension_new::class,
+            'Resam' => \App\Models\Resampling::class,
+            'Obse' => \App\Models\Observation::class,
+            'RCA' => \App\Models\RootCauseAnalysis::class,
+            'RA' => \App\Models\RiskAssessment::class,
+            'MR' => \App\Models\ManagementReview::class,
+            'EA' => \App\Models\Auditee::class,
+            'IA' => \App\Models\InternalAudit::class,
+            'CAPA' => \App\Models\Capa::class,
+            'CC' => \App\Models\CC::class,
+            'ND' => \App\Models\Document::class,
+            'Lab' => \App\Models\LabIncident::class,
+            'EC' => \App\Models\EffectivenessCheck::class,
+            'OOSChe' => \App\Models\OOS::class,
+            'OOT' => \App\Models\OOT::class,
+            'OOC' => \App\Models\OutOfCalibration::class,
+            'MC' => \App\Models\MarketComplaint::class,
+            'NC' => \App\Models\NonConformance::class,
+            'Incident' => \App\Models\Incident::class,
+            'FI' => \App\Models\FailureInvestigation::class,
+            'ERRATA' => \App\Models\errata::class,
+            'OOSMicr' => \App\Models\OOS_micro::class,
+            // Add other models as necessary...
+        ];
+
+        // Create an empty collection to store the related records
+        $relatedRecords = collect();
+
+        // Loop through each model and get the records, adding the process name to each record
+        foreach ($pre as $processName => $modelClass) {
+            $records = $modelClass::all()->map(function ($record) use ($processName) {
+                $record->process_name = $processName; // Attach the process name to each record
+                return $record;
+            });
+
+            // Merge the records into the collection
+            $relatedRecords = $relatedRecords->merge($records);
+        }
+
+        return $relatedRecords;
+    }
+
+
+
+
+
+
 }
+

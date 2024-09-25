@@ -1,4 +1,4 @@
-@extends('frontend.layout.main')
+vi@extends('frontend.layout.main')
 @section('container')
     <style>
         textarea.note-codable {
@@ -55,40 +55,37 @@
                             </div> <!-- RECORD NUMBER -->
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <div class="group-input"> 
+                                    <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $parent_record }}">
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $record_number }}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
-                                <div class="col-lg-6">  
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Division Code</b></label>
                                         <input disabled type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
-                                <div class="col-lg-6">  
+                                <div class="col-lg-6">
                                     @if (!empty($cc->id))
                                         <input type="hidden" name="ccId" value="{{ $cc->id }}">
                                     @endif
                                     <div class="group-input">
                                         <label for="originator">Initiator</label>
-                                        <input disabled type="text"
-                                            value="{{ Helpers::getInitiatorName($parent_initiator_id) }}">
+                                        <input disabled type="text" value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date Opened">Date of Initiation</label>
                                         {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
-                                        <input disabled type="text"
-                                            value="{{ Helpers::getdateFormat($parent_intiation_date) }}"
-                                            name="intiation_date">
-                                        <input type="hidden" value="{{ $parent_intiation_date }}" name="intiation_date">
+                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('d-M-Y') }}" name="intiation_date">
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-6">
@@ -119,48 +116,91 @@
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        <!-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                            value="" name="due_date"> -->
-                                        <div class="calenderauditee">                                     
-                                            <input type="text"  id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, false) }}" />
-                                            <input type="date" name="due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}"
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'due_date_display')"/>
+                                        <div class="calenderauditee">
+                                            <!-- Display the formatted date in a readonly input -->
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY"
+                                                value="{{ Helpers::getDueDate(30, true) }}" />
+
+                                            <input type="date" name="due_date"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
                                         </div>
                                     </div>
                                 </div>
-                             
+
+                                <script>
+                                    function handleDateInput(dateInput, displayId) {
+                                        const date = new Date(dateInput.value);
+                                        const options = {
+                                            day: '2-digit',
+                                            month: 'short',
+                                            year: 'numeric'
+                                        };
+                                        document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                    }
+
+                                    // Call this function initially to ensure the correct format is shown on page load
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dateInput = document.querySelector('input[name="due_date"]');
+                                        handleDateInput(dateInput, 'due_date_display');
+                                    });
+                                </script>
+
+                                <style>
+                                    .hide-input {
+                                        display: none;
+                                    }
+                                </style>
+
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
-                                        <input id="docname" type="text" name="short_description" maxlength="255" required>
+                                        <input id="docname" type="text" name="short_description" maxlength="255"
+                                            required>
                                     </div>
-                                </div>  
-                                <div class="col-lg-6">
+                                </div>
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Related Records">Action Item Related Records</label>
                                         <select multiple id="related_records" name="related_records[]"
                                             placeholder="Select Reference Records">
-                                            {{-- <option value="">--select record--</option> --}}
-                                            <!-- @if (!empty($old_record)) -->
+                                      @if (!empty($old_record)) 
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                                 </option>
                                             @endforeach
-                                            <!-- @endif -->
+                                         @endif
+                                        </select>
+                                    </div>
+                                </div> --}}
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Related Records">Action Item Related Records</label>
+                                        <select multiple id="related_records" name="related_records[]"
+                                            placeholder="Select Reference Records">
+
+                                            @foreach ($old_record as $new)
+                                                <option
+                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/AI/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) . '/AI/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="HOD Persons">HOD Persons</label>
-                                        <select multiple  name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
-                                            data-silent-initial-value-set="true" id="hod" >
+                                        <select name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
+                                            data-silent-initial-value-set="true" id="hod">
+                                            <option value="">select person</option>
                                             @foreach ($users as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option value="{{ $value->name }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -294,24 +334,24 @@
                                     <div class="group-input input-date">
                                         <label for="start_date">Actual Start Date</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="start_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="start_date_checkdate" name="start_date" class="hide-input"
+                                            <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                id="start_date_checkdate" name="start_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="col-lg-6  new-date-data-field">
+                                <div class="col-lg-6  new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="end_date">Actual End Date</lable>
+                                        <label for="end_date">Actual End Date</label>
                                         <div class="calenderauditee">
-                                        <input type="text" id="end_date"                             
-                                                placeholder="DD-MMM-YYYY" />
-                                             <input type="date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="end_date_checkdate" name="end_date" class="hide-input"
+                                            <input type="text" id="end_date" placeholder="DD-MMM-YYYY" />
+                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                id="end_date_checkdate" name="end_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
-                                   
-                                        
+
+
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -320,9 +360,9 @@
                                         <textarea name="comments"></textarea>
                                     </div>
                                 </div>
-                                {{-- <div class="col-12">
+                                <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Support_doc">Supporting Documents</label>
+                                        <label for="Support_doc">Completion Attachment</label>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="Support_doc"></div>
                                             <div class="add-btn">
@@ -333,7 +373,7 @@
                                         </div>
 
                                     </div>
-                                </div> --}}
+                                </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -355,10 +395,21 @@
                                         <textarea name="qa_comments"></textarea>
                                     </div>
                                 </div>
-                                {{--
+
+                                <div class="col-12 sub-head">
+                                    Extension Justification
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="due-dateextension">Due Date Extension Justification</label>
+                                        <textarea name="due_date_extension"></textarea>
+                                    </div>
+                                </div>
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="file_attach">Final Attachments</label>
+                                        <label for="file_attach">Action Approval</label>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="final_attach"></div>
                                             <div class="add-btn">
@@ -368,16 +419,6 @@
                                             </div>
                                         </div>
 
-                                    </div>
-                                </div> --}}
-                                <div class="col-12 sub-head">
-                                    Extension Justification
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="due-dateextension">Due Date Extension Justification</label>
-                                        <textarea name="due_date_extension"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -424,28 +465,28 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="More information required By">More information required By</label>
-                                        <div class="static"></div> 
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="More information required On">More information required On</label>
-                                         <div class="Date"></div>
+                                        <div class="Date"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="completed by">Completed By</label>
-                                        <div class="static"></div> 
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="completed on">Completed On</label>
-                                         <div class="Date"></div>
+                                        <div class="Date"></div>
                                     </div>
                                 </div>
-                              
+
                             </div>
                             <div class="button-block">
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -548,6 +589,7 @@
         var maxLength = 255;
         $('#docname').keyup(function() {
             var textlen = maxLength - $(this).val().length;
-            $('#rchars').text(textlen);});
+            $('#rchars').text(textlen);
+        });
     </script>
 @endsection

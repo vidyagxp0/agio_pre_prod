@@ -19,12 +19,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-    </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/nlsiabbt295w89cjmcocv6qjdg3k7ozef0q9meowv2nkwyd3/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="{{ asset('user/css/virtual-select.min.css') }}">
     <script src="{{ asset('user/js/virtual-select.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('user/css/rcms_style.css') }}">
+    
     <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/stock.js"></script>
@@ -43,6 +44,7 @@
     <script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.0/themes/base/jquery-ui.min.css" integrity="sha512-F8mgNaoH6SSws+tuDTveIu+hx6JkVcuLqTQ/S/KJaHJjGc8eUxIrBawMnasq2FDlfo7FYsD8buQXVwD+0upbcA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         .bottom-links {
             display: flex;
@@ -116,7 +118,7 @@
                         <div class="logo-container">
                             <div class="logo">
                                 <img src="{{ asset('user/images/vidyagxplogo.png') }}" alt="..."
-                                    class="w-100 h-100" style="scale: 5">
+                                    class="w-100 h-100" style="scale: 5; pointer-events: none;">
                             </div>
                             <div class="logo">
                                 <img src="{{ asset('user/images/agio.jpg') }}" alt="..." class="w-100 h-100">
@@ -156,27 +158,10 @@
                             <a href="{{ url('rcms/qms-dashboard') }}" data-bs-toggle="tooltip" title="Dekstop">
                                 <i class="fa-solid fa-house-user"></i>
                             </a>
-                            <div onclick="
-                            
-                            window.open('/rcms_desktop', '_blank', 'width=1200, height=900, top=0, left=0');"
-                                data-bs-toggle="tooltip" title="Logs">
+                            <button class="btn-transparent bg-transparent text-black" data-bs-toggle="modal" data-bs-target="#log-list-modal" title="Logs">
                                 <i class="fa-solid fa-gauge-high"></i>
-                            </div>
-                            {{-- <a href="/rcms_reports" data-bs-toggle="tooltip" title="Analytics">
-                                <svg width="20" height="20" viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="#000000" fill-rule="evenodd"
-                                        d="M3.6 2.25A1.35 1.35 0 0 0 2.25 3.6v16.8c0 .746.604 1.35 1.35 1.35h16.8a1.35 1.35 0 0 0 1.35-1.35V3.6a1.35 1.35 0 0 0-1.35-1.35zM16.75 8a.75.75 0 0 0-1.5 0v8a.75.75 0 0 0 1.5 0zM12 10.25a.75.75 0 0 1 .75.75v5a.75.75 0 0 1-1.5 0v-5a.75.75 0 0 1 .75-.75M8.75 13a.75.75 0 0 0-1.5 0v3a.75.75 0 0 0 1.5 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </a> --}}
-                            {{-- <div data-bs-toggle="tooltip" title="Standards">
-                                <svg width="17" height="22" viewBox="0 0 8 8" xmlns="http://www.w3.org/2000/svg"
-                                    data-bs-toggle="modal" data-bs-target="#standards-modal">
-                                    <path fill="#000000"
-                                        d="M1 0C.93 0 .87.01.81.03C.42.11.11.42.03.81C0 .87 0 .93 0 1v5.5C0 7.33.67 8 1.5 8H7V7H1.5c-.28 0-.5-.22-.5-.5s.22-.5.5-.5H7V.5c0-.28-.22-.5-.5-.5H6v3L5 2L4 3V0z" />
-                                </svg>
-                            </div> --}}
+                            </button>
+                            
                         </div>
                     </div>
                     <div class="right-block">
@@ -186,12 +171,10 @@
                                 <input type="text" name="search" id="searchInput" placeholder="Search...">
                             </form>
                         </div>
-                        @if (Helpers::checkRoles(3) || Helpers::checkRoles(14))
-                            <div class="create">
-                                <a href="{{ url('rcms/form-division') }}"> <button class="button_theme1">Create
-                                        Record</button> </a>
-                            </div>
-                        @endif
+                        <div class="create">
+                            <a href="{{ url('rcms/form-division') }}"> <button class="button_theme1">Create
+                                    Record</button> </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -211,7 +194,7 @@
                             <a href="/rcms/qms-dashboard">QMS-Dashboard</a>
                         </div>
                         {{-- <div>
-                                    <a href="/analytics">Analytics</a> 
+                                    <a href="/analytics">Analytics</a>
                                     </div>  --}}
 
                         @if (Auth::user())
@@ -354,7 +337,7 @@
 
                 <div class="modal-body">
                     <div class="logo">
-                        <img src="{{ asset('user/images/logo.png') }}" alt="..." class="w-100 h-100">
+                        <img src="{{ asset('user/images/vidhyagxp.png') }}" alt="..." class="w-70 h-100">
                     </div>
                     <div class="bar">
                         <strong>Version : </strong> 10.0.0
@@ -383,3 +366,44 @@
             </div>
         </div>
     </div>
+
+@php
+    $logs_list = [
+        'CAPA',
+        'Change Control',
+        'Deviation',
+        'Errata',
+        'Failure Investigation',
+        'Incident',
+        'Inernal Audit',
+        'Lab Incident',
+        'Market Complaint',
+        'Non Conformance',
+        'OOC',
+        'OOT',
+        'Risk Management',
+            
+    ];                
+@endphp
+
+    {{-- LOG LIST MODAL START --}}
+    <div class="modal fade" id="log-list-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Log Reports</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+                @foreach ($logs_list as $log_list)
+                    <p> <a href="{{ route('rcms.logs.show', Str::slug($log_list)) }}" target="_blank">{{ $log_list }}</a> </p>
+                @endforeach
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    {{-- LOG LIST MODAL END --}}

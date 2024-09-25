@@ -50,10 +50,10 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">CAPA Plan</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Impact Analysis</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Summary</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Signatures</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
             </div>
 
-            <form action="{{ route('observationstore') }}" method="post" enctype="multipart/form-data">\
+            <form action="{{ route('observationstore') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
 
@@ -66,15 +66,19 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
+                                        <input disabled type="text"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
+                                            <input type="hidden" name="record_number" id="record_number"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ date('Y') }}/{{ $record_number }}">                                            
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Division Code"><b>Division Code</b></label>
-                                        <input readonly type="text" name="division_code" value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                        <label for="Division Code"><b>Site/Location Code</b></label>
+                                        {{-- <input readonly type="text" name="division_code" value="{{ Helpers::getDivisionName(session()->get('division')) }}"> --}}
+                                        <input readonly type="text" name="division_id"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -87,7 +91,7 @@
                                     <div class="group-input">
                                         <label for="date_opened">Date of Initiation</label>
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                        <input  type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
                                 </div>
 
@@ -97,8 +101,8 @@
                                         <select name="assign_to">
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $data)
-                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                        @endforeach
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -123,25 +127,45 @@
                                         </div>
                                     </div>
                                 </div> --}}
-                                <div class="col-lg-6 new-date-data-field">
+                                <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Date Due">Date Due</label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
-                                        </div>
+                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                            <!-- Display the formatted date in a readonly input -->
+                                            <input type="text" name="due_date" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
+                                           
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <script>
+                                function handleDateInput(dateInput, displayId) {
+                                    const date = new Date(dateInput.value);
+                                    const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                    document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                }
+                                
+                                // Call this function initially to ensure the correct format is shown on page load
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const dateInput = document.querySelector('input[name="due_date"]');
+                                    handleDateInput(dateInput, 'due_date_display');
+                                });
+                                </script>
+                                
+                                <style>
+                                .hide-input {
+                                    display: none;
+                                }
+                                </style>
+                                     
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
-                                        <input id="docname" type="text" name="short_description" maxlength="255" required>
+                                        <input id="docname" type="text" name="short_description" maxlength="255"
+                                            required>
                                     </div>
                                 </div>
                                 {{-- <div class="col-12">
@@ -282,7 +306,23 @@
                                         <input type="file" name="attach_files1" />
                                     </div>
                                 </div> --}}
-                                <div class="col-12">
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Attached Files">Attached Files </label>
+                                        <div><small class="text-primary">
+                                            </small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="attach_files_gi"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="attach_files_gi" name="attach_files_gi[]"
+                                                    oninput="addMultipleFiles(this, 'attach_files_gi')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="attach_files1">Attached Files</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -297,7 +337,7 @@
                                         </div>
 
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="capa_date_due">Recomendation Date Due for CAPA</label>
@@ -306,12 +346,25 @@
                                 </div> --}}
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
-                                        <label for="capa_date_due">Recomendation  Due Date  for CAPA</label>
+                                        <label for="capa_date_due">Recomendation Due Date for CAPA</label>
                                         <div class="calenderauditee">
-                                            <input type="text" name="recomendation_capa_date_due" id="recomendation_capa_date_due"  readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            <input type="text" name="recomendation_capa_date_due"
+                                                id="recomendation_capa_date_due" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                class="hide-input"
                                                 oninput="handleDateInput(this, 'recomendation_capa_date_due')" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date ">
+                                        <label for="capa_date_due">Audit Response Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" name="audit_response_date"
+                                                id="audit_response_date" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                class="hide-input"
+                                                oninput="handleDateInput(this, 'audit_response_date')" />
                                         </div>
                                     </div>
                                 </div>
@@ -371,11 +424,12 @@
                                 </div> --}}
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
-                                        <label for="date_Response_due1">Date Response Due</label>
+                                        <label for="date_Response_due2">Date Response Due</label>
                                         <div class="calenderauditee">
-                                            <input type="text" name="date_response_due1" id="date_Response_due" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_Response_due_checkdate" class="hide-input"
+                                            <input type="text" name="date_Response_due2" id="date_Response_due"
+                                                readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                id="date_Response_due_checkdate" class="hide-input"
                                                 oninput="handleDateInput(this, 'date_Response_due');checkDate('date_Response_due_checkdate','date_due_checkdate')" />
                                         </div>
                                     </div>
@@ -386,7 +440,8 @@
                                         <div class="calenderauditee">
                                             <input type="text" name="capa_date_due" id="date_due" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_due_checkdate" class="hide-input"
+                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                id="date_due_checkdate" class="hide-input"
                                                 oninput="handleDateInput(this, 'date_due');checkDate('date_Response_due_checkdate','date_due_checkdate')" />
                                         </div>
                                     </div>
@@ -403,8 +458,8 @@
                                         <select name="assign_to2">
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $data)
-                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                        @endforeach
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -442,7 +497,7 @@
                                             </option>
                                             {{-- @foreach ($users as $data)
                                             <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                        @endforeach --}}
+                                        @endforeach
                                         </select>
                                     </div>
                                 </div> --}}
@@ -455,18 +510,21 @@
                                         <table class="table table-bordered" id="observation">
                                             <thead>
                                                 <tr>
-                                                    <th>S.No</th>
+                                                    <th style="width: 25px;">S.No.</th>
                                                     <th>Action</th>
                                                     <th>Responsible</th>
                                                     <th>Deadline</th>
                                                     <th>Item Status</th>
+                                                    <th style="width: 15%">Action Button</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1"></td>
+                                                <td><input disabled type="text" name="serial_number[]" value="1">
+                                                </td>
                                                 <td><input type="text" name="action[]"></td>
                                                 {{-- <td><input type="text" name="responsible[]"></td> --}}
-                                                <td> <select id="select-state" placeholder="Select..." name="responsible[]">
+                                                <td> <select id="select-state" placeholder="Select..."
+                                                        name="responsible[]">
                                                         <option value="">Select a value</option>
                                                         @foreach ($users as $data)
                                                             <option value="{{ $data->id }}">{{ $data->name }}
@@ -478,14 +536,19 @@
                                                     <div class="group-input new-date-data-field mb-0">
                                                         <div class="input-date ">
                                                             <div class="calenderauditee">
-                                                                <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"name="deadline[]" class="hide-input" 
-                                                                oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
+                                                                <input type="text" id="deadline' + serialNumber +'"
+                                                                    readonly placeholder="DD-MMM-YYYY" />
+                                                                <input type="date"
+                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"name="deadline[]"
+                                                                    class="hide-input"
+                                                                    oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </td> 
+                                                </td>
                                                 <td><input type="text" name="item_status[]"></td>
+                                                <td><button type="text"
+                                                    class="removeRowBtn">Remove</button></td>
                                             </tbody>
                                         </table>
                                     </div>
@@ -606,24 +669,27 @@
                                         <div class="calenderauditee">
                                             <input type="text" id="actual_start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="actual_start_date_checkdate" name="actual_start_date" class="hide-input"
+                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                id="actual_start_date_checkdate" name="actual_start_date"
+                                                class="hide-input"
                                                 oninput="handleDateInput(this, 'actual_start_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="col-lg-6  new-date-data-field">
+                                <div class="col-lg-6  new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="actual_end_date">Actual End Date</lable>
-                                        <div class="calenderauditee">
-                                        <input type="text" id="actual_end_date"                             
-                                                placeholder="DD-MMM-YYYY" />
-                                             <input type="date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="actual_end_date_checkdate" name="actual_end_date" class="hide-input"
-                                                oninput="handleDateInput(this, 'actual_end_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
-                                        </div>
-                                   
-                                        
+                                            <div class="calenderauditee">
+                                                <input type="text" id="actual_end_date" placeholder="DD-MMM-YYYY" />
+                                                <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                    id="actual_end_date_checkdate" name="actual_end_date"
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'actual_end_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
+                                            </div>
+
+
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="action_taken">Action Taken</label>
@@ -702,57 +768,192 @@
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Completed_By">Completed By</label>
+                                        <label for="Report Issued By">Report Issued By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Completed_On">Completed On</label>
+                                        <label for="Report Issued On">Report Issued On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="QA_Approved_By">QA Approved By</label>
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Cancel By">Cancel By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="QA_Approved_On">QA Approved On</label>
+                                        <label for="Cancel On">Cancel On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Final_Approval_By">Final Approval By</label>
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Complete By">Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Complete On">Complete On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="More Info Required By">More Info Required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="More Info Required On">More Info Required On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Reject CAPA Plan By">Reject CAPA Plan By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Reject CAPA plan On">Reject CAPA plan On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="QA Approval Without CAPA By">QA Approval Without CAPA
+                                            By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="QA Approval Without CAPA On">QA Approval Without CAPA
+                                            On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="QA Approval On">QA Approval By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="QA Approval By">QA Approval On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="All CAPA closed By">All CAPA closed By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="All CAPA Closed On">All CAPA Closed On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Final_Approval_On">Final Approval By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Final_Approval_On">Final Approval On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="submit">Submit</button>
-                                <button type="button"> <a class="text-white" href="{{ url('dashboard') }}"> Exit </a>
+                                <button type="button"> <a class="text-white"
+                                        href="{{ url('rcms/qms-dashboard') }}"> Exit </a>
                                 </button>
                             </div>
                         </div>
                     </div>
-
                 </div>
-            </form>
 
         </div>
+        </form>
+
+    </div>
     </div>
 
     <style>
@@ -854,46 +1055,58 @@
         }
     </script>
     <script>
-                $(document).ready(function() {
-                    $('#observation_table').click(function(e) {
-                        function generateTableRow(serialNumber) {
-                            var users = @json($users);
-                            console.log(users);
-                            var html =
-                            '<tr>' +
-                                '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
-                                '<td><input type="text" name="action[]"></td>' +
-                                '<td><select name="responsible[]">' +
-                                    '<option value="">Select a value</option>';
+        $(document).ready(function() {
+            $('#observation_table').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
+                    console.log(users);
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="action[]"></td>' +
+                        '<td><select name="responsible[]">' +
+                        '<option value="">Select a value</option>';
 
-                                for (var i = 0; i < users.length; i++) {
-                                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                                }
+                    for (var i = 0; i < users.length; i++) {
+                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    }
 
-                                html += '</select></td>' +
-                                // '<td><input type="date" name="deadline[]"></td>' +
-                                                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>' +
+                    html += '</select></td>' +
+                        // '<td><input type="date" name="deadline[]"></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' +
+                        serialNumber +
+                        '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' +
+                    serialNumber + '`)" /></div></div></div></td>' +
 
-                                '<td><input type="text" name="item_status[]"></td>' +
-                                '</tr>';
+                        '<td><input type="text" name="item_status[]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '</tr>';
 
 
 
-                            return html;
-                        }
+                    return html;
+                }
 
-                        var tableBody = $('#observation tbody');
-                        var rowCount = tableBody.children('tr').length;
-                        var newRow = generateTableRow(rowCount + 1);
-                        tableBody.append(newRow);
-                    });                    
-                });
-      </script>
-             <script>
-                var maxLength = 255;
-                $('#docname').keyup(function() {
-                    var textlen = maxLength - $(this).val().length;
-                    $('#rchars').text(textlen);});
-            </script>
-    
+                var tableBody = $('#observation tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+
+<script>
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
+    })
+</script>
+
+    <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);
+        });
+    </script>
 @endsection

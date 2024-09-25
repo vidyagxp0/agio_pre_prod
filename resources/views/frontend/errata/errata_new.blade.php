@@ -10,13 +10,23 @@
         }
     </style>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        #txt-custom {
+            display: none;
+        }
+    </style>
+
     <div class="form-field-head">
         {{-- <div class="pr-id">
             New Child
         </div> --}}
         <div class="division-bar">
-            <strong>Site Division/Project</strong> :
-            / ERRATA
+            <strong>Site Division/Project</strong> : {{ Helpers::getDivisionName(session()->get('division')) }}/ERRATA
         </div>
     </div>
 
@@ -31,11 +41,16 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks " onclick="openCity(event, 'CCForm2')">HOD Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
+                <button class="cctablinks " onclick="openCity(event, 'CCForm2')">HOD Initial Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Initial Review</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">CFT</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA Head Designee Approval</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA/CQA Head Designee Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Initiator Update</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">HOD final Review</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA Review</button> --}}
+                <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA/CQA Head Designee Closure
+                    Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Activity Log</button>
             </div>
 
             <form action="{{ route('errata.store') }}" method="POST" enctype="multipart/form-data">
@@ -49,13 +64,12 @@
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="sub-head">Parent Record Information</div>
+                                {{-- <div class="sub-head">Parent Record Information</div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="RLS Record Number">Record Number</label>
-                                        <input disabled type="text" name="record_number">
-                                        {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}"> --}}
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                        <label for="Record Number">Record Number</label>
+                                        <input disabled type="text" name="record"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/ERRATA/{{ date('Y') }}/{{ $record_number }}">
                                     </div>
                                 </div>
 
@@ -65,7 +79,7 @@
                                         <input readonly type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -84,73 +98,114 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="Initiated Through">
-                                            Initiated Through <span class="text-danger"></span>
-                                        </label>
-                                        <select id="select-state" placeholder="Select..." name="initiated_by">
-                                            <option value="">Select a value</option>
-                                            {{-- <option value="Pankaj Jat">Pankaj Jat</option>
+                                <!-- <div class="col-md-6">
+                                                                                                                                                                                                                                                                                                                        <div class="group-input">
+                                                                                                                                                                                                                                                                                                                            <label for="Initiated Through">
+                                                                                                                                                                                                                                                                                                                                Initiated Through <span class="text-danger"></span>
+                                                                                                                                                                                                                                                                                                                            </label>
+                                                                                                                                                                                                                                                                                                                            <select id="select-state" placeholder="Select..." name="initiated_by">
+                                                                                                                                                                                                                                                                                                                                <option value="">Select a value</option>
+                                                                                                                                                                                                                                                                                                                                {{-- <option value="Pankaj Jat">Pankaj Jat</option>
                                             <option value="Gaurav">Gaurav</option>
                                             <option value="Manish">Manish</option> --}}
-                                        </select>
-                                    </div>
-                                </div>
+                                                                                                                                                                                                                                                                                                                                <option value="Recall ">Recall </option>
+                                                                                                                                                                                                                                                                                                                                <option value="Return ">Return </option>
+                                                                                                                                                                                                                                                                                                                                <option value="Deviation">Deviation</option>
+                                                                                                                                                                                                                                                                                                                                <option value="Complaint">Complaint</option>
+                                                                                                                                                                                                                                                                                                                                <option value="Regulatory">Regulatory</option>
+                                                                                                                                                                                                                                                                                                                                <option value="Lab Incident">Lab Incident</option>
+                                                                                                                                                                                                                                                                                                                                <option value="Improvement">Improvement</option>
+                                                                                                                                                                                                                                                                                                                                <option value="Others">Others</option>
+                                                                                                                                                                                                                                                                                                                            </select>
+                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                    </div> -->
 
+                                <!-- <div class="col-md-6">
+                                                                                                                                                                                                                                                                                                                        <div class="group-input">
+                                                                                                                                                                                                                                                                                                                            <label for="search">
+                                                                                                                                                                                                                                                                                                                                Department<span class="text-danger"></span>
+                                                                                                                                                                                                                                                                                                                            </label>
+                                                                                                                                                                                                                                                                                                                            <select id="selectedOptions" placeholder="Select..." name="Department">
+                                                                                                                                                                                                                                                                                                                                <option value="">-- Select --</option>
+                                                                                                                                                                                                                                                                                                                                <option value="CQA" @if (old('selectedOptions') == 'CQA') selected @endif>
+                                                                                                                                                                                                                                                                                                                                    Corporate Quality Assurance</option>
+                                                                                                                                                                                                                                                                                                                                <option value="QAB" @if (old('selectedOptions') == 'QAB') selected @endif>
+                                                                                                                                                                                                                                                                                                                                    Quality
+                                                                                                                                                                                                                                                                                                                                    Assurance Biopharma</option>
+                                                                                                                                                                                                                                                                                                                                <option value="CQC" @if (old('selectedOptions') == 'CQA') selected @endif>
+                                                                                                                                                                                                                                                                                                                                    Central
+                                                                                                                                                                                                                                                                                                                                    Quality Control</option>
+                                                                                                                                                                                                                                                                                                                                <option value="CQC" @if (old('selectedOptions') == 'CQC') selected @endif>
+                                                                                                                                                                                                                                                                                                                                    Manufacturing</option>
+                                                                                                                                                                                                                                                                                                                                <option value="PSG" @if (old('selectedOptions') == 'PSG') selected @endif>Plasma
+                                                                                                                                                                                                                                                                                                                                    Sourcing Group</option>
+                                                                                                                                                                                                                                                                                                                                <option value="CS" @if (old('selectedOptions') == 'CS') selected @endif>
+                                                                                                                                                                                                                                                                                                                                    Central
+                                                                                                                                                                                                                                                                                                                                    Stores</option>
+                                                                                                                                                                                                                                                                                                                                <option value="ITG" @if (old('selectedOptions') == 'ITG') selected @endif>
+                                                                                                                                                                                                                                                                                                                                    Information Technology Group</option>
+                                                                                                                                                                                                                                                                                                                                <option value="MM" @if (old('selectedOptions') == 'MM') selected @endif>
+                                                                                                                                                                                                                                                                                                                                    Molecular Medicine</option>
+                                                                                                                                                                                                                                                                                                                                <option value="CL" @if (old('selectedOptions') == 'CL') selected @endif>
+                                                                                                                                                                                                                                                                                                                                    Central
+                                                                                                                                                                                                                                                                                                                                    Laboratory</option>
+                                                                                                                                                                                                                                                                                                                                <option value="TT" @if (old('selectedOptions') == 'TT') selected @endif>Tech
+                                                                                                                                                                                                                                                                                                                                    Team</option>
+                                                                                                                                                                                                                                                                                                                                <option value="QA" @if (old('selectedOptions') == 'QA') selected @endif>
+                                                                                                                                                                                                                                                                                                                                    Quality Assurance</option>
+                                                                                                                                                                                                                                                                                                                                <option value="QM" @if (old('selectedOptions') == 'QM') selected @endif>
+                                                                                                                                                                                                                                                                                                                                    Quality Management</option>
+                                                                                                                                                                                                                                                                                                                                <option value="IA" @if (old('selectedOptions') == 'IA') selected @endif>IT
+                                                                                                                                                                                                                                                                                                                                    Administration</option>
+                                                                                                                                                                                                                                                                                                                                <option value="ACC" @if (old('selectedOptions') == 'ACC') selected @endif>
+                                                                                                                                                                                                                                                                                                                                    Accounting</option>
+                                                                                                                                                                                                                                                                                                                                <option value="LOG" @if (old('selectedOptions') == 'LOG') selected @endif>
+                                                                                                                                                                                                                                                                                                                                    Logistics</option>
+                                                                                                                                                                                                                                                                                                                                <option value="SM" @if (old('selectedOptions') == 'SM') selected @endif>
+                                                                                                                                                                                                                                                                                                                                    Senior Management</option>
+                                                                                                                                                                                                                                                                                                                                <option value="BA" @if (old('selectedOptions') == 'BA') selected @endif>
+                                                                                                                                                                                                                                                                                                                                    Business Administration</option>
+
+                                                                                                                                                                                                                                                                                                                            </select>
+                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                    </div> -->
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
                                             Department<span class="text-danger"></span>
                                         </label>
                                         <select id="selectedOptions" placeholder="Select..." name="Department">
-                                            <option value="">-- Select --</option>
-                                            <option value="CQA" @if (old('selectedOptions') == 'CQA') selected @endif>
-                                                Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('selectedOptions') == 'QAB') selected @endif>
-                                                Quality
-                                                Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('selectedOptions') == 'CQA') selected @endif>
-                                                Central
-                                                Quality Control</option>
-                                            <option value="CQC" @if (old('selectedOptions') == 'CQC') selected @endif>
-                                                Manufacturing</option>
-                                            <option value="PSG" @if (old('selectedOptions') == 'PSG') selected @endif>Plasma
-                                                Sourcing Group</option>
-                                            <option value="CS" @if (old('selectedOptions') == 'CS') selected @endif>
-                                                Central
-                                                Stores</option>
-                                            <option value="ITG" @if (old('selectedOptions') == 'ITG') selected @endif>
-                                                Information Technology Group</option>
-                                            <option value="MM" @if (old('selectedOptions') == 'MM') selected @endif>
-                                                Molecular Medicine</option>
-                                            <option value="CL" @if (old('selectedOptions') == 'CL') selected @endif>
-                                                Central
-                                                Laboratory</option>
-                                            <option value="TT" @if (old('selectedOptions') == 'TT') selected @endif>Tech
-                                                Team</option>
-                                            <option value="QA" @if (old('selectedOptions') == 'QA') selected @endif>
-                                                Quality Assurance</option>
-                                            <option value="QM" @if (old('selectedOptions') == 'QM') selected @endif>
-                                                Quality Management</option>
-                                            <option value="IA" @if (old('selectedOptions') == 'IA') selected @endif>IT
-                                                Administration</option>
-                                            <option value="ACC" @if (old('selectedOptions') == 'ACC') selected @endif>
-                                                Accounting</option>
-                                            <option value="LOG" @if (old('selectedOptions') == 'LOG') selected @endif>
-                                                Logistics</option>
-                                            <option value="SM" @if (old('selectedOptions') == 'SM') selected @endif>
-                                                Senior Management</option>
-                                            <option value="BA" @if (old('selectedOptions') == 'BA') selected @endif>
-                                                Business Administration</option>
-
+                                            <option value="">Select Department</option>
+                                            <option value="CQA">Corporate Quality Assurance</option>
+                                            <option value="QA">Quality Assurance</option>
+                                            <option value="QC">Quality Control</option>
+                                            <option value="QM">Quality Control (Microbiology department)</option>
+                                            <option value="PG">Production General</option>
+                                            <option value="PL">Production Liquid Orals</option>
+                                            <option value="PT">Production Tablet and Powder</option>
+                                            <option value="PE">Production External (Ointment, Gels, Creams and Liquid)
+                                            </option>
+                                            <option value="PC">Production Capsules</option>
+                                            <option value="PI">Production Injectable</option>
+                                            <option value="EN">Engineering</option>
+                                            <option value="HR">Human Resource</option>
+                                            <option value="ST">Store</option>
+                                            <option value="IT">Electronic Data Processing</option>
+                                            <option value="FD">Formulation Development</option>
+                                            <option value="AL">Analytical research and Development Laboratory</option>
+                                            <option value="PD">Packaging Development</option>
+                                            <option value="PU">Purchase Department</option>
+                                            <option value="DC">Document Cell</option>
+                                            <option value="RA">Regulatory Affairs</option>
+                                            <option value="PV">Pharmacovigilance</option>
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Department Code</label>
-                                        <input type="text" name="department_code" id="initiator_group_code"
+                                        <input readonly type="text" name="department_code" id="initiator_group_code"
                                             value="">
                                     </div>
                                 </div>
@@ -184,17 +239,13 @@
                                     </div>
                                 </div> --}}
 
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="search">
                                             Document Type<span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="document_type">
-                                            <option value="">Select a value</option>
-                                            <option value="D01">D01</option>
-                                            <option value="D02">D02</option>
-                                            <option value="D03">D03</option>
-                                        </select>
+                                        <input type="text" id="select-state" placeholder="Select..."
+                                            name="document_type">
                                     </div>
                                 </div>
 
@@ -215,25 +266,77 @@
                                     //     : explode(',', $showdata->reference_document);
                                 @endphp
 
-                                <div class="">
-                                    <div class="group-input">
-                                        <label for="Reference Recores">Refrence Documents </label>
-                                        <select multiple id="reference_record" name="reference_document[]"
-                                            id="">
-                                            <option value="">--Select---</option>
-                                            @foreach ($old_record as $new)
-                                                <option value="{{ $new->id }}">
-                                                    {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ $new->id }}
-                                                    {{-- {{ Helpers::recordFormat($new->record) }} --}}
-                                                </option>
-                                            @endforeach
-                                            {{-- <option
+                                <!-- <div class="">
+                                                                                                                            <div class="group-input">
+                                                                                                                                <label for="Reference Recores">Refrence Documents </label>
+                                                                                                                                <select multiple id="reference_record" name="reference_document[]"
+                                                                                                                                    id="">
+                                                                                                                                    {{-- <option value="">--Select---</option> --}}
+                                                                                                                                    @foreach ($old_record as $new)
+    <option value="{{ $new->id }}">
+                                                                                                                                        {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
+                                                                                                                                        {{-- {{ Helpers::recordFormat($new->record) }} --}}
+                                                                                                                                    </option>
+    @endforeach
+                                                                                                                                        {{-- <option
                                                 value="{{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}">
                                                 {{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}
                                             </option> --}}
+                                                                                                                                </select>
+                                                                                                                            </div>
+                                                                                                                        </div> -->
+                                {{-- <div class="">
+                                    <div class="group-input">
+                                        <label for="Reference Recores">Refrence Documents </label>
+
+                                        @foreach ($old_record as $new)
+                                            <option value="{{ $new->id }}">
+                                                {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
+
+                                            </option>
+                                        @endforeach
+
+                                        </select> -->
+                                        <input type="text" name="reference" id="docname" maxlength="255">
+                                    </div>
+                                </div> --}}
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="reference">Parent Record Number</label>
+                                        <select multiple name="reference[]" placeholder="Select Parent Record Number"
+                                            data-silent-initial-value-set="true" id="reference">
+
+                                            @foreach ($relatedRecords as $records)
+                                                <option
+                                                    value="{{ Helpers::getDivisionName(
+                                                        $records->division_id || $records->division || $records->division_code || $records->site_location_code,
+                                                    ) .
+                                                        '/' .
+                                                        $records->process_name .
+                                                        '/' .
+                                                        date('Y') .
+                                                        '/' .
+                                                        Helpers::recordFormat($records->record) }}">
+                                                    {{ Helpers::getDivisionName(
+                                                        $records->division_id || $records->division || $records->division_code || $records->site_location_code,
+                                                    ) .
+                                                        '/' .
+                                                        $records->process_name .
+                                                        '/' .
+                                                        date('Y') .
+                                                        '/' .
+                                                        Helpers::recordFormat($records->record) }}
+                                                </option>
+                                            @endforeach
                                         </select>
+                                        @error('reference')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
+
+
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -245,12 +348,19 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Brief Description</label>
+                                        <label class="mt-4" for="Audit Comments">Brief Description of error </label>
                                         <textarea class="summernote" name="brief_description" id="summernote-16"></textarea>
                                     </div>
                                 </div>
 
-                                <div class="">
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Document title">Document title</label>
+                                        <input type="text" name="document_title" maxlength="255">
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
                                     <div class="group-input">
                                         <label for="search">
                                             Type Of Error<span class="text-danger"></span>
@@ -261,9 +371,104 @@
                                             <option value="Calculation Error (CE)">Calculation Error (CE)</option>
                                             <option value="Grammatical Error (GE)">Grammatical Error (GE)</option>
                                             <option value="Missing Word Error (ME)">Missing Word Error (ME)</option>
+                                            <option value="Other">Other</option>
                                         </select>
                                     </div>
                                 </div>
+
+                                <div id="typeOfErrorBlock" class="group-input col-6" style="display: none;">
+                                    <label for="otherFieldsUser">Other</label>
+                                    <input type="text" name="otherFieldsUser" class="form-control" />
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label class="mt-4" for="Correction Of Error">Correction Of Error required</label>
+                                        <textarea class="summernote" name="Correction_Of_Error" id="summernote-16"></textarea>
+                                    </div>
+                                </div>
+
+                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+                                <script>
+                                    $(document).ready(function() {
+                                        // Initially hide the field
+                                        $('#typeOfErrorBlock').hide();
+
+                                        $('select[name=type_of_error]').change(function() {
+                                            const selectedVal = $(this).val();
+                                            if (selectedVal === 'Other') {
+                                                $('#typeOfErrorBlock').show();
+                                            } else {
+                                                $('#typeOfErrorBlock').hide();
+                                            }
+                                        });
+
+                                        // Optionally, check the current value when the page loads in case of form errors
+                                        if ($('select[name=type_of_error]').val() === 'Other') {
+                                            $('#typeOfErrorBlock').show();
+                                        }
+                                    });
+                                </script>
+
+
+
+
+                                @php
+                                    $users = DB::table('users')->get();
+                                @endphp
+                                <!-- <div class="col-md-6">
+                                                                                                                                                                                                                                                                                        <div class="group-input">
+                                                                                                                                                                                                                                                                                            <label for="select-state">
+                                                                                                                                                                                                                                                                                                Department Head  <span class="text-danger"></span>
+                                                                                                                                                                                                                                                                                            </label>
+                                                                                                                                                                                                                                                                                            <select id="select-state" placeholder="Select..." name="department_head_to">
+                                                                                                                                                                                                                                                                                                <option value="">Select a value</option>
+                                                                                                                                                                                                                                                                                                @foreach ($users as $data)
+    <option value="{{ $data->id }}">{{ $data->name }}</option>
+    @endforeach
+                                                                                                                                                                                                                                                                                            </select>
+                                                                                                                                                                                                                                                                                            @error('department_head_to')
+        <p class="text-danger">{{ $message }}</p>
+    @enderror
+                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                    </div> -->
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="search">
+                                            Department Head <span class="text-danger"></span>
+                                        </label>
+                                        <select id="select-state" placeholder="Select..." name="department_head_to">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('department_head_to')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="search">
+                                            QA reviewer <span class="text-danger"></span>
+                                        </label>
+                                        <select id="select-state" placeholder="Select..." name="qa_reviewer">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('qa_reviewer')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+
+
 
                                 <div class="group-input">
                                     <label for="audit-agenda-grid">
@@ -279,12 +484,12 @@
                                         <table class="table table-bordered" id="Details-table">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 5%">Row#</th>
+                                                    <th style="width: 2%">Row#</th>
                                                     <th style="width: 12%">List Of Impacting Document (If Any)</th>
-                                                    <th style="width: 16%"> Prepared By</th>
+                                                    <!-- <th style="width: 16%"> Prepared By</th>
                                                     <th style="width: 15%">Checked By</th>
-                                                    <th style="width: 15%">Approved By</th>
-                                                    <th style="width: 15%">Action</th>
+                                                    <th style="width: 15%">Approved By</th> -->
+                                                    <th style="width: 3%">Action</th>
 
                                                 </tr>
                                             </thead>
@@ -292,9 +497,9 @@
                                                 <td><input disabled type="text" name="details[0][serial]"
                                                         value="1"></td>
                                                 <td><input type="text" name="details[0][ListOfImpactingDocument]"></td>
-                                                <td><input type="text" name="details[0][PreparedBy]"></td>
+                                                <!-- <td><input type="text" name="details[0][PreparedBy]"></td>
                                                 <td><input type="text" name="details[0][CheckedBy]"></td>
-                                                <td><input type="text" name="details[0][ApprovedBy]"></td>
+                                                <td><input type="text" name="details[0][ApprovedBy]"></td> -->
                                                 <td><button type="text" class="removeRowBtn">Remove</button></td>
                                             </tbody>
 
@@ -302,23 +507,29 @@
                                     </div>
                                 </div>
 
-                                <div class="">
-                                    <div class="group-input">
-                                        <label for="dateandtime"><b>Date And Time of Correction </b></label>
-                                        <input type="date" name="Date_and_time_of_correction" value="">
+                                <!-- <div class="new-date-data-field">
+                                                                                                                                                                                                                                                                                                                        <div class="group-input input-date">
+                                                                                                                                                                                                                                                                                                                            <label for="Errata_date">Date And Time of Correction</label>
+                                                                                                                                                                                                                                                                                                                            <div class="calenderauditee">
+                                                                                                                                                                                                                                                                                                                                <input type="text" id="displayErrataDate"
+                                                                                                                                                                                                                                                                                                                                    name="Date_and_time_of_correction" readonly
+                                                                                                                                                                                                                                                                                                                                    placeholder="DD-MM-YYYY HH:MM" />
+                                                                                                                                                                                                                                                                                                                                <input type="datetime-local" id="Errata_date"
+                                                                                                                                                                                                                                                                                                                                    name="Date_and_time_of_correction" onchange="updateDisplayDateTime(this)"
+                                                                                                                                                                                                                                                                                                                                    class="hide-input" />
+                                                                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                        @error('Errata_date')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+                                                                                                                                                                                                                                                                                                                    </div> -->
 
-                                            <input type="text" id="displayErrataDate"
-                                                nmae="Date_and_time_of_correction" readonly
-                                                placeholder="DD-MM-YYYY HH:MM" />
-
-                                            <input type="datetime-local" id="Errata_date"
-                                                name="Date_and_time_of_correction"
-                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}"
-                                                onchange="updateDisplayDateTime(this)" class="hide-input" />
-                                        </div>
-                                    </div>
-                                </div>
-
+                                <script>
+                                    function updateDisplayDateTime(input) {
+                                        const selectedDateTime = new Date(input.value);
+                                        const formattedDateTime = formatDate(selectedDateTime);
+                                        document.getElementById('displayErrataDate').value = formattedDateTime;
+                                    }
 
                                     function formatDate(date) {
                                         const day = String(date.getDate()).padStart(2, '0');
@@ -331,6 +542,7 @@
                                         let hours = date.getHours();
                                         let minutes = date.getMinutes();
 
+                                        hours = String(hours).padStart(2, '0');
                                         minutes = String(minutes).padStart(2, '0');
 
                                         const formattedDateTime = `${day}-${month}-${year} ${hours}:${minutes}`;
@@ -339,13 +551,11 @@
                                     }
                                 </script>
 
-
-
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                <button type="button"> <a class="text-white" href="{{ url('rcms /qms-dashboard') }}">
                                         Exit </a> </button>
                             </div>
                         </div>
@@ -356,14 +566,14 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">HOD Remarks</label>
+                                        <label class="mt-4" for="HOD Initial Comment">HOD Initial Comment</label>
                                         <textarea class="summernote" name="HOD_Remarks" id="summernote-16"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="HOD attachment">HOD Attachments </label>
+                                        <label for="HOD Initial Attachments">HOD Initial Attachments</label>
                                         <div><small class="text-primary">
                                             </small>
                                         </div>
@@ -1617,14 +1827,14 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="QA Feedbacks">QA Feedbacks</label>
+                                        <label class="mt-4" for="QA Initial Comment">QA/CQA Initial Comment</label>
                                         <textarea class="summernote" name="QA_Feedbacks" id="summernote-16"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="QA Attachment">QA Attachments </label>
+                                        <label for="QA Initial Attachments">QA/CQA Initial Attachments </label>
                                         <div><small class="text-primary">
                                             </small>
                                         </div>
@@ -1659,14 +1869,138 @@
                         <div class="inner-block-content">
                             <div class="row">
 
-                                <div class="col-6">
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label class="mt-4" for="Approval Comment">Approval Comment</label>
+                                        <textarea class="summernote" name="Approval_Comment" id="summernote-16"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Approval attachment">Approval Attachments </label>
+                                        <div><small class="text-primary">
+                                            </small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Approval_Attachments"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="Approval_Attachments"
+                                                    name="Approval_Attachments[]"
+                                                    oninput="addMultipleFiles(this, 'Approval_Attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- <div class="col-lg-12 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Date Of Correction</label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="Date_and_time_of_correction" readonly
+                                                placeholder="DD-MMM-YYYY"
+                                                value="
+                                        " />
+                                            <input type="date" name="Date_and_time_of_correction" class="hide-input"
+                                                oninput="handleDateInput(this, 'Date_and_time_of_correction')" />
+                                        </div>
+                                    </div>
+
+                                </div> --}}
+
+                                {{-- <div class="col-12">
+                                    <div class="group-input">
+                                        <label class="mt-4" for="Audit Comments">Closure Comments</label>
+                                        <textarea class="summernote" name="Closure_Comments" id="summernote-16"></textarea>
+                                    </div>
+                                </div> --}}
+
+                                {{-- <div class="col-6">
                                     <div class="group-input">
                                         <label class="" for="Audit Comments">Closure Comments</label>
                                         <input type="text" name="Closure_Comments" />
                                     </div>
+                                </div> --}}
+
+                                {{-- <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="search">
+                                            All Impacting Documents Corrected <span class="text-danger"></span>
+                                        </label>
+                                        <select id="select-state" placeholder="Select..."
+                                            name="All_Impacting_Documents_Corrected">
+                                            <option value="">Select a value</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                </div> --}}
+
+                                {{-- <div class="col-12">
+                                    <div class="group-input">
+                                        <label class="mt-4" for="Audit Comments"> Remarks (If Any)</label>
+                                        <textarea class="summernote" name="Remarks" id="summernote-16"></textarea>
+                                    </div>
+                                </div> --}}
+
+                                {{-- <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="closure attachment">Closure Attachments </label>
+                                        <div><small class="text-primary">
+                                            </small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Closure_Attachments"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="Closure_Attachments"
+                                                    name="Closure_Attachments[]"
+                                                    oninput="addMultipleFiles(this, 'Closure_Attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> --}}
+
+
+
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+
+                                    <button type="button"> <a class="text-white"
+                                            href="{{ url('rcms/qms-dashboard') }}">Exit
+                                        </a> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- -----------Tab-6------------ -->
+                    <div id="CCForm6" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+
+                                <div class="col-lg-12 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Date Of Correction of document</label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="Date_and_time_of_correction" readonly
+                                                placeholder="DD-MMM-YYYY" value="" />
+                                            <input type="date" name="Date_and_time_of_correction" class="hide-input"
+                                                oninput="handleDateInput(this, 'Date_and_time_of_correction')" />
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="search">
                                             All Impacting Documents Corrected <span class="text-danger"></span>
@@ -1682,8 +2016,146 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments"> Remarks (If Any)</label>
+                                        <label class="mt-4" for="Audit Comments"> Remarks</label>
                                         <textarea class="summernote" name="Remarks" id="summernote-16"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initial Attachments">Initiator Attachments </label>
+                                        <div><small class="text-primary">
+                                            </small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Initiator_Attachments"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="Initiator_Attachments"
+                                                    name="Initiator_Attachments[]"
+                                                    oninput="addMultipleFiles(this, 'Initiator_Attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+
+                                    <button type="button"> <a class="text-white"
+                                            href="{{ url('rcms/qms-dashboard') }}">Exit
+                                        </a> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- -----------Tab-7------------ -->
+
+                    <div id="CCForm7" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label class="mt-4" for="HOD Comment">HOD final review Comment</label>
+                                        <textarea class="summernote" name="HOD_Comment1" id="summernote-16"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="HOD Attachments">HOD final Attachments</label>
+                                        <div><small class="text-primary">
+                                            </small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="HOD_Attachments1"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="HOD_Attachments1" name="HOD_Attachments1[]"
+                                                    oninput="addMultipleFiles(this, 'HOD_Attachments1')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+
+                                    <button type="button"> <a class="text-white"
+                                            href="{{ url('rcms/qms-dashboard') }}">Exit
+                                        </a> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- -----------Tab-8------------ -->
+
+                    {{-- <div id="CCForm8" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label class="mt-4" for="QA Comment">QA Comment</label>
+                                        <textarea class="summernote" name="QA_Comment1" id="summernote-16"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="QA Attachments">QA Attachments</label>
+                                        <div><small class="text-primary">
+                                            </small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="QA_Attachments1"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="QA_Attachments1" name="QA_Attachments1[]"
+                                                    oninput="addMultipleFiles(this, 'QA_Attachments1')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+
+                                    <button type="button"> <a class="text-white"
+                                            href="{{ url('rcms/qms-dashboard') }}">Exit
+                                        </a> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
+
+
+                    <!-- -----------Tab-9------------ -->
+
+                    <div id="CCForm9" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label class="mt-4" for="Audit Comments">Closure Comments</label>
+                                        <textarea class="summernote" name="Closure_Comments" id="summernote-16"></textarea>
                                     </div>
                                 </div>
 
@@ -1706,7 +2178,6 @@
                                 </div>
 
 
-
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1721,72 +2192,191 @@
                         </div>
                     </div>
 
-                    <!-- -----------Tab-6------------ -->
-                    <div id="CCForm6" class="inner-block cctabcontent">
+
+
+
+                    <!-- -----------Tab-10------------ -->
+                    <div id="CCForm10" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Submitted by">Submitted By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Submitted on">Submitted On</label>
-                                        <div class="Date"></div>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Reviewed by">HOD Initial Review Completed By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Approved on">HOD Initial Review Completed On</label>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Reviewed by">Review Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Approved on">Review Completed On</label>
-                                        <div class="Date"></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Reviewed by">Approval Completed By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Approved on">Approval Completed On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Correction Completed by">Correction Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Correction Completed on">Correction Completed On</label>
-                                        <div class="Date"></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="HOD Review Complete By">HOD Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="HOD Review Complete By on">HOD Review Complete By On</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="QA Head Aproval Completed by">QA Head Aproval Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="QA Head Aproval Completed on">QA Head Aproval Completed On</label>
-                                        <div class="Date"></div>
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="QA Head Aproval Completed by">QA Head Aproval Completed
+                                            By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="QA Head Aproval Completed on">QA Head Aproval Completed
+                                            On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Sent to Opened State BY">Sent to Opened State By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="QA Head Aproval Completed on">Sent to Opened State
+                                            On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Cancel BY">Cancel By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Cancel On">Cancel On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
@@ -1794,9 +2384,9 @@
 
 
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    {{-- <button type="submit" class="saveButton">Save</button> --}}
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    {{-- <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
 
 
                                     <button type="button"> <a class="text-white"
@@ -1823,7 +2413,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#related_records, #hod'
+            ele: '#related_records, #hod, #reference'
         });
 
         function openCity(evt, cityName) {
@@ -1904,9 +2494,11 @@
                         '"></td>' +
                         '<td><input type="text" name="details[' + serialNumber +
                         '][ListOfImpactingDocument]"></td>' +
-                        '<td><input type="text" name="details[' + serialNumber + '][PreparedBy]"></td>' +
-                        '<td><input type="text" name="details[' + serialNumber + '][CheckedBy]"></td>' +
-                        '<td><input type="text" name="details[' + serialNumber + '][ApprovedBy]"></td>' +
+
+                        // '<td><input type="text" name="details[' + serialNumber + '][PreparedBy]"></td>' +
+                        // '<td><input type="text" name="details[' + serialNumber + '][CheckedBy]"></td>' +
+                        // '<td><input type="text" name="details[' + serialNumber + '][ApprovedBy]"></td>' +
+
                         '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
                         '</tr>';
 

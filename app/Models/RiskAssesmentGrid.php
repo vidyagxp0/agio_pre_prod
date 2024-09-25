@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class RiskAssesmentGrid extends Model
 {
     use HasFactory;
+    public function riskmanagement()
+    {
+        return $this->hasMany(RiskManagement::class,'type');
+    }
 }

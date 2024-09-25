@@ -1,4 +1,4 @@
-<div id="CCForm9" class="inner-block cctabcontent">
+{{-- <div id="CCForm9" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="sub-head">
             Conclusion Review Comments
@@ -8,7 +8,8 @@
                 <div class="group-input">
                     <label for="Description Deviation">Conclusion Review Comments</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="conclusion_review_comments_ocr" id="summernote-1">
+                    <textarea class="summernote" name="conclusion_review_comments_ocr" id="summernote-1" 
+                    {{Helpers::isOOSChemical($data->stage)}}>
                         {{ $data->conclusion_review_comments_ocr ? $data->conclusion_review_comments_ocr : '' }}
                     </textarea>
                 </div>
@@ -19,7 +20,7 @@
             <div class="group-input">
                 <label for="audit-agenda-grid">
                     Summary of OOS Test Results
-                    <button type="button" name="audit-agenda-grid" id="oosconclusion_review">+</button>
+                    <button type="button" name="audit-agenda-grid" id="oos_conclusion_review">+</button>
                     <span class="text-primary" data-bs-toggle="modal"
                         data-bs-target="#document-details-field-instruction-modal"
                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -27,7 +28,7 @@
                     </span>
                 </label>
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="oosconclusion_review_details" style="width: 100%;">
+                    <table class="table table-bordered" id="oos_conclusion_review_details" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th style="width: 4%">Row#</th>
@@ -35,31 +36,30 @@
                                 <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
                                 <th style="width: 16%">Any Other Information</th>
                                 <th style="width: 16%">Action Taken on Affec.batch</th>
+                                <th style="widht: 16%">Action </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if ($oos_conclusion_reviews)
-                                @foreach ($oos_conclusion_reviews->data as $oos_conclusion_review)
+                            @if ($oos_conclusion_review && is_array($oos_conclusion_review->data))
+                                @foreach ($oos_conclusion_review->data as $oos_conclusion_review)
                                     <tr>
                                         <td><input disabled type="text" name="oos_conclusion_review[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}"></td>
-                                        <td><input type="text" name="oos_conclusion_review[{{ $loop->index }}][conclusion_review_product_name]" value="{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_product_name') }}"></td>
-                                        <td><input type="text" name="oos_conclusion_review[{{ $loop->index }}][conclusion_review_batch_no]" value="{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_batch_no') }}"></td>
-                                        <td><input type="text" name="oos_conclusion_review[{{ $loop->index }}][conclusion_review_any_other_information]" value="{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_any_other_information') }}"></td>
-                                        <td><input type="text" name="oos_conclusion_review[{{ $loop->index }}][conclusion_review_action_affecte_batch]" value="{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_action_affecte_batch') }}"></td>
+                                        <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_conclusion_review[{{ $loop->index }}][conclusion_review_product_name]" value="{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_product_name') }}"></td>
+                                        <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_conclusion_review[{{ $loop->index }}][conclusion_review_batch_no]" value="{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_batch_no') }}"></td>
+                                        <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_conclusion_review[{{ $loop->index }}][conclusion_review_any_other_information]" value="{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_any_other_information') }}"></td>
+                                        <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_conclusion_review[{{ $loop->index }}][conclusion_review_action_affecte_batch]" value="{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_action_affecte_batch') }}"></td>
+                                        <td><button {{Helpers::isOOSChemical($data->stage)}} type="text" class="removeRowBtn">Remove</button></td>
                                     </tr>
                                 @endforeach
                             @endif
                         </tbody>
-
                     </table>
                 </div>
             </div>
-
-
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Action Taken on Affec.batch</label>
-                    <textarea class="summernote" name="action_taken_on_affec_batch_ocr" id="summernote-1">
+                    <textarea class="summernote" name="action_taken_on_affec_batch_ocr" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                     {{ $data->action_taken_on_affec_batch_ocr ? $data->action_taken_on_affec_batch_ocr :'NA' }}
                 </textarea>
                 </div>
@@ -67,31 +67,29 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">CAPA Req?</label>
-                    <select name="capa_req_ocr">
+                    <select name="capa_req_ocr" {{Helpers::isOOSChemical($data->stage)}}>
+                        <option value="">Enter Your Selection Here</option>
                         <option value="Yes" {{ $data->capa_req_ocr == 'Yes' ? 'selected' : '' }}>Yes</option>
                         <option value="No" {{ $data->capa_req_ocr == 'No' ? 'selected' : '' }}>No</option>
                     </select>
                 </div>
             </div>
-
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Records">CAPA Reference</label>
-                    <select multiple id="reference_record" name="capa_refer_ocr[]">
-                        <option value="0" {{ in_array('0', $data->capa_refer_ocr ?? []) ? 'selected' : ''
-                            }}>--Select---</option>
-                        <option value="1" {{ in_array('1', $data->capa_refer_ocr ?? []) ? 'selected' : '' }}>1
-                        </option>
-                        <option value="2" {{ in_array('2', $data->capa_refer_ocr ?? []) ? 'selected' : '' }}>2
-                        </option>
-                    </select>
+                    <select multiple id="reference_record" name="capa_refer_ocr[]" {{Helpers::isOOSChemical($data->stage)}}>
+                    <option value="">Enter Your Selection Here</option>
+                    <option value="1" {{ (!empty($data->capa_refer_ocr) && in_array('1', explode(',', $data->capa_refer_ocr[0]))) ? 'selected' : '' }}>1</option>
+                    <option value="2" {{ (!empty($data->capa_refer_ocr) && in_array('2', explode(',', $data->capa_refer_ocr[0]))) ? 'selected' : '' }}>2</option>
+                  </select>
+                 
                 </div>
             </div>
 
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justify if No Risk Assessment</label>
-                    <textarea class="summernote" name="justify_if_no_risk_assessment_ocr" id="summernote-1">
+                    <textarea class="summernote" name="justify_if_no_risk_assessment_ocr" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                             {{ $data->justify_if_no_risk_assessment_ocr ? $data->justify_if_no_risk_assessment_ocr : 'NA' }}
                         </textarea>
                 </div>
@@ -122,26 +120,32 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="conclusion_attachment_ocr[]"
-                                oninput="addMultipleFiles(this, 'conclusion_attachment_ocr')" multiple>
+                                oninput="addMultipleFiles(this, 'conclusion_attachment_ocr')" multiple 
+                                {{Helpers::isOOSChemical($data->stage)}} >
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">CQ Approver</label>
-                    <input type="text" name="cq_approver" value="{{$data->cq_approver ? $data->cq_approver : '' }}">
+                    <input type="text" name="cq_approver" value="{{$data->cq_approver ? $data->cq_approver : '' }}" {{Helpers::isOOSChemical($data->stage)}}>
                 </div>
             </div>
-
             <div class="button-block">
-                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
-                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+            @if ($data->stage == 0  || $data->stage >= 15)
+            <div class="progress-bars">
+                    <div class="bg-danger">Workflow is already Closed-Done</div>
+                </div>
+            @else
+            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" id="ChangeNextButton" class="nextButton"
+                onclick="nextStep()">Next</button>
+            @endif
+        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                         Exit </a> </button>
             </div>
         </div>
     </div>
-</div>
+</div> --}}

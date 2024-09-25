@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('designation')->nullable();
             $table->string('department')->nullable();
             $table->string('experience')->nullable();
-            $table->string('external_agencies')->nullable();
+            // $table->string('hod')->nullable();
             $table->string('trainer')->nullable();
             $table->string('evaluation_criteria_1')->nullable();
             $table->string('evaluation_criteria_2')->nullable();

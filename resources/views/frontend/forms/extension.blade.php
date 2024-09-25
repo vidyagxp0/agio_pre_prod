@@ -95,7 +95,7 @@
                                         <input disabled type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -245,7 +245,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">Extention Attachments</label>
+                                        <label for="Inv Attachments">Extension Attachments</label>
                                         {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="extention_attachment"></div>

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('mc_id');
             $table->string('identifer')->nullable();
-            $table->text('data');          
+            $table->text('data')->nullable();          
           
             $table->timestamps();
         });

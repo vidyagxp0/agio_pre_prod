@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('division_id')->nullable();
             //$table->string('division_code')->nullable();
             $table->string('initiator_group_code')->nullable();
-            $table->date('intiation_date')->nullable();
+            $table->string('intiation_date')->nullable();
             $table->string('form_type')->nullable();
             $table->integer('record_number')->nullable();
             //$table->string('text')->nullable();
@@ -30,9 +30,9 @@ return new class extends Migration
             $table->string('Initiator_Group')->nullable();
             $table->longText('short_description')->nullable();
             $table->string('short_description_required')->nullable();
-            $table->string('nature_of_repeat')->nullable();
-            $table->date('failure_investigation_date')->nullable();
-            $table->date('failure_investigation_reported_date')->nullable();
+            $table->longText('nature_of_repeat')->nullable();
+            $table->string('failure_investigation_date')->nullable();
+            $table->string('failure_investigation_reported_date')->nullable();
             $table->string('Facility')->nullable();
             $table->string('Capachild')->nullable();
             $table->string('Rootchild')->nullable();
@@ -78,6 +78,7 @@ return new class extends Migration
             $table->longText('Capa_attachment')->nullable();
             $table->longText('QA_attachments')->nullable();
             $table->longText('closure_attachment')->nullable();
+            $table->longText('initial_file')->nullable();
 
             $table->string('submit_on')->nullable();
             $table->string('submit_by')->nullable();
@@ -107,21 +108,21 @@ return new class extends Migration
 
             $table->text('QA_head_approved_by')->nullable();
             $table->text('QA_head_approved_on')->nullable();
-            $table->longText('QA_head_approved_comment');
+            $table->longText('QA_head_approved_comment')->nullable();
             
-            $table->text('pending_initiator_approved_by');
-            $table->text('pending_initiator_approved_on');
-            $table->longText('pending_initiator_approved_comment');
+            $table->text('pending_initiator_approved_by')->nullable();
+            $table->text('pending_initiator_approved_on')->nullable();
+            $table->longText('pending_initiator_approved_comment')->nullable();
             
             $table->text('QA_final_approved_by')->nullable();
             $table->text('QA_final_approved_on')->nullable();
-            $table->longText('QA_final_approved_comment');
+            $table->longText('QA_final_approved_comment')->nullable();
 
             $table->string('capa_required')->nullable();
             $table->string('qrm_required')->nullable();
 
-            $table->string('Conclusion')->nullable();
-            $table->string('Identified_Risk')->nullable();
+            $table->longText('Conclusion')->nullable();
+            $table->longText('Identified_Risk')->nullable();
             $table->string('severity_rate')->nullable();
             $table->string('Occurrence')->nullable();
             $table->string('detection')->nullable();

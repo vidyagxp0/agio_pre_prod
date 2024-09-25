@@ -76,5 +76,26 @@ class OutOfCalibration extends Model
         'initiated_through_rootcause_ooc',
         'initiated_through_impact_closure_ooc'
     ];
+
+    protected $cast = [
+        'created_at' => 'date',
+        'ooc_due_date'=>'date'
+    ];
+
+    public function InstrumentDetails()
+    {
+        return $this->hasOne(OOC_Grid::class,'ooc_id');
+    }
     
+    public function division()
+    {
+        return $this->belongsTo(QMSDivision::class,'division_id');
+
+    }
+    public function initiator(){
+        return $this->belongsTo(User::class,'initiator_id');
+    }
+    public function assignedUser(){
+        return $this->belongsTo(User::class,'assign_to');
+    }
 }

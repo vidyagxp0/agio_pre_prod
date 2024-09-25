@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class AuditProgram extends Model
 {
     use HasFactory;
+    
+    
 }

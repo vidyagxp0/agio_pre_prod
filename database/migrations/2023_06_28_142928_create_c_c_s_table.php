@@ -20,10 +20,12 @@ return new class extends Migration
 
             $table->string('form_type')->nullable();
             $table->integer('record')->nullable();
+            $table->longText('record_number')->nullable();
             $table->integer('parent_id')->nullable();
             $table->string('parent_type')->nullable();
             $table->longText('short_description')->nullable();
             $table->longText('severity_level1')->nullable();    
+            $table->longText('reviewer_person_value')->nullable();    
             $table->longText('initiated_through')->nullable();
             $table->longText('initiated_through_req')->nullable();
             $table->string('intiation_date')->nullable();
@@ -46,7 +48,7 @@ return new class extends Migration
             $table->longText('supervisor_comment')->nullable();
             $table->string('type_chnage')->nullable();
             $table->longText('qa_comments')->nullable();
-            $table->string('related_records')->nullable();
+            $table->longText('related_records')->nullable();
             $table->string('qa_head')->nullable();
 
             $table->longText('qa_eval_comments')->nullable();
