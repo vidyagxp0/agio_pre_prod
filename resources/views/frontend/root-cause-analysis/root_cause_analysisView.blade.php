@@ -137,8 +137,7 @@
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     HOD Review Complete
                                 </button>
-                            @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 7) ||
-                                    Helpers::check_roles($data->division_id, 'Root Cause Analysis', 66))
+                            @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 7))
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                     More Info Required
                                 </button>
@@ -166,8 +165,7 @@
                                     HOD Final Review Complete
 
                                 </button>
-                            @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 7) ||
-                                    Helpers::check_roles($data->division_id, 'Root Cause Analysis', 66))
+                            @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 7))
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                     More Information
                                     Required
@@ -176,8 +174,7 @@
                                     Final QA/CQA Review Complete
                                 </button>
                             @elseif(
-                                ($data->stage == 7 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 42)) ||
-                                    Helpers::check_roles($data->division_id, 'Root Cause Analysis', 65))
+                                ($data->stage == 7 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 42)))
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                     More Information
                                     Required
@@ -279,7 +276,7 @@
                         <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Investigation</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm9')">HOD Review</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Initial QA/CQA  Review</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation & Root Cause</button> --}}
                    
@@ -494,7 +491,7 @@
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="select-state">Responsible department Head <span
+                                                <label for="select-state">Name of Responsible department Head <span
                                                         class="text-danger">*</span></label>
                                                 <select id="select-state" placeholder="Select..." name="assign_to"
                                                     {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
@@ -1070,7 +1067,49 @@
                                                 <option value="Is/Is Not Analysis"
                                                     @if (in_array('Is/Is Not Analysis', $selectedMethodologies)) selected @endif>Is/Is Not Analysis
                                                 </option>
+                                                <option value="Rootcauseothers"                                            
+
+                                                    @if (in_array('Rootcauseothers', $selectedMethodologies)) selected @endif>Is/Is Not Analysis
+                                                </option>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Inv Attachments"> Attachment</label>
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please Attach all relevant or supporting documents
+                                                </small>
+                                            </div>
+                                            <div class="file-attachment-field">
+                                                <div disabled class="file-attachment-list"
+                                                    id="investigation_attachment">
+                                                    @if ($data->investigation_attachment)
+                                                        @foreach (json_decode($data->investigation_attachment) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+
+                                                    <input type="file" id="myfile"
+                                                        name="investigation_attachment[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                        oninput="addMultipleFiles(this, 'investigation_attachment')"
+                                                        multiple>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -1138,251 +1177,62 @@
                                                     onclick="addRootCauseAnalysisRiskAssessment1('risk-assessment-risk-management')"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>+</button>
                                             </label>
                                             <div class="table-responsive">
-                                                <table class="table table-bordered" style="width: 200%"
-                                                    id="risk-assessment-risk-management">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Row #</th>
-                                                            <th>Risk Factor</th>
-                                                            <th>Risk element </th>
-                                                            <th>Probable cause of risk element</th>
-                                                            <th>Existing Risk Controls</th>
-                                                            <th>Initial Severity</th>
-                                                            <th>Initial Probability</th>
-                                                            <th>Initial Detectability</th>
-                                                            <th>Initial RPN</th>
-                                                            <th>Risk Acceptance (Y/N)</th>
-                                                            <th>Proposed Additional Risk control measure (Mandatory for
-                                                                Risk
-                                                                elements having RPN>4)</th>
-                                                            <th>Residual Severity</th>
-                                                            <th>Residual Probability</th>
-                                                            <th>Residual Detectability</th>
-                                                            <th>Residual RPN</th>
-                                                            <th>Risk Acceptance (Y/N)</th>
-                                                            <th>Mitigation proposal (Mention either CAPA reference
-                                                                number, IQ,
-                                                                OQ or
-                                                                PQ)
-                                                            </th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @if (!empty($data->risk_factor))
-                                                            @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
-                                                                {{--  @dd($key, $riskFactor)  --}}
+    <table class="table table-bordered" style="width: 200%" id="risk-assessment-risk-management">
+        <thead>
+            <tr>
+                <th colspan="1"style="text-align:center;">Row #</th>
+                <th colspan="2"style="text-align:center;">Risk Identification</th>
+                <th colspan="1"style="text-align:center;">Risk Analysis</th>
+                <th colspan="4"style="text-align:center;">Risk Evaluation</th>
+                <th colspan="1"style="text-align:center;">Risk Control</th>
+                <th colspan="6"style="text-align:center;">Risk Evaluation</th>
+                <th colspan="2"style="text-align:center;"></th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>Activity</th>
+                <th>Possible Risk/Failure (Identified Risk)</th>
+                <th>Consequences of Risk/Potential Causes</th>
+                <th>Severity (S)</th>
+                <th>Probability (P)</th>
+                <th>Detection (D)</th>
+                <th>Risk Level (RPN)</th>
+                <th>Control Measures recommended/ Risk mitigation proposed</th>
+                <th>Severity (S)</th>
+                <th>Probability (P)</th>
+                <th>Detection (D)</th>
+                <th>Risk Level (RPN)</th>
+                <th>Category of Risk Level (Low, Medium and High)</th>
+                <th>Risk Acceptance (Y/N)</th>
+                <th>Traceability document number</th>
+                  <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td> <!-- Example Row Number -->
+                <td>Example Activity</td>
+                <td>Example Risk</td>
+                <td>Example Consequences</td>
+                <td>3</td>
+                <td>4</td>
+                <td>2</td>
+                <td>24</td>
+                <td>Example Control Measures</td>
+                <td>2</td>
+                <td>3</td>
+                <td>2</td>
+                <td>12</td>
+                <td>Medium</td>
+                <td>Y</td>
+                <td>Example Traceability Document Number</td> <!-- Added field -->
+                <td><button>Action</button></td> <!-- Added field -->
+            </tr>
+            <!-- You can replicate the <tr> block above to add more rows as needed -->
+        </tbody>
+    </table>
+</div>
 
-                                                                <tr>
-                                                                    <td>{{ $key + 1 }}</td>
-                                                                    <td><input name="risk_factor[]" type="text"
-                                                                            value="{{ $riskFactor }}"
-                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                    </td>
-                                                                    <td><input name="risk_element[]" type="text"
-                                                                            value="{{ unserialize($data->risk_element)[$key] ?? null }}"
-                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                    </td>
-                                                                    <td><input name="problem_cause[]" type="text"
-                                                                            value="{{ unserialize($data->problem_cause)[$key] ?? null }}"
-                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                    </td>
-                                                                    <td><input name="existing_risk_control[]"
-                                                                            type="text"
-                                                                            value="{{ unserialize($data->existing_risk_control)[$key] ?? null }}"
-                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                    </td>
-                                                                    <td>
-                                                                        <select onchange="calculateInitialResult(this)"
-                                                                            class="fieldR" name="initial_severity[]"
-                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                            <option value="">-- Select --</option>
-                                                                            <option value="1"
-                                                                                {{ (unserialize($data->initial_severity)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                                1-Insignificant</option>
-                                                                            <option value="2"
-                                                                                {{ (unserialize($data->initial_severity)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                                2-Minor</option>
-                                                                            <option value="3"
-                                                                                {{ (unserialize($data->initial_severity)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                                3-Major</option>
-                                                                            <option value="4"
-                                                                                {{ (unserialize($data->initial_severity)[$key] ?? null) == 4 ? 'selected' : '' }}>
-                                                                                4-Critical</option>
-                                                                            <option value="5"
-                                                                                {{ (unserialize($data->initial_severity)[$key] ?? null) == 5 ? 'selected' : '' }}>
-                                                                                5-Catastrophic</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <select onchange="calculateInitialResult(this)"
-                                                                            class="fieldP" name="initial_detectability[]"
-                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                            <option value="">-- Select --</option>
-                                                                            <option value="1"
-                                                                                {{ (unserialize($data->initial_detectability)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                                1-Very rare</option>
-                                                                            <option value="2"
-                                                                                {{ (unserialize($data->initial_detectability)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                                2-Unlikely</option>
-                                                                            <option value="3"
-                                                                                {{ (unserialize($data->initial_detectability)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                                3-Possibly</option>
-                                                                            <option value="4"
-                                                                                {{ (unserialize($data->initial_detectability)[$key] ?? null) == 4 ? 'selected' : '' }}>
-                                                                                4-Likely</option>
-                                                                            <option value="5"
-                                                                                {{ (unserialize($data->initial_detectability)[$key] ?? null) == 5 ? 'selected' : '' }}>
-                                                                                5-Almost certain (every time)</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <select onchange="calculateInitialResult(this)"
-                                                                            class="fieldN" name="initial_probability[]"
-                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                            <option value="">-- Select --</option>
-                                                                            <option value="1"
-                                                                                {{ (unserialize($data->initial_probability)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                                1-Always detected</option>
-                                                                            <option value="2"
-                                                                                {{ (unserialize($data->initial_probability)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                                2-Likely to detect</option>
-                                                                            <option value="3"
-                                                                                {{ (unserialize($data->initial_probability)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                                3-Possible to detect</option>
-                                                                            <option value="4"
-                                                                                {{ (unserialize($data->initial_probability)[$key] ?? null) == 4 ? 'selected' : '' }}>
-                                                                                4-Unlikely to detect</option>
-                                                                            <option value="5"
-                                                                                {{ (unserialize($data->initial_probability)[$key] ?? null) == 5 ? 'selected' : '' }}>
-                                                                                5-Not detectable</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input name="initial_rpn[]" class='initial-rpn'
-                                                                            readonly
-                                                                            value="{{ unserialize($data->initial_rpn)[$key] ?? null }}">
-                                                                    </td>
-                                                                    <td>
-                                                                        <select onchange="calculateInitialResult(this)"
-                                                                            class="fieldR" name="risk_acceptance[]"
-                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                            <option value="">-- Select --</option>
-                                                                            <option value="Y"
-                                                                                {{ (unserialize($data->risk_acceptance)[$key] ?? null) == 'Y' ? 'selected' : '' }}>
-                                                                                Y</option>
-                                                                            <option value="N"
-                                                                                {{ (unserialize($data->risk_acceptance)[$key] ?? null) == 'N' ? 'selected' : '' }}>
-                                                                                N</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input name="risk_control_measure[]"
-                                                                            type="text"
-                                                                            value="{{ unserialize($data->risk_control_measure)[$key] ?? null }}"
-                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                    </td>
-                                                                    <td>
-                                                                        <select onchange="calculateResidualResult(this)"
-                                                                            class="residual-fieldR"
-                                                                            name="residual_severity[]"
-                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                            <option value="">-- Select --</option>
-                                                                            <option value="1"
-                                                                                {{ (unserialize($data->residual_severity)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                                1-Insignificant</option>
-                                                                            <option value="2"
-                                                                                {{ (unserialize($data->residual_severity)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                                2-Minor</option>
-                                                                            <option value="3"
-                                                                                {{ (unserialize($data->residual_severity)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                                3-Major</option>
-                                                                            <option value="4"
-                                                                                {{ (unserialize($data->residual_severity)[$key] ?? null) == 4 ? 'selected' : '' }}>
-                                                                                4-Critical</option>
-                                                                            <option value="5"
-                                                                                {{ (unserialize($data->residual_severity)[$key] ?? null) == 5 ? 'selected' : '' }}>
-                                                                                5-Catastrophic</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <select onchange="calculateResidualResult(this)"
-                                                                            class="residual-fieldP"
-                                                                            name="residual_probability[]"
-                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                            <option value="">-- Select --</option>
-                                                                            <option value="1"
-                                                                                {{ (unserialize($data->residual_probability)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                                1-Very rare</option>
-                                                                            <option value="2"
-                                                                                {{ (unserialize($data->residual_probability)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                                2-Unlikely</option>
-                                                                            <option value="3"
-                                                                                {{ (unserialize($data->residual_probability)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                                3-Possibly</option>
-                                                                            <option value="4"
-                                                                                {{ (unserialize($data->residual_probability)[$key] ?? null) == 4 ? 'selected' : '' }}>
-                                                                                4-Likely</option>
-                                                                            <option value="5"
-                                                                                {{ (unserialize($data->residual_probability)[$key] ?? null) == 5 ? 'selected' : '' }}>
-                                                                                5-Almost certain (every time)</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <select onchange="calculateResidualResult(this)"
-                                                                            class="residual-fieldN"
-                                                                            name="residual_detectability[]"
-                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                            <option value="">-- Select --</option>
-                                                                            <option value="1"
-                                                                                {{ (unserialize($data->residual_detectability)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                                1-Always detected</option>
-                                                                            <option value="2"
-                                                                                {{ (unserialize($data->residual_detectability)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                                2-Likely to detect</option>
-                                                                            <option value="3"
-                                                                                {{ (unserialize($data->residual_detectability)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                                3-Possible to detect</option>
-                                                                            <option value="4"
-                                                                                {{ (unserialize($data->residual_detectability)[$key] ?? null) == 4 ? 'selected' : '' }}>
-                                                                                4-Unlikely to detect</option>
-                                                                            <option value="5"
-                                                                                {{ (unserialize($data->residual_detectability)[$key] ?? null) == 5 ? 'selected' : '' }}>
-                                                                                5-Not detectable</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input name="residual_rpn[]" class='residual-rpn'
-                                                                            readonly
-                                                                            value="{{ unserialize($data->residual_rpn)[$key] ?? null }}">
-                                                                    </td>
-                                                                    <td>
-                                                                        <select onchange="calculateInitialResult(this)"
-                                                                            class="fieldR" name="risk_acceptance2[]"
-                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                            <option value="">-- Select --</option>
-                                                                            <option value="Y"
-                                                                                {{ (unserialize($data->risk_acceptance2)[$key] ?? null) == 'Y' ? 'selected' : '' }}>
-                                                                                Y</option>
-                                                                            <option value="N"
-                                                                                {{ (unserialize($data->risk_acceptance2)[$key] ?? null) == 'N' ? 'selected' : '' }}>
-                                                                                N</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input name="mitigation_proposal[]" type="text"
-                                                                            value="{{ unserialize($data->mitigation_proposal)[$key] ?? null }}"
-                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                    </td>
-                                                                    <td><button type="text" class="removeRowBtn"
-                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Remove</button>
-                                                                    </td>
-                                                                </tr>
-                                                            @endforeach
-                                                        @endif
-                                                    </tbody>
-                                                </table>
-                                            </div>
                                         </div>
                                     </div>
                                     {{--  <div class="col-12 sub-head"></div>  --}}
@@ -1748,6 +1598,14 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-12 " id="root-cause-others"style="display:none;">
+                                        <div class="group-input">
+                                            <label for="root_cause_Others">Others</label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if
+                                                    it does not require completion</small></div>
+                                            <textarea name="root_cause_Others"  >{{ $data->root_cause_Others }}</textarea>
+                                        </div>
+                                    </div>
 
 
                                 </div>
@@ -1854,12 +1712,12 @@
                                     </div>
 
 
-                                    <div class="col-12">
+                                    {{-- <div class="col-12">
                                         <div class="group-input">
                                             <label for="root_cause_description">Root Cause Description</label>
                                             <textarea name="root_cause_description_rca"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->root_cause_description_rca }}</textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="investigation_summary">Investigation Summary</label>
@@ -2715,55 +2573,64 @@
                 var cell4 = newRow.insertCell(3);
                 cell4.innerHTML = "<input name='problem_cause[]' type='text'>";
 
+                // var cell5 = newRow.insertCell(4);
+                // cell5.innerHTML = "<input name='existing_risk_control[]' type='text'>";
+
                 var cell5 = newRow.insertCell(4);
-                cell5.innerHTML = "<input name='existing_risk_control[]' type='text'>";
+                cell5.innerHTML =
+                    "<select onchange='calculateInitialResult(this)' class='fieldR' name='initial_severity[]'><option value=''>-- Select --</option><option value='1'>1-Insignificant</option><option value='2'>2-Minor</option><option value='3'>3-Major</option><option value='4'>4-Critical</option><option value='5'>5-Catastrophic</option></select>";
+                    //  "<input name='initial_severity[]' type='text'>";
 
                 var cell6 = newRow.insertCell(5);
                 cell6.innerHTML =
-                    "<select onchange='calculateInitialResult(this)' class='fieldR' name='initial_severity[]'><option value=''>-- Select --</option><option value='1'>1-Insignificant</option><option value='2'>2-Minor</option><option value='3'>3-Major</option><option value='4'>4-Critical</option><option value='5'>5-Catastrophic</option></select>";
+                    "<select onchange='calculateInitialResult(this)' class='fieldP' name='initial_probability[]'><option value=''>-- Select --</option><option value='1'>1-Very rare</option><option value='2'>2-Unlikely</option><option value='3'>3-Possibly</option><option value='4'>4-Likely</option><option value='5'>5-Almost certain (every time)</option></select>";
 
                 var cell7 = newRow.insertCell(6);
                 cell7.innerHTML =
-                    "<select onchange='calculateInitialResult(this)' class='fieldP' name='initial_probability[]'><option value=''>-- Select --</option><option value='1'>1-Very rare</option><option value='2'>2-Unlikely</option><option value='3'>3-Possibly</option><option value='4'>4-Likely</option><option value='5'>5-Almost certain (every time)</option></select>";
-
-                var cell8 = newRow.insertCell(7);
-                cell8.innerHTML =
                     "<select onchange='calculateInitialResult(this)' class='fieldN' name='initial_detectability[]'><option value=''>-- Select --</option><option value='1'>1-Always detected</option><option value='2'>2-Likely to detect</option><option value='3'>3-Possible to detect</option><option value='4'>4-Unlikely to detect</option><option value='5'>5-Not detectable</option></select>";
 
+                var cell8 = newRow.insertCell(7);
+                cell8.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn' readonly>";
+
+                // var cell10 = newRow.insertCell(9);
+                // cell10.innerHTML =
+                //     "<select name='risk_acceptance[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
+
                 var cell9 = newRow.insertCell(8);
-                cell9.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn' readonly>";
+                cell9.innerHTML = "<input name='risk_control_measure[]' type='text'>";
 
                 var cell10 = newRow.insertCell(9);
                 cell10.innerHTML =
-                    "<select name='risk_acceptance[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
+                    "<select onchange='calculateResidualResult(this)' class='residual-fieldR' name='residual_severity[]'><option value=''>-- Select --</option><option value='1'>1-Insignificant</option><option value='2'>2-Minor</option><option value='3'>3-Major</option><option value='4'>4-Critical</option><option value='5'>5-Catastrophic</option></select>";
 
                 var cell11 = newRow.insertCell(10);
-                cell11.innerHTML = "<input name='risk_control_measure[]' type='text'>";
+                cell11.innerHTML =
+                    "<select onchange='calculateResidualResult(this)' class='residual-fieldP' name='residual_probability[]'><option value=''>-- Select --</option><option value='1'>1-Very rare</option><option value='2'>2-Unlikely</option><option value='3'>3-Possibly</option><option value='4'>4-Likely</option><option value='5'>5-Almost certain (every time)</option></select>";
 
                 var cell12 = newRow.insertCell(11);
                 cell12.innerHTML =
-                    "<select onchange='calculateResidualResult(this)' class='residual-fieldR' name='residual_severity[]'><option value=''>-- Select --</option><option value='1'>1-Insignificant</option><option value='2'>2-Minor</option><option value='3'>3-Major</option><option value='4'>4-Critical</option><option value='5'>5-Catastrophic</option></select>";
-
-                var cell13 = newRow.insertCell(12);
-                cell13.innerHTML =
-                    "<select onchange='calculateResidualResult(this)' class='residual-fieldP' name='residual_probability[]'><option value=''>-- Select --</option><option value='1'>1-Very rare</option><option value='2'>2-Unlikely</option><option value='3'>3-Possibly</option><option value='4'>4-Likely</option><option value='5'>5-Almost certain (every time)</option></select>";
-
-                var cell14 = newRow.insertCell(13);
-                cell14.innerHTML =
                     "<select onchange='calculateResidualResult(this)' class='residual-fieldN' name='residual_detectability[]'><option value=''>-- Select --</option><option value='1'>1-Always detected</option><option value='2'>2-Likely to detect</option><option value='3'>3-Possible to detect</option><option value='4'>4-Unlikely to detect</option><option value='5'>5-Not detectable</option></select>";
 
-                var cell15 = newRow.insertCell(14);
-                cell15.innerHTML = "<input name='residual_rpn[]' type='text' class='residual-rpn' readonly>";
+                var cell13 = newRow.insertCell(12);
+                cell13.innerHTML = "<input name='residual_rpn[]' type='text' class='residual-rpn' readonly>";
+                var cell14 = newRow.insertCell(13);
+                cell14.innerHTML =
+                    "<select name='risk_acceptance[]' class='risk-acceptance' readonly>" +
+                    "<option value=''>-- Select --</option>" +
+                    "<option value='Low'>Low</option>" +
+                    "<option value='Medium'>Medium</option>" +
+                    "<option value='High'>High</option>" +
+                    "</select>";
 
-                var cell16 = newRow.insertCell(15);
-                cell16.innerHTML =
-                    "<select name='risk_acceptance2[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
+                    var cell15 = newRow.insertCell(14);
+                    cell15.innerHTML =
+                        "<select name='risk_acceptance2[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
 
-                var cell17 = newRow.insertCell(16);
-                cell17.innerHTML = "<input name='mitigation_proposal[]' type='text'>";
+                    var cell16 = newRow.insertCell(15);
+                    cell16.innerHTML = "<input name='mitigation_proposal[]' type='text'>";
 
-                var cell18 = newRow.insertCell(17);
-                cell18.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
+                    var cell17 = newRow.insertCell(16);
+                    cell17.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
 
                 for (var i = 1; i < currentRowCount; i++) {
                     var row = table.rows[i];
@@ -3013,6 +2880,8 @@
                     $('#fishbone-section').hide();
                     $('#HideInference').hide();
                     $('#is-is-not-section').hide();
+                    $('#root-cause-others').hide();
+
 
                     // Show sections based on the selected values
                     selectedValues.forEach(function(value) {
@@ -3029,6 +2898,9 @@
                         if (value === 'Is/Is Not Analysis') {
                             $('#is-is-not-section').show();
                         }
+                        if (selectedValues.includes('Rootcauseothers')) {
+                            $('#root-cause-others').show();
+                         }
                     });
                 });
 
