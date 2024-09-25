@@ -606,7 +606,7 @@ class LabIncidentController extends Controller
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Record Number';
             $history->previous = "Null";
-            $history->current = $data->record;
+            $history->current = Helpers::getDivisionName(session()->get('division')) . "/LI/" . Helpers::year($data->created_at) . "/" . str_pad($data->record, 4, '0', STR_PAD_LEFT);;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1650,7 +1650,7 @@ class LabIncidentController extends Controller
         if (!empty($data->attachments_ia)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Attachments';
+            $history->activity_type = 'Immidiate Action Attachments';
             $history->previous = "Null";
             $history->current = $data->attachments_ia;
             $history->comment = "Not Applicable";
@@ -3920,7 +3920,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
         if ($lastDocument->incident_stability_cond_gi != $data->incident_stability_cond_gi ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Stability';
+            $history->activity_type = 'Stability Condition (If Applicable)';
             $history->previous = $lastDocument->incident_stability_cond_gi;
             $history->current = $data->incident_stability_cond_gi;
             $history->comment = $request->incident_stability_cond_gi_comment;
@@ -3987,7 +3987,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'Attachments';
+            $history->activity_type = 'Immidiate Action Attachments';
             $history->previous = $lastDocument->attachments_ia;
             $history->current = $data->attachments_ia;
             $history->comment = $request->attachments_ia_comment;
@@ -4416,7 +4416,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'QA Secondary Review Comment';
+            $history->activity_type = 'QA Secondary Review Comments';
             $history->previous = $lastDocument->QA_secondry_Comments;
             $history->current = $data->QA_secondry_Comments;
             $history->comment = $request->QA_Review_Comments_comment;
@@ -4439,7 +4439,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'QA Secondary Review Attachment';
+            $history->activity_type = 'QA Secondary Review Attachments';
             $history->previous = $lastDocument->QA_secondery_Attachment;
             $history->current = $data->QA_secondery_Attachment;
             $history->comment = $request->QA_Review_Comments_comment;
@@ -5592,7 +5592,7 @@ if ($lastDocument->type_incidence_ia != $data->type_incidence_ia) {
 if ($lastDocument->investigator_qc != $data->investigator_qc) {
     $history = new LabIncidentAuditTrial();
     $history->LabIncident_id = $id;
-    $history->activity_type = 'Investigator(QC)';
+    $history->activity_type = 'QC Head/HOD Person';
     $history->previous = Helpers::getInitiatorName($lastDocument->investigator_qc);
     $history->current = Helpers::getInitiatorName($data->investigator_qc);
     $history->comment = $request->investigator_qc_comment ?? "Not Applicable";
@@ -6450,7 +6450,7 @@ $suitabilityReport->save();
                 return back();
             }
                 if ($changeControl->stage == 4) {
-                    if (empty($changeControl->Investigation_Details && $changeControl->Action_Taken && $changeControl->Root_Cause   ))
+                    if (empty($changeControl->Investigation_Details))
                     {
                         Session::flash('swal', [
                             'type' => 'warning',
@@ -6676,7 +6676,7 @@ $suitabilityReport->save();
             }
 
             if ($changeControl->stage == 7) {
-                if (empty($changeControl->closure_incident_cclosure_incident_c))
+                if (empty($changeControl->qa_hear_remark_c))
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
