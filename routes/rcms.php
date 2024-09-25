@@ -80,6 +80,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('actionitemSingleReport/{id}', [ActionItemController::class, 'singleReport'])->name('actionitemSingleReport');
             Route::get('actionitemAuditReport/{id}', [ActionItemController::class, 'auditReport'])->name('actionitemAuditReport');
             Route::get('actionitemauditTrailPdf/{id}', [ActionItemController::class, 'auditTrailPdf'])->name('actionitemauditTrailPdf');
+            Route::get('/actionItemFilter/{id}',[ActionItemController::class,'audit_trail_filter_action'])->name('actionItemFilter');
 
             Route::get('effective-audit-trial-show/{id}', [EffectivenessCheckController::class, 'effectiveAuditTrialShow'])->name('show_effective_AuditTrial');
             Route::get('effective-audit-trial-details/{id}', [EffectivenessCheckController::class, 'effectiveAuditTrialDetails'])->name('show_audittrial_effective');
@@ -458,6 +459,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('send-post-implementation/{id}', [CCController::class, 'sentoPostImplementation'])->name('send-post-implementation');
             Route::post('moreinfoState_actionitem/{id}', [ActionItemController::class, 'actionmoreinfo']);
             Route::post('LabIncidentStateCancel/{id}', [LabIncidentController::class, 'LabIncidentStateCancel'])->name('StageChangeLabcancel');
+            
 
         }
     );

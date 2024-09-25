@@ -1185,47 +1185,47 @@
                                                 {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
                                                 id="initiator_group">
                                                 <option value="">-- Select --</option>
-                                                <option value="CQC" @if ($data->Initiator_Group == 'CQC') selected @endif>
+                                                <option value="Corporate Quality Assurance" @if ($data->Initiator_Group == 'Corporate Quality Assurance') selected @endif>
                                                     Corporate Quality Assurance</option>
-                                                <option value="QA" @if ($data->Initiator_Group == 'QA') selected @endif>
+                                                <option value="Quality Assurance" @if ($data->Initiator_Group == 'Quality Assurance') selected @endif>
                                                     Quality Assurance</option>
-                                                <option value="QC" @if ($data->Initiator_Group == 'QC') selected @endif>
+                                                <option value="Quality Control" @if ($data->Initiator_Group == 'Quality Control') selected @endif>
                                                     Quality Control</option>
-                                                <option value="QM" @if ($data->Initiator_Group == 'QM') selected @endif>
+                                                <option value="Quality Control (Microbiology department)" @if ($data->Initiator_Group == 'Quality Control (Microbiology department)') selected @endif>
                                                     Quality Control (Microbiology department)</option>
-                                                <option value="PG" @if ($data->Initiator_Group == 'PG') selected @endif>
+                                                <option value="Production General" @if ($data->Initiator_Group == 'Production General') selected @endif>
                                                     Production General</option>
-                                                <option value="PL" @if ($data->Initiator_Group == 'PL') selected @endif>
+                                                <option value="Production Liquid Orals" @if ($data->Initiator_Group == 'Production Liquid Orals') selected @endif>
                                                     Production Liquid Orals</option>
-                                                <option value="PT" @if ($data->Initiator_Group == 'PT') selected @endif>
+                                                <option value="Production Tablet and Powder" @if ($data->Initiator_Group == 'Production Tablet and Powder') selected @endif>
                                                     Production Tablet and Powder</option>
-                                                <option value="PE" @if ($data->Initiator_Group == 'PE') selected @endif>
+                                                <option value="Production External (Ointment, Gels, Creams and Liquid)" @if ($data->Initiator_Group == 'Production External (Ointment, Gels, Creams and Liquid)') selected @endif>
                                                     Production External (Ointment, Gels, Creams and Liquid)</option>
-                                                <option value="PC" @if ($data->Initiator_Group == 'PC') selected @endif>
+                                                <option value="Production Capsules" @if ($data->Initiator_Group == 'Production Capsules') selected @endif>
                                                     Production Capsules</option>
-                                                <option value="PI" @if ($data->Initiator_Group == 'PI') selected @endif>
+                                                <option value="Production Injectable" @if ($data->Initiator_Group == 'Production Injectable') selected @endif>
                                                     Production Injectable</option>
-                                                <option value="EN" @if ($data->Initiator_Group == 'EN') selected @endif>
+                                                <option value="Engineering" @if ($data->Initiator_Group == 'Engineering') selected @endif>
                                                     Engineering</option>
-                                                <option value="HR" @if ($data->Initiator_Group == 'HR') selected @endif>
+                                                <option value="Human Resource" @if ($data->Initiator_Group == 'Human Resource') selected @endif>
                                                     Human Resource</option>
-                                                <option value="ST" @if ($data->Initiator_Group == 'ST') selected @endif>
+                                                <option value="Store" @if ($data->Initiator_Group == 'Store') selected @endif>
                                                     Store</option>
-                                                <option value="IT" @if ($data->Initiator_Group == 'IT') selected @endif>
+                                                <option value="Electronic Data Processing" @if ($data->Initiator_Group == 'Electronic Data Processing') selected @endif>
                                                     Electronic Data Processing</option>
-                                                <option value="FD" @if ($data->Initiator_Group == 'FD') selected @endif>
+                                                <option value="Formulation Development" @if ($data->Initiator_Group == 'Formulation Development') selected @endif>
                                                     Formulation Development</option>
-                                                <option value="AL" @if ($data->Initiator_Group == 'AL') selected @endif>
+                                                <option value="Analytical research and Development Laboratory" @if ($data->Initiator_Group == 'Analytical research and Development Laboratory') selected @endif>
                                                     Analytical research and Development Laboratory</option>
-                                                <option value="PD" @if ($data->Initiator_Group == 'PD') selected @endif>
+                                                <option value="Packaging Development" @if ($data->Initiator_Group == 'Packaging Development') selected @endif>
                                                     Packaging Development</option>
-                                                <option value="PU" @if ($data->Initiator_Group == 'PU') selected @endif>
+                                                <option value="Purchase Department" @if ($data->Initiator_Group == 'Purchase Department') selected @endif>
                                                     Purchase Department</option>
-                                                <option value="DC" @if ($data->Initiator_Group == 'DC') selected @endif>
+                                                <option value="Document Cell" @if ($data->Initiator_Group == 'Document Cell') selected @endif>
                                                     Document Cell</option>
-                                                <option value="RA" @if ($data->Initiator_Group == 'RA') selected @endif>
+                                                <option value="Regulatory Affairs" @if ($data->Initiator_Group == 'Regulatory Affairs') selected @endif>
                                                     Regulatory Affairs</option>
-                                                <option value="PV" @if ($data->Initiator_Group == 'PV') selected @endif>
+                                                <option value="Pharmacovigilance" @if ($data->Initiator_Group == 'Pharmacovigilance') selected @endif>
                                                     Pharmacovigilance</option>
                                             </select>
                                         </div>
@@ -2076,12 +2076,13 @@
                                                 @if ($users->isNotEmpty())
                                                     @foreach ($users as $value)
                                                         <option {{ $data->Hod_person_to == $value->id ? 'selected' : '' }}
-                                                            value='{{ $value->id }}'>{{ $value->name }}</option>
+                                                            value='{{ $value->name }}'>{{ $value->name }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
                                         </div>
                                     </div>
+
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -2092,7 +2093,7 @@
                                                 @if ($users->isNotEmpty())
                                                     @foreach ($users as $value)
                                                         <option {{ $data->Reviewer_to == $value->id ? 'selected' : '' }}
-                                                            value='{{ $value->id }}'>{{ $value->name }}</option>
+                                                            value='{{ $value->name }}'>{{ $value->name }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
@@ -2108,7 +2109,7 @@
                                                 @if ($users->isNotEmpty())
                                                     @foreach ($users as $value)
                                                         <option {{ $data->Approver_to == $value->id ? 'selected' : '' }}
-                                                            value='{{ $value->id }}'>{{ $value->name }}</option>
+                                                            value='{{ $value->name }}'>{{ $value->name }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
