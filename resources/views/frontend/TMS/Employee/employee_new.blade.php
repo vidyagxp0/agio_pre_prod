@@ -93,7 +93,7 @@ $userDetails = DB::table('users')
         <div class="cctab">
 
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Employee</button>
-            <button class="cctablinks " onclick="openCity(event, 'CCForm2')">External Training</button>
+            <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm2')">External Training</button> -->
             <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm12')">Induction Training</button> -->
             <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
 
@@ -163,7 +163,7 @@ $userDetails = DB::table('users')
 
 
 
-    <div class="col-lg-6 new-date-data-field">
+    <!-- <div class="col-lg-6 new-date-data-field">
         <div class="group-input input-date">
             <label for="Actual Start Date">Actual Start Date</label>
             <div class="calenderauditee">
@@ -171,7 +171,7 @@ $userDetails = DB::table('users')
                 <input type="date" name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" class="hide-input" oninput="handleDateInput(this, 'start_date')" />
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="col-lg-6">
     <div class="group-input">
         <label for="Prefix">Prefix<span class="text-danger">*</span></label>
@@ -275,13 +275,13 @@ function toggleInputBox() {
     <div class="col-lg-6">
         <div class="group-input">
             <label for="employee_name">Other Department</label>
-            <input type="text" name="other_department" required>
+            <input type="text" name="other_department">
         </div>
     </div>
     <div class="col-lg-6">
         <div class="group-input">
             <label for="employee_name">Other Designation<label>
-            <input type="text" name="other_designation" required>
+            <input type="text" name="other_designation">
         </div>
     </div>
     <div class="col-lg-6">
@@ -372,7 +372,7 @@ function toggleInputBox() {
 
 
     <div class="col-12 sub-head">
-        Employee Information
+        Employee Address Details
     </div>
     <!-- <div class="col-lg-6">
         <div class="group-input">
