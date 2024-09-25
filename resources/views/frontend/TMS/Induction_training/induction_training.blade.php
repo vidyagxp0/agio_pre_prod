@@ -633,9 +633,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                 </div>
                             </div>
 
-                            $php
-                             $users = DB::table('users')->get();
-                            $endphp
+                         
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="severity-level">Trainer Name</label>
