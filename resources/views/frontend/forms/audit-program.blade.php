@@ -178,8 +178,8 @@ DATA FIELDS
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Audit Program</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Self Inspection Circular</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD Designee</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA/QA Head</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD/Designee Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA/QA Head Approval</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Activity Log</button>
         </div>
         <form action="{{ route('createAuditProgram') }}" method="post" enctype="multipart/form-data">
@@ -557,8 +557,10 @@ DATA FIELDS
                                 <label for="Year">Yearly Planner</label>
                                 <select name="year" id="year">
                                     <option value="">-- Select --</option>
-                                    <option value="Yearly">Yearly</option>
-                                    <option value="Monthly">Monthly</option>
+                                    <option value="Deviation">Deviation</option>
+                                    <option value="CAPA">CAPA</option>
+                                    <option value="Lab Incident">Lab Incident</option>
+                                    <option value="Internal Audit">Internal Audit</option>
                                     <option value="Other">Other</option>
                                 </select>
                             </div>
@@ -949,18 +951,18 @@ DATA FIELDS
                 <div class="inner-block-content">
                     <div class="row">
                         <div class="col-12">
-                            <div class="sub-head">HOD Review
+                            <div class="sub-head">HOD/Designee Review
                             </div>
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="comment">HOD Comments</label>
+                                    <label for="comment">HOD/Designee Review Comments</label>
                                     <textarea name="hod_comment"></textarea>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Inv Attachments">HOD File Attachment</label>
+                                    <label for="Inv Attachments">HOD/Designee Review Attached Files</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -989,17 +991,17 @@ DATA FIELDS
                 <div class="inner-block-content">
                     <div class="row">
                         <div class="col-12">
-                            <div class="sub-head">CQA/QA Review
+                            <div class="sub-head">CQA/QA Approval
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="comment">CQA/QA Comments</label>
+                                    <label for="comment">CQA/QA Approval Comments</label>
                                     <textarea name="cqa_qa_comment"></textarea>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Inv Attachments">CQA/QA File Attachment</label>
+                                    <label for="Inv Attachments">CQA/QA Attached Files</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
