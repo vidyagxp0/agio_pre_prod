@@ -642,8 +642,9 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Initial Review</button>
+                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA Head Designee Approval</button>--}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Initiator Update</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm14')">HOD Final Review  </button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm14')">HOD Final Review</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Extension</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Final Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QAH/Designee Closure Approval</button>
@@ -753,8 +754,8 @@
 
                                     </div>
                                 </div>
-                                
-                               
+
+
 
                                 <script>
                                     // Format the due date to DD-MM-YYYY
@@ -833,7 +834,77 @@
                                         @enderror
                                     </div>
                                 </div> --}}
-                                <div class="col-lg-6">
+
+        {{--new department--}}
+
+                        {{--<div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Short Description">Initiator Department <span
+                                        class="text-danger"></span></label>
+                                <select name="Initiator_Group" id="Initiator_Group">
+                                    <option selected disabled value="">---select---</option>
+                                    @foreach (Helpers::getInitiatorGroups() as $code => $Initiator_Group)
+                                        <option value="{{ $Initiator_Group }}"
+                                            data-code="{{ $code }}"
+                                            @if (isset($data->Initiator_Group) && $data->Initiator_Group == $Initiator_Group)
+                                                    selected
+                                                @endif>
+                                            {{ $Initiator_Group }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>--}}
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group"><b>Initiation Department
+                                </b> <span
+                                        class="text-danger">*</span></label>
+                                <select name="Initiator_Group" id="initiator_group">
+                                        <option value="">Select Department</option>
+                                        <option value="CQA">Corporate Quality Assurance</option>
+                                        <option value="QA">Quality Assurance</option>
+                                        <option value="QC">Quality Control</option>
+                                        <option value="QM">Quality Control (Microbiology department)</option>
+                                        <option value="PG">Production General</option>
+                                        <option value="PL">Production Liquid Orals</option>
+                                        <option value="PT">Production Tablet and Powder</option>
+                                        <option value="PE">Production External (Ointment, Gels, Creams and
+                                            Liquid)</option>
+                                        <option value="PC">Production Capsules</option>
+                                        <option value="PI">Production Injectable</option>
+                                        <option value="EN">Engineering</option>
+                                        <option value="HR">Human Resource</option>
+                                        <option value="ST">Store</option>
+                                        <option value="IT">Electronic Data Processing</option>
+                                        <option value="FD">Formulation Development</option>
+                                        <option value="AL">Analytical research and Development Laboratory
+                                        </option>
+                                        <option value="PD">Packaging Development</option>
+                                        <option value="PU">Purchase Department</option>
+                                        <option value="DC">Document Cell</option>
+                                        <option value="RA">Regulatory Affairs</option>
+                                        <option value="PV">Pharmacovigilance</option>
+
+                                </select>
+                            </div>
+                            {{--@error('Initiator_Group')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror--}}
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group Code">Initiation Department Code</label>
+                                <input readonly type="text" name="initiator_group_code"
+                                    id="initiator_group_code"
+                                    value="{{ $data->initiator_group_code ?? '' }}">
+                            </div>
+                        </div>
+
+                                {{--<div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="initiator-group">Initiation Department </label>
                                         <select name="Initiator_Group" id="Initiator_group">
@@ -861,19 +932,20 @@
                                                 <option value="DC">Document Cell</option>
                                                 <option value="RA">Regulatory Affairs</option>
                                                 <option value="PV">Pharmacovigilance</option>
-                                        </select>
+                                        </select>--}}
                                         {{-- @error('Initiator_Group')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror --}}
-                                    </div>
+                                    {{--</div>
                                 </div>
-                                {{-- <div class="col-lg-6">
+
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Department Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
                                             value="" readonly>
                                     </div>
-                                </div> --}}
+                                </div>--}}
 
                                 {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
@@ -994,7 +1066,7 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Incident date">Incident Observed On</label>
+                                        <label for="Incident date">Incident Observed On (Date)</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="incident_date" readonly placeholder="DD-MM-YYYY" />
                                             {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
@@ -1096,8 +1168,8 @@
                                         <label for="audit type">Incident Related To </label>
                                         <select multiple name="audit_type[]" id="audit_type">
                                             {{-- <option value="">Enter Your Selection Here</option> --}}
-                                            <option value="Equipment/Instrument">Equipment/ Instrument/System </option>
-                                            <option value="Material_System">Material  </option>
+                                            <option value="Equipment/Instrument">Equipment/Instrument/System </option>
+                                            <option value="Material_System">Material</option>
                                             <option value="process">Process</option>
                                             <option value="Anyother(specify)">Any other (specify) </option>
                                             {{-- <option value="Documentationerror">Documentation error </option>
@@ -1327,10 +1399,10 @@
                                                 <tr>
                                                     <th style="width: 4%">Row#</th>
                                                     <th style="width: 12%">Document Number</th>
-                                                    <th style="width: 16%"> Reference Document Name</th>
-                                                    <th style="width: 16%"> Remarks</th>
-                                                    <th style="width: 8%"> Action</th>
-
+                                                    {{--<th style="width: 16%"> Reference Document Name</th>--}}
+                                                    <th style="width: 16%">Document Name</th>
+                                                    <th style="width: 16%">Remarks</th>
+                                                    <th style="width: 8%">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1394,7 +1466,7 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Product Details Required">Product/Batch Details Required?</label>
+                                        <label for="Product Details Required">Product / Material Details Required?</label>
                                         <select name=" Product_Details_Required" id="Product_Details_Required">
                                             <option value="">--Select --</option>
                                             <option value="yes">Yes</option>
@@ -1408,7 +1480,8 @@
                                 <div class="col-lg-12">
                                     <div class="group-input" id="productRow" style="display: none">
                                         <label for="audit-agenda-grid">
-                                            Product/Batch Details
+                                            Product / Material Details
+                                                    {{--Batch--}}
                                             <button type="button" name="audit-agenda-grid"
                                                 id="Product_Details">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
@@ -1423,9 +1496,9 @@
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 4%">Row#</th>
-                                                        <th style="width: 12%">Product</th>
+                                                        <th style="width: 12%">Product / Material</th>
                                                         <th style="width: 16%"> Stage</th>
-                                                        <th style="width: 16%">Batch No</th>
+                                                        <th style="width: 16%">A.R.No. / Batch No</th>
                                                         <th style="width: 8%">Action</th>
                                                     </tr>
                                                 </thead>
@@ -1699,7 +1772,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -1732,22 +1805,22 @@
                             grid-template-columns: auto auto;
                             align-items: center;
                         }
-                    
+
                         .form-section > div {
                             padding: 10px;
                         }
-                    
+
                         /* .divider {
                             width: 2px;
                             background-color: black;
                             height: 100%;
                         } */
-                    
+
                         .radio-group {
                             display: flex;
                             flex-direction: column;
                         }
-                    
+
                         label {
                             font-weight: bold;
                         }
@@ -1756,11 +1829,11 @@
                             gap:20px;
                             border: 2px solid gray;
                             padding: 10px;
-                            
+
                             border-radius: 5px;
                         }
                     </style>
-                    
+
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -1780,7 +1853,7 @@
                                             </div>
                                         </div>
                                         <br>
-                                
+
                                         <!-- Process Performance Impact -->
                                         <div class="main-group">
                                            <div>
@@ -1793,7 +1866,7 @@
                                         </div>
                                         </div>
                                         <br>
-                                
+
                                         <!-- Yield Impact -->
                                         <div class="main-group">
                                             <div>
@@ -1804,11 +1877,11 @@
                                             <label><input type="checkbox" name="yield_impact" value="no" onclick="selectOne(this)"> No</label>
                                             <label><input type="checkbox" name="yield_impact" value="na" onclick="selectOne(this)"> N/A</label>
                                         </div>
-                                       
+
                                         </div>
                                         <br>
 
-                                
+
                                         <!-- GMP Impact -->
                                         <div class="main-group">
                                             <div>
@@ -1819,7 +1892,7 @@
                                             <label><input type="checkbox" name="gmp_impact" value="no" onclick="selectOne(this)"> No</label>
                                             <label><input type="checkbox" name="gmp_impact" value="na" onclick="selectOne(this)"> N/A</label>
                                         </div>
-                                        
+
                                         </div>
                                         <br>
                                         <div class="main-group">
@@ -1832,9 +1905,9 @@
                                             <label><input type="checkbox" name="additionl_testing_required" value="no" onclick="selectOne(this)"> No</label>
                                             <label><input type="checkbox" name="additionl_testing_required" value="na" onclick="selectOne(this)"> N/A</label>
                                         </div>
-                                        </div>  
+                                        </div>
                                         <br>
-                                         
+
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
                                             <label for="QAInitialRemark">If Yes, Then Mention:</label>
@@ -1843,12 +1916,12 @@
                                             <textarea class="tiny" name="any_similar_incident_in_past"></textarea>
                                         </div>
                                     </div>
-    
-    
-                                
+
+
+
                                     <!-- Vertical Line Divider -->
                                     <div class="divider"></div>
-                                
+
                                     <!-- Right Column -->
                                     <div>
                                         <div class="main-group">
@@ -1861,9 +1934,9 @@
                                             <label><input type="checkbox" name="capa_require" value="no" onclick="selectOne(this)"> No</label>
                                             <label><input type="checkbox" name="capa_require" value="na" onclick="selectOne(this)"> N/A</label>
                                         </div>
-                                        </div> 
+                                        </div>
                                         <br>
-                                
+
                                         <!-- Classification by QA -->
                                         <div class="main-group">
                                             <div>
@@ -1904,9 +1977,9 @@
                                 </div>
 
                             </div>
-                                
+
                             </form>
-                               
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
@@ -1931,6 +2004,71 @@
                             </div>
                         </div>
                     </div>
+
+
+                    <!-- ----------QA HEAD Designee Approval-------- -->
+                    <div id="CCForm3" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="col-12 sub-head">
+                                QA Head/Designee Approval
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="HOD Remarks">QA Head/Designee approval comment</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="tiny" name="qa_head_deginee_comment" id="summernote-4"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Audit Attachments">QA Head/Designee approval attachement</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="QA_Desinee_attachments"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="qa_head_deginee_attachments[]"
+                                                    oninput="addMultipleFiles(this, 'QA_Desinee_attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
+                                    class="saveButton">Save </button>
+
+                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
+                                    class="backButton" onclick="previousStep()">Back</button>
+
+                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
+                                    class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;">
+                                    <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                                <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
+                                                class="button  launch_extension" data-bs-toggle="modal"
+                                                data-bs-target="#launch_extension">
+                                                Launch Extension
+                                            </a> -->
+                                {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
+                                        data-bs-target="#effectivenss_extension">
+                                        Launch Effectiveness Check
+                                    </a> --}}
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -1941,7 +2079,7 @@
                                                                 {{-- <script>
                                     function selectOne(checkbox) {
                                                         const checkboxes = checkbox.closest('.checkbox-group').querySelectorAll('input[type="checkbox"]');
-                                                        
+
                                                         checkboxes.forEach((item) => {
                                                             if (item !== checkbox) {
                                                                 item.checked = false; // Uncheck other checkboxes in the group
@@ -1961,60 +2099,60 @@
                                                 <label><input type="checkbox" name="product_quality_imapct" value="na" onclick="selectOne(this)"> N/A</label>
                                             </div>
                                         </div> --}}
-                                      
+
                                         <div class="main-group">
                                             <div>
                                                 <label>CAPA Implementation:</label>
                                             </div>
-                                        
+
                                         <div class="checkbox-group">
                                             <label><input type="checkbox" name="capa_implementation" value="yes" onclick="selectOne(this)"> Yes</label>
                                             <label><input type="checkbox" name="capa_implementation" value="no" onclick="selectOne(this)"> No</label>
                                             <label><input type="checkbox" name="capa_implementation" value="na" onclick="selectOne(this)"> N/A</label>
                                         </div>
-                                        </div>  
+                                        </div>
                                         <br>
-                                
+
                                         <!-- Process Performance Impact -->
                                         <div class="main-group">
                                             <div>
                                                 <label >All check points compiled with (Documentary evidence shall be attached or referred to):</label>
                                             </div>
-                                        
+
                                         <div class="checkbox-group">
                                             <label><input type="checkbox" name="check_points" value="yes" onclick="selectOne(this)"> Yes</label>
                                             <label><input type="checkbox" name="check_points" value="no" onclick="selectOne(this)"> No</label>
                                             <label><input type="checkbox" name="check_points" value="na" onclick="selectOne(this)"> N/A</label>
                                         </div>
-                                        </div> 
+                                        </div>
                                         <br>
-                                
+
                                         <!-- Yield Impact -->
                                         <div class="main-group">
                                             <div>
                                                 <label >Based upon the assessment of the corrective actions planned, whether unplanned deviation is required:</label>
                                             </div>
-                                        
+
                                         <div class="checkbox-group">
                                             <label><input type="checkbox" name="corrective_actions" value="yes" onclick="selectOne(this)"> Yes</label>
                                             <label><input type="checkbox" name="corrective_actions" value="no" onclick="selectOne(this)"> No</label>
                                             <label><input type="checkbox" name="corrective_actions" value="na" onclick="selectOne(this)"> N/A</label>
                                         </div>
-                                       </div> 
+                                       </div>
                                         <br>
-                                
+
                                         <!-- GMP Impact -->
                                         <div class="main-group">
                                             <div>
                                                 <label>Batch release satisfactory:</label>
                                             </div>
-                                        
+
                                           <div class="checkbox-group">
                                             <label><input type="checkbox" name="batch_release" value="yes" onclick="selectOne(this)"> Yes</label>
                                             <label><input type="checkbox" name="batch_release" value="no" onclick="selectOne(this)"> No</label>
                                             <label><input type="checkbox" name="batch_release" value="na" onclick="selectOne(this)"> N/A</label>
                                           </div>
-                                        </div>   
+                                        </div>
                                         <br>
                                         {{-- <div class="col-md-12 mb-3">
                                             <div class="group-input">
@@ -2023,36 +2161,36 @@
                                                 <textarea class="tiny" name="closure_ini" id="summernote-14"></textarea>
                                             </div>
                                         </div> --}}
-                                         
+
                                         <!-- Additional Testing Required -->
                                         <div class="main-group">
                                             <div>
                                                 <label>Affected documents closed:</label>
                                             </div>
-                                        
+
                                         <div class="checkbox-group">
                                             <label><input type="checkbox" name="affected_documents" value="yes" onclick="selectOne(this)"> Yes</label>
                                             <label><input type="checkbox" name="affected_documents" value="no" onclick="selectOne(this)"> No</label>
                                             <label><input type="checkbox" name="affected_documents" value="na" onclick="selectOne(this)"> N/A</label>
                                         </div>
-                                        </div>  
+                                        </div>
                                         <br>
-                                
+
                                         <!-- If Yes, Then Mention -->
-                                       
+
                                     </div>
-                                
+
                                     <!-- Vertical Line Divider -->
                                     <div class="divider"></div>
-                                
+
                                     <!-- Right Column -->
                                     <div>
                                         <!-- Similar Incident in Past -->
 
-                                
+
                                         <!-- Classification by QA -->
-                                        
-                                        
+
+
                                     </div>
                                  </div>
                                       <div class="col-md-12 mb-3">
@@ -2130,7 +2268,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
@@ -2156,31 +2294,31 @@
                             </div>
                         </div>
                     </div>
-                    
+
                        {{-- <script>
                          function selectOne(checkbox) {
                          const checkboxes = document.getElementsByName('additional_testing_required');
-    
+
                            checkboxes.forEach((item) => {
                              if (item !== checkbox) {
                                 item.checked = false; // Uncheck other checkboxes
                                }
-                             });            
+                             });
                                }
 
                         </script>--}}
                         <script>
                             function selectOne(checkbox) {
                                                 const checkboxes = checkbox.closest('.checkbox-group').querySelectorAll('input[type="checkbox"]');
-                                                
+
                                                 checkboxes.forEach((item) => {
                                                     if (item !== checkbox) {
                                                         item.checked = false; // Uncheck other checkboxes in the group
                                                     }
                                                 });
                                             }
-                            </script>    
-                    <script> 
+                            </script>
+                    <script>
                         $(document).ready(function () {
                             // Event listener for Investigation_required dropdown
                             $('#Investigation_required').change(function () {
@@ -2246,9 +2384,9 @@
                             }
                         });
                     </script>
-                  
+
                     <!-- Initiator Update -->
-                    
+
                     <!-- ----------Qa Fina Review-------- -->
                     <div id="CCForm13" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -2384,9 +2522,9 @@
                     </div>
 
                     <!-- QAH-->
-                   
 
-                   
+
+
                 </div>
 
 
@@ -2454,8 +2592,8 @@
                                     <div class="static"></div>
                                 </div>
                             </div> --}}
-                          
-                            
+
+
                             {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="HOD Review Comments">HOD Review Comments :-</label>
@@ -2479,7 +2617,7 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                       
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="QA Initial Review Complete On">QA Initial Review Complete Comment
@@ -3871,6 +4009,27 @@
         //         }
         //     });
         // }); --}}
+
+
+        <script>
+            document.getElementById('Initiator_Group').addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex];
+            var selectedCode = selectedOption.getAttribute('data-code');
+            document.getElementById('initiator_group_code').value = selectedCode;
+            });
+
+            // Set the group code on page load if a value is already selected
+            document.addEventListener('DOMContentLoaded', function() {
+            var initiatorGroupElement = document.getElementById('initiator_group');
+            if (initiatorGroupElement.value) {
+                var selectedOption = initiatorGroupElement.options[initiatorGroupElement.selectedIndex];
+                var selectedCode = selectedOption.getAttribute('data-code');
+                document.getElementById('initiator_group_code').value = selectedCode;
+            }
+            });
+        </script>
+
+
 
         <script>
             document.getElementById('initiator_group').addEventListener('change', function() {

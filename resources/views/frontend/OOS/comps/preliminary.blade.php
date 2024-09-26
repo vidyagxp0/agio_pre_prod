@@ -33,7 +33,7 @@
                         <option value="General-checklist" @if (in_array('General-checklist', $selectedChecklist)) selected @endif>CheckList - General checklist</option>
                         <option value="KF-Potentiometer" @if (in_array('KF-Potentiometer', $selectedChecklist)) selected @endif>CheckList - KF-Potentiometer</option>
                         <option value="RM-PM" @if (in_array('RM-PM', $selectedChecklist)) selected @endif>CheckList - RM-PM Sampling</option>
-                        <option value="Bacterial-Endotoxin-Test" @if (in_array('7', $selectedChecklist)) selected @endif>Checklist - Bacterial Endotoxin Test</option>
+                        <option value="Bacterial-Endotoxin-Test" @if (in_array('Bacterial-Endotoxin-Test', $selectedChecklist)) selected @endif>Checklist - Bacterial Endotoxin Test</option>
                         <option value="Sterility" @if (in_array('Sterility', $selectedChecklist)) selected @endif>Checklist - Sterility</option>
                         <option value="Water-Test" @if (in_array('Water-Test', $selectedChecklist)) selected @endif>Checklist - Microbial limit test/Bioburden and Water Test</option>
                         <option value="Microbial-assay" @if (in_array('Microbial-assay', $selectedChecklist)) selected @endif>Checklist - Microbial assay</option>
@@ -154,7 +154,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Product/Material Name">Phase I Investigation</label>
+                    <label for="Product/Material Name">OOS cause identified</label>
                     <select name="phase_i_investigation_pli" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Yes"{{ $data->phase_i_investigation_pli ==
@@ -245,7 +245,7 @@
                     <input  {{Helpers::isOOSChemical($data->stage)}} type="text" value="{{$data->reference_capa_no_plic}}" name="reference_capa_no_plic" {{ $data->stage == 5 ? '' : 'disabled' }}>
                 </div>
             </div>
-            <div class="col-md-12 mb-4">
+            {{-- <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Root Cause Details</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
@@ -253,7 +253,7 @@
                    {{ $data->root_cause_details_plic }}
                 </textarea>
                 </div>
-            </div>
+            </div> --}}
             {{-- <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Delay Justification for Preliminary Investigation</label>
@@ -304,7 +304,7 @@
             </div> --}}
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">OOS review for similar nature</label>
+                    <label for="Description Deviation">OOS review for Similar Nature</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="review_comments_plir" id="summernote-1"
                         value="" {{Helpers::isOOSChemical($data->stage)}}>{{  $data->review_comments_plir ?  $data->review_comments_plir : '' }}
@@ -312,10 +312,10 @@
                 </div>
             </div>
 
-            <div class="sub-head">OOS Review for Similar Nature</div>
+            {{-- <div class="sub-head">OOS Review for Similar Nature</div> --}}
 
             <!-- ---------------------------grid-1 ---Preliminary Lab Invst. Review----------------------------- -->
-            <div class="group-input">
+            {{-- <div class="group-input">
                 <label for="audit-agenda-grid">
                     Info. On Product/ Material
                     <button type="button" name="audit-agenda-grid" id="oos_capa" {{ $data->stage == 5 ? '' : 'disabled' }}>+</button>
@@ -389,7 +389,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Start Date">Phase IB Inv. Required?</label>
@@ -439,9 +439,9 @@
                     </select>
                 </div>
             </div>
-            {{-- <div class="col-lg-6">
+            <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Audit Start Date">Resampling required</label>
+                    <label for="Audit Start Date">Repeat testing required</label>
                     <select name="repeat_testing_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="YES" {{ $data && $data->repeat_testing_pia == 'YES' ?
@@ -450,7 +450,7 @@
                             'selected' : '' }}>No</option>
                     </select>
                 </div>
-            </div> --}}
+            </div>
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Results of Retest/re-measurement</label>

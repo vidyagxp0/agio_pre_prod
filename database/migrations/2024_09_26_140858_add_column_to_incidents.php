@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('induction_trainings', function (Blueprint $table) {
-            $table->longText('training_type')->nullable();
+        Schema::table('incidents', function (Blueprint $table) {
+            $table->longText('qa_head_deginee_comment')->nullable();
+            $table->longText('qa_head_deginee_attachments')->nullable();
         });
     }
 
@@ -25,7 +26,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('induction_trainings', function (Blueprint $table) {
+        Schema::table('incidents', function (Blueprint $table) {
             //
         });
     }

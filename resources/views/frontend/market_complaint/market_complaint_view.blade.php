@@ -970,6 +970,8 @@
                                                             data-file-name="{{ $file }}"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
+                                                                <input type="hidden" name="existing_initial_attachments_gi[]" value="{{ $file }}">
+
                                                     </h6>
                                                 @endforeach
                                             @endif
@@ -983,8 +985,36 @@
                                     </div>
                                 </div>
                             </div>
+                            <input type="hidden" id="deleted_attachments_gi" name="deleted_attachments_gi" value="">
 
-
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const removeButtons = document.querySelectorAll('.remove-file');
+                            
+                                    removeButtons.forEach(button => {
+                                        button.addEventListener('click', function() {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+                            
+                                            // Hide the file container
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                // Remove hidden input associated with this file
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+                            
+                                                // Add the file name to the deleted files list
+                                                const deletedFilesInput = document.getElementById('deleted_attachments_gi');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+                            </script>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -1505,6 +1535,389 @@
                                     <textarea class="" name="review_of_control_sample_gi" id="" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_control_sample_gi }}</textarea>
                                 </div>
                             </div>
+                            
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Review of stability study program and samples">Review of stability study program and samples</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea class="summernote" name="review_of_stability_study_gi" id="summernote-1"  {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_stability_study_gi }}
+                                </textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Review of product manufacturing and analytical process">Review of product manufacturing and analytical process </label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea class="summernote" name="review_of_product_manu_gi" id="summernote-1"  {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_product_manu_gi }} 
+                                </textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Additional information if require ">Additional information if require</label>
+                                    <select name="additional_inform" id="additional_inform">
+                                        <option value="">-- select --</option>
+                                        <option value="" {{ $data->additional_inform == '0' ? 'selected' : '' }}>--
+                                            select --</option>
+                                        <option value="yes" {{ $data->additional_inform == 'yes' ? 'selected' : '' }}>Yes
+                                        </option>
+                                        <option value="no" {{ $data->additional_inform == 'no' ? 'selected' : '' }}>No
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="In case of Invalide complain then">In case of Invalide complain then </label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea class="summernote" name="in_case_Invalide_com" id="summernote-1"  {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->in_case_Invalide_com }}
+                                </textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="root_cause">
+                                        Report Review (Final Review shall be done after QA Verification) 
+                                        <button type="button" id="team_members"
+                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>+</button>
+                                        <span class="text-primary" data-bs-toggle="modal"
+                                            data-bs-target="#document-details-field-instruction-modal"
+                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            (Launch Instruction)
+                                        </span>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="team_members_details" style="width: %;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 100px;">Row #</th>
+                                                    <th>Names</th>
+                                                    <th>Designation</th>
+                                                    <th>Department</th>
+                                                    <th>Sign</th>
+                                                    <th>Date</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php
+                                                    $teammebindex = 1;
+                                                @endphp
+
+                                                @if (!empty($team_members) && is_array($team_members->data))
+                                                    @foreach ($team_members->data as $index => $tem_meb)
+                                                        <tr>
+                                                            <td><input disabled type="text"
+                                                                    name="serial_number[{{ $index }}]"
+                                                                    value="{{ $teammebindex++ }}"
+                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                            </td>
+                                                            <td><input type="text"
+                                                                    name="Team_Members[{{ $index }}][names_tm]"
+                                                                    value="{{ array_key_exists('names_tm', $tem_meb) ? $tem_meb['names_tm'] : '' }}"
+                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                            </td>
+                                                            <td><input type="text"
+                                                                name="Team_Members[{{ $index }}]['designation']"
+                                                                value="{{ array_key_exists('designation', $tem_meb) ? $tem_meb['designation'] : '' }}"
+                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                        </td>
+                                                            <td><input type="text"
+                                                                    name="Team_Members[{{ $index }}][department_tm]"
+                                                                    value="{{ array_key_exists('department_tm', $tem_meb) ? $tem_meb['department_tm'] : '' }}"
+                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                            </td>
+                                                            <td><input type="text"
+                                                                    name="Team_Members[{{ $index }}][sign_tm]"
+                                                                    value="{{ array_key_exists('sign_tm', $tem_meb) ? $tem_meb['sign_tm'] : '' }}"
+                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                            </td>
+                                                          
+
+                                                            <td>
+                                                                <div class="new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                        <div class="calenderauditee">
+                                                                            <input class="click_date"
+                                                                                id="date_{{ $index }}_date_tm_display"
+                                                                                type="text"
+                                                                                name="Team_Members[{{ $index }}][date_tm_display]"
+                                                                                placeholder="DD-MMM-YYYY"
+                                                                                readonly
+                                                                                value="{{ !empty($tem_meb['date_tm']) ? \Carbon\Carbon::parse($tem_meb['date_tm'])->format('d-M-Y') : '' }}"
+                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                                onclick="showDatePicker('date_{{ $index }}_date_tm')" />
+
+                                                                            <input type="date"
+                                                                                name="Team_Members[{{ $index }}][date_tm]"
+                                                                                value="{{ !empty($tem_meb['date_tm']) ? \Carbon\Carbon::parse($tem_meb['date_tm'])->format('Y-m-d') : '' }}"
+                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                                id="date_{{ $index }}_date_tm"
+                                                                                class="hide-input show_date"
+                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                                onchange="handleDateInput(this, 'date_{{ $index }}_date_tm_display')" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+                                                            <td><button type="text" class="removeRowBtn"
+                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Remove</button>
+                                                            </td>
+
+                                                        </tr>
+                                                    @endforeach
+                                                    {{-- @else
+                                                <tr>
+                                                    <td colspan="9">No product details found</td>
+                                                </tr> --}}
+                                                @endif
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <script>
+                                function showDatePicker(dateInputId) {
+                                    document.getElementById(dateInputId).click();
+                                }
+
+                                function handleDateInput(dateInput, displayInputId) {
+                                    var date = new Date(dateInput.value);
+                                    var formattedDate = date.toLocaleDateString('en-GB', {
+                                        day: '2-digit',
+                                        month: 'short',
+                                        year: 'numeric'
+                                    }).replace(/ /g, '-');
+                                    document.getElementById(displayInputId).value = formattedDate;
+                                }
+                            </script>
+
+                            <script>
+                                $(document).ready(function() {
+                                    let indexteam =
+                                        {{ !empty($team_members) && is_array($team_members->data) ? count($team_members->data) : 0 }};
+                                    $('#team_members').click(function(e) {
+                                        e.preventDefault();
+
+                                        function generateTableRow(teamserialNumber) {
+                                            var html =
+                                                '<tr>' +
+                                                '<td><input disabled type="text" name="Team_Members[' + teamserialNumber +
+                                                '][serial]" value="' + (teamserialNumber + 1) + '"></td>' +
+                                                '<td><input type="text" name="Team_Members[' + indexteam + '][names_tm]"></td>' +
+                                                '<td><input type="text" name="Team_Members[' + indexteam +
+                                                '][designation]"></td>' +
+                                                '<td><input type="text" name="Team_Members[' + indexteam +
+                                                    '][department_tm]"></td>' +
+                                                '<td><input type="text" name="Team_Members[' + indexteam + '][sign_tm]"></td>' +
+                                                '<td>  <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
+                                                indexteam + '_date_tm" type="text" name="Team_Members[' + indexteam +
+                                                '][date_tm]" placeholder="DD-MMM-YYYY" readonly/> <input type="date" name="Team_Members[' +
+                                                indexteam +
+                                                '][date_tm]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" id="date_' +
+                                                indexteam +
+                                                '_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
+                                                indexteam + '_date_tm\')" /> </div> </div></td>' +
+                                                '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+                                                '</tr>';
+                                            indexteam++;
+                                            return html;
+                                        }
+
+                                        var tableBody = $('#team_members_details tbody');
+                                        var rowCount = tableBody.children('tr').length;
+                                        var newRow = generateTableRow(rowCount);
+                                        tableBody.append(newRow);
+                                    });
+                                });
+                            </script>
+
+                    <div class="col-12">
+                        <div class="group-input">
+                            <label for="root_cause">
+                                Report Approval by Head QA/CQA (Final Approvalshall be done after QA Verification)
+                                <button type="button" id="report_approval"
+                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>+</button>
+                                <span class="text-primary" data-bs-toggle="modal"
+                                    data-bs-target="#document-details-field-instruction-modal"
+                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                    (Launch Instruction)
+                                </span>
+                            </label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="report_approval_details"
+                                    style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 100px;">Row #</th>
+                                            <th>Names</th>
+                                            <th>Designation</th>
+                                            <th>Department</th>
+                                            <th>Sign</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $reportindex = 1;
+                                        @endphp
+                                        @if (!empty($report_approval) && is_array($report_approval->data))
+                                            @foreach ($report_approval->data as $index => $rep_ap)
+                                                <tr>
+                                                    <td><input disabled type="text"
+                                                            name="Report_Approval[{{ $index }}][serial]"
+                                                            value="{{ $reportindex++ }}"
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                    </td>
+                                                    <td><input type="text"
+                                                            name="Report_Approval[{{ $index }}][names_rrv]"
+                                                            value="{{ $rep_ap['names_rrv'] }}"
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                    </td>
+                                                    <td><input type="text"
+                                                            name="Report_Approval[{{ $index }}][designation]"
+                                                            value="{{ $rep_ap['designation'] }}"
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                    </td> 
+                                                    <td><input type="text"
+                                                        name="Report_Approval[{{ $index }}][department_rrv]"
+                                                        value="{{ $rep_ap['department_rrv'] }}"
+                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                </td>
+                                                    <td><input type="text"
+                                                            name="Report_Approval[{{ $index }}][sign_rrv]"
+                                                            value="{{ $rep_ap['sign_rrv'] }}"
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                    </td>
+                                                    
+
+                                                    <td>
+                                                        <div class="new-date-data-field">
+                                                            <div class="group-input input-date">
+                                                                <div class="calenderauditee">
+                                                                    <input class="click_date"
+                                                                        id="date_{{ $index }}_date_rrv_display"
+                                                                        type="text"
+                                                                        name="Report_Approval[{{ $index }}][date_rrv_display]"
+                                                                        placeholder="DD-MMM-YYYY"
+                                                                        readonly
+                                                                        value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('d-M-Y') : '' }}"
+                                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                        onclick="showDatePicker('date_{{ $index }}_date_rrv')" />
+
+                                                                    <input type="date"
+                                                                        name="Report_Approval[{{ $index }}][date_rrv]"
+                                                                        value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('Y-m-d') : '' }}"
+                                                                        id="date_{{ $index }}_date_rrv"
+                                                                        class="hide-input show_date"
+                                                                        style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                        onchange="handleDateInput(this, 'date_{{ $index }}_date_rrv_display')"
+                                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td><button type="button" class="removeRowBtn"
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Remove</button>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <script>
+                        function showDatePicker(dateInputId) {
+                            document.getElementById(dateInputId).click();
+                        }
+
+                        function handleDateInput(dateInput, displayInputId) {
+                            var date = new Date(dateInput.value);
+                            var formattedDate = date.toLocaleDateString('en-GB', {
+                                day: '2-digit',
+                                month: 'short',
+                                year: 'numeric'
+                            }).replace(/ /g, '-');
+                            document.getElementById(displayInputId).value = formattedDate;
+                        }
+                    </script>
+
+                    <script>
+                        $(document).ready(function() {
+                            let indexReaprovel =
+                                {{ $report_approval && is_array($report_approval->data) ? count($report_approval->data) : 0 }};
+
+                            $('#report_approval').click(function(e) {
+                                e.preventDefault();
+
+                                function generateTableRow(serialNumber) {
+                                    var html =
+                                        '<tr>' +
+                                        '<td><input disabled type="text" name="Report_Approval[' + serialNumber +
+                                        '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                        '<td><input type="text" name="Report_Approval[' + serialNumber +
+                                        '][names_rrv]"></td>' +
+                                        '<td><input type="text" name="Report_Approval[' + serialNumber +
+                                        '][designation]"></td>' +
+                                        '<td><input type="text" name="Report_Approval[' + serialNumber +
+                                            '][department_rrv]"></td>' +
+                                        '<td><input type="text" name="Report_Approval[' + serialNumber +
+                                        '][sign_rrv]"></td>' +
+                                        '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
+                                        serialNumber + '_date_rrv" type="text" name="Report_Approval[' + serialNumber +
+                                        '][date_rrv]" placeholder="DD-MMM-YYYY" readonly value="" /> <input type="date" name="Report_Approval[' +
+                                        serialNumber + '][date_rrv]" value="" id="date_' + serialNumber +
+                                        '_date_rrv" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
+                                        serialNumber + '_date_rrv\')" /> </div></div></div></td>' +
+                                        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                        '</tr>';
+                                    indexReaprovel++;
+                                    return html;
+                                }
+
+                                var tableBody = $('#report_approval_details tbody');
+                                var rowCount = tableBody.children('tr').length;
+                                var newRow = generateTableRow(rowCount);
+                                tableBody.append(newRow);
+                            });
+
+                            $(document).on('click', '.removeRowBtn', function() {
+                                $(this).closest('tr').remove();
+                            });
+                        });
+
+                        function handleDateInput(dateInput, textInputId) {
+                            const textInput = document.getElementById(textInputId);
+                            if (dateInput.value) {
+                                const date = new Date(dateInput.value);
+                                const formattedDate = date.toLocaleDateString('en-GB', {
+                                    day: '2-digit',
+                                    month: 'short',
+                                    year: 'numeric'
+                                }).replace(/ /g, '-');
+                                textInput.value = formattedDate;
+                            } else {
+                                textInput.value = '';
+                            }
+                        }
+                    </script>
+
                             <div class="button-block">
                                 <button type="submit" class="saveButton"
                                     id="saveButton"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Save</button>
@@ -2408,6 +2821,8 @@
                                 </div>
                             </div>
 
+                          
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="root_cause">
@@ -2515,6 +2930,25 @@
                                     });
                                 });
                             </script>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Conclusion (A dedicated provision must be established to record the inference or outcome of brainstorming sessions) ">Conclusion (A dedicated provision must be established to record the inference or outcome of brainstorming sessions) </label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                        not require completion</small></div>
+                                <textarea class="summernote" name="conclusion_pi" id="summernote-1" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->conclusion_pi }}
+                            </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="The probable root causes or Root Cause">The probable root causes or Root Cause </label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                        not require completion</small></div>
+                                <textarea class="summernote" name="the_probable_root" id="summernote-1" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->the_probable_root }}
+                            </textarea>
+                            </div>
+                        </div>
                             <div class="sub-head col-12">HOD Review</div>
 
                             <div class="col-md-12 mb-3">
@@ -2598,374 +3032,9 @@
                             </div>
 
 
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="root_cause">
-                                        Team Members
-                                        <button type="button" id="team_members"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#document-details-field-instruction-modal"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            (Launch Instruction)
-                                        </span>
-                                    </label>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="team_members_details" style="width: %;">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 100px;">Row #</th>
-                                                    <th>Names</th>
-                                                    <th>Department</th>
-                                                    <th>Sign</th>
-                                                    <th>Date</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php
-                                                    $teammebindex = 1;
-                                                @endphp
+                           
 
-                                                @if (!empty($team_members) && is_array($team_members->data))
-                                                    @foreach ($team_members->data as $index => $tem_meb)
-                                                        <tr>
-                                                            <td><input disabled type="text"
-                                                                    name="serial_number[{{ $index }}]"
-                                                                    value="{{ $teammebindex++ }}"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                            </td>
-                                                            <td><input type="text"
-                                                                    name="Team_Members[{{ $index }}][names_tm]"
-                                                                    value="{{ array_key_exists('names_tm', $tem_meb) ? $tem_meb['names_tm'] : '' }}"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                            </td>
-                                                            <td><input type="text"
-                                                                    name="Team_Members[{{ $index }}][department_tm]"
-                                                                    value="{{ array_key_exists('department_tm', $tem_meb) ? $tem_meb['department_tm'] : '' }}"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                            </td>
-                                                            <td><input type="text"
-                                                                    name="Team_Members[{{ $index }}][sign_tm]"
-                                                                    value="{{ array_key_exists('sign_tm', $tem_meb) ? $tem_meb['sign_tm'] : '' }}"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                            </td>
-                                                            {{-- <td>
-                                                                <div class="new-date-data-field">
-                                                                    <div class="group-input input-date">
-                                                                        <div class="calenderauditee">
-                                                                            <input class="click_date"
-                                                                                id="date_{{ $index }}_date_tm"
-                                                                                type="text"
-                                                                                name="Team_Members[{{ $index }}][date_tm]"
-                                                                                placeholder="DD-MMM-YYYY"
-                                                                                value="{{ !empty($tem_meb['date_tm']) ? \Carbon\Carbon::parse($tem_meb['date_tm'])->format('d-M-Y') : '' }}"
-                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} />
-                                                                            <input type="date"
-                                                                                name="Team_Members[{{ $index }}][date_tm]"
-                                                                                value="{{ !empty($tem_meb['date_tm']) ? \Carbon\Carbon::parse($tem_meb['date_tm'])->format('Y-m-d') : '' }}"
-                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                                                id="date_{{ $index }}_date_tm"
-                                                                                class="hide-input show_date"
-                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                                onchange="handleDateInput(this, 'date_{{ $index }}_date_tm')" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td> --}}
-
-                                                            <td>
-                                                                <div class="new-date-data-field">
-                                                                    <div class="group-input input-date">
-                                                                        <div class="calenderauditee">
-                                                                            <input class="click_date"
-                                                                                id="date_{{ $index }}_date_tm_display"
-                                                                                type="text"
-                                                                                name="Team_Members[{{ $index }}][date_tm_display]"
-                                                                                placeholder="DD-MMM-YYYY"
-                                                                                readonly
-                                                                                value="{{ !empty($tem_meb['date_tm']) ? \Carbon\Carbon::parse($tem_meb['date_tm'])->format('d-M-Y') : '' }}"
-                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                                                onclick="showDatePicker('date_{{ $index }}_date_tm')" />
-
-                                                                            <input type="date"
-                                                                                name="Team_Members[{{ $index }}][date_tm]"
-                                                                                value="{{ !empty($tem_meb['date_tm']) ? \Carbon\Carbon::parse($tem_meb['date_tm'])->format('Y-m-d') : '' }}"
-                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                                                id="date_{{ $index }}_date_tm"
-                                                                                class="hide-input show_date"
-                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                                onchange="handleDateInput(this, 'date_{{ $index }}_date_tm_display')" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-
-                                                            <td><button type="text" class="removeRowBtn"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Remove</button>
-                                                            </td>
-
-                                                        </tr>
-                                                    @endforeach
-                                                    {{-- @else
-                                                <tr>
-                                                    <td colspan="9">No product details found</td>
-                                                </tr> --}}
-                                                @endif
-
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <script>
-                                function showDatePicker(dateInputId) {
-                                    document.getElementById(dateInputId).click();
-                                }
-
-                                function handleDateInput(dateInput, displayInputId) {
-                                    var date = new Date(dateInput.value);
-                                    var formattedDate = date.toLocaleDateString('en-GB', {
-                                        day: '2-digit',
-                                        month: 'short',
-                                        year: 'numeric'
-                                    }).replace(/ /g, '-');
-                                    document.getElementById(displayInputId).value = formattedDate;
-                                }
-                            </script>
-
-                            <script>
-                                $(document).ready(function() {
-                                    let indexteam =
-                                        {{ !empty($team_members) && is_array($team_members->data) ? count($team_members->data) : 0 }};
-                                    $('#team_members').click(function(e) {
-                                        e.preventDefault();
-
-                                        function generateTableRow(teamserialNumber) {
-                                            var html =
-                                                '<tr>' +
-                                                '<td><input disabled type="text" name="Team_Members[' + teamserialNumber +
-                                                '][serial]" value="' + (teamserialNumber + 1) + '"></td>' +
-                                                '<td><input type="text" name="Team_Members[' + indexteam + '][names_tm]"></td>' +
-                                                '<td><input type="text" name="Team_Members[' + indexteam +
-                                                '][department_tm]"></td>' +
-                                                '<td><input type="text" name="Team_Members[' + indexteam + '][sign_tm]"></td>' +
-                                                '<td>  <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
-                                                indexteam + '_date_tm" type="text" name="Team_Members[' + indexteam +
-                                                '][date_tm]" placeholder="DD-MMM-YYYY" readonly/> <input type="date" name="Team_Members[' +
-                                                indexteam +
-                                                '][date_tm]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" id="date_' +
-                                                indexteam +
-                                                '_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                                indexteam + '_date_tm\')" /> </div> </div></td>' +
-                                                '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
-                                                '</tr>';
-                                            indexteam++;
-                                            return html;
-                                        }
-
-                                        var tableBody = $('#team_members_details tbody');
-                                        var rowCount = tableBody.children('tr').length;
-                                        var newRow = generateTableRow(rowCount);
-                                        tableBody.append(newRow);
-                                    });
-                                });
-                            </script>
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="root_cause">
-                                        Report Approval
-                                        <button type="button" id="report_approval"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#document-details-field-instruction-modal"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            (Launch Instruction)
-                                        </span>
-                                    </label>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="report_approval_details"
-                                            style="width: 100%;">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 100px;">Row #</th>
-                                                    <th>Names</th>
-                                                    <th>Department</th>
-                                                    <th>Sign</th>
-                                                    <th>Date</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php
-                                                    $reportindex = 1;
-                                                @endphp
-                                                @if (!empty($report_approval) && is_array($report_approval->data))
-                                                    @foreach ($report_approval->data as $index => $rep_ap)
-                                                        <tr>
-                                                            <td><input disabled type="text"
-                                                                    name="Report_Approval[{{ $index }}][serial]"
-                                                                    value="{{ $reportindex++ }}"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                            </td>
-                                                            <td><input type="text"
-                                                                    name="Report_Approval[{{ $index }}][names_rrv]"
-                                                                    value="{{ $rep_ap['names_rrv'] }}"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                            </td>
-                                                            <td><input type="text"
-                                                                    name="Report_Approval[{{ $index }}][department_rrv]"
-                                                                    value="{{ $rep_ap['department_rrv'] }}"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                            </td>
-                                                            <td><input type="text"
-                                                                    name="Report_Approval[{{ $index }}][sign_rrv]"
-                                                                    value="{{ $rep_ap['sign_rrv'] }}"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                            </td>
-                                                            {{-- <td>
-                                                                <div class="new-date-data-field">
-                                                                    <div class="group-input input-date">
-                                                                        <div class="calenderauditee">
-                                                                            <input class="click_date"
-                                                                                id="date_{{ $index }}_date_rrv"
-                                                                                type="text"
-                                                                                name="Report_Approval[{{ $index }}][date_rrv]"
-                                                                                placeholder="DD-MMM-YYYY"
-                                                                                value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('d-M-Y') : '' }}"
-                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} />
-                                                                            <input type="date"
-                                                                                name="Report_Approval[{{ $index }}][date_rrv]"
-                                                                                value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('Y-m-d') : '' }}"
-                                                                                id="date_{{ $index }}_date_rrv"
-                                                                                class="hide-input show_date"
-                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                                onchange="handleDateInput(this, 'date_{{ $index }}_date_rrv')"
-                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td> --}}
-
-                                                            <td>
-                                                                <div class="new-date-data-field">
-                                                                    <div class="group-input input-date">
-                                                                        <div class="calenderauditee">
-                                                                            <input class="click_date"
-                                                                                id="date_{{ $index }}_date_rrv_display"
-                                                                                type="text"
-                                                                                name="Report_Approval[{{ $index }}][date_rrv_display]"
-                                                                                placeholder="DD-MMM-YYYY"
-                                                                                readonly
-                                                                                value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('d-M-Y') : '' }}"
-                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                                                onclick="showDatePicker('date_{{ $index }}_date_rrv')" />
-
-                                                                            <input type="date"
-                                                                                name="Report_Approval[{{ $index }}][date_rrv]"
-                                                                                value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('Y-m-d') : '' }}"
-                                                                                id="date_{{ $index }}_date_rrv"
-                                                                                class="hide-input show_date"
-                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                                onchange="handleDateInput(this, 'date_{{ $index }}_date_rrv_display')"
-                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td><button type="button" class="removeRowBtn"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Remove</button>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                @endif
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                            <script>
-                                function showDatePicker(dateInputId) {
-                                    document.getElementById(dateInputId).click();
-                                }
-
-                                function handleDateInput(dateInput, displayInputId) {
-                                    var date = new Date(dateInput.value);
-                                    var formattedDate = date.toLocaleDateString('en-GB', {
-                                        day: '2-digit',
-                                        month: 'short',
-                                        year: 'numeric'
-                                    }).replace(/ /g, '-');
-                                    document.getElementById(displayInputId).value = formattedDate;
-                                }
-                            </script>
-
-                            <script>
-                                $(document).ready(function() {
-                                    let indexReaprovel =
-                                        {{ $report_approval && is_array($report_approval->data) ? count($report_approval->data) : 0 }};
-
-                                    $('#report_approval').click(function(e) {
-                                        e.preventDefault();
-
-                                        function generateTableRow(serialNumber) {
-                                            var html =
-                                                '<tr>' +
-                                                '<td><input disabled type="text" name="Report_Approval[' + serialNumber +
-                                                '][serial]" value="' + (serialNumber + 1) + '"></td>' +
-                                                '<td><input type="text" name="Report_Approval[' + serialNumber +
-                                                '][names_rrv]"></td>' +
-                                                '<td><input type="text" name="Report_Approval[' + serialNumber +
-                                                '][department_rrv]"></td>' +
-                                                '<td><input type="text" name="Report_Approval[' + serialNumber +
-                                                '][sign_rrv]"></td>' +
-                                                '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
-                                                serialNumber + '_date_rrv" type="text" name="Report_Approval[' + serialNumber +
-                                                '][date_rrv]" placeholder="DD-MMM-YYYY" readonly value="" /> <input type="date" name="Report_Approval[' +
-                                                serialNumber + '][date_rrv]" value="" id="date_' + serialNumber +
-                                                '_date_rrv" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                                serialNumber + '_date_rrv\')" /> </div></div></div></td>' +
-                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                                                '</tr>';
-                                            indexReaprovel++;
-                                            return html;
-                                        }
-
-                                        var tableBody = $('#report_approval_details tbody');
-                                        var rowCount = tableBody.children('tr').length;
-                                        var newRow = generateTableRow(rowCount);
-                                        tableBody.append(newRow);
-                                    });
-
-                                    $(document).on('click', '.removeRowBtn', function() {
-                                        $(this).closest('tr').remove();
-                                    });
-                                });
-
-                                function handleDateInput(dateInput, textInputId) {
-                                    const textInput = document.getElementById(textInputId);
-                                    if (dateInput.value) {
-                                        const date = new Date(dateInput.value);
-                                        const formattedDate = date.toLocaleDateString('en-GB', {
-                                            day: '2-digit',
-                                            month: 'short',
-                                            year: 'numeric'
-                                        }).replace(/ /g, '-');
-                                        textInput.value = formattedDate;
-                                    } else {
-                                        textInput.value = '';
-                                    }
-                                }
-                            </script>
+                         
 
                             <div class="col-12">
                                 <div class="group-input">
@@ -9497,14 +9566,22 @@
                             QA/CQA Head Review
                         </div>
                         <div class="row">
-                            <div class="col-md-12 mb-3">
+                            {{-- <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="Closure Comment">QA/CQA Head Comment </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea class="" name="qa_head_comment" id=""
+                                    <textarea class="" name="qa_head_comment" 
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_head_comment }}
                                     </textarea>
+                                </div>
+                            </div> --}}
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Closure Comment">QA/CQA Head Comment </label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea class="" name="qa_head_comment" id="" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_head_comment }}</textarea>
                                 </div>
                             </div>
 

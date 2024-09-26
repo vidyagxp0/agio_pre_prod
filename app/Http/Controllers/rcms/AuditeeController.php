@@ -81,6 +81,8 @@ class AuditeeController extends Controller
         $internalAudit->initial_comments = $request->initial_comments;
         $internalAudit->severity_level = $request->severity_level;
 
+        $internalAudit->reviewer_person_value = implode(',', $request->reviewer_person_value);
+
 
         $internalAudit->start_date = $request->start_date;
         $internalAudit->end_date = $request->end_date;
@@ -1475,6 +1477,25 @@ class AuditeeController extends Controller
             $history->save();
         }
 
+
+
+        if (!empty($internalAudit->reviewer_person_value)) {
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type =  'CFT Review';
+            $history->previous = "Null";
+            $history->current = $internalAudit->reviewer_person_value;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+
+            $history->save();
+        }
         if (!empty($internalAudit->myfile)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
@@ -1596,6 +1617,11 @@ class AuditeeController extends Controller
         $old_record = Auditee::select('id', 'division_id', 'record')->get();
         $auditornew = Auditee::where('id', $id)->first();
         $data = Auditee::find($id);
+
+
+        $cftReviewerIds = explode(',', $data->reviewer_person_value);
+        $cft = User::get();
+
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
@@ -1610,7 +1636,7 @@ class AuditeeController extends Controller
 
 
 
-        return view('frontend.externalAudit.view', compact('data', 'old_record','grid_data','grid_data1', 'data1','oocgrid','auditorview'));
+        return view('frontend.externalAudit.view', compact('data', 'old_record','grid_data','grid_data1', 'data1','oocgrid','auditorview','cftReviewerIds','cft'));
     }
 
     public function update(Request $request, $id)
@@ -1658,8 +1684,9 @@ class AuditeeController extends Controller
         $internalAudit->material_name = $request->material_name;
         $internalAudit->if_comments = $request->if_comments;
         $internalAudit->lead_auditor = $request->lead_auditor;
-        $internalAudit->Audit_team =  implode(',', $request->Audit_team);
-        $internalAudit->Auditee =  implode(',', $request->Auditee);
+        $internalAudit->Audit_team = is_array($request->Audit_team) ? implode(',', $request->Audit_team) : $request->Audit_team;
+        $internalAudit->Auditee = is_array($request->Auditee) ? implode(',', $request->Auditee) : $request->Auditee;
+        
         $internalAudit->Auditor_Details = $request->Auditor_Details;
         $internalAudit->Audit_Category = $request->Audit_Category;
         $internalAudit->External_Auditing_Agency = $request->External_Auditing_Agency;
@@ -1670,6 +1697,15 @@ class AuditeeController extends Controller
         $internalAudit->Comments = $request->Comments;
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
         $internalAudit->Remarks = $request->Remarks;
+
+
+        $internalAudit->reviewer_person_value = implode(',', $request->reviewer_person_value);
+
+
+
+
+        
+
 
 
 
@@ -2478,6 +2514,31 @@ class AuditeeController extends Controller
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->Initiator_Group) || $lastDocument->Initiator_Group === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
+            $history->save();
+        }
+
+
+
+        if ($lastDocument->reviewer_person_value != $internalAudit->reviewer_person_value || !empty($request->reviewer_person_value_comment)) {
+
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'CFT review ';
+            $history->previous = $lastDocument->reviewer_person_value;
+            $history->current = $internalAudit->reviewer_person_value;
+            $history->comment = $request->date_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->reviewer_person_value) || $lastDocument->reviewer_person_value === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4732,6 +4793,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
     public function UpdateStateChange(Request $request, $id)
     {
+
+        //return "hello";
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Auditee::find($id);
             $lastDocument = Auditee::find($id);
