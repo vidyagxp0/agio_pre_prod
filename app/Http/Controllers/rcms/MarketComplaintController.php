@@ -87,6 +87,14 @@ class MarketComplaintController extends Controller
         $marketComplaint->categorization_of_complaint_gi = $request->categorization_of_complaint_gi;
         $marketComplaint->review_of_complaint_sample_gi = $request->review_of_complaint_sample_gi;
         $marketComplaint->review_of_control_sample_gi = $request->review_of_control_sample_gi;
+
+        $marketComplaint->review_of_stability_study_gi = $request->review_of_stability_study_gi;
+        $marketComplaint->review_of_product_manu_gi = $request->review_of_product_manu_gi;
+        $marketComplaint->additional_inform = $request->additional_inform;
+        $marketComplaint->in_case_Invalide_com = $request->in_case_Invalide_com;
+        $marketComplaint->conclusion_pi = $request->conclusion_pi;
+        $marketComplaint->the_probable_root = $request->the_probable_root;
+
         $marketComplaint->review_of_batch_manufacturing_record_BMR_gi = $request->review_of_batch_manufacturing_record_BMR_gi;
         $marketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi = $request->review_of_raw_materials_used_in_batch_manufacturing_gi;
         $marketComplaint->review_of_Batch_Packing_record_bpr_gi = $request->review_of_Batch_Packing_record_bpr_gi;
@@ -714,6 +722,105 @@ class MarketComplaintController extends Controller
 
 
         // ----------------------------------autid show  fileds ----------------------------------------------------------
+
+
+        if (!empty($marketComplaint->review_of_stability_study_gi)) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Review of stability study program and samples ';
+            $history->previous = "Null";
+            $history->current = $marketComplaint->review_of_stability_study_gi;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+        if (!empty($marketComplaint->review_of_product_manu_gi)) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Review of product manufacturing and analytical process';
+            $history->previous = "Null";
+            $history->current = $marketComplaint->review_of_product_manu_gi;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+        if (!empty($marketComplaint->additional_inform)) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Additional information if require';
+            $history->previous = "Null";
+            $history->current = $marketComplaint->additional_inform;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+        if (!empty($marketComplaint->in_case_Invalide_com)) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'In case of Invalide complain then provision shall  be provided to handle the invalide complaints )';
+            $history->previous = "Null";
+            $history->current = $marketComplaint->in_case_Invalide_com;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+        if (!empty($marketComplaint->conclusion_pi)) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Conclusion (A dedicated provision must be established to record the inference or outcome of brainstorming sessions) ';
+            $history->previous = "Null";
+            $history->current = $marketComplaint->conclusion_pi;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+        if (!empty($marketComplaint->the_probable_root)) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'The probable root causes or Root Cause';
+            $history->previous = "Null";
+            $history->current = $marketComplaint->the_probable_root;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
 
         if (!empty($marketComplaint->division_code)) {
             $history = new MarketComplaintAuditTrial();
@@ -1788,6 +1895,14 @@ class MarketComplaintController extends Controller
         $marketComplaint->categorization_of_complaint_gi = $request->categorization_of_complaint_gi;
         $marketComplaint->review_of_complaint_sample_gi = $request->review_of_complaint_sample_gi;
         $marketComplaint->review_of_control_sample_gi = $request->review_of_control_sample_gi;
+       
+        $marketComplaint->review_of_stability_study_gi = $request->review_of_stability_study_gi;
+        $marketComplaint->review_of_product_manu_gi = $request->review_of_product_manu_gi;
+        $marketComplaint->additional_inform = $request->additional_inform;
+        $marketComplaint->in_case_Invalide_com = $request->in_case_Invalide_com;
+        $marketComplaint->conclusion_pi = $request->conclusion_pi;
+        $marketComplaint->the_probable_root = $request->the_probable_root;
+
         $marketComplaint->review_of_batch_manufacturing_record_BMR_gi = $request->review_of_batch_manufacturing_record_BMR_gi;
         $marketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi = $request->review_of_raw_materials_used_in_batch_manufacturing_gi;
         $marketComplaint->review_of_Batch_Packing_record_bpr_gi = $request->review_of_Batch_Packing_record_bpr_gi;
@@ -2554,13 +2669,13 @@ class MarketComplaintController extends Controller
 
 
         // -------------------------audit show conditon--codestart----------------------------------
-        if ($lastmarketComplaint->initiator_group_code_gi != $marketComplaint->initiator_group_code_gi) {
+        if ($lastmarketComplaint->review_of_stability_study_gi != $marketComplaint->review_of_stability_study_gi) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Initiator Department Code';
-            $history->previous = $lastmarketComplaint->initiator_group_code_gi;
-            $history->current = $marketComplaint->initiator_group_code_gi;
-            $history->comment = $request->initiator_group_code_gi_comment;
+            $history->activity_type = 'Review of stability study program and samples';
+            $history->previous = $lastmarketComplaint->review_of_stability_study_gi;
+            $history->current = $marketComplaint->review_of_stability_study_gi;
+            $history->comment = $request->review_of_stability_study_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -2569,7 +2684,123 @@ class MarketComplaintController extends Controller
             $history->change_from = $lastmarketComplaint->status;
 
             // New condition added here
-            if (is_null($lastmarketComplaint->initiator_group_code_gi) || $lastmarketComplaint->initiator_group_code_gi === '') {
+            if (is_null($lastmarketComplaint->review_of_stability_study_gi) || $lastmarketComplaint->review_of_stability_study_gi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
+            $history->save();
+        }
+        if ($lastmarketComplaint->review_of_product_manu_gi != $marketComplaint->review_of_product_manu_gi) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Review of product manufacturing and analytical process';
+            $history->previous = $lastmarketComplaint->review_of_product_manu_gi;
+            $history->current = $marketComplaint->review_of_product_manu_gi;
+            $history->comment = $request->review_of_product_manu_gi_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+
+            // New condition added here
+            if (is_null($lastmarketComplaint->review_of_product_manu_gi) || $lastmarketComplaint->review_of_product_manu_gi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
+            $history->save();
+        }
+        if ($lastmarketComplaint->additional_inform != $marketComplaint->additional_inform) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Additional information if require ';
+            $history->previous = $lastmarketComplaint->additional_inform;
+            $history->current = $marketComplaint->additional_inform;
+            $history->comment = $request->additional_inform_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+
+            // New condition added here
+            if (is_null($lastmarketComplaint->additional_inform) || $lastmarketComplaint->additional_inform === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
+            $history->save();
+        }
+       
+        if ($lastmarketComplaint->in_case_Invalide_com != $marketComplaint->in_case_Invalide_com) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'In case of Invalide complain then provision shall  be provided to handle the invalide complaints )';
+            $history->previous = $lastmarketComplaint->in_case_Invalide_com;
+            $history->current = $marketComplaint->in_case_Invalide_com;
+            $history->comment = $request->in_case_Invalide_com_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+
+            // New condition added here
+            if (is_null($lastmarketComplaint->in_case_Invalide_com) || $lastmarketComplaint->in_case_Invalide_com === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
+            $history->save();
+        }
+        if ($lastmarketComplaint->conclusion_pi != $marketComplaint->conclusion_pi) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Conclusion (A dedicated provision must be established to record the inference or outcome of brainstorming sessions)';
+            $history->previous = $lastmarketComplaint->conclusion_pi;
+            $history->current = $marketComplaint->conclusion_pi;
+            $history->comment = $request->conclusion_pi_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+
+            // New condition added here
+            if (is_null($lastmarketComplaint->conclusion_pi) || $lastmarketComplaint->conclusion_pi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
+            $history->save();
+        }
+        if ($lastmarketComplaint->the_probable_root != $marketComplaint->the_probable_root) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'The probable root causes or Root Cause';
+            $history->previous = $lastmarketComplaint->the_probable_root;
+            $history->current = $marketComplaint->the_probable_root;
+            $history->comment = $request->the_probable_root_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+
+            // New condition added here
+            if (is_null($lastmarketComplaint->the_probable_root) || $lastmarketComplaint->the_probable_root === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
