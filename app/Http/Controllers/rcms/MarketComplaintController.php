@@ -2534,18 +2534,38 @@ class MarketComplaintController extends Controller
 
 
         // ===============================work code attachement ==========
-        if ($request->hasFile('initial_attachment_gi')) {
-            $files = [];
-            foreach ($request->file('initial_attachment_gi') as $file) {
-                $name = $request->name . '_initial_attachment_gi_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
-            }
-            $marketComplaint->initial_attachment_gi = json_encode($files);
-        }
+        // if ($request->hasFile('initial_attachment_gi')) {
+        //     $files = [];
+        //     foreach ($request->file('initial_attachment_gi') as $file) {
+        //         $name = $request->name . '_initial_attachment_gi_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //         $file->move(public_path('upload/'), $name);
+        //         $files[] = $name;
+        //     }
+        //     $marketComplaint->initial_attachment_gi = json_encode($files);
+        // }
 
-        $marketComplaint->fill($request->except('initial_attachment_gi'));
+        // $marketComplaint->fill($request->except('initial_attachment_gi'));
 
+                              //first attchment ============================
+                              if (!empty($request->initial_attachment_gi) || !empty($request->deleted_attachments_gi)) {
+                                $existingFiles = json_decode($marketComplaint->initial_attachment_gi, true) ?? [];
+                                        if (!empty($request->deleted_attachments_gi)) {
+                                    $filesToDelete = explode(',', $request->deleted_attachments_gi);    
+                                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                        return !in_array($file, $filesToDelete);
+                                    });
+                                }
+                                $newFiles = [];
+                                if ($request->hasFile('initial_attachment_gi')) {
+                                    foreach ($request->file('initial_attachment_gi') as $file) {
+                                        $name = $request->name . 'initial_attachment_gi' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                                        $file->move(public_path('upload/'), $name);
+                                        $newFiles[] = $name;
+                                    }
+                                }
+                                $allFiles = array_merge($existingFiles, $newFiles);
+                                $marketComplaint->initial_attachment_gi = json_encode($allFiles);
+                            }
 
         if ($request->hasFile('initial_attachment_hodsr')) {
             $files = [];

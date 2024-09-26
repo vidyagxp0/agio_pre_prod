@@ -970,6 +970,8 @@
                                                             data-file-name="{{ $file }}"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
+                                                                <input type="hidden" name="existing_initial_attachments_gi[]" value="{{ $file }}">
+
                                                     </h6>
                                                 @endforeach
                                             @endif
@@ -983,8 +985,36 @@
                                     </div>
                                 </div>
                             </div>
+                            <input type="hidden" id="deleted_attachments_gi" name="deleted_attachments_gi" value="">
 
-
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const removeButtons = document.querySelectorAll('.remove-file');
+                            
+                                    removeButtons.forEach(button => {
+                                        button.addEventListener('click', function() {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+                            
+                                            // Hide the file container
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                // Remove hidden input associated with this file
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+                            
+                                                // Add the file name to the deleted files list
+                                                const deletedFilesInput = document.getElementById('deleted_attachments_gi');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+                            </script>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -9546,7 +9576,6 @@
                                     </textarea>
                                 </div>
                             </div>
-
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Inv Attachments">QA/CQA Head Attachment</label>
