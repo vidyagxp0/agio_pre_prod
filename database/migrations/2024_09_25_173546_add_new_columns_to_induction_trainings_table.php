@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('induction_trainings', function (Blueprint $table) {
-            $table->longTaxt('training_type')->nullable();
+            $table->longText('training_type')->nullable();
         });
     }
 
