@@ -16,7 +16,7 @@
 
 
             <!-- ---------------------------grid-1 -------------------------------- -->
-            <div class="group-input">
+            {{-- <div class="group-input">
                 <label for="audit-agenda-grid">
                     Summary of OOS Test Results
                     <button type="button" name="audit-agenda-grid" id="oos_conclusion">+</button>
@@ -56,7 +56,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Report Attachments">Specification Limit </label>
@@ -121,16 +121,6 @@
                 </div>
             </div>
 
-            {{-- <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Records">CAPA Ref No.</label>
-                    <select multiple id="reference_record" name="capa_ref_no_oosc[]"  {{Helpers::isOOSChemical($data->stage)}}>
-                        <option value="0">--Select---</option>
-                        <option value="1" {{ (!empty($data->capa_ref_no_oosc) && str_contains($data->capa_ref_no_oosc, 1)) ? 'selected' : '' }}>1</option>
-                        <option value="2" {{ (!empty($data->capa_ref_no_oosc) && str_contains($data->capa_ref_no_oosc, 2)) ? 'selected' : '' }}>2</option>
-                    </select>
-                </div>
-            </div> --}}
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Records">CAPA Ref No.</label>
@@ -175,7 +165,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-6">
+            {{-- <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">Action Item Req.</label>
                     <select name="action_plan_req_oosc"  {{Helpers::isOOSChemical($data->stage)}}>
@@ -186,16 +176,7 @@
                     </select>
                 </div>
             </div>
-            {{-- <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Recores">Action Item Ref.</label>
-                    <select multiple id="reference_record" name="action_plan_ref_oosc[]" id=""  {{Helpers::isOOSChemical($data->stage)}}>
-                    <option value="o">Enter Your Selection Here</option>
-                    <option value="1" {{ (!empty($data->action_plan_ref_oosc) && in_array('1', explode(',', $data->action_plan_ref_oosc[0]))) ? 'selected' : '' }}>1</option>
-                    <option value="2" {{ (!empty($data->action_plan_ref_oosc) && in_array('2', explode(',', $data->action_plan_ref_oosc[0]))) ? 'selected' : '' }}>2</option>
-                  </select>
-                </div>
-            </div> --}}
+           
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Records">Action Item Ref.</label>
@@ -229,37 +210,7 @@
                 </div>
             </div>
             
-            {{-- <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Recores">Action Item Ref.</label>
-                    <select multiple id="related_records" name="action_plan_ref_oosc[]"
-                        placeholder="Select Reference Records">
-
-                        @if (!empty($old_record))
-                            @foreach ($old_record as $new)
-                                @php
-                                    $recordValue =
-                                        Helpers::getDivisionName($new->division_id) .
-                                        '/AI/' .
-                                        date('Y') .
-                                        '/' .
-                                        Helpers::recordFormat($new->record);
-                                    $selected = in_array(
-                                        $recordValue,
-                                        explode(',', $data->action_plan_ref_oosc),
-                                    )
-                                        ? 'selected'
-                                        : '';
-                                @endphp
-                                <option value="{{ $recordValue }}" {{ $selected }}>
-                                    {{ $recordValue }}
-                                </option>
-                            @endforeach
-                        @endif
-                    </select>
-                </div>
-
-            </div> --}}
+            
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justification for Delay</label>
@@ -385,7 +336,7 @@
                   </select>
                  
                 </div>
-            </div>
+            </div> --}}
 
             <div class="col-md-12 mb-4">
                 <div class="group-input">
@@ -395,12 +346,20 @@
                         </textarea>
                 </div>
             </div>
-            <div class="col-lg-12">
+            <div class="col-md-12 mb-4">
+                <div class="group-input">
+                    <label for="Description Deviation">Action On affected batches</label>
+                    <textarea class="summernote" name="action_on_affected_batch" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
+                            {{ $data->action_on_affected_batch ? $data->action_on_affected_batch : '' }}
+                        </textarea>
+                </div>
+            </div>
+            {{-- <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Audit Attachments">CQ Approver</label>
                     <input type="text" name="cq_approver" value="{{$data->cq_approver ? $data->cq_approver : '' }}" {{Helpers::isOOSChemical($data->stage)}}>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Reference Recores">Conclusion Attachment</label>
