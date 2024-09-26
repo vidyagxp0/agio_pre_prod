@@ -57,6 +57,10 @@ class ObservationController extends Controller
         $data->category_observation = $request->category_observation;
         $data->reference_guideline = $request->reference_guideline;
         $data->description = $request->description;
+        $data->auditee_department = $request->auditee_department;
+        $data->response_detail = $request->response_detail;
+        $data->corrective_action = $request->corrective_action;
+        $data->preventive_action = $request->preventive_action;
 
         if(!empty($request->attach_files_gi)){
             $files = [];
@@ -68,6 +72,18 @@ class ObservationController extends Controller
                 }
             }
             $data->attach_files_gi = json_encode($files);
+        }
+        
+        if(!empty($request->response_capa_attach)){
+            $files = [];
+            if ($request->hasFile('response_capa_attach')) {
+                foreach ($request->file('response_capa_attach') as $file) {
+                    $name = $request->name . 'response_capa_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $files[] = $name;
+                }
+            }
+            $data->response_capa_attach = json_encode($files);
         }
 
         // $files = [];
@@ -209,6 +225,17 @@ if(!empty($request->attach_files2)){
 
         $data->attach_files2 = json_encode($files);
 
+    }
+    if(!empty($request->impact_analysis)){
+        $files = [];
+        if ($request->hasFile('impact_analysis')) {
+            foreach ($request->file('impact_analysis') as $file) {
+                $name = $request->name . 'impact_analysis' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
+            }
+        }
+        $data->impact_analysis = json_encode($files);
     }
         $data->status = 'Opened';
         $data->stage = 1;
@@ -864,6 +891,34 @@ if(!empty($request->attach_files2)){
         $data->reference_guideline = $request->reference_guideline;
         $data->description = $request->description;
 
+        $data->auditee_department = $request->auditee_department;
+        $data->response_detail = $request->response_detail;
+        $data->corrective_action = $request->corrective_action;
+        $data->preventive_action = $request->preventive_action;
+
+        if(!empty($request->attach_files_gi)){
+            $files = [];
+            if ($request->hasFile('attach_files_gi')) {
+                foreach ($request->file('attach_files_gi') as $file) {
+                    $name = $request->name . 'attach_files_gi' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $files[] = $name;
+                }
+            }
+            $data->attach_files_gi = json_encode($files);
+        }
+        
+        if(!empty($request->response_capa_attach)){
+            $files = [];
+            if ($request->hasFile('response_capa_attach')) {
+                foreach ($request->file('response_capa_attach') as $file) {
+                    $name = $request->name . 'response_capa_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $files[] = $name;
+                }
+            }
+            $data->response_capa_attach = json_encode($files);
+        }
 
         // $files = [];
         // if ($request->hasFile('attach_files_gi')) {
@@ -879,22 +934,23 @@ if(!empty($request->attach_files2)){
         //     }
         // }
 
-        if(!empty($request->attach_files_gi)) {
-            $files = [];
-            if ($request->hasFile('attach_files_gi')) {
-                foreach ($request->file('attach_files_gi') as $file) {
-                    $name = $request->name . 'attach_files_gi' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $files[] = $name;
-                }
-            }
-            $data->attach_files_gi = json_encode($files);
-        } else {
-            // Handle case when no new files are added, but some might have been removed
-            if ($request->input('current_files')) {
-                $data->attach_files_gi = json_encode($request->input('current_files'));
-            }
-        }
+        // if(!empty($request->attach_files_gi)) {
+        //     $files = [];
+        //     if ($request->hasFile('attach_files_gi')) {
+        //         foreach ($request->file('attach_files_gi') as $file) {
+        //             $name = $request->name . 'attach_files_gi' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //             $file->move(public_path('upload/'), $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $data->attach_files_gi = json_encode($files);
+        // } else {
+        //     // Handle case when no new files are added, but some might have been removed
+        //     if ($request->input('current_files')) {
+        //         $data->attach_files_gi = json_encode($request->input('current_files'));
+        //     }
+        // }
+
 
 
         $data->recomendation_capa_date_due = $request->recomendation_capa_date_due;
@@ -907,7 +963,19 @@ if(!empty($request->attach_files2)){
         $data->cro_vendor = $request->cro_vendor;
         $data->comments = $request->comments;
         $data->impact = $request->impact;
-        $data->impact_analysis = $request->impact_analysis;
+        // $data->impact_analysis = $request->impact_analysis;
+        
+        if(!empty($request->impact_analysis)){
+            $files = [];
+            if ($request->hasFile('impact_analysis')) {
+                foreach ($request->file('impact_analysis') as $file) {
+                    $name = $request->name . 'impact_analysis' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $files[] = $name;
+                }
+            }
+            $data->impact_analysis = json_encode($files);
+        }
         // $data->severity_rate = $request->severity_rate;
         $severity = [
             '1' => 'Negligible',
@@ -1800,6 +1868,7 @@ if(!empty($request->attach_files2)){
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
+        // return $data;
         return view('frontend.observation.view', compact('data','griddata','grid_data','due_date'));
     }
     public function observation_send_stage(Request $request, $id)
@@ -1954,6 +2023,7 @@ if(!empty($request->attach_files2)){
                 $changestage->stage = "4";
                 $changestage->status = "Closed - Done";
                 $changestage->Final_Approval_By = Auth::user()->name;
+                // dd($data->Final_Approval_By);
                 $changestage->Final_Approval_on = Carbon::now()->format('d-M-Y');
                 $changestage->Final_Approval_comment = $request->comment;
 

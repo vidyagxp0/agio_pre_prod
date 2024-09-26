@@ -252,9 +252,9 @@
                     <!-- Tab links -->
                     <div class="cctab">
                         <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Observation</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm2')">CAPA Plan</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Impact Analysis</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Response & CAPA</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Summary</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Response Verification</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
                     </div>
 
@@ -303,7 +303,7 @@
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="assign_to">Assigned To</label>
+                                                <label for="assign_to">Auditee Department Head</label>
                                                 <select name="assign_to"
                                                      {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
@@ -314,40 +314,30 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <!-- <div class="col-lg-6">
+                                        <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="date_due">Date Due</label>
-                                                <div class="calenderauditee">
-                                                    <input type="text" name="due_date" id="due_date" readonly
-                                                        placeholder="DD-MMM-YYYY" />
-                                                     <input type="date"  class="hide-input"
-                                                        oninput="handleDateInput(this, 'due_date')" />
-                                                <input disabled type="text"  value="{{ Helpers::getdateFormat($data->due_date) }}">
+                                                <label for="Short Description">Auditee Department Name<span
+                                                        class="text-danger"></span></label>
+                                                <select name="auditee_department" id="auditee_department"
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                    <option selected disabled value="">---Select---</option>
+                                                    @foreach (Helpers::getInitiatorGroups() as $code => $auditee_department)
+                                                        <option value="{{ $auditee_department }}"
+                                                            data-code="{{ $code }}"
+                                                            @if ($data->auditee_department == $auditee_department) selected @endif>
+                                                            {{ $auditee_department }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
-                                        </div>  -->
-                                        {{-- <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="date_due">Due Date<span class="text-danger"></span></label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small></div>
-                                        {{-- <input type="date" name="due_date"> --}}
-                                        {{-- <div class="calenderauditee">
-                                            <input type="text"  id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY"
-                                                    value="{{ Helpers::getdateFormat($data->due_date) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}/>
-                                            <!-- <input type="date" name="due_date" id="due_date"  class="hide-input" --}}
-                                        {{-- oninput="handleDateInput(this, 'due_date');checkDate('due_date_checkdate','due_date_checkdate')" /> --> --}}
-                                        {{-- </div>
-                                    </div>
-                                </div> --}}
-
 
                                 <div class="col-lg-6  new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="actual_end_date">Due Date</lable>
+                                        <label for="actual_end_date">Observation Due Date</lable>
                                             <div><small class="text-primary">If revising Due Date, kindly mention revision
                                                 reason in "Due Date Extension Justification" data field.</small>
-                                        </div>
+                                        </div>  
                                             <div class="calenderauditee">
                                                 <input disabled type="text" id="due_date"
                                                     placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->due_date) }}" />
@@ -524,7 +514,7 @@
                                     </div>
                                 </div> --}}
 
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="related_observations">Attached files</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -556,7 +546,33 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div> -->
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Attachments">Attached files</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="attach_files_gi">
+                                                @if ($data->attach_files_gi)
+                                                    @foreach(json_decode($data->attach_files_gi) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                            <input type="hidden" name="existing_attachments_gi[]" value="{{ $file }}">
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="attach_files_gi[]" {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }} oninput="addMultipleFiles(this, 'attach_files_gi')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                
 
 
 {{-- <script>
@@ -633,7 +649,7 @@
                                         </div>
                                     </div>
                                 </div> --}}
-                                        <div class="col-md-6 new-date-data-field">
+                                        <!-- <div class="col-md-6 new-date-data-field">
                                             <div class="group-input input-date ">
                                                 <label for="capa_date_due">Recomendation Due Date for CAPA</label>
                                                 <div class="calenderauditee">
@@ -647,34 +663,34 @@
                                                         oninput="handleDateInput(this, 'recomendation_capa_date_due')" />
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-md-6 new-date-data-field">
                                             <div class="group-input input-date ">
-                                                <label for="capa_date_due">Audit Response Date</label>
+                                                <label for="capa_date_due">Response due date</label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" name="audit_response_date"
+                                                    <input type="text" name="recomendation_capa_date_due"
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                        id="audit_response_date" readonly
+                                                        id="recomendation_capa_date_due" readonly
                                                         placeholder="DD-MMM-YYYY"
-                                                        value="{{ Helpers::getdateFormat($data->audit_response_date) }}" />
+                                                        value="{{ Helpers::getdateFormat($data->recomendation_capa_date_due) }}" />
                                                     <input type="date" class="hide-input"
-                                                        value="{{ Helpers::getdateFormat($data->audit_response_date) }}"
-                                                        oninput="handleDateInput(this, 'audit_response_date')" />
+                                                        value="{{ Helpers::getdateFormat($data->recomendation_capa_date_due) }}"
+                                                        oninput="handleDateInput(this, 'recomendation_capa_date_due')" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="non_compliance">Non Compliance</label>
+                                                <label for="non_compliance">Observation (+)</label>
                                                 <textarea name="non_compliance"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->non_compliance }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="recommend_action">Recommended Action</label>
                                                 <textarea name="recommend_action"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->recommend_action }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="related_observations">Related Obsevations</label>
@@ -682,7 +698,7 @@
                                     </div>
                                 </div> --}}
                                     </div>
-                                    <div class="col-12">
+                                    <!-- <div class="col-12">
                                         <div class="group-input">
                                             <label for="related_observations">Related Obsevations</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
@@ -714,7 +730,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="button-block">
                                         <button type="submit" id="ChangesaveButton" class="saveButton"
                                              {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Save</button>
@@ -729,7 +745,7 @@
                                 <div class="inner-block-content">
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="sub-head">CAPA Plan Details</div>
+                                            <div class="sub-head">Response and CAPA Plan Details</div>
                                         </div>
                                         {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
@@ -748,59 +764,22 @@
                                         </div>
                                     </div>
                                 </div> --}}
-                                        <div class="col-md-6 new-date-data-field">
+                                        <div class="col-md-12 new-date-data-field">
                                             <div class="group-input input-date ">
-                                                <label for="date_Response_due1">Date Response Due </label>
-                                                <div class="calenderauditee">
-                                                    <input type="text" name="date_Response_due2"
-                                                        id="date_Response_due" readonly placeholder="DD-MMM-YYYY"
-                                                        value="{{ Helpers::getdateFormat($data->date_Response_due2) }}" />
-                                                    <input type="date" id="date_Response_due_checkdate"
-                                                         {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                        value="{{ $data->date_response_due1 }}" class="hide-input"
-                                                        oninput="handleDateInput(this, 'date_Response_due');checkDate('date_Response_due_checkdate','date_due_checkdate')" />
-                                                </div>
+                                                <label for="date_Response_due1">Response Details (+) </label>
+                                                <textarea name="response_detail" id="">{{ $data->response_detail }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 new-date-data-field">
+                                        <div class="col-lg-12 new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="date_due"> Due Date</label>
-                                                <div class="calenderauditee">
-                                                    <input type="text" name="capa_date_due11" id="date_due" readonly
-                                                        placeholder="DD-MMM-YYYY"
-                                                        value="{{ Helpers::getdateFormat($data->capa_date_due) }}"
-                                                         {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} />
-                                                    <input type="date" id="date_due_checkdate"
-                                                         {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                        value="{{ $data->capa_date_due }}" class="hide-input"
-                                                        oninput="handleDateInput(this, 'date_due');checkDate('date_Response_due_checkdate','date_due_checkdate')" />
-                                                </div>
+                                                <label for="date_due">Corrective Actions (+)</label>
+                                                <textarea name="corrective_action" id="">{{ $data->corrective_action }}</textarea>
                                             </div>
                                         </div>
-                                        {{-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="due-date">Due Date1 <span class="text-danger"></span></label>
-                                        <div><small class="text-primary">Please Mention justification if due date is
-                                            crossed</small></div>
-
-                                            value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                            name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}>
-                                        <input type="text" value="{{ $data->due_date }}" name="due_date">
-
-
-                                    </div>
-                                </div> --}}
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <div class="group-input">
-                                                <label for="assign_to2">Assigned To</label>
-                                                <select name="assign_to2"
-                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
-                                                    <option value="">-- Select --</option>
-                                                    @foreach ($users as $value)
-                                                        <option {{ $data->assign_to2 == $value->id ? 'selected' : '' }}
-                                                            value="{{ $value->id }}">{{ $value->name }}</option>
-                                                    @endforeach
-                                                </select>
+                                                <label for="assign_to2">Preventive Action (+)</label>
+                                                    <textarea name="preventive_action">{{ $data->preventive_action }}</textarea>
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-6">
@@ -944,6 +923,34 @@
                                                 <textarea name="comments"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->comments }}</textarea>
                                             </div>
                                         </div>
+
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Attachments">Response and CAPA Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div class="file-attachment-list" id="response_capa_attach">
+                                                        @if ($data->response_capa_attach)
+                                                            @foreach(json_decode($data->response_capa_attach) as $file)
+                                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                    <input type="hidden" name="existing_response_capa_attach[]" value="{{ $file }}">
+                                                                </h6>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input type="file" id="myfile" name="response_capa_attach[]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} oninput="addMultipleFiles(this, 'response_capa_attach')" multiple>
+                                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
@@ -956,115 +963,7 @@
                                 </div>
                             </div>
 
-                            <div id="CCForm3" class="inner-block cctabcontent">
-                                <div class="inner-block-content">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="sub-head">Impact Analysis</div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="impact">Impact</label>
-                                                <select name="impact"
-                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
-                                                    <option value="">-- Select --</option>
-                                                    <option value="1" {{ $data->impact == '1' ? 'selected' : '' }}>
-                                                        High</option>
-                                                    <option value="2" {{ $data->impact == '2' ? 'selected' : '' }}>
-                                                        Medium</option>
-                                                    <option value="3" {{ $data->impact == '3' ? 'selected' : '' }}>
-                                                        Low</option>
-                                                    <option value="4" {{ $data->impact == '4' ? 'selected' : '' }}>
-                                                        None</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="impact_analysis">Impact Analysis</label>
-                                                <textarea type name="impact_analysis"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->impact_analysis }}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="sub-head">Risk Analysis</div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Severity Rate">Severity Rate</label>
-                                                <select name="severity_rate" id="analysisR"
-                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                    onchange='calculateRiskAnalysis(this)'>
-                                                    <option value="">Enter Your Selection Here</option>
-                                                    <option value="1" {{ $data->severity_rate == 'Negligible' ? 'selected' : '' }}>Negligible</option>
-                                                    <option value="2" {{ $data->severity_rate == 'Moderate' ? 'selected' : '' }}>Moderate</option>
-                                                    <option value="3" {{ $data->severity_rate == 'Major' ? 'selected' : '' }}>Major</option>
-                                                    <option value="4" {{ $data->severity_rate == 'Fatal' ? 'selected' : '' }}>Fatal</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Occurrence">Occurrence</label>
-                                                <select name="occurrence" id="analysisP"
-                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                    onchange='calculateRiskAnalysis(this)'>
-                                                    <option value="">Enter Your Selection Here</option>
-                                                    <option value="5"
-                                                        {{ $data->occurrence == 'Extremely Unlikely' ? 'selected' : '' }}>Extremely Unlikely
-                                                    </option>
-                                                    <option value="4"
-                                                        {{ $data->occurrence == 'Rare' ? 'selected' : '' }}>Rare</option>
-                                                    <option value="3"
-                                                        {{ $data->occurrence == 'Unlikely' ? 'selected' : '' }}>Unlikely</option>
-                                                    <option value="2"
-                                                        {{ $data->occurrence == 'Likely' ? 'selected' : '' }}>Likely</option>
-                                                    <option value="1"
-                                                        {{ $data->occurrence == 'Very Likely' ? 'selected' : '' }}>Very Likely
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Detection">Detection</label>
-                                                <select name="detection" id="analysisN"
-                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                    onchange='calculateRiskAnalysis(this)'>
-                                                    <option value="">Enter Your Selection Here</option>
-                                                    <option value="5"
-                                                        {{ $data->detection == 'Impossible' ? 'selected' : '' }}>Impossible</option>
-                                                    <option value="4"
-                                                        {{ $data->detection == 'Rare' ? 'selected' : '' }}>Rare</option>
-                                                    <option value="3"
-                                                        {{ $data->detection == 'Unlikely' ? 'selected' : '' }}>Unlikely</option>
-                                                    <option value="2"
-                                                        {{ $data->detection == 'Likely' ? 'selected' : '' }}>Likely</option>
-                                                    <option value="1"
-                                                        {{ $data->detection == 'Very Likely' ? 'selected' : '' }}>Very Likely
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="RPN">RPN</label>
-                                                <input type="text" name="analysisRPN" id="analysisRPN"
-                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                    value="{{ $data->analysisRPN }}" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="button-block">
-                                        <button type="submit" class="saveButton"
-                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Save</button>
-                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                        <button type="button"> <a class="text-white"
-                                                href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
-                                    </div>
-                                </div>
-                            </div>
+                            
 
                             <div id="CCForm4" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
@@ -1104,7 +1003,7 @@
                                  --}}
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="actual_start_date">Actual Start Date</label>
+                                                <label for="actual_start_date">Actual Action Start Date</label>
                                                 <div class="calenderauditee">
                                                     <input type="text" id="actual_start_date" readonly
                                                         placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->actual_start_date) }}" />
@@ -1120,7 +1019,7 @@
                                         </div>
                                         <div class="col-lg-6  new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="actual_end_date">Actual End Date</lable>
+                                                <label for="actual_end_date">Actual Action End Date</lable>
                                                     <div class="calenderauditee">
                                                         <input type="text" id="actual_end_date"
                                                             placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->actual_end_date) }}" />
@@ -1145,7 +1044,12 @@
                                         <div class="col-12">
                                             <div class="sub-head">Response Summary</div>
                                         </div>
-
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="response_summary">Response Summary</label>
+                                                <textarea name="response_summary"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->response_summary }}</textarea>
+                                            </div>
+                                        </div>
                                         {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="date_response_due1">Date Response Due</label>
@@ -1184,7 +1088,7 @@
                                 </div> --}}
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="attach_files2">Attached Files</label>
+                                                <label for="attach_files2">Response Verification Attachements</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                                         documents</small></div>
                                                 <div class="file-attachment-field">
@@ -1216,7 +1120,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="related_url">Related URL</label>
                                                 <input type="url" name="related_url"
@@ -1224,12 +1128,7 @@
                                                     value="{{ $data->related_url }}">
                                             </div>
                                         </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="response_summary">Response Summary</label>
-                                                <textarea name="response_summary"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->response_summary }}</textarea>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
@@ -1245,61 +1144,59 @@
                             <div id="CCForm5" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
+
+                                    <div class="col-12">
+                                            <div class="sub-head">Report Issued</div>
+                                        </div>
+
+                                        
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Report Issued By">Report Issued By</label>
+                                                <label for="Cancel By">Report Issued By</label>
                                                 <div class="static">{{ $data->report_issued_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Report Issued On">Report Issued On</label>
+                                                <label for="Cancel By">Report Issued On</label>
                                                 <div class="static">{{ $data->report_issued_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted on">Comment</label>
-                                                <div class="Date">{{ $data->report_issued_comment }}</div>
+                                                <label for="Cancel By">Report Issued Comment</label>
+                                                <div class="static">{{ $data->report_issued_comment }}</div>
                                             </div>
                                         </div>
+
+                                        <div class="col-12">
+                                            <div class="sub-head">Cancelled</div>
+                                        </div>
+
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Cancel By">Cancel By</label>
+                                                <label for="Cancel By">Cancelled By</label>
                                                 <div class="static">{{ $data->cancel_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Cancel On">Cancel On</label>
+                                                <label for="Cancelled On">Cancelled On</label>
                                                 <div class="static">{{ $data->cancel_on }}</div>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted on">Comment</label>
+                                                <label for="Submitted on">Cancelled Comment</label>
                                                 <div class="Date">{{ $data->cancel_comment }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Complete By">Complete By</label>
-                                                <div class="static">{{ $data->complete_By }}</div>
-                                            </div>
+
+                                        <div class="col-12">
+                                            <div class="sub-head">More Info Required</div>
                                         </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Complete On">Complete On</label>
-                                                <div class="static">{{ $data->complete_on }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Submitted on">Comment</label>
-                                                <div class="Date">{{ $data->complete_comment }}</div>
-                                            </div>
-                                        </div>
+
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="More Info Required By">More Info Required By</label>
@@ -1314,102 +1211,82 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted on">Comment</label>
+                                                <label for="Submitted on">More Info Required Comment</label>
                                                 <div class="Date">{{ $data->more_info_required_comment }}</div>
                                             </div>
                                         </div>
+
+                                        <div class="col-12">
+                                            <div class="sub-head">CAPA Plan Proposed</div>
+                                        </div>
+
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Reject CAPA Plan By">Reject CAPA Plan By</label>
-                                                <div class="static">{{ $data->reject_capa_plan_by }}</div>
+                                                <label for="Reject CAPA Plan By">CAPA Plan Proposed By</label>
+                                                <div class="static">{{ $data->complete_By }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Reject CAPA plan On">Reject CAPA plan On</label>
-                                                <div class="static">{{ $data->reject_capa_plan_on }}</div>
+                                                <label for="CAPA Plan Proposed On">CAPA Plan Proposed On</label>
+                                                <div class="static">{{ $data->complete_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted on">Comment</label>
-                                                <div class="Date">{{ $data->reject_capa_plan_comment }}</div>
+                                                <label for="Submitted on">CAPA Plan Proposed Comment</label>
+                                                <div class="Date">{{ $data->complete_comment }}</div>
                                             </div>
                                         </div>
+
+                                        <div class="col-12">
+                                            <div class="sub-head">No CAPA's Plan Proposed</div>
+                                        </div>
+
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="QA Approval Without CAPA By">QA Approval Without CAPA
+                                                <label for="QA Approval Without CAPA By">No CAPA's Plan Proposed
                                                     By</label>
                                                 <div class="static">{{ $data->qa_approval_without_capa_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="QA Approval Without CAPA On">QA Approval Without CAPA
+                                                <label for="No CAPA's Plan Proposed On">No CAPA's Plan Proposed
                                                     On</label>
                                                 <div class="static">{{ $data->qa_approval_without_capa_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted on">Comment</label>
+                                                <label for="Submitted on">No CAPA's Plan Proposed Comment</label>
                                                 <div class="Date">{{ $data->qa_approval_without_capa_comment }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="QA Approval On">QA Approval By</label>
-                                                <div class="static">{{ $data->qa_appproval_by }}</div>
-                                            </div>
+
+                                        <div class="col-12">
+                                            <div class="sub-head">Response Reviewed</div>
                                         </div>
+
+                             
+
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="QA Approval By">QA Approval On</label>
-                                                <div class="static">{{ $data->qa_appproval_on }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Submitted on">Comment</label>
-                                                <div class="Date">{{ $data->qa_appproval_comment }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="All CAPA closed By">All CAPA closed By</label>
-                                                <div class="static">{{ $data->all_capa_closed_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="All CAPA Closed On">All CAPA Closed On</label>
-                                                <div class="static">{{ $data->all_capa_closed_on }}</div>
+                                                <label for="QA Approval On">Response Reviewed By</label>
+                                                <div class="static">{{ $data->Final_Approval_by }}</div>
+                                                <!-- <div class="static">{{ $data->Final_Approval_By }}</div> -->
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted on">Comment</label>
-                                                <div class="Date">{{ $data->all_capa_closed_comment }}</div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Final_Approval_On">Final Approval By</label>
-                                                <div class="static">{{ $data->Final_Approval_by}}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Final_Approval_On">Final Approval On</label>
+                                                <label for="Response Reviewed By">Response Reviewed On</label>
                                                 <div class="static">{{ $data->Final_Approval_on }}</div>
                                             </div>
                                         </div>
-
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted on">Comment</label>
+                                                <label for="Submitted on">Response Reviewed Comment</label>
                                                 <div class="Date">{{ $data->Final_Approval_comment }}</div>
                                             </div>
                                         </div>
@@ -1429,6 +1306,55 @@
                             </div>
 
                         </div>
+                        <div id="CCForm3" class="inner-block cctabcontent">
+                                <div class="inner-block-content">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="sub-head">Response Verification</div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="impact">Response Verification Comment</label>
+                                                <textarea name="impact">{{ $data->impact }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Attachments">Response Verification Attachements</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                <div class="file-attachment-field"> 
+                                                    <div class="file-attachment-list" id="impact_analysis">
+                                                        @if ($data->impact_analysis)
+                                                            @foreach(json_decode($data->impact_analysis) as $file)
+                                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                    <input type="hidden" name="existing_impact_analysis[]" value="{{ $file }}">
+                                                                </h6>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input type="file" id="myfile" name="impact_analysis[]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} oninput="addMultipleFiles(this, 'impact_analysis')" multiple>
+                                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                    </div>
+                                    <div class="button-block">
+                                        <button type="submit" class="saveButton"
+                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Save</button>
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                        <button type="button"> <a class="text-white"
+                                                href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                                    </div>
+                                </div>
+                            </div>
                     </form>
 
                 </div>
