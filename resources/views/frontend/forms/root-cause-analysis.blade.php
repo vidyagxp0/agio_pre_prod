@@ -483,7 +483,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Inv Attachments"> Attachment</label>
                                         <div>
@@ -502,7 +502,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
@@ -935,14 +935,44 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 " id="root-cause-others"style="display:none;">
+                                {{-- <div class="col-12 " id="root-cause-others"style="display:none;">
                                     <div class="group-input">
                                         <label for="root_cause_Others">Others</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if
                                                 it does not require completion</small></div>
                                         <textarea name="root_cause_Others"  ></textarea>
                                     </div>
+                                </div> --}}
+
+                                <div class="col-md-12" id="root-cause-others"style="display:none;">
+                                    <div class="group-input">
+                                        <label for="root_cause_Others">Others</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="summernote" name="root_cause_Others" id="summernote-1"></textarea>
+                                    </div>
                                 </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Inv Attachments"> Attachment</label>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please Attach all relevant or supporting documents
+                                            </small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="investigation_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile"
+                                                    name="investigation_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'investigation_attachment')"
+                                                    multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
 
                                 <div class="button-block">
@@ -2054,6 +2084,31 @@
             $('#rchars').text(textlen);
         });
     </script>
+    <script>
+          $('#summernote').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear', 'italic']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
+        $('.summernote').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear', 'italic']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+        </script>
 
 
 

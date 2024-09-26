@@ -272,7 +272,7 @@ class RootCauseController extends Controller
             $root->mitigation_proposal = serialize($request->mitigation_proposal);
         }
 
-
+    //    dd($request->risk_factor);
         //observation changes
         $root->objective = $request->objective;
         $root->scope = $request->scope;
