@@ -4,12 +4,19 @@ namespace App\Http\Controllers\tms;
 
 use App\Http\Controllers\Controller;
 use App\Models\RecordNumber;
+use App\Models\DocumentTraining;
+use App\Models\Training;
+use App\Models\Quize;
+use App\Models\Question;
+use App\Models\Document;
 use App\Models\RoleGroup;
 use App\Models\TrainerGrid;
 use App\Models\QuestionariesTrainingGrid;
 use App\Models\TrainerQualification;
 use App\Models\TrainerQualificationAuditTrial;
 use App\Models\User;
+use Illuminate\Support\Facades\App;
+use PDF;
 use App\Models\Employee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -37,6 +44,33 @@ class TrainerController extends Controller
         return response()->json($employee);
     }
 
+    public function fetchQuestionss($id)
+    {
+        $document_training = DocumentTraining::where('document_id', $id)->first();
+        if ($document_training) {
+            $training = Training::find($document_training->training_plan); 
+            if ($training && $training->training_plan_type == "Read & Understand with Questions") {
+                $quize = Quize::find($training->quize);
+                $questions = explode(',', $quize->question);
+                $question_list = [];
+    
+                foreach ($questions as $question_id) {
+                    $question = Question::find($question_id);
+                    if ($question) {
+                        $json_options = unserialize($question->options);
+                        $options = [];
+                        foreach ($json_options as $key => $value) {
+                            $options[chr(97 + $key)] = $value; // Format options
+                        }
+                        $question->options = $options;
+                        $question_list[] = $question;
+                    }
+                }
+                return response()->json($question_list); // Return questions array as JSON
+            }
+        }
+        return response()->json([]); // Return empty array if no questions found
+    }
 
     public function store(Request $request)
     {
@@ -399,7 +433,7 @@ class TrainerController extends Controller
         $trainer->topic = $request->topic;
         $trainer->type = $request->type;
         $trainer->evaluation = $request->evaluation;
-
+        $trainer->sopdocument = $request->sopdocument;
 
         $trainer->qa_final_comment = $request->qa_final_comment;
         $trainer->hod_comment = $request->hod_comment;
@@ -762,12 +796,24 @@ class TrainerController extends Controller
         $trainer_skill = TrainerGrid::where(['trainer_qualification_id' => $id, 'identifier' => 'trainerSkillSet'])->first();
         $trainer_list = TrainerGrid::where(['trainer_qualification_id' => $id, 'identifier' => 'listOfAttachment'])->first();
         $employee_grid_data = QuestionariesTrainingGrid::where(['trainer_qualification_id' => $id, 'identifier' => 'Questionaries'])->first();
+        
+        $data = Document::all();
+        // Fetch the record and document training by ID
+        $record = TrainerQualification::findOrFail($id);
+        $document_training = DocumentTraining::where('document_id', $id)->first();
+    
+        // Use optional() to avoid null errors when training_plan or quize is null
+        $training = optional($document_training)->training_plan ? Training::find($document_training->training_plan) : null;
+        $quize = optional($training)->quize ? Quize::find($training->quize) : null;
+    
+        // Get the saved SOP document and employee grid data
+        $savedSop = $record->sopdocument;
 
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
 
-        return view('frontend.TMS.Trainer_qualification.trainer_qualification_view', compact('trainer', 'due_date', 'trainer_skill', 'trainer_list','employee_grid_data'));
+        return view('frontend.TMS.Trainer_qualification.trainer_qualification_view', compact('trainer', 'due_date', 'trainer_skill', 'trainer_list','employee_grid_data','data','record','document_training','training','quize','savedSop'));
     }
 
     public function sendStage(Request $request, $id)
@@ -1034,5 +1080,30 @@ class TrainerController extends Controller
         $doc->origiator_name = User::find($doc->initiator_id);
 
         return view('frontend.TMS.Trainer_qualification.trainerQualification_auditTrailDetails', compact('detail', 'doc', 'detail_data'));
+    }
+
+    public static function trainerReport($id)
+    {
+        $data = Induction_training::find($id);
+        if (!empty($data)) {
+            $data->originator_id = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.TMS.Trainer_qualification.trainer_report', compact('data'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('example.pdf' . $id . '.pdf');
+        }
     }
 }
