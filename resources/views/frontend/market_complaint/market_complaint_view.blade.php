@@ -9566,16 +9566,25 @@
                             QA/CQA Head Review
                         </div>
                         <div class="row">
-                            <div class="col-md-12 mb-3">
+                            {{-- <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="Closure Comment">QA/CQA Head Comment </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea class="" name="qa_head_comment" id=""
+                                    <textarea class="" name="qa_head_comment" 
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_head_comment }}
                                     </textarea>
                                 </div>
+                            </div> --}}
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Closure Comment">QA/CQA Head Comment </label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea class="" name="qa_head_comment" id="" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_head_comment }}</textarea>
+                                </div>
                             </div>
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Inv Attachments">QA/CQA Head Attachment</label>
