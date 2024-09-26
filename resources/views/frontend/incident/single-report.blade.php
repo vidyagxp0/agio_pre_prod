@@ -232,7 +232,7 @@
                         <th class="w-20">Due Date</th>
                         <td class="w-30">
                             @if ($data->due_date)
-                                {{ $data->due_date }}
+                                {{ Helpers::getdateFormat($data->due_date) }}
                             @else
                                 Not Applicable
                             @endif
@@ -240,7 +240,7 @@
                         <th class="w-20">Initiation Department</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
-                                {{ $data->Initiator_Group }}
+                                {{ Helpers::getFullDepartmentName($data->Initiator_Group) }}
                             @else
                                 Not Applicable
                             @endif
@@ -250,8 +250,17 @@
                 </table>
                 <table>
                     <tr>
+                        <th class="w-20">Initiation Department Code</th>
+                        <td class="w-30">
+                            @if ($data->Initiator_Group)
+                                {{ $data->Initiator_Group }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
                         <th class="w-20">Short Description</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->short_description)
                                 {{ $data->short_description }}
                             @else
@@ -281,10 +290,10 @@
 
                     </tr>
                     <tr>
-                        <th class="w-20"> Incident Observed On</th>
+                        <th class="w-20"> Incident Observed On (Date)</th>
                         <td class="w-30">
                             @if ($data->incident_date)
-                                {{ $data->incident_date }}
+                                {{ Helpers::getdateFormat($data->incident_date) }}
                             @else
                                 Not Applicable
                             @endif
@@ -305,13 +314,20 @@
                         <th class="w-20">Incident Reported On </th>
                         <td class="w-30">
                             @if ($data->incident_reported_date)
-                                {{ $data->incident_reported_date }}
+                                {{ Helpers::getdateFormat($data->incident_reported_date) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
                         <th class="w-20">Incident Observed by</th>
-                        @php
+                        <td class="w-30">
+                            @if ($data->Facility)
+                                {{ $data->Facility }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        {{--@php
                             $facilityIds = explode(',', $data->Facility);
                             $users = $facilityIds ? DB::table('users')->whereIn('id', $facilityIds)->get() : [];
                         @endphp
@@ -324,7 +340,7 @@
                             @else
                                 Not Applicable
                             @endif
-                        </td>
+                        </td>--}}
 
                     </tr>
                 </table>
@@ -795,9 +811,9 @@
                         </td>
                     </tr>
                 </table>
-
-
             </div>
+
+
             <div class="border-table">
                 <div class="block-head">
                     QA Initial Review Attachments
@@ -825,6 +841,58 @@
 
                 </table>
             </div>
+
+
+            <br>
+
+            <div class="block">
+                <div class="block-head">
+                    QA Head/Designee Approval
+                </div>
+                <table>
+                    <tr>
+                        <th class="w-20">QA Head/Designee approval comment</th>
+                        <td class="w-30">
+                            @if ($data->qa_head_deginee_comment)
+                                {{ $data->qa_head_deginee_comment }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
+            <div class="border-table">
+                <div class="block-head">
+                    QA Head/Designee approval attachement
+                </div>
+                <table>
+
+                    <tr class="table_bg">
+                        <th class="w-20">S.N.</th>
+                        <th class="w-60">Attachment</th>
+                    </tr>
+                    @if ($data->qa_head_deginee_attachments)
+                        @foreach (json_decode($data->qa_head_deginee_attachments) as $key => $file)
+                            <tr>
+                                <td class="w-20">{{ $key + 1 }}</td>
+                                <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        target="_blank"><b>{{ $file }}</b></a> </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-20">Not Applicable</td>
+                        </tr>
+                    @endif
+
+                </table>
+            </div>
+
+
 
             <div class="block">
                 <div class="block-head">
