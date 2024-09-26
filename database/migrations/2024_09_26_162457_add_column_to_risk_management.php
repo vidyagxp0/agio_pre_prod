@@ -13,8 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('induction_trainings', function (Blueprint $table) {
-            $table->longText('training_type')->nullable();
+        Schema::table('risk_management', function (Blueprint $table) {
+            $table->text('other_source_of_risk')->nullable();
+            $table->text('other_type')->nullable();
+
         });
     }
 
@@ -25,7 +27,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('induction_trainings', function (Blueprint $table) {
+        Schema::table('risk_management', function (Blueprint $table) {
             //
         });
     }

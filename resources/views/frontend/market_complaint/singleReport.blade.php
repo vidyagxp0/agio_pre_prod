@@ -310,6 +310,28 @@
                         <td class="w-80">{!! $data->review_of_control_sample_gi ?? 'Not Applicable' !!}</td>
                     </tr>
                 </table>
+                <table>
+                    <tr>
+                        <th class="w-20">Review of Stability Study Program and Samples</th>
+                        <td class="w-80">{!! $data->review_of_stability_study_gi ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Review of Product Manufacturing and Analytical Process</th>
+                        <td class="w-80">{!! $data->review_of_product_manu_gi ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <th class="w-20">Additional Information if Require</th>
+                        <td class="w-80">{!! $data->additional_inform ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <th class="w-20">In Case of Invalide Complain Then</th>
+                        <td class="w-80">{!! $data->in_case_Invalide_com ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
 
                 <table>
                     <div class="border-table">
@@ -801,6 +823,14 @@
                     <tr>
                         <th class="w-20">Review Of Past History Of Product</th>
                         <td class="w-80">{!! $data->review_of_past_history_of_product_gi ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Conclusion(A Dedicated Provision Must be Established to Record the Inference or Outcome of Brainstorming Sessions)</th>
+                        <td class="w-80">{!! $data->conclusion_pi ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">The Probable Root Causes or Root Cause</th>
+                        <td class="w-80">{!! $data->the_probable_root ?? 'Not Applicable' !!}</td>
                     </tr>
                 </table>
             </div>

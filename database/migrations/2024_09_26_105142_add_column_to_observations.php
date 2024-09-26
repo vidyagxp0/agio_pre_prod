@@ -13,19 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('induction_trainings', function (Blueprint $table) {
-            $table->longText('training_type')->nullable();
+        Schema::table('observations', function (Blueprint $table) {
+            $table->text('auditee_department')->nullable();
+            $table->text('response_capa_attach')->nullable();
         });
     }
 
-    /**
+    /** 
      * Reverse the migrations.
      *
      * @return void
      */
     public function down()
     {
-        Schema::table('induction_trainings', function (Blueprint $table) {
+        Schema::table('observations', function (Blueprint $table) {
             //
         });
     }

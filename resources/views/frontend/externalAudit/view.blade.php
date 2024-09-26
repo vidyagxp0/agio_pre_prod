@@ -1059,7 +1059,7 @@
                             </div>
 
                             <!-- Audit Planning content -->
-                            <div id="CCForm2" class="inner-block cctabcontent">
+                            <!-- <div id="CCForm2" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
                                         <div class="col-lg-6 new-date-data-field">
@@ -1248,10 +1248,10 @@
                                                 class="text-white"> Exit </a> </button>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- Audit Preparation content -->
-                            <div id="CCForm3" class="inner-block cctabcontent">
+                            <!-- <div id="CCForm3" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -1557,10 +1557,10 @@
                                                 class="text-white"> Exit </a> </button>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- Audit Execution content -->
-                            <div id="CCForm4" class="inner-block cctabcontent">
+                            <!-- <div id="CCForm4" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
                                         <div class="col-lg-6 new-date-data-field">
@@ -1595,129 +1595,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div class="col-12">
-                                                <div class="group-input">
-                                                    <label for="audit-agenda-grid">
-                                                        Observation Details
-                                                        <button type="button" name="audit-agenda-grid"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                          id="ObservationAdd">+</button>
-                                                        <span class="text-primary" data-bs-toggle="modal"
-                                                            data-bs-target="#observation-field-instruction-modal"
-                                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                            (Launch Instruction)
-                                                        </span>
-                                                    </label>
-                                                    <div class="table-responsive">
-                                                        <table class="table table-bordered" id="onservation-field-table"
-                                                            style="width: 100%;">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Row#</th>
-                                                                    <th>Observation Details</th>
-                                                                    {{-- <th>Date</th>
-                                                                <th>Auditor</th>
-                                                                <th>Auditee</th> --}}
-                                                                    <th>Pre Comments</th>
-                                                                    {{-- <th>Severity Level</th> --}}
-                                                                     <th>CAPA Details if any</th>
-                                                                    {{-- <th>Observation Category</th>
-                                                                <th>CAPA Required</th> --}}
-                                                                    <th>Post Comments</th>
-                                                                    {{-- <th>Auditor Review on Response</th>
-                                                                <th>QA Comments</th>
-                                                                <th>CAPA Details</th>
-                                                                <th>CAPA Due Date</th>
-                                                                <th>CAPA Owner</th>
-                                                                <th>Action Taken</th>
-                                                                <th>CAPA Completion Date</th>
-                                                                <th>Status</th>
-                                                                <th>Remarks</th>   --}}
-                                                                    <th>Action</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="observationDetail">
-                                                                @if ($grid_data1->observation_id)
-    @foreach (unserialize($grid_data1->observation_id) as $key => $tempData)
-    <tr>
-                                                                        <td>{{ $key + 1 }}</td>
-                                                                        <td><input type="text" name="observation_id[]" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} value="{{ $tempData ? $tempData : '' }}"></td>
-                                                                        {{-- <td><input type="date" name="date[]" value="{{unserialize($grid_data1->date)[$key] ? unserialize($grid_data1->date)[$key]: "" }}"></td> --}}
-                                                                    {{-- <td> <div class="group-input new-date-data-field mb-0">
-                                                                        <div class="input-date "><div class="calenderauditee">
-                                                                        <input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->date) }}"/>
-                                                                        <input type="date" name="date[]" value="{{ $data->date }}" class="hide-input"
-                                                                        oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>
-                                                                <td> --}}
-                                                                        {{-- <select placeholder="Select..." name="auditorG[]">
-                                                                        <option value="">Select a value</option>
-                                                                        @foreach ($users as $datas)
-                                                                            <option value="{{ $datas->id }}">
-
-                                                                                {{ $datas->name }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </td>
-                                                                <td>
-                                                                    <select placeholder="Select..." name="auditeeG[]">
-                                                                        <option value="">Select a value</option>
-                                                                        @foreach ($users as $datas)
-                                                                            <option value="{{ $datas->id }}">
-
-                                                                                {{ $datas->name }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </td> --}}
-                                                                        <td><input type="text" name="observation_description[]" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} value="{{ unserialize($grid_data1->observation_description)[$key] ? unserialize($grid_data1->observation_description)[$key] : '' }}"></td>
-                                                                        {{-- <td><input type="text" name="severity_level[]" value="{{unserialize($grid_data1->severity_level)[$key] ? unserialize($grid_data1->severity_level)[$key]: "" }}"></td> --}}
-                                                                         <td><input type="text" name="area[]" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} value="{{ unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key] : '' }}"></td>
-                                                                        {{-- <td><input type="text" name="observation_category[]" value="{{unserialize($grid_data1->observation_category)[$key] ? unserialize($grid_data1->observation_category)[$key]: "" }}"></td>
-                                                                    <td>
-                                                                        <select name="capa_required[]">
-                                                                            <option value="0">-- Select --</option>
-                                                                            <option value="yes">Yes</option>
-                                                                            <option value="no">No</option>
-                                                                        </select>
-                                                                    </td> --}}
-                                                                        <td><input type="text" name="auditee_response[]" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} value="{{ unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key] : '' }}"></td>
-                                                                        {{-- <td><input type="text" name="auditor_review_on_response[]" value="{{unserialize($grid_data1->auditor_review_on_response)[$key] ? unserialize($grid_data1->auditor_review_on_response)[$key]: "" }}"></td>
-                                                                    <td><input type="text" name="qa_comment[]" value="{{unserialize($grid_data1->qa_comment)[$key] ? unserialize($grid_data1->qa_comment)[$key]: "" }}"></td>
-                                                                    <td><input type="text" name="capa_details[]" value="{{unserialize($grid_data1->capa_details)[$key] ? unserialize($grid_data1->capa_details)[$key]: "" }}"></td>
-                                                                    {{-- <td><input type="date" name="capa_due_date[]" value="{{unserialize($grid_data1->capa_due_date)[$key] ? unserialize($grid_data1->capa_due_date)[$key]: "" }}"></td> --}}
-                                                                        {{-- <td><div class="group-input new-date-data-field mb-0">
-                                                                        <div class="input-date "><div class="calenderauditee">
-                                                                        <input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->capa_due_date) }}"/>
-                                                                        <input type="date" name="capa_due_date[]" value="{{ $data->capa_due_date }}" class="hide-input"
-                                                                        oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>
-                                                                    <td>
-                                                                        <select placeholder="Select..." name="capa_owner[]">
-                                                                            <option value="">Select a value</option>
-                                                                            @foreach ($users as $datas)
-                                                                                <option value="{{ $datas->id }}">
-                                                                                    {{ $datas->name }}
-                                                                                </option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </td>
-                                                                    <td><input type="text" name="action_taken[]" value="{{unserialize($grid_data1->action_taken)[$key] ? unserialize($grid_data1->action_taken)[$key]: "" }}"></td> --}}
-                                                                        {{-- <td><input type="date" name="capa_completion_date[]" value="{{unserialize($grid_data1->capa_completion_date)[$key] ? unserialize($grid_data1->capa_completion_date)[$key]: "" }}"></td> --}}
-                                                                        {{-- <td><div class="group-input new-date-data-field mb-0">
-                                                                        <div class="input-date "><div class="calenderauditee">
-                                                                        <input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->capa_completion_date) }}"/>
-                                                                        <input type="date" name="capa_completion_date[]" value="{{ $data->capa_completion_date }}" class="hide-input"
-                                                                        oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>
-                                                                    <td><input type="text" name="status_Observation[]" value="{{unserialize($grid_data1->status)[$key] ? unserialize($grid_data1->status)[$key]: "" }}"></td>
-                                                                    <td><input type="text" name="remark_observation[]" value="{{unserialize($grid_data1->remark)[$key] ? unserialize($grid_data1->remark)[$key]: "" }}"></td> --}}
-                                                                 <td><button type="button" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>Remove</button></td>
-                                                             </tr>
-    @endforeach
-    @endif
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div> -->
+                                        
 
 
                                         <div class="col-12">
@@ -1788,7 +1666,7 @@
                                                 class="text-white"> Exit </a> </button>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- Audit Response & Closure content -->
                             <div id="CCForm5" class="inner-block cctabcontent">
@@ -1822,7 +1700,7 @@
                                                             <th>Row</th>
                                                             <th>Observation</th>
                                                             <th>Response</th>
-                                                            <th>CAPA / ACTION Child Reference If Any </th>
+                                                            <th>CAPA / Child action Reference If Any </th>
                                                             <th>Status</th>
                                                             <th>Remarks</th>
                                                             <th>Action</th>
@@ -2000,6 +1878,37 @@
                                                         </div>
                                                 </div>
                                             </div> -->
+
+
+
+
+                                      
+
+                                            
+
+                                     @php
+
+                                    $assignedUsers = explode(',', $data->reviewer_person_value ?? '');
+
+                                    @endphp
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="reviewer_person_value">CFT review selection</label>
+                                        <select id="reviewer_person_value" name="reviewer_person_value[]" multiple
+                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->name }}" {{-- Pass the user's name instead of id --}}
+                                                    {{ in_array($user->name, explode(',', $data->reviewer_person_value ?? '')) ? 'selected' : '' }}>
+                                                    {{ $user->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('reviewer_person_value')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Audit Attachments">Summary And Response Attachments</label>
@@ -2051,10 +1960,9 @@
                                             </div> -->
                                     </div>
                                     <div class="button-block">
-                                        @if ($data->stage != 0)
+                                       
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
-                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>Save</button>
-                                        @endif
+                                               >Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
@@ -2067,7 +1975,7 @@
                                 <div class="inner-block-content">
                                     <div class="row">
                                         <div class="sub-head">
-                                            Production (Tablet/Capsule/Powder)
+                                        Production (Tablet/Capsule/Powder)
                                         </div>
                                         <script>
                                             $(document).ready(function() {
@@ -2096,7 +2004,7 @@
                                         @if ($data->stage == 2 || $data->stage == 3)
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet"> Production Tablet Required ? <span
+                                                    <label for="Production Tablet"> Production Tablet/Capsule Powdert Required ?  <span
                                                             class="text-danger">*</span></label>
                                                     <select name="Production_Table_Review" id="Production_Table_Review"
                                                         @if ($data->stage == 3) disabled @endif>
@@ -2127,7 +2035,7 @@
                                             <!-- <p>USER ROLE COUNT {{ $data->division_id }}</p> -->
                                             <div class="col-lg-6 productionTable">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet notification">Production Tablet Person
+                                                    <label for="Production Tablet notification">Production Tablet/Capsule Powder Person 
                                                         <span id="asteriskPT"
                                                             style="display: {{ $data1->Production_Table_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
@@ -2146,9 +2054,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 productionTable">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet assessment">Impact Assessment (By
-                                                        Production
-                                                        Tablet) <span id="asteriskPT1"
+                                                    <label for="Production Tablet assessment">Review comment (By Production Tablet/Capsule Powder) <span id="asteriskPT1"
                                                             style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field
@@ -2162,7 +2068,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 productionTable">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet feedback">Production Tablet Feedback
+                                                    <label for="Production Tablet feedback">Production Tablet/Capsule Powder Feedback
                                                         <span id="asteriskPT2"
                                                             style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
@@ -2177,8 +2083,7 @@
                                             </div>
                                             <div class="col-12 productionTable">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet attachment">Production Tablet
-                                                        Attachments</label>
+                                                    <label for="Production Tablet attachment">Production Tablet/Capsule Powder Attachments</label>
                                                     <div><small class="text-primary">Please Attach all relevant or
                                                             supporting
                                                             documents</small></div>
@@ -2216,8 +2121,7 @@
                                             </div>
                                             <div class="col-md-6 mb-3 productionTable">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet Completed By">Production Tablet Completed
-                                                        By</label>
+                                                    <label for="Production Tablet Completed By">Production Tablet/Capsule Powder Completed By</label>
                                                     <input readonly type="text"
                                                         value="{{ $data1->Production_Table_By }}"
                                                         name="Production_Table_By"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
@@ -2229,8 +2133,7 @@
 
                                             {{-- <div class="col-6 productionTable new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Production Tablet Completed On">Production Tablet
-                                                Completed On</label>
+                                            <label for="Production Tablet Completed On">Production Tablet/Capsule Powder Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="Production_Table_On" readonly
                                                     placeholder="DD-MMM-YYYY"
@@ -2304,7 +2207,7 @@
                                         @else
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet">Production Tablet Required ?</label>
+                                                    <label for="Production Tablet">Production Tablet/Capsule Powdert Required ? </label>
                                                     <select name="Production_Table_Review" disabled
                                                         id="Production_Table_Review">
                                                         <option value="">-- Select --</option>
@@ -2333,7 +2236,7 @@
                                             @endphp
                                             <div class="col-lg-6 productionTable">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet notification">Production Tablet Person
+                                                    <label for="Production Tablet notification">Production Tablet/Capsule Powder Person 
                                                         <span id="asteriskInvi11" style="display: none"
                                                             class="text-danger">*</span></label>
                                                     <select name="Production_Table_Person" disabled
@@ -2350,9 +2253,7 @@
                                             @if ($data->stage == 3)
                                                 <div class="col-md-12 mb-3 productionTable">
                                                     <div class="group-input">
-                                                        <label for="Production Tablet assessment">Impact Assessment (By
-                                                            Production
-                                                            Tablet)
+                                                        <label for="Production Tablet assessment">Review comment (By Production Tablet/Capsule Powder)
                                                             <!-- <span
                                                                                                                                                                                                                         id="asteriskInvi12" style="display: none"
                                                                                                                                                                                                                         class="text-danger">*</span> -->
@@ -2366,7 +2267,7 @@
                                                 </div>
                                                 <div class="col-md-12 mb-3 productionTable">
                                                     <div class="group-input">
-                                                        <label for="Production Tablet feedback">Production Tablet Feedback
+                                                        <label for="Production Tablet feedback">Production Tablet FeedbackProduction Tablet/Capsule Powder Feedback
                                                             <!-- <span
                                                                                                                                                                                                                         id="asteriskInvi22" style="display: none"
                                                                                                                                                                                                                         class="text-danger">*</span> -->
@@ -2381,9 +2282,7 @@
                                             @else
                                                 <div class="col-md-12 mb-3 productionTable">
                                                     <div class="group-input">
-                                                        <label for="Production Tablet assessment">Impact Assessment (By
-                                                            Production
-                                                            Tablet)
+                                                        <label for="Production Tablet assessment">Review comment (By Production Tablet/Capsule Powder)
                                                             <!-- <span
                                                                                                                                                                                                                         id="asteriskInvi12" style="display: none"
                                                                                                                                                                                                                         class="text-danger">*</span> -->
@@ -2578,8 +2477,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 productionInjection">
                                                 <div class="group-input">
-                                                    <label for="Production Injection feedback">Production Injection
-                                                        Feedback <span id="asteriskPT2"
+                                                    <label for="Production Injection feedback">Production Table Injection Feedback <span id="asteriskPT2"
                                                             style="display: {{ $data1->Production_Injection_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field
@@ -5436,7 +5334,7 @@
                                         @if ($data->stage == 2 || $data->stage == 3)
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Production Liquid"> Production Liquid Required ? <span
+                                                    <label for="Production Liquid"> Production Liquid/ointment Required ?<span
                                                             class="text-danger">*</span></label>
                                                     <select name="ProductionLiquid_Review" id="ProductionLiquid_Review"
                                                         @if ($data->stage == 3) disabled @endif>
@@ -5466,7 +5364,7 @@
                                             @endphp
                                             <div class="col-lg-6 productionLiquid">
                                                 <div class="group-input">
-                                                    <label for="Production Liquid notification">Production Liquid Person
+                                                    <label for="Production Liquid notification">Production Liquid/ointment Person
                                                         <span id="asteriskPT"
                                                             style="display: {{ $data1->ProductionLiquid_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
@@ -5485,9 +5383,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 productionLiquid">
                                                 <div class="group-input">
-                                                    <label for="Production Liquid assessment">Impact Assessment (By
-                                                        Production
-                                                        Liquid) <span id="asteriskPT1"
+                                                    <label for="Production Liquid assessment">Impact Assessment (By Production Liquid/ointment) <span id="asteriskPT1"
                                                             style="display: {{ $data1->ProductionLiquid_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field
@@ -5501,7 +5397,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 productionLiquid">
                                                 <div class="group-input">
-                                                    <label for="Production Liquid feedback">Production Liquid Feedback
+                                                    <label for="Production Liquid feedback">Production Liquid/ointment Feedback
                                                         <span id="asteriskPT2"
                                                             style="display: {{ $data1->ProductionLiquid_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
@@ -5516,8 +5412,7 @@
                                             </div>
                                             <div class="col-12 productionLiquid">
                                                 <div class="group-input">
-                                                    <label for="Production Liquid attachment">Production Liquid
-                                                        Attachments</label>
+                                                    <label for="Production Liquid attachment">Production Liquid/ointment Attachments</label>
                                                     <div><small class="text-primary">Please Attach all relevant or
                                                             supporting
                                                             documents</small></div>
@@ -5555,9 +5450,7 @@
                                             </div>
                                             <div class="col-md-6 mb-3 productionLiquid">
                                                 <div class="group-input">
-                                                    <label for="Production Liquid Completed By">Production Liquid
-                                                        Completed
-                                                        By</label>
+                                                    <label for="Production Liquid Completed By">Production Liquid/ointment Completed By</label>
                                                     <input readonly type="text"
                                                         value="{{ $data1->ProductionLiquid_by }}"
                                                         name="ProductionLiquid_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
@@ -5578,8 +5471,7 @@
                                     </div> --}}
                                             <div class="col-lg-6 productionLiquid new-date-data-field">
                                                 <div class="group-input input-date">
-                                                    <label for="Production Liquid Completed On">Production Liquid
-                                                        Completed On</label>
+                                                    <label for="Production Liquid Completed On">Production Liquid/ointment Completed On</label>
                                                     <div class="calenderauditee">
                                                         <input type="text" id="ProductionLiquid_on" readonly
                                                             placeholder="DD-MMM-YYYY"
@@ -7043,7 +6935,7 @@
 
                                             <div class="col-md-12 mb-3 ContractGiver">
                                                 <div class="group-input">
-                                                    <label for="Contract Giver feedback">Contract Giver Feedback <span
+                                                    <label for="Contract Giver feedback">Impact Assessment (By Contract Giver)<span
                                                             id="asteriskPT2" class="text-danger"
                                                             style="display: {{ $data1->ContractGiver_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"></span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field
@@ -7439,7 +7331,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 other1_reviews ">
                                                 <div class="group-input">
-                                                    <label for="Impact Assessment12">Impact Assessment (By Other's 1)
+                                                    <label for="Impact Assessment12">Review comment (By Other's 1)
                                                     </label>
                                                     <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 3) required @endif class="tiny" name="Other1_assessment"
                                                         @if ($data->stage == 2 || Auth::user()->name != $data1->Other1_person) readonly @endif id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
@@ -10410,7 +10302,7 @@
 
         <script>
             VirtualSelect.init({
-                ele: '#Facility, #Group, #Audit, #Auditee , #reference_record'
+                ele: '#Facility, #Group, #Audit, #Auditee , #reference_record,#reviewer_person_value'
             });
 
             function openCity(evt, cityName) {

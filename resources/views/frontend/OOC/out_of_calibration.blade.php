@@ -1064,7 +1064,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Root Cause identified</label>
                                 <select name="is_repeat_assingable_ooc" id="assignableSelect" onchange="toggleRootCauseInput()">
-                                    <option value="NA">Select</option>
+                                    <option value=" ">Select</option>
                                     <option value="YES">YES</option>
                                     <option value="NO">NO</option>
                                 </select>

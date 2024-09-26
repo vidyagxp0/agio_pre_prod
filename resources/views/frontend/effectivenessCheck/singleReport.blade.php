@@ -258,6 +258,44 @@
             </div>
 
 
+            <div class="block-head">
+                Acknowledge
+           </div>
+               <table>
+                   <tr>
+                      <th class="w-20">Acknowledge Comment</th>
+                      <td class="w-80">@if($data->acknowledge_comment){{ $data->acknowledge_comment }}@else Not Applicable @endif</td>
+                   </tr>
+                </table>
+
+                <div class="block-head">
+                    Acknowledge Attachment
+                 </div>
+                   <div class="border-table">
+                     <table>
+                         <tr class="table_bg">
+                             <th class="w-20">S.N.</th>
+                             <th class="w-60">File </th>
+                         </tr>
+                             @if($data->acknowledge_Attachment)
+                             @foreach(json_decode($data->acknowledge_Attachment) as $key => $file)
+                                 <tr>
+                                     <td class="w-20">{{ $key + 1 }}</td>
+                                     <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                 </tr>
+                             @endforeach
+                             @else
+                             <tr>
+                                 <td class="w-20">1</td>
+                                 <td class="w-20">Not Applicable</td>
+                             </tr>
+                         @endif
+
+                     </table>
+                   </div>
+            
+            </div>
+
              <div class="block-head">
                   Effectiveness Summary
              </div>
@@ -302,213 +340,231 @@
 
                         </table>
                       </div>
-               
-                    {{-- <div class="block-head">
-                       Reopen
-                    </div> --}}
-                    {{-- <table>
-                     <tr>
-                        <th class="w-20">Addendum Comments</th>
-                        <td class="w-80">@if($data->Addendum_Comments){{ $data->Addendum_Comments }}@else Not Applicable @endif</td>
-                       
-                      </tr>
-                  </table> --}}
-                    {{-- <div class="block-head">
-                    Addendum Attachment
-                    </div>
-                      <div class="border-table">
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">File </th>
-                            </tr>
-                                @if($data->Addendum_Attachment)
-                                @foreach(json_decode($data->Addendum_Attachment) as $key => $file)
-                                    <tr>
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                                    </tr>
-                                @endforeach
-                                @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
-                                </tr>
-                            @endif
-
-                        </table>
-                      </div> --}}
-
+               <br>
                       <div class="block-head">
-                      Reference Info comments
+                        HOD Review
                     </div>
                     <table>
-                     <tr>
-                        <th class="w-20">Comments</th>
-                        <td class="w-80">@if($data->Comments){{ $data->Comments }}@else Not Applicable @endif</td>
-                       
-                      </tr>
-                  </table>
+                     
+                    <tr>
+                         <th class="w-20">HOD Review Comments</th>
+                         <td class="w-80">@if($data->Comments){{ $data->Comments }}@else Not Applicable @endif</td>
+                    </tr>
+                    </table>
+                     <div class="block-head">
+                        HOD Review Attachment
+                     </div>
+                       <div class="border-table">
+                         <table>
+                             <tr class="table_bg">
+                                 <th class="w-20">S.N.</th>
+                                 <th class="w-60">File </th>
+                             </tr>
+                                 @if($data->Attachment)
+                                 @foreach(json_decode($data->Attachment) as $key => $file)
+                                     <tr>
+                                         <td class="w-20">{{ $key + 1 }}</td>
+                                         <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                     </tr>
+                                 @endforeach
+                                 @else
+                                 <tr>
+                                     <td class="w-20">1</td>
+                                     <td class="w-20">Not Applicable</td>
+                                 </tr>
+                             @endif
+ 
+                         </table>
+                       </div>
+
+                       <br>
+                      <div class="block-head">
+                        QA/CQA Review
+                    </div>
+                    <table>
+                     
+                    <tr>
+                         <th class="w-20">QA/CQA Review Comment</th>
+                         <td class="w-80">@if($data->qa_cqa_review_comment){{ $data->qa_cqa_review_comment }}@else Not Applicable @endif</td>
+                    </tr>
+                    </table>
                     <div class="block-head">
-                       Attachment
+                        QA/CQA Review Attachment
+                     </div>
+                       <div class="border-table">
+                         <table>
+                             <tr class="table_bg">
+                                 <th class="w-20">S.N.</th>
+                                 <th class="w-60">File </th>
+                             </tr>
+                                 @if($data->qa_cqa_review_Attachment)
+                                 @foreach(json_decode($data->qa_cqa_review_Attachment) as $key => $file)
+                                     <tr>
+                                         <td class="w-20">{{ $key + 1 }}</td>
+                                         <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                     </tr>
+                                 @endforeach
+                                 @else
+                                 <tr>
+                                     <td class="w-20">1</td>
+                                     <td class="w-20">Not Applicable</td>
+                                 </tr>
+                             @endif
+ 
+                         </table>
+                       </div>
+
+                       <br>
+                      <div class="block-head">
+                        QA/CQA Approval
                     </div>
-                      <div class="border-table">
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">File </th>
-                            </tr>
-                                @if($data->Attachment)
-                                @foreach(json_decode($data->Attachment) as $key => $file)
-                                    <tr>
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                                    </tr>
-                                @endforeach
-                                @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
-                                </tr>
-                            @endif
-
-                        </table>
-                      </div>
-                      {{-- <div class="block-head">
-                      Reference Records
-                    </div>
-                      <div class="border-table">
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">File </th>
-                            </tr>
-                                @if($data->refer_record)
-                                @foreach(json_decode($data->refer_record) as $key => $file)
-                                    <tr>
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                                    </tr>
-                                @endforeach
-                                @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
-                                </tr>
-                            @endif
-
-                        </table>
-                      </div> --}}
-            <div class="block">
-                <div class="block-head">
-                Activity Log
-                </div>
-                <table>
+                    <table>
+                     
                     <tr>
-                        <th class="w-20">Submit by
-                        </th>
-                        <td class="w-30">{{ $data->submit_by }}</td>
-                        <th class="w-20">
-                        Submit On</th>
-                        <td class="w-30">{{ $data->submit_on }}</td>
-                        <th class="w-20">
-                        Submit Comment</th>
-                        <td class="w-30">{{ $data->submit_comment }}</td>
+                         <th class="w-20">QA/CQA Approval Comment</th>
+                         <td class="w-80">@if($data->qa_cqa_approval_comment){{ $data->qa_cqa_approval_comment }}@else Not Applicable @endif</td>
                     </tr>
-                    <tr>
-                        <th class="w-20">Acknowledge Complete by
-                        </th>
-                        <td class="w-30">{{ $data->work_complition_by }}</td>
-                        <th class="w-20">
-                            Acknowledge Complete On</th>
-                        <td class="w-30">{{ $data->work_complition_on }}</td>
-                        <th class="w-20">
-                            Acknowledge Complete Comment</th>
-                        <td class="w-30">{{ $data->work_complition_comment }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20"> Complete By
-                        </th>
-                        <td class="w-30">{{ $data->effectiveness_check_complete_by }}</td>
-                        <th class="w-20">
-                         Complete On</th>
-                        <td class="w-30">{{ $data->effectiveness_check_complete_on }}</td>
-                        <th class="w-20">
-                         Complete Comment</th>
-                        <td class="w-30">{{ $data->effectiveness_check_complete_comment }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">HOD Review Complete By
-                        </th>
-                        <td class="w-30">{{ $data->hod_review_complete_by }}</td>
-                        <th class="w-20">
-                        HOD Review Complete On</th>
-                        <td class="w-30">{{ $data->hod_review_complete_on }}</td>
-                        <th class="w-20">
-                        HOD Review Complete Comment</th>
-                        <td class="w-30">{{ $data->hod_review_complete_comment }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Not Effective By
-                        </th>
-                        <td class="w-30">{{ $data->qa_review_complete_by }}</td>
-                        <th class="w-20">
-                        Not Effective On</th>
-                        <td class="w-30">{{ $data->qa_review_complete_on }}</td>
-                        <th class="w-20">
-                        Not Effective Comment</th>
-                        <td class="w-30">{{ $data->qa_review_complete_comment }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Not Effective Approval Complete By
-                        </th>
-                        <td class="w-30">{{ $data->not_effective_approval_complete_by }}</td>
-                        <th class="w-20">
-                        Not Effective Approval Complete On</th>
-                        <td class="w-30">{{ $data->not_effective_approval_complete_on }}</td>
-                        <th class="w-20">
-                        Not Effective Approval Complete Comment</th>
-                        <td class="w-30">{{ $data->not_effective_approval_complete_comment }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Effective by
-                        </th>
-                        <td class="w-30">{{ $data->effective_by }}</td>
-                        <th class="w-20">
-                        Effective On</th>
-                        <td class="w-30">{{ $data->effective_on }}</td>
-                        <th class="w-20">
-                        Effective Comment</th>
-                        <td class="w-30">{{ $data->effective_comment }}</td>
-                    </tr>
-                  
-                    <tr>
-                        <th class="w-20">Effective Approval Complete By
-                        </th>
-                        <td class="w-30">{{ $data->effective_approval_complete_by }}</td>
-                        <th class="w-20">
-                        Effective Approval Complete On</th>
-                        <td class="w-30">{{ $data->effective_approval_complete_on }}</td>
-                        <th class="w-20">
-                        Effective Approval Complete Comment</th>
-                        <td class="w-30">{{ $data->effective_approval_complete_comment }}</td>
-                    </tr>
-
+                    </table>
+                    <div class="block-head">
+                        QA/CQA Approval Attachment
+                     </div>
+                       <div class="border-table">
+                         <table>
+                             <tr class="table_bg">
+                                 <th class="w-20">S.N.</th>
+                                 <th class="w-60">File </th>
+                             </tr>
+                                 @if($data->qa_cqa_approval_Attachment)
+                                 @foreach(json_decode($data->qa_cqa_approval_Attachment) as $key => $file)
+                                     <tr>
+                                         <td class="w-20">{{ $key + 1 }}</td>
+                                         <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                     </tr>
+                                 @endforeach
+                                 @else
+                                 <tr>
+                                     <td class="w-20">1</td>
+                                     <td class="w-20">Not Applicable</td>
+                                 </tr>
+                             @endif
+ 
+                         </table>
+                       </div><br>
+                       <div class="block-head">
+                        Activity Log
+                       </div>
+                       <table>
+                           <tr>
+                               <th class="w-20">Submit by
+                               </th>
+                               <td class="w-30">{{ $data->submit_by }}</td>
+                               <th class="w-20">
+                               Submit On</th>
+                               <td class="w-30">{{ $data->submit_on }}</td>
+                               <th class="w-20">
+                               Submit Comment</th>
+                               <td class="w-30">{{ $data->submit_comment }}</td>
+                           </tr>
+                           <tr>
+                               <th class="w-20">Acknowledge Complete by
+                               </th>
+                               <td class="w-30">{{ $data->work_complition_by }}</td>
+                               <th class="w-20">
+                                   Acknowledge Complete On</th>
+                               <td class="w-30">{{ $data->work_complition_on }}</td>
+                               <th class="w-20">
+                                   Acknowledge Complete Comment</th>
+                               <td class="w-30">{{ $data->work_complition_comment }}</td>
+                           </tr>
+                           <tr>
+                               <th class="w-20"> Complete By
+                               </th>
+                               <td class="w-30">{{ $data->effectiveness_check_complete_by }}</td>
+                               <th class="w-20">
+                                Complete On</th>
+                               <td class="w-30">{{ $data->effectiveness_check_complete_on }}</td>
+                               <th class="w-20">
+                                Complete Comment</th>
+                               <td class="w-30">{{ $data->effectiveness_check_complete_comment }}</td>
+                           </tr>
+                           <tr>
+                               <th class="w-20">HOD Review Complete By
+                               </th>
+                               <td class="w-30">{{ $data->hod_review_complete_by }}</td>
+                               <th class="w-20">
+                               HOD Review Complete On</th>
+                               <td class="w-30">{{ $data->hod_review_complete_on }}</td>
+                               <th class="w-20">
+                               HOD Review Complete Comment</th>
+                               <td class="w-30">{{ $data->hod_review_complete_comment }}</td>
+                           </tr>
+                           <tr>
+                               <th class="w-20">Not Effective By
+                               </th>
+                               <td class="w-30">{{ $data->qa_review_complete_by }}</td>
+                               <th class="w-20">
+                               Not Effective On</th>
+                               <td class="w-30">{{ $data->qa_review_complete_on }}</td>
+                               <th class="w-20">
+                               Not Effective Comment</th>
+                               <td class="w-30">{{ $data->qa_review_complete_comment }}</td>
+                           </tr>
+                           <tr>
+                               <th class="w-20">Not Effective Approval Complete By
+                               </th>
+                               <td class="w-30">{{ $data->not_effective_approval_complete_by }}</td>
+                               <th class="w-20">
+                               Not Effective Approval Complete On</th>
+                               <td class="w-30">{{ $data->not_effective_approval_complete_on }}</td>
+                               <th class="w-20">
+                               Not Effective Approval Complete Comment</th>
+                               <td class="w-30">{{ $data->not_effective_approval_complete_comment }}</td>
+                           </tr>
+                           <tr>
+                               <th class="w-20">Effective by
+                               </th>
+                               <td class="w-30">{{ $data->effective_by }}</td>
+                               <th class="w-20">
+                               Effective On</th>
+                               <td class="w-30">{{ $data->effective_on }}</td>
+                               <th class="w-20">
+                               Effective Comment</th>
+                               <td class="w-30">{{ $data->effective_comment }}</td>
+                           </tr>
+                         
+                           <tr>
+                               <th class="w-20">Effective Approval Complete By
+                               </th>
+                               <td class="w-30">{{ $data->effective_approval_complete_by }}</td>
+                               <th class="w-20">
+                               Effective Approval Complete On</th>
+                               <td class="w-30">{{ $data->effective_approval_complete_on }}</td>
+                               <th class="w-20">
+                               Effective Approval Complete Comment</th>
+                               <td class="w-30">{{ $data->effective_approval_complete_comment }}</td>
+                           </tr>
+       
+                           
+                         
+                           <tr>
+                               <th class="w-20">Cancel By
+                               </th>
+                               <td class="w-30">{{ $data->closed_cancelled_by }}</td>
+                               <th class="w-20">
+                               Cancel On</th>
+                               <td class="w-30">{{ $data->closed_cancelled_on }}</td>
+                               <th class="w-20">
+                               Cancel Comment</th>
+                               <td class="w-30">{{ $data->closed_cancelled_comment }}</td>
+                           </tr>
+                          
+                       </table>
+                 </table>
+             </div>
+            
                     
-                  
-                    <tr>
-                        <th class="w-20">Cancel By
-                        </th>
-                        <td class="w-30">{{ $data->closed_cancelled_by }}</td>
-                        <th class="w-20">
-                        Cancel On</th>
-                        <td class="w-30">{{ $data->closed_cancelled_on }}</td>
-                        <th class="w-20">
-                        Cancel Comment</th>
-                        <td class="w-30">{{ $data->closed_cancelled_comment }}</td>
-                    </tr>
-                   
-                </table>
+            <div class="block">
+                
             </div>
         </div>
     </div>
