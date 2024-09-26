@@ -115,6 +115,8 @@ class DeviationController extends Controller
         $deviation->initiator_group_code = $request->initiator_group_code;
         $deviation->short_description = $request->short_description;
         $deviation->Deviation_date = $request->Deviation_date;
+        // $deviation->discb_deviat = $request->discb_deviat;
+        $deviation->discb_deviat = implode(',', $request->discb_deviat);
         $deviation->deviation_time = $request->deviation_time;
         $deviation->Hod_person_to = $request->Hod_person_to;
         $deviation->Reviewer_to = $request->Reviewer_to;
@@ -1256,7 +1258,7 @@ class DeviationController extends Controller
         if (!empty ($request->Hod_person_to)){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
-            $history->activity_type = 'HOD To';
+            $history->activity_type = 'HOD Person';
             $history->previous = "Null";
             $history->current = $deviation->Hod_person_to;
             $history->comment = "Not Applicable";
@@ -1272,7 +1274,7 @@ class DeviationController extends Controller
         if (!empty ($request->Approver_to)){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
-            $history->activity_type = 'Approver To';
+            $history->activity_type = 'Approver Person';
             $history->previous = "Null";
             $history->current = $deviation->Approver_to;
             $history->comment = "Not Applicable";
@@ -1288,7 +1290,7 @@ class DeviationController extends Controller
         if (!empty ($request->Reviewer_to)){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
-            $history->activity_type = 'Reviewer To';
+            $history->activity_type = 'Reviewer Person';
             $history->previous = "Null";
             $history->current = $deviation->Reviewer_to;
             $history->comment = "Not Applicable";
@@ -1484,6 +1486,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $deviation->why_why = $request->why_why;
         $deviation->where_where = $request->where_where;
         $deviation->due_date = $request->due_date;
+        // $deviation->discb_deviat = $request->discb_deviat;
         $deviation->when_when = $request->when_when;
         $deviation->who = $request->who;
         $deviation->how = $request->how;
@@ -1778,6 +1781,8 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
         $deviation->QAInitialRemark = $request->QAInitialRemark;
         $deviation->Investigation_Summary = $request->Investigation_Summary;
+        // $deviation->discb_deviat = $request->discb_deviat;
+        $deviation->discb_deviat = implode(',', $request->discb_deviat);
         $deviation->Impact_assessment = $request->Impact_assessment;
         $deviation->Root_cause = $request->Root_cause;
 
@@ -2625,6 +2630,17 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
 
         $deviation->form_progress = isset($form_progress) ? $form_progress : null;
+
+
+          if (!empty($request->inference_type)) {
+          
+                $deviation->inference_type = serialize($request->inference_type);
+        }
+        if (!empty($request->inference_remarks)) {
+            $deviation->inference_remarks = serialize($request->inference_remarks);
+        }
+
+        
         $deviation->update();
         // grid
          $data3=DeviationGrid::where('deviation_grid_id', $deviation->id)->where('type', "Deviation")->first();
@@ -2668,6 +2684,9 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                 $data5->batch_no = serialize($request->batch_no);
             }
             $data5->update();
+           
+
+            
 
 
              if ($lastDeviation->due_date != $deviation->due_date || !empty ($request->comment)) {
@@ -2985,11 +3004,11 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         }
         if ($lastDeviation->Reviewer_to != $deviation->Reviewer_to || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'Review To')
+                            ->where('activity_type', 'Reviewer Person')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Review To';
+            $history->activity_type = 'Reviewer Person';
              $history->previous = $lastDeviation->Reviewer_to;
             $history->current = $deviation->Reviewer_to;
             $history->comment = $deviation->submit_comment;
@@ -3004,11 +3023,11 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         }
         if ($lastDeviation->Approver_to != $deviation->Approver_to || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'Approve To')
+                            ->where('activity_type', 'Approve Person')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Approve To';
+            $history->activity_type = 'Approve Person';
              $history->previous = $lastDeviation->Approver_to;
             $history->current = $deviation->Approver_to;
             $history->comment = $deviation->submit_comment;
@@ -3023,11 +3042,11 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         }
         if ($lastDeviation->Hod_person_to != $deviation->Hod_person_to || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'HOD To')
+                            ->where('activity_type', 'HOD Person')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'HOD To';
+            $history->activity_type = 'HOD Person';
              $history->previous = $lastDeviation->Hod_person_to;
             $history->current = $deviation->Hod_person_to;
             $history->comment = $deviation->submit_comment;
@@ -3786,7 +3805,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         if ($lastCft->Production_Table_Review != $request->Production_Table_Review && $request->Production_Table_Review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Tablet Review Required';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Review Required';
             $history->previous = $lastCft->Production_Table_Review;
             $history->current = $request->Production_Table_Review;
             $history->comment = "Not Applicable";
@@ -3806,7 +3825,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         if ($lastCft->Production_Table_Person != $request->Production_Table_Person && $request->Production_Table_Person != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Tablet Person';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Person';
             $history->previous = $lastCft->Production_Table_Person;
             $history->current = $request->Production_Table_Person;
             $history->comment = "Not Applicable";
@@ -3826,7 +3845,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         if ($lastCft->Production_Table_Assessment != $request->Production_Table_Assessment && $request->Production_Table_Assessment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Tablet Assessment';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Assessment';
             $history->previous = $lastCft->Production_Table_Assessment;
             $history->current = $request->Production_Table_Assessment;
             $history->comment = "Not Applicable";
@@ -3846,7 +3865,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         if ($lastCft->Production_Table_Feedback != $request->Production_Table_Feedback && $request->Production_Table_Feedback != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Tablet Feeback';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Feeback';
             $history->previous = $lastCft->Production_Table_Feedback;
             $history->current = $request->Production_Table_Feedback;
             $history->comment = "Not Applicable";
@@ -3866,7 +3885,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         if ($lastCft->Production_Table_Attachment != $request->Production_Table_Attachment && $request->Production_Table_Attachment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Table Attachment';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Attachment';
             $history->previous = $lastCft->Production_Table_Attachment;
             $history->current = implode(',',$request->Production_Table_Attachment);
             $history->comment = "Not Applicable";
@@ -3886,7 +3905,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         if ($lastCft->Production_Table_By != $request->Production_Table_By && $request->Production_Table_By != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Tablet Review By';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Review By';
             $history->previous = $lastCft->Production_Table_Review;
             $history->current = $request->Production_Table_By;
             $history->comment = "Not Applicable";
@@ -3906,7 +3925,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         if ($lastCft->Production_Table_On != $request->Production_Table_On && $request->Production_Table_On != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Tablet On';
+            $history->activity_type = 'Production Tablet/Capsule/Powder On';
             $history->previous = $lastCft->Production_Table_On;
             $history->current = $request->Production_Table_On;
             $history->comment = "Not Applicable";
@@ -3928,7 +3947,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
          if ($lastCft->ProductionLiquid_Review != $request->ProductionLiquid_Review && $request->ProductionLiquid_Review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Liquid Review Required';
+            $history->activity_type = 'Production Liquid/Ointment Review Required';
             $history->previous = $lastCft->ProductionLiquid_Review;
             $history->current = $request->ProductionLiquid_Review;
             $history->comment = "Not Applicable";
@@ -3948,7 +3967,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         if ($lastCft->ProductionLiquid_person != $request->ProductionLiquid_person && $request->ProductionLiquid_person != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Liquid Person';
+            $history->activity_type = 'Production Liquid/Ointment Person';
             $history->previous = $lastCft->ProductionLiquid_person;
             $history->current = $request->ProductionLiquid_person;
             $history->comment = "Not Applicable";
@@ -3968,7 +3987,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         if ($lastCft->ProductionLiquid_assessment != $request->ProductionLiquid_assessment && $request->ProductionLiquid_assessment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Liquid Assessment';
+            $history->activity_type = 'Production Liquid/Ointment Assessment';
             $history->previous = $lastCft->ProductionLiquid_assessment;
             $history->current = $request->ProductionLiquid_assessment;
             $history->comment = "Not Applicable";
@@ -3988,7 +4007,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         if ($lastCft->ProductionLiquid_feedback != $request->ProductionLiquid_feedback && $request->ProductionLiquid_feedback != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Liquid Feedback';
+            $history->activity_type = 'Production Liquid/Ointment Feedback';
             $history->previous = $lastCft->ProductionLiquid_feedback;
             $history->current = $request->ProductionLiquid_feedback;
             $history->comment = "Not Applicable";
@@ -4008,7 +4027,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         if ($lastCft->ProductionLiquid_attachment != $request->ProductionLiquid_attachment && $request->ProductionLiquid_attachment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Liquid Feedback';
+            $history->activity_type = 'Production Liquid/Ointment Feedback';
             $history->previous = $lastCft->ProductionLiquid_attachment;
             $history->current = implode(',',$request->ProductionLiquid_attachment);
             $history->comment = "Not Applicable";
@@ -4028,7 +4047,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         if ($lastCft->ProductionLiquid_by != $request->ProductionLiquid_by && $request->ProductionLiquid_by != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Liquid Review By';
+            $history->activity_type = 'Production Liquid/Ointment Review By';
             $history->previous = $lastCft->ProductionLiquid_by;
             $history->current = $request->ProductionLiquid_by;
             $history->comment = "Not Applicable";
@@ -4048,7 +4067,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         if ($lastCft->ProductionLiquid_on != $request->ProductionLiquid_on && $request->ProductionLiquid_on != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Liquid Review On';
+            $history->activity_type = 'Production Liquid/Ointment Review On';
             $history->previous = $lastCft->ProductionLiquid_on;
             $history->current = $request->ProductionLiquid_on;
             $history->comment = "Not Applicable";

@@ -27,16 +27,16 @@
         }
 
         /* .sub-head {
-                                                                                    margin-left: 280px;
-                                                                                    margin-right: 280px;
-                                                                                    color: #4274da;
-                                                                                    border-bottom: 2px solid #4274da;
-                                                                                    padding-bottom: 5px;
-                                                                                    margin-bottom: 20px;
-                                                                                    font-weight: bold;
-                                                                                    font-size: 1.2rem;
+                                                                                        margin-left: 280px;
+                                                                                        margin-right: 280px;
+                                                                                        color: #4274da;
+                                                                                        border-bottom: 2px solid #4274da;
+                                                                                        padding-bottom: 5px;
+                                                                                        margin-bottom: 20px;
+                                                                                        font-weight: bold;
+                                                                                        font-size: 1.2rem;
 
-                                                                                } */
+                                                                                    } */
 
         .create-entity {
             background: #323c50;
@@ -70,8 +70,8 @@
         }
 
         /* .modal-header{
-                                                                                    background: gainsboro !important;
-                                                                                } */
+                                                                                        background: gainsboro !important;
+                                                                                    } */
         .main_head_modal li {
             margin-bottom: 10px;
         }
@@ -115,10 +115,10 @@
         }
 
         /* .saveButton:disabled{
-                                                                                        background: black!important;
-                                                                                        border:  black!important;
+                                                                                            background: black!important;
+                                                                                            border:  black!important;
 
-                                                                                    } */
+                                                                                        } */
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -606,7 +606,7 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Initial Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA/CQA Initial assesmnent</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT</button>
                 <button class="cctablinks " id="Investigation_button" style="display: none"
                     onclick="openCity(event, 'CCForm9')">Investigation</button>
@@ -681,12 +681,12 @@
                                 @endphp
 
                                 <!-- <div class="col-lg-6">
-                                                                                                            <div class="group-input">
-                                                                                                                <label for="Date of Initiation"><b>Date of Initiation</b></label>
-                                                                                                                <input type="date" id="intiation_date" name="intiation_date" required />
-                                                                                                                 <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
-                                                                                                            </div>
-                                                                                                        </div> -->
+                                                                                                                <div class="group-input">
+                                                                                                                    <label for="Date of Initiation"><b>Date of Initiation</b></label>
+                                                                                                                    <input type="date" id="intiation_date" name="intiation_date" required />
+                                                                                                                     <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                                                                                                </div>
+                                                                                                            </div> -->
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -781,7 +781,8 @@
                                             <option value="Store">Store</option>
                                             <option value="Electronic Data Processing">Electronic Data Processing</option>
                                             <option value="Formulation Development">Formulation Development</option>
-                                            <option value="Analytical research and Development Laboratory">Analytical research and Development Laboratory</option>
+                                            <option value="Analytical research and Development Laboratory">Analytical
+                                                research and Development Laboratory</option>
                                             <option value="Packaging Development">Packaging Development</option>
                                             <option value="Purchase Department">Purchase Department</option>
                                             <option value="Document Cell">Document Cell</option>
@@ -1083,8 +1084,8 @@
                                             <thead>
                                                 <tr>
                                                     <th style="width: 4%">Row#</th>
-                                                    <th style="width: 12%">Name</th>
-                                                    <th style="width: 16%"> ID Number</th>
+                                                    <th style="width: 12%">Related to</th>
+                                                    <th style="width: 16%">Name & ID Number</th>
                                                     <th style="width: 15%">Remarks</th>
                                                     <th style="width: 8%">Action</th>
 
@@ -1177,8 +1178,8 @@
                                             <thead>
                                                 <tr>
                                                     <th style="width: 4%">Row#</th>
-                                                    <th style="width: 12%">Document Number</th>
-                                                    <th style="width: 16%"> Reference Document Name</th>
+                                                    <th style="width: 12%">Document Name</th>
+                                                    <th style="width: 16%"> Document Number</th>
                                                     <th style="width: 16%"> Remarks</th>
 
                                                     <th style="width: 8%"> Action</th>
@@ -1296,19 +1297,19 @@
                                                     <td>
 
                                                         <!-- <select name="product_stage[]" id="product_stage"
-                                                                                                                                    class="productStage">
-                                                                                                                                    <option value="">-- Select --</option>
-                                                                                                                                    <option value="">1</option>
-                                                                                                                                    <option value="">2</option>
-                                                                                                                                    <option value="">3</option>
-                                                                                                                                    <option value="">4</option>
-                                                                                                                                    <option value="">5</option>
-                                                                                                                                    <option value="">6</option>
-                                                                                                                                    <option value="">7</option>
-                                                                                                                                    <option value="">8</option>
-                                                                                                                                    <option value="">9</option>
-                                                                                                                                    <option value="">Final</option>
-                                                                                                                                </select> -->
+                                                                                                                                        class="productStage">
+                                                                                                                                        <option value="">-- Select --</option>
+                                                                                                                                        <option value="">1</option>
+                                                                                                                                        <option value="">2</option>
+                                                                                                                                        <option value="">3</option>
+                                                                                                                                        <option value="">4</option>
+                                                                                                                                        <option value="">5</option>
+                                                                                                                                        <option value="">6</option>
+                                                                                                                                        <option value="">7</option>
+                                                                                                                                        <option value="">8</option>
+                                                                                                                                        <option value="">9</option>
+                                                                                                                                        <option value="">Final</option>
+                                                                                                                                    </select> -->
                                                         <input type="text" class="productStage"
                                                             name="product_stage[]">
 
@@ -1375,55 +1376,55 @@
                                     });
                                 </script>
                                 <!-- <div class="col-lg-6">
-                                                                                                                <div class="group-input" id="external_agencies_req">
-                                                                                                                    <label for="others">HOD / Designee<span class="text-danger d-none">*</span></label>
-                                                                                                                  <select name="hod_designee" id="">
-                                                                                                                    <option value="">-- Select --</option>
-                                                                                                                    <option value="person1">person 1</option>
-                                                                                                                    <option value="person2">person 2</option>
-                                                                                                                  </select>
+                                                                                                                    <div class="group-input" id="external_agencies_req">
+                                                                                                                        <label for="others">HOD / Designee<span class="text-danger d-none">*</span></label>
+                                                                                                                      <select name="hod_designee" id="">
+                                                                                                                        <option value="">-- Select --</option>
+                                                                                                                        <option value="person1">person 1</option>
+                                                                                                                        <option value="person2">person 2</option>
+                                                                                                                      </select>
 
 
 
-                                                                                                                </div>
-                                                                                                  </div> -->
+                                                                                                                    </div>
+                                                                                                      </div> -->
                                 <!-- <div class="col-lg-6">
-                                                                                                                <div class="group-input" id="external_agencies_req">
-                                                                                                                    <label for="others">Head QA / Designee<span class="text-danger d-none">*</span></label>
-                                                                                                                  <select name="hod_designee" id="">
-                                                                                                                    <option value="">-- Select --</option>
-                                                                                                                    <option value="person1">person 1</option>
-                                                                                                                    <option value="person2">person 2</option>
-                                                                                                                  </select>
+                                                                                                                    <div class="group-input" id="external_agencies_req">
+                                                                                                                        <label for="others">Head QA / Designee<span class="text-danger d-none">*</span></label>
+                                                                                                                      <select name="hod_designee" id="">
+                                                                                                                        <option value="">-- Select --</option>
+                                                                                                                        <option value="person1">person 1</option>
+                                                                                                                        <option value="person2">person 2</option>
+                                                                                                                      </select>
 
 
 
-                                                                                                                </div>
-                                                                                                  </div> -->
+                                                                                                                    </div>
+                                                                                                      </div> -->
                                 <!-- <div class="col-lg-6">
-                                                                                                                <div class="group-input" id="external_agencies_req">
-                                                                                                                    <label for="others">QA<span class="text-danger d-none">*</span></label>
-                                                                                                                  <select name="hod_designee" id="">
-                                                                                                                    <option value="">-- Select --</option>
-                                                                                                                    <option value="person1">person 1</option>
-                                                                                                                    <option value="person2">person 2</option>
-                                                                                                                  </select>
+                                                                                                                    <div class="group-input" id="external_agencies_req">
+                                                                                                                        <label for="others">QA<span class="text-danger d-none">*</span></label>
+                                                                                                                      <select name="hod_designee" id="">
+                                                                                                                        <option value="">-- Select --</option>
+                                                                                                                        <option value="person1">person 1</option>
+                                                                                                                        <option value="person2">person 2</option>
+                                                                                                                      </select>
 
 
-                                                                                                                </div>
-                                                                                                  </div> -->
+                                                                                                                    </div>
+                                                                                                      </div> -->
                                 <!-- <div class="col-6">
-                                                                                                                <div class="group-input">
-                                                                                                                    <label for="Facility Name">Notify To</label>
-                                                                                                                    <select multiple name="Facility[]" placeholder="Select Facility Name"
-                                                                                                                        data-search="false" data-silent-initial-value-set="true" id="Facility">
-                                                                                                                        <option value="Plant 1"> 1</option>
-                                                                                                                        <option value="Plant 1"> 2</option>
-                                                                                                                        <option value="Plant 1"> 3</option>
+                                                                                                                    <div class="group-input">
+                                                                                                                        <label for="Facility Name">Notify To</label>
+                                                                                                                        <select multiple name="Facility[]" placeholder="Select Facility Name"
+                                                                                                                            data-search="false" data-silent-initial-value-set="true" id="Facility">
+                                                                                                                            <option value="Plant 1"> 1</option>
+                                                                                                                            <option value="Plant 1"> 2</option>
+                                                                                                                            <option value="Plant 1"> 3</option>
 
-                                                                                                                    </select>
-                                                                                                                </div>
-                                                                                                            </div> -->
+                                                                                                                        </select>
+                                                                                                                    </div>
+                                                                                                                </div> -->
 
                                 {{-- <div class="col-6">
                                     <div class="group-input">
@@ -1432,12 +1433,20 @@
                                     </div>
                                 </div> --}}
 
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="Immediate Action">Description of Deviation</label>
+
+                                        <textarea class="tiny" name="discb_deviat[]" id="summernote-2"></textarea>
+                                    </div>
+
+                                </div>
 
 
                                 <!-- additional added -->
                                 <div class="col-md-12">
                                     <div class="group-input">
-                                        <label for="Description Deviation">Description of Deviation </label>
+                                        <label for="Description Deviation">Description of Deviation (5W/2H) </label>
                                     </div>
                                     <table class="table table-bordered">
                                         <thead class="table-light">
@@ -1449,43 +1458,43 @@
                                         </thead>
                                         <tbody style=" border-radius: inherit; border: blanchedalmond;">
                                             <tr>
-                                                <td style="background-color: #91b4f7;">What</td>
+                                                <td style="background-color: #91b4f7;">What / Remarks</td>
                                                 <td id="what-details">
                                                     <textarea name="what" id="what_id" style="width:-webkit-fill-available;"></textarea>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="background-color: #91b4f7;">Why</td>
+                                                <td style="background-color: #91b4f7;">Why / Remarks</td>
                                                 <td id="why-details">
                                                     <textarea name="why_why" id="why_id" style="width:-webkit-fill-available;"></textarea>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="background-color: #91b4f7; ">Where</td>
+                                                <td style="background-color: #91b4f7; ">Where / Remarks</td>
                                                 <td id="where-details">
                                                     <textarea name="where_where" id="where_id" style="width:-webkit-fill-available;"></textarea>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="background-color: #91b4f7; ">When</td>
+                                                <td style="background-color: #91b4f7; ">When / Remarks</td>
                                                 <td id="when-details">
                                                     <textarea name="when_when" id="when_id" style="width:-webkit-fill-available;"></textarea>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="background-color: #91b4f7; ">Who</td>
+                                                <td style="background-color: #91b4f7; ">Who / Remarks</td>
                                                 <td id="who-details">
                                                     <textarea name="who" id="who_id" style="width:-webkit-fill-available;"></textarea>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style=" background-color: #91b4f7; ">How</td>
+                                                <td style=" background-color: #91b4f7; ">How / Remarks</td>
                                                 <td id="how-details">
                                                     <textarea name="how" id="how_id" style="width:-webkit-fill-available;"></textarea>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="background-color: #91b4f7; ">How much</td>
+                                                <td style="background-color: #91b4f7; ">How much / Remarks</td>
                                                 <td id="how-much-details">
                                                     <textarea name="how_much" id="how-much_id" style="width:-webkit-fill-available;"></textarea>
                                                 </td>
@@ -1496,7 +1505,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="If Others">HOD To</label>
+                                        <label for="If Others">HOD Person</label>
                                         <select name="Hod_person_to" onchange="">
 
                                             <option value="">Select a value</option>
@@ -1511,7 +1520,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="If Others">Reviewer To</label>
+                                        <label for="If Others">Reviewer Person</label>
                                         <select name="Reviewer_to" onchange="">
 
                                             <option value="">Select a value</option>
@@ -1525,7 +1534,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="If Others">Approver To</label>
+                                        <label for="If Others">Approver Person</label>
                                         <select name="Approver_to" onchange="">
 
                                             <option value="">Select a value</option>
@@ -1660,10 +1669,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                                class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                data-bs-target="#launch_extension">
-                                                                                                                Launch Extension
-                                                                                                            </a> -->
+                                                                                                                    class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                    data-bs-target="#launch_extension">
+                                                                                                                    Launch Extension
+                                                                                                                </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -1826,7 +1835,7 @@
 
                                     </div>
                                 </div> --}} -->
-                                <div class="col-md-12 mb-3">
+                                {{-- <div class="col-md-12 mb-3">
                                     <div class="group-input" id="Investigations_details">
                                         <label for="Investigation Details">Investigation Details<span
                                                 class="text-danger">*</span></label>
@@ -1834,7 +1843,7 @@
                                                 not require completion</small></div>
                                         <textarea class=" Investigation_Details" name="Investigation_Details" id="summernote-6"></textarea>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
@@ -1883,10 +1892,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                                class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                data-bs-target="#launch_extension">
-                                                                                                                Launch Extension
-                                                                                                            </a> -->
+                                                                                                                    class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                    data-bs-target="#launch_extension">
+                                                                                                                    Launch Extension
+                                                                                                                </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -2122,7 +2131,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Tablet"> Production Tablet</label>
+                                        <label for="Production Tablet"> Production Tablet/Capsule/Powder Required?</label>
                                         <select name="Production_Table_Review" id="Production_Table_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -2166,13 +2175,13 @@
                                 </div>
                                 <div class="col-md-12 mb-3 productionTable">
                                     <div class="group-input">
-                                        <label for="Production Tablet feedback">Production Tablet Feedback</label>
+                                        <label for="Production Tablet feedback">Production Tablet/Capsule/Powder Feedback</label>
                                         <textarea class="summernote Production_Table_Feedback" name="Production_Table_Feedback" id="summernote-18"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 productionTable">
                                     <div class="group-input">
-                                        <label for="Production Tablet attachment">Production Tablet Attachments</label>
+                                        <label for="Production Tablet attachment">Production Tablet/Capsule/Powder Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -2188,14 +2197,14 @@
                                 </div>
                                 <div class="col-md-6 mb-3 productionTable">
                                     <div class="group-input">
-                                        <label for="Production Tablet Completed By">Production Tablet Completed By</label>
+                                        <label for="Production Tablet Completed By">Production Tablet/Capsule/Powder Completed By</label>
                                         <input readonly type="text" name="Production_Table_By"
                                             id="Production_Table_By">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 productionTable">
                                     <div class="group-input ">
-                                        <label for="Production Tablet Completed On">Production Tablet Completed On</label>
+                                        <label for="Production Tablet Completed On">Production Tablet/Capsule/Powder Completed On</label>
                                         <input type="date" id="Production_Table_On" name="Production_Table_On">
                                     </div>
                                 </div>
@@ -2328,7 +2337,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Research Development"> Research Development Required ?</label>
+                                        <label for="Research Development"> Research & Development Required ?</label>
                                         <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review"
                                             disabled>
                                             <option value="">-- Select --</option>
@@ -2354,7 +2363,7 @@
                                 @endphp
                                 <div class="col-lg-6 researchDevelopment">
                                     <div class="group-input">
-                                        <label for="Research Development notification">Research Development Person</label>
+                                        <label for="Research Development notification">Research & Development Person</label>
                                         <select name="ResearchDevelopmentStore_Person" class="ResearchDevelopment_Person"
                                             id="ResearchDevelopment_Person">
                                             <option value="">-- Select --</option>
@@ -2366,7 +2375,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 researchDevelopment">
                                     <div class="group-input">
-                                        <label for="Research Development assessment">Impact Assessment (By Research
+                                        <label for="Research Development assessment">Impact Assessment (By Research &
                                             Development)</label>
                                         <textarea class="summernote ResearchDevelopment_assessment" name="ResearchDevelopment_assessment" id="summernote-17"></textarea>
                                     </div>
@@ -2379,7 +2388,7 @@
                                 </div>
                                 <div class="col-12 researchDevelopment">
                                     <div class="group-input">
-                                        <label for="Research Development attachment">Research Development
+                                        <label for="Research Development attachment">Research & Development
                                             Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
@@ -2397,7 +2406,7 @@
                                 </div>
                                 <div class="col-md-6 mb-3 researchDevelopment">
                                     <div class="group-input">
-                                        <label for="Research Development Completed By">Research Development Completed
+                                        <label for="Research Development Completed By">Research & Development Completed
                                             By</label>
                                         <input readonly type="text" name="ResearchDevelopment_by"
                                             id="ResearchDevelopment_by">
@@ -3081,7 +3090,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Liquid"> Production Liquid </label>
+                                        <label for="Production Liquid"> Production Liquid/Ointment </label>
                                         <select name="ProductionLiquid_Review" id="ProductionLiquid_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -3106,7 +3115,7 @@
                                 @endphp
                                 <div class="col-lg-6 productionLiquid">
                                     <div class="group-input">
-                                        <label for="Production Liquid notification">Production Liquid Person</label>
+                                        <label for="Production Liquid notification">Production Liquid/Ointment Person</label>
                                         <select name="ProductionLiquid_Person" class="ProductionLiquid_Person"
                                             id="ProductionLiquid_Person">
                                             <option value="">-- Select --</option>
@@ -3119,13 +3128,13 @@
                                 <div class="col-md-12 mb-3 productionLiquid">
                                     <div class="group-input">
                                         <label for="Production Liquid assessment">Impact Assessment (By Production
-                                            Liquid)</label>
+                                            Liquid/Ointment)</label>
                                         <textarea class="summernote ProductionLiquid_assessment" name="ProductionLiquid_assessment" id="summernote-17"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 productionLiquid">
                                     <div class="group-input">
-                                        <label for="Production Liquid feedback">Production Liquid Feedback</label>
+                                        <label for="Production Liquid feedback">Production Liquid/Ointment Feedback</label>
                                         <textarea class="summernote ProductionLiquid_feedback" name="ProductionLiquid_feedback" id="summernote-18"></textarea>
                                     </div>
                                 </div>
@@ -3148,14 +3157,14 @@
                                 </div>
                                 <div class="col-md-6 mb-3 productionLiquid">
                                     <div class="group-input">
-                                        <label for="Production Liquid Completed By">Production Liquid Completed By</label>
+                                        <label for="Production Liquid Completed By">Production Liquid/Ointment Completed By</label>
                                         <input readonly type="text" name="ProductionLiquid_by"
                                             id="ProductionLiquid_by">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 productionLiquid">
                                     <div class="group-input ">
-                                        <label for="Production Liquid Completed On">Production Liquid Completed On</label>
+                                        <label for="Production Liquid Completed On">Production Liquid/Ointment Completed On</label>
                                         <input type="date" id="ProductionLiquid_on" name="ProductionLiquid_on">
                                     </div>
                                 </div>
@@ -4239,10 +4248,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                                class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                data-bs-target="#launch_extension">
-                                                                                                                Launch Extension
-                                                                                                            </a> -->
+                                                                                                                    class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                    data-bs-target="#launch_extension">
+                                                                                                                    Launch Extension
+                                                                                                                </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -4413,8 +4422,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid-field field-name">
-                                                    <div>Environment</div>
-                                                    <div>Manpower</div>
+                                                    <div>Mother Environment</div>
+                                                    <div>Man</div>
                                                     <div>Machine</div>
                                                 </div>
                                             </div>
@@ -4929,10 +4938,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                                class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                data-bs-target="#launch_extension">
-                                                                                                                Launch Extension
-                                                                                                            </a> -->
+                                                                                                                    class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                    data-bs-target="#launch_extension">
+                                                                                                                    Launch Extension
+                                                                                                                </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -5141,10 +5150,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                                class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                data-bs-target="#launch_extension">
-                                                                                                                Launch Extension
-                                                                                                            </a> -->
+                                                                                                                    class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                    data-bs-target="#launch_extension">
+                                                                                                                    Launch Extension
+                                                                                                                </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -5401,10 +5410,10 @@
                                             href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                             Exit </a> </button>
                                     <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                                    class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                    data-bs-target="#launch_extension">
-                                                                                                                    Launch Extension
-                                                                                                                </a> -->
+                                                                                                                        class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                        data-bs-target="#launch_extension">
+                                                                                                                        Launch Extension
+                                                                                                                    </a> -->
                                     {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#effectivenss_extension">
                                             Launch Effectiveness Check
@@ -5595,10 +5604,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                                class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                data-bs-target="#launch_extension">
-                                                                                                                Launch Extension
-                                                                                                            </a> -->
+                                                                                                                    class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                    data-bs-target="#launch_extension">
+                                                                                                                    Launch Extension
+                                                                                                                </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -5653,10 +5662,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                                class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                data-bs-target="#launch_extension">
-                                                                                                                Launch Extension
-                                                                                                            </a> -->
+                                                                                                                    class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                    data-bs-target="#launch_extension">
+                                                                                                                    Launch Extension
+                                                                                                                </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -5718,10 +5727,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                                    class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                    data-bs-target="#launch_extension">
-                                                                                                                    Launch Extension
-                                                                                                                </a> -->
+                                                                                                                        class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                        data-bs-target="#launch_extension">
+                                                                                                                        Launch Extension
+                                                                                                                    </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -5803,10 +5812,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                                class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                data-bs-target="#launch_extension">
-                                                                                                                Launch Extension
-                                                                                                            </a> -->
+                                                                                                                    class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                    data-bs-target="#launch_extension">
+                                                                                                                    Launch Extension
+                                                                                                                </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -6501,10 +6510,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                                    class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                    data-bs-target="#launch_extension">
-                                                                                                                    Launch Extension
-                                                                                                                </a> -->
+                                                                                                                        class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                        data-bs-target="#launch_extension">
+                                                                                                                        Launch Extension
+                                                                                                                    </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#effectivenss_extension">
                                             Launch Effectiveness Check
