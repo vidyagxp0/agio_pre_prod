@@ -915,6 +915,258 @@
                                     </textarea>
                                     </div>
                                 </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="Review of stability study program and samples">Review of stability study program and samples</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="summernote" name="review_of_stability_study_gi" id="summernote-1">
+                                    </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="Review of product manufacturing and analytical process">Review of product manufacturing and analytical process </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="summernote" name="review_of_product_manu_gi" id="summernote-1">
+                                    </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Additional information if require ">Additional information if require</label>
+                                        <select name="additional_inform" id="additional_inform">
+                                            <option value="">-- select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="In case of Invalide complain then">In case of Invalide complain then </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="summernote" name="in_case_Invalide_com" id="summernote-1">
+                                    </textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="root_cause">
+                                            Report Review (Final Review shall be done after QA Verification) 
+                                            <button type="button" id="team_members_details">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#document-details-field-instruction-modal"
+                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="team_members_details_add"
+                                                style="width: %;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 100px;">Row #</th>
+                                                        <th>Names</th>
+                                                        <th>Designation</th>
+                                                        <th>Department</th>
+                                                        <th>Sign</th>
+                                                        <th>Date</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <td><input disabled type="text" name="Team_Members[0][serial]"
+                                                            value="1">
+                                                    </td>
+                                                    <td><input type="text" name="Team_Members[0][names_tm]"></td>
+                                                    <td><input type="text" name="Team_Members[0][designation]"></td>
+                                                    <td><input type="text" name="Team_Members[0][department_tm]"></td>
+                                                    <td><input type="text" name="Team_Members[0][sign_tm]"></td>
+                                                    <td>
+                                                        <div class="new-date-data-field">
+                                                            <div class="group-input input-date">
+                                                                <div class="calenderauditee">
+                                                                    <input id="date_0_date_tm" type="text" name="Team_Members[0][date_tm]"  placeholder="DD-MMM-YYYY" />
+                                                                    <input type="date" name="Team_Members[0][date_tm]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"    value="" id="date_0_date_tm"   class="hide-input show_date"
+                                                                        style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                        oninput="handleDateInput(this, 'date_0_date_tm')" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                    {{-- <td>
+                                                        <div class="new-date-data-field">
+                                                            <div class="group-input input-date">
+                                                                <div class="calenderauditee">
+                                                                    <input id="date_0_date_rrv" type="text"  name="Report_Approval[0][date_rrv]"  placeholder="DD-MMM-YYYY" />
+                                                                    <input type="date"
+                                                                        name="Report_Approval[0][date_rrv]"
+                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                        id="date_0_date_rrv"
+                                                                        class="hide-input show_date"
+                                                                        style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                        oninput="handleDateInput(this, 'date_0_date_rrv')" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td> --}}
+
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#team_members_details').click(function(e) {
+                                            function generateTableRow(serialNumber) {
+
+                                                var html =
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="Team_Members[' + serialNumber +
+                                                    '][serial]" value="' + (serialNumber) + '"></td>' +
+                                                    '<td><input type="text" name="Team_Members[' + serialNumber + '][names_tm]"></td>' +
+                                                    '<td><input type="text" name="Team_Members[' + serialNumber +
+                                                    '][designation]"></td>'+
+                                                    '<td><input type="text" name="Team_Members[' + serialNumber +
+                                                    '][department_tm]"></td>' +
+                                                    '<td><input type="text" name="Team_Members[' + serialNumber + '][sign_tm]"></td>' +
+                                                    '<td><div class="new-date-data-field"><div class="group-input input-date"> <div class="calenderauditee"><input id="date_' +
+                                                    serialNumber + '_date_tm" type="text" name="Team_Members[' + serialNumber +
+                                                    '][date_tm]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Team_Members[' +
+                                                    serialNumber +
+                                                    '][date_tm]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
+                                                    serialNumber +
+                                                    '_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
+                                                    serialNumber + '_date_tm\')" /> </div> </div></div></td>' +
+                                                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+
+                                                    '</tr>';
+
+                                                return html;
+                                            }
+
+                                            var tableBody = $('#team_members_details_add tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            var newRow = generateTableRow(rowCount + 1);
+                                            tableBody.append(newRow);
+                                        });
+                                    });
+                                </script>
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="root_cause">
+                                            Report Approval by Head QA/CQA (Final Approvalshall be done after QA Verification)
+                                            <button type="button" id="add_report_approval_row">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#document-details-field-instruction-modal"
+                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="report_approval_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 100px;">Row #</th>
+                                                        <th>Names</th>
+                                                        <th>Designation</th>
+                                                        <th>Department</th>
+                                                        <th>Sign</th>
+                                                        <th>Date</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><input disabled type="text"
+                                                                name="Report_Approval[0][serial]" value="1"></td>
+                                                        <td><input type="text" name="Report_Approval[0][names_rrv]">
+                                                        </td>
+                                                         <td><input type="text"
+                                                            name="Report_Approval[0][designation]"></td>
+                                                        <td><input type="text"
+                                                                name="Report_Approval[0][department_rrv]"></td>
+                                                        <td><input type="text" name="Report_Approval[0][sign_rrv]">
+                                                        </td>
+                                                        <td>
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">
+                                                                        <input id="date_0_date_rrv" type="text"
+                                                                            name="Report_Approval[0][date_rrv]"
+                                                                            placeholder="DD-MMM-YYYY" />
+                                                                        <input type="date"
+                                                                            name="Report_Approval[0][date_rrv]"
+                                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                            id="date_0_date_rrv"
+                                                                            class="hide-input show_date"
+                                                                            style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                            oninput="handleDateInput(this, 'date_0_date_rrv')" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    });
+
+                                    $(document).ready(function() {
+                                        $('#add_report_approval_row').click(function(e) {
+                                            e.preventDefault();
+
+                                            function generateTableRow(reportNumber) {
+                                                var html =
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="Report_Approval[' + reportNumber +
+                                                    '][serial]" value="' + (reportNumber + 1) + '"></td>' +
+                                                    '<td><input type="text" name="Report_Approval[' + reportNumber +
+                                                    '][names_rrv]"></td>' +
+                                                    '<td><input type="text" name="Report_Approval[' + reportNumber +
+                                                    '][designation]"></td>' +
+                                                    '<td><input type="text" name="Report_Approval[' + reportNumber +
+                                                        '][department_rrv]"></td>' +
+                                                    '<td><input type="text" name="Report_Approval[' + reportNumber +
+                                                    '][sign_rrv]"></td>' +
+                                                    '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
+                                                    reportNumber + '_date_rrv" type="text" name="Report_Approval[' + reportNumber +
+                                                    '][date_rrv]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Report_Approval[' +
+                                                    reportNumber +
+                                                    '][date_rrv]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
+                                                    reportNumber +
+                                                    '_date_rrv" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
+                                                    reportNumber + '_date_rrv\')" /> </div> </div></div></td>' +
+                                                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                    '</tr>';
+                                                return html;
+                                            }
+
+                                            var tableBody = $('#report_approval_table tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            var newRow = generateTableRow(rowCount);
+                                            tableBody.append(newRow);
+                                        });
+                                    });
+                                </script>
 
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
@@ -1165,6 +1417,7 @@
                                     </textarea>
                                     </div>
                                 </div>
+                             
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -1247,6 +1500,25 @@
                                     });
                                 </script>
 
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Conclusion (A dedicated provision must be established to record the inference or outcome of brainstorming sessions) ">Conclusion (A dedicated provision must be established to record the inference or outcome of brainstorming sessions) </label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea class="summernote" name="conclusion_pi" id="summernote-1">
+                                </textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="The probable root causes or Root Cause">The probable root causes or Root Cause </label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea class="summernote" name="the_probable_root" id="summernote-1">
+                                </textarea>
+                                </div>
+                            </div>
+
                                 <div class="sub-head col-12">HOD Review</div>
 
 
@@ -1326,213 +1598,11 @@
                                 </div>
 
 
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="root_cause">
-                                            Team Members
-                                            <button type="button" id="team_members_details">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="team_members_details_add"
-                                                style="width: %;">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 100px;">Row #</th>
-                                                        <th>Names</th>
-                                                        <th>Department</th>
-                                                        <th>Sign</th>
-                                                        <th>Date</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <td><input disabled type="text" name="Team_Members[0][serial]"
-                                                            value="1">
-                                                    </td>
-                                                    <td><input type="text" name="Team_Members[0][names_tm]"></td>
-                                                    <td><input type="text" name="Team_Members[0][department_tm]"></td>
-                                                    <td><input type="text" name="Team_Members[0][sign_tm]"></td>
-                                                    <td>
-                                                        <div class="new-date-data-field">
-                                                            <div class="group-input input-date">
-                                                                <div class="calenderauditee">
-                                                                    <input id="date_0_date_tm" type="text" name="Team_Members[0][date_tm]"  placeholder="DD-MMM-YYYY" />
-                                                                    <input type="date" name="Team_Members[0][date_tm]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"    value="" id="date_0_date_tm"   class="hide-input show_date"
-                                                                        style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                        oninput="handleDateInput(this, 'date_0_date_tm')" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-
-                                                    {{-- <td>
-                                                        <div class="new-date-data-field">
-                                                            <div class="group-input input-date">
-                                                                <div class="calenderauditee">
-                                                                    <input id="date_0_date_rrv" type="text"  name="Report_Approval[0][date_rrv]"  placeholder="DD-MMM-YYYY" />
-                                                                    <input type="date"
-                                                                        name="Report_Approval[0][date_rrv]"
-                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                        id="date_0_date_rrv"
-                                                                        class="hide-input show_date"
-                                                                        style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                        oninput="handleDateInput(this, 'date_0_date_rrv')" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td> --}}
-
-                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <script>
-                                    $(document).ready(function() {
-                                        $('#team_members_details').click(function(e) {
-                                            function generateTableRow(serialNumber) {
-
-                                                var html =
-                                                    '<tr>' +
-                                                    '<td><input disabled type="text" name="Team_Members[' + serialNumber +
-                                                    '][serial]" value="' + (serialNumber) + '"></td>' +
-                                                    '<td><input type="text" name="Team_Members[' + serialNumber + '][names_tm]"></td>' +
-                                                    '<td><input type="text" name="Team_Members[' + serialNumber +
-                                                    '][department_tm]"></td>' +
-                                                    '<td><input type="text" name="Team_Members[' + serialNumber + '][sign_tm]"></td>' +
-                                                    '<td><div class="new-date-data-field"><div class="group-input input-date"> <div class="calenderauditee"><input id="date_' +
-                                                    serialNumber + '_date_tm" type="text" name="Team_Members[' + serialNumber +
-                                                    '][date_tm]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Team_Members[' +
-                                                    serialNumber +
-                                                    '][date_tm]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
-                                                    serialNumber +
-                                                    '_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                                    serialNumber + '_date_tm\')" /> </div> </div></div></td>' +
-                                                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-
-                                                    '</tr>';
-
-                                                return html;
-                                            }
-
-                                            var tableBody = $('#team_members_details_add tbody');
-                                            var rowCount = tableBody.children('tr').length;
-                                            var newRow = generateTableRow(rowCount + 1);
-                                            tableBody.append(newRow);
-                                        });
-                                    });
-                                </script>
+                               
 
 
 
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="root_cause">
-                                            Report Approval
-                                            <button type="button" id="add_report_approval_row">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="report_approval_table">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 100px;">Row #</th>
-                                                        <th>Names</th>
-                                                        <th>Department</th>
-                                                        <th>Sign</th>
-                                                        <th>Date</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td><input disabled type="text"
-                                                                name="Report_Approval[0][serial]" value="1"></td>
-                                                        <td><input type="text" name="Report_Approval[0][names_rrv]">
-                                                        </td>
-                                                        <td><input type="text"
-                                                                name="Report_Approval[0][department_rrv]"></td>
-                                                        <td><input type="text" name="Report_Approval[0][sign_rrv]">
-                                                        </td>
-                                                        <td>
-                                                            <div class="new-date-data-field">
-                                                                <div class="group-input input-date">
-                                                                    <div class="calenderauditee">
-                                                                        <input id="date_0_date_rrv" type="text"
-                                                                            name="Report_Approval[0][date_rrv]"
-                                                                            placeholder="DD-MMM-YYYY" />
-                                                                        <input type="date"
-                                                                            name="Report_Approval[0][date_rrv]"
-                                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                            id="date_0_date_rrv"
-                                                                            class="hide-input show_date"
-                                                                            style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                            oninput="handleDateInput(this, 'date_0_date_rrv')" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td><button type="button" class="removeRowBtn">Remove</button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <script>
-                                    $(document).on('click', '.removeRowBtn', function() {
-                                        $(this).closest('tr').remove();
-                                    });
-
-                                    $(document).ready(function() {
-                                        $('#add_report_approval_row').click(function(e) {
-                                            e.preventDefault();
-
-                                            function generateTableRow(reportNumber) {
-                                                var html =
-                                                    '<tr>' +
-                                                    '<td><input disabled type="text" name="Report_Approval[' + reportNumber +
-                                                    '][serial]" value="' + (reportNumber + 1) + '"></td>' +
-                                                    '<td><input type="text" name="Report_Approval[' + reportNumber +
-                                                    '][names_rrv]"></td>' +
-                                                    '<td><input type="text" name="Report_Approval[' + reportNumber +
-                                                    '][department_rrv]"></td>' +
-                                                    '<td><input type="text" name="Report_Approval[' + reportNumber +
-                                                    '][sign_rrv]"></td>' +
-                                                    '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
-                                                    reportNumber + '_date_rrv" type="text" name="Report_Approval[' + reportNumber +
-                                                    '][date_rrv]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Report_Approval[' +
-                                                    reportNumber +
-                                                    '][date_rrv]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
-                                                    reportNumber +
-                                                    '_date_rrv" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                                    reportNumber + '_date_rrv\')" /> </div> </div></div></td>' +
-                                                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                                                    '</tr>';
-                                                return html;
-                                            }
-
-                                            var tableBody = $('#report_approval_table tbody');
-                                            var rowCount = tableBody.children('tr').length;
-                                            var newRow = generateTableRow(rowCount);
-                                            tableBody.append(newRow);
-                                        });
-                                    });
-                                </script>
+                                
 
 
 

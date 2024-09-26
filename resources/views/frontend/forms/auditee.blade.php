@@ -569,6 +569,51 @@ $(document).ready(function() {
     });
 });
 </script>
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="start_date">Start Date of Audit</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="start_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="start_date_checkdate" name="start_date_gi" class="hide-input"
+                                                oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="col-lg-6  new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="end_date">End Date of Audit</label>
+                                        <div class="calenderauditee">
+                                        <input type="text" id="end_date"                             
+                                                placeholder="DD-MMM-YYYY" />
+                                             <input type="date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="end_date_checkdate" name="end_date_gi" class="hide-input"
+                                                oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                        </div>
+                                   
+                                        
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+
+
+
                                     <div class="col-12">
                                     <div class="group-input">
                                         <label for="Inv Attachments">GI Attachments</label>
@@ -596,7 +641,7 @@ $(document).ready(function() {
                     </div>
 
                     <!-- Audit Planning content -->
-                    <div id="CCForm2" class="inner-block cctabcontent">
+                    <!-- <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 
@@ -758,10 +803,10 @@ $(document).ready(function() {
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- Audit Preparation content -->
-                    <div id="CCForm3" class="inner-block cctabcontent">
+                    <!-- <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-12">
@@ -903,10 +948,10 @@ $(document).ready(function() {
                                         Exit </a> </button>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- Audit Execution content -->
-                    <div id="CCForm4" class="inner-block cctabcontent">
+                    <!-- <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-6 new-date-data-field">
@@ -1026,7 +1071,7 @@ $(document).ready(function() {
                                         Exit </a> </button>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- Audit Response & Closure content -->
                     <div id="CCForm5" class="inner-block cctabcontent">
@@ -1095,7 +1140,7 @@ $(document).ready(function() {
                         <th>Row</th>
                         <th>Observation</th>
                         <th>Response</th>
-                        <th>CAPA / ACTION Child Reference If Any </th>
+                        <th>CAPA / Child action Reference If Any</th>
                         <th>Status</th>
                         <th>Remarks</th>
                         <th>Action</th>
@@ -1195,6 +1240,21 @@ $(document).ready(function() {
     </script>
 
 {{-- grid added new --}}
+
+
+
+
+                                <div class="col-lg-12">
+                                    <div class="group-input" >
+                                        <label for="reviewer_person_value">CFT review selection</label>
+                                        <select id="reviewer_person_value" name="reviewer_person_value[]" class="form-control" multiple
+                                       >
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->name }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -3694,7 +3754,7 @@ $(document).ready(function() {
 
     <script>
         VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record'
+            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record,#reviewer_person_value'
         });
 
         function openCity(evt, cityName) {
