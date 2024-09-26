@@ -8,6 +8,8 @@ use App\Models\JobTraining;
 use App\Models\JobTrainingGrid;
 use App\Models\Department;
 use App\Models\JobTrainingAudit;
+use Illuminate\Support\Facades\App;
+use PDF;
 use Illuminate\Support\Facades\Mail;
 use App\Models\SetDivision;
 use App\Models\RoleGroup;
@@ -681,4 +683,33 @@ class JobTrainingController extends Controller
         $document->Initiation = User::where('id', $document->initiator_id)->value('name');
         return view('frontend.TMS.Job_Training.job_training_audit', compact('audit', 'document', 'today', 'jobTraining'));
     }
+
+
+
+    public static function jobReport($id)
+    {
+        $data = JobTraining::find($id);
+        // dd($data);
+        if (!empty($data)) {
+            $data->originator_id = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadView('frontend.TMS.Job_Training.job_report', compact('data'))
+            ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('example.pdf' . $id . '.pdf');
+        }
+    }
+
 }

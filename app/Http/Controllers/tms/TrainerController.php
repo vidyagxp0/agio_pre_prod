@@ -9,6 +9,8 @@ use App\Models\TrainerGrid;
 use App\Models\QuestionariesTrainingGrid;
 use App\Models\TrainerQualification;
 use App\Models\TrainerQualificationAuditTrial;
+use Illuminate\Support\Facades\App;
+use PDF;
 use App\Models\User;
 use App\Models\Employee;
 use Carbon\Carbon;
@@ -1034,5 +1036,34 @@ class TrainerController extends Controller
         $doc->origiator_name = User::find($doc->initiator_id);
 
         return view('frontend.TMS.Trainer_qualification.trainerQualification_auditTrailDetails', compact('detail', 'doc', 'detail_data'));
+    }
+
+
+
+    
+    public static function trainerReport($id)
+    {
+        $data = TrainerQualification::find($id);
+        // dd($data);
+        if (!empty($data)) {
+            $data->originator_id = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadView('frontend.TMS.Trainer_qualification.trainer_report', compact('data'))
+            ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('example.pdf' . $id . '.pdf');
+        }
     }
 }

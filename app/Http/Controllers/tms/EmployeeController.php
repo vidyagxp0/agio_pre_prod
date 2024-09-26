@@ -9,7 +9,6 @@ use App\Models\EmployeeGrid;
 use App\Models\RecordNumber;
 use App\Models\RoleGroup;
 use App\Models\Training;
-use App\Models\Document;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -1736,69 +1735,85 @@ class EmployeeController extends Controller
 
     public function Employee_Child(Request $request, $id)
     {
-        $employee = Employee::find($id);
-        // dd($employee = Employee::find($id));
+        $employee = Employee::find($id); // Child se employee ka data
+    
         $record = ((RecordNumber::first()->value('counter')) + 1);
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
         $employees = Employee::all();
-        $data = Document::all();
-
-        // $employee = Employee::find($request->name_employee); 
-        if ($employee) {
-            $employeeName = $employee->employee_name; // Get employee name if employee exists.
-        } else {
-            // Handle the case where the employee does not exist.
-            $employeeName = 'Unknown Employee'; // Or handle it in a different way.
-        }
+    
         if ($request->child_type == 'induction_training') {
-            return view('frontend.TMS.Induction_training.induction_training', compact('employee','employeeName','due_date','record','data'));
+            return view('frontend.TMS.Induction_training.induction_training', compact('employee','due_date','record'));
         } else {
-            return view('frontend.TMS.Induction_training.induction_training',compact('employee','employeeName','due_date','record','data'));
+            return view('frontend.forms.classroom-training');
         }
     }
     
 
-    public function report(Request $request, $id){
-        $data = Employee::find($id);
+    // public function report(Request $request, $id){
+    //     $data = Employee::find($id);
 
-        // if (!empty($data)) {
-        //     $pdf = App::make('dompdf.wrapper');
-        //     $time = Carbon::now();
-        //     $pdf = PDF::loadview('frontend.TMS.Employee.report', compact('data'))
-        //         ->setOptions([
-        //             'defaultFont' => 'sans-serif',
-        //             'isHtml5ParserEnabled' => true,
-        //             'isRemoteEnabled' => true,
-        //             'isPhpEnabled' => true,
-        //         ]);
-        //     $pdf->setPaper('A4');
-        //     $pdf->render();
-        //     $canvas = $pdf->getDomPDF()->getCanvas();
-        //     $height = $canvas->get_height();
-        //     $width = $canvas->get_width();
-        //     $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-        //     $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
-        //     return $pdf->stream('report' . $id . '.pdf');
-        // }
-        $employee = Employee::find(1);  // Or use whatever logic to get the employee data
+    //     // if (!empty($data)) {
+    //     //     $pdf = App::make('dompdf.wrapper');
+    //     //     $time = Carbon::now();
+    //     //     $pdf = PDF::loadview('frontend.TMS.Employee.report', compact('data'))
+    //     //         ->setOptions([
+    //     //             'defaultFont' => 'sans-serif',
+    //     //             'isHtml5ParserEnabled' => true,
+    //     //             'isRemoteEnabled' => true,
+    //     //             'isPhpEnabled' => true,
+    //     //         ]);
+    //     //     $pdf->setPaper('A4');
+    //     //     $pdf->render();
+    //     //     $canvas = $pdf->getDomPDF()->getCanvas();
+    //     //     $height = $canvas->get_height();
+    //     //     $width = $canvas->get_width();
+    //     //     $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+    //     //     $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+    //     //     return $pdf->stream('report' . $id . '.pdf');
+    //     // }
+    //     $employee = Employee::find(1);  // Or use whatever logic to get the employee data
         
-        // Convert model data to an array
-        $data = Employee::all();
+    //     // Convert model data to an array
+    //     $data = Employee::all();
 
-        // Load the view with the data array
-        // $pdf = PDF::loadView('pdf_template', $data);
-        $pdf = App::make('dompdf.wrapper');
-        $time = Carbon::now();
-        $pdf = PDF::loadView('frontend.TMS.Employee.report', compact('data'));
+    //     // Load the view with the data array
+    //     // $pdf = PDF::loadView('pdf_template', $data);
+    //     $pdf = App::make('dompdf.wrapper');
+    //     $time = Carbon::now();
+    //     $pdf = PDF::loadView('frontend.TMS.Employee.report', compact('data'));
 
-        // Download the generated PDF file
-        return $pdf->stream('example.pdf');
+    //     // Download the generated PDF file
+    //     return $pdf->stream('example.pdf');
 
 
-        // return view('frontend.TMS.Employee.report', compact('data'));
+    //     // return view('frontend.TMS.Employee.report', compact('data'));
+    // }
+    public static function report($id)
+    {
+        $data = Employee::find($id);
+        if (!empty($data)) {
+            $data->originator_id = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadView('frontend.TMS.Employee.report', compact('data'))
+            ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('example.pdf' . $id . '.pdf');
+        }
     }
 
 }
