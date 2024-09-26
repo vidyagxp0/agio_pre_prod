@@ -260,13 +260,24 @@ $users = DB::table('users')->get();
                     <div class="inner-block-content">
                         <div class="row">
          
-                            <div class="col-lg-6">
+                            <!-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="RLS Record Number">Name of Employee</label>
                                     <input disabled type="text" name="name_employee_display" id="name_employee_display" maxlength="255" value="{{ $inductionTraining->name_employee }}">
                                     <input type="hidden" name="name_employee" value="{{ $inductionTraining->name_employee }}">
                                 </div>
+                            </div> -->
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="RLS Record Number">Name of Employee</label>
+                                    <!-- Disabled input to display the employee name -->
+                                    <input disabled type="text" name="name_employee_display" id="name_employee_display" maxlength="255" 
+                                        value="{{ $employee_name }}">
+                                    <!-- Hidden input to store the employee ID -->
+                                    <input type="hidden" name="name_employee" value="{{ $inductionTraining->name_employee }}">
+                                </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="RLS Record Number">Employee ID </label>
@@ -452,6 +463,7 @@ $users = DB::table('users')->get();
 
                                                     <td>
                                                         <textarea name="document_number_1" value="">{{ $inductionTraining->{"document_number_1"} }}</textarea>
+                                                        
                                                     </td>
                                                     <td>
                                                         <div class=" new-date-data-field">
@@ -863,7 +875,21 @@ $users = DB::table('users')->get();
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-6">
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="training_type">Type of Training</label>
+                                    <input type="text" value="{{ $inductionTraining->training_type }}" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="trainer_name">Trainer Name</label>
+                                    <input type="text" value="{{ $inductionTraining->trainee_name }}" readonly>
+                                </div>
+                            </div>
+                            {{-- <div class="col-6">
                                 <div class="group-input">
                                     <label for="severity-level">Trainer Name</label>
 
@@ -873,7 +899,7 @@ $users = DB::table('users')->get();
 
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -1138,40 +1164,166 @@ $users = DB::table('users')->get();
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <div class="certificate-container">
-                                        <div class="certificate-title">TRAINING CERTIFICATE</div>
+                                <div class="button-block">
+                                    <button type="button" class="printButton" onclick="printCertificate()">
+                                        <i class="fas fa-print"></i>Print
+                                    </button>
+                                </div>
+                
+                                <div class="certificate-container">
+                                <div class="certificate-title">TRAINING CERTIFICATE</div>
 
-                                        <div class="certificate-description"><br><br>
-                                            This is to certify that Mr./Ms./Mrs. <strong>{{$inductionTraining->name_employee}}</strong>.
-                                            has undergone Induction training including the requirement of cGMP and has shown a good attitude and thorough understanding in the subject.
-                                        </div>
-
-                                        <div class="certificate-description">
-                                            Therefore we certify that Mr. Ms. / Mrs. <strong>{{$inductionTraining->name_employee}}</strong>.
-                                            is capable of performing his/her assigned duties in the <strong>{{$inductionTraining->department}}</strong> Department independently.
-                                        </div>
-
-                                        <div class="date-container">
-                                            <div>Sign/Date</div>
-                                            <div class="signature">HR Head</div>
-                                        </div>
-
-                                        <div class="signature-container">
-                                            <div>Sign/Date</div>
-                                            <div class="signature">Head QA/CQA</div>
-                                        </div>
-                                    </div>
+                                <div class="certificate-description"><br><br>
+                                    This is to certify that Mr./Ms./Mrs. <strong>{{$inductionTraining->name_employee}}</strong>.
+                                    has undergone Induction training including the requirement of cGMP and has shown a good attitude and thorough understanding in the subject.
                                 </div>
 
+                                <div class="certificate-description">
+                                    Therefore, we certify that Mr./Ms./Mrs. <strong>{{$inductionTraining->name_employee}}</strong>.
+                                    is capable of performing his/her assigned duties in the <strong>{{$inductionTraining->department}}</strong> Department independently.
+                                </div>
+
+                                                    <div class="date-container">
+                                        <div class="signature-block">
+                                            <strong>Sign/Date:</strong>_________
+                                            <div>HR Head</div>
+                                        </div>
+
+                                        <div>
+                                            <strong>Sign/Date:</strong>_________
+                                            <div class="signature">Head QA/CQA<div></div></div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
                                 <div style="margin-top: 40px;" class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
-                                    <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                <button type="submit" class=" btn btn saveButton">Save</button>
+                                <button type="button" id="ChangeNextButton" class=" btn btn nextButton">Next</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 @endif
+                <style>
+           .certificate-container {
+            width: 685px;
+            height: 500px;
+            border: 4px solid #3d6186;
+            padding: 18px;
+            background-color: white;
+            position: relative;
+            margin: auto;
+            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        .certificate-title {
+            font-size: 30px;
+            font-weight: bold;
+            color: #677078;
+            display: flex;
+            justify-content: center;
+        }
+        .certificate-subtitle {
+            font-size: 18px;
+            color: #555;
+        }
+        .certificate-description {
+            margin-top: 30px;
+            font-size: 18px;
+            color: #333;
+        }
+       
+          .date-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 60px;
+            font-size: 18px;
+        }
+        .signature-container {
+            position: absolute;
+            bottom: 40px;
+            right: 50px;
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+        }
+       
+        @media print {
+            .button-block {
+                display: none !important; 
+            }
 
+            body * {
+                visibility: hidden;
+            }
+
+            #CCForm4, #CCForm4 * {
+                visibility: visible;
+            }
+
+            #CCForm4 {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+        }
+        .button-block {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 50px;
+        }
+
+        .printButton {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            float: right; 
+        }
+
+        .printButton:hover {
+            background-color: #1a252f;
+        }
+
+        .printButton i {
+            margin-right: 8px; 
+        }
+
+        @media print {
+    .button-block {
+        display: none !important; 
+    }
+
+    body * {
+        visibility: hidden;
+    }
+
+    .certificate-container, .certificate-container * {
+        visibility: visible;
+    }
+
+    .certificate-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+}
+
+            </style>
+                <script>
+                        function printCertificate() {
+                        var buttons = document.querySelector(".button-block");
+                        buttons.style.display = 'none';
+                        window.print();
+                        buttons.style.display = 'block';
+                    }
+
+                </script>
                 <script>
                     document.getElementById("saveForm").addEventListener("click", function(event) {
                         let questionInputs = document.querySelectorAll(".question-input");
@@ -1240,55 +1392,6 @@ $users = DB::table('users')->get();
     }
 </style>
 
-<style>
- 
-        .certificate-container {
-            width: 1000px;
-            height: 500px;
-            border: 4px solid #00000061;
-            padding: 18px;
-            background-color: white;
-            position: relative;
-            margin: auto;
-        }
-        .certificate-title {
-            font-size: 30px;
-            font-weight: bold;
-            color: #677078;
-            display: flex;
-            justify-content: center;
-        }
-        .certificate-subtitle {
-            font-size: 18px;
-            color: #555;
-        }
- 
-        .certificate-description {
-            margin-top: 30px;
-            font-size: 18px;
-            color: #333;
-        }
-        .date-container {
-            position: absolute;
-            bottom: 40px;
-            left: 50px;
-            font-size: 18px;
-            color: #333;
-        }
-        .signature-container {
-            position: absolute;
-            bottom: 40px;
-            right: 50px;
-            text-align: center;
-            font-size: 18px;
-            color: #333;
-        }
-        .signature {
-            margin-top: 10px;
-            border-top: 1px solid #333;
-            width: 200px;
-        }
-</style>
 
 <script>
     function otherController(value, checkValue, blockID) {

@@ -35,11 +35,12 @@ class JobTrainingController extends Controller
         //     ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name')
         //     ->get();
         $hods = User::get();
+        $delegate = User::get();
 
         $jobTraining = JobTraining::all();
         $employees = Employee::all();
 
-        return view('frontend.TMS.Job_Training.job_training', compact('jobTraining','data','hods','employees'));
+        return view('frontend.TMS.Job_Training.job_training', compact('jobTraining','data','hods','delegate','employees'));
     }
 
 
@@ -93,7 +94,9 @@ class JobTrainingController extends Controller
         $jobTraining->experience_with_agio = $request->input('experience_with_agio');
         $jobTraining->total_experience = $request->input('total_experience');
         $jobTraining->reason_for_revision = $request->input('reason_for_revision');
+        $jobTraining->jd_type = $request->input('jd_type');
         $jobTraining->revision_purpose = $request->input('revision_purpose');
+        $jobTraining->remark = $request->input('remark'); 
         $jobTraining->evaluation_required = $request->input('evaluation_required');
         $jobTraining->delegate = $request->input('delegate');
 
@@ -247,7 +250,9 @@ class JobTrainingController extends Controller
         $jobTraining->experience_with_agio = $request->input('experience_with_agio');
         $jobTraining->total_experience = $request->input('total_experience');
         $jobTraining->reason_for_revision = $request->input('reason_for_revision');
+        $jobTraining->jd_type = $request->input('jd_type');
         $jobTraining->revision_purpose = $request->input('revision_purpose');
+        $jobTraining->remark = $request->input('remark'); 
         $jobTraining->evaluation_required = $request->input('evaluation_required');
         $jobTraining->delegate = $request->input('delegate');
 

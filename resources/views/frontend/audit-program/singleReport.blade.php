@@ -437,11 +437,11 @@
 
             <div class="block">
                 <div class="block-head">
-                        HOD Review
+                    HOD/Designee Review
                         </div>
                         <table>
                             <tr>
-                                <th>HOD Comments</th>
+                                <th>HOD/Designee Review Comments</th>
                                 <td>@if($data->hod_comment){{ $data->hod_comment }}@else Not Applicable @endif</td>
                             </tr>
                         </table>
@@ -449,7 +449,7 @@
 
             <div class="border-table">
                             <div class="block-head">
-                            HOD Attached Files
+                                HOD/Designee Review Attached Files
                             </div>
                             <table>
 
@@ -478,11 +478,11 @@
 
             <div class="block">
                 <div class="block-head">
-                CQA/QA Review
+                    CQA/QA Approval
                         </div>
                         <table>
                             <tr>
-                                <th>CQA/QA Comments</th>
+                                <th>CQA/QA Approval Comments</th>
                                 <td>@if($data->cqa_qa_comment){{ $data->cqa_qa_comment }}@else Not Applicable @endif</td>
                             </tr>
                         </table>
@@ -490,7 +490,7 @@
 
             <div class="border-table">
                             <div class="block-head">
-                            CQA/QA Attached Files
+                                CQA/QA Attached Files
                             </div>
                             <table>
 

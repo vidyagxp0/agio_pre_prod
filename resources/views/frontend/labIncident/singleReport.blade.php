@@ -682,9 +682,14 @@
                     </table>
             </div>
 
+            <br>
+
             <div class="block">
                 <div class="block-head">
                     Activity Log
+                </div>
+                <div class="block-head">
+                    Submitted
                 </div>
                 <table>
                     <tr>
@@ -695,6 +700,11 @@
                         <th class="w-20">Comment</th>
                         <td class="w-30">{{ $data->comment }}</td>
                     </tr>
+                    </table>
+                    <div class="block-head">
+                    QA Head/HOD Initial Review
+                </div>
+                <table>
                     <tr>
                         <th class="w-20">QC Head/HOD Initial Review Complete By</th>
                         <td class="w-30">{{ $data->verification_complete_completed_by }}</td>
@@ -711,6 +721,11 @@
                         <th class="w-20">Comment</th>
                         <td class="w-30">{{ $data->more_info_req_1_comment }}</td>
                     </tr>
+                    </table>
+                    <div class="block-head">
+                    QA Initial Review
+                </div>
+                <table>
                     <tr>
                         <th class="w-20">QA Initial Review Complete By</th>
                         <td class="w-30">{{ $data->preliminary_completed_by }}</td>
@@ -727,6 +742,11 @@
                         <th class="w-20">Comment</th>
                         <td class="w-30">{{ $data->more_info_req_2_comment }}</td>
                     </tr>
+                    </table>
+                    <div class="block-head">
+                    Pending Initiator Update
+                </div>
+                <table>
                     <tr>
                         <th class="w-20">Pending Initiator Update Complete By</th>
                         <td class="w-30">{{ $data->all_activities_completed_by }}</td>
@@ -743,6 +763,11 @@
                         <th class="w-20">Comment</th>
                         <td class="w-30">{{ $data->more_info_req_3_comment }}</td>
                     </tr>
+                    </table>
+                    <div class="block-head">
+                    QC Head/HOD Secondary Review
+                </div>
+                <table>
                     <tr>
                         <th class="w-20">QC Head/HOD Secondary Review Complete By</th>
                         <td class="w-30">{{ $data->review_completed_by }}</td>
@@ -759,6 +784,11 @@
                         <th class="w-20">Comment</th>
                         <td class="w-30">{{ $data->more_info_req_4_comment }}</td>
                     </tr>
+                    </table>
+                    <div class="block-head">
+                    QA Secondary Review
+                </div>
+                <table>
                     <tr>
                         <th class="w-20">QA Secondry Review Complete By</th>
                         <td class="w-30">{{ $data->extended_inv_complete_by }}</td>
@@ -775,6 +805,11 @@
                         <th class="w-20">Comment</th>
                         <td class="w-30">{{ $data->more_info_req_5_comment }}</td>
                     </tr>
+                    </table>
+                    <div class="block-head">
+                    QAH Approval
+                </div>
+                <table>
                     <tr>
                         <th class="w-20">Approved By</th>
                         <td class="w-30">{{ $data->no_assignable_cause_by }}</td>
@@ -791,6 +826,11 @@
                         <th class="w-20">Comment</th>
                         <td class="w-30">{{ $data->more_info_req_6_comment }}</td>
                     </tr>
+                    </table>
+                    <div class="block-head">
+                    Cancel
+                </div>
+                <table>
                     <tr>
                         <th class="w-20">Cancel By</th>
                         <td class="w-30">{{ $data->cancelled_by }}</td>

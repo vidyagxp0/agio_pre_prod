@@ -131,9 +131,9 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             <th>Employee Name</th>
                             <th>Department</th>
                             <th>Job Title</th>
-                            <!-- <th>Assigned To</th> -->
                             <th>Joining Date</th>
                             <th>Status</th>
+                            <th>Report</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -158,11 +158,37 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             <!-- <td>{{ $employee->user_assigned ? $employee->user_assigned->name : 'NA' }}</td> -->
                             <td>{{ Helpers::getdateFormat($employee->joining_date) }}</td>
                             <td>{{ $employee->status }}</td>
+                            <td>
+                            <button type="button"  class="view-report-btn" onclick="window.location.href='{{ url('rcms/report/' . $employee->id) }}'" >
+                                View Report
+                            </button>
+                        </td>                  
+
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
+         
+                  <style>
+        .view-report-btn {
+            background-color: #4274da; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .view-report-btn:hover {
+            background-color: #000; 
+            color: white;
+            transform: scale(1.05);
+            
+        }
+    </style>
+            
             <div id="CCForm1" class="inner-block tms-block cctabcontent" style="margin-top:50px; ">
                 @if (Helpers::checkRoles(6))
                 <div>

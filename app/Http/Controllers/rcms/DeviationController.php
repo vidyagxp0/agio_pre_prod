@@ -940,12 +940,12 @@ class DeviationController extends Controller
 
         $Cft->save();
 
-        if (!empty ($request->record_number)){
+
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Record Number';
             $history->previous = "Null";
-            $history->current = $deviation->record_number;
+            $history->current = Helpers::getDivisionName(session()->get('division')) . "/DEV/" . Helpers::year($deviation->created_at) . "/" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -956,13 +956,13 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
 
-           }
+
             if (!empty ($request->division_id)){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Site/Location Code';
             $history->previous = "Null";
-            $history->current = $deviation->division_id;
+            $history->current =Helpers::getDivisionName($deviation->division_id);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1253,6 +1253,55 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+        if (!empty ($request->Hod_person_to)){
+            $history = new DeviationAuditTrail();
+            $history->deviation_id = $deviation->id;
+            $history->activity_type = 'HOD To';
+            $history->previous = "Null";
+            $history->current = $deviation->Hod_person_to;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $deviation->status;
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->Approver_to)){
+            $history = new DeviationAuditTrail();
+            $history->deviation_id = $deviation->id;
+            $history->activity_type = 'Approver To';
+            $history->previous = "Null";
+            $history->current = $deviation->Approver_to;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $deviation->status;
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->Reviewer_to)){
+            $history = new DeviationAuditTrail();
+            $history->deviation_id = $deviation->id;
+            $history->activity_type = 'Reviewer To';
+            $history->previous = "Null";
+            $history->current = $deviation->Reviewer_to;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $deviation->status;
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
         if (!empty ($request->Product_Batch)){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
@@ -1285,54 +1334,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
             $history->action_name = 'Create';
             $history->save();
         }
-         if (is_array($request->Reviewer_to) && array_key_exists(0, $request->Reviewer_to) && $request->Reviewer_to[0] !== null){
-            $history = new DeviationAuditTrail();
-            $history->deviation_id = $deviation->id;
-            $history->activity_type = 'Review To';
-            $history->previous = "Null";
-            $history->current = $deviation->Reviewer_to;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $deviation->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = 'Create';
-            $history->save();
-        }
-        if (is_array($request->Approver_to) && array_key_exists(0, $request->Approver_to) && $request->Approver_to[0] !== null){
-            $history = new DeviationAuditTrail();
-            $history->deviation_id = $deviation->id;
-            $history->activity_type = 'Approve To';
-            $history->previous = "Null";
-            $history->current = $deviation->Approver_to;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $deviation->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = 'Create';
-            $history->save();
-        }
-        if (is_array($request->Hod_person_to) && array_key_exists(0, $request->Hod_person_to) && $request->Hod_person_to[0] !== null){
-            $history = new DeviationAuditTrail();
-            $history->deviation_id = $deviation->id;
-            $history->activity_type = 'HOD To';
-            $history->previous = "Null";
-            $history->current = $deviation->Hod_person_to;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $deviation->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = 'Create';
-            $history->save();
-        }
+
 
                 if (is_array($request->Immediate_Action) && array_key_exists(0, $request->Immediate_Action) && $request->Immediate_Action[0] !== null){
             $history = new DeviationAuditTrail();

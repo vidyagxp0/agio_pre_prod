@@ -73,6 +73,8 @@ class AuditeeController extends Controller
         $internalAudit->initiated_through = $request->initiated_through;
         $internalAudit->initiated_if_other = $request->initiated_if_other;
         $internalAudit->others = $request->others;
+        $internalAudit->start_date_gi = $request->start_date_gi;
+        $internalAudit->end_date_gi = $request->end_date_gi;
         $internalAudit->repeat = $request->repeat;
         $internalAudit->repeat_nature = $request->repeat_nature;
         $internalAudit->due_date_extension = $request->due_date_extension;
@@ -206,7 +208,7 @@ class AuditeeController extends Controller
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
 
-        // -----------------grid---- Audit Agenda 
+        // -----------------grid---- Audit Agenda
         $data3 = new InternalAuditGrid();
       //  $request->dd();
         $data3->audit_id = $internalAudit->id;
@@ -714,7 +716,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -732,7 +734,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
         if (!empty($internalAudit->record)) {
@@ -749,7 +751,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
         if (!empty($internalAudit->Initiator_Group)) {
@@ -766,7 +768,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -785,13 +787,13 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
         if(!empty($internalAudit->division_code))
         {
-          
-    
+
+
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Site/Location Code';
@@ -805,8 +807,8 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
-         
+
+
             $history->save();
         }
         if (!empty($internalAudit->initiator)) {
@@ -823,7 +825,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
         if (!empty($internalAudit->short_description)) {
@@ -840,7 +842,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -858,7 +860,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 //----------------------------------------------------------------------
@@ -876,7 +878,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -894,7 +896,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -912,7 +914,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -930,7 +932,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -948,7 +950,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
         if (!empty($internalAudit->initial_comments)) {
@@ -965,7 +967,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -983,7 +985,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1001,11 +1003,11 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
-        
+
 
         if (!empty($internalAudit->if_comments)) {
             $history = new AuditTrialExternal();
@@ -1021,7 +1023,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                  $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1039,7 +1041,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1085,7 +1087,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1103,7 +1105,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                  $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1121,7 +1123,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1139,7 +1141,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1157,7 +1159,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1175,7 +1177,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1195,7 +1197,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1214,7 +1216,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1232,7 +1234,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1250,12 +1252,12 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
 
-        
+
         if (!empty($internalAudit->Supplier_Details)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
@@ -1270,11 +1272,11 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                  $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
-        
+
         if (!empty($internalAudit->Supplier_Site)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
@@ -1289,7 +1291,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                  $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1307,7 +1309,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1325,7 +1327,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1343,7 +1345,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1361,7 +1363,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1379,7 +1381,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1397,7 +1399,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1415,7 +1417,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1433,7 +1435,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1451,7 +1453,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1469,7 +1471,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1487,7 +1489,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1506,7 +1508,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                    $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1524,7 +1526,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                  $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1542,7 +1544,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                  $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1560,7 +1562,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1590,7 +1592,7 @@ class AuditeeController extends Controller
 
     public function show($id)
     {
-       
+
         $old_record = Auditee::select('id', 'division_id', 'record')->get();
         $auditornew = Auditee::where('id', $id)->first();
         $data = Auditee::find($id);
@@ -1603,7 +1605,7 @@ class AuditeeController extends Controller
         $oocgrid = SummaryGrid::where('summary_id',$id)->first();
         $auditorview = SummaryGrid::where(['summary_id'=>$id, 'identifier'=>'Auditors'])->first();
 
-        
+
 
 
 
@@ -1637,6 +1639,8 @@ class AuditeeController extends Controller
         $internalAudit->if_other = $request->if_other;
 
         $internalAudit->initiated_through = $request->initiated_through;
+        $internalAudit->start_date_gi = $request->start_date_gi;
+        $internalAudit->end_date_gi = $request->end_date_gi;
         $internalAudit->initiated_if_other = $request->initiated_if_other;
         $internalAudit->others = $request->others;
         $internalAudit->external_agencies = $request->external_agencies;
@@ -1646,7 +1650,7 @@ class AuditeeController extends Controller
 
         $internalAudit->initial_comments = $request->initial_comments;
         $internalAudit->start_date = $request->start_date;
-        
+
         $internalAudit->end_date = $request->end_date;
         $internalAudit->audit_agenda = $request->audit_agenda;
         //$internalAudit->Facility =  implode(',', $request->Facility);
@@ -1676,7 +1680,7 @@ class AuditeeController extends Controller
         if (!empty($request->qa_cqa_attach)) {
             $files = [];
             if ($request->hasfile('qa_cqa_attach')) {
-                
+
                 foreach ($request->file('qa_cqa_attach') as $file) {
                     $name = $request->name . 'qa_cqa_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
@@ -1690,7 +1694,7 @@ class AuditeeController extends Controller
         if (!empty($request->file_attachment_guideline)) {
             $files = [];
             if ($request->hasfile('file_attachment_guideline')) {
-                
+
                 foreach ($request->file('file_attachment_guideline') as $file) {
                     $name = $request->name . 'file_attachment_guideline' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
@@ -1701,7 +1705,7 @@ class AuditeeController extends Controller
 
             $internalAudit->file_attachment_guideline = json_encode($files);
         }
- 
+
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_start_date = $request->audit_start_date;
@@ -1726,7 +1730,7 @@ class AuditeeController extends Controller
         if (!empty($request->file_attachment)) {
             $files = [];
             if ($request->hasfile('file_attachment')) {
-                
+
                 foreach ($request->file('file_attachment') as $file) {
                     $name = $request->name . 'file_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
@@ -1779,7 +1783,7 @@ class AuditeeController extends Controller
 
             $internalAudit->myfile = json_encode($files);
         }
-        
+
         if($internalAudit->stage == 2 || $internalAudit->stage == 3 ){
 
 
@@ -1798,7 +1802,7 @@ class AuditeeController extends Controller
 
                 $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->Production_Injection_Review : $request->Production_Injection_Review;
                 $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->Production_Injection_Person : $request->Production_Injection_Person;
-                
+
                 $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
                 $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
 
@@ -1828,16 +1832,16 @@ class AuditeeController extends Controller
 
                 $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
-                
+
                 $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
 
                 $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
                 $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
-                
+
                 $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
                 $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
-                
+
                 $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
                 $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
                 $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
@@ -1849,7 +1853,7 @@ class AuditeeController extends Controller
                 $Cft->Other3_review = $request->Other3_review  == null ? $Cft->Other3_review : $request->Other3_review;
                 $Cft->Other3_person = $request->Other3_person  == null ? $Cft->Other3_person : $request->Other3_person;
                 $Cft->Other3_Department_person = $request->Other3_Department_person  == null ? $Cft->Other3_Department_person : $request->Other3_Department_person;
-                
+
                 $Cft->Other4_review = $request->Other4_review  == null ? $Cft->Other4_review : $request->Other4_review;
                 $Cft->Other4_person = $request->Other4_person  == null ? $Cft->Other4_person : $request->Other4_person;
                 $Cft->Other4_Department_person = $request->Other4_Department_person  == null ? $Cft->Other4_Department_person : $request->Other4_Department_person;
@@ -1898,7 +1902,7 @@ class AuditeeController extends Controller
 
                 $Cft->Engineering_review = $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person;
-                
+
                 $Cft->Environment_Health_review = $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
 
@@ -1907,10 +1911,10 @@ class AuditeeController extends Controller
 
                 $Cft->Project_management_review = $request->Project_management_review;
                 $Cft->Project_management_person = $request->Project_management_person;
-                
+
                 $Cft->Information_Technology_review = $request->Information_Technology_review;
                 $Cft->Information_Technology_person = $request->Information_Technology_person;
-                
+
                 $Cft->Other1_review = $request->Other1_review;
                 $Cft->Other1_person = $request->Other1_person;
                 $Cft->Other1_Department_person = $request->Other1_Department_person;
@@ -1965,13 +1969,13 @@ class AuditeeController extends Controller
 
             $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
             $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
-            
+
             $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
             $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
 
             $Cft->Engineering_assessment = $request->Engineering_assessment;
             $Cft->Engineering_feedback = $request->Engineering_feedback;
-            
+
             $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
             $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
 
@@ -1980,7 +1984,7 @@ class AuditeeController extends Controller
 
             $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
             $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
-            
+
             $Cft->Other1_assessment = $request->Other1_assessment;
             $Cft->Other1_feedback = $request->Other1_feedback;
 
@@ -2051,7 +2055,7 @@ class AuditeeController extends Controller
                     }
                 }
                 $Cft->Production_Injection_Attachment = json_encode($files);
-            }            
+            }
             if (!empty ($request->Store_attachment)) {
                 $files = [];
                 if ($request->hasfile('Store_attachment')) {
@@ -2150,7 +2154,7 @@ class AuditeeController extends Controller
                     }
                 }
                 $Cft->Environment_Health_Safety_attachment = json_encode($files);
-            }            
+            }
             if (!empty ($request->Information_Technology_attachment)) {
                 $files = [];
                 if ($request->hasfile('Information_Technology_attachment')) {
@@ -2228,7 +2232,7 @@ class AuditeeController extends Controller
                     }
                 }
                 $Cft->Other5_attachment = json_encode($files);
-            }   
+            }
 
 
             $Cft->save();
@@ -2405,12 +2409,12 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-    
-           
+
+
             $history->save();
         }
 
-      
+
 
         if ($lastDocument->initiated_through != $internalAudit->initiated_through || !empty($request->comment)) {
 
@@ -2431,7 +2435,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
 
@@ -2456,7 +2460,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
         if ($lastDocument->Initiator_Group != $internalAudit->Initiator_Group || !empty($request->Initiator_Group_comment)) {
@@ -2478,7 +2482,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
 
@@ -2501,11 +2505,11 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
 //-----------------------------------------------------------------------------------------
-          
+
             if ($lastDocument->initiated_if_other != $internalAudit->initiated_if_other || !empty($request->Initiator_Group_comment)) {
 
                 $history = new AuditTrialExternal();
@@ -2525,8 +2529,8 @@ class AuditeeController extends Controller
                 } else {
                     $history->action_name = "Update";
                 }
-             
-            
+
+
                 $history->save();
             }
 
@@ -2549,8 +2553,8 @@ class AuditeeController extends Controller
                 } else {
                     $history->action_name = "Update";
                 }
-             
-            
+
+
                 $history->save();
             }
 
@@ -2574,8 +2578,8 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
+
+
             $history->save();
         }
         if ($lastDocument->audit_type != $internalAudit->audit_type || !empty($request->audit_type_comment)) {
@@ -2597,8 +2601,8 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
+
+
             $history->save();
         }
         if ($lastDocument->if_other != $internalAudit->if_other || !empty($request->if_other_comment)) {
@@ -2620,7 +2624,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
 
@@ -2644,7 +2648,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
 
@@ -2667,8 +2671,8 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
+
+
             $history->save();
         }
         if ($lastDocument->initial_comments != $internalAudit->initial_comments || !empty($request->initial_comments_comment)) {
@@ -2690,7 +2694,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->start_date != $internalAudit->start_date || !empty($request->start_date_comment)) {
@@ -2712,7 +2716,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->end_date != $internalAudit->end_date || !empty($request->end_date_comment)) {
@@ -2734,7 +2738,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->audit_agenda != $internalAudit->audit_agenda || !empty($request->audit_agenda_comment)) {
@@ -2756,7 +2760,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->Facility != $internalAudit->Facility || !empty($request->Facility_comment)) {
@@ -2799,7 +2803,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
 
@@ -2824,7 +2828,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
 
@@ -2848,7 +2852,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
 
@@ -2871,7 +2875,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
 
@@ -2894,7 +2898,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
 
@@ -2941,7 +2945,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->lead_auditor != $internalAudit->lead_auditor || !empty($request->lead_auditor_comment)) {
@@ -2963,7 +2967,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->Audit_team != $internalAudit->Audit_team || !empty($request->Audit_team_comment)) {
@@ -2985,7 +2989,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->Auditee != $internalAudit->Auditee || !empty($request->Auditee_comment)) {
@@ -3007,7 +3011,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->Auditor_Details != $internalAudit->Auditor_Details || !empty($request->Auditor_Details_comment)) {
@@ -3029,7 +3033,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->Comments != $internalAudit->Comments || !empty($request->Comments_comment)) {
@@ -3051,7 +3055,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->Audit_Comments1 != $internalAudit->Audit_Comments1 || !empty($request->Audit_Comments1_comment)) {
@@ -3073,7 +3077,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->Remarks != $internalAudit->Remarks || !empty($request->Remarks_comment)) {
@@ -3095,7 +3099,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->Reference_Recores1 != $internalAudit->Reference_Recores1 || !empty($request->Reference_Recores1_comment)) {
@@ -3117,7 +3121,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->Reference_Recores2 != $internalAudit->Reference_Recores2 || !empty($request->Reference_Recores2_comment)) {
@@ -3139,7 +3143,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->Audit_Comments2 != $internalAudit->Audit_Comments2 || !empty($request->Audit_Comments2_comment)) {
@@ -3161,8 +3165,8 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
+
+
             $history->save();
         }
         if ($lastDocument->inv_attachment != $internalAudit->inv_attachment || !empty($request->inv_attachment_comment)) {
@@ -3184,8 +3188,8 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
+
+
             $history->save();
         }
         if ($lastDocument->file_attachment != $internalAudit->file_attachment || !empty($request->file_attachment_comment)) {
@@ -3207,8 +3211,8 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
+
+
             $history->save();
         }
         if ($lastDocument->Audit_file != $internalAudit->Audit_file || !empty($request->Audit_file_comment)) {
@@ -3230,8 +3234,8 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
+
+
             $history->save();
         }
         if ($lastDocument->report_file != $internalAudit->report_file || !empty($request->report_file_comment)) {
@@ -3253,8 +3257,8 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
+
+
             $history->save();
         }
         if ($lastDocument->myfile != $internalAudit->myfile || !empty($request->myfile_comment)) {
@@ -3276,11 +3280,11 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
+
+
             $history->save();
         }
-    
+
         if ($lastDocument->due_date != $internalAudit->due_date || !empty($request->due_date_comment)) {
 
             $history = new AuditTrialExternal();
@@ -3300,9 +3304,9 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
-         
+
+
+
             $history->save();
         }
         if ($lastDocument->audit_start_date != $internalAudit->audit_start_date || !empty($request->audit_start_date_comment)) {
@@ -3324,9 +3328,9 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
-         
+
+
+
             $history->save();
         }
         if ($lastDocument->audit_end_date != $internalAudit->audit_end_date || !empty($request->audit_end_date_comment)) {
@@ -3348,9 +3352,9 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
-         
+
+
+
             $history->save();
         }
 
@@ -3399,8 +3403,8 @@ $AuditorShow->save();
                 $changeControl->audit_details_summary_by = Auth::user()->name;
                 $changeControl->audit_details_summary_on = Carbon::now()->format('d-M-Y');
                 $changeControl->audit_details_summary_on_comment = $request->comment;
-                      
-                
+
+
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
                         $history->activity_type = 'Audit Details Summary By,Audit Details Summary On';
@@ -3474,7 +3478,7 @@ $AuditorShow->save();
                     ]);
 
                     return redirect()->back();
-                    
+
                 }
                  else {
                     Session::flash('swal', [
@@ -3485,11 +3489,22 @@ $AuditorShow->save();
                 }
                 $changeControl->stage = "3";
                 $changeControl->status = "CFT Review";
+
+
+
+                 $stage = new ExternalAuditCFTResponse();
+                    $stage->external_audit_id = $id;
+                    $stage->cft_user_id = Auth::user()->id;
+                    $stage->status = "CFT Required";
+                    // $stage->cft_stage = ;
+                    $stage->comment = $request->comment;
+                    $stage->is_required = 1;
+                    $stage->save();
                 $changeControl->summary_and_response_com_by = Auth::user()->name;
                 $changeControl->summary_and_response_com_on = Carbon::now()->format('d-M-Y');
                 $changeControl->summary_and_response_com_on_comment = $request->comment;
-                   
-                
+
+
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
                         $history->activity_type = 'Summary and Response Complete By,Summary and Response Complete On';
@@ -3558,24 +3573,24 @@ $AuditorShow->save();
 
             if ($changeControl->stage == 3) {
 
-                // CFT review state update form_progress
-                if ($changeControl->form_progress !== 'cft')
-                {
-                    Session::flash('swal', [
-                        'type' => 'warning',
-                        'title' => 'Mandatory Fields!',
-                        'message' => 'CFT Tab is yet to be filled'
-                    ]);
+                // // CFT review state update form_progress
+                // if ($changeControl->form_progress !== 'cft')
+                // {
+                //     Session::flash('swal', [
+                //         'type' => 'warning',
+                //         'title' => 'Mandatory Fields!',
+                //         'message' => 'CFT Tab is yet to be filled'
+                //     ]);
 
-                    return redirect()->back();
-                }
-                 else {
-                    Session::flash('swal', [
-                        'type' => 'success',
-                        'title' => 'Success',
-                        'message' => 'Sent for QA/CQA Head Approval state'
-                    ]);
-                }
+                //     return redirect()->back();
+                // }
+                //  else {
+                //     Session::flash('swal', [
+                //         'type' => 'success',
+                //         'title' => 'Success',
+                //         'message' => 'Sent for QA/CQA Head Approval state'
+                //     ]);
+                // }
 
 
                 $IsCFTRequired = ExternalAuditCFTResponse::where(['is_required' => 1, 'external_audit_id' => $id])->latest()->first();
@@ -4142,7 +4157,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 }
                         $history->save();
                     }
-                    
+
                     if($index == 19 && $cftUsers->$column == Auth::user()->name){
                         $updateCFT->CorporateQualityAssurance_by = Auth::user()->name;
                         $updateCFT->CorporateQualityAssurance_on = Carbon::now()->format('Y-m-d');
@@ -4250,9 +4265,9 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 //         'message' => 'Sent for QA/CQA initial review state'
                 //     ]);
                 // }
-                
+
                 if (!$IsCFTRequired || $checkCFTCount) {
-                    
+
 
                     $changeControl->stage = "4";
                     $changeControl->status = "QA/CQA Head Approval";
@@ -4306,15 +4321,15 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 toastr()->success('Document Sent');
                 return back();
             }
-            
+
             // if ($changeControl->stage == 3) {
             //     $changeControl->stage = "4";
             //     $changeControl->status = "QA/CQA Head Approval";
             //     $changeControl->cft_review_complete_by = Auth::user()->name;
             //     $changeControl->cft_review_complete_on = Carbon::now()->format('d-M-Y');
             //     $changeControl->cft_review_complete_comment = $request->comment;
-              
-                
+
+
             //           $history = new AuditTrialExternal();
             //             $history->ExternalAudit_id = $id;
             //             $history->activity_type = 'CFT Review Complete By,CFT Review Complete On';
@@ -4326,7 +4341,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             //             $history->user_name = Auth::user()->name;
             //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             //             $history->origin_state = $lastDocument->status;
-                       
+
             //             $history->change_to =   "QA/CQA Head Approval";
             //             $history->change_from = $lastDocument->status;
             //             $history->action_name = 'Update';
@@ -4348,7 +4363,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                     //             $email = Helpers::getInitiatorEmail($u->user_id);
                     //              if ($email !== null) {
-                              
+
                     //               Mail::send(
                     //                   'mail.view-mail',
                     //                    ['data' => $changeControl],
@@ -4358,7 +4373,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     //                 }
                     //               );
                     //             }
-                    //      } 
+                    //      }
                     //   }
             //     $changeControl->update();
             //     toastr()->success('Document Sent');
@@ -4370,8 +4385,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             //     $changeControl->audit_observation_submitted_by = Auth::user()->name;
             //     $changeControl->audit_observation_submitted_on = Carbon::now()->format('d-M-Y');
             //     $changeControl->audit_observation_submitted_on_comment = $request->comment;
-                  
-                
+
+
             //     $history = new AuditTrialExternal();
             //             $history->ExternalAudit_id = $id;
             //             $history->activity_type = 'Activity Log';
@@ -4387,7 +4402,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             //             $history->change_from = $lastDocument->status;
             //             $history->action_name = 'Update';
             //             $history->stage = 'CAPA Execution in Progress';
-                     
+
             //             $history->save();
             //     $changeControl->update();
             //     toastr()->success('Document Sent');
@@ -4420,9 +4435,9 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 // $changeControl->audit_response_completed_on = Carbon::now()->format('d-M-Y');
                 // $changeControl->response_feedback_verified_by = Auth::user()->name;
                 // $changeControl->response_feedback_verified_on = Carbon::now()->format('d-M-Y');
-                
+
                 $changeControl->approval_complete_on_comment = $request->comment;
-             
+
                 $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
                         $history->activity_type = 'Approval Complete By,Approval Complete On';
@@ -4488,7 +4503,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     // }
 
 
-                    
+
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -4514,8 +4529,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             //     $changeControl->audit_preparation_completed_by = Auth::user()->name;
             //     $changeControl->audit_preparation_completed_on = Carbon::now()->format('d-M-Y');
             //     $changeControl->audit_preparation_completed_on_comment = $request->comment;
-                   
-                
+
+
             //             $history = new AuditTrialExternal();
             //             $history->ExternalAudit_id = $id;
             //             $history->activity_type = 'Activity Log';
@@ -4531,7 +4546,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             //             $history->change_from = $lastDocument->status;
             //             $history->action_name = 'Update';
             //             $history->stage = 'QA Head Approval';
-                     
+
             //             $history->save();
 
             //     $changeControl->update();
@@ -4544,7 +4559,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $changeControl->more_info_req_by = Auth::user()->name;
                 $changeControl->more_info_req_on = Carbon::now()->format('d-M-Y');
                 $changeControl->more_info_req_on_comment = $request->comment;
-               
+
 
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
@@ -4560,7 +4575,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $history->change_to =   "Opened";
                         $history->change_from = $lastDocument->status;
                         $history->action_name ="Not Applicable";
-              
+
                         $history->stage = "Rejected";
                         // if (is_null($lastDocument->more_info_req_by) || $lastDocument->more_info_req_by === '') {
                         //     $history->previous = "";
@@ -4579,7 +4594,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                     //             $email = Helpers::getInitiatorEmail($u->user_id);
                     //              if ($email !== null) {
-                              
+
                     //               Mail::send(
                     //                   'mail.view-mail',
                     //                    ['data' => $changeControl],
@@ -4589,7 +4604,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     //                 }
                     //               );
                     //             }
-                    //      } 
+                    //      }
                     //   }
 
                     // $history = new AuditeeHistory();
@@ -4600,7 +4615,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     // $history->stage_id = $changeControl->stage;
                     // $history->status = $changeControl->status;
                     // $history->save();
-                   
+
                 $changeControl->update();
                 $history = new AuditeeHistory();
                 $history->type = "External Audit";
@@ -4619,7 +4634,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $changeControl->more_info_req_crc_by = Auth::user()->name;
                 $changeControl->more_info_req_crc_on = Carbon::now()->format('d-M-Y');
                 $changeControl->more_info_req_crc_on_comment = $request->comment;
-               
+
                 $history = new AuditTrialExternal();
                 $history->ExternalAudit_id = $id;
                 $history->activity_type = 'Not Applicable';
@@ -4634,7 +4649,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $history->change_to =   "Summary and Response";
                 $history->change_from = $lastDocument->status;
                 $history->action_name ="Not Applicable";
-      
+
                 $history->stage = "Summary and Response";
                 // if (is_null($lastDocument->more_info_req_crc_by) || $lastDocument->more_info_req_crc_by === '') {
                 //     $history->previous = "";
@@ -4665,8 +4680,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $changeControl->status = "Opened";
                 $changeControl->send_to_opened_by = Auth::user()->name;
                 $changeControl->send_to_opened_on = Carbon::now()->format('d-M-Y');
-                $changeControl->send_to_opened_comment = $request->comment;   
-               
+                $changeControl->send_to_opened_comment = $request->comment;
+
                 $history = new AuditTrialExternal();
                 $history->ExternalAudit_id = $id;
                 $history->activity_type = 'Send to Opened By, Send to Opened On';
@@ -4681,7 +4696,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $history->change_to =   "Opened";
                 $history->change_from = $lastDocument->status;
                 $history->action_name = 'Update';
-      
+
                 $history->stage = "Opened";
                 if (is_null($lastDocument->send_to_opened_by) || $lastDocument->send_to_opened_by === '') {
                     $history->previous = "";
@@ -4695,7 +4710,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     $history->action_name = 'Update';
                 }
                 $history->save();
-        
+
                 $history = new AuditeeHistory();
                 $history->type = "External Audit";
                 $history->doc_id = $id;
@@ -4708,13 +4723,13 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 toastr()->success('Document Sent');
                 return back();
             }
-            
+
         } else {
             toastr()->error('E-signature Not match');
             return back();
         }
     }
-    
+
     public function UpdateStateChange(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
@@ -4728,8 +4743,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $changeControl->cft_review_not_req_by = Auth::user()->name;
                 $changeControl->cft_review_not_req_on = Carbon::now()->format('d-M-Y');
                 $changeControl->cft_review_not_req_on_comment = $request->comment;
-                   
-                
+
+
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
                         $history->activity_type = 'CFT Review Not Required By, CFT Review Not Required On';
@@ -4762,8 +4777,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 toastr()->success('Document Sent');
                 return back();
             }
-          
-            
+
+
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -5014,7 +5029,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $currentDate = Carbon::now();
             $formattedDate = $currentDate->addDays(30);
-            $due_date = $formattedDate->format('d-M-Y');        
+            $due_date = $formattedDate->format('d-M-Y');
             return view('frontend.action-item.action-item', compact('record','parentRecord', 'due_date', 'parent_id', 'parent_type'));
         }
         if ($request->child_type == "Observations")
@@ -5027,7 +5042,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
         $due_date = $formattedDate->format('d-M-Y');
         return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
 
-    
-   
-    
+
+
+
 }}

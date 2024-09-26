@@ -359,7 +359,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="hod">Revision Purpose</label>
                                     <select name="revision_purpose" id="" >
@@ -373,7 +373,49 @@
 
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
+
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="revision_purpose">Revision Purpose</label>
+        <select name="revision_purpose" id="revision_purpose" onchange="toggleRemarkInput()">
+            <option value="">----Select---</option>
+            <option value="New" {{ isset($jobTraining) && $jobTraining->revision_purpose == 'New' ? 'selected' : '' }}>New</option>
+            <option value="Old" {{ isset($jobTraining) && $jobTraining->revision_purpose == 'Old' ? 'selected' : '' }}>Old</option>
+        </select>
+    </div>
+</div>
+
+<!-- Remark Input Field -->
+<div class="col-lg-6" id="remark_container" style="display: {{ isset($jobTraining) && $jobTraining->revision_purpose == 'Old' ? 'block' : 'none' }};">
+    <div class="group-input">
+        <label for="remark">Remark</label>
+        <textarea name="remark" id="remark" rows="4" placeholder="Enter your remark here...">{{ isset($jobTraining) ? $jobTraining->remark : '' }}</textarea>
+    </div>
+</div>
+<script>
+    // Function to toggle the remark input based on selection
+    function toggleRemarkInput() {
+        const revisionPurposeSelect = document.getElementById('revision_purpose');
+        const remarkContainer = document.getElementById('remark_container');
+
+        // Show the remark input if "Old" is selected, otherwise hide it
+        if (revisionPurposeSelect.value === 'Old') {
+            remarkContainer.style.display = 'block';
+        } else {
+            remarkContainer.style.display = 'none';
+            // Clear the remark input when hiding (optional)
+            document.getElementById('remark').value = '';
+        }
+    }
+
+    // Call the function on page load to set the initial state
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleRemarkInput(); // Call the function to initialize display based on current selection
+    });
+</script>
+
+
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -516,14 +558,14 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="employee_id">Job Description Number</label>
-                                    <input type="text" name="job_description_no" value="{{ old('job_description_no', $jobTraining->job_description_no) }}" @if($jobTraining->stage != 2) disabled @endif>
+                                    <input type="text" name="job_description_no" value="{{ old('job_description_no', $jobTraining->job_description_no) }}" @if($jobTraining->stage != 3) disabled @endif>
                                 </div>
                             </div>
               
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="end_date">Effective Date </label>
-                                    <input id="end_date" type="date" value="{{ old('effective_date', $jobTraining->effective_date) }}" name="effective_date" @if($jobTraining->stage != 2) disabled @endif>
+                                    <input id="end_date" type="date" value="{{ old('effective_date', $jobTraining->effective_date) }}" name="effective_date" >
                                 </div>
                             </div>
 
@@ -648,20 +690,74 @@
                                     <input type="text" name="experience_if_any" id="" value="{{ $jobTraining->experience_if_any }}" readonly>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="For Revision">Reason For Revision </label>
                                     <input type="text" name="reason_for_revision" value="{{ old('reason_for_revision', $jobTraining->reason_for_revision) }}" @if($jobTraining->stage != 2) disabled @endif>
                                 </div>
-                            </div>
+                            </div> --}}
+
+                            <div class="col-lg-6">
+    <div class="group-input">
+        <label for="jd_type">Job Description Status</label>
+        <select id="jd_type" name="jd_type" required>
+            <option value="">Select...</option>
+            <option value="new" {{ old('jd_type', $jobTraining->jd_type) === 'new' ? 'selected' : '' }}>New</option>
+            <option value="old" {{ old('jd_type', $jobTraining->jd_type) === 'old' ? 'selected' : '' }}>Old</option>
+        </select>
+    </div>
+</div>
+
+<div class="col-lg-6" id="revision_reason_div" style="{{ $jobTraining->jd_type === 'old' ? 'display: block;' : 'display: none;' }}">
+    <div class="group-input">
+        <label for="reason_for_revision">Reason for Revision</label>
+        <input type="text" name="reason_for_revision" id="reason_for_revision" value="{{ old('reason_for_revision', $jobTraining->reason_for_revision) }}">
+    </div>
+</div>
+
+<script>
+    // Initialize visibility of the revision reason field based on the current status
+    document.addEventListener('DOMContentLoaded', function() {
+        var statusSelect = document.getElementById('jd_type');
+        var selectedValue = statusSelect.value;
+
+        // Show or hide the reason for revision field based on selection
+        if (selectedValue === 'old') {
+            document.getElementById('revision_reason_div').style.display = 'block';
+        } else {
+            document.getElementById('revision_reason_div').style.display = 'none';
+        }
+    });
+
+    document.getElementById('jd_type').addEventListener('change', function() {
+        var selectedValue = this.value;
+
+        // Show or hide the reason for revision field based on selection
+        if (selectedValue === 'old') {
+            document.getElementById('revision_reason_div').style.display = 'block';
+        } else {
+            document.getElementById('revision_reason_div').style.display = 'none';
+            document.getElementById('reason_for_revision').value = ''; // Clear input when hiding
+        }
+    });
+</script>
+
+
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="For Revision">Delegate</label>
-                                    <input type="text" name="delegate" value="{{$jobTraining->delegate}}">
+                                    <select name="delegate" id="hod">
+                                            <option value="">-- Select Delegate --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}"
+                                                    {{ $user->id == old('delegate', $jobTraining->delegate) ? 'selected' : '' }}>
+                                                    {{ $user->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                 </div>
                             </div>
-
 
                             
                             {{-- <div class="col-lg-6">
@@ -841,6 +937,11 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-12">
+                                <div class="button-block">
+                                        <button type="button" class="printButton" onclick="printCertificate()">
+                                            <i class="fas fa-print"></i> Print
+                                        </button>
+                                    </div>
                                     <div class="certificate-container">
                                         <div class="certificate-title">TRAINING CERTIFICATE</div>
 
@@ -855,25 +956,150 @@
                                         </div>
 
                                         <div class="date-container">
-                                            <div>Sign/Date</div>
-                                            <div class="signature">Head Department</div>
+                                        <div class="signature-block">
+                                            <strong>Sign/Date:</strong>_________
+                                            <div>HR Department</div>
                                         </div>
 
-                                        <div class="signature-container">
-                                            <div>Sign/Date</div>
-                                            <div class="signature">Head QA/CQA</div>
+                                        <div>
+                                                <strong>Sign/Date:</strong>_________
+                                                <div class="signature">Head QA/CQA<div></div></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div style="margin-top: 40px;" class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
-                                    <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                <button type="submit" class=" btn btn saveButton">Save</button>
+                                <button type="button" id="ChangeNextButton" class=" btn btn nextButton">Next</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 @endif
+
+                <style>
+       .certificate-container {
+    width: 685px;
+    height: 500px;
+    border: 4px solid #3d6186;
+    padding: 18px;
+    background-color: white;
+    position: relative;
+    margin: auto;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+}
+.certificate-title {
+    font-size: 30px;
+    font-weight: bold;
+    color: #677078;
+    display: flex;
+    justify-content: center;
+}
+.certificate-subtitle {
+    font-size: 18px;
+    color: #555;
+}
+.certificate-description {
+    margin-top: 30px;
+    font-size: 18px;
+    color: #333;
+}
+.date-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+    font-size: 18px;
+}
+.signature-container {
+    position: absolute;
+    bottom: 40px;
+    right: 50px;
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+}
+
+@media print {
+    .button-block {
+        display: none !important;
+    }
+
+    body * {
+        visibility: hidden;
+    }
+
+    #CCForm6, #CCForm6 * {
+        visibility: visible;
+    }
+
+    #CCForm6 {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+}
+
+.button-block {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 50px;
+}
+
+.printButton {
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    float: right;
+}
+
+.printButton:hover {
+    background-color: #1a252f;
+}
+
+.printButton i {
+    margin-right: 8px;
+}
+
+@media print {
+    .button-block {
+        display: none !important;
+    }
+
+    body * {
+        visibility: hidden;
+    }
+
+    #CCForm6, #CCForm6 * {
+        visibility: visible;
+    }
+
+    #CCForm6 {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+}
+
+    </style>
+      <script>
+        function printCertificate() {
+            var buttons = document.querySelectorAll(".button-block");
+            buttons.forEach(button => button.style.display = 'none');
+
+            window.print();
+
+            buttons.forEach(button => button.style.display = 'flex');
+        }
+    </script>
+
 
                 <div id="CCForm7" class="inner-block cctabcontent">
                     <div class="inner-block-content">
@@ -1096,55 +1322,6 @@
     });
 </script>
 
-<style>
- 
-        .certificate-container {
-            width: 1000px;
-            height: 500px;
-            border: 4px solid #00000061;
-            padding: 18px;
-            background-color: white;
-            position: relative;
-            margin: auto;
-        }
-        .certificate-title {
-            font-size: 30px;
-            font-weight: bold;
-            color: #00aaff;
-            display: flex;
-            justify-content: center;
-        }
-        .certificate-subtitle {
-            font-size: 18px;
-            color: #555;
-        }
- 
-        .certificate-description {
-            margin-top: 30px;
-            font-size: 18px;
-            color: #333;
-        }
-        .date-container {
-            position: absolute;
-            bottom: 40px;
-            left: 50px;
-            font-size: 18px;
-            color: #333;
-        }
-        .signature-container {
-            position: absolute;
-            bottom: 40px;
-            right: 50px;
-            text-align: center;
-            font-size: 18px;
-            color: #333;
-        }
-        .signature {
-            margin-top: 10px;
-            border-top: 1px solid #333;
-            width: 200px;
-        }
-</style>
 
     <div class="modal fade" id="signature-modal">
         <div class="modal-dialog modal-dialog-centered">

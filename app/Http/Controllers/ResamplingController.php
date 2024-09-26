@@ -167,6 +167,9 @@ foreach ($pre as $processName => $modelClass) {
             $openState->file_attach = json_encode($files);
         }
 
+
+
+
         if (!empty($request->qa_head)) {
             $files = [];
             if ($request->hasfile('qa_head')) {
@@ -849,15 +852,44 @@ foreach ($pre as $processName => $modelClass) {
 
         // $openState->status = 'Opened';
         // $openState->stage = 1;
-        if ($request->hasFile('file_attach')) {
-            $files = [];
-            foreach ($request->file('file_attach') as $file) {
-                $name = $request->name . '_file_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
+        // if ($request->hasFile('file_attach')) {
+        //     $files = [];
+        //     foreach ($request->file('file_attach') as $file) {
+        //         $name = $request->name . '_file_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //         $file->move(public_path('upload/'), $name);
+        //         $files[] = $name;
+        //     }
+        //     $openState->file_attach = json_encode($files);
+        // }
+
+
+
+        if (!empty($request->file_attach) || !empty($request->deleted_file_attach)) {
+            $existingFiles = json_decode($openState->file_attach, true) ?? [];
+        
+            // Handle deleted files
+            if (!empty($request->deleted_file_attach)) {
+                $filesToDelete = explode(',', $request->deleted_file_attach);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
             }
-            $openState->file_attach = json_encode($files);
+        
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('file_attach')) {
+                foreach ($request->file('file_attach') as $file) {
+                    $name = $request->name . 'file_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+        
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $openState->file_attach = json_encode($allFiles);
         }
+
 
             //  $files = [];
             // if ($request->hasfile('file_attach')) {
@@ -872,48 +904,114 @@ foreach ($pre as $processName => $modelClass) {
             // $openState->file_attach = json_encode($files);
         
 
-        if (!empty($request->Support_doc)) {
-            $files = [];
-            if ($request->hasfile('Support_doc')) {
-                foreach ($request->file('Support_doc') as $file) {
-                    if ($file instanceof \Illuminate\Http\UploadedFile) {  
-                    $name = $request->name . 'Support_doc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            }
-            $openState->Support_doc = json_encode($files);
-        }
-        if (!empty($request->final_attach)) {
-            $files = [];
-            if ($request->hasfile('final_attach')) {
-                foreach ($request->file('final_attach') as $file) {
-                    if ($file instanceof \Illuminate\Http\UploadedFile) {  
-                    $name = $request->name . 'final_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            }
-            $openState->final_attach = json_encode($files);
-        }
+        // if (!empty($request->Support_doc)) {
+        //     $files = [];
+        //     if ($request->hasfile('Support_doc')) {
+        //         foreach ($request->file('Support_doc') as $file) {
+        //             if ($file instanceof \Illuminate\Http\UploadedFile) {  
+        //             $name = $request->name . 'Support_doc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     }
+        //     $openState->Support_doc = json_encode($files);
+        // }
 
 
-        if (!empty($request->qa_head)) {
-            $files = [];
-            if ($request->hasfile('qa_head')) {
-                foreach ($request->file('qa_head') as $file) {
-                    if ($file instanceof \Illuminate\Http\UploadedFile) {  
-                    $name = $request->name . 'qa_head' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            }
-            $openState->qa_head = json_encode($files);
-        }
+        if (!empty($request->Support_doc) || !empty($request->deleted_Support_doc)) {
+            $existingFiles = json_decode($openState->Support_doc, true) ?? [];
         
+            // Handle deleted files
+            if (!empty($request->deleted_Support_doc)) {
+                $filesToDelete = explode(',', $request->deleted_Support_doc);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+        
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('Support_doc')) {
+                foreach ($request->file('Support_doc') as $file) {
+                    $name = $request->name . 'Support_doc' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+        
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $openState->Support_doc = json_encode($allFiles);
+        }
+
+        // if (!empty($request->final_attach)) {
+        //     $files = [];
+        //     if ($request->hasfile('final_attach')) {
+        //         foreach ($request->file('final_attach') as $file) {
+        //             if ($file instanceof \Illuminate\Http\UploadedFile) {  
+        //             $name = $request->name . 'final_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     }
+        //     $openState->final_attach = json_encode($files);
+        // }
+
+        if (!empty($request->final_attach) || !empty($request->deleted_final_attach)) {
+            $existingFiles = json_decode($openState->final_attach, true) ?? [];
+        
+            // Handle deleted files
+            if (!empty($request->deleted_final_attach)) {
+                $filesToDelete = explode(',', $request->deleted_final_attach);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+        
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('final_attach')) {
+                foreach ($request->file('final_attach') as $file) {
+                    $name = $request->name . 'final_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+        
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $openState->final_attach = json_encode($allFiles);
+        }
+       
+        
+
+        if (!empty($request->qa_head) || !empty($request->deleted_qa_head)) {
+            $existingFiles = json_decode($openState->qa_head, true) ?? [];
+        
+            // Handle deleted files
+            if (!empty($request->deleted_qa_head)) {
+                $filesToDelete = explode(',', $request->deleted_qa_head);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+        
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('qa_head')) {
+                foreach ($request->file('qa_head') as $file) {
+                    $name = $request->name . 'qa_head' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+        
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $openState->qa_head = json_encode($allFiles);
+        }
         $openState->update();
 
 
@@ -1630,7 +1728,7 @@ foreach ($pre as $processName => $modelClass) {
             if ($changeControl->stage == 3) {
 
 
-                if (empty($changeControl->comments))
+                if (empty($changeControl->action_taken))
                 {
                     Session::flash('swal', [
                         'type' => 'warning',

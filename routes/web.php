@@ -580,6 +580,8 @@ Route::get('trainer_qualification_view/{id}', [TrainerController::class, 'show']
 Route::post('/tms/employee/sendstage/{id}', [EmployeeController::class, 'sendStage']);
 Route::post('/tms/trainer/sendstage/{id}', [TrainerController::class, 'sendStage']);
 Route::post('/tms/trainer/rejectStage/{id}', [TrainerController::class, 'rejectStage']);
+Route::get('/getEmployeeDetails/{id}', [TrainerController::class, 'getEmployeeDetails']);
+
 //new one
 Route::post('tms/induction/sendstage/{id}', [InductionTrainingController::class, 'sendStage']);
 Route::post('tms/induction/cancelstage/{id}', [InductionTrainingController::class, 'cancelStage']);

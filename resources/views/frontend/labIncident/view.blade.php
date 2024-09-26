@@ -1529,15 +1529,13 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Action Taken">Action Taken @if($data->stage==4)<span class="text-danger">*</span>   
-                                            @endif</label>
+                                        <label for="Action Taken">Action Taken</label>
                                         <textarea name="Action_Taken" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{ $data->Action_Taken }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Root Cause">Root Cause @if($data->stage==4)<span class="text-danger">*</span>   
-                                            @endif</label>
+                                        <label for="Root Cause">Root Cause</label>
                                         <textarea name="Root_Cause" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{ $data->Root_Cause }}</textarea>
                                     </div>
                                 </div>
@@ -2195,8 +2193,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="closure_incident">Closure of Incident @if($data->stage==7)<span class="text-danger">*</span>   
-                                        @endif</label>
+                                    <label for="closure_incident">Closure of Incident</label>
                                     <input type="text" name="closure_incident_c" {{ $data->stage <= 6 || $data->stage >= 8 ? "readonly" : "" }}  value="{{$labnew->closure_incident_c}}">
                                 </div>
 
@@ -2229,7 +2226,8 @@
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for=" qa head remark"><b>QA Head Comment</b></label>
+                                <label for=" qa head remark"><b>QA Head Comment</b> @if($data->stage==7)<span class="text-danger">*</span>   
+                                @endif</label>
                                <textarea name="qa_hear_remark_c" {{ $data->stage <= 6 || $data->stage >= 8 ? "readonly" : "" }}>{{$labnew->qa_hear_remark_c}}</textarea>
                             </div>
                         </div>
