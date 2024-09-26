@@ -564,7 +564,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Summary">Effectiveness Summary</label>
-                                        <textarea type="text" name="effect_summary"  {{ $data->stage == 0 || $data->stage == 1  || $data->stage == 2 || $data->stage == 4  || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 || $data->stage == 10 ? 'disabled' : ''}} > {{ $data->effect_summary }}</textarea>
+                                        <textarea name="effect_summary" value="{{ $data->effect_summary }}">{{ $data->effect_summary }}</textarea>
                                     </div>
                                 </div>
                                 {{-- <div class="col-12 sub-head">
@@ -812,7 +812,7 @@
                                
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Acknowledge Attachment">QA/CQA Approval  Attachment</label>
+                                        <label for="Acknowledge Attachment">QA/CQA Approval Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div disabled class="file-attachment-list" id="qa_cqa_approval_Attachment">

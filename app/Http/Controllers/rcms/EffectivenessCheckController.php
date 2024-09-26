@@ -707,6 +707,7 @@ class EffectivenessCheckController extends Controller
 
     public function update(Request $request, $id)
     {
+       // dd($request->effect_summary);
         $lastopenState = EffectivenessCheck::find($id);
         $openState =  EffectivenessCheck::find($id);
         $openState->assign_to = $request->assign_to;
