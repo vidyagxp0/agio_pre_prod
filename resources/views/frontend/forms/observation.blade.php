@@ -47,9 +47,9 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Observation</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">CAPA Plan</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Impact Analysis</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Response & CAPA</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Summary</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Response Verification</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
             </div>
 
@@ -97,7 +97,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="assign_to1">Assigned To</label>
+                                        <label for="assign_to1">Auditee Department Head</label>
                                         <select name="assign_to">
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $data)
@@ -106,30 +106,83 @@
                                         </select>
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="date_due">Date Due</label>
-                                        <input  type="hidden" value="{{ $due_date }}" name="due_date">
-                                        <input disabled type="text" value="{{ Helpers::getdateFormat($due_date) }}" >
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date ">
-                                        <label for="date_due">Due Date<span class="text-danger"></span></label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.
-                                        </small>
-                                        </div>
-                                        <div class="calenderauditee">
-                                            <input type="text" name="due_date" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date"  class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
-                                        </div>
-                                    </div>
-                                </div> --}}
+                                <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group"><b>Auditee Department Name</b></label>
+                                <select name="auditee_department" id="auditee_department">
+                                    <option value="" data-code="">-- Select --</option>
+                                    <option value="Corporate Quality Assurance" data-code="CQA" @if (old('auditee_department') == 'Corporate Quality Assurance') selected @endif>
+                                        Corporate Quality Assurance
+                                    </option>
+                                    <option value="Quality Assurance" data-code="QA" @if (old('auditee_department') == 'Quality Assurance') selected @endif>
+                                        Quality Assurance
+                                    </option>
+                                    <option value="Quality Control" data-code="QC" @if (old('auditee_department') == 'Quality Control') selected @endif>
+                                        Quality Control
+                                    </option>
+                                    <option value="Quality Control (Microbiology department)" data-code="QCMD" @if (old('auditee_department') == 'Quality Control (Microbiology department') selected @endif>
+                                        Quality Control (Microbiology department)
+                                    </option>
+                                    <option value="Production General" data-code="PG" @if (old('auditee_department') == 'Production General') selected @endif>
+                                        Production General
+                                    </option>
+                                    <option value="Production Liquid Orals" data-code="PLO" @if (old('auditee_department') == 'Production Liquid Orals') selected @endif>
+                                        Production Liquid Orals
+                                    </option>
+                                    <option value="Production Tablet and Powder" data-code="PTP" @if (old('auditee_department') == 'Production Tablet and Powder') selected @endif>
+                                        Production Tablet and Powder
+                                    </option>
+                                    <option value="Production External (Ointment, Gels, Creams and Liquid)" data-code="PE" @if (old('auditee_department') == 'Production External (Ointment, Gels, Creams and Liquid') selected @endif>
+                                        Production External (Ointment, Gels, Creams and Liquid)
+                                    </option>
+                                    <option value="Production Capsules" data-code="PC" @if (old('auditee_department') == 'Production Capsules') selected @endif>
+                                        Production Capsules
+                                    </option>
+                                    <option value="Production Injectable" data-code="PI" @if (old('auditee_department') == 'Production Injectable') selected @endif>
+                                        Production Injectable
+                                    </option>
+                                    <option value="Engineering" data-code="ENG" @if (old('auditee_department') == 'Engineering') selected @endif>
+                                        Engineering
+                                    </option>
+                                    <option value="Human Resource" data-code="HR" @if (old('auditee_department') == 'Human Resource') selected @endif>
+                                        Human Resource
+                                    </option>
+                                    <option value="Store" data-code="ST" @if (old('auditee_department') == 'Store') selected @endif>
+                                        Store
+                                    </option>
+                                    <option value="Electronic Data Processing" data-code="EDP" @if (old('auditee_department') == 'Electronic Data Processing') selected @endif>
+                                        Electronic Data Processing
+                                    </option>
+                                    <option value="Formulation Development" data-code="FD" @if (old('auditee_department') == 'Formulation Development') selected @endif>
+                                        Formulation Development
+                                    </option>
+                                    <option value="Analytical research and Development Laboratory" data-code="ARD" @if (old('auditee_department') == 'Analytical research and Development Laboratory') selected @endif>
+                                        Analytical research and Development Laboratory
+                                    </option>
+                                    <option value="Packaging Development" data-code="PD" @if (old('auditee_department') == 'Packaging Development') selected @endif>
+                                        Packaging Development
+                                    </option>
+                                    <option value="Purchase Department" data-code="PD" @if (old('auditee_department') == 'Purchase Department') selected @endif>
+                                        Purchase Department
+                                    </option>
+                                    <option value="Document Cell" data-code="DC" @if (old('auditee_department') == 'Document Cell') selected @endif>
+                                        Document Cell
+                                    </option>
+                                    <option value="Regulatory Affairs" data-code="RA" @if (old('auditee_department') == 'Regulatory Affairs') selected @endif>
+                                        Regulatory Affairs
+                                    </option>
+                                    <option value="Pharmacovigilance" data-code="PV" @if (old('auditee_department') == 'Pharmacovigilance') selected @endif>
+                                        Pharmacovigilance
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                        <label for="due-date">Observation Due Date <span class="text-danger"></span></label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                                reason in "Due Date Extension Justification" data field.</small>
+                                        </div>  
                                         <div class="calenderauditee">
                                             <!-- Display the formatted date in a readonly input -->
                                             <input type="text" name="due_date" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
@@ -346,7 +399,7 @@
                                 </div> --}}
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
-                                        <label for="capa_date_due">Recomendation Due Date for CAPA</label>
+                                        <label for="capa_date_due">Response Due Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" name="recomendation_capa_date_due"
                                                 id="recomendation_capa_date_due" readonly placeholder="DD-MMM-YYYY" />
@@ -356,51 +409,20 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date ">
-                                        <label for="capa_date_due">Audit Response Date</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" name="audit_response_date"
-                                                id="audit_response_date" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                class="hide-input"
-                                                oninput="handleDateInput(this, 'audit_response_date')" />
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="non_compliance">Non Compliance</label>
+                                        <label for="non_compliance">Observation (+)</label>
                                         <textarea name="non_compliance"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="recommend_action">Recommended Action</label>
-                                        <textarea name="recommend_action"></textarea>
-                                    </div>
-                                </div>
+                                
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="related_observations">`</label>
                                         <input type="file" name="related_observations" />
                                     </div>
                                 </div> --}}
-                            </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="related_observations">Related Obsevations</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small></div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="related_observations"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="related_observations[]"
-                                                oninput="addMultipleFiles(this, 'related_observations')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -414,7 +436,7 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="sub-head">CAPA Plan Details</div>
+                                    <div class="sub-head">Response and CAPA Plan Details</div>
                                 </div>
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
@@ -422,47 +444,24 @@
                                         <input type="date" name="date_Response_due2" />
                                     </div>
                                 </div> --}}
-                                <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date ">
-                                        <label for="date_Response_due2">Date Response Due</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" name="date_Response_due2" id="date_Response_due"
-                                                readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                id="date_Response_due_checkdate" class="hide-input"
-                                                oninput="handleDateInput(this, 'date_Response_due');checkDate('date_Response_due_checkdate','date_due_checkdate')" />
+                                <div class="col-md-12 new-date-data-field">
+                                            <div class="group-input input-date ">
+                                                <label for="date_Response_due1">Response Details (+) </label>
+                                                <textarea name="response_detail" id=""></textarea>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date ">
-                                        <label for="date_due"> Due Date</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" name="capa_date_due" id="date_due" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                id="date_due_checkdate" class="hide-input"
-                                                oninput="handleDateInput(this, 'date_due');checkDate('date_Response_due_checkdate','date_due_checkdate')" />
+                                        <div class="col-lg-12 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="date_due">Corrective Actions (+)</label>
+                                                <textarea name="corrective_action" id=""></textarea>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="date_due">Date Due</label>
-                                        <input type="date" name="capa_date_due">
-                                    </div>
-                                </div> --}}
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="assign_to2">Assigned To</label>
-                                        <select name="assign_to2">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
+                                        <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="assign_to2">Preventive Action (+)</label>
+                                                    <textarea name="preventive_action"></textarea>
+                                            </div>
+                                        </div>
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="cro_vendor">CRO/Vendor</label>
@@ -559,6 +558,25 @@
                                         <textarea name="comments"></textarea>
                                     </div>
                                 </div>
+
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Attachments">Response and CAPA Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        {{-- <input type="file" id="myfile" name="Attachments"> --}}
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="response_capa_attach"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="response_capa_attach" name="response_capa_attach[]"
+                                                    oninput="addMultipleFiles(this, 'response_capa_attach')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -569,87 +587,7 @@
                         </div>
                     </div>
 
-                    <div id="CCForm3" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="sub-head">Impact Analysis</div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="impact">Impact</label>
-                                        <select name="impact">
-                                            <option value="">-- Select --</option>
-                                            <option value="1">High</option>
-                                            <option value="2">Medium</option>
-                                            <option value="3">Low</option>
-                                            <option value="4">None</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="impact_analysis">Impact Analysis</label>
-                                        <textarea name="impact_analysis"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="sub-head">Risk Analysis</div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Severity Rate">Severity Rate</label>
-                                        <select name="severity_rate" id="analysisR"
-                                            onchange='calculateRiskAnalysis(this)'>
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="1">Negligible</option>
-                                            <option value="2">Moderate</option>
-                                            <option value="3">Major</option>
-                                            <option value="4">Fatal</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Occurrence">Occurrence</label>
-                                        <select name="occurrence" id="analysisP" onchange='calculateRiskAnalysis(this)'>
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="5">Extremely Unlikely</option>
-                                            <option value="4">Rare</option>
-                                            <option value="3">Unlikely</option>
-                                            <option value="2">Likely</option>
-                                            <option value="1">Very Likely</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Detection">Detection</label>
-                                        <select name="detection" id="analysisN" onchange='calculateRiskAnalysis(this)'>
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="5">Impossible</option>
-                                            <option value="4">Rare</option>
-                                            <option value="3">Unlikely</option>
-                                            <option value="2">Likely</option>
-                                            <option value="1">Very Likely</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="RPN">RPN</label>
-                                        <input type="text" name="analysisRPN" id="analysisRPN" readonly>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a class="text-white"> Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
+                
 
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -665,7 +603,7 @@
                                 </div> --}}
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="actual_start_date">Actual Start Date</label>
+                                        <label for="actual_start_date">Actual Action Start Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="actual_start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
@@ -678,7 +616,7 @@
                                 </div>
                                 <div class="col-lg-6  new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="actual_end_date">Actual End Date</lable>
+                                        <label for="actual_end_date">Actual Action End Date</lable>
                                             <div class="calenderauditee">
                                                 <input type="text" id="actual_end_date" placeholder="DD-MMM-YYYY" />
                                                 <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
@@ -699,38 +637,16 @@
                                 <div class="col-12">
                                     <div class="sub-head">Response Summary</div>
                                 </div>
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="date_response_due">Date Response Due</label>
-                                        <input type="date" name="date_response_due1">
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date ">
-                                        <label for="date_response_due">Date Response Due</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" name="date_response_due1" id="date_response_due1" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
-                                                oninput="handleDateInput(this, 'date_response_due1')" />
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="response_date">Date of Response</label>
-                                        <input type="date" name="response_date">
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="attach_files">Attached Files</label>
-                                        <input type="file" name="attach_files2">
-                                    </div>
-                                </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="attach_files">Attached Files</label>
+                                        <label for="response_summary">Response Summary</label>
+                                        <textarea name="response_summary"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="attach_files">Response Verification Attachements</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -743,19 +659,48 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="related_url">Related URL</label>
                                         <input type="url" name="related_url">
                                     </div>
                                 </div>
-                                <div class="col-12">
+                               
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white"> Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="CCForm3" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                            <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="impact">Response Verification Comment</label>
+                                                <textarea name="impact"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
                                     <div class="group-input">
-                                        <label for="response_summary">Response Summary</label>
-                                        <textarea name="response_summary"></textarea>
+                                        <label for="attach_files">Response Verification Attachements</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="impact_analysis"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="impact_analysis[]"
+                                                    oninput="addMultipleFiles(this, 'impact_analysis')" multiple>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                    </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
