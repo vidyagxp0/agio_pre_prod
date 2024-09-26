@@ -465,7 +465,7 @@
                                         <label for="Effectiveness check Attachments">QA/CQA Approval Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="C"></div>
+                                            <div class="file-attachment-list" id="qa_cqa_review_Attachment"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="qa_cqa_approval_Attachment[]"
