@@ -15,7 +15,7 @@
                 </div>
             </div>
 
-            <div class="col-12">
+            {{-- <div class="col-12">
                 <div class="group-input">
                     <label for="Reference Recores">Approval Attachment</label>
                     <small class="text-primary">
@@ -46,7 +46,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <div class="sub-head">
             Batch Disposition
@@ -116,7 +116,7 @@
             </div>
 
             <!-- Trend of Previous Batches -->
-            <div class="col-md-12 mb-4">
+            {{-- <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Trend of Previous Batches</label>
                     <textarea class="summernote" name="trend_of_previous_batches_bd" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
@@ -193,7 +193,7 @@
                                 </textarea>
                 </div>
 
-            </div>
+            </div> --}}
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justify for Delay in Activity</label>
