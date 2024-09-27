@@ -242,7 +242,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Assigned to">Assigned To   </label>
                                         <select name="assign_to">
@@ -252,7 +252,7 @@
                                         @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
@@ -342,22 +342,24 @@
                                         <select name="initiator_group" id="initiator_group">
                                             <option value="">-- Select --</option>
                                             <optio value="">Select Initiation Department</option>
-                                                <option value="CQA" >Corporate Quality Assurance</option>
-                                                <option value="QA" >Quality Assurance</option>
-                                                <option value="QC" >Quality Control</option>
-                                                <option value="QM" >Quality Control (Microbiology department)</option>
-                                                <option value="PG" >Production General</option>
-                                                <option value="PL" >Production Liquid Orals</option>
-                                                <option value="PT" >Production Tablet and Powder</option>
-                                                <option value="PE" >Production External (Ointment, Gels, Creams and Liquid)</option>
-                                                <option value="PC" >Production Capsules</option>
-                                                <option value="PI" >Production Injectable</option>
-                                                <option value="EN" >Engineering</option>
-                                                <option value="HR" >Human Resource</option>
-                                                <option value="ST" >Store</option>
-                                                <option value="IT" >Electronic Data Processing</option>
-                                                <option value="FD" >Formulation  Development</option>
-                                                <option value="AL" >Analytical research and Development Laboratory</option>
+                                                <option value="CQA">Corporate Quality Assurance</option>
+                                                <option value="QA">Quality Assurance</option>
+                                                <option value="QC">Quality Control</option>
+                                                <option value="QM">Quality Control (Microbiology department)</option>
+                                                <option value="PG">Production General</option>
+                                                <option value="PL">Production Liquid Orals</option>
+                                                <option value="PT">Production Tablet and Powder</option>
+                                                <option value="PE">Production External (Ointment, Gels, Creams and
+                                                    Liquid)</option>
+                                                <option value="PC">Production Capsules</option>
+                                                <option value="PI">Production Injectable</option>
+                                                <option value="EN">Engineering</option>
+                                                <option value="HR">Human Resource</option>
+                                                <option value="ST">Store</option>
+                                                <option value="IT">Electronic Data Processing</option>
+                                                <option value="FD">Formulation Development</option>
+                                                <option value="AL">Analytical research and Development Laboratory
+                                                </option>
                                                 <option value="PD">Packaging Development</option>
                                                 <option value="PU">Purchase Department</option>
                                                 <option value="DC">Document Cell</option>
@@ -512,7 +514,8 @@
                                         <label for="Due Date">Complaint Reported On</label>
 
                                         <div class="calenderauditee">
-                                            <input type="text" id="complaint_dat" name="complaint_reported_on_gi" placeholder="Select Due Date" value=""/>
+                                            <input type="text" id="complaint_dat" name="complaint_reported_on_gi"
+                                                placeholder="Select Due Date" value="" />
                                         </div>
                                         <script>
                                             $(document).ready(function() {
@@ -521,7 +524,7 @@
                                                     // Do not set a default date, let the user select it
                                                     onClose: function(dateText, inst) {
                                                         if (!dateText) {
-                                                            $(this).val('');  // Ensure input stays empty if no date is selected
+                                                            $(this).val(''); // Ensure input stays empty if no date is selected
                                                         }
                                                     }
                                                 });
@@ -618,13 +621,13 @@
                                                                         <input id="date_0_date_display" type="text"
                                                                             name="serial_number_gi[0][info_mfg_date]"
                                                                             placeholder="DD-MMM-YYYY" value=""
-                                                                            readonly onclick="document.getElementById('date_0_date_input').click();" />
+                                                                            readonly
+                                                                            onclick="document.getElementById('date_0_date_input').click();" />
                                                                         <!-- Hidden date input field for actual date handling -->
                                                                         <input type="date"
                                                                             name="serial_number_gi[0][info_mfg_date]"
                                                                             min="{{ today()->subDays(1000)->format('Y-m-d') }}"
-                                                                            {{-- max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --}}
-                                                                            value=""
+                                                                            {{-- max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --}} value=""
                                                                             id="date_0_date_input"
                                                                             class="hide-input show_date"
                                                                             style="position: absolute; top: 0; left: 0; opacity: 0;"
@@ -637,10 +640,12 @@
                                                             <div class="new-date-data-field">
                                                                 <div class="group-input input-date">
                                                                     <div class="calenderauditee">
-                                                                        <input id="date_0_expiry_date_display" type="text"
+                                                                        <input id="date_0_expiry_date_display"
+                                                                            type="text"
                                                                             name="serial_number_gi[0][info_expiry_date]"
                                                                             placeholder="DD-MMM-YYYY" value=""
-                                                                            readonly onclick="document.getElementById('date_0_expiry_date_input').click();" />
+                                                                            readonly
+                                                                            onclick="document.getElementById('date_0_expiry_date_input').click();" />
                                                                         <!-- Hidden date input field for actual date handling -->
                                                                         <input type="date"
                                                                             name="serial_number_gi[0][info_expiry_date]"
@@ -685,17 +690,40 @@
                                             function generateTableRow(serialNumber) {
                                                 var html =
                                                     '<tr>' +
-                                                    '<td><input disabled type="text" name="serial_number_gi[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_product_name]"></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_no]"></td>' +
+                                                    '<td><input disabled type="text" name="serial_number_gi[' + serialNumber +
+                                                    '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber +
+                                                    '][info_product_name]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber +
+                                                    '][info_batch_no]"></td>' +
                                                     // '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_mfg_date]" placeholder="DD-MMM-YYYY"></td>' +
                                                     // '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_expiry_date]" placeholder="DD-MMM-YYYY"></td>' +
-                                                    '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +  serialNumber + '_info_mfg_date" type="text" readonly name="serial_number_gi[' + serialNumber + '][info_mfg_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' +  serialNumber + '][info_mfg_date]" min="{{ today()->subDays(1000)->format('Y-m-d') }}" value="" id="date_' +  serialNumber +  '_info_mfg_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +  serialNumber + '_info_mfg_date\')" /> </div></div></div> </td>' +
-                                                    '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' + serialNumber + '_info_expiry_date" type="text" name="serial_number_gi[' + serialNumber + '][info_expiry_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' +  serialNumber + '][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="" id="date_' + serialNumber +  '_info_expiry_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' + serialNumber + '_info_expiry_date\')" /> </div></div></div> </td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_size]"></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_pack_size]"></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_dispatch_quantity]"></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_remarks]"></td>' +
+                                                    '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
+                                                    serialNumber + '_info_mfg_date" type="text" readonly name="serial_number_gi[' +
+                                                    serialNumber +
+                                                    '][info_mfg_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' +
+                                                    serialNumber +
+                                                    '][info_mfg_date]" min="{{ today()->subDays(1000)->format('Y-m-d') }}" value="" id="date_' +
+                                                    serialNumber +
+                                                    '_info_mfg_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
+                                                    serialNumber + '_info_mfg_date\')" /> </div></div></div> </td>' +
+                                                    '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
+                                                    serialNumber + '_info_expiry_date" type="text" name="serial_number_gi[' +
+                                                    serialNumber +
+                                                    '][info_expiry_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' +
+                                                    serialNumber +
+                                                    '][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="" id="date_' +
+                                                    serialNumber +
+                                                    '_info_expiry_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
+                                                    serialNumber + '_info_expiry_date\')" /> </div></div></div> </td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber +
+                                                    '][info_batch_size]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber +
+                                                    '][info_pack_size]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber +
+                                                    '][info_dispatch_quantity]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber +
+                                                    '][info_remarks]"></td>' +
                                                     '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                                                     '</tr>';
                                                 return html;
@@ -709,31 +737,33 @@
                                     });
                                 </script>
 
-                                    <script>
-                                        function handleDateInput(dateInput, textInputId) {
-                                            const selectedDate = new Date(dateInput.value);
-                                            const today = new Date();
+                                <script>
+                                    function handleDateInput(dateInput, textInputId) {
+                                        const selectedDate = new Date(dateInput.value);
+                                        const today = new Date();
 
-                                            // Remove the time portion of today's date for comparison
-                                            today.setHours(0, 0, 0, 0);
+                                        // Remove the time portion of today's date for comparison
+                                        today.setHours(0, 0, 0, 0);
 
-                                            if (selectedDate < today) {
-                                                alert("Selected date is in the past. Please choose a current or future date.");
-                                                dateInput.value = "";
-                                                document.getElementById(textInputId).value = "";
-                                            } else {
-                                                const formattedDate = selectedDate.toLocaleDateString('en-GB', {
-                                                    day: '2-digit', month: 'short', year: 'numeric'
-                                                }).replace(/ /g, '-');
-                                                document.getElementById(textInputId).value = formattedDate;
-                                            }
+                                        if (selectedDate < today) {
+                                            alert("Selected date is in the past. Please choose a current or future date.");
+                                            dateInput.value = "";
+                                            document.getElementById(textInputId).value = "";
+                                        } else {
+                                            const formattedDate = selectedDate.toLocaleDateString('en-GB', {
+                                                day: '2-digit',
+                                                month: 'short',
+                                                year: 'numeric'
+                                            }).replace(/ /g, '-');
+                                            document.getElementById(textInputId).value = formattedDate;
                                         }
+                                    }
 
-                                        // Set minimum date for date inputs to today
-                                        document.querySelectorAll('input[type="date"]').forEach(input => {
-                                            // input.setAttribute('min', new Date().toISOString().split('T')[0]);
-                                        });
-                                    </script>
+                                    // Set minimum date for date inputs to today
+                                    document.querySelectorAll('input[type="date"]').forEach(input => {
+                                        // input.setAttribute('min', new Date().toISOString().split('T')[0]);
+                                    });
+                                </script>
 
 
                                 {{-- {{ ---end s code }} --}}
@@ -917,7 +947,8 @@
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Review of stability study program and samples">Review of stability study program and samples</label>
+                                        <label for="Review of stability study program and samples">Review of stability
+                                            study program and samples</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="review_of_stability_study_gi" id="summernote-1">
@@ -926,26 +957,38 @@
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Review of product manufacturing and analytical process">Review of product manufacturing and analytical process </label>
+                                        <label for="Review of product manufacturing and analytical process">Review of
+                                            product manufacturing and analytical process </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="review_of_product_manu_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="In case of Invalide complain then">Additional information if require
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="summernote" name="additional_inform" id="summernote-1">
+                                    </textarea>
+                                    </div>
+                                </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Additional information if require ">Additional information if require</label>
-                                        <select name="additional_inform" id="additional_inform">
-                                            <option value="">-- select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
+                                        <label for="Additional information if require ">Type of Market Complaints </label>
+                                        <select name="probable_root_causes_complaint_hodsr" id="probable_root_causes_complaint_hodsr">
+                                            {{-- <option value="">-- select --</option> --}}
+                                            <option value="valid">Valid</option>
+                                            <option value="invalid">Invalid</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="In case of Invalide complain then">In case of Invalide complain then </label>
+                                        <label for="In case of Invalide complain then">Comments </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="in_case_Invalide_com" id="summernote-1">
@@ -956,7 +999,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
-                                            Report Review (Final Review shall be done after QA Verification) 
+                                            Report Review (Final Review shall be done after QA Verification)
                                             <button type="button" id="team_members_details">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#document-details-field-instruction-modal"
@@ -990,8 +1033,13 @@
                                                         <div class="new-date-data-field">
                                                             <div class="group-input input-date">
                                                                 <div class="calenderauditee">
-                                                                    <input id="date_0_date_tm" type="text" name="Team_Members[0][date_tm]"  placeholder="DD-MMM-YYYY" />
-                                                                    <input type="date" name="Team_Members[0][date_tm]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"    value="" id="date_0_date_tm"   class="hide-input show_date"
+                                                                    <input id="date_0_date_tm" type="text"
+                                                                        name="Team_Members[0][date_tm]"
+                                                                        placeholder="DD-MMM-YYYY" />
+                                                                    <input type="date" name="Team_Members[0][date_tm]"
+                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                        value="" id="date_0_date_tm"
+                                                                        class="hide-input show_date"
                                                                         style="position: absolute; top: 0; left: 0; opacity: 0;"
                                                                         oninput="handleDateInput(this, 'date_0_date_tm')" />
                                                                 </div>
@@ -1035,7 +1083,7 @@
                                                     '][serial]" value="' + (serialNumber) + '"></td>' +
                                                     '<td><input type="text" name="Team_Members[' + serialNumber + '][names_tm]"></td>' +
                                                     '<td><input type="text" name="Team_Members[' + serialNumber +
-                                                    '][designation]"></td>'+
+                                                    '][designation]"></td>' +
                                                     '<td><input type="text" name="Team_Members[' + serialNumber +
                                                     '][department_tm]"></td>' +
                                                     '<td><input type="text" name="Team_Members[' + serialNumber + '][sign_tm]"></td>' +
@@ -1065,7 +1113,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
-                                            Report Approval by Head QA/CQA (Final Approvalshall be done after QA Verification)
+                                            Report Approval by Head QA/CQA (Final Approvalshall be done after QA
+                                            Verification)
                                             <button type="button" id="add_report_approval_row">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#document-details-field-instruction-modal"
@@ -1092,8 +1141,8 @@
                                                                 name="Report_Approval[0][serial]" value="1"></td>
                                                         <td><input type="text" name="Report_Approval[0][names_rrv]">
                                                         </td>
-                                                         <td><input type="text"
-                                                            name="Report_Approval[0][designation]"></td>
+                                                        <td><input type="text" name="Report_Approval[0][designation]">
+                                                        </td>
                                                         <td><input type="text"
                                                                 name="Report_Approval[0][department_rrv]"></td>
                                                         <td><input type="text" name="Report_Approval[0][sign_rrv]">
@@ -1144,7 +1193,7 @@
                                                     '<td><input type="text" name="Report_Approval[' + reportNumber +
                                                     '][designation]"></td>' +
                                                     '<td><input type="text" name="Report_Approval[' + reportNumber +
-                                                        '][department_rrv]"></td>' +
+                                                    '][department_rrv]"></td>' +
                                                     '<td><input type="text" name="Report_Approval[' + reportNumber +
                                                     '][sign_rrv]"></td>' +
                                                     '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
@@ -1191,8 +1240,10 @@
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Closure Comment">QA/CQA Head Comment <span class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                        <label for="Closure Comment">QA/CQA Head Comment <span
+                                                class="text-danger">*</span></label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not
                                                 require completion</small></div>
                                         <textarea class="summernote" name="qa_head_comment" id="qa_head_comment">
                                 </textarea>
@@ -1200,34 +1251,34 @@
                                 </div>
 
                                 <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="Inv Attachments">QA/CQA Head Attachment</label>
-                                            <div>
-                                                <small class="text-primary">
-                                                    Please Attach all relevant or supporting documents
-                                                </small>
+                                    <div class="group-input">
+                                        <label for="Inv Attachments">QA/CQA Head Attachment</label>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please Attach all relevant or supporting documents
+                                            </small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="qa_cqa_he_attach">
+
+
                                             </div>
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="qa_cqa_he_attach">
-
-
-                                                </div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input type="file" id="qa_cqa_he_attach"
-                                                        name="qa_cqa_he_attach[]"
-                                                        oninput="addMultipleFiles(this,'qa_cqa_he_attach')" multiple>
-                                                </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="qa_cqa_he_attach" name="qa_cqa_he_attach[]"
+                                                    oninput="addMultipleFiles(this,'qa_cqa_he_attach')" multiple>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton" id="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
-                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
+                                <button type="button"> <a class="text-white"
+                                        href="{{ url('rcms/qms-dashboard') }}">Exit
                                     </a> </button>
                             </div>
                         </div>
@@ -1417,7 +1468,7 @@
                                     </textarea>
                                     </div>
                                 </div>
-                             
+
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -1500,26 +1551,48 @@
                                     });
                                 </script>
 
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Conclusion (A dedicated provision must be established to record the inference or outcome of brainstorming sessions) ">Conclusion (A dedicated provision must be established to record the inference or outcome of brainstorming sessions) </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" name="conclusion_pi" id="summernote-1">
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label
+                                            for="Conclusion (A dedicated provision must be established to record the inference or outcome of brainstorming sessions) ">Conclusion
+                                            (A dedicated provision must be established to record the inference or outcome of
+                                            brainstorming sessions) </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="summernote" name="conclusion_pi" id="summernote-1">
                                 </textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="The probable root causes or Root Cause">The probable root causes or Root Cause </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" name="the_probable_root" id="summernote-1">
+                                 <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="Conclusion">Root Cause Analysis (A mandatory provision must be implemented for the selection of appropriate investigation tools, such as Brainstorming, Fishbone Diagram, Why-Why Analysis, Fault Tree Analysis, Pareto Chart, etc)</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="summernote" name="conclusion_hodsr" id="summernote-1">
+                                    </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="Root Cause Analysis">Other Methodology</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="summernote" name="root_cause_analysis_hodsr" id="summernote-1">
+                                    </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="The probable root causes or Root Cause">The probable root causes or
+                                            Root Cause </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="summernote" name="the_probable_root" id="summernote-1">
                                 </textarea>
+                                    </div>
                                 </div>
-                            </div>
 
-                                <div class="sub-head col-12">HOD Review</div>
+                                {{-- <div class="sub-head col-12">HOD Review</div>
 
 
 
@@ -1531,29 +1604,21 @@
                                         <textarea class="summernote" name="conclusion_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Root Cause Analysis">Root Cause Analysis</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" name="root_cause_analysis_hodsr" id="summernote-1">
-                                    </textarea>
-                                    </div>
-                                </div>
 
-                                <div class="col-md-12 mb-3">
+
+                                {{-- <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label
                                             for="The most probable root causes identified of the complaint are as below">The
-                                            Most Probable Root Causes Identified Of The Complaint Are As Below</label>
+                                            probable root causes or Root Cause </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="probable_root_causes_complaint_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
@@ -1598,15 +1663,15 @@
                                 </div>
 
 
-                               
 
 
 
-                                
 
 
 
-                                <div class="col-12">
+
+
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Inv Attachments">HOD Attachment</label>
                                         <div>
@@ -1633,7 +1698,7 @@
                                         <textarea class="summernote" name="comments_if_any_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 {{-- <div class="col-12">
                                     <div class="group-input">
@@ -1708,21 +1773,24 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td><input disabled type="text" name="Product_MaterialDetails[0][serial]" value="1"></td>
-                                                    <td><input type="text" name="Product_MaterialDetails[0][product_name_ca]"></td>
-                                                    <td><input type="text" name="Product_MaterialDetails[0][batch_no_pmd_ca]"></td>
+                                                    <td><input disabled type="text"
+                                                            name="Product_MaterialDetails[0][serial]" value="1"></td>
+                                                    <td><input type="text"
+                                                            name="Product_MaterialDetails[0][product_name_ca]"></td>
+                                                    <td><input type="text"
+                                                            name="Product_MaterialDetails[0][batch_no_pmd_ca]"></td>
                                                     <td>
                                                         <div class="new-date-data-field">
                                                             <div class="group-input input-date">
                                                                 <div class="calenderauditee">
                                                                     <input id="date_0_mfg_date_pmd_ca" type="text"
                                                                         name="Product_MaterialDetails[0][mfg_date_pmd_ca]"
-                                                                        readonly
-                                                                        placeholder="DD-MMM-YYYY" />
-                                                                    <input type="date" name="Product_MaterialDetails[0][mfg_date_pmd_ca]"
-                                                                         min="{{ today()->subDays(1000)->format('Y-m-d') }}"
-                                                                        {{-- min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --}}
-                                                                        id="date_0_mfg_date_pmd_ca" class="hide-input show_date"
+                                                                        readonly placeholder="DD-MMM-YYYY" />
+                                                                    <input type="date"
+                                                                        name="Product_MaterialDetails[0][mfg_date_pmd_ca]"
+                                                                        min="{{ today()->subDays(1000)->format('Y-m-d') }}"
+                                                                        {{-- min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --}} id="date_0_mfg_date_pmd_ca"
+                                                                        class="hide-input show_date"
                                                                         style="position: absolute; top: 0; left: 0; opacity: 0;"
                                                                         oninput="handleDateInput(this, 'date_0_mfg_date_pmd_ca')" />
                                                                 </div>
@@ -1733,22 +1801,30 @@
                                                         <div class="new-date-data-field">
                                                             <div class="group-input input-date">
                                                                 <div class="calenderauditee">
-                                                                    <input class="click_date" id="date_0_expiry_date_pmd_ca" type="text"
+                                                                    <input class="click_date"
+                                                                        id="date_0_expiry_date_pmd_ca" type="text"
                                                                         name="Product_MaterialDetails[0][expiry_date_pmd_ca]"
                                                                         placeholder="DD-MMM-YYYY" />
-                                                                    <input type="date" name="Product_MaterialDetails[0][expiry_date_pmd_ca]"
+                                                                    <input type="date"
+                                                                        name="Product_MaterialDetails[0][expiry_date_pmd_ca]"
                                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                        id="date_0_expiry_date_pmd_ca" class="hide-input show_date"
+                                                                        id="date_0_expiry_date_pmd_ca"
+                                                                        class="hide-input show_date"
                                                                         style="position: absolute; top: 0; left: 0; opacity: 0;"
                                                                         oninput="handleDateInput(this, 'date_0_expiry_date_pmd_ca')" />
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td><input type="text" name="Product_MaterialDetails[0][batch_size_pmd_ca]"></td>
-                                                    <td><input type="text" name="Product_MaterialDetails[0][pack_profile_pmd_ca]"></td>
-                                                    <td><input type="text" name="Product_MaterialDetails[0][released_quantity_pmd_ca]"></td>
-                                                    <td><input type="text" name="Product_MaterialDetails[0][remarks_ca]"></td>
+                                                    <td><input type="text"
+                                                            name="Product_MaterialDetails[0][batch_size_pmd_ca]"></td>
+                                                    <td><input type="text"
+                                                            name="Product_MaterialDetails[0][pack_profile_pmd_ca]"></td>
+                                                    <td><input type="text"
+                                                            name="Product_MaterialDetails[0][released_quantity_pmd_ca]">
+                                                    </td>
+                                                    <td><input type="text"
+                                                            name="Product_MaterialDetails[0][remarks_ca]"></td>
                                                     <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                 </tr>
                                             </tbody>
@@ -1771,23 +1847,41 @@
 
                                         function generateTableRow(productserialno) {
                                             var html = '<tr>' +
-                                                '<td><input disabled type="text" name="Product_MaterialDetails[' + productserialno + '][serial]" value="' + (productserialno + 1) + '"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][product_name_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_no_pmd_ca]"></td>' +
+                                                '<td><input disabled type="text" name="Product_MaterialDetails[' + productserialno +
+                                                '][serial]" value="' + (productserialno + 1) + '"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
+                                                '][product_name_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
+                                                '][batch_no_pmd_ca]"></td>' +
                                                 '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
-                                                '<input id="date_' + productserialno + '_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" />' +
-                                                '<input type="date" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" readonly min="{{today()->subDays(1000)->format('Y-m-d')}}"  id="date_' + productserialno + '_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' + productserialno + '_mfg_date_pmd_ca\')"/>' +
+                                                '<input id="date_' + productserialno +
+                                                '_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno +
+                                                '][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" />' +
+                                                '<input type="date" name="Product_MaterialDetails[' + productserialno +
+                                                '][mfg_date_pmd_ca]" readonly min="{{ today()->subDays(1000)->format('Y-m-d') }}"  id="date_' +
+                                                productserialno +
+                                                '_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
+                                                productserialno + '_mfg_date_pmd_ca\')"/>' +
                                                 '</div></div></div></td>' +
 
                                                 '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
-                                                '<input id="date_' + productserialno + '_expiry_date_pmd_ca" type="text" readonly name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]" placeholder="DD-MMM-YYYY" />' +
-                                                '<input type="date" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]" min="' + currentDate + '" id="date_' + productserialno + '_expiry_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' + productserialno + '_expiry_date_pmd_ca\')"/>' +
+                                                '<input id="date_' + productserialno +
+                                                '_expiry_date_pmd_ca" type="text" readonly name="Product_MaterialDetails[' +
+                                                productserialno + '][expiry_date_pmd_ca]" placeholder="DD-MMM-YYYY" />' +
+                                                '<input type="date" name="Product_MaterialDetails[' + productserialno +
+                                                '][expiry_date_pmd_ca]" min="' + currentDate + '" id="date_' + productserialno +
+                                                '_expiry_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
+                                                productserialno + '_expiry_date_pmd_ca\')"/>' +
                                                 '</div></div></div></td>' +
 
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_size_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][pack_profile_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][released_quantity_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][remarks_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
+                                                '][batch_size_pmd_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
+                                                '][pack_profile_pmd_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
+                                                '][released_quantity_pmd_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
+                                                '][remarks_ca]"></td>' +
                                                 '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                                                 '</tr>';
                                             return html;
@@ -1820,10 +1914,19 @@
                             </div>
 
 
-                            <div class="col-lg-12">
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Complaint Sample Status">Complaint Sample Status</label>
                                     <input type="text" name="complaint_sample_status_ca" id="date_of_initiation">
+                                </div>
+                            </div> --}}
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Analytical Data review observation">Complaint Sample Status</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea class="summernote" name="complaint_sample_status_ca" id="summernote-1">
+                                </textarea>
                                 </div>
                             </div>
 
@@ -2407,7 +2510,8 @@
                             <div class="col-md-6 mb-3 productionTable">
                                 <div class="group-input">
                                     <label for="Production Tablet Completed By">Production Tablet Completed By</label>
-                                    <input readonly type="text" name="Production_Table_By" id="Production_Table_By">
+                                    <input readonly type="text" name="Production_Table_By"
+                                        id="Production_Table_By">
                                 </div>
                             </div>
                             <div class="col-lg-6 productionTable">
@@ -2440,7 +2544,8 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Production Injection"> Production Injection </label>
-                                    <select name="Production_Injection_Review" id="Production_Injection_Review" disabled>
+                                    <select name="Production_Injection_Review" id="Production_Injection_Review"
+                                        disabled>
                                         <option value="">-- Select --</option>
                                         <option value='yes'>
                                             Yes</option>
@@ -2484,7 +2589,8 @@
                             <div class="col-md-12 mb-3 productionInjection">
                                 <div class="group-input">
                                     <label for="Production Injection feedback">Production Injection Feedback </label>
-                                    <textarea class="summernote Production_Injection_Feedback" name="Production_Injection_Feedback" id="summernote-18"></textarea>
+                                    <textarea class="summernote Production_Injection_Feedback" name="Production_Injection_Feedback"
+                                        id="summernote-18"></textarea>
                                 </div>
                             </div>
                             <div class="col-12 productionInjection">
@@ -2497,7 +2603,8 @@
                                         <div class="file-attachment-list" id="Production_Injection_Attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="Production_Injection_Attachment[]"
+                                            <input type="file" id="myfile"
+                                                name="Production_Injection_Attachment[]"
                                                 oninput="addMultipleFiles(this, 'Production_Injection_Attachment')"
                                                 multiple>
                                         </div>
@@ -2582,7 +2689,8 @@
                                 <div class="group-input">
                                     <label for="Research Development assessment">Impact Assessment (By Research
                                         Development)</label>
-                                    <textarea class="summernote ResearchDevelopment_assessment" name="ResearchDevelopment_assessment" id="summernote-17"></textarea>
+                                    <textarea class="summernote ResearchDevelopment_assessment" name="ResearchDevelopment_assessment"
+                                        id="summernote-17"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3 researchDevelopment">
@@ -2601,7 +2709,8 @@
                                         <div class="file-attachment-list" id="ResearchDevelopment_attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="ResearchDevelopment_attachment[]"
+                                            <input type="file" id="myfile"
+                                                name="ResearchDevelopment_attachment[]"
                                                 oninput="addMultipleFiles(this, 'ResearchDevelopment_attachment')"
                                                 multiple>
                                         </div>
@@ -4442,10 +4551,10 @@
                                 <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                     Exit </a> </button>
                             <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                    class="button  launch_extension" data-bs-toggle="modal"
-                                                                                    data-bs-target="#launch_extension">
-                                                                                    Launch Extension
-                                                                                </a> -->
+                                                                                        class="button  launch_extension" data-bs-toggle="modal"
+                                                                                        data-bs-target="#launch_extension">
+                                                                                        Launch Extension
+                                                                                    </a> -->
                             {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                             data-bs-target="#effectivenss_extension">
                             Launch Effectiveness Check
@@ -4716,7 +4825,7 @@
                         <div class="row">
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Closure Comment">QA/CQA  Comment</label>
+                                    <label for="Closure Comment">QA/CQA Comment</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
                                     <textarea class="summernote" name="qa_cqa_comments" id="qa_cqa_comments">
