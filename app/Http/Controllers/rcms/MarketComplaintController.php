@@ -792,7 +792,7 @@ class MarketComplaintController extends Controller
         if (!empty($marketComplaint->conclusion_pi)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Conclusion (A dedicated provision must be established to record the inference or outcome of brainstorming sessions) ';
+            $history->activity_type = 'Conclusion';
             $history->previous = "Null";
             $history->current = $marketComplaint->conclusion_pi;
             $history->comment = "Not Applicable";
@@ -2797,7 +2797,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->conclusion_pi != $marketComplaint->conclusion_pi) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Conclusion (A dedicated provision must be established to record the inference or outcome of brainstorming sessions)';
+            $history->activity_type = 'Conclusion';
             $history->previous = $lastmarketComplaint->conclusion_pi;
             $history->current = $marketComplaint->conclusion_pi;
             $history->comment = $request->conclusion_pi_comment;
@@ -3514,7 +3514,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->conclusion_hodsr != $marketComplaint->conclusion_hodsr) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Root Cause Analysis (A mandatory provision must be implemented for the selection of appropriate investigation tools, such as Brainstorming, Fishbone Diagram, Why-Why Analysis, Fault Tree Analysis, Pareto Chart, etc)';
+            $history->activity_type = 'Root Cause Analysis';
             $history->previous = $lastmarketComplaint->conclusion_hodsr;
             $history->current = $marketComplaint->conclusion_hodsr;
             $history->comment = $request->conclusion_hodsr_comment;

@@ -209,7 +209,7 @@
             border-radius: 20px 0px 0px 20px;
         }
 
-        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(9) {
+        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(8) {
             border-radius: 0px 20px 20px 0px;
 
         }
@@ -984,7 +984,8 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="initial_attachment_gi"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                            <input type="file"
+                                                id="initial_attachment_gi"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                 name="initial_attachment_gi[]"
                                                 oninput="addMultipleFiles(this,'initial_attachment_gi')" multiple>
                                         </div>
@@ -1027,7 +1028,9 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator Group">Complaint</label>
-                                    <input type="text" name="complainant_gi"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} value="{{ $data->complainant_gi }}">
+                                    <input type="text"
+                                        name="complainant_gi"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                        value="{{ $data->complainant_gi }}">
 
                                 </div>
                             </div>
@@ -1046,7 +1049,9 @@
                                                 ? ''
                                                 : $data->complaint_reported_on_gi;
                                         @endphp
-                                        <input type="text"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} id="complaint_dat" name="complaint_reported_on_gi"
+                                        <input
+                                            type="text"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                            id="complaint_dat" name="complaint_reported_on_gi"
                                             placeholder="Select Due Date"
                                             value="{{ Helpers::getdateFormat($formattedDate) }}" />
                                     </div>
@@ -1074,7 +1079,8 @@
                                         Complaint</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="details_of_nature_market_complaint_gi" id="summernote-1">{{ $data->details_of_nature_market_complaint_gi }}
+                                    <textarea class="summernote"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                        name="details_of_nature_market_complaint_gi" id="summernote-1">{{ $data->details_of_nature_market_complaint_gi }}
                                     </textarea>
                                 </div>
                             </div>
@@ -1604,15 +1610,15 @@
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="additional_inform" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->additional_inform }}
+                                    <textarea class="summernote" name="additional_inform" id="summernote-1">{{ $data->additional_inform }}
                                 </textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Additional information if require ">Type of Market Complaints </label>
-                                    <select name="probable_root_causes_complaint_hodsr"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                    <select
+                                        name="probable_root_causes_complaint_hodsr"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                         id="probable_root_causes_complaint_hodsr">
                                         {{-- <option value="">-- select --</option> --}}
                                         <option value=""
@@ -2442,7 +2448,8 @@
                                                     <td class="main-head">
                                                         <label class="label-head">
                                                             <span class="input-head">
-                                                                <input type="radio" name="csr1_yesno" value="yes"
+                                                                <input type="radio" name="csr1_yesno"
+                                                                    value="yes"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                     {{ isset($proposalData['Complaint sample Required']['csr3']) && $proposalData['Complaint sample Required']['csr3'] == 'yes' ? 'checked' : '' }}
                                                                     onchange="toggleInputs('csr1_yesno', 'csr1', 'csr2')">
                                                             </span>
@@ -2450,7 +2457,8 @@
                                                         </label>
                                                         <label class="label-head">
                                                             <span class="input-head">
-                                                                <input type="radio" name="csr1_yesno" value="no"
+                                                                <input type="radio" name="csr1_yesno"
+                                                                    value="no"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                     {{ isset($proposalData['Complaint sample Required']['csr3']) && $proposalData['Complaint sample Required']['csr3'] == 'no' ? 'checked' : '' }}
                                                                     onchange="toggleInputs('csr1_yesno', 'csr1', 'csr2')">
                                                             </span>
@@ -2475,13 +2483,15 @@
                                                     <td>Additional info. From Complaint</td>
                                                     <td class="main-head">
                                                         <label class="label-head">
-                                                            <input type="radio" name="afc1_yesno" value="yes"
+                                                            <input type="radio" name="afc1_yesno"
+                                                                value="yes"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                 {{ isset($proposalData['Additional info. From Complainant']['afc3']) && $proposalData['Additional info. From Complainant']['afc3'] == 'yes' ? 'checked' : '' }}
                                                                 onchange="toggleInputs('afc1_yesno', 'afc1', 'afc2')">
                                                             <span>Yes</span>
                                                         </label>
                                                         <label class="label-head">
-                                                            <input type="radio" name="afc1_yesno" value="no"
+                                                            <input type="radio" name="afc1_yesno"
+                                                                value="no"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                 {{ isset($proposalData['Additional info. From Complainant']['afc3']) && $proposalData['Additional info. From Complainant']['afc3'] == 'no' ? 'checked' : '' }}
                                                                 onchange="toggleInputs('afc1_yesno', 'afc1', 'afc2')">
                                                             <span>No</span>
@@ -2505,13 +2515,15 @@
                                                     <td>Analysis of complaint Sample</td>
                                                     <td class="main-head">
                                                         <label class="label-head">
-                                                            <input type="radio" name="acs1_yesno" value="yes"
+                                                            <input type="radio" name="acs1_yesno"
+                                                                value="yes"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                 {{ isset($proposalData['Analysis of complaint Sample']['acs3']) && $proposalData['Analysis of complaint Sample']['acs3'] == 'yes' ? 'checked' : '' }}
                                                                 onchange="toggleInputs('acs1_yesno', 'acs1', 'acs2')">
                                                             <span>Yes</span>
                                                         </label>
                                                         <label class="label-head">
-                                                            <input type="radio" name="acs1_yesno" value="no"
+                                                            <input type="radio" name="acs1_yesno"
+                                                                value="no"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                 {{ isset($proposalData['Analysis of complaint Sample']['acs3']) && $proposalData['Analysis of complaint Sample']['acs3'] == 'no' ? 'checked' : '' }}
                                                                 onchange="toggleInputs('acs1_yesno', 'acs1', 'acs2')">
                                                             <span>No</span>
@@ -2535,13 +2547,15 @@
                                                     <td>QRM Approach</td>
                                                     <td class="main-head">
                                                         <label class="label-head">
-                                                            <input type="radio" name="qrm1_yesno" value="yes"
+                                                            <input type="radio" name="qrm1_yesno"
+                                                                value="yes"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                 {{ isset($proposalData['QRM Approach']['qrm3']) && $proposalData['QRM Approach']['qrm3'] == 'yes' ? 'checked' : '' }}
                                                                 onchange="toggleInputs('qrm1_yesno', 'qrm1', 'qrm2')">
                                                             <span>Yes</span>
                                                         </label>
                                                         <label class="label-head">
-                                                            <input type="radio" name="qrm1_yesno" value="no"
+                                                            <input type="radio" name="qrm1_yesno"
+                                                                value="no"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                 {{ isset($proposalData['QRM Approach']['qrm3']) && $proposalData['QRM Approach']['qrm3'] == 'no' ? 'checked' : '' }}
                                                                 onchange="toggleInputs('qrm1_yesno', 'qrm1', 'qrm2')">
                                                             <span>No</span>
@@ -2565,13 +2579,15 @@
                                                     <td>Others</td>
                                                     <td class="main-head">
                                                         <label class="label-head">
-                                                            <input type="radio" name="oth1_yesno" value="yes"
+                                                            <input type="radio" name="oth1_yesno"
+                                                                value="yes"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                 {{ isset($proposalData['Others']['oth3']) && $proposalData['Others']['oth3'] == 'yes' ? 'checked' : '' }}
                                                                 onchange="toggleInputs('oth1_yesno', 'oth1', 'oth2')">
                                                             <span>Yes</span>
                                                         </label>
                                                         <label class="label-head">
-                                                            <input type="radio" name="oth1_yesno" value="no"
+                                                            <input type="radio" name="oth1_yesno"
+                                                                value="no"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                 {{ isset($proposalData['Others']['oth3']) && $proposalData['Others']['oth3'] == 'no' ? 'checked' : '' }}
                                                                 onchange="toggleInputs('oth1_yesno', 'oth1', 'oth2')">
                                                             <span>No</span>
@@ -3131,8 +3147,7 @@
                                 <div class="group-input">
                                     <label
                                         for="Conclusion (A dedicated provision must be established to record the inference or outcome of brainstorming sessions) ">Conclusion
-                                        (A dedicated provision must be established to record the inference or outcome of
-                                        brainstorming sessions) </label>
+                                    </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="conclusion_pi" id="summernote-1"
@@ -3142,9 +3157,7 @@
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Conclusion">Root Cause Analysis (A mandatory provision must be implemented
-                                        for the selection of appropriate investigation tools, such as Brainstorming,
-                                        Fishbone Diagram, Why-Why Analysis, Fault Tree Analysis, Pareto Chart, etc)</label>
+                                    <label for="Conclusion">Root Cause Analysis</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="conclusion_hodsr" id="summernote-1"
@@ -3605,8 +3618,8 @@
                                             <label for="Production Tablet assessment">Impact Assessment (By Production
                                                 Tablet)
                                                 <!-- <span
-                                                                                                                                                                                                            id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                            class="text-danger">*</span> -->
+                                                                                                                                                                                                                    id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                    class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -3618,8 +3631,8 @@
                                         <div class="group-input">
                                             <label for="Production Tablet feedback">Production Tablet Feedback
                                                 <!-- <span
-                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                            class="text-danger">*</span> -->
+                                                                                                                                                                                                                    id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                    class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -3633,8 +3646,8 @@
                                             <label for="Production Tablet assessment">Impact Assessment (By Production
                                                 Tablet)
                                                 <!-- <span
-                                                                                                                                                                             id="asteriskInvi12" style="display: none"
-                                                                                                                                                            class="text-danger">*</span> -->
+                                                                                                                                                                                     id="asteriskInvi12" style="display: none"
+                                                                                                                                                                    class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -3646,8 +3659,8 @@
                                         <div class="group-input">
                                             <label for="Production Tablet feedback">Production Tablet Feedback
                                                 <!-- <span
-                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                            class="text-danger">*</span> -->
+                                                                                                                                                                                                                    id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                    class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -3961,8 +3974,8 @@
                                             <label for="Production Injection assessment">Impact Assessment (By
                                                 Production Injection)
                                                 <!-- <span
-                                                                                                                                                                                                            id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                            class="text-danger">*</span> -->
+                                                                                                                                                                                                                    id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                    class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -3974,8 +3987,8 @@
                                         <div class="group-input">
                                             <label for="Production Injection feedback">Production Injection Feedback
                                                 <!-- <span
-                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                            class="text-danger">*</span> -->
+                                                                                                                                                                                                                    id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                    class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -3989,8 +4002,8 @@
                                             <label for="Production Injection assessment">Impact Assessment (By
                                                 Production Injection)
                                                 <!-- <span
-                                                                                                                                                                                                            id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                            class="text-danger">*</span> -->
+                                                                                                                                                                                                                    id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                    class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -4002,8 +4015,8 @@
                                         <div class="group-input">
                                             <label for="Production Injection feedback">Production Injection Feedback
                                                 <!-- <span
-                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                            class="text-danger">*</span> -->
+                                                                                                                                                                                                                    id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                    class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -9532,9 +9545,9 @@
                                 </a> --}}
                         @endif
                         <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                    data-bs-target="#effectivenss_extension">
-                                                                                                                                                    Launch Effectiveness Check
-                                                                                                                                                </a> -->
+                                                                                                                                                            data-bs-target="#effectivenss_extension">
+                                                                                                                                                            Launch Effectiveness Check
+                                                                                                                                                        </a> -->
                     </div>
                 </div>
             </div>
@@ -10730,9 +10743,9 @@ document.getElementById('initiator_group').addEventListener('change', function()
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                            <button>Close</button>
-                                        </div> -->
+                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                    <button>Close</button>
+                                                </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -10777,9 +10790,9 @@ document.getElementById('initiator_group').addEventListener('change', function()
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                            <button>Close</button>
-                                        </div> -->
+                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                    <button>Close</button>
+                                                </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -10824,9 +10837,9 @@ document.getElementById('initiator_group').addEventListener('change', function()
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                            <button>Close</button>
-                                        </div> -->
+                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                    <button>Close</button>
+                                                </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -10876,9 +10889,9 @@ document.getElementById('initiator_group').addEventListener('change', function()
 
                         <!-- Modal footer -->
                         <!-- <div class="modal-footer">
-                                            <button type="button" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit">Continue</button>
-                                        </div> -->
+                                                    <button type="button" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit">Continue</button>
+                                                </div> -->
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>

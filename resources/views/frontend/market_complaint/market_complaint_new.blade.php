@@ -1554,9 +1554,8 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label
-                                            for="Conclusion (A dedicated provision must be established to record the inference or outcome of brainstorming sessions) ">Conclusion
-                                            (A dedicated provision must be established to record the inference or outcome of
-                                            brainstorming sessions) </label>
+                                            for="Conclusion  ">Conclusion
+                                             </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="conclusion_pi" id="summernote-1">
@@ -1565,7 +1564,7 @@
                                 </div>
                                  <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Conclusion">Root Cause Analysis (A mandatory provision must be implemented for the selection of appropriate investigation tools, such as Brainstorming, Fishbone Diagram, Why-Why Analysis, Fault Tree Analysis, Pareto Chart, etc)</label>
+                                        <label for="Conclusion">Root Cause Analysis</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="conclusion_hodsr" id="summernote-1">
