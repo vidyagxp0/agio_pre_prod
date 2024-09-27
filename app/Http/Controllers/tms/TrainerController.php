@@ -1084,7 +1084,7 @@ class TrainerController extends Controller
 
     public static function trainerReport($id)
     {
-        $data = Induction_training::find($id);
+        $data = TrainerQualification::find($id);
         if (!empty($data)) {
             $data->originator_id = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');

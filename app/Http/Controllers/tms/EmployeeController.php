@@ -8,6 +8,7 @@ use App\Models\EmployeeAudit;
 use App\Models\EmployeeGrid;
 use App\Models\RecordNumber;
 use App\Models\RoleGroup;
+use App\Models\Document;
 use App\Models\Training;
 use App\Models\User;
 use Carbon\Carbon;
@@ -1743,9 +1744,9 @@ class EmployeeController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
         $employees = Employee::all();
-    
+        $data = Document::all();
         if ($request->child_type == 'induction_training') {
-            return view('frontend.TMS.Induction_training.induction_training', compact('employee','due_date','record'));
+            return view('frontend.TMS.Induction_training.induction_training', compact('employee','due_date','record','data'));
         } else {
             return view('frontend.forms.classroom-training');
         }

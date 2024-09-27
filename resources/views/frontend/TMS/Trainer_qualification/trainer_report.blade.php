@@ -271,6 +271,118 @@
                 <div class="block-head">
                 Evaluation Criteria
                 </div>
+                <div class="col-12">
+                <div class="group-input">
+                    <div class="why-why-chart">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width: 7%;">Sr. No.</th>
+                                    <th style="width: 50%;">Evaluation Criteria</th>
+                                    <th>Rating</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Clarity Of Objectives</td>
+                                    <td>
+                                 
+                                        @if($data->evaluation_criteria_1){{ $data->evaluation_criteria_1 }}@else Not Applicable @endif
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Delivery & Knowledge Of Content</td>
+                                    <td>
+                          
+                                        @if($data->evaluation_criteria_2){{ $data->evaluation_criteria_2 }}@else Not Applicable @endif
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Oral & Written Languagee (Speaking
+                                        Style Was Clear, Easily understood , Pleasant to hear)</td>
+                                    <td>
+                             
+                                        @if($data->evaluation_criteria_3){{ $data->evaluation_criteria_3 }}@else Not Applicable @endif
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Is Research Up to Date?</td>
+                                    <td>
+                                
+                                        @if($data->evaluation_criteria_4){{ $data->evaluation_criteria_4 }}@else Not Applicable @endif
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Interactions With Participants</td>
+                                    <td>
+                             
+                                        @if($data->evaluation_criteria_5){{ $data->evaluation_criteria_5 }}@else Not Applicable @endif
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>Response To Participants</td>
+                                    <td>
+                                     
+                                        @if($data->evaluation_criteria_6){{ $data->evaluation_criteria_6 }}@else Not Applicable @endif
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>Discussion Techniques</td>
+                                    <td>
+                                   
+                                        @if($data->evaluation_criteria_7){{ $data->evaluation_criteria_7 }}@else Not Applicable @endif
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>Managed Pace Of The Training Well /
+                                        Created a Comfortable learning environment</td>
+                                    <td>
+                                    
+                                        @if($data->evaluation_criteria_8){{ $data->evaluation_criteria_8 }}@else Not Applicable @endif
+                                    </td>
+
+
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <div class="block-heads">
+                                
+                                </div>
+                                <style>
+                                    .block-heads {
+                                        background-color: black;  
+                                                
+                                    }
+    
+                                </style>
+
                   <table>
 
 

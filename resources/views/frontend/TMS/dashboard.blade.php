@@ -332,7 +332,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                 <td>{{ Helpers::getFullDepartmentName($trainer->department) ? Helpers::getFullDepartmentName($trainer->department) : 'NA' }}</td>
                                 <td>{{ Helpers::getdateFormat($trainer->training_date) }}</td>
                                 <td>{{ $trainer->status }}</td>
-                                <td>   <button type="button" class="view-report-btn" onclick="window.location.href='{{ url('rcms/trainer_report/' . $trainer->id) }}'">
+                                <td>     <button type="button" class="view-report-btn" onclick="window.location.href='{{ url('rcms/trainer_report/' . $trainer->id) }}'">
                                                 View Report
                                             </button></td>
                             </tr>
@@ -409,11 +409,12 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             <tr>
                                 <td>{{ DB::table('job_trainings')->where('id', $job_training->id)->value('name') }}</td>
                                 {{-- <td>{{ DB::table('departments')->where('id', $job_training->department)->value('name') }}</td> --}}
-                                <!-- <td>{{ Helpers::getFullDepartmentName($job_training->department) ? Helpers::getFullDepartmentName($job_training->department) : 'NA' }}</td> -->
-                                <td>{{ $job_training->location}}</td>
-                                @for ($i = 1; $i <= 1; $i++) <td>{{ \Carbon\Carbon::parse($job_training->{"startdate_$i"})->format('d-M-Y') }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($job_training->{"enddate_$i"})->format('d-M-Y') }}</td>
-                                    @endfor
+                                <td>{{ Helpers::getFullDepartmentName($job_training->department) ? Helpers::getFullDepartmentName($job_training->department) : 'NA' }}</td>
+                                <!-- <td>{{ $job_training->location}}</td> -->
+                                <!-- @for ($i = 1; $i <= 1; $i++)  -->
+                                <td>{{ \Carbon\Carbon::parse($job_training->{"start_date"})->format('d-M-Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($job_training->{"enddate_1"})->format('d-M-Y') }}</td>
+                                    <!-- @endfor -->
 
                                     <td>
                                     
