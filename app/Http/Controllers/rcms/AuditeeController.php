@@ -73,11 +73,15 @@ class AuditeeController extends Controller
         $internalAudit->initiated_through = $request->initiated_through;
         $internalAudit->initiated_if_other = $request->initiated_if_other;
         $internalAudit->others = $request->others;
+        $internalAudit->start_date_gi = $request->start_date_gi;
+        $internalAudit->end_date_gi = $request->end_date_gi;
         $internalAudit->repeat = $request->repeat;
         $internalAudit->repeat_nature = $request->repeat_nature;
         $internalAudit->due_date_extension = $request->due_date_extension;
         $internalAudit->initial_comments = $request->initial_comments;
         $internalAudit->severity_level = $request->severity_level;
+
+        $internalAudit->reviewer_person_value = implode(',', $request->reviewer_person_value);
 
 
         $internalAudit->start_date = $request->start_date;
@@ -88,8 +92,8 @@ class AuditeeController extends Controller
         $internalAudit->material_name = $request->material_name;
         $internalAudit->if_comments = $request->if_comments;
         $internalAudit->lead_auditor = $request->lead_auditor;
-        $internalAudit->Audit_team =  implode(',', $request->Audit_team);
-        $internalAudit->Auditee =  implode(',', $request->Auditee);
+        $internalAudit->Audit_team = is_array($request->Audit_team) ? implode(',', $request->Audit_team) : $request->Audit_team;
+        $internalAudit->Auditee =  is_array($request->Auditee) ? implode(',', $request->Auditee) : $request->Auditee; 
         $internalAudit->Auditor_Details = $request->Auditor_Details;
         $internalAudit->External_Auditing_Agency = $request->External_Auditing_Agency;
         $internalAudit->Relevant_Guidelines = $request->Relevant_Guidelines;
@@ -206,7 +210,7 @@ class AuditeeController extends Controller
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
 
-        // -----------------grid---- Audit Agenda 
+        // -----------------grid---- Audit Agenda
         $data3 = new InternalAuditGrid();
       //  $request->dd();
         $data3->audit_id = $internalAudit->id;
@@ -714,9 +718,32 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
+
+
+
+       
+
+
+      
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Inititator';
+            $history->previous = "Null";
+            $history->current =Auth::user()->name;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+
+            $history->save();
+    
 
         if (!empty($internalAudit->assign_to)) {
             $history = new AuditTrialExternal();
@@ -732,7 +759,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
         if (!empty($internalAudit->record)) {
@@ -749,7 +776,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
         if (!empty($internalAudit->Initiator_Group)) {
@@ -766,7 +793,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -785,13 +812,13 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
         if(!empty($internalAudit->division_code))
         {
-          
-    
+
+
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Site/Location Code';
@@ -805,8 +832,8 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
-         
+
+
             $history->save();
         }
         if (!empty($internalAudit->initiator)) {
@@ -823,7 +850,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
         if (!empty($internalAudit->short_description)) {
@@ -840,7 +867,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -858,7 +885,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 //----------------------------------------------------------------------
@@ -876,7 +903,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -894,7 +921,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -912,7 +939,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -930,7 +957,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -948,7 +975,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
         if (!empty($internalAudit->initial_comments)) {
@@ -965,7 +992,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -983,7 +1010,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1001,11 +1028,73 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
+
+
+
+
+
+        if (!empty($internalAudit->start_date_gi)) {
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Start Date of Audit';
+            $history->previous = "Null";
+            $history->current = $internalAudit->start_date_gi;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+
+            $history->save();
+        }
+
+
+
+        if (!empty($internalAudit->end_date_gi)) {
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'End Date of Audit';
+            $history->previous = "Null";
+            $history->current = $internalAudit->end_date_gi;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+
+            $history->save();
+        }
+
+
+
         
+        if (!empty($internalAudit->reviewer_person_value)) {
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'CFT review selection';
+            $history->previous = "Null";
+            $history->current = $internalAudit->reviewer_person_value;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+
+            $history->save();
+        }
 
         if (!empty($internalAudit->if_comments)) {
             $history = new AuditTrialExternal();
@@ -1021,7 +1110,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                  $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1039,7 +1128,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1085,7 +1174,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1103,7 +1192,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                  $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1121,7 +1210,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1139,7 +1228,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1157,7 +1246,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1175,7 +1264,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1195,7 +1284,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1214,7 +1303,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1232,7 +1321,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1250,12 +1339,12 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
 
-        
+
         if (!empty($internalAudit->Supplier_Details)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
@@ -1270,11 +1359,11 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                  $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
-        
+
         if (!empty($internalAudit->Supplier_Site)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
@@ -1289,7 +1378,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                  $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1307,7 +1396,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                   $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1325,7 +1414,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1343,7 +1432,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1361,7 +1450,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1379,7 +1468,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1397,7 +1486,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1415,7 +1504,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1433,7 +1522,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1451,7 +1540,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1469,14 +1558,33 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
+
+
+        if (!empty($internalAudit->reviewer_person_value)) {
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type =  'CFT review selection';
+            $history->previous = "Null";
+            $history->current = $internalAudit->reviewer_person_value;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+
+            $history->save();
+        }
         if (!empty($internalAudit->myfile)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Inv Attachment';
+            $history->activity_type = 'Summary And Response Attachments';
             $history->previous = "Null";
             $history->current = $internalAudit->myfile;
             $history->comment = "NA";
@@ -1487,7 +1595,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1506,7 +1614,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                    $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1524,7 +1632,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                  $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1542,7 +1650,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
                  $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1560,7 +1668,7 @@ class AuditeeController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-         
+
             $history->save();
         }
 
@@ -1590,10 +1698,15 @@ class AuditeeController extends Controller
 
     public function show($id)
     {
-       
+
         $old_record = Auditee::select('id', 'division_id', 'record')->get();
         $auditornew = Auditee::where('id', $id)->first();
         $data = Auditee::find($id);
+
+
+        $cftReviewerIds = explode(',', $data->reviewer_person_value);
+        $cft = User::get();
+
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
@@ -1603,18 +1716,21 @@ class AuditeeController extends Controller
         $oocgrid = SummaryGrid::where('summary_id',$id)->first();
         $auditorview = SummaryGrid::where(['summary_id'=>$id, 'identifier'=>'Auditors'])->first();
 
-        
 
 
 
 
-        return view('frontend.externalAudit.view', compact('data', 'old_record','grid_data','grid_data1', 'data1','oocgrid','auditorview'));
+
+        return view('frontend.externalAudit.view', compact('data', 'old_record','grid_data','grid_data1', 'data1','oocgrid','auditorview','cftReviewerIds','cft'));
     }
 
     public function update(Request $request, $id)
     {
         $lastDocument = Auditee::find($id);
         $internalAudit = Auditee::find($id);
+
+
+        $lastCft = ExternalAuditCFT::where('external_audit_id', $internalAudit->id)->first();
         $form_progress = null;
         //$internalAudit->division_id = $request->division_id;
         //$internalAudit->parent_id = $request->parent_id;
@@ -1637,6 +1753,8 @@ class AuditeeController extends Controller
         $internalAudit->if_other = $request->if_other;
 
         $internalAudit->initiated_through = $request->initiated_through;
+        $internalAudit->start_date_gi = $request->start_date_gi;
+        $internalAudit->end_date_gi = $request->end_date_gi;
         $internalAudit->initiated_if_other = $request->initiated_if_other;
         $internalAudit->others = $request->others;
         $internalAudit->external_agencies = $request->external_agencies;
@@ -1646,7 +1764,7 @@ class AuditeeController extends Controller
 
         $internalAudit->initial_comments = $request->initial_comments;
         $internalAudit->start_date = $request->start_date;
-        
+
         $internalAudit->end_date = $request->end_date;
         $internalAudit->audit_agenda = $request->audit_agenda;
         //$internalAudit->Facility =  implode(',', $request->Facility);
@@ -1654,8 +1772,9 @@ class AuditeeController extends Controller
         $internalAudit->material_name = $request->material_name;
         $internalAudit->if_comments = $request->if_comments;
         $internalAudit->lead_auditor = $request->lead_auditor;
-        $internalAudit->Audit_team =  implode(',', $request->Audit_team);
-        $internalAudit->Auditee =  implode(',', $request->Auditee);
+        $internalAudit->Audit_team = is_array($request->Audit_team) ? implode(',', $request->Audit_team) : $request->Audit_team;
+        $internalAudit->Auditee = is_array($request->Auditee) ? implode(',', $request->Auditee) : $request->Auditee;
+        
         $internalAudit->Auditor_Details = $request->Auditor_Details;
         $internalAudit->Audit_Category = $request->Audit_Category;
         $internalAudit->External_Auditing_Agency = $request->External_Auditing_Agency;
@@ -1668,29 +1787,67 @@ class AuditeeController extends Controller
         $internalAudit->Remarks = $request->Remarks;
 
 
+        $internalAudit->reviewer_person_value = implode(',', $request->reviewer_person_value);
+
+
+
+
+        $internalAudit->qa_cqa_comment = $request->qa_cqa_comment;
+        
+
+
+
 
 
 
         // $internalAudit->Reference_Recores1 =  implode(',', $request->refrence_record);
-        $internalAudit->qa_cqa_comment = $request->qa_cqa_comment;
-        if (!empty($request->qa_cqa_attach)) {
-            $files = [];
-            if ($request->hasfile('qa_cqa_attach')) {
-                
+            // if (!empty($request->qa_cqa_attach)) {
+        //     $files = [];
+        //     if ($request->hasfile('qa_cqa_attach')) {
+
+        //         foreach ($request->file('qa_cqa_attach') as $file) {
+        //             $name = $request->name . 'qa_cqa_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $internalAudit->qa_cqa_attach = json_encode($files);
+        // }
+
+
+
+        if (!empty($request->qa_cqa_attach) || !empty($request->deleted_qa_cqa_attach)) {
+            $existingFiles = json_decode($internalAudit->qa_cqa_attach, true) ?? [];
+        
+            // Handle deleted files
+            if (!empty($request->deleted_qa_cqa_attach)) {
+                $filesToDelete = explode(',', $request->deleted_qa_cqa_attach);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+        
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('qa_cqa_attach')) {
                 foreach ($request->file('qa_cqa_attach') as $file) {
-                    $name = $request->name . 'qa_cqa_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
+                    $name = $request->name . 'qa_cqa_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
                 }
             }
-
-
-            $internalAudit->qa_cqa_attach = json_encode($files);
+        
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $internalAudit->qa_cqa_attach = json_encode($allFiles);
         }
+
         if (!empty($request->file_attachment_guideline)) {
             $files = [];
             if ($request->hasfile('file_attachment_guideline')) {
-                
+
                 foreach ($request->file('file_attachment_guideline') as $file) {
                     $name = $request->name . 'file_attachment_guideline' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
@@ -1701,32 +1858,60 @@ class AuditeeController extends Controller
 
             $internalAudit->file_attachment_guideline = json_encode($files);
         }
- 
+
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_start_date = $request->audit_start_date;
         $internalAudit->audit_end_date = $request->audit_end_date;
         $internalAudit->severity_level = $request->severity_level;
 
-        if (!empty($request->inv_attachment)) {
-            $files = [];
-            if ($request->hasfile('inv_attachment')) {
+        // if (!empty($request->inv_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('inv_attachment')) {
+        //         foreach ($request->file('inv_attachment') as $file) {
+        //             $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $internalAudit->inv_attachment = json_encode($files);
+        // }
+
+
+
+        if (!empty($request->inv_attachment) || !empty($request->deleted_inv_attachment)) {
+            $existingFiles = json_decode($internalAudit->inv_attachment, true) ?? [];
+        
+            // Handle deleted files
+            if (!empty($request->deleted_inv_attachment)) {
+                $filesToDelete = explode(',', $request->deleted_inv_attachment);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+        
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('inv_attachment')) {
                 foreach ($request->file('inv_attachment') as $file) {
-                    $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
+                    $name = $request->name . 'inv_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
                 }
             }
-
-
-            $internalAudit->inv_attachment = json_encode($files);
+        
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $internalAudit->inv_attachment = json_encode($allFiles);
         }
 
 
         if (!empty($request->file_attachment)) {
             $files = [];
             if ($request->hasfile('file_attachment')) {
-                
+
                 foreach ($request->file('file_attachment') as $file) {
                     $name = $request->name . 'file_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
@@ -1766,20 +1951,36 @@ class AuditeeController extends Controller
 
             $internalAudit->report_file = json_encode($files);
         }
-        if (!empty($request->myfile)) {
-            $files = [];
-            if ($request->hasfile('myfile')) {
+      
+
+
+
+        if (!empty($request->myfile) || !empty($request->deleted_myfile)) {
+            $existingFiles = json_decode($internalAudit->myfile, true) ?? [];
+        
+            // Handle deleted files
+            if (!empty($request->deleted_myfile)) {
+                $filesToDelete = explode(',', $request->deleted_myfile);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+        
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('myfile')) {
                 foreach ($request->file('myfile') as $file) {
-                    $name = $request->name . 'myfile' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
+                    $name = $request->name . 'myfile' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
                 }
             }
-
-
-            $internalAudit->myfile = json_encode($files);
-        }
         
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $internalAudit->myfile = json_encode($allFiles);
+        }
+
         if($internalAudit->stage == 2 || $internalAudit->stage == 3 ){
 
 
@@ -1798,7 +1999,7 @@ class AuditeeController extends Controller
 
                 $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->Production_Injection_Review : $request->Production_Injection_Review;
                 $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->Production_Injection_Person : $request->Production_Injection_Person;
-                
+
                 $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
                 $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
 
@@ -1828,16 +2029,16 @@ class AuditeeController extends Controller
 
                 $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
-                
+
                 $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
 
                 $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
                 $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
-                
+
                 $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
                 $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
-                
+
                 $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
                 $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
                 $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
@@ -1849,7 +2050,7 @@ class AuditeeController extends Controller
                 $Cft->Other3_review = $request->Other3_review  == null ? $Cft->Other3_review : $request->Other3_review;
                 $Cft->Other3_person = $request->Other3_person  == null ? $Cft->Other3_person : $request->Other3_person;
                 $Cft->Other3_Department_person = $request->Other3_Department_person  == null ? $Cft->Other3_Department_person : $request->Other3_Department_person;
-                
+
                 $Cft->Other4_review = $request->Other4_review  == null ? $Cft->Other4_review : $request->Other4_review;
                 $Cft->Other4_person = $request->Other4_person  == null ? $Cft->Other4_person : $request->Other4_person;
                 $Cft->Other4_Department_person = $request->Other4_Department_person  == null ? $Cft->Other4_Department_person : $request->Other4_Department_person;
@@ -1898,7 +2099,7 @@ class AuditeeController extends Controller
 
                 $Cft->Engineering_review = $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person;
-                
+
                 $Cft->Environment_Health_review = $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
 
@@ -1907,10 +2108,10 @@ class AuditeeController extends Controller
 
                 $Cft->Project_management_review = $request->Project_management_review;
                 $Cft->Project_management_person = $request->Project_management_person;
-                
+
                 $Cft->Information_Technology_review = $request->Information_Technology_review;
                 $Cft->Information_Technology_person = $request->Information_Technology_person;
-                
+
                 $Cft->Other1_review = $request->Other1_review;
                 $Cft->Other1_person = $request->Other1_person;
                 $Cft->Other1_Department_person = $request->Other1_Department_person;
@@ -1965,13 +2166,13 @@ class AuditeeController extends Controller
 
             $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
             $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
-            
+
             $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
             $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
 
             $Cft->Engineering_assessment = $request->Engineering_assessment;
             $Cft->Engineering_feedback = $request->Engineering_feedback;
-            
+
             $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
             $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
 
@@ -1980,7 +2181,7 @@ class AuditeeController extends Controller
 
             $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
             $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
-            
+
             $Cft->Other1_assessment = $request->Other1_assessment;
             $Cft->Other1_feedback = $request->Other1_feedback;
 
@@ -2051,7 +2252,7 @@ class AuditeeController extends Controller
                     }
                 }
                 $Cft->Production_Injection_Attachment = json_encode($files);
-            }            
+            }
             if (!empty ($request->Store_attachment)) {
                 $files = [];
                 if ($request->hasfile('Store_attachment')) {
@@ -2150,7 +2351,7 @@ class AuditeeController extends Controller
                     }
                 }
                 $Cft->Environment_Health_Safety_attachment = json_encode($files);
-            }            
+            }
             if (!empty ($request->Information_Technology_attachment)) {
                 $files = [];
                 if ($request->hasfile('Information_Technology_attachment')) {
@@ -2228,7 +2429,7 @@ class AuditeeController extends Controller
                     }
                 }
                 $Cft->Other5_attachment = json_encode($files);
-            }   
+            }
 
 
             $Cft->save();
@@ -2405,12 +2606,12 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-    
-           
+
+
             $history->save();
         }
 
-      
+
 
         if ($lastDocument->initiated_through != $internalAudit->initiated_through || !empty($request->comment)) {
 
@@ -2431,7 +2632,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
 
@@ -2456,7 +2657,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
         if ($lastDocument->Initiator_Group != $internalAudit->Initiator_Group || !empty($request->Initiator_Group_comment)) {
@@ -2478,7 +2679,32 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
+            $history->save();
+        }
+
+
+
+        if ($lastDocument->reviewer_person_value != $internalAudit->reviewer_person_value || !empty($request->reviewer_person_value_comment)) {
+
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'CFT review selection';
+            $history->previous = $lastDocument->reviewer_person_value;
+            $history->current = $internalAudit->reviewer_person_value;
+            $history->comment = $request->date_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->reviewer_person_value) || $lastDocument->reviewer_person_value === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
             $history->save();
         }
 
@@ -2501,12 +2727,12 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
 //-----------------------------------------------------------------------------------------
-          
-            if ($lastDocument->initiated_if_other != $internalAudit->initiated_if_other || !empty($request->Initiator_Group_comment)) {
+
+            if ($lastDocument->initiated_if_other != $internalAudit->initiated_if_other || !empty($request->others_comment)) {
 
                 $history = new AuditTrialExternal();
                 $history->ExternalAudit_id = $id;
@@ -2525,18 +2751,18 @@ class AuditeeController extends Controller
                 } else {
                     $history->action_name = "Update";
                 }
-             
-            
+
+
                 $history->save();
             }
 
-            if ($lastDocument->initiated_if_other != $internalAudit->initiated_if_other || !empty($request->Initiator_Group_comment)) {
+            if ($lastDocument->others != $internalAudit->others || !empty($request->Initiator_Group_comment)) {
 
                 $history = new AuditTrialExternal();
                 $history->ExternalAudit_id = $id;
                 $history->activity_type = 'Others';
-                $history->previous = $lastDocument->initiated_if_other;
-                $history->current = $internalAudit->initiated_if_other;
+                $history->previous = $lastDocument->others;
+                $history->current = $internalAudit->others;
                 $history->comment = $request->date_comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2544,13 +2770,13 @@ class AuditeeController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->change_to =   "Not Applicable";
                 $history->change_from = $lastDocument->status;
-                if (is_null($lastDocument->initiated_if_other) || $lastDocument->initiated_if_other === '') {
+                if (is_null($lastDocument->others) || $lastDocument->others === '') {
                     $history->action_name = "New";
                 } else {
                     $history->action_name = "Update";
                 }
-             
-            
+
+
                 $history->save();
             }
 
@@ -2574,8 +2800,8 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
+
+
             $history->save();
         }
         if ($lastDocument->audit_type != $internalAudit->audit_type || !empty($request->audit_type_comment)) {
@@ -2597,8 +2823,8 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
+
+
             $history->save();
         }
         if ($lastDocument->if_other != $internalAudit->if_other || !empty($request->if_other_comment)) {
@@ -2620,7 +2846,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
 
@@ -2644,7 +2870,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
 
@@ -2667,8 +2893,8 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
+
+
             $history->save();
         }
         if ($lastDocument->initial_comments != $internalAudit->initial_comments || !empty($request->initial_comments_comment)) {
@@ -2690,7 +2916,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->start_date != $internalAudit->start_date || !empty($request->start_date_comment)) {
@@ -2712,7 +2938,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->end_date != $internalAudit->end_date || !empty($request->end_date_comment)) {
@@ -2734,7 +2960,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->audit_agenda != $internalAudit->audit_agenda || !empty($request->audit_agenda_comment)) {
@@ -2756,7 +2982,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->Facility != $internalAudit->Facility || !empty($request->Facility_comment)) {
@@ -2799,7 +3025,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
 
@@ -2824,7 +3050,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
 
@@ -2848,7 +3074,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
 
@@ -2871,7 +3097,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
 
@@ -2894,7 +3120,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
 
@@ -2941,7 +3167,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->lead_auditor != $internalAudit->lead_auditor || !empty($request->lead_auditor_comment)) {
@@ -2963,7 +3189,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->Audit_team != $internalAudit->Audit_team || !empty($request->Audit_team_comment)) {
@@ -2985,7 +3211,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->Auditee != $internalAudit->Auditee || !empty($request->Auditee_comment)) {
@@ -3007,7 +3233,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->Auditor_Details != $internalAudit->Auditor_Details || !empty($request->Auditor_Details_comment)) {
@@ -3029,7 +3255,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->Comments != $internalAudit->Comments || !empty($request->Comments_comment)) {
@@ -3051,7 +3277,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->Audit_Comments1 != $internalAudit->Audit_Comments1 || !empty($request->Audit_Comments1_comment)) {
@@ -3073,7 +3299,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->Remarks != $internalAudit->Remarks || !empty($request->Remarks_comment)) {
@@ -3095,7 +3321,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->Reference_Recores1 != $internalAudit->Reference_Recores1 || !empty($request->Reference_Recores1_comment)) {
@@ -3117,7 +3343,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->Reference_Recores2 != $internalAudit->Reference_Recores2 || !empty($request->Reference_Recores2_comment)) {
@@ -3139,7 +3365,7 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->save();
         }
         if ($lastDocument->Audit_Comments2 != $internalAudit->Audit_Comments2 || !empty($request->Audit_Comments2_comment)) {
@@ -3161,8 +3387,34 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
+
+
+            $history->save();
+        }
+
+
+
+        if ($lastDocument->qa_cqa_comment != $internalAudit->qa_cqa_comment || !empty($request->qa_cqa_comment_comment)) {
+
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'QA/CQA Head Approval Comment';
+            $history->previous = $lastDocument->qa_cqa_comment;
+            $history->current = $internalAudit->qa_cqa_comment;
+            $history->comment = $request->date_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->qa_cqa_comment) || $lastDocument->qa_cqa_comment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
+
             $history->save();
         }
         if ($lastDocument->inv_attachment != $internalAudit->inv_attachment || !empty($request->inv_attachment_comment)) {
@@ -3184,8 +3436,8 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
+
+
             $history->save();
         }
         if ($lastDocument->file_attachment != $internalAudit->file_attachment || !empty($request->file_attachment_comment)) {
@@ -3207,8 +3459,8 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
+
+
             $history->save();
         }
         if ($lastDocument->Audit_file != $internalAudit->Audit_file || !empty($request->Audit_file_comment)) {
@@ -3230,8 +3482,8 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
+
+
             $history->save();
         }
         if ($lastDocument->report_file != $internalAudit->report_file || !empty($request->report_file_comment)) {
@@ -3253,15 +3505,41 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
+
+
             $history->save();
         }
+        if ($lastDocument->qa_cqa_attach != $internalAudit->qa_cqa_attach || !empty($request->qa_cqa_attach_comment)) {
+
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'QA/CQA Head Approval Attachments';
+            $history->previous = $lastDocument->qa_cqa_attach;
+            $history->current = $internalAudit->qa_cqa_attach;
+            $history->comment = $request->date_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->qa_cqa_attach) || $lastDocument->qa_cqa_attach === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
+
+            $history->save();
+        }
+
+
+
         if ($lastDocument->myfile != $internalAudit->myfile || !empty($request->myfile_comment)) {
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Inv Attachment';
+            $history->activity_type = 'Summary And Response Attachments';
             $history->previous = $lastDocument->myfile;
             $history->current = $internalAudit->myfile;
             $history->comment = $request->date_comment;
@@ -3276,11 +3554,10 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
+
+
             $history->save();
         }
-    
         if ($lastDocument->due_date != $internalAudit->due_date || !empty($request->due_date_comment)) {
 
             $history = new AuditTrialExternal();
@@ -3300,18 +3577,25 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-         
-         
-         
+
+
+
             $history->save();
         }
-        if ($lastDocument->audit_start_date != $internalAudit->audit_start_date || !empty($request->audit_start_date_comment)) {
+
+
+
+
+
+
+
+        if ($lastDocument->start_date_gi != $internalAudit->start_date_gi || !empty($request->start_date_gi_comment)) {
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Audit Start Date';
-            $history->previous = $lastDocument->audit_start_date;
-            $history->current = $internalAudit->audit_start_date;
+            $history->activity_type = 'Start Date of Audit';
+            $history->previous = $lastDocument->start_date_gi;
+            $history->current = $internalAudit->start_date_gi;
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3319,23 +3603,23 @@ class AuditeeController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->audit_start_date) || $lastDocument->audit_start_date === '') {
+            if (is_null($lastDocument->start_date_gi) || $lastDocument->start_date_gi === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-         
-         
-         
+
+
+
             $history->save();
         }
-        if ($lastDocument->audit_end_date != $internalAudit->audit_end_date || !empty($request->audit_end_date_comment)) {
+        if ($lastDocument->end_date_gi != $internalAudit->end_date_gi || !empty($request->end_date_gi_comment)) {
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Audit End Date';
-            $history->previous = $lastDocument->audit_end_date;
-            $history->current = $internalAudit->audit_end_date;
+            $history->activity_type = 'End Date of Audit';
+            $history->previous = $lastDocument->end_date_gi;
+            $history->current = $internalAudit->end_date_gi;
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3343,16 +3627,22 @@ class AuditeeController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->audit_end_date) || $lastDocument->audit_end_date === '') {
+            if (is_null($lastDocument->end_date_gi) || $lastDocument->end_date_gi === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-         
-         
-         
+
+
+
             $history->save();
         }
+
+
+
+
+
+
 
 
 
@@ -3374,6 +3664,2823 @@ $AuditorShow->identifier = 'Auditors';
 $AuditorShow->data = $request->AuditorNew;
 $AuditorShow->save();
 }
+
+
+
+
+
+
+
+
+
+   /************ CFT Review ************/
+          /*************** Quality Assurance ***************/
+          if ($lastCft->Quality_Assurance_Review != $request->Quality_Assurance_Review && $request->Quality_Assurance_Review != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Quality Assurance Review Required';
+            $history->previous = $lastCft->Quality_Assurance_Review;
+            $history->current = $request->Quality_Assurance_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Quality_Assurance_Review) || $lastCft->Quality_Assurance_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->QualityAssurance_person != $request->QualityAssurance_person && $request->QualityAssurance_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Quality Assurance Person';
+            $history->previous = $lastCft->QualityAssurance_person;
+            $history->current = $request->QualityAssurance_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->QualityAssurance_person) || $lastCft->QualityAssurance_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->QualityAssurance_assessment != $request->QualityAssurance_assessment && $request->QualityAssurance_assessment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Quality Assurance Assessment';
+            $history->previous = $lastCft->QualityAssurance_assessment;
+            $history->current = $request->QualityAssurance_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->QualityAssurance_assessment) || $lastCft->QualityAssurance_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->QualityAssurance_feedback != $request->QualityAssurance_feedback && $request->QualityAssurance_feedback != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Quality Assurance Feedback';
+            $history->previous = $lastCft->QualityAssurance_feedback;
+            $history->current = $request->QualityAssurance_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->QualityAssurance_feedback) || $lastCft->QualityAssurance_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+         if ($lastCft->Quality_Assurance_attachment != $request->Quality_Assurance_attachment && $request->Quality_Assurance_attachment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Quality Assurance Attachment';
+            $history->previous = $lastCft->Quality_Assurance_attachment;
+            $history->current =implode(',', $request->Quality_Assurance_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Quality_Assurance_attachment) || $lastCft->Quality_Assurance_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->QualityAssurance_by != $request->QualityAssurance_by && $request->QualityAssurance_by != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Quality Assurance Review By';
+            $history->previous = $lastCft->QualityAssurance_by;
+            $history->current = $request->QualityAssurance_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->QualityAssurance_by) || $lastCft->QualityAssurance_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->QualityAssurance_on != $request->QualityAssurance_on && $request->QualityAssurance_on != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Quality Assurance Review On';
+            $history->previous = $lastCft->QualityAssurance_on;
+            $history->current = $request->QualityAssurance_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->QualityAssurance_person) || $lastCft->QualityAssurance_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+        /*************** Production Tablet ***************/
+        if ($lastCft->Production_Table_Review != $request->Production_Table_Review && $request->Production_Table_Review != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule/Powder Review Required';
+            $history->previous = $lastCft->Production_Table_Review;
+            $history->current = $request->Production_Table_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Table_Review) || $lastCft->Production_Table_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Table_Person != $request->Production_Table_Person && $request->Production_Table_Person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule/Powder Person';
+            $history->previous = $lastCft->Production_Table_Person;
+            $history->current = $request->Production_Table_Person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Table_Person) || $lastCft->Production_Table_Person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Table_Assessment != $request->Production_Table_Assessment && $request->Production_Table_Assessment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule/Powder Assessment';
+            $history->previous = $lastCft->Production_Table_Assessment;
+            $history->current = $request->Production_Table_Assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Table_Assessment) || $lastCft->Production_Table_Assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Table_Feedback != $request->Production_Table_Feedback && $request->Production_Table_Feedback != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule/Powder Feeback';
+            $history->previous = $lastCft->Production_Table_Feedback;
+            $history->current = $request->Production_Table_Feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Table_Feedback) || $lastCft->Production_Table_Feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Table_Attachment != $request->Production_Table_Attachment && $request->Production_Table_Attachment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule/Powder Attachment';
+            $history->previous = $lastCft->Production_Table_Attachment;
+            $history->current = implode(',',$request->Production_Table_Attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Table_Attachment) || $lastCft->Production_Table_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Table_By != $request->Production_Table_By && $request->Production_Table_By != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule/Powder Review By';
+            $history->previous = $lastCft->Production_Table_Review;
+            $history->current = $request->Production_Table_By;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Table_By) || $lastCft->Production_Table_By === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Table_On != $request->Production_Table_On && $request->Production_Table_On != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule/Powder On';
+            $history->previous = $lastCft->Production_Table_On;
+            $history->current = $request->Production_Table_On;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Table_On) || $lastCft->Production_Table_On === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+         /*************** Production Liquid ***************/
+         if ($lastCft->ProductionLiquid_Review != $request->ProductionLiquid_Review && $request->ProductionLiquid_Review != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Review Required';
+            $history->previous = $lastCft->ProductionLiquid_Review;
+            $history->current = $request->ProductionLiquid_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ProductionLiquid_Review) || $lastCft->ProductionLiquid_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ProductionLiquid_person != $request->ProductionLiquid_person && $request->ProductionLiquid_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Person';
+            $history->previous = $lastCft->ProductionLiquid_person;
+            $history->current = $request->ProductionLiquid_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ProductionLiquid_person) || $lastCft->ProductionLiquid_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ProductionLiquid_assessment != $request->ProductionLiquid_assessment && $request->ProductionLiquid_assessment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Assessment';
+            $history->previous = $lastCft->ProductionLiquid_assessment;
+            $history->current = $request->ProductionLiquid_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ProductionLiquid_assessment) || $lastCft->ProductionLiquid_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ProductionLiquid_feedback != $request->ProductionLiquid_feedback && $request->ProductionLiquid_feedback != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Feedback';
+            $history->previous = $lastCft->ProductionLiquid_feedback;
+            $history->current = $request->ProductionLiquid_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ProductionLiquid_feedback) || $lastCft->ProductionLiquid_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ProductionLiquid_attachment != $request->ProductionLiquid_attachment && $request->ProductionLiquid_attachment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Feedback';
+            $history->previous = $lastCft->ProductionLiquid_attachment;
+            $history->current = implode(',',$request->ProductionLiquid_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ProductionLiquid_attachment) || $lastCft->ProductionLiquid_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ProductionLiquid_by != $request->ProductionLiquid_by && $request->ProductionLiquid_by != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Review By';
+            $history->previous = $lastCft->ProductionLiquid_by;
+            $history->current = $request->ProductionLiquid_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ProductionLiquid_by) || $lastCft->ProductionLiquid_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ProductionLiquid_on != $request->ProductionLiquid_on && $request->ProductionLiquid_on != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Review On';
+            $history->previous = $lastCft->ProductionLiquid_on;
+            $history->current = $request->ProductionLiquid_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ProductionLiquid_on) || $lastCft->ProductionLiquid_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Production Injection ***************/
+        if ($lastCft->Production_Injection_Review != $request->Production_Injection_Review && $request->Production_Injection_Review != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Injection Review Required';
+            $history->previous = $lastCft->Production_Injection_Review;
+            $history->current = $request->Production_Injection_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Injection_Review) || $lastCft->Production_Injection_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Injection_Person != $request->Production_Injection_Person && $request->Production_Injection_Person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Injection Person';
+            $history->previous = $lastCft->Production_Injection_Person;
+            $history->current = $request->Production_Injection_Person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Injection_Person) || $lastCft->Production_Injection_Person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Injection_Assessment != $request->Production_Injection_Assessment && $request->Production_Injection_Assessment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Injection Assessment';
+            $history->previous = $lastCft->Production_Injection_Assessment;
+            $history->current = $request->Production_Injection_Assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Injection_Assessment) || $lastCft->Production_Injection_Assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Injection_Feedback != $request->Production_Injection_Feedback && $request->Production_Injection_Feedback != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Injection Feedback';
+            $history->previous = $lastCft->Production_Injection_Feedback;
+            $history->current = $request->Production_Injection_Feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Injection_Feedback) || $lastCft->Production_Injection_Feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Injection_Attachment != $request->Production_Injection_Attachment && $request->Production_Injection_Attachment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Injection On';
+            $history->previous = $lastCft->Production_Injection_Attachment;
+            $history->current =implode(',', $request->Production_Injection_Attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Injection_Attachment) || $lastCft->Production_Injection_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Injection_By != $request->Production_Injection_By && $request->Production_Injection_By != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Injection Review By';
+            $history->previous = $lastCft->Production_Injection_By;
+            $history->current = $request->Production_Injection_By;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Injection_By) || $lastCft->Production_Injection_By === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Injection_On != $request->Production_Injection_On && $request->Production_Injection_On != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Production Injection On';
+            $history->previous = $lastCft->Production_Injection_On;
+            $history->current = $request->Production_Injection_On;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Injection_On) || $lastCft->Production_Injection_On === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Stores ***************/
+        if ($lastCft->Store_Review != $request->Store_Review && $request->Store_Review != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Store Review Required';
+            $history->previous = $lastCft->Store_Review;
+            $history->current = $request->Store_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Store_Review) || $lastCft->Store_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Store_person != $request->Store_person && $request->Store_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Store Person';
+            $history->previous = $lastCft->Store_person;
+            $history->current = $request->Store_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Store_person) || $lastCft->Store_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Store_assessment != $request->Store_assessment && $request->Store_assessment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Store Assessment';
+            $history->previous = $lastCft->Store_assessment;
+            $history->current = $request->Store_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Store_assessment) || $lastCft->Store_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Store_feedback != $request->Store_feedback && $request->Store_feedback != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Store Feedback';
+            $history->previous = $lastCft->Store_feedback;
+            $history->current = $request->Store_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Store_feedback) || $lastCft->Store_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+         if ($lastCft->Store_attachment != $request->Store_attachment && $request->Store_attachment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Store Review On';
+            $history->previous = $lastCft->Store_attachment;
+            $history->current =implode(',', $request->Store_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Store_attachment) || $lastCft->Store_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Store_by != $request->Store_by && $request->Store_by != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Store Review By';
+            $history->previous = $lastCft->Store_by;
+            $history->current = $request->Store_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Store_by) || $lastCft->Store_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Store_on != $request->Store_on && $request->Store_on != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Store Review On';
+            $history->previous = $lastCft->Store_on;
+            $history->current = $request->Store_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Store_on) || $lastCft->Store_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Quality Control ***************/
+        if ($lastCft->Quality_review != $request->Quality_review && $request->Quality_review != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Quality Control Required';
+            $history->previous = $lastCft->Quality_review;
+            $history->current = $request->Quality_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Quality_review) || $lastCft->Quality_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Quality_Control_Person != $request->Quality_Control_Person && $request->Quality_Control_Person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Quality Control Person';
+            $history->previous = $lastCft->Quality_Control_Person;
+            $history->current = $request->Quality_Control_Person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Quality_Control_Person) || $lastCft->Quality_Control_Person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Quality_Control_assessment != $request->Quality_Control_assessment && $request->Quality_Control_assessment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Quality Control Assessment';
+            $history->previous = $lastCft->Quality_Control_assessment;
+            $history->current = $request->Quality_Control_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Quality_Control_assessment) || $lastCft->Quality_Control_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Quality_Control_feedback != $request->Quality_Control_feedback && $request->Quality_Control_feedback != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Quality Control Feeback';
+            $history->previous = $lastCft->Quality_Control_feedback;
+            $history->current = $request->Quality_Control_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Quality_Control_feedback) || $lastCft->Quality_Control_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        // if ($lastCft->Quality_Control_by != $request->Quality_Control_by && $request->Quality_Control_by != null) {
+        //     $history = new AuditTrialExternal;
+        //     $history->ExternalAudit_id = $id;
+        //     $history->activity_type = 'Quality Control By';
+        //     $history->previous = $lastCft->Quality_Control_by;
+        //     $history->current = $request->Quality_Control_by;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Quality_Control_by) || $lastCft->Quality_Control_by === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
+        // if ($lastCft->Quality_Control_on != $request->Quality_Control_on && $request->Quality_Control_on != null) {
+        //     $history = new AuditTrialExternal;
+        //     $history->ExternalAudit_id = $id;
+        //     $history->activity_type = 'Quality Control On';
+        //     $history->previous = $lastCft->Quality_Control_on;
+        //     $history->current = $request->Quality_Control_on;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Quality_Control_on) || $lastCft->Quality_Control_on === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
+        if ($lastCft->Quality_Control_attachment != $request->Quality_Control_attachment && $request->Quality_Control_attachment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Quality Control On';
+            $history->previous = $lastCft->Quality_Control_attachment;
+            $history->current =implode(',', $request->Quality_Control_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Quality_Control_attachment) || $lastCft->Quality_Control_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Research & Development ***************/
+        if ($lastCft->ResearchDevelopment_Review != $request->ResearchDevelopment_Review && $request->ResearchDevelopment_Review != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Research & Development Required';
+            $history->previous = $lastCft->ResearchDevelopment_Review;
+            $history->current = $request->ResearchDevelopment_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ResearchDevelopment_Review) || $lastCft->ResearchDevelopment_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ResearchDevelopment_person != $request->ResearchDevelopment_person && $request->ResearchDevelopment_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Research & Development Person';
+            $history->previous = $lastCft->ResearchDevelopment_person;
+            $history->current = $request->ResearchDevelopment_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ResearchDevelopment_person) || $lastCft->ResearchDevelopment_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ResearchDevelopment_assessment != $request->ResearchDevelopment_assessment && $request->ResearchDevelopment_assessment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Research & Development Assessment';
+            $history->previous = $lastCft->ResearchDevelopment_assessment;
+            $history->current = $request->ResearchDevelopment_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ResearchDevelopment_assessment) || $lastCft->ResearchDevelopment_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ResearchDevelopment_feedback != $request->ResearchDevelopment_feedback && $request->ResearchDevelopment_feedback != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Research & Development Feedback';
+            $history->previous = $lastCft->ResearchDevelopment_feedback;
+            $history->current = $request->ResearchDevelopment_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ResearchDevelopment_feedback) || $lastCft->ResearchDevelopment_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ResearchDevelopment_by != $request->ResearchDevelopment_by && $request->ResearchDevelopment_by != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Research & Development By';
+            $history->previous = $lastCft->ResearchDevelopment_by;
+            $history->current = $request->ResearchDevelopment_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ResearchDevelopment_by) || $lastCft->ResearchDevelopment_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ResearchDevelopment_on != $request->ResearchDevelopment_on && $request->ResearchDevelopment_on != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Research & Development On';
+            $history->previous = $lastCft->ResearchDevelopment_on;
+            $history->current = $request->ResearchDevelopment_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ResearchDevelopment_on) || $lastCft->ResearchDevelopment_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ResearchDevelopment_attachment != $request->ResearchDevelopment_attachment && $request->ResearchDevelopment_attachment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Research & Development On';
+            $history->previous = $lastCft->ResearchDevelopment_attachment;
+            $history->current =implode(',', $request->ResearchDevelopment_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ResearchDevelopment_attachment) || $lastCft->ResearchDevelopment_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Engineering ***************/
+        if ($lastCft->Engineering_review != $request->Engineering_review && $request->Engineering_review != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Engineering Review Required';
+            $history->previous = $lastCft->Engineering_review;
+            $history->current = $request->Engineering_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Engineering_review) || $lastCft->Engineering_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Engineering_person != $request->Engineering_person && $request->Engineering_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Engineering Person';
+            $history->previous = $lastCft->Engineering_person;
+            $history->current = $request->Engineering_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Engineering_person) || $lastCft->Engineering_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Engineering_assessment != $request->Engineering_assessment && $request->Engineering_assessment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Engineering Assessment';
+            $history->previous = $lastCft->Engineering_assessment;
+            $history->current = $request->Engineering_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Engineering_assessment) || $lastCft->Engineering_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Engineering_feedback != $request->Engineering_feedback && $request->Engineering_feedback != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Engineering Feedback';
+            $history->previous = $lastCft->Engineering_feedback;
+            $history->current = $request->Engineering_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Engineering_feedback) || $lastCft->Engineering_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Engineering_by != $request->Engineering_by && $request->Engineering_by != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Engineering Review By';
+            $history->previous = $lastCft->Engineering_by;
+            $history->current = $request->Engineering_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Engineering_by) || $lastCft->Engineering_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Engineering_on != $request->Engineering_on && $request->Engineering_on != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Engineering Review On';
+            $history->previous = $lastCft->Engineering_on;
+            $history->current = $request->Engineering_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Engineering_on) || $lastCft->Engineering_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Engineering_attachment != $request->Engineering_attachment && $request->Engineering_attachment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Engineering Review On';
+            $history->previous = $lastCft->Engineering_attachment;
+            $history->current = implode(',',$request->Engineering_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Engineering_attachment) || $lastCft->Engineering_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Human Resource ***************/
+        if ($lastCft->Human_Resource_review != $request->Human_Resource_review && $request->Human_Resource_review != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Human Resource Review Required';
+            $history->previous = $lastCft->Human_Resource_review;
+            $history->current = $request->Human_Resource_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Human_Resource_review) || $lastCft->Human_Resource_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Human_Resource_person != $request->Human_Resource_person && $request->Human_Resource_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Human Resource Person';
+            $history->previous = $lastCft->Human_Resource_person;
+            $history->current = $request->Human_Resource_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Human_Resource_person) || $lastCft->Human_Resource_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Human_Resource_assessment != $request->Human_Resource_assessment && $request->Human_Resource_assessment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Human Resource Assessment';
+            $history->previous = $lastCft->Human_Resource_assessment;
+            $history->current = $request->Human_Resource_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Human_Resource_assessment) || $lastCft->Human_Resource_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Human_Resource_feedback != $request->Human_Resource_feedback && $request->Human_Resource_feedback != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Human Resource Feedback';
+            $history->previous = $lastCft->Human_Resource_feedback;
+            $history->current = $request->Human_Resource_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Human_Resource_feedback) || $lastCft->Human_Resource_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Human_Resource_by != $request->Human_Resource_by && $request->Human_Resource_by != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Human Resource Review By';
+            $history->previous = $lastCft->Human_Resource_by;
+            $history->current = $request->Human_Resource_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Human_Resource_by) || $lastCft->Human_Resource_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Human_Resource_on != $request->Human_Resource_on && $request->Human_Resource_on != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Human Resource Review On';
+            $history->previous = $lastCft->Human_Resource_on;
+            $history->current = $request->Human_Resource_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Human_Resource_on) || $lastCft->Human_Resource_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Human_Resource_attachment != $request->Human_Resource_attachment && $request->Human_Resource_attachment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Human Resource Review On';
+            $history->previous = $lastCft->Human_Resource_attachment;
+            $history->current =implode(',', $request->Human_Resource_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Human_Resource_attachment) || $lastCft->Human_Resource_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Microbiology ***************/
+        if ($lastCft->Microbiology_Review != $request->Microbiology_Review && $request->Microbiology_Review != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Microbiology Review Required';
+            $history->previous = $lastCft->Microbiology_Review;
+            $history->current = $request->Microbiology_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Microbiology_Review) || $lastCft->Microbiology_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Microbiology_person != $request->Microbiology_person && $request->Microbiology_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Microbiology Person';
+            $history->previous = $lastCft->Microbiology_person;
+            $history->current = $request->Microbiology_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Microbiology_person) || $lastCft->Microbiology_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Microbiology_assessment != $request->Microbiology_assessment && $request->Microbiology_assessment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Microbiology Assessment';
+            $history->previous = $lastCft->Microbiology_assessment;
+            $history->current = $request->Microbiology_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Microbiology_assessment) || $lastCft->Microbiology_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Microbiology_feedback != $request->Microbiology_feedback && $request->Microbiology_feedback != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Microbiology Feedback';
+            $history->previous = $lastCft->Microbiology_feedback;
+            $history->current = $request->Microbiology_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Microbiology_feedback) || $lastCft->Microbiology_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Microbiology_by != $request->Microbiology_by && $request->Microbiology_by != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Microbiology Review By';
+            $history->previous = $lastCft->Microbiology_by;
+            $history->current = $request->Microbiology_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Microbiology_by) || $lastCft->Microbiology_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Microbiology_on != $request->Microbiology_on && $request->Microbiology_on != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Microbiology Review On';
+            $history->previous = $lastCft->Microbiology_on;
+            $history->current = $request->Microbiology_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Microbiology_on) || $lastCft->Microbiology_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+         if ($lastCft->Microbiology_attachment != $request->Microbiology_attachment && $request->Microbiology_attachment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Microbiology Review On';
+            $history->previous = $lastCft->Microbiology_attachment;
+            $history->current = implode(',',$request->Microbiology_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Microbiology_attachment) || $lastCft->Microbiology_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Regulatory Affair ***************/
+        if ($lastCft->RegulatoryAffair_Review != $request->RegulatoryAffair_Review && $request->RegulatoryAffair_Review != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Regulatory Affair Review Required';
+            $history->previous = $lastCft->RegulatoryAffair_Review;
+            $history->current = $request->RegulatoryAffair_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->RegulatoryAffair_Review) || $lastCft->RegulatoryAffair_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->RegulatoryAffair_person != $request->RegulatoryAffair_person && $request->RegulatoryAffair_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Regulatory Affair Person';
+            $history->previous = $lastCft->RegulatoryAffair_person;
+            $history->current = $request->RegulatoryAffair_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->RegulatoryAffair_person) || $lastCft->RegulatoryAffair_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->RegulatoryAffair_assessment != $request->RegulatoryAffair_assessment && $request->RegulatoryAffair_assessment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Regulatory Affair Assessment';
+            $history->previous = $lastCft->RegulatoryAffair_assessment;
+            $history->current = $request->RegulatoryAffair_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->RegulatoryAffair_assessment) || $lastCft->RegulatoryAffair_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->RegulatoryAffair_feedback != $request->RegulatoryAffair_feedback && $request->RegulatoryAffair_feedback != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Regulatory Affair Feedback';
+            $history->previous = $lastCft->RegulatoryAffair_feedback;
+            $history->current = $request->RegulatoryAffair_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->RegulatoryAffair_feedback) || $lastCft->RegulatoryAffair_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->RegulatoryAffair_by != $request->RegulatoryAffair_by && $request->RegulatoryAffair_by != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Regulatory Affair Review By';
+            $history->previous = $lastCft->RegulatoryAffair_by;
+            $history->current = $request->RegulatoryAffair_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->RegulatoryAffair_by) || $lastCft->RegulatoryAffair_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->RegulatoryAffair_on != $request->RegulatoryAffair_on  && $request->RegulatoryAffair_on != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Regulatory Affair Review On';
+            $history->previous = $lastCft->RegulatoryAffair_on;
+            $history->current = $request->RegulatoryAffair_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->RegulatoryAffair_on) || $lastCft->RegulatoryAffair_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->RegulatoryAffair_attachment != $request->RegulatoryAffair_attachment  && $request->RegulatoryAffair_attachment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Regulatory Affair Review On';
+            $history->previous = $lastCft->RegulatoryAffair_attachment;
+            $history->current =implode(',', $request->RegulatoryAffair_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->RegulatoryAffair_attachment) || $lastCft->RegulatoryAffair_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Corporate Quality Assurance ***************/
+        if ($lastCft->CorporateQualityAssurance_Review != $request->CorporateQualityAssurance_Review && $request->CorporateQualityAssurance_Review != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Review Required';
+            $history->previous = $lastCft->CorporateQualityAssurance_Review;
+            $history->current = $request->CorporateQualityAssurance_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->CorporateQualityAssurance_Review) || $lastCft->CorporateQualityAssurance_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->CorporateQualityAssurance_person != $request->CorporateQualityAssurance_person && $request->CorporateQualityAssurance_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Person';
+            $history->previous = $lastCft->CorporateQualityAssurance_person;
+            $history->current = $request->CorporateQualityAssurance_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->CorporateQualityAssurance_person) || $lastCft->CorporateQualityAssurance_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->CorporateQualityAssurance_assessment != $request->CorporateQualityAssurance_assessment && $request->CorporateQualityAssurance_assessment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Assessment';
+            $history->previous = $lastCft->CorporateQualityAssurance_assessment;
+            $history->current = $request->CorporateQualityAssurance_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->CorporateQualityAssurance_assessment) || $lastCft->CorporateQualityAssurance_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->CorporateQualityAssurance_feedback != $request->CorporateQualityAssurance_feedback && $request->CorporateQualityAssurance_feedback != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Feedback';
+            $history->previous = $lastCft->CorporateQualityAssurance_feedback;
+            $history->current = $request->CorporateQualityAssurance_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->CorporateQualityAssurance_feedback) || $lastCft->CorporateQualityAssurance_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->CorporateQualityAssurance_by != $request->CorporateQualityAssurance_by && $request->CorporateQualityAssurance_by != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Review By';
+            $history->previous = $lastCft->CorporateQualityAssurance_by;
+            $history->current = $request->CorporateQualityAssurance_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->CorporateQualityAssurance_by) || $lastCft->CorporateQualityAssurance_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->CorporateQualityAssurance_on != $request->CorporateQualityAssurance_on && $request->CorporateQualityAssurance_on != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Review On';
+            $history->previous = $lastCft->CorporateQualityAssurance_on;
+            $history->current = $request->CorporateQualityAssurance_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->CorporateQualityAssurance_on) || $lastCft->CorporateQualityAssurance_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->CorporateQualityAssurance_attachment != $request->CorporateQualityAssurance_attachment && $request->CorporateQualityAssurance_attachment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Review On';
+            $history->previous = $lastCft->CorporateQualityAssurance_attachment;
+            $history->current =implode(',', $request->CorporateQualityAssurance_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->CorporateQualityAssurance_attachment) || $lastCft->CorporateQualityAssurance_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Safety ***************/
+        if ($lastCft->Environment_Health_review != $request->Environment_Health_review && $request->Environment_Health_review != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Safety Review Required';
+            $history->previous = $lastCft->Environment_Health_review;
+            $history->current = $request->Environment_Health_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Environment_Health_review) || $lastCft->Environment_Health_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Environment_Health_Safety_person != $request->Environment_Health_Safety_person && $request->Environment_Health_Safety_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Safety Person';
+            $history->previous = $lastCft->Environment_Health_Safety_person;
+            $history->current = $request->Environment_Health_Safety_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Environment_Health_Safety_person) || $lastCft->Environment_Health_Safety_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Health_Safety_assessment != $request->Health_Safety_assessment && $request->Health_Safety_assessment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Safety Assessment';
+            $history->previous = $lastCft->Health_Safety_assessment;
+            $history->current = $request->Health_Safety_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Health_Safety_assessment) || $lastCft->Health_Safety_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Health_Safety_feedback != $request->Health_Safety_feedback && $request->Health_Safety_feedback != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Safety Feedback';
+            $history->previous = $lastCft->Health_Safety_feedback;
+            $history->current = $request->Health_Safety_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Health_Safety_feedback) || $lastCft->Health_Safety_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Environment_Health_Safety_by != $request->Environment_Health_Safety_by && $request->Environment_Health_Safety_by != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Safety Review By';
+            $history->previous = $lastCft->Environment_Health_Safety_by;
+            $history->current = $request->Environment_Health_Safety_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Environment_Health_Safety_by) || $lastCft->Environment_Health_Safety_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Environment_Health_Safety_on != $request->Environment_Health_Safety_on && $request->Environment_Health_Safety_on != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Safety Review On';
+            $history->previous = $lastCft->Environment_Health_Safety_on;
+            $history->current = $request->Environment_Health_Safety_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Environment_Health_Safety_on) || $lastCft->Environment_Health_Safety_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Environment_Health_Safety_attachment != $request->Environment_Health_Safety_attachment && $request->Environment_Health_Safety_attachment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Safety Review On';
+            $history->previous = $lastCft->Environment_Health_Safety_attachment;
+            $history->current =implode(',', $request->Environment_Health_Safety_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Environment_Health_Safety_attachment) || $lastCft->Environment_Health_Safety_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Contract Giver ***************/
+        if ($lastCft->ContractGiver_Review != $request->ContractGiver_Review && $request->ContractGiver_Review != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Contract Giver Review Required';
+            $history->previous = $lastCft->ContractGiver_Review;
+            $history->current = $request->ContractGiver_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ContractGiver_Review) || $lastCft->ContractGiver_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ContractGiver_person != $request->ContractGiver_person && $request->ContractGiver_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Contract Giver Person';
+            $history->previous = $lastCft->ContractGiver_person;
+            $history->current = $request->ContractGiver_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ContractGiver_person) || $lastCft->ContractGiver_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ContractGiver_assessment != $request->ContractGiver_assessment && $request->ContractGiver_assessment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Contract Giver Assessment';
+            $history->previous = $lastCft->ContractGiver_assessment;
+            $history->current = $request->ContractGiver_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ContractGiver_assessment) || $lastCft->ContractGiver_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ContractGiver_feedback != $request->ContractGiver_feedback && $request->ContractGiver_feedback != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Contract Giver Feedback';
+            $history->previous = $lastCft->ContractGiver_feedback;
+            $history->current = $request->ContractGiver_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ContractGiver_feedback) || $lastCft->ContractGiver_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ContractGiver_by != $request->ContractGiver_by && $request->ContractGiver_by != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Contract Giver Review By';
+            $history->previous = $lastCft->ContractGiver_by;
+            $history->current = $request->ContractGiver_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ContractGiver_by) || $lastCft->ContractGiver_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ContractGiver_on != $request->ContractGiver_on && $request->ContractGiver_on != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Contract Giver Review On';
+            $history->previous = $lastCft->ContractGiver_on;
+            $history->current = $request->ContractGiver_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ContractGiver_on) || $lastCft->ContractGiver_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastCft->ContractGiver_attachment != $request->ContractGiver_attachment && $request->ContractGiver_attachment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Contract Giver Review On';
+            $history->previous = $lastCft->ContractGiver_attachment;
+            $history->current = implode(',',$request->ContractGiver_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ContractGiver_attachment) || $lastCft->ContractGiver_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        /*************** Other 1 ***************/
+        if ($lastCft->Other1_review != $request->Other1_review && $request->Other1_review != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 1 Review Required';
+            $history->previous = $lastCft->Other1_review;
+            $history->current = $request->Other1_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other1_review) || $lastCft->Other1_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_person != $request->Other1_person && $request->Other1_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 1 Person';
+            $history->previous = $lastCft->Other1_person;
+            $history->current = $request->Other1_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other1_person) || $lastCft->Other1_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_Department_person != $request->Other1_Department_person && $request->Other1_Department_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 1 Review Required';
+            $history->previous = $lastCft->Other1_Department_person;
+            $history->current = $request->Other1_Department_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other1_Department_person) || $lastCft->Other1_Department_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_assessment != $request->Other1_assessment && $request->Other1_assessment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 1 Assessment';
+            $history->previous = $lastCft->Other1_assessment;
+            $history->current = $request->Other1_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other1_assessment) || $lastCft->Other1_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_feedback != $request->Other1_feedback && $request->Other1_feedback != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 1 Feedback';
+            $history->previous = $lastCft->Other1_feedback;
+            $history->current = $request->Other1_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other1_feedback) || $lastCft->Other1_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_by != $request->Other1_by && $request->Other1_by != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 1 Review By';
+            $history->previous = $lastCft->Other1_by;
+            $history->current = $request->Other1_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other1_by) || $lastCft->Other1_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_on != $request->Other1_on && $request->Other1_on != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 1 Review On';
+            $history->previous = $lastCft->Other1_on;
+            $history->current = $request->Other1_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other1_on) || $lastCft->Other1_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_attachment != $request->Other1_attachment && $request->Other1_attachment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 1 Review On';
+            $history->previous = $lastCft->Other1_attachment;
+            $history->current = implode(',',$request->Other1_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other1_attachment) || $lastCft->Other1_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+        /*************** Other 2 ***************/
+        if ($lastCft->Other2_review != $request->Other2_review && $request->Other2_review != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 2 Review Required';
+            $history->previous = $lastCft->Other2_review;
+            $history->current = $request->Other2_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other2_review) || $lastCft->Other2_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_person != $request->Other2_person && $request->Other2_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 2 Person';
+            $history->previous = $lastCft->Other2_person;
+            $history->current = $request->Other2_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other2_person) || $lastCft->Other2_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_Department_person != $request->Other2_Department_person && $request->Other2_Department_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 2 Review Required';
+            $history->previous = $lastCft->Other2_Department_person;
+            $history->current = $request->Other2_Department_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other2_Department_person) || $lastCft->Other2_Department_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_assessment != $request->Other2_assessment && $request->Other2_assessment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 2 Assessment';
+            $history->previous = $lastCft->Other2_assessment;
+            $history->current = $request->Other2_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other2_assessment) || $lastCft->Other2_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_feedback != $request->Other2_feedback && $request->Other2_feedback != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 2 Feedback';
+            $history->previous = $lastCft->Other2_feedback;
+            $history->current = $request->Other2_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other2_feedback) || $lastCft->Other2_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_by != $request->Other2_by && $request->Other2_by != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 2 Review By';
+            $history->previous = $lastCft->Other2_by;
+            $history->current = $request->Other2_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other2_by) || $lastCft->Other2_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_on != $request->Other2_on && $request->Other2_on != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 2 Review On';
+            $history->previous = $lastCft->Other2_on;
+            $history->current = $request->Other2_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other2_on) || $lastCft->Other2_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_attachment != $request->Other2_attachment && $request->Other2_attachment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 2 Review On';
+            $history->previous = $lastCft->Other2_attachment;
+            $history->current =implode(',', $request->Other2_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other2_attachment) || $lastCft->Other2_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Other 3 ***************/
+        if ($lastCft->Other3_review != $request->Other3_review && $request->Other3_review != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 3 Review Required';
+            $history->previous = $lastCft->Other3_review;
+            $history->current = $request->Other3_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other3_review) || $lastCft->Other3_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_person != $request->Other3_person && $request->Other3_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 3 Person';
+            $history->previous = $lastCft->Other3_person;
+            $history->current = $request->Other3_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other3_person) || $lastCft->Other3_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_Department_person != $request->Other3_Department_person && $request->Other3_Department_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 3 Review Required';
+            $history->previous = $lastCft->Other3_Department_person;
+            $history->current = $request->Other3_Department_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other3_Department_person) || $lastCft->Other3_Department_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_assessment != $request->Other3_assessment && $request->Other3_assessment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 3 Assessment';
+            $history->previous = $lastCft->Other3_assessment;
+            $history->current = $request->Other3_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other3_assessment) || $lastCft->Other3_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_feedback != $request->Other3_feedback && $request->Other3_feedback != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 3 Feedback';
+            $history->previous = $lastCft->Other3_feedback;
+            $history->current = $request->Other3_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other3_feedback) || $lastCft->Other3_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_by != $request->Other3_by && $request->Other3_by != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 3 Review By';
+            $history->previous = $lastCft->Other3_by;
+            $history->current = $request->Other3_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other3_by) || $lastCft->Other3_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 3 Review On';
+            $history->previous = $lastCft->Other3_on;
+            $history->current = $request->Other3_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other3_on) || $lastCft->Other3_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_attachment != $request->Other3_attachment && $request->Other3_attachment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 3 Review On';
+            $history->previous = $lastCft->Other3_attachment;
+            $history->current =implode(',', $request->Other3_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other3_attachment) || $lastCft->Other3_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Other 4 ***************/
+        if ($lastCft->Other4_review != $request->Other4_review && $request->Other4_review != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 4 Review Required';
+            $history->previous = $lastCft->Other4_review;
+            $history->current = $request->Other4_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other4_review) || $lastCft->Other4_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_person != $request->Other4_person && $request->Other4_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 4 Person';
+            $history->previous = $lastCft->Other4_person;
+            $history->current = $request->Other4_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other4_person) || $lastCft->Other4_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_Department_person != $request->Other4_Department_person && $request->Other4_Department_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 4 Review Required';
+            $history->previous = $lastCft->Other4_Department_person;
+            $history->current = $request->Other4_Department_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other4_Department_person) || $lastCft->Other4_Department_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_assessment != $request->Other4_assessment && $request->Other4_assessment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 4 Assessment';
+            $history->previous = $lastCft->Other4_assessment;
+            $history->current = $request->Other4_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other4_assessment) || $lastCft->Other4_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_feedback != $request->Other4_feedback && $request->Other4_feedback != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 4 Feedback';
+            $history->previous = $lastCft->Other4_feedback;
+            $history->current = $request->Other4_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other4_feedback) || $lastCft->Other4_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_by != $request->Other4_by && $request->Other4_by != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 4 Review By';
+            $history->previous = $lastCft->Other4_by;
+            $history->current = $request->Other4_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other4_by) || $lastCft->Other4_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_on != $request->Other4_on && $request->Other4_on != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 4 Review On';
+            $history->previous = $lastCft->Other4_on;
+            $history->current = $request->Other4_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other4_on) || $lastCft->Other4_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_attachment != $request->Other4_attachment && $request->Other4_attachment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 4 Review On';
+            $history->previous = $lastCft->Other4_attachment;
+            $history->current =implode(',', $request->Other4_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other4_attachment) || $lastCft->Other4_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+        /*************** Other 5 ***************/
+        if ($lastCft->Other5_review != $request->Other5_review && $request->Other5_review != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 5 Review Required';
+            $history->previous = $lastCft->Other5_review;
+            $history->current = $request->Other5_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other5_review) || $lastCft->Other5_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_person != $request->Other5_person && $request->Other5_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 5 Person';
+            $history->previous = $lastCft->Other5_person;
+            $history->current = $request->Other5_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other5_person) || $lastCft->Other5_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_Department_person != $request->Other5_Department_person && $request->Other5_Department_person != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 5 Review Required';
+            $history->previous = $lastCft->Other5_Department_person;
+            $history->current = $request->Other5_Department_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other5_Department_person) || $lastCft->Other5_Department_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_assessment != $request->Other5_assessment && $request->Other5_assessment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 5 Assessment';
+            $history->previous = $lastCft->Other5_assessment;
+            $history->current = $request->Other5_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other5_assessment) || $lastCft->Other5_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_feedback != $request->Other5_feedback && $request->Other5_feedback != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 5 Feedback';
+            $history->previous = $lastCft->Other5_feedback;
+            $history->current = $request->Other5_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other5_feedback) || $lastCft->Other5_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_by != $request->Other5_by && $request->Other5_by != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 5 Review By';
+            $history->previous = $lastCft->Other5_by;
+            $history->current = $request->Other5_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other5_by) || $lastCft->Other5_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_on != $request->Other5_on && $request->Other5_on != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 5 Review On';
+            $history->previous = $lastCft->Other5_on;
+            $history->current = $request->Other5_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other5_on) || $lastCft->Other5_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_attachment != $request->Other5_attachment && $request->Other5_attachment != null) {
+            $history = new AuditTrialExternal;
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Other 5 Review On';
+            $history->previous = $lastCft->Other5_attachment;
+            $history->current = implode(',',$request->Other5_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other5_attachment) || $lastCft->Other5_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+
+
+
+
+
 
 
         toastr()->success("Record is Update Successfully");
@@ -3399,8 +6506,8 @@ $AuditorShow->save();
                 $changeControl->audit_details_summary_by = Auth::user()->name;
                 $changeControl->audit_details_summary_on = Carbon::now()->format('d-M-Y');
                 $changeControl->audit_details_summary_on_comment = $request->comment;
-                      
-                
+
+
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
                         $history->activity_type = 'Audit Details Summary By,Audit Details Summary On';
@@ -3474,7 +6581,7 @@ $AuditorShow->save();
                     ]);
 
                     return redirect()->back();
-                    
+
                 }
                  else {
                     Session::flash('swal', [
@@ -3485,11 +6592,22 @@ $AuditorShow->save();
                 }
                 $changeControl->stage = "3";
                 $changeControl->status = "CFT Review";
+
+
+
+                 $stage = new ExternalAuditCFTResponse();
+                    $stage->external_audit_id = $id;
+                    $stage->cft_user_id = Auth::user()->id;
+                    $stage->status = "CFT Required";
+                    // $stage->cft_stage = ;
+                    $stage->comment = $request->comment;
+                    $stage->is_required = 1;
+                    $stage->save();
                 $changeControl->summary_and_response_com_by = Auth::user()->name;
                 $changeControl->summary_and_response_com_on = Carbon::now()->format('d-M-Y');
                 $changeControl->summary_and_response_com_on_comment = $request->comment;
-                   
-                
+
+
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
                         $history->activity_type = 'Summary and Response Complete By,Summary and Response Complete On';
@@ -3558,24 +6676,24 @@ $AuditorShow->save();
 
             if ($changeControl->stage == 3) {
 
-                // CFT review state update form_progress
-                if ($changeControl->form_progress !== 'cft')
-                {
-                    Session::flash('swal', [
-                        'type' => 'warning',
-                        'title' => 'Mandatory Fields!',
-                        'message' => 'CFT Tab is yet to be filled'
-                    ]);
+                // // CFT review state update form_progress
+                // if ($changeControl->form_progress !== 'cft')
+                // {
+                //     Session::flash('swal', [
+                //         'type' => 'warning',
+                //         'title' => 'Mandatory Fields!',
+                //         'message' => 'CFT Tab is yet to be filled'
+                //     ]);
 
-                    return redirect()->back();
-                }
-                 else {
-                    Session::flash('swal', [
-                        'type' => 'success',
-                        'title' => 'Success',
-                        'message' => 'Sent for QA/CQA Head Approval state'
-                    ]);
-                }
+                //     return redirect()->back();
+                // }
+                //  else {
+                //     Session::flash('swal', [
+                //         'type' => 'success',
+                //         'title' => 'Success',
+                //         'message' => 'Sent for QA/CQA Head Approval state'
+                //     ]);
+                // }
 
 
                 $IsCFTRequired = ExternalAuditCFTResponse::where(['is_required' => 1, 'external_audit_id' => $id])->latest()->first();
@@ -4142,7 +7260,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 }
                         $history->save();
                     }
-                    
+
                     if($index == 19 && $cftUsers->$column == Auth::user()->name){
                         $updateCFT->CorporateQualityAssurance_by = Auth::user()->name;
                         $updateCFT->CorporateQualityAssurance_on = Carbon::now()->format('Y-m-d');
@@ -4250,9 +7368,9 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 //         'message' => 'Sent for QA/CQA initial review state'
                 //     ]);
                 // }
-                
+
                 if (!$IsCFTRequired || $checkCFTCount) {
-                    
+
 
                     $changeControl->stage = "4";
                     $changeControl->status = "QA/CQA Head Approval";
@@ -4306,15 +7424,15 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 toastr()->success('Document Sent');
                 return back();
             }
-            
+
             // if ($changeControl->stage == 3) {
             //     $changeControl->stage = "4";
             //     $changeControl->status = "QA/CQA Head Approval";
             //     $changeControl->cft_review_complete_by = Auth::user()->name;
             //     $changeControl->cft_review_complete_on = Carbon::now()->format('d-M-Y');
             //     $changeControl->cft_review_complete_comment = $request->comment;
-              
-                
+
+
             //           $history = new AuditTrialExternal();
             //             $history->ExternalAudit_id = $id;
             //             $history->activity_type = 'CFT Review Complete By,CFT Review Complete On';
@@ -4326,7 +7444,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             //             $history->user_name = Auth::user()->name;
             //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             //             $history->origin_state = $lastDocument->status;
-                       
+
             //             $history->change_to =   "QA/CQA Head Approval";
             //             $history->change_from = $lastDocument->status;
             //             $history->action_name = 'Update';
@@ -4348,7 +7466,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                     //             $email = Helpers::getInitiatorEmail($u->user_id);
                     //              if ($email !== null) {
-                              
+
                     //               Mail::send(
                     //                   'mail.view-mail',
                     //                    ['data' => $changeControl],
@@ -4358,7 +7476,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     //                 }
                     //               );
                     //             }
-                    //      } 
+                    //      }
                     //   }
             //     $changeControl->update();
             //     toastr()->success('Document Sent');
@@ -4370,8 +7488,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             //     $changeControl->audit_observation_submitted_by = Auth::user()->name;
             //     $changeControl->audit_observation_submitted_on = Carbon::now()->format('d-M-Y');
             //     $changeControl->audit_observation_submitted_on_comment = $request->comment;
-                  
-                
+
+
             //     $history = new AuditTrialExternal();
             //             $history->ExternalAudit_id = $id;
             //             $history->activity_type = 'Activity Log';
@@ -4387,7 +7505,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             //             $history->change_from = $lastDocument->status;
             //             $history->action_name = 'Update';
             //             $history->stage = 'CAPA Execution in Progress';
-                     
+
             //             $history->save();
             //     $changeControl->update();
             //     toastr()->success('Document Sent');
@@ -4420,9 +7538,9 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 // $changeControl->audit_response_completed_on = Carbon::now()->format('d-M-Y');
                 // $changeControl->response_feedback_verified_by = Auth::user()->name;
                 // $changeControl->response_feedback_verified_on = Carbon::now()->format('d-M-Y');
-                
+
                 $changeControl->approval_complete_on_comment = $request->comment;
-             
+
                 $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
                         $history->activity_type = 'Approval Complete By,Approval Complete On';
@@ -4488,7 +7606,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     // }
 
 
-                    
+
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -4514,8 +7632,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             //     $changeControl->audit_preparation_completed_by = Auth::user()->name;
             //     $changeControl->audit_preparation_completed_on = Carbon::now()->format('d-M-Y');
             //     $changeControl->audit_preparation_completed_on_comment = $request->comment;
-                   
-                
+
+
             //             $history = new AuditTrialExternal();
             //             $history->ExternalAudit_id = $id;
             //             $history->activity_type = 'Activity Log';
@@ -4531,7 +7649,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             //             $history->change_from = $lastDocument->status;
             //             $history->action_name = 'Update';
             //             $history->stage = 'QA Head Approval';
-                     
+
             //             $history->save();
 
             //     $changeControl->update();
@@ -4544,7 +7662,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $changeControl->more_info_req_by = Auth::user()->name;
                 $changeControl->more_info_req_on = Carbon::now()->format('d-M-Y');
                 $changeControl->more_info_req_on_comment = $request->comment;
-               
+
 
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
@@ -4560,7 +7678,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $history->change_to =   "Opened";
                         $history->change_from = $lastDocument->status;
                         $history->action_name ="Not Applicable";
-              
+
                         $history->stage = "Rejected";
                         // if (is_null($lastDocument->more_info_req_by) || $lastDocument->more_info_req_by === '') {
                         //     $history->previous = "";
@@ -4579,7 +7697,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                     //             $email = Helpers::getInitiatorEmail($u->user_id);
                     //              if ($email !== null) {
-                              
+
                     //               Mail::send(
                     //                   'mail.view-mail',
                     //                    ['data' => $changeControl],
@@ -4589,7 +7707,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     //                 }
                     //               );
                     //             }
-                    //      } 
+                    //      }
                     //   }
 
                     // $history = new AuditeeHistory();
@@ -4600,7 +7718,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     // $history->stage_id = $changeControl->stage;
                     // $history->status = $changeControl->status;
                     // $history->save();
-                   
+
                 $changeControl->update();
                 $history = new AuditeeHistory();
                 $history->type = "External Audit";
@@ -4619,7 +7737,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $changeControl->more_info_req_crc_by = Auth::user()->name;
                 $changeControl->more_info_req_crc_on = Carbon::now()->format('d-M-Y');
                 $changeControl->more_info_req_crc_on_comment = $request->comment;
-               
+
                 $history = new AuditTrialExternal();
                 $history->ExternalAudit_id = $id;
                 $history->activity_type = 'Not Applicable';
@@ -4634,7 +7752,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $history->change_to =   "Summary and Response";
                 $history->change_from = $lastDocument->status;
                 $history->action_name ="Not Applicable";
-      
+
                 $history->stage = "Summary and Response";
                 // if (is_null($lastDocument->more_info_req_crc_by) || $lastDocument->more_info_req_crc_by === '') {
                 //     $history->previous = "";
@@ -4665,8 +7783,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $changeControl->status = "Opened";
                 $changeControl->send_to_opened_by = Auth::user()->name;
                 $changeControl->send_to_opened_on = Carbon::now()->format('d-M-Y');
-                $changeControl->send_to_opened_comment = $request->comment;   
-               
+                $changeControl->send_to_opened_comment = $request->comment;
+
                 $history = new AuditTrialExternal();
                 $history->ExternalAudit_id = $id;
                 $history->activity_type = 'Send to Opened By, Send to Opened On';
@@ -4681,7 +7799,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $history->change_to =   "Opened";
                 $history->change_from = $lastDocument->status;
                 $history->action_name = 'Update';
-      
+
                 $history->stage = "Opened";
                 if (is_null($lastDocument->send_to_opened_by) || $lastDocument->send_to_opened_by === '') {
                     $history->previous = "";
@@ -4695,7 +7813,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     $history->action_name = 'Update';
                 }
                 $history->save();
-        
+
                 $history = new AuditeeHistory();
                 $history->type = "External Audit";
                 $history->doc_id = $id;
@@ -4708,15 +7826,17 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 toastr()->success('Document Sent');
                 return back();
             }
-            
+
         } else {
             toastr()->error('E-signature Not match');
             return back();
         }
     }
-    
+
     public function UpdateStateChange(Request $request, $id)
     {
+
+        //return "hello";
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Auditee::find($id);
             $lastDocument = Auditee::find($id);
@@ -4728,8 +7848,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $changeControl->cft_review_not_req_by = Auth::user()->name;
                 $changeControl->cft_review_not_req_on = Carbon::now()->format('d-M-Y');
                 $changeControl->cft_review_not_req_on_comment = $request->comment;
-                   
-                
+
+
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
                         $history->activity_type = 'CFT Review Not Required By, CFT Review Not Required On';
@@ -4762,8 +7882,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 toastr()->success('Document Sent');
                 return back();
             }
-          
-            
+
+
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -4926,11 +8046,19 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
     public static function singleReport($id)
     {
         $data = Auditee::find($id);
+       $grid_Data = SummaryGrid::where(['summary_id' => $id, 'identifier' => 'Auditors'])->first();
+       $grid_Data_2 = SummaryGrid::where(['summary_id' => $id, 'identifier' => 'Summary Response'])->first();
+
+
+       $data1 =  ExternalAuditCFT::where('external_audit_id', $id)->first();
+     //  $cc_cfts =  ExternalAuditCFT::where('external_audit_id', $id)->first();
+
+    //  $AuditorShow = SummaryGrid::where(['summary_id' => $AuditUpdate, 'identifier' => 'Auditors'])->firstOrNew();
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.externalAudit.singleReport', compact('data'))
+            $pdf = PDF::loadview('frontend.externalAudit.singleReport', compact('data','grid_Data','grid_Data_2','data1'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -5014,7 +8142,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $currentDate = Carbon::now();
             $formattedDate = $currentDate->addDays(30);
-            $due_date = $formattedDate->format('d-M-Y');        
+            $due_date = $formattedDate->format('d-M-Y');
             return view('frontend.action-item.action-item', compact('record','parentRecord', 'due_date', 'parent_id', 'parent_type'));
         }
         if ($request->child_type == "Observations")
@@ -5027,7 +8155,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
         $due_date = $formattedDate->format('d-M-Y');
         return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
 
-    
-   
-    
+
+
+
 }}

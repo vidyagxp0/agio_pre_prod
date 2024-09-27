@@ -122,48 +122,36 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Due Date"> Due Date</label>
-                                        <div>
-                                            <small class="text-primary">If revising Due Date, kindly mention the revision reason in the "Due Date Extension Justification" data field.</small>
-                                        </div>
+                                        <label for="Audit Schedule Start Date">Due Date</label>
                                         <div class="calenderauditee">
-                                            <!-- Display formatted date (Initial placeholder) -->
-                                            <input disabled type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
-                                
-                                            <!-- Hidden input field to allow the user to pick a date -->
-                                            <input type="date" name="due_date"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                class="hide-input" oninput="handleDateInput(this, 'due_date_display')" />
+                                            <input type="text" id="due_dateq" readonly
+                                                placeholder="DD-MM-YYYY" />
+                                            <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
+                                                oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" />
                                         </div>
+
                                     </div>
                                 </div>
                                 
                                 <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const date = new Date(dateInput.value);
-                                        if (dateInput.value) {
-                                            const options = { day: '2-digit', month: 'short', year: 'numeric' };
-                                            document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
-                                        } else {
-                                            document.getElementById(displayId).value = '';
-                                        }
+                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                        document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
                                     }
-                                
-                                    // Ensure the correct format is shown on page load (if you want to pre-fill with today's date)
+                                    
+                                    // Call this function initially to ensure the correct format is shown on page load
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const dateInput = document.querySelector('input[name="due_date"]');
-                                        if (!dateInput.value) {
-                                            dateInput.value = "{{ \Carbon\Carbon::now()->format('Y-m-d') }}";
-                                            handleDateInput(dateInput, 'due_date_display');
-                                        }
+                                        handleDateInput(dateInput, 'due_date_display');
                                     });
-                                </script>
-                                
-                                <style>
+                                    </script>
+                                    
+                                    <style>
                                     .hide-input {
                                         display: none;
                                     }
-                                </style>
+                                    </style>
                                 
                              
                                 <div class="col-12">
@@ -200,7 +188,7 @@
                                     <div class="group-input">
                                         <label for="related_records">Related Records</label>
                                         <select multiple name="related_records[]" placeholder="Select Reference Records"
-                                            data-silent-initial-value-set="true" id="related_records" class="form-control">
+                                            data-silent-initial-value-set="true" id="related_records" >
 
                                             @foreach ($relatedRecords as $records)
                                                 <option
@@ -234,12 +222,12 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="HOD Persons">HOD Persons</label>
-                                        <select   name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
+                                        <select   name="hod_preson" placeholder="Select HOD Persons" data-search="false"
                                             data-silent-initial-value-set="true" id="hod" >
                                             <option value="">select person</option>
                                             @foreach ($users as $value)
                                                 
-                                                <option value="{{ $value->name }}">{{ $value->name }}</option>
+                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
 
                                             @endforeach
                                         </select>
@@ -404,7 +392,7 @@
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="sub-head col-12">Post Completion</div>
+                                <div class="sub-head col-12">Acknowledge</div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="action_taken">Action Taken</label>
@@ -499,7 +487,7 @@
                                 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="file_attach">Action Approval</label>
+                                        <label for="file_attach">Action Approval Attachemnts</label>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="final_attach"></div>
                                             <div class="add-btn">
@@ -668,7 +656,7 @@
     
     <script>
         VirtualSelect.init({
-            ele: '#related_records, #hod'
+            ele: '#related_records'
         });
 
         function openCity(evt, cityName) {
@@ -746,7 +734,7 @@
     </script>
     <script>
         VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee ,#related_records, #designee, #hod'
+            ele: '#Facility, #Group, #Audit, #Auditee ,#related_records, #designee'
         });
     </script>
 @endsection

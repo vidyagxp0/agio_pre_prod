@@ -26,7 +26,6 @@ use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\ExtensionNewController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ResamplingController;
-// use App\Http\Controllers\tms\JobTrainingController;
 use App\Http\Controllers\InductionTrainingcontroller;
 use App\Http\Controllers\OOSMicroController;
 use App\Http\Controllers\rcms\AuditeeController;
@@ -284,6 +283,7 @@ Route::post('mC/cftnotrequired/{id}', [MarketComplaintController::class, 'MarkCo
 
 
 
+Route::get('/observation/{id}',[ObservationController::class,'audit_trail_filter_observation'])->name('observation_filter');
 
 
 
@@ -359,6 +359,10 @@ Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer
 // Route::view('job_training', 'frontend.TMS.Job_Training.job_training')->name('job_training');
 Route::get('job_training',[JobTrainingController::class ,'index'])->name('job_training');
 Route::get('job_training/show/{id}',[JobTrainingController::class ,'edit'])->name('job_training_view');
+Route::post('tms/jobTraining/cancelstage/{id}',[JobTrainingController::class ,'cancelStage']);
+Route::get('/get-sop-description/{id}', [JobTrainingController::class, 'getSopDescription']);
+
+Route::get('/fetch-questions/{documentId}', [JobTrainingController::class, 'fetchQuestions']);
 
 Route::post('job_trainingcreate', [JobTrainingController::class, 'store'])->name('job_trainingcreate');
 Route::put('job_trainingupdate/{id}', [JobTrainingController::class, 'update'])->name('job_trainingupdate');
@@ -374,6 +378,9 @@ Route::post('induction_training', [InductionTrainingcontroller::class, 'store'])
 Route::put('induction_training/{id}', [InductionTrainingcontroller::class, 'update'])->name('induction_training.update');
 //new route 
 Route::get('/employees/{id}', [InductionTrainingController::class, 'getEmployeeDetails']);
+
+Route::get('/fetch-question/{documentId}', [InductionTrainingController::class, 'fetchQuestion']);
+
 
 
 //! ============================================
@@ -578,6 +585,13 @@ Route::get('trainer_qualification_view/{id}', [TrainerController::class, 'show']
 Route::post('/tms/employee/sendstage/{id}', [EmployeeController::class, 'sendStage']);
 Route::post('/tms/trainer/sendstage/{id}', [TrainerController::class, 'sendStage']);
 Route::post('/tms/trainer/rejectStage/{id}', [TrainerController::class, 'rejectStage']);
+Route::get('/getEmployeeDetails/{id}', [TrainerController::class, 'getEmployeeDetails']);
+
+Route::get('/fetch-questionss/{documentId}', [TrainerController::class, 'fetchQuestionss']);
+// Route::get('/training-questions/{id}', [TrainerController::class, 'trainingQuestion']);
+
+
+
 //new one
 Route::post('tms/induction/sendstage/{id}', [InductionTrainingController::class, 'sendStage']);
 Route::post('tms/induction/cancelstage/{id}', [InductionTrainingController::class, 'cancelStage']);

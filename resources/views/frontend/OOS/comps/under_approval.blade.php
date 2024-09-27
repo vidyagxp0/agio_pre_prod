@@ -1,7 +1,7 @@
 <div id="CCForm13" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="sub-head">
-             Approval Comment
+             Phase II B QAH/CQAH
         </div>
         <div class="row">
        
@@ -15,7 +15,7 @@
                 </div>
             </div>
 
-            <div class="col-12">
+            {{-- <div class="col-12">
                 <div class="group-input">
                     <label for="Reference Recores">Approval Attachment</label>
                     <small class="text-primary">
@@ -46,7 +46,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <div class="sub-head">
             Batch Disposition
@@ -55,7 +55,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">OOS Category</label>
-                    <select name="oos_category_bd" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'disabled' }}>
+                    <select name="oos_category_bd" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'readonly' }}>
                         <option value="" >Enter Your Selection Here</option>
                         <option value="analyst_error" {{ $data->oos_category_bd == 'analyst_error' ? 'selected' : ''
                             }}>Analyst Error</option>
@@ -77,14 +77,14 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Records">Other's</label>
-                    <input type="text" name="others_bd" value="{{ $data->others_bd ?? '' }}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'disabled' }}>
+                    <input type="text" name="others_bd" value="{{ $data->others_bd ?? '' }}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'readonly' }}>
                 </div>
             </div>
             <!-- Material/Batch Release Selection -->
             <div class="col-12">
                 <div class="group-input">
                     <label for="Reference Records">Material/Batch Release</label>
-                    <select name="material_batch_release_bd" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'disabled' }}>
+                    <select name="material_batch_release_bd" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'readonly' }}>
                         <option value="default" {{ $data->material_batch_release_bd == 'default' ? 'selected' : ''
                             }}>Enter Your Selection Here</option>
                         <option value="release" {{ $data->material_batch_release_bd == 'release' ? 'selected' : ''
@@ -116,7 +116,7 @@
             </div>
 
             <!-- Trend of Previous Batches -->
-            <div class="col-md-12 mb-4">
+            {{-- <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Trend of Previous Batches</label>
                     <textarea class="summernote" name="trend_of_previous_batches_bd" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
@@ -193,7 +193,7 @@
                                 </textarea>
                 </div>
 
-            </div>
+            </div> --}}
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justify for Delay in Activity</label>
@@ -230,7 +230,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="disposition_attachment_bd[]"
-                                oninput="addMultipleFiles(this, 'disposition_attachment_bd')" {{ $data->stage == 20 ? '' : 'disabled' }} multiple {{Helpers::isOOSChemical($data->stage)}}>
+                                oninput="addMultipleFiles(this, 'disposition_attachment_bd')" {{ $data->stage == 20 ? '' : 'readonly' }} multiple {{Helpers::isOOSChemical($data->stage)}}>
                         </div>
                     </div>
 

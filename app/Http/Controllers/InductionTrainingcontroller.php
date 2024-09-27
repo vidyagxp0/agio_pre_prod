@@ -6,8 +6,16 @@ use App\Models\Employee;
 use App\Models\Induction_training;
 use App\Models\InductionTrainingAudit;
 use App\Models\RecordNumber;
+use App\Models\JobTraining;
+use App\Models\DocumentTraining;
+use App\Models\Training;
+use App\Models\Quize;
+use App\Models\Question;
 use App\Models\RoleGroup;
 use App\Models\User;
+use Illuminate\Support\Facades\App;
+use PDF;
+use App\Models\Document;
 use App\Models\QuestionariesGrid;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -25,8 +33,37 @@ class InductionTrainingController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
         $employees = Employee::all();
+        $data = Document::all();
 
-        return view('frontend.TMS.Induction_training.induction_training', compact('due_date', 'record', 'employees'));
+        return view('frontend.TMS.Induction_training.induction_training', compact('due_date','data', 'record', 'employees'));
+    }
+
+    public function fetchQuestion($id)
+    {
+        $document_training = DocumentTraining::where('document_id', $id)->first();
+        if ($document_training) {
+            $training = Training::find($document_training->training_plan); 
+            if ($training && $training->training_plan_type == "Read & Understand with Questions") {
+                $quize = Quize::find($training->quize);
+                $questions = explode(',', $quize->question);
+                $question_list = [];
+    
+                foreach ($questions as $question_id) {
+                    $question = Question::find($question_id);
+                    if ($question) {
+                        $json_options = unserialize($question->options);
+                        $options = [];
+                        foreach ($json_options as $key => $value) {
+                            $options[chr(97 + $key)] = $value; // Format options
+                        }
+                        $question->options = $options;
+                        $question_list[] = $question;
+                    }
+                }
+                return response()->json($question_list); // Return questions array as JSON
+            }
+        }
+        return response()->json([]); // Return empty array if no questions found
     }
 
     public function getEmployeeDetails($id)
@@ -46,7 +83,7 @@ class InductionTrainingController extends Controller
         $inductionTraining->stage = '1';
         $inductionTraining->status = 'Opened';
         $inductionTraining->employee_id = $request->employee_id;
-        $inductionTraining->name_employee = $request->employee_name;
+        $inductionTraining->name_employee = $request->name_employee;
         $inductionTraining->department = $request->department;
         $inductionTraining->location = $request->location;
         $inductionTraining->designation = $request->designation;
@@ -107,6 +144,8 @@ class InductionTrainingController extends Controller
             }
         }
         $inductionTraining->trainee_name = $request->trainee_name;
+        $inductionTraining->training_type = $request->training_type;
+
         $inductionTraining->hr_name = $request->hr_name;
         $inductionTraining->save();
 
@@ -256,12 +295,35 @@ class InductionTrainingController extends Controller
 
     public function edit($id)
     {
+        // Find the Induction Training record by ID
         $inductionTraining = Induction_training::find($id);
+    
+        // Fetch the employee details related to this training
+        $employee = Employee::where('id', $inductionTraining->name_employee)->first();
+        $employee_name = $employee ? $employee->employee_name : ''; // If employee exists, get name, otherwise empty string
+    
+        // Fetch all employees and documents
         $employees = Employee::all();
+        $data = Document::all();
+    
+        // Fetch the record and document training by ID
+        $record = Induction_training::findOrFail($id);
+        $document_training = DocumentTraining::where('document_id', $id)->first();
+    
+        // Use optional() to avoid null errors when training_plan or quize is null
+        $training = optional($document_training)->training_plan ? Training::find($document_training->training_plan) : null;
+        $quize = optional($training)->quize ? Quize::find($training->quize) : null;
+    
+        // Get the saved SOP document and employee grid data
+        $savedSop = $record->sopdocument;
         $employee_grid_data = QuestionariesGrid::where(['induction_id' => $id, 'identifier' => 'Questionaries'])->first();
-
-        return view('frontend.TMS.Induction_training.induction_training_view', compact('inductionTraining', 'employees','employee_grid_data'));
+    
+        // Return the view with all necessary data
+        return view('frontend.TMS.Induction_training.induction_training_view', compact(
+            'inductionTraining', 'employees', 'employee_grid_data', 'employee_name', 'data', 'savedSop', 'quize', 'document_training'
+        ));
     }
+    
 
 
     public function update(Request $request, $id)
@@ -279,7 +341,14 @@ class InductionTrainingController extends Controller
         $inductionTraining->date_joining = $request->date_joining;
 
         $inductionTraining->final_r_comment = $request->final_r_comment;
+        $inductionTraining->questionaries_required = $request->questionaries_required;
 
+        $inductionTraining->evaluation_comment = $request->evaluation_comment;
+        $inductionTraining->hr_head_comment = $request->hr_head_comment;
+        $inductionTraining->qa_final_comment = $request->qa_final_comment;
+        $inductionTraining->hr_final_comment = $request->hr_final_comment;
+
+        
         $inductionTraining->training_date_1 = $request->training_date_1;
         $inductionTraining->training_date_2 = $request->training_date_2;
         $inductionTraining->training_date_3 = $request->training_date_3;
@@ -301,6 +370,34 @@ class InductionTrainingController extends Controller
             $name = $request->employee_id . 'final_r_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
             $file->move('upload/', $name);
             $inductionTraining->final_r_attachment = $name;
+        }
+
+        if ($request->hasFile('evaluation_attachment')) {
+            $file = $request->file('evaluation_attachment');
+            $name = $request->employee_id . 'evaluation_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $inductionTraining->evaluation_attachment = $name;
+        }
+
+        if ($request->hasFile('hr_head_attachment')) {
+            $file = $request->file('hr_head_attachment');
+            $name = $request->employee_id . 'hr_head_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $inductionTraining->hr_head_attachment = $name;
+        }
+
+        if ($request->hasFile('qa_final_attachment')) {
+            $file = $request->file('qa_final_attachment');
+            $name = $request->employee_id . 'qa_final_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $inductionTraining->qa_final_attachment = $name;
+        }
+
+        if ($request->hasFile('hr_final_attachment')) {
+            $file = $request->file('hr_final_attachment');
+            $name = $request->employee_id . 'hr_final_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $inductionTraining->hr_final_attachment = $name;
         }
 
         if ($request->hasFile('on_the_job_attachment')) {
@@ -356,6 +453,7 @@ class InductionTrainingController extends Controller
         }
 
         $inductionTraining->trainee_name = $request->trainee_name;
+        $inductionTraining->training_type = $request->training_type;    
         $inductionTraining->hr_name = $request->hr_name;
         $inductionTraining->save();
 
@@ -387,7 +485,7 @@ class InductionTrainingController extends Controller
             $validation2 = new InductionTrainingAudit();
             $validation2->induction_id = $inductionTraining->id;
             $validation2->previous = $lastdocument->name_employee;
-            $validation2->current = $inductionTraining->name_employee;
+            $validation2->current = $inductionTraining->name_eemployee_namemployee;
             $validation2->activity_type = 'Name of Employee';
             $validation2->user_id = Auth::user()->id;
             $validation2->user_name = Auth::user()->name;
@@ -605,9 +703,29 @@ class InductionTrainingController extends Controller
                 $jobTraining = Induction_training::find($id);
                 $lastjobTraining = Induction_training::find($id);
 
+                // if ($jobTraining->stage == 1) {
+                //     $jobTraining->stage = "2";
+                //     $jobTraining->status = "Question-Answer";
+
+                //     $history = new InductionTrainingAudit();
+                //     $history->induction_id = $id;
+                //     $history->activity_type = 'Activity Log';
+                //     $history->comment = $request->comment;
+                //     $history->user_id = Auth::user()->id;
+                //     $history->user_name = Auth::user()->name;
+                //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //     $history->change_to = "Question-Answer";
+                //     $history->change_from = $lastjobTraining->status;
+                //     $history->action = 'Submit';
+                //     $history->stage = 'Submited';
+                //     $history->save();
+
+                //     $jobTraining->update();
+                //     return back();
+                // }
                 if ($jobTraining->stage == 1) {
                     $jobTraining->stage = "2";
-                    $jobTraining->status = "Question-Answer";
+                    $jobTraining->status = "Employee Answers";
 
                     $history = new InductionTrainingAudit();
                     $history->induction_id = $id;
@@ -616,18 +734,19 @@ class InductionTrainingController extends Controller
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->change_to = "Question-Answer";
+                    $history->change_to = "Employee Answers";
                     $history->change_from = $lastjobTraining->status;
-                    $history->action = 'submit';
+                    $history->action = 'Submit';
                     $history->stage = 'Submited';
                     $history->save();
 
                     $jobTraining->update();
                     return back();
                 }
+
                 if ($jobTraining->stage == 2) {
                     $jobTraining->stage = "3";
-                    $jobTraining->status = "Answer-Submit";
+                    $jobTraining->status = "Evaluation";
 
                     $history = new InductionTrainingAudit();
                     $history->induction_id = $id;
@@ -636,9 +755,9 @@ class InductionTrainingController extends Controller
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->change_to = "Answer-Submit";
+                    $history->change_to = "Evaluation";
                     $history->change_from = $lastjobTraining->status;
-                    $history->action = 'Complete';
+                    $history->action = 'Answer Submit';
                     $history->stage = 'Submited';
                     $history->save();
 
@@ -648,8 +767,7 @@ class InductionTrainingController extends Controller
 
                 if ($jobTraining->stage == 3) {
                     $jobTraining->stage = "4";
-                    $jobTraining->status = "Final-Result";
-
+                    $jobTraining->status = "HR Head Approval";
                     $history = new InductionTrainingAudit();
                     $history->induction_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -657,9 +775,9 @@ class InductionTrainingController extends Controller
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->change_to = "Final-Result";
+                    $history->change_to = "HR Head Approval";
                     $history->change_from = $lastjobTraining->status;
-                    $history->action = 'Send On Job Training';
+                    $history->action = 'Evaluation Complete';
                     $history->stage = 'Submited';
                     $history->save();
 
@@ -669,7 +787,7 @@ class InductionTrainingController extends Controller
 
                 if ($jobTraining->stage == 4) {
                     $jobTraining->stage = "5";
-                    $jobTraining->status = "Certification";
+                    $jobTraining->status = "QA/CQA Head Approval";
 
                     $history = new InductionTrainingAudit();
                     $history->induction_id = $id;
@@ -678,9 +796,9 @@ class InductionTrainingController extends Controller
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->change_to = "Certification";
+                    $history->change_to = "QA/CQA Head Approval";
                     $history->change_from = $lastjobTraining->status;
-                    $history->action = 'Certificate';
+                    $history->action = 'Approval Complete';
                     $history->stage = 'Submited';
                     $history->save();
 
@@ -690,7 +808,7 @@ class InductionTrainingController extends Controller
 
                 if ($jobTraining->stage == 5) {
                     $jobTraining->stage = "6";
-                    $jobTraining->status = "On JOb Training";
+                    $jobTraining->status = "In HR Final Review";
 
                     $history = new InductionTrainingAudit();
                     $history->induction_id = $id;
@@ -699,9 +817,29 @@ class InductionTrainingController extends Controller
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->change_to = "On JOb Training";
+                    $history->change_to = "In HR Final Review";
                     $history->change_from = $lastjobTraining->status;
-                    $history->action = 'Send On JOb Training';
+                    $history->action = 'QA/CQA Head Approval Complete';
+                    $history->stage = 'Submited';
+                    $history->save();
+
+                    $jobTraining->update();
+                    return back();
+                }
+                if ($jobTraining->stage == 6) {
+                    $jobTraining->stage = "7";
+                    $jobTraining->status = "OJT Creation";
+
+                    $history = new InductionTrainingAudit();
+                    $history->induction_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->change_to = "OJT Creation";
+                    $history->change_from = $lastjobTraining->status;
+                    $history->action = 'Send To OJT';
                     $history->stage = 'Submited';
                     $history->save();
 
@@ -709,8 +847,8 @@ class InductionTrainingController extends Controller
                     return back();
                 }
 
-                if ($jobTraining->stage == 6) {
-                    $jobTraining->stage = "7";
+                if ($jobTraining->stage == 7) {
+                    $jobTraining->stage = "8";
                     $jobTraining->status = "Closed-done";
 
                     $history = new InductionTrainingAudit();
@@ -722,7 +860,7 @@ class InductionTrainingController extends Controller
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->change_to = "Closed-done";
                     $history->change_from = $lastjobTraining->status;
-                    $history->action = 'Closed-done';
+                    $history->action = 'Creation Complete';
                     $history->stage = 'Submited';
                     $history->save();
 
@@ -769,5 +907,52 @@ class InductionTrainingController extends Controller
                 'message' => $e->getMessage(),
             ], 500);
         } 
+    }
+
+
+    public function Induction_Child(Request $request, $id)
+    {
+        $employees = Employee::find($id);
+    
+        $data = Document::all();
+        $hods = User::get();
+        $delegate = User::get();
+        $jobTraining = JobTraining::all();
+        $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('Y-m-d');
+        $inductionTraining = Induction_training::all();
+    
+        if ($request->child_type == 'induction_training') {
+            return view('frontend.TMS.Job_Training.job_training', compact('employees','due_date','record','data','hods','jobTraining','delegate','inductionTraining'));
+        } else {
+            return view('frontend.TMS.Job_Training.job_training', compact('employees','due_date','record','data','hods','jobTraining','delegate','inductionTraining'));
+        }
+    }
+    public static function inductionReport($id)
+    {
+        $data = Induction_training::find($id);
+        if (!empty($data)) {
+            $data->originator_id = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.TMS.induction_training.induction_report', compact('data'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('example.pdf' . $id . '.pdf');
+        }
     }
 }

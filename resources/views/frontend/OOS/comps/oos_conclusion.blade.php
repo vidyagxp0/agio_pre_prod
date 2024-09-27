@@ -1,7 +1,7 @@
 <div id="CCForm8" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="sub-head">
-            Conclusion Comments
+            OOS Conclusion
         </div>
         <div class="row">
             <div class="col-md-12 mb-4">
@@ -16,7 +16,7 @@
 
 
             <!-- ---------------------------grid-1 -------------------------------- -->
-            <div class="group-input">
+            {{-- <div class="group-input">
                 <label for="audit-agenda-grid">
                     Summary of OOS Test Results
                     <button type="button" name="audit-agenda-grid" id="oos_conclusion">+</button>
@@ -56,7 +56,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Report Attachments">Specification Limit </label>
@@ -124,14 +124,38 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Records">CAPA Ref No.</label>
-                    <select multiple id="reference_record" name="capa_ref_no_oosc[]"  {{Helpers::isOOSChemical($data->stage)}}>
-                        <option value="0">--Select---</option>
-                        <option value="1" {{ (!empty($data->capa_ref_no_oosc) && str_contains($data->capa_ref_no_oosc, 1)) ? 'selected' : '' }}>1</option>
-                        <option value="2" {{ (!empty($data->capa_ref_no_oosc) && str_contains($data->capa_ref_no_oosc, 2)) ? 'selected' : '' }}>2</option>
+                    <select multiple id="reference_record" name="capa_ref_no_oosc[]"
+                        placeholder="Select Reference Records">
+                        
+                        @if (!empty($old_record))
+                            @foreach ($old_record as $new)
+                                @php
+                                    $recordValue =
+                                        Helpers::getDivisionName($new->division_id) .
+                                        '/CAPA/' .
+                                        date('Y') . 
+                                        '/' . 
+                                        Helpers::recordFormat($new->record);
+            
+                                    // Ensure $data->capa_ref_no_oosc is properly fetched from the DB
+                                    $selectedValues = is_string($data->capa_ref_no_oosc) 
+                                        ? explode(',', $data->capa_ref_no_oosc) 
+                                        : (is_array($data->capa_ref_no_oosc) 
+                                            ? $data->capa_ref_no_oosc 
+                                            : []);
+            
+                                    // Check if the recordValue exists in the selected values
+                                    $selected = in_array($recordValue, $selectedValues) ? 'selected' : '';
+                                @endphp
+                                <option value="{{ $recordValue }}" {{ $selected }}>
+                                    {{ $recordValue }}
+                                </option>
+                            @endforeach
+                        @endif
                     </select>
                 </div>
             </div>
-
+            
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justify if CAPA not required</label>
@@ -141,7 +165,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-6">
+            {{-- <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">Action Item Req.</label>
                     <select name="action_plan_req_oosc"  {{Helpers::isOOSChemical($data->stage)}}>
@@ -152,16 +176,41 @@
                     </select>
                 </div>
             </div>
+           
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Reference Recores">Action Item Ref.</label>
-                    <select multiple id="reference_record" name="action_plan_ref_oosc[]" id=""  {{Helpers::isOOSChemical($data->stage)}}>
-                    <option value="o">Enter Your Selection Here</option>
-                    <option value="1" {{ (!empty($data->action_plan_ref_oosc) && in_array('1', explode(',', $data->action_plan_ref_oosc[0]))) ? 'selected' : '' }}>1</option>
-                    <option value="2" {{ (!empty($data->action_plan_ref_oosc) && in_array('2', explode(',', $data->action_plan_ref_oosc[0]))) ? 'selected' : '' }}>2</option>
-                  </select>
+                    <label for="Reference Records">Action Item Ref.</label>
+                    <select multiple id="related_records" name="action_plan_ref_oosc[]"
+                        placeholder="Select Reference Records">
+            
+                        @if (!empty($old_record))
+                            @foreach ($old_record as $new)
+                                @php
+                                    $recordValue =
+                                        Helpers::getDivisionName($new->division_id) .
+                                        '/AI/' .
+                                        date('Y') .
+                                        '/' .
+                                        Helpers::recordFormat($new->record);
+            
+                                    $selectedValues = is_string($data->action_plan_ref_oosc) 
+                                        ? explode(',', $data->action_plan_ref_oosc) 
+                                        : (is_array($data->action_plan_ref_oosc) 
+                                            ? $data->action_plan_ref_oosc 
+                                            : []);
+            
+                                    $selected = in_array($recordValue, $selectedValues) ? 'selected' : '';
+                                @endphp
+                                <option value="{{ $recordValue }}" {{ $selected }}>
+                                    {{ $recordValue }}
+                                </option>
+                            @endforeach
+                        @endif
+                    </select>
                 </div>
             </div>
+            
+            
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justification for Delay</label>
@@ -235,11 +284,11 @@
                         <thead>
                             <tr>
                                 <th style="width: 4%">Row#</th>
-                                <th style="width: 16%">Material/Product Name</th>
-                                <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
-                                <th style="width: 16%">Any Other Information</th>
-                                <th style="width: 16%">Action Taken on Affec.batch</th>
-                                <th style="widht: 16%">Action </th>
+                                <th style="width: 24%">Material/Product Name</th>
+                                <th style="width: 24%">Batch No.(s) / A.R. No. (s)</th>
+                                <th style="width: 24%">Any Other Information</th>
+                                <th style="width: 24%">Action Taken on Affec.batch</th>
+                                <th style="widht: 4%">Action </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -263,7 +312,7 @@
                 <div class="group-input">
                     <label for="Description Deviation">Action Taken on Affec.batch</label>
                     <textarea class="summernote" name="action_taken_on_affec_batch_ocr" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
-                    {{ $data->action_taken_on_affec_batch_ocr ? $data->action_taken_on_affec_batch_ocr :'NA' }}
+                    {{ $data->action_taken_on_affec_batch_ocr ? $data->action_taken_on_affec_batch_ocr :'' }}
                 </textarea>
                 </div>
             </div>
@@ -287,16 +336,30 @@
                   </select>
                  
                 </div>
-            </div>
+            </div> --}}
 
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justify if No Risk Assessment</label>
                     <textarea class="summernote" name="justify_if_no_risk_assessment_ocr" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
-                            {{ $data->justify_if_no_risk_assessment_ocr ? $data->justify_if_no_risk_assessment_ocr : 'NA' }}
+                            {{ $data->justify_if_no_risk_assessment_ocr ? $data->justify_if_no_risk_assessment_ocr : '' }}
                         </textarea>
                 </div>
             </div>
+            <div class="col-md-12 mb-4">
+                <div class="group-input">
+                    <label for="Description Deviation">Action On affected batches</label>
+                    <textarea class="summernote" name="action_on_affected_batch" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
+                            {{ $data->action_on_affected_batch ? $data->action_on_affected_batch : '' }}
+                        </textarea>
+                </div>
+            </div>
+            {{-- <div class="col-lg-12">
+                <div class="group-input">
+                    <label for="Audit Attachments">CQ Approver</label>
+                    <input type="text" name="cq_approver" value="{{$data->cq_approver ? $data->cq_approver : '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                </div>
+            </div> --}}
             <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Reference Recores">Conclusion Attachment</label>
@@ -329,13 +392,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Audit Attachments">CQ Approver</label>
-                    <input type="text" name="cq_approver" value="{{$data->cq_approver ? $data->cq_approver : '' }}" {{Helpers::isOOSChemical($data->stage)}}>
-                </div>
-            </div>
-            <div class="sub-head">
+           
+            {{-- <div class="sub-head">
                 CQ Review Comments
             </div>
             <div class="col-md-12 mb-4">
@@ -379,7 +437,7 @@
                     </div>
 
                 </div>
-            </div>
+            </div> --}}
 
             <div class="button-block">
                 @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)

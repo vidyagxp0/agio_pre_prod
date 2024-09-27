@@ -1,7 +1,7 @@
 <div id="CCForm7" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="sub-head">
-            Additional Testing Proposal by QA
+            Additional Testing Proposal
         </div>
         <div class="row">
             <div class="col-md-12 mb-4">

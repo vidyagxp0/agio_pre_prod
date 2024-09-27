@@ -9,6 +9,7 @@
         display: none;
     }
 </style>
+
 @php
     $users = DB::table('users')->select('id', 'name')->get();
 @endphp
@@ -178,8 +179,8 @@ DATA FIELDS
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Audit Program</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Self Inspection Circular</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD Designee</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA/QA Head</button>
+            <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD/Designee Review</button> -->
+            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA/QA Head Approval</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Activity Log</button>
         </div>
         <form action="{{ route('createAuditProgram') }}" method="post" enctype="multipart/form-data">
@@ -220,6 +221,87 @@ DATA FIELDS
                                 <input disabled type="text" name="division_code" value="{{ Auth::user()->name }}">
                             </div>
                         </div>
+                        
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group"><b>Initiator Department</b></label>
+                                <select name="Initiator_Group" id="Initiator_Group">
+                                    <option value="" data-code="">-- Select --</option>
+                                    <option value="Corporate Quality Assurance" data-code="CQA" @if (old('Initiator_Group') == 'Corporate Quality Assurance') selected @endif>
+                                        Corporate Quality Assurance
+                                    </option>
+                                    <option value="Quality Assurance" data-code="QA" @if (old('Initiator_Group') == 'Quality Assurance') selected @endif>
+                                        Quality Assurance
+                                    </option>
+                                    <option value="Quality Control" data-code="QC" @if (old('Initiator_Group') == 'Quality Control') selected @endif>
+                                        Quality Control
+                                    </option>
+                                    <option value="Quality Control (Microbiology department)" data-code="QCMD" @if (old('Initiator_Group') == 'Quality Control (Microbiology department') selected @endif>
+                                        Quality Control (Microbiology department)
+                                    </option>
+                                    <option value="Production General" data-code="PG" @if (old('Initiator_Group') == 'Production General') selected @endif>
+                                        Production General
+                                    </option>
+                                    <option value="Production Liquid Orals" data-code="PLO" @if (old('Initiator_Group') == 'Production Liquid Orals') selected @endif>
+                                        Production Liquid Orals
+                                    </option>
+                                    <option value="Production Tablet and Powder" data-code="PTP" @if (old('Initiator_Group') == 'Production Tablet and Powder') selected @endif>
+                                        Production Tablet and Powder
+                                    </option>
+                                    <option value="Production External (Ointment, Gels, Creams and Liquid)" data-code="PE" @if (old('Initiator_Group') == 'Production External (Ointment, Gels, Creams and Liquid') selected @endif>
+                                        Production External (Ointment, Gels, Creams and Liquid)
+                                    </option>
+                                    <option value="Production Capsules" data-code="PC" @if (old('Initiator_Group') == 'Production Capsules') selected @endif>
+                                        Production Capsules
+                                    </option>
+                                    <option value="Production Injectable" data-code="PI" @if (old('Initiator_Group') == 'Production Injectable') selected @endif>
+                                        Production Injectable
+                                    </option>
+                                    <option value="Engineering" data-code="ENG" @if (old('Initiator_Group') == 'Engineering') selected @endif>
+                                        Engineering
+                                    </option>
+                                    <option value="Human Resource" data-code="HR" @if (old('Initiator_Group') == 'Human Resource') selected @endif>
+                                        Human Resource
+                                    </option>
+                                    <option value="Store" data-code="ST" @if (old('Initiator_Group') == 'Store') selected @endif>
+                                        Store
+                                    </option>
+                                    <option value="Electronic Data Processing" data-code="EDP" @if (old('Initiator_Group') == 'Electronic Data Processing') selected @endif>
+                                        Electronic Data Processing
+                                    </option>
+                                    <option value="Formulation Development" data-code="FD" @if (old('Initiator_Group') == 'Formulation Development') selected @endif>
+                                        Formulation Development
+                                    </option>
+                                    <option value="Analytical research and Development Laboratory" data-code="ARD" @if (old('Initiator_Group') == 'Analytical research and Development Laboratory') selected @endif>
+                                        Analytical research and Development Laboratory
+                                    </option>
+                                    <option value="Packaging Development" data-code="PD" @if (old('Initiator_Group') == 'Packaging Development') selected @endif>
+                                        Packaging Development
+                                    </option>
+                                    <option value="Purchase Department" data-code="PD" @if (old('Initiator_Group') == 'Purchase Department') selected @endif>
+                                        Purchase Department
+                                    </option>
+                                    <option value="Document Cell" data-code="DC" @if (old('Initiator_Group') == 'Document Cell') selected @endif>
+                                        Document Cell
+                                    </option>
+                                    <option value="Regulatory Affairs" data-code="RA" @if (old('Initiator_Group') == 'Regulatory Affairs') selected @endif>
+                                        Regulatory Affairs
+                                    </option>
+                                    <option value="Pharmacovigilance" data-code="PV" @if (old('Initiator_Group') == 'Pharmacovigilance') selected @endif>
+                                        Pharmacovigilance
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="initiator_group_code">Department Code</label>
+                                <input type="text" name="initiator_group_code" id="initiator_group_code"
+                                    value="{{ old('initiator_group_code') }}" readonly>
+                            </div>
+                        </div>
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Date Due"><b>Date of Initiation</b></label>
@@ -359,85 +441,6 @@ DATA FIELDS
                         </div>
 
 
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group"><b>Initiator Department</b></label>
-                                <select name="Initiator_Group" id="Initiator_Group">
-                                    <option value="" data-code="">-- Select --</option>
-                                    <option value="Corporate Quality Assurance" data-code="CQA" @if (old('Initiator_Group') == 'Corporate Quality Assurance') selected @endif>
-                                        Corporate Quality Assurance
-                                    </option>
-                                    <option value="Quality Assurance" data-code="QA" @if (old('Initiator_Group') == 'Quality Assurance') selected @endif>
-                                        Quality Assurance
-                                    </option>
-                                    <option value="Quality Control" data-code="QC" @if (old('Initiator_Group') == 'Quality Control') selected @endif>
-                                        Quality Control
-                                    </option>
-                                    <option value="Quality Control (Microbiology department)" data-code="QCMD" @if (old('Initiator_Group') == 'Quality Control (Microbiology department') selected @endif>
-                                        Quality Control (Microbiology department)
-                                    </option>
-                                    <option value="Production General" data-code="PG" @if (old('Initiator_Group') == 'Production General') selected @endif>
-                                        Production General
-                                    </option>
-                                    <option value="Production Liquid Orals" data-code="PLO" @if (old('Initiator_Group') == 'Production Liquid Orals') selected @endif>
-                                        Production Liquid Orals
-                                    </option>
-                                    <option value="Production Tablet and Powder" data-code="PTP" @if (old('Initiator_Group') == 'Production Tablet and Powder') selected @endif>
-                                        Production Tablet and Powder
-                                    </option>
-                                    <option value="Production External (Ointment, Gels, Creams and Liquid)" data-code="PE" @if (old('Initiator_Group') == 'Production External (Ointment, Gels, Creams and Liquid') selected @endif>
-                                        Production External (Ointment, Gels, Creams and Liquid)
-                                    </option>
-                                    <option value="Production Capsules" data-code="PC" @if (old('Initiator_Group') == 'Production Capsules') selected @endif>
-                                        Production Capsules
-                                    </option>
-                                    <option value="Production Injectable" data-code="PI" @if (old('Initiator_Group') == 'Production Injectable') selected @endif>
-                                        Production Injectable
-                                    </option>
-                                    <option value="Engineering" data-code="ENG" @if (old('Initiator_Group') == 'Engineering') selected @endif>
-                                        Engineering
-                                    </option>
-                                    <option value="Human Resource" data-code="HR" @if (old('Initiator_Group') == 'Human Resource') selected @endif>
-                                        Human Resource
-                                    </option>
-                                    <option value="Store" data-code="ST" @if (old('Initiator_Group') == 'Store') selected @endif>
-                                        Store
-                                    </option>
-                                    <option value="Electronic Data Processing" data-code="EDP" @if (old('Initiator_Group') == 'Electronic Data Processing') selected @endif>
-                                        Electronic Data Processing
-                                    </option>
-                                    <option value="Formulation Development" data-code="FD" @if (old('Initiator_Group') == 'Formulation Development') selected @endif>
-                                        Formulation Development
-                                    </option>
-                                    <option value="Analytical research and Development Laboratory" data-code="ARD" @if (old('Initiator_Group') == 'Analytical research and Development Laboratory') selected @endif>
-                                        Analytical research and Development Laboratory
-                                    </option>
-                                    <option value="Packaging Development" data-code="PD" @if (old('Initiator_Group') == 'Packaging Development') selected @endif>
-                                        Packaging Development
-                                    </option>
-                                    <option value="Purchase Department" data-code="PD" @if (old('Initiator_Group') == 'Purchase Department') selected @endif>
-                                        Purchase Department
-                                    </option>
-                                    <option value="Document Cell" data-code="DC" @if (old('Initiator_Group') == 'Document Cell') selected @endif>
-                                        Document Cell
-                                    </option>
-                                    <option value="Regulatory Affairs" data-code="RA" @if (old('Initiator_Group') == 'Regulatory Affairs') selected @endif>
-                                        Regulatory Affairs
-                                    </option>
-                                    <option value="Pharmacovigilance" data-code="PV" @if (old('Initiator_Group') == 'Pharmacovigilance') selected @endif>
-                                        Pharmacovigilance
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="initiator_group_code">Department Code</label>
-                                <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                    value="{{ old('initiator_group_code') }}" readonly>
-                            </div>
-                        </div>
 
 
 
@@ -552,18 +555,20 @@ DATA FIELDS
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Year">Yearly Planner</label>
+                                <label for="Year">Initiated Through </label>
                                 <select name="year" id="year">
                                     <option value="">-- Select --</option>
-                                    <option value="Yearly">Yearly</option>
-                                    <option value="Monthly">Monthly</option>
+                                    <option value="Deviation">Deviation</option>
+                                    <option value="CAPA">CAPA</option>
+                                    <option value="Lab Incident">Lab Incident</option>
+                                    <option value="Internal Audit">Internal Audit</option>
                                     <option value="Other">Other</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" id="through_req_text" style="display: none;">
-                                <label for="type">Yearly Planners(Other)<span class="text-danger">*</span></label>
+                                <label for="type">Initiated Through(Other)<span class="text-danger">*</span></label>
                                 <textarea name="yearly_other" id="year_data"></textarea>
                             </div>
                         </div>
@@ -729,8 +734,7 @@ DATA FIELDS
                             <label for="audit-agenda-grid">
                                 Self Inspection Planner
                                 <button type="button" name="audit-agenda-grid" id="Self_Inspection">+</button>
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#observation-field-instruction-modal"
+                                <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                     (Launch Instruction)
                                 </span>
@@ -747,57 +751,165 @@ DATA FIELDS
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td><input disabled type="text" name="serial[]" value="1">
-                                        </td>
-                                        <td>
-
-                                            <select name="Self_Inspection[0][department]" id="department" {{ isset($data->stage) && ($data->stage == 0 || $data->stage == 8) ? 'disabled' : '' }}>
-                                                <option selected disabled value="">---select---
-                                                </option>
-                                                @foreach (Helpers::getDepartments() as $department)
+                                        <tr>
+                                            <td><input disabled type="text" name="serial[]" value="1"></td>
+                                            <td>
+                                                <select name="Self_Inspection[0][department]" id="department">
+                                                    <option selected disabled value="">---select---</option>
+                                                    @foreach (Helpers::getDepartments() as $department)
                                                     <option value="{{ $department }}" @if (isset($data->department) && $data->department == $department) selected @endif>
                                                         {{ $department }}
                                                     </option>
-                                                @endforeach
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select id="Months" multiple placeholder="Select..." data-search="false"
-                                                data-silent-initial-value-set="true" name="Self_Inspection[0][Months]">
-                                                {{-- <option value="">Select a months</option> --}}
-                                                <option value="Jan">January</option>
-                                                <option value="Feb">February</option>
-                                                <option value="March">March
-                                                </option>
-                                                <option value="April">April
-                                                </option>
-                                                <option value="May">May
-                                                </option>
-                                                <option value="June">June
-                                                </option>
-                                                <option value="July">July
-                                                </option>
-                                                <option value="Aug">August
-                                                </option>
-                                                <option value="Sept">September
-                                                </option>
-                                                <option value="Oct">October
-                                                </option>
-                                                <option value="Nov">November
-                                                </option>
-                                                <option value="Dec">December
-                                                </option>
-                                            </select>
-                                        </td>
-                                        <td><input type="text" name="Self_Inspection[0][Remarked]">
-                                        </td>
-                                        <td>
-                                            <button type="button" class="removeBtn">remove</button>
-                                        </td>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select id="Months" multiple name="Self_Inspection[0][Months]">
+                                                    <option value="Jan">January</option>
+                                                    <option value="Feb">February</option>
+                                                    <option value="March">March</option>
+                                                    <option value="April">April</option>
+                                                    <option value="May">May</option>
+                                                    <option value="June">June</option>
+                                                    <option value="July">July</option>
+                                                    <option value="Aug">August</option>
+                                                    <option value="Sept">September</option>
+                                                    <option value="Oct">October</option>
+                                                    <option value="Nov">November</option>
+                                                    <option value="Dec">December</option>
+                                                </select>
+                                            </td>
+                                            <td><input type="text" name="Self_Inspection[0][Remarked]"></td>
+                                            <td><button type="button" class="removeBtn">Remove</button></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                        <script>
+                            $(document).ready(function () {
+                                // Function to generate a new row in the Self Inspection Planner table
+                                function generateOptions() {
+                                    var options = '<option selected disabled value="">---select---</option>';
+                                    @foreach (Helpers::getDepartments() as $department)
+                                    options += '<option value="{{ $department }}">{{ $department }}</option>';
+                                    @endforeach
+                                    return options;
+                                }
+                        
+                                // Function to generate a new row in the table
+                                function generateTableRow(serialNumber) {
+                                    var departmentOptions = generateOptions(); // Call to get the department options
+                        
+                                    var html = '<tr>' +
+                                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                                        '<td>' +
+                                        '<select name="Self_Inspection[' + serialNumber + '][department]" id="department' + serialNumber + '">' +
+                                        departmentOptions +
+                                        '</select>' +
+                                        '</td>' +
+                                        '<td>' +
+                                        '<select id="Months' + serialNumber + '" multiple name="Self_Inspection[' + serialNumber + '][Months]">' +
+                                        '<option value="Jan">January</option>' +
+                                        '<option value="Feb">February</option>' +
+                                        '<option value="Mar">March</option>' +
+                                        '<option value="Apr">April</option>' +
+                                        '<option value="May">May</option>' +
+                                        '<option value="Jun">June</option>' +
+                                        '<option value="Jul">July</option>' +
+                                        '<option value="Aug">August</option>' +
+                                        '<option value="Sep">September</option>' +
+                                        '<option value="Oct">October</option>' +
+                                        '<option value="Nov">November</option>' +
+                                        '<option value="Dec">December</option>' +
+                                        '</select>' +
+                                        '</td>' +
+                                        '<td><input type="text" name="Self_Inspection[' + serialNumber + '][Remarked]"></td>' +
+                                        '<td><button type="button" class="removeBtn">Remove</button></td>' +
+                                        '</tr>';
+                                    return html;
+                                }
+                        
+                                // Event listener for adding new rows
+                                $('#Self_Inspection').click(function (e) {
+                                    e.preventDefault();
+                        
+                                    var tableBody = $('#Self_Inspection-field-instruction-modal tbody');
+                                    var rowCount = tableBody.children('tr').length;
+                                    var newRow = generateTableRow(rowCount + 1); // Pass the correct serial number
+                                    tableBody.append(newRow);
+                        
+                                    // Initialize VirtualSelect only for the new Months select
+                                    VirtualSelect.init({
+                                        ele: '#Months' + (rowCount + 1) // Initialize only for the new row's select box
+                                    });
+                                });
+                        
+                                // Event delegation for remove button
+                                $('#Self_Inspection-field-instruction-modal').on('click', '.removeBtn', function () {
+                                    $(this).closest('tr').remove();
+                                });
+                            });
+                        </script>
+                        
+                        
+                        {{-- <script>
+                            document.getElementById('Self_Inspection').addEventListener('click', function() {
+                                const tableBody = document.querySelector('#Self_Inspection-field-instruction-modal tbody');
+                                const newRow = document.createElement('tr');
+                        
+                                const rowCount = tableBody.rows.length + 1;
+                        
+                                // Get the department dropdown from the first row
+                                const departmentDropdown = document.querySelector('#Self_Inspection-field-instruction-modal tbody tr td select[name^="Self_Inspection[0][department]"]').outerHTML;
+                        
+                                newRow.innerHTML = `
+                                    <td><input disabled type="text" name="serial[]" value="${rowCount}"></td>
+                                    <td>${departmentDropdown.replace('Self_Inspection[0][department]', `Self_Inspection[${rowCount - 1}][department]`)}</td>
+                                    <td>
+                                        <select id="Months" multiple name="Self_Inspection[${rowCount - 1}][Months]">
+                                            <option value="Jan">January</option>
+                                            <option value="Feb">February</option>
+                                            <option value="March">March</option>
+                                            <option value="April">April</option>
+                                            <option value="May">May</option>
+                                            <option value="June">June</option>
+                                            <option value="July">July</option>
+                                            <option value="Aug">August</option>
+                                            <option value="Sept">September</option>
+                                            <option value="Oct">October</option>
+                                            <option value="Nov">November</option>
+                                            <option value="Dec">December</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="text" name="Self_Inspection[${rowCount - 1}][Remarked]"></td>
+                                    <td><button type="button" class="removeBtn">Remove</button></td>
+                                `;
+                        
+                                tableBody.appendChild(newRow);
+                                updateRemoveBtnListeners();
+                            });
+                        
+                            function updateRemoveBtnListeners() {
+                                document.querySelectorAll('.removeBtn').forEach(button => {
+                                    button.addEventListener('click', function() {
+                                        this.closest('tr').remove();
+                                        updateRowNumbers();
+                                    });
+                                });
+                            }
+                        
+                            function updateRowNumbers() {
+                                document.querySelectorAll('#Self_Inspection-field-instruction-modal tbody tr').forEach((row, index) => {
+                                    row.querySelector('input[name="serial[]"]').value = index + 1;
+                                });
+                            }
+                        
+                            // Initial call to set up the listeners for the existing row
+                            updateRemoveBtnListeners();
+                        </script> --}}
+                        
+                        
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="comments">Comments</label>
@@ -943,22 +1055,22 @@ DATA FIELDS
                     </div>
                 </div>
             </div>
-            <div id="CCForm4" class="inner-block cctabcontent">
+            <!-- <div id="CCForm4" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
                         <div class="col-12">
-                            <div class="sub-head">HOD Review
+                            <div class="sub-head">HOD/Designee Review
                             </div>
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="comment">HOD Comments</label>
+                                    <label for="comment">HOD/Designee Review Comments</label>
                                     <textarea name="hod_comment"></textarea>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Inv Attachments">HOD File Attachment</label>
+                                    <label for="Inv Attachments">HOD/Designee Review Attached Files</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -982,22 +1094,22 @@ DATA FIELDS
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div id="CCForm5" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
                         <div class="col-12">
-                            <div class="sub-head">CQA/QA Review
+                            <div class="sub-head">CQA/QA Approval
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="comment">CQA/QA Comments</label>
+                                    <label for="comment">CQA/QA Approval Comments</label>
                                     <textarea name="cqa_qa_comment"></textarea>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Inv Attachments">CQA/QA File Attachment</label>
+                                    <label for="Inv Attachments">CQA/QA Attached Files</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -1426,75 +1538,7 @@ DATA FIELDS
     });
 </script>
 
-<script>
-    $(document).ready(function () {
-        // Function to generate a new row in the Self Inspection Planner table
-        function generateTableRow(serialNumber) {
-            var departments = @json(Helpers::getDepartments());
-            var disabled = @json(isset($data->stage) && ($data->stage == 0 || $data->stage == 4));
-            var selectedDepartment = @json(isset($data->department) ? $data->department : '');
 
-            var departmentOptions = '<option selected disabled value="">---select---</option>';
-            for (var key in departments) {
-                var selected = (departments[key] === selectedDepartment) ? 'selected' : '';
-                departmentOptions += '<option value="' + departments[key] + '" ' + selected + '>' + departments[
-                    key] + '</option>';
-            }
-
-            var html = '<tr>' +
-                '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
-                '<td>' +
-                '<select name="Self_Inspection[' + serialNumber + '][department]" id="department' +
-                serialNumber + '"' + (disabled ? ' disabled' : '') + '>' +
-                departmentOptions +
-                '</select>' +
-                '</td>' +
-                '<td>' +
-                '<select id="Months' + serialNumber + '" multiple placeholder="Select..." ' +
-                'data-search="false" data-silent-initial-value-set="true" ' +
-                'name="Self_Inspection[' + serialNumber + '][Months]">' +
-                '<option value="Jan">January</option>' +
-                '<option value="Feb">February</option>' +
-                '<option value="Mar">March</option>' +
-                '<option value="Apr">April</option>' +
-                '<option value="May">May</option>' +
-                '<option value="Jun">June</option>' +
-                '<option value="Jul">July</option>' +
-                '<option value="Aug">August</option>' +
-                '<option value="Sep">September</option>' +
-                '<option value="Oct">October</option>' +
-                '<option value="Nov">November</option>' +
-                '<option value="Dec">December</option>' +
-                '</select>' +
-                '</td>' +
-                '<td><input type="text" name="Self_Inspection[' + serialNumber + '][Remarked]"></td>' +
-                '<td><button type="button" class="removeBtn">Remove</button></td>' +
-                '</tr>';
-            return html;
-        }
-
-        // Event listener for adding new rows
-        $('#Self_Inspection').click(function (e) {
-            e.preventDefault();
-            var tableBody = $('#Self_Inspection-field-instruction-modal tbody');
-            var rowCount = tableBody.children('tr').length;
-            var newRow = generateTableRow(rowCount + 1);
-            tableBody.append(newRow);
-
-            // Initialize VirtualSelect after adding the new row
-            VirtualSelect.init({
-                ele: '#Months' + (rowCount + 1) +
-                    ', #team_members, #training-require, #impacted_objects'
-            });
-        });
-
-        // Event delegation for remove button
-        $('#Self_Inspection-field-instruction-modal').on('click', '.removeBtn', function () {
-            $(this).closest('tr').remove();
-        });
-        
-    });
-</script>
 
 
 

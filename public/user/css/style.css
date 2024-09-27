@@ -2756,6 +2756,7 @@ section#pdf-page .watermark {
 
 #tms-dashboard .tms-block td a {
     /* border: 1px solid #a3a0a0a6; */
+
     color: #355cab;
     display: grid;
     width: 30px;

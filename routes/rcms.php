@@ -52,18 +52,26 @@ Route::group(['prefix' => 'rcms'], function () {
 
 
 
-    Route::middleware(['rcms'])->group(
+    // Route::middleware(['rcms'])->group(
+        Route::middleware(['rcms', 'active-account'])->group(
         function () {
             Route::post('job_trainer_send/{id}', [JobTrainingController::class, 'sendStage']);
             Route::get('traineraudittrail/{id}', [TrainerController::class, 'trainerAuditTrial'])->name('trainer.audittrail');
+            Route::get('trainer_report/{id}', [TrainerController::class, 'trainerReport'])->name('trainer_report');   
+
+            Route::get('job_report/{id}', [JobTrainingController::class, 'jobReport'])->name('job_report');
             // Route::get('auditDetailsTrainer/{id}', [TrainerController::class, 'auditDetailstrainer'])->name('trainerauditDetails');
             Route::get('employeeaudittrail/{id}', [EmployeeController::class, 'AuditTrial'])->name('audittrail');
+            Route::get('report/{id}', [EmployeeController::class, 'report'])->name('report');
             // Route::get('auditDetailsEmployee/{id}', [EmployeeController::class, 'auditDetailsEmployee'])->name('employeeauditDetails');
             Route::get('job_traineeaudittrail/{id}', [JobTrainingController::class, 'jobAuditTrial'])->name('job_audittrail');
             // Route::get('auditDetailsEmployee/{id}', [JobTrainingController::class, 'auditDetailsJobTrainee'])->name('jobTraineeauditDetails');
             Route::get('induction_traineeaudittrail/{id}', [InductionTrainingController::class, 'inductionAuditTrial'])->name('induction_audittrail');
+            Route::get('induction_report/{id}', [InductionTrainingController::class, 'inductionReport'])->name('induction_report');
             // Route::get('auditDetailsEmployee/{id}', [InductionTrainingController::class, 'auditDetailsInduction'])->name('InductionauditDetails');
             Route::post('employee_Child/{id}', [EmployeeController::class, 'Employee_Child'])->name('employee.child');
+            Route::post('job_training_Child/{id}', [InductionTrainingController::class, 'Induction_Child'])->name('induction.child');
+
             Route::resource('CC', CCController::class);
             Route::post('send-initiator/{id}', [CCController::class, 'sendToInitiator']);
             Route::post('send-hod/{id}', [CCController::class, 'sendToHod']);
@@ -77,6 +85,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('actionitemSingleReport/{id}', [ActionItemController::class, 'singleReport'])->name('actionitemSingleReport');
             Route::get('actionitemAuditReport/{id}', [ActionItemController::class, 'auditReport'])->name('actionitemAuditReport');
             Route::get('actionitemauditTrailPdf/{id}', [ActionItemController::class, 'auditTrailPdf'])->name('actionitemauditTrailPdf');
+            Route::get('/actionItemFilter/{id}',[ActionItemController::class,'audit_trail_filter_action'])->name('actionItemFilter');
 
             Route::get('effective-audit-trial-show/{id}', [EffectivenessCheckController::class, 'effectiveAuditTrialShow'])->name('show_effective_AuditTrial');
             Route::get('effective-audit-trial-details/{id}', [EffectivenessCheckController::class, 'effectiveAuditTrialDetails'])->name('show_audittrial_effective');
@@ -160,6 +169,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('LabIncidentSingleReport/{id}', [LabIncidentController::class, 'singleReport'])->name('LabIncidentSingleReport');
             Route::get('LabIncidentAuditReport/{id}', [LabIncidentController::class, 'auditReport'])->name('LabIncidentAuditReport');
             Route::post('labExtChild/{id}', [LabIncidentController::class, 'lab_incident_extension_child'])->name('lab_incident_extension_child');
+            Route::get('/incident/{id}',[IncidentController::class,'audit_trail_filter_incident'])->name('incident_filter');
             //------------------------------------
 
 
@@ -454,6 +464,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('send-post-implementation/{id}', [CCController::class, 'sentoPostImplementation'])->name('send-post-implementation');
             Route::post('moreinfoState_actionitem/{id}', [ActionItemController::class, 'actionmoreinfo']);
             Route::post('LabIncidentStateCancel/{id}', [LabIncidentController::class, 'LabIncidentStateCancel'])->name('StageChangeLabcancel');
+            
 
         }
     );

@@ -10,6 +10,7 @@ use App\Models\managementCft;
 use App\Models\hodmanagementCft;
 use App\Models\Capa;
 use App\Models\managementCft_Response;
+use App\Models\hodmanagementCft_Response;
 use App\Models\CC;
 use App\Models\EffectivenessCheck;
 use App\Models\managementHistory;
@@ -46,7 +47,7 @@ class ManagementReviewController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
- 
+
 
         return view("frontend.forms.meeting", compact('due_date', 'record_number'));
     }
@@ -65,10 +66,15 @@ class ManagementReviewController extends Controller
         // $management->assign_to = 1;//$request->assign_to;
 
          $management->priority_level = $request->priority_level;
-         $management->assign_to= $request->assign_to;
+        //  $management->assign_to= $request->assign_to;
+        // $management->assign_to = implode(',', $request->assign_to);
+
+        $management->assign_to = implode(',', $request->assign_to);
+
+
          $management->Operations= $request->Operations;
          $management->requirement_products_services = $request->requirement_products_services;
-         $management->design_development_product_services = $request->design_development_product_services; 
+         $management->design_development_product_services = $request->design_development_product_services;
          $management->control_externally_provide_services = $request->control_externally_provide_services;
          $management->production_service_provision= $request->production_service_provision;
          $management->release_product_services = $request->release_product_services;
@@ -86,7 +92,7 @@ class ManagementReviewController extends Controller
         //$management->comment = json_encode($request->comment);
         //$management->end_time = json_encode($request->end_time);
        // $management->topic = json_encode($request->topic);
-        
+
       // $management = new ManagementReview();
         $management->form_type = "Management Review";
         $management->division_id = $request->division_id;
@@ -96,10 +102,12 @@ class ManagementReviewController extends Controller
         $management->division_code = $request->division_code;
         // $management->Initiator_id = $request->Initiator_id;
         $management->short_description = $request->short_description;
-        $management->assigned_to = $request->assigned_to;
+        // $management->assigned_to = $request->assigned_to;
+        // $management->assign_to = implode(',', $request->assign_to);
+
         $management->due_date = $request->due_date;
         $management->type = $request->type;
-       
+
         $management->start_date = $request->start_date;
         $management->end_date = $request->end_date;
         $management->attendees = $request->attendees;
@@ -127,7 +135,7 @@ class ManagementReviewController extends Controller
         $management->review_period_six_monthly = $request->review_period_six_monthly;
         $management->status = 'Opened';
         $management->stage = 1;
-       
+
         if (!empty($request->inv_attachment)) {
             $files = [];
             if ($request->hasfile('inv_attachment')) {
@@ -137,7 +145,7 @@ class ManagementReviewController extends Controller
                     $files[] = $name;
                 }
             }
-            
+
             $management->inv_attachment= json_encode($files);
         }
         if (!empty($request->file_attchment_if_any)) {
@@ -149,7 +157,7 @@ class ManagementReviewController extends Controller
                     $files[] = $name;
                 }
             }
-            
+
             $management->file_attchment_if_any= json_encode($files);
         }
         if (!empty($request->closure_attachments)) {
@@ -161,7 +169,7 @@ class ManagementReviewController extends Controller
                     $files[] = $name;
                 }
             }
-            
+
             $management->closure_attachments= json_encode($files);
         }
 
@@ -176,7 +184,7 @@ class ManagementReviewController extends Controller
                     $files[] = $name;
                 }
             }
-            
+
             $management->cft_hod_attach= json_encode($files);
         } if (!empty($request->qa_verification_file)) {
             $files = [];
@@ -187,10 +195,10 @@ class ManagementReviewController extends Controller
                     $files[] = $name;
                 }
             }
-            
+
             $management->qa_verification_file= json_encode($files);
         }
-        
+
         $management->save();
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
@@ -198,12 +206,12 @@ class ManagementReviewController extends Controller
 
 
         //  $request->dd();
-        
+
         // $management = new MeetingSummary();
         $management->risk_opportunities = $request->risk_opportunities;
         $management->external_supplier_performance = $request->external_supplier_performance;
         $management->customer_satisfaction_level = $request->customer_satisfaction_level;
-        $management->budget_estimates = $request->budget_estimates; 
+        $management->budget_estimates = $request->budget_estimates;
         $management->completion_of_previous_tasks = $request->completion_of_previous_tasks;
         $management->production_new = $request->production_new;
         $management->plans_new = $request->plans_new;
@@ -214,7 +222,7 @@ class ManagementReviewController extends Controller
         $management->summary_recommendation = $request->summary_recommendation;
         $management->additional_suport_required = $request->additional_suport_required;
         // $management->file_attchment_if_any = json_encode($request->file_attchment_if_any);
-       
+
         $management->save();
         $Cft = new managementCft();
        $Cft->ManagementReview_id = $management->id;
@@ -387,7 +395,7 @@ class ManagementReviewController extends Controller
         $Cft->Other5_by = $request->Other5_by;
         $Cft->Other5_on = $request->Other5_on;
 
-        
+
             if (!empty ($request->production_attachment)) {
             $files = [];
             if ($request->hasfile('production_attachment')) {
@@ -613,7 +621,7 @@ class ManagementReviewController extends Controller
         $Cft->save();
 
     //-------------------HODCFT------------------------------//
-   
+
 
 
 
@@ -769,7 +777,59 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Quality_Control_attachment = json_encode($files);
+            $hodCft->hod_Quality_Control_attachment = json_encode($files);
+        }
+          if (!empty ($request->hod_CorporateQualityAssurance_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_CorporateQualityAssurance_attachment')) {
+                foreach ($request->file('hod_CorporateQualityAssurance_attachment') as $file) {
+                    $name = $request->name . 'hod_CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_CorporateQualityAssurance_attachment = json_encode($files);
+        }
+          if (!empty ($request->hod_Store_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Store_attachment')) {
+                foreach ($request->file('hod_Store_attachment') as $file) {
+                    $name = $request->name . 'hod_Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Store_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_ResearchDevelopment_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_ResearchDevelopment_attachment')) {
+                foreach ($request->file('hod_ResearchDevelopment_attachment') as $file) {
+                    $name = $request->name . 'hod_ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_ResearchDevelopment_attachment = json_encode($files);
+        }
+         if (!empty ($request->hod_Production_Table_Attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Production_Table_Attachment')) {
+                foreach ($request->file('hod_Production_Table_Attachment') as $file) {
+                    $name = $request->name . 'hod_Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Production_Table_Attachment = json_encode($files);
         }
         if (!empty ($request->hod_Quality_Assurance_attachment)) {
             $files = [];
@@ -782,7 +842,7 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Quality_Assurance_attachment = json_encode($files);
+            $hodCft->hod_Quality_Assurance_attachment = json_encode($files);
         }
         if (!empty ($request->hod_Engineering_attachment)) {
             $files = [];
@@ -795,7 +855,20 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Engineering_attachment = json_encode($files);
+            $hodCft->hod_Engineering_attachment = json_encode($files);
+        }
+         if (!empty ($request->hod_RegulatoryAffair_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_RegulatoryAffair_attachment')) {
+                foreach ($request->file('hod_RegulatoryAffair_attachment') as $file) {
+                    $name = $request->name . 'hod_RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_RegulatoryAffair_attachment = json_encode($files);
         }
         if (!empty ($request->hod_Analytical_Development_attachment)) {
             $files = [];
@@ -808,7 +881,7 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Analytical_Development_attachment = json_encode($files);
+            $hodCft->hod_Analytical_Development_attachment = json_encode($files);
         }
 
         if (!empty ($request->hod_Technology_transfer_attachment)) {
@@ -822,7 +895,20 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Technology_transfer_attachment = json_encode($files);
+            $hodCft->hod_Technology_transfer_attachment = json_encode($files);
+        }
+         if (!empty ($request->hod_ProductionLiquid_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_ProductionLiquid_attachment')) {
+                foreach ($request->file('hod_ProductionLiquid_attachment') as $file) {
+                    $name = $request->name . 'hod_ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_ProductionLiquid_attachment = json_encode($files);
         }
         if (!empty ($request->hod_Environment_Health_Safety_attachment)) {
             $files = [];
@@ -835,7 +921,7 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Environment_Health_Safety_attachment = json_encode($files);
+            $hodCft->hod_Environment_Health_Safety_attachment = json_encode($files);
         }
         if (!empty ($request->hod_Human_Resource_attachment)) {
             $files = [];
@@ -848,9 +934,9 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Human_Resource_attachment = json_encode($files);
+            $hodCft->hod_Human_Resource_attachment = json_encode($files);
         }
-    
+
         if (!empty ($request->hod_Project_management_attachment)) {
             $files = [];
             if ($request->hasfile('hod_Project_management_attachment')) {
@@ -862,7 +948,7 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Project_management_attachment = json_encode($files);
+            $hodCft->hod_Project_management_attachment = json_encode($files);
         }
         if (!empty ($request->hod_Other1_attachment)) {
             $files = [];
@@ -875,7 +961,20 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Other1_attachment = json_encode($files);
+            $hodCft->hod_Other1_attachment = json_encode($files);
+        }
+          if (!empty ($request->hod_Production_Injection_Attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Production_Injection_Attachment')) {
+                foreach ($request->file('hod_Production_Injection_Attachment') as $file) {
+                    $name = $request->name . 'hod_Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Production_Injection_Attachment = json_encode($files);
         }
         if (!empty ($request->hod_Other2_attachment)) {
             $files = [];
@@ -888,7 +987,7 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Other2_attachment = json_encode($files);
+            $hodCft->hod_Other2_attachment = json_encode($files);
         }
         if (!empty ($request->hod_Other3_attachment)) {
             $files = [];
@@ -901,7 +1000,7 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Other3_attachment = json_encode($files);
+            $hodCft->hod_Other3_attachment = json_encode($files);
         }
         if (!empty ($request->hod_Other4_attachment)) {
             $files = [];
@@ -914,7 +1013,7 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Other4_attachment = json_encode($files);
+            $hodCft->hod_Other4_attachment = json_encode($files);
         }
         if (!empty ($request->hod_Other5_attachment)) {
             $files = [];
@@ -927,14 +1026,40 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Other5_attachment = json_encode($files);
+            $hodCft->hod_Other5_attachment = json_encode($files);
+        }
+           if (!empty ($request->hod_ContractGiver_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_ContractGiver_attachment')) {
+                foreach ($request->file('hod_ContractGiver_attachment') as $file) {
+                    $name = $request->name . 'hod_ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_ContractGiver_attachment = json_encode($files);
+        }
+         if (!empty ($request->hod_Microbiology_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Microbiology_attachment')) {
+                foreach ($request->file('hod_Microbiology_attachment') as $file) {
+                    $name = $request->name . 'hod_Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Microbiology_attachment = json_encode($files);
         }
         $hodCft->save();
         //  dd($management->id);
 
 
 
-       
+
 
 
         // --------------agenda--------------
@@ -977,7 +1102,7 @@ class ManagementReviewController extends Controller
             $data2->evaluation = serialize($request->evaluation);
         }
         $data2->save();
-          
+
         $data3 = new ManagementReviewDocDetails();
         $data3->review_id = $management->id;
         $data3->type = "management_review_participants";
@@ -1007,7 +1132,7 @@ class ManagementReviewController extends Controller
         $data4 = new ManagementReviewDocDetails();
         $data4->review_id = $management->id;
         $data4->type = "action_item_details";
-        
+
         if (!empty($request->short_desc)) {
             $data4->short_desc = serialize($request->short_desc);
         }
@@ -1034,7 +1159,7 @@ class ManagementReviewController extends Controller
         $data5 = new ManagementReviewDocDetails();
         $data5->review_id = $management->id;
         $data5->type = "capa_detail_details";
-        
+
         if (!empty($request->Details)) {
             $data5->Details = serialize($request->Details);
         }
@@ -1058,6 +1183,101 @@ class ManagementReviewController extends Controller
         }
         $data5->save();
 
+          if (!empty($management->record_number)) {
+        $history = new ManagementAuditTrial();
+        $history->ManagementReview_id = $management->id;
+        $history->activity_type = 'Record Number';
+        $history->previous = "Null";
+        $history->current = $management->record_number;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+           $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+          if (!empty($management->division_code)) {
+        $history = new ManagementAuditTrial();
+        $history->ManagementReview_id = $management->id;
+        $history->activity_type = 'Site/Location Code';
+        $history->previous = "Null";
+        $history->current = $management->division_code;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+           $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+
+          if (!empty($management->initiator_name)) {
+        $history = new ManagementAuditTrial();
+        $history->ManagementReview_id = $management->id;
+        $history->activity_type = 'Initiator';
+        $history->previous = "Null";
+        $history->current = $management->initiator_name;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+           $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+          if (!empty($management->intiation_date)) {
+        $history = new ManagementAuditTrial();
+        $history->ManagementReview_id = $management->id;
+        $history->activity_type = 'Date of Initiation';
+        $history->previous = "Null";
+        $history->current =  Helpers::getdateFormat($management->intiation_date);
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+           $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+            if (!empty($management->initiator_Group)) {
+        $history = new ManagementAuditTrial();
+        $history->ManagementReview_id = $management->id;
+        $history->activity_type = 'Initiator department';
+        $history->previous = "Null";
+        $history->current =Helpers::getFullDepartmentName( $management->initiator_Group);
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+           $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+
+
+        if (!empty($management->initiator_group_code)) {
+        $history = new ManagementAuditTrial();
+        $history->ManagementReview_id = $management->id;
+        $history->activity_type = 'Initiator department Code';
+        $history->previous = "Null";
+        $history->current = $management->initiator_group_code;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+           $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+
+
         if (!empty($management->short_description)) {
         $history = new ManagementAuditTrial();
         $history->ManagementReview_id = $management->id;
@@ -1073,59 +1293,53 @@ class ManagementReviewController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-         
-        if (!empty($management->assigned_to)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Assigned To';
-        $history->previous = "Null";
-        $history->current = $management->assigned_to;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
+          if (!empty($management->summary_recommendation)) {
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $management->id;
+            $history->activity_type = 'Type';
+            $history->previous = "Null";
+            $history->current = $management->summary_recommendation;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+          if (!empty($management->review_period_monthly)) {
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $management->id;
+            $history->activity_type = 'Review Period (Monthly)';
+            $history->previous = "Null";
+            $history->current = $management->review_period_monthly;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
             $history->save();
         }
 
-
-        if (!empty($management->due_date)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Date Due';
-        $history->previous = "Null";
-        $history->current = Helpers::getdateFormat($management->due_date);
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
+        if (!empty($management->review_period_six_monthly)) {
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $management->id;
+            $history->activity_type = 'Review Period (Six Monthly)';
+            $history->previous = "Null";
+            $history->current = $management->review_period_six_monthly;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
             $history->save();
         }
-
-
-        if (!empty($management->type)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Type';
-        $history->previous = "Null";
-        $history->current = $management->type;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
-
-        if (!empty($management->start_date)) {
+         if (!empty($management->start_date)) {
         $history = new ManagementAuditTrial();
         $history->ManagementReview_id = $management->id;
         $history->activity_type = 'Proposed Scheduled Start Date';
@@ -1141,13 +1355,12 @@ class ManagementReviewController extends Controller
             $history->save();
         }
 
-
-        if (!empty($management->end_date)) {
+        if (!empty($management->assign_to)) {
         $history = new ManagementAuditTrial();
         $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Scheduled end date';
+        $history->activity_type = 'Invite Person Notify';
         $history->previous = "Null";
-        $history->current = $management->end_date;
+        $history->current = $management->assign_to;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -1158,107 +1371,7 @@ class ManagementReviewController extends Controller
             $history->save();
         }
 
-
-        if (!empty($management->Attendess)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Attendess';
-        $history->previous = "Null";
-        $history->current = $management->attendees;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
-
-        if (!empty($management->Agenda)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Agenda';
-        $history->previous = "Null";
-        $history->current = $management->agenda;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
-        
-        if (!empty($management->performance_evaluation)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Performance Evaluation';
-        $history->previous = "Null";
-        $history->current = $management->performance_evaluation;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
-        if (!empty($management->management_review_participants)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Management Review Participants';
-        $history->previous = "Null";
-        $history->current = $management->management_review_participants;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
-        if (!empty($management->action_item_details)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Action Item Details';
-        $history->previous = "Null";
-        $history->current = $management->action_item_details;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
-        if (!empty($management->capa_detail_details)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'CAPA Details';
-        $history->previous = "Null";
-        $history->current = $management->capa_detail_details;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
-
-        if (!empty($management->description)) {
+  if (!empty($management->description)) {
         $history = new ManagementAuditTrial();
         $history->ManagementReview_id = $management->id;
         $history->activity_type = 'Description';
@@ -1275,246 +1388,13 @@ class ManagementReviewController extends Controller
         }
 
 
-        if (!empty($management->attachment)) {
+
+         if (!empty($management->inv_attachment)) {
         $history = new ManagementAuditTrial();
         $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Attached Files';
-        $history->previous = "Null";
-        $history->current = $management->attachment;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
-
-        if (!empty($management->inv_attachment)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Inv Attachment';
+        $history->activity_type = 'GI Attachment';
         $history->previous = "Null";
         $history->current = $management->inv_attachment;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-         
-        if (!empty($management->file_attchment_if_any)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'File Attachment';
-        $history->previous = "Null";
-        $history->current = $management->file_attchment_if_any;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-         
-        if (!empty($management->closure_attachments)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'File Attachment';
-        $history->previous = "Null";
-        $history->current = $management->closure_attachments;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
-        if (!empty($management->actual_start_date)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Actual Start Date';
-        $history->previous = "Null";
-        $history->current = $management->actual_start_date;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
-        if (!empty($management->actual_end_date)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Actual End Date';
-        $history->previous = "Null";
-        $history->current = $management->actual_end_date;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
-
-        if (!empty($management->meeting_minute)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Meeting minutes';
-        $history->previous = "Null";
-        $history->current = $management->meeting_minute;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
-
-        if (!empty($management->decision)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Decisions';
-        $history->previous = "Null";
-        $history->current = $management->decision;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
-
-        if (!empty($management->zone)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Zone';
-        $history->previous = "Null";
-        $history->current = $management->zone;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->change_to= "Opened";
-        $history->change_from= "Initiation";
-        $history->action_name="Create";
-        $history->save();
-        $history->save();
-        }
-
-        if (!empty($management->country)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Country';
-        $history->previous = "Null";
-        $history->current = $management->country;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->change_to= "Opened";
-        $history->change_from= "Initiation";
-        $history->action_name="Create";
-        $history->save();
-        $history->save();
-        }
-
-        if (!empty($management->city)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'City';
-        $history->previous = "Null";
-        $history->current = $management->city;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
-
-        if (!empty($management->site_name)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Site Name';
-        $history->previous = "Null";
-        $history->current = $management->site_name;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
-
-        if (!empty($management->building)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Building';
-        $history->previous = "Null";
-        $history->current = $management->building;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
-
-        if (!empty($management->floor)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Floor';
-        $history->previous = "Null";
-        $history->current = $management->floor;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
-
-        if (!empty($management->room)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Room';
-        $history->previous = "Null";
-        $history->current = $management->room;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -1539,114 +1419,21 @@ class ManagementReviewController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-         if(!empty($management->control_externally_provide_services)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Requirements for Products';
-            $history->previous = "Null";
-            $history->current = $management->control_externally_provide_services;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to= "Opened";
+        if (!empty($management->file_attchment_if_any)) {
+        $history = new ManagementAuditTrial();
+        $history->ManagementReview_id = $management->id;
+        $history->activity_type = 'QA review Attachment';
+        $history->previous = "Null";
+        $history->current = $management->file_attchment_if_any;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+           $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
             $history->save();
         }
-          if (!empty($management->production_service_provision)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Design and Development';
-            $history->previous = "Null";
-            $history->current = $management->production_service_provision;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-          if(!empty($management->release_product_services)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Control of Externally';
-            $history->previous = "Null";
-            $history->current = $management->release_product_services;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
-        if (!empty($management->Production_and_Service)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Production and Service';
-            $history->previous = "Null";
-            $history->current = $management->Production_and_Service;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-         if (!empty($management->release_product_services)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Release of Products';
-            $history->previous = "Null";
-            $history->current = $management->release_product_services;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-            if (!empty($management->control_nonconforming_outputs)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Control of Non';
-            $history->previous = "Null";
-            $history->current = $management->control_nonconforming_outputs;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
-        if (!empty($management->risk_opportunities)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Risk Opportunities';
-            $history->previous = "Null";
-            $history->current = $management->risk_opportunities;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
         if (!empty($management->external_supplier_performance)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -1710,57 +1497,10 @@ class ManagementReviewController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-          if(!empty($management->production_new)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Production';
-            $history->previous = "Null";
-            $history->current = $management->production_new;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-         if (!empty($management->plans_new)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Plans';
-            $history->previous = "Null";
-            $history->current = $management->plans_new;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
-        if (!empty($management->forecast_new)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Forecast';
-            $history->previous = "Null";
-            $history->current = $management->forecast_new;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-
         if (!empty($management->additional_suport_required)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Any Additional Support Required';
+            $history->activity_type = 'QA verification Comment';
             $history->previous = "Null";
             $history->current = $management->additional_suport_required;
             $history->comment = "Not Applicable";
@@ -1772,13 +1512,12 @@ class ManagementReviewController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-
-        if (!empty($management->file_attchment_if_any)) {
+        if (!empty($management->qa_verification_file)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'file attach';
+            $history->activity_type = 'Action Item Status Attachment';
             $history->previous = "Null";
-            $history->current = $management->file_attchment_if_any;
+            $history->current = $management->qa_verification_file;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1788,13 +1527,12 @@ class ManagementReviewController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-
         if (!empty($management->next_managment_review_date)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Date Due';
+            $history->activity_type = 'Next Management Review Date';
             $history->previous = "Null";
-            $history->current = $management->next_managment_review_date;
+            $history->current =  Helpers::getdateFormat($management->next_managment_review_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1804,26 +1542,10 @@ class ManagementReviewController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-
-        if (!empty($management->summary_recommendation)) {
+        if (!empty($management->conclusion_new)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Summary Recommendation';
-            $history->previous = "Null";
-            $history->current = $management->summary_recommendation;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-          if(!empty($management->conclusion_new)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Conclusion';
+            $history->activity_type = 'QA Head Comment';
             $history->previous = "Null";
             $history->current = $management->conclusion_new;
             $history->comment = "Not Applicable";
@@ -1835,10 +1557,10 @@ class ManagementReviewController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-         if (!empty($management->closure_attachments)) {
+        if (!empty($management->closure_attachments)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'file attachment';
+            $history->activity_type = 'Closure Attachments';
             $history->previous = "Null";
             $history->current = $management->closure_attachments;
             $history->comment = "Not Applicable";
@@ -1851,86 +1573,15 @@ class ManagementReviewController extends Controller
             $history->save();
         }
 
-        if (!empty($management->due_date_extension)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Due_Date_Extension_Justification';
-            $history->previous = "Null";
-            $history->current = $management->due_date_extension;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
-         if (!empty($management->review_period_monthly)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Review Period (Monthly)';
-            $history->previous = "Null";
-            $history->current = $management->review_period_monthly;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
 
-        if (!empty($management->review_period_six_monthly)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Review Period (Six Monthly)';
-            $history->previous = "Null";
-            $history->current = $management->review_period_six_monthly;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
 
-          if (!empty($management->cft_hod_attach)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Review Period (Monthly)';
-            $history->previous = "Null";
-            $history->current = $management->cft_hod_attach;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
 
-        if (!empty($management->qa_verification_file)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Review Period (Six Monthly)';
-            $history->previous = "Null";
-            $history->current = $management->qa_verification_file;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
 
-    
+
+
+
+
+
 
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
@@ -1948,11 +1599,19 @@ class ManagementReviewController extends Controller
         $management = ManagementReview::find($id);
         $lastCft = managementCft::where('ManagementReview_id', $management->id)->first();
         $lastCft = hodmanagementCft::where('ManagementReview_id', $management->id)->first();
+        $Cft = managementCft::where('ManagementReview_id', $id)->first();
+
         $management->initiator_id = Auth::user()->id;
         $management->division_code = $request->division_code;
         // $management->Initiator_id= $request->Initiator_id;
         $management->short_description = $request->short_description;
-        $management->assigned_to = $request->assigned_to;
+        // $management->assigned_to = $request->assigned_to;
+        // $management->assign_to = implode(',', $request->assign_to);
+        // $management->assign_to = explode(',', $management->assign_to ?? '');
+        $management->assign_to = implode(',', $request->assign_to);
+
+
+
         $management->due_date = $request->due_date;
         $management->type = $request->type;
         $management->start_date = $request->start_date;
@@ -1979,19 +1638,19 @@ class ManagementReviewController extends Controller
         $management->room = $request->room;
         $management->priority_level = $request->priority_level;
         // $management->file_attchment_if_any = json_encode($request->file_attchment_if_any);
-        $management->assign_to = $request->assign_to;
+        // $management->assign_to = $request->assign_to;
         $management->initiator_group_code= $request->initiator_group_code;
         $management->Operations= $request->Operations;
         $management->initiator_Group= $request->initiator_Group;
         $management->requirement_products_services = $request->requirement_products_services;
-        $management->design_development_product_services = $request->design_development_product_services; 
+        $management->design_development_product_services = $request->design_development_product_services;
         $management->control_externally_provide_services = $request->control_externally_provide_services;
         $management->production_service_provision= $request->production_service_provision;
         $management->release_product_services = $request->release_product_services;
        $management->control_nonconforming_outputs = $request->control_nonconforming_outputs;
          $management->external_supplier_performance = $request->external_supplier_performance;
          $management->customer_satisfaction_level = $request->customer_satisfaction_level;
-         $management->budget_estimates = $request->budget_estimates; 
+         $management->budget_estimates = $request->budget_estimates;
          $management->completion_of_previous_tasks = $request->completion_of_previous_tasks;
          $management->production_new = $request->production_new;
          $management->plans_new = $request->plans_new;
@@ -2017,7 +1676,7 @@ class ManagementReviewController extends Controller
         //     $management->inv_attachment = json_encode($files);
         // }
 
-       $attachments = json_decode($management->inv_attachment, true) ?? [];
+    //    $attachments = json_decode($management->inv_attachment, true) ?? [];
         // Handle file removals
 
             if($management->stage == 3 || $management->stage == 4 ){
@@ -2037,7 +1696,7 @@ class ManagementReviewController extends Controller
 
                 $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->Production_Injection_Review : $request->Production_Injection_Review;
                 $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->Production_Injection_Person : $request->Production_Injection_Person;
-                
+
                 $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
                 $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
 
@@ -2067,16 +1726,16 @@ class ManagementReviewController extends Controller
 
                 $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
-                
+
                 $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
 
                 $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
                 $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
-                
+
                 $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
                 $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
-                
+
                 $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
                 $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
                 $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
@@ -2088,7 +1747,7 @@ class ManagementReviewController extends Controller
                 $Cft->Other3_review = $request->Other3_review  == null ? $Cft->Other3_review : $request->Other3_review;
                 $Cft->Other3_person = $request->Other3_person  == null ? $Cft->Other3_person : $request->Other3_person;
                 $Cft->Other3_Department_person = $request->Other3_Department_person  == null ? $Cft->Other3_Department_person : $request->Other3_Department_person;
-                
+
                 $Cft->Other4_review = $request->Other4_review  == null ? $Cft->Other4_review : $request->Other4_review;
                 $Cft->Other4_person = $request->Other4_person  == null ? $Cft->Other4_person : $request->Other4_person;
                 $Cft->Other4_Department_person = $request->Other4_Department_person  == null ? $Cft->Other4_Department_person : $request->Other4_Department_person;
@@ -2137,7 +1796,7 @@ class ManagementReviewController extends Controller
 
                 $Cft->Engineering_review = $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person;
-                
+
                 $Cft->Environment_Health_review = $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
 
@@ -2146,10 +1805,10 @@ class ManagementReviewController extends Controller
 
                 $Cft->Project_management_review = $request->Project_management_review;
                 $Cft->Project_management_person = $request->Project_management_person;
-                
+
                 $Cft->Information_Technology_review = $request->Information_Technology_review;
                 $Cft->Information_Technology_person = $request->Information_Technology_person;
-                
+
                 $Cft->Other1_review = $request->Other1_review;
                 $Cft->Other1_person = $request->Other1_person;
                 $Cft->Other1_Department_person = $request->Other1_Department_person;
@@ -2204,13 +1863,13 @@ class ManagementReviewController extends Controller
 
             $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
             $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
-            
+
             $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
             $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
 
             $Cft->Engineering_assessment = $request->Engineering_assessment;
             $Cft->Engineering_feedback = $request->Engineering_feedback;
-            
+
             $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
             $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
 
@@ -2219,7 +1878,7 @@ class ManagementReviewController extends Controller
 
             $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
             $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
-            
+
             $Cft->Other1_assessment = $request->Other1_assessment;
             $Cft->Other1_feedback = $request->Other1_feedback;
 
@@ -2288,7 +1947,7 @@ class ManagementReviewController extends Controller
                     }
                 }
                 $Cft->Production_Injection_Attachment = json_encode($files);
-            }            
+            }
             if (!empty ($request->Store_attachment)) {
                 $files = [];
                 if ($request->hasfile('Store_attachment')) {
@@ -2366,6 +2025,7 @@ class ManagementReviewController extends Controller
                 }
                 $Cft->RegulatoryAffair_attachment = json_encode($files);
             }
+
             if (!empty ($request->CorporateQualityAssurance_attachment)) {
                 $files = [];
                 if ($request->hasfile('CorporateQualityAssurance_attachment')) {
@@ -2387,7 +2047,7 @@ class ManagementReviewController extends Controller
                     }
                 }
                 $Cft->Environment_Health_Safety_attachment = json_encode($files);
-            }            
+            }
             if (!empty ($request->Information_Technology_attachment)) {
                 $files = [];
                 if ($request->hasfile('Information_Technology_attachment')) {
@@ -2465,28 +2125,65 @@ class ManagementReviewController extends Controller
                     }
                 }
                 $Cft->Other5_attachment = json_encode($files);
-            }   
-               if (!empty ($request->hod_Quality_Control_attachment)) {
-            $files = [];
-            if ($request->hasfile('hod_Quality_Control_attachment')) {
-                foreach ($request->file('hod_Quality_Control_attachment') as $file) {
-                    $name = $request->name . 'hod_Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
             }
 
-
-            $Cft->hod_Quality_Control_attachment = json_encode($files);
-        }
         $Cft->save();
 
-           $hodCft = hodmanagementCft::withoutTrashed()->where('ManagementReview_id', $id)->first();
-        if($hodCft && $management->stage == 5 ){
+
+                $IsCFTRequired = managementCft_Response::withoutTrashed()->where(['is_required' => 1, 'ManagementReview_id' => $id])->latest()->first();
+                $cftUsers = DB::table('management_cfts')->where(['ManagementReview_id' => $id])->first();
+                // Define the column names
+                $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
+
+                // Initialize an array to store the values
+                $valuesArray = [];
+
+                foreach ($columns as $index => $column) {
+                    $value = $cftUsers->$column;
+                    // Check if the value is not null and not equal to 0
+                    if ($value != null && $value != 0) {
+                        $valuesArray[] = $value;
+                    }
+                }
+                // Remove duplicates from the array
+                $valuesArray = array_unique($valuesArray);
+
+                // Convert the array to a re-indexed array
+                $valuesArray = array_values($valuesArray);
+
+                foreach ($valuesArray as $u) {
+                        $email = Helpers::getInitiatorEmail($u);
+                        if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $management],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                            ->subject("CFT Assgineed by " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                //log error
+                            }
+                    }
+                }
+            }
+                 if($management->stage == 3 || $management->stage == 5 ){
+
+
+                    if (!$form_progress) {
+                        $form_progress = 'cft';
+                    }
+
+                           $hodCft = hodmanagementCft::withoutTrashed()->where('ManagementReview_id', $id)->first();
+                         if($hodCft && $management->stage == 5 ){
+
+
 
             $hodCft->hod_Production_Table_Review = $request->hod_Production_Table_Review ?? $hodCft->hod_Production_Table_Review;
             $hodCft->hod_Production_Table_Person = $request->hod_Production_Table_Person ?? $hodCft->hod_Production_Table_Person;
-            // dd($request->hod_Production_Table_Person);
+
 
             $hodCft->hod_Production_Injection_Review = $request->hod_Production_Injection_Review ?? $hodCft->hod_Production_Injection_Review;
             $hodCft->hod_Production_Injection_Person = $request->hod_Production_Injection_Person ?? $hodCft->hod_Production_Injection_Person;
@@ -2515,7 +2212,7 @@ class ManagementReviewController extends Controller
             $hodCft->hod_Quality_review = $request->hod_Quality_review ?? $hodCft->hod_Quality_review;
             $hodCft->hod_Quality_Control_Person = $request->hod_Quality_Control_Person ?? $hodCft->hod_Quality_Control_Person;
 
-            $hodCft->hod_QualityAssurance_Review = $request->hod_QualityAssurance_Review ?? $hodCft->hod_QualityAssurance_Review;
+            $hodCft->hod_Quality_Assurance_Review = $request->hod_Quality_Assurance_Review ?? $hodCft->hod_Quality_Assurance_Review;
             $hodCft->hod_QualityAssurance_person = $request->hod_QualityAssurance_person ?? $hodCft->hod_QualityAssurance_person;
 
             $hodCft->hod_Engineering_review = $request->hod_Engineering_review ?? $hodCft->hod_Engineering_review;
@@ -2667,8 +2364,72 @@ class ManagementReviewController extends Controller
             $hodCft->hod_Other5_feedback = $request->hod_Other5_feedback;
 
 
+if (!empty ($request->hod_ContractGiver_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_ContractGiver_attachment')) {
+                foreach ($request->file('hod_ContractGiver_attachment') as $file) {
+                    $name = $request->name . 'hod_ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
 
- 
+
+            $hodCft->hod_ContractGiver_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_Microbiology_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Microbiology_attachment')) {
+                foreach ($request->file('hod_Microbiology_attachment') as $file) {
+                    $name = $request->name . 'hod_Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Microbiology_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_CorporateQualityAssurance_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_CorporateQualityAssurance_attachment')) {
+                foreach ($request->file('hod_CorporateQualityAssurance_attachment') as $file) {
+                    $name = $request->name . 'hod_CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_CorporateQualityAssurance_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_ResearchDevelopment_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_ResearchDevelopment_attachment')) {
+                foreach ($request->file('hod_ResearchDevelopment_attachment') as $file) {
+                    $name = $request->name . 'hod_ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_ResearchDevelopment_attachment = json_encode($files);
+        }
+
+          if (!empty ($request->hod_Store_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Store_attachment')) {
+                foreach ($request->file('hod_Store_attachment') as $file) {
+                    $name = $request->name . 'hod_Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Store_attachment = json_encode($files);
+        }
         if (!empty ($request->hod_Quality_Assurance_attachment)) {
             $files = [];
             if ($request->hasfile('hod_Quality_Assurance_attachment')) {
@@ -2681,6 +2442,59 @@ class ManagementReviewController extends Controller
 
 
             $hodCft->hod_Quality_Assurance_attachment = json_encode($files);
+        }
+         if (!empty ($request->hod_Quality_Control_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Quality_Control_attachment')) {
+                foreach ($request->file('hod_Quality_Control_attachment') as $file) {
+                    $name = $request->name . 'hod_Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Quality_Control_attachment = json_encode($files);
+        }
+         if (!empty ($request->hod_Production_Table_Attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Production_Table_Attachment')) {
+                foreach ($request->file('hod_Production_Table_Attachment') as $file) {
+                    $name = $request->name . 'hod_Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Production_Table_Attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_RegulatoryAffair_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_RegulatoryAffair_attachment')) {
+                foreach ($request->file('hod_RegulatoryAffair_attachment') as $file) {
+                    $name = $request->name . 'hod_RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_RegulatoryAffair_attachment = json_encode($files);
+        }
+
+          if (!empty ($request->hod_Production_Injection_Attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Production_Injection_Attachment')) {
+                foreach ($request->file('hod_Production_Injection_Attachment') as $file) {
+                    $name = $request->name . 'hod_Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Production_Injection_Attachment = json_encode($files);
         }
         if (!empty ($request->hod_Engineering_attachment)) {
             $files = [];
@@ -2721,6 +2535,19 @@ class ManagementReviewController extends Controller
 
 
             $hodCft->hod_Technology_transfer_attachment = json_encode($files);
+        }
+         if (!empty ($request->hod_ProductionLiquid_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_ProductionLiquid_attachment')) {
+                foreach ($request->file('hod_ProductionLiquid_attachment') as $file) {
+                    $name = $request->name . 'hod_ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_ProductionLiquid_attachment = json_encode($files);
         }
         if (!empty ($request->hod_Environment_Health_Safety_attachment)) {
             $files = [];
@@ -2827,26 +2654,25 @@ class ManagementReviewController extends Controller
 
             $hodCft->hod_Other5_attachment = json_encode($files);
         }
-    
+
 
 
             $hodCft->save();
-
-                $IsCFTRequired = managementCft_Response::withoutTrashed()->where(['is_required' => 1, 'ManagementReview_id' => $id])->latest()->first();
-                $cftUsers = DB::table('management_cfts')->where(['ManagementReview_id' => $id])->first();
+            $IsCFTRequired = hodmanagementCft_Response::withoutTrashed()->where(['is_required' => 1, 'ManagementReview_id' => $id])->latest()->first();
+                $hodcftUsers = DB::table('hodmanagement_cft__responses')->where(['ManagementReview_id' => $id])->first();
                 // Define the column names
-                $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
+                $columns = ['hod_Quality_Control_Person', 'hod_QualityAssurance_person', 'hod_Engineering_person', 'hod_Environment_Health_Safety_person', 'hod_Human_Resource_person', 'hod_Other1_person', 'hod_Other2_person', 'hod_Other3_person', 'hod_Other4_person', 'hod_Other5_person', 'hod_Production_Table_Person','hod_ProductionLiquid_person','hod_Production_Injection_Person','hod_Store_person','hod_ResearchDevelopment_person','hod_Microbiology_person','hod_RegulatoryAffair_person','hod_CorporateQualityAssurance_person','hod_ContractGiver_person'];
 
                 // Initialize an array to store the values
                 $valuesArray = [];
 
-                foreach ($columns as $index => $column) {
-                    $value = $cftUsers->$column;
-                    // Check if the value is not null and not equal to 0
-                    if ($value != null && $value != 0) {
-                        $valuesArray[] = $value;
-                    }
-                }
+                // foreach ($columns as $index => $column) {
+                //     $value = $hodcftUsers->$column;
+                //     // Check if the value is not null and not equal to 0
+                //     if ($value != null && $value != 0) {
+                //         $valuesArray[] = $value;
+                //     }
+                // }
                 // Remove duplicates from the array
                 $valuesArray = array_unique($valuesArray);
 
@@ -2870,6 +2696,8 @@ class ManagementReviewController extends Controller
                             }
                     }
                 }
+            }
+ $attachments = json_decode($management->inv_attachment, true) ?? [];
 
 
             if (!empty ($request->Initial_attachment)) {
@@ -2890,7 +2718,7 @@ class ManagementReviewController extends Controller
 
                 $management->Initial_attachment = json_encode($files);
             }
-        
+
         if ($request->has('removed_files')) {
             $removedFiles = explode(',', $request->input('removed_files'));
             foreach ($removedFiles as $removedFile) {
@@ -2904,16 +2732,16 @@ class ManagementReviewController extends Controller
             }
         }
         // Handle new file uploads
-        if ($request->hasfile('inv_attachment')) {
-            $files = [];
-            foreach ($request->file('inv_attachment') as $file) {
-                $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                $file->move('upload/', $name);
-                $files[] = $name;
-            }
-            // Merge the new files with the existing ones
-            $attachments = array_merge($attachments, $files);
-        }
+        // if ($request->hasfile('inv_attachment')) {
+        //     $files = [];
+        //     foreach ($request->file('inv_attachment') as $file) {
+        //         $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //         $file->move('upload/', $name);
+        //         $files[] = $name;
+        //     }
+        //     // Merge the new files with the existing ones
+        //     $attachments = array_merge($attachments, $files);
+        // }
         // Save the updated attachments list
         // $management->inv_attachment = json_encode(array_values($attachments));
 
@@ -2922,29 +2750,115 @@ class ManagementReviewController extends Controller
 
 
 
+        //  if (!empty($request->inv_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('inv_attachment')) {
+        //         foreach ($request->file('inv_attachment') as $file) {
+        //             $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $management->inv_attachment = json_encode($files);
+        // }
+        if (!empty($request->inv_attachment) || !empty($request->deleted_inv_attachment)) {
+    $existingFiles = json_decode($management->inv_attachment, true) ?? [];
 
-        if (!empty($request->file_attchment_if_any)) {
-            $files = [];
-            if ($request->hasfile('file_attchment_if_any')) {
-                foreach ($request->file('file_attchment_if_any') as $file) {
-                    $name = $request->name . 'file_attchment_if_any' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $management->file_attchment_if_any = json_encode($files);
+    // Handle deleted files
+    if (!empty($request->deleted_inv_attachment)) {
+        $filesToDelete = explode(',', $request->deleted_inv_attachment);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('inv_attachment')) {
+        foreach ($request->file('inv_attachment') as $file) {
+            $name = $request->name . 'inv_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
         }
-        if (!empty($request->closure_attachments)) {
-            $files = [];
-            if ($request->hasfile('closure_attachments')) {
-                foreach ($request->file('closure_attachments') as $file) {
-                    $name = $request->name . 'closure_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $management->closure_attachments = json_encode($files);
-        } 
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $management->inv_attachment = json_encode($allFiles);
+}
+
+        // if (!empty($request->file_attchment_if_any)) {
+        //     $files = [];
+        //     if ($request->hasfile('file_attchment_if_any')) {
+        //         foreach ($request->file('file_attchment_if_any') as $file) {
+        //             $name = $request->name . 'file_attchment_if_any' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $management->file_attchment_if_any = json_encode($files);
+        // }
+        if (!empty($request->file_attchment_if_any) || !empty($request->deleted_file_attchment_if_any)) {
+    $existingFiles = json_decode($management->file_attchment_if_any, true) ?? [];
+
+    // Handle deleted files
+    if (!empty($request->deleted_file_attchment_if_any)) {
+        $filesToDelete = explode(',', $request->deleted_file_attchment_if_any);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('file_attchment_if_any')) {
+        foreach ($request->file('file_attchment_if_any') as $file) {
+            $name = $request->name . 'file_attchment_if_any' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
+        }
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $management ->file_attchment_if_any = json_encode($allFiles);
+}
+        // if (!empty($request->closure_attachments)) {
+        //     $files = [];
+        //     if ($request->hasfile('closure_attachments')) {
+        //         foreach ($request->file('closure_attachments') as $file) {
+        //             $name = $request->name . 'closure_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $management->closure_attachments = json_encode($files);
+        // }
+        if (!empty($request->closure_attachments) || !empty($request->deleted_closure_attachments)) {
+    $existingFiles = json_decode($management->closure_attachments, true) ?? [];
+
+    // Handle deleted files
+    if (!empty($request->deleted_closure_attachments)) {
+        $filesToDelete = explode(',', $request->deleted_closure_attachments);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('closure_attachments')) {
+        foreach ($request->file('closure_attachments') as $file) {
+            $name = $request->name . 'closure_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
+        }
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $management->closure_attachments = json_encode($allFiles);
+}
              if (!empty($request->cft_hod_attach)) {
             $files = [];
             if ($request->hasfile('cft_hod_attach')) {
@@ -2954,24 +2868,49 @@ class ManagementReviewController extends Controller
                     $files[] = $name;
                 }
             }
-            
+
             $management->cft_hod_attach= json_encode($files);
-        } 
-        if (!empty($request->qa_verification_file)) {
-            $files = [];
-            if ($request->hasfile('qa_verification_file')) {
-                foreach ($request->file('qa_verification_file') as $file) {
-                    $name = $request->name . 'qa_verification_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            
-            $management->qa_verification_file= json_encode($files);
         }
+        // if (!empty($request->qa_verification_file)) {
+        //     $files = [];
+        //     if ($request->hasfile('qa_verification_file')) {
+        //         foreach ($request->file('qa_verification_file') as $file) {
+        //             $name = $request->name . 'qa_verification_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+        //     $management->qa_verification_file= json_encode($files);
+        // }
+        if (!empty($request->qa_verification_file) || !empty($request->deleted_qa_verification_file)) {
+    $existingFiles = json_decode($management->qa_verification_file, true) ?? [];
+
+    // Handle deleted files
+    if (!empty($request->deleted_qa_verification_file)) {
+        $filesToDelete = explode(',', $request->deleted_qa_verification_file);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('qa_verification_file')) {
+        foreach ($request->file('qa_verification_file') as $file) {
+            $name = $request->name . 'qa_verification_file' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
+        }
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $management->qa_verification_file = json_encode($allFiles);
+}
 
         $management->update();
-        
+
         if ($lastDocument->short_description != $management->short_description || !empty($request->short_desc_comment)) {
              $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
                             ->where('activity_type', 'Short Description')
@@ -2989,72 +2928,105 @@ class ManagementReviewController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
-        
-
-        if ($lastDocument->assigned_to != $management->assigned_to || !empty($request->assigned_to_comment)) {
-         $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Short Description')
+           if($lastDocument->initiator_Group !=$management->initiator_Group || !empty($request->initiator_Group_comment)) {
+             $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
+                            ->where('activity_type', 'Initiator Department')
                             ->exists();
-
             $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Assigned To';
-            $history->previous = $lastDocument->assigned_to;
-            $history->current = $management->assigned_to;
-            $history->comment = $request->assigned_to_comment;
+            $history->ManagementReview_id = $management->id;
+            $history->activity_type = 'Initiator Department';
+            $history->previous =  Helpers::getFullDepartmentName($lastDocument->initiator_Group);
+            $history->current =Helpers::getFullDepartmentName( $management->initiator_Group);
+            $history->comment = $request->initiator_Group_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
+            $history->origin_state= $lastDocument->status;
+            $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
-        if ($lastDocument->due_date != $management->due_date || !empty($request->due_date_comment)) {
-            $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Date Due')
+          if($lastDocument->initiator_group_code !=$management->initiator_group_code || !empty($request->initiator_group_code_comment)) {
+             $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
+                            ->where('activity_type', 'Initiator Department Code')
                             ->exists();
-
             $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Date Due';
-            $history->previous = Helpers::getdateFormat ($lastDocument->due_date);
-            $history->current = Helpers::getdateFormat ($management->due_date);
-            $history->comment = $request->due_date_comment;
+            $history->ManagementReview_id = $management->id;
+            $history->activity_type = 'Initiator Department Code';
+            $history->previous =  $lastDocument->initiator_group_code;
+            $history->current = $management->initiator_group_code;
+            $history->comment = $request->initiator_group_code_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
+            $history->origin_state= $lastDocument->status;
+            $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
-        if ($lastDocument->type != $management->type || !empty($request->type_comment)) {
-         $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
+            if($lastDocument->summary_recommendation !=$management->summary_recommendation || !empty($request->summary_recommendation_comment)) {
+             $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
                             ->where('activity_type', 'Type')
                             ->exists();
-
             $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
+            $history->ManagementReview_id = $management->id;
             $history->activity_type = 'Type';
-            $history->previous = $lastDocument->type;
-            $history->current = $management->type;
-            $history->comment = $request->type_comment;
+            $history->previous =  $lastDocument->summary_recommendation;
+            $history->current = $management->summary_recommendation;
+            $history->comment = $request->summary_recommendation_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
+            $history->origin_state= $lastDocument->status;
+            $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
-        if ($lastDocument->start_date != $management->start_date || !empty($request->start_date_comment)) {
+            if($lastDocument->review_period_monthly !=$management->review_period_monthly || !empty($request->review_period_monthly_comment)) {
+             $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
+                            ->where('activity_type', 'Review Period (Monthly)')
+                            ->exists();
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $management->id;
+            $history->activity_type = 'Review Period (Monthly)';
+            $history->previous =  $lastDocument->review_period_monthly;
+            $history->current = $management->review_period_monthly;
+            $history->comment = $request->review_period_monthly_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastDocument->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastDocument->status;
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+         if($lastDocument->review_period_six_monthly !=$management->review_period_six_monthly || !empty($request->review_period_six_monthly_comment)) {
+             $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
+                            ->where('activity_type', 'Review Period (Six Monthly)')
+                            ->exists();
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $management->id;
+            $history->activity_type = 'Review Period (Six Monthly)';
+            $history->previous =  $lastDocument->review_period_six_monthly;
+            $history->current = $management->review_period_six_monthly;
+            $history->comment = $request->review_period_six_monthly_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastDocument->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastDocument->status;
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+             if ($lastDocument->start_date != $management->start_date || !empty($request->start_date_comment)) {
         $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
                             ->where('activity_type', 'Proposed Scheduled Start Date')
                             ->exists();
@@ -3071,151 +3043,30 @@ class ManagementReviewController extends Controller
             $history->origin_state = $lastDocument->status;
                        $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
-        if ($lastDocument->end_date != $management->end_date || !empty($request->end_date_comment)) {
-        $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Scheduled end date')
-                            ->exists();
-
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Scheduled end date';
-            $history->previous = $lastDocument->end_date;
-            $history->current = $management->end_date;
-            $history->comment = $request->end_date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-        if ($lastDocument->attendees != $management->attendees || !empty($request->attendees_comment)) {
+        if ($lastDocument->assign_to != $management->assign_to || !empty($request->assign_to_comment)) {
          $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Attendess')
+                            ->where('activity_type', 'Invite Person Notify')
                             ->exists();
 
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Attendess';
-            $history->previous = $lastDocument->attendees;
-            $history->current = $management->attendees;
-            $history->comment = $request->attendees_comment;
+            $history->activity_type = 'Invite Person Notify';
+            $history->previous = $lastDocument->assign_to;
+            $history->current = $management->assign_to;
+            $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
                        $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
-        if ($lastDocument->agenda != $management->agenda || !empty($request->agenda_comment)) {
-         $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Agenda')
-                            ->exists();
-
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Agenda';
-            $history->previous = $lastDocument->agenda;
-            $history->current = $management->agenda;
-            $history->comment = $request->agenda_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-        if ($lastDocument->performance_evaluation != $management->performance_evaluation || !empty($request->performance_evaluation_comment)) {
-        $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Performance Evaluation')
-                            ->exists();
-
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Performance Evaluation';
-            $history->previous = $lastDocument->performance_evaluation;
-            $history->current = $management->performance_evaluation;
-            $history->comment = $request->performance_evaluation_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-        if ($lastDocument->management_review_participants != $management->management_review_participants || !empty($request->management_review_participants_comment)) {
-        $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Management Review Participants')
-                            ->exists();
-
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Management Review Participants';
-            $history->previous = $lastDocument->management_review_participants;
-            $history->current = $management->management_review_participants;
-            $history->comment = $request->management_review_participants_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-
-        if ($lastDocument->action_item_details != $management->action_item_details || !empty($request->action_item_details_comment)) {
-         $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Action Item Details')
-                            ->exists();
-
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = ' Action Item Details';
-            $history->previous = $lastDocument->action_item_details;
-            $history->current = $management->action_item_details;
-            $history->comment = $request->action_item_details_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-        if ($lastDocument->capa_detail_details != $management->capa_detail_details || !empty($request->capa_detail_details_comment)) {
-         $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'CAPA Details')
-                            ->exists();
-
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = '  CAPA Details';
-            $history->previous = $lastDocument->capa_detail_details;
-            $history->current = $management->capa_detail_details;
-            $history->comment = $request->capa_detail_details_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-        if ($lastDocument->description != $management->description || !empty($request->description_comment)) {
+          if ($lastDocument->description != $management->description || !empty($request->description_comment)) {
            $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
                             ->where('activity_type', 'Description')
                             ->exists();
@@ -3232,37 +3083,17 @@ class ManagementReviewController extends Controller
             $history->origin_state = $lastDocument->status;
                        $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
-        if ($lastDocument->attachment != $management->attachment || !empty($request->attachment_comment)) {
-            $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Attached Files')
-                            ->exists();
-
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Attached Files';
-            $history->previous = $lastDocument->attachment;
-            $history->current = $management->attachment;
-            $history->comment = $request->attachment_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-        if ($lastDocument->inv_attachment != $management->inv_attachment || !empty($request->inv_attachment_comment)) {
+         if ($lastDocument->inv_attachment != $management->inv_attachment || !empty($request->inv_attachment_comment)) {
         $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Inv Attachment')
+                            ->where('activity_type', 'GI Attachment')
                             ->exists();
 
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Inv Attachment';
+            $history->activity_type = 'GI Attachment';
             $history->previous = $lastDocument->inv_attachment;
             $history->current = $management->inv_attachment;
             $history->comment = $request->inv_attachment_comment;
@@ -3272,271 +3103,10 @@ class ManagementReviewController extends Controller
             $history->origin_state = $lastDocument->status;
                        $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
-        
-        if ($lastDocument->file_attchment_if_any != $management->file_attchment_if_any || !empty($request->file_attchment_if_any_comment)) {
-         $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'File Attachment')
-                            ->exists();
-
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'File Attachment';
-            $history->previous = $lastDocument->file_attchment_if_any;
-            $history->current = $management->file_attchment_if_any;
-            $history->comment = $request->file_attchment_if_any_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-        if ($lastDocument->closure_attachments != $management->closure_attachments || !empty($request->closure_attachments_comment)) {
-             $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Closure Attachment')
-                            ->exists();
-
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Closure Attachment';
-            $history->previous = $lastDocument->closure_attachments;
-            $history->current = $management->closure_attachments;
-            $history->comment = $request->closure_attachments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-        if ($lastDocument->actual_start_date != $management->actual_start_date || !empty($request->actual_start_date_comment)) {
-          $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Actual Start Date')
-                            ->exists();
-
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Actual Start Date';
-            $history->previous = $lastDocument->actual_start_date;
-            $history->current = $management->actual_start_date;
-            $history->comment = $request->actual_start_date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-        if ($lastDocument->actual_end_date != $management->actual_end_date || !empty($request->actual_end_date_comment)) {
-         $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Actual End Date')
-                            ->exists();
-
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Actual End Date';
-            $history->previous = $lastDocument->actual_end_date;
-            $history->current = $management->actual_end_date;
-            $history->comment = $request->actual_end_date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-        if ($lastDocument->meeting_minute != $management->meeting_minute || !empty($request->meeting_minute_comment)) {
-            $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Meeting minutes')
-                            ->exists();
-
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Meeting minutes';
-            $history->previous = $lastDocument->meeting_minute;
-            $history->current = $management->meeting_minute;
-            $history->comment = $request->meeting_minute_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-        if ($lastDocument->decision != $management->decision || !empty($request->decision_comment)) {
-          $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Decisions')
-                            ->exists();
-
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Decisions';
-            $history->previous = $lastDocument->decision;
-            $history->current = $management->decision;
-            $history->comment = $request->decision_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-        if ($lastDocument->zone != $management->zone || !empty($request->zone_comment)) {
-          $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Zone')
-                            ->exists();
-
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Zone';
-            $history->previous = $lastDocument->zone;
-            $history->current = $management->zone;
-            $history->comment = $request->zone_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-        if ($lastDocument->country != $management->country || !empty($request->country_comment)) {
-         $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Country')
-                            ->exists();
-
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Country';
-            $history->previous = $lastDocument->country;
-            $history->current = $management->country;
-            $history->comment = $request->country_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-        if ($lastDocument->city != $management->city || !empty($request->city_comment)) {
-            $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'City')
-                            ->exists();
-
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'City';
-            $history->previous = $lastDocument->city;
-            $history->current = $management->city;
-            $history->comment = $request->city_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-        if ($lastDocument->site_name != $management->site_name || !empty($request->site_name_comment)) {
-            $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Site Name')
-                            ->exists();
-
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Site Name';
-            $history->previous = $lastDocument->site_name;
-            $history->current = $management->site_name;
-            $history->comment = $request->site_name_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-        if ($lastDocument->building != $management->building || !empty($request->building_comment)) {
-           $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Building')
-                            ->exists();
-
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Building';
-            $history->previous = $lastDocument->building;
-            $history->current = $management->building;
-            $history->comment = $request->building_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-        if ($lastDocument->floor != $management->floor || !empty($request->floor_comment)) {
-           $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Floor')
-                            ->exists();
-
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Floor';
-            $history->previous = $lastDocument->floor;
-            $history->current = $management->floor;
-            $history->comment = $request->floor_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-        if ($lastDocument->room != $management->room || !empty($request->room_comment)) {
-          $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Room')
-                            ->exists();
-
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Room';
-            $history->previous = $lastDocument->room;
-            $history->current = $management->room;
-            $history->comment = $request->room_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-                       $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-        if($lastDocument->Operations !=$management->Operations || !empty($request->Operations_comment)) {
+            if($lastDocument->Operations !=$management->Operations || !empty($request->Operations_comment)) {
                  $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
                             ->where('activity_type', 'QA review comment ')
                             ->exists();
@@ -3552,143 +3122,30 @@ class ManagementReviewController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
-            if($lastDocument->requirement_products_services !=$management->requirement_products_services || !empty($request->requirement_products_services_comment)) {
-                 $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Requirements for Products')
+              if ($lastDocument->file_attchment_if_any != $management->file_attchment_if_any || !empty($request->file_attchment_if_any_comment)) {
+         $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
+                            ->where('activity_type', 'QA Head Review Attachment')
                             ->exists();
+
             $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Requirements for Products';
-            $history->previous =  $lastDocument->requirement_products_services;
-            $history->current = $management->requirement_products_services;
-            $history->comment = $request->requirement_products_services_comment;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'QA Head Review Attachment';
+            $history->previous = $lastDocument->file_attchment_if_any;
+            $history->current = $management->file_attchment_if_any;
+            $history->comment = $request->file_attchment_if_any_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastDocument->status;
-            $history->change_to= "Not Applicable";
+            $history->origin_state = $lastDocument->status;
+                       $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
-            if($lastDocument->design_development_product_services !=$management->design_development_product_services || !empty($request->design_development_product_services_comment)) {
-                 $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Design and Development')
-                            ->exists();
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Design and Development';
-            $history->previous =  $lastDocument->design_development_product_services;
-            $history->current = $management->design_development_product_services;
-            $history->comment = $request->design_development_product_services_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-            if($lastDocument->control_externally_provide_services !=$management->control_externally_provide_services || !empty($request->control_externally_provide_services_comment)) {
-                 $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Control of Externally')
-                            ->exists();
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Control of Externally';
-            $history->previous =  $lastDocument->control_externally_provide_services;
-            $history->current = $management->control_externally_provide_services;
-            $history->comment = $request->control_externally_provide_services_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-            if($lastDocument->production_service_provision !=$management->production_service_provision || !empty($request->production_service_provision_comment)) {
-                 $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Production and Service')
-                            ->exists();
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Production and Service';
-            $history->previous =  $lastDocument->production_service_provision;
-            $history->current = $management->production_service_provision;
-            $history->comment = $request->production_service_provision_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-            if($lastDocument->release_product_services !=$management->release_product_services || !empty($request->release_product_services_comment)) {
-                 $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Release of Products')
-                            ->exists();
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Release of Products';
-            $history->previous =  $lastDocument->release_product_services;
-            $history->current = $management->release_product_services;
-            $history->comment = $request->release_product_services_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-            if($lastDocument->control_nonconforming_outputs !=$management->control_nonconforming_outputs || !empty($request->control_nonconforming_outputs_comment)) {
-                 $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Control of Non')
-                            ->exists();
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Control of Non';
-            $history->previous =  $lastDocument->control_nonconforming_outputs;
-            $history->current = $management->control_nonconforming_outputs;
-            $history->comment = $request->control_nonconforming_outputs_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-           if($lastDocument->risk_opportunities !=$management->risk_opportunities || !empty($request->risk_opportunities_comment)) {
-             $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Risk Opportunities')
-                            ->exists();
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Risk Opportunities';
-            $history->previous =  $lastDocument->risk_opportunities;
-            $history->current = $management->risk_opportunities;
-            $history->comment = $request->risk_opportunities_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-               if($lastDocument->external_supplier_performance !=$management->external_supplier_performance || !empty($request->external_supplier_performance_comment)) {
+                if($lastDocument->external_supplier_performance !=$management->external_supplier_performance || !empty($request->external_supplier_performance_comment)) {
                  $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
                             ->where('activity_type', 'Meeting Start Date')
                             ->exists();
@@ -3704,7 +3161,7 @@ class ManagementReviewController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
              if($lastDocument->customer_satisfaction_level !=$management->customer_satisfaction_level || !empty($request->customer_satisfaction_level_comment)) {
@@ -3723,7 +3180,7 @@ class ManagementReviewController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
             if($lastDocument->budget_estimates !=$management->budget_estimates || !empty($request->budget_estimates_comment)) {
@@ -3742,7 +3199,7 @@ class ManagementReviewController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
          if($lastDocument->completion_of_previous_tasks !=$management->completion_of_previous_tasks || !empty($request->completion_of_previous_tasks_comment)) {
@@ -3761,73 +3218,4730 @@ class ManagementReviewController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
-         if($lastDocument->production_new !=$management->production_new || !empty($request->production_new_comment)) {
-            $history = new ManagementAuditTrial();
-             $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Production')
-                            ->exists();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Production';
-            $history->previous =  $lastDocument->production_new;
-            $history->current = $management->production_new;
-            $history->comment = $request->production_new_comment;
+            /*************** Quality Assurance ***************/
+        if ($lastCft->Quality_Assurance_Review != $request->Quality_Assurance_Review && $request->Quality_Assurance_Review != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Quality Assurance Review Required';
+            $history->previous = $lastCft->Quality_Assurance_Review;
+            $history->current = $request->Quality_Assurance_Review;
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Quality_Assurance_Review) || $lastCft->Quality_Assurance_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
+
             $history->save();
         }
-            if($lastDocument->plans_new !=$management->plans_new || !empty($request->plans_new_comment)) {
+
+
+        if ($lastCft->QualityAssurance_person != $request->QualityAssurance_person && $request->QualityAssurance_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Quality Assurance Person';
+            $history->previous = $lastCft->QualityAssurance_person;
+            $history->current = $request->QualityAssurance_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->QualityAssurance_person) || $lastCft->QualityAssurance_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+         if ($lastCft->hod_QualityAssurance_person != $request->hod_QualityAssurance_person && $request->hod_QualityAssurance_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Quality Assurance Person';
+            $history->previous = $lastCft->hod_QualityAssurance_person;
+            $history->current = $request->hod_QualityAssurance_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_QualityAssurance_person) || $lastCft->hod_QualityAssurance_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->QualityAssurance_assessment != $request->QualityAssurance_assessment && $request->QualityAssurance_assessment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Quality Assurance Description of Action Item';
+            $history->previous = $lastCft->QualityAssurance_assessment;
+            $history->current = $request->QualityAssurance_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->QualityAssurance_assessment) || $lastCft->QualityAssurance_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->QualityAssurance_feedback != $request->QualityAssurance_feedback && $request->QualityAssurance_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Quality Assurance Status of Action Item';
+            $history->previous = $lastCft->QualityAssurance_feedback;
+            $history->current = $request->QualityAssurance_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->QualityAssurance_feedback) || $lastCft->QualityAssurance_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+         if ($lastCft->Quality_Assurance_attachment != $request->Quality_Assurance_attachment && $request->Quality_Assurance_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Quality Assurance Attachment';
+            $history->previous = $lastCft->Quality_Assurance_attachment;
+            $history->current =implode(',', $request->Quality_Assurance_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Quality_Assurance_attachment) || $lastCft->Quality_Assurance_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->QualityAssurance_by != $request->QualityAssurance_by && $request->QualityAssurance_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Quality Assurance Review By';
+            $history->previous = $lastCft->QualityAssurance_by;
+            $history->current = $request->QualityAssurance_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->QualityAssurance_by) || $lastCft->QualityAssurance_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->QualityAssurance_on != $request->QualityAssurance_on && $request->QualityAssurance_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Quality Assurance Review On';
+            $history->previous = $lastCft->QualityAssurance_on;
+            $history->current = $request->QualityAssurance_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->QualityAssurance_person) || $lastCft->QualityAssurance_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+        /*************** Production Tablet ***************/
+        if ($lastCft->Production_Table_Review != $request->Production_Table_Review && $request->Production_Table_Review != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule Powder Review Required';
+            $history->previous = $lastCft->Production_Table_Review;
+            $history->current = $request->Production_Table_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Table_Review) || $lastCft->Production_Table_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Table_Person != $request->Production_Table_Person && $request->Production_Table_Person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule Powder Person';
+            $history->previous = $lastCft->Production_Table_Person;
+            $history->current = $request->Production_Table_Person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Table_Person) || $lastCft->Production_Table_Person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Production_Table_Person != $request->hod_Production_Table_Person && $request->hod_Production_Table_Person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Production Tablet/Capsule Powder Person';
+            $history->previous = $lastCft->hod_Production_Table_Person;
+            $history->current = $request->hod_Production_Table_Person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Production_Table_Person) || $lastCft->hod_Production_Table_Person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Table_Assessment != $request->Production_Table_Assessment && $request->Production_Table_Assessment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule Powder Description of Action Item';
+            $history->previous = $lastCft->Production_Table_Assessment;
+            $history->current = $request->Production_Table_Assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Table_Assessment) || $lastCft->Production_Table_Assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Table_Feedback != $request->Production_Table_Feedback && $request->Production_Table_Feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule Powder Status of Action Item';
+            $history->previous = $lastCft->Production_Table_Feedback;
+            $history->current = $request->Production_Table_Feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Table_Feedback) || $lastCft->Production_Table_Feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Table_Attachment != $request->Production_Table_Attachment && $request->Production_Table_Attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule Powder Attachment';
+            $history->previous = $lastCft->Production_Table_Attachment;
+            $history->current = implode(',',$request->Production_Table_Attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Table_Attachment) || $lastCft->Production_Table_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+          if ($lastCft->Production_Table_By != $request->Production_Table_By && $request->Production_Table_By != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule Powder Review By';
+            $history->previous = $lastCft->Production_Table_By;
+            $history->current = $request->Production_Table_By;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Table_By) || $lastCft->Production_Table_By === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastCft->Production_Table_On != $request->Production_Table_On && $request->Production_Table_On != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule Powder On';
+            $history->previous = $lastCft->Production_Table_On;
+            $history->current = $request->Production_Table_On;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Table_On) || $lastCft->Production_Table_On === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+         /*************** Production Liquid ***************/
+         if ($lastCft->ProductionLiquid_Review != $request->ProductionLiquid_Review && $request->ProductionLiquid_Review != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Review Required';
+            $history->previous = $lastCft->ProductionLiquid_Review;
+            $history->current = $request->ProductionLiquid_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ProductionLiquid_Review) || $lastCft->ProductionLiquid_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ProductionLiquid_person != $request->ProductionLiquid_person && $request->ProductionLiquid_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Person';
+            $history->previous = $lastCft->ProductionLiquid_person;
+            $history->current = $request->ProductionLiquid_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ProductionLiquid_person) || $lastCft->ProductionLiquid_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+         if ($lastCft->hod_ProductionLiquid_person != $request->hod_ProductionLiquid_person && $request->hod_ProductionLiquid_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Production Liquid/Ointment Person';
+            $history->previous = $lastCft->hod_ProductionLiquid_person;
+            $history->current = $request->hod_ProductionLiquid_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_ProductionLiquid_person) || $lastCft->hod_ProductionLiquid_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ProductionLiquid_assessment != $request->ProductionLiquid_assessment && $request->ProductionLiquid_assessment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Description of Action Item';
+            $history->previous = $lastCft->ProductionLiquid_assessment;
+            $history->current = $request->ProductionLiquid_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ProductionLiquid_assessment) || $lastCft->ProductionLiquid_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ProductionLiquid_feedback != $request->ProductionLiquid_feedback && $request->ProductionLiquid_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Status of Action Item';
+            $history->previous = $lastCft->ProductionLiquid_feedback;
+            $history->current = $request->ProductionLiquid_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ProductionLiquid_feedback) || $lastCft->ProductionLiquid_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ProductionLiquid_attachment != $request->ProductionLiquid_attachment && $request->ProductionLiquid_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Attachment';
+            $history->previous = $lastCft->ProductionLiquid_attachment;
+            $history->current = implode(',',$request->ProductionLiquid_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ProductionLiquid_attachment) || $lastCft->ProductionLiquid_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ProductionLiquid_by != $request->ProductionLiquid_by && $request->ProductionLiquid_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Review By';
+            $history->previous = $lastCft->ProductionLiquid_by;
+            $history->current = $request->ProductionLiquid_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ProductionLiquid_by) || $lastCft->ProductionLiquid_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ProductionLiquid_on != $request->ProductionLiquid_on && $request->ProductionLiquid_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Review On';
+            $history->previous = $lastCft->ProductionLiquid_on;
+            $history->current = $request->ProductionLiquid_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ProductionLiquid_on) || $lastCft->ProductionLiquid_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Production Injection ***************/
+        if ($lastCft->Production_Injection_Review != $request->Production_Injection_Review && $request->Production_Injection_Review != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Injection Review Required';
+            $history->previous = $lastCft->Production_Injection_Review;
+            $history->current = $request->Production_Injection_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Injection_Review) || $lastCft->Production_Injection_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Injection_Person != $request->Production_Injection_Person && $request->Production_Injection_Person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Injection Person';
+            $history->previous = $lastCft->Production_Injection_Person;
+            $history->current = $request->Production_Injection_Person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Injection_Person) || $lastCft->Production_Injection_Person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Production_Injection_Person != $request->hod_Production_Injection_Person && $request->hod_Production_Injection_Person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Production Injection Person';
+            $history->previous = $lastCft->hod_Production_Injection_Person;
+            $history->current = $request->hod_Production_Injection_Person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Production_Injection_Person) || $lastCft->hod_Production_Injection_Person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastCft->Production_Injection_Assessment != $request->Production_Injection_Assessment && $request->Production_Injection_Assessment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Injection Description of Action Item';
+            $history->previous = $lastCft->Production_Injection_Assessment;
+            $history->current = $request->Production_Injection_Assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Injection_Assessment) || $lastCft->Production_Injection_Assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Injection_Feedback != $request->Production_Injection_Feedback && $request->Production_Injection_Feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Injection Status of Action Item';
+            $history->previous = $lastCft->Production_Injection_Feedback;
+            $history->current = $request->Production_Injection_Feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Injection_Feedback) || $lastCft->Production_Injection_Feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Injection_Attachment != $request->Production_Injection_Attachment && $request->Production_Injection_Attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Injection On';
+            $history->previous = $lastCft->Production_Injection_Attachment;
+            $history->current =implode(',', $request->Production_Injection_Attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Injection_Attachment) || $lastCft->Production_Injection_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Injection_By != $request->Production_Injection_By && $request->Production_Injection_By != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Injection Review By';
+            $history->previous = $lastCft->Production_Injection_By;
+            $history->current = $request->Production_Injection_By;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Injection_By) || $lastCft->Production_Injection_By === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Injection_On != $request->Production_Injection_On && $request->Production_Injection_On != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Production Injection On';
+            $history->previous = $lastCft->Production_Injection_On;
+            $history->current = $request->Production_Injection_On;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Production_Injection_On) || $lastCft->Production_Injection_On === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Stores ***************/
+        if ($lastCft->Store_Review != $request->Store_Review && $request->Store_Review != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Store Review Required';
+            $history->previous = $lastCft->Store_Review;
+            $history->current = $request->Store_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Store_Review) || $lastCft->Store_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Store_person != $request->Store_person && $request->Store_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Store Person';
+            $history->previous = $lastCft->Store_person;
+            $history->current = $request->Store_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Store_person) || $lastCft->Store_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Store_person != $request->hod_Store_person && $request->hod_Store_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Store Person';
+            $history->previous = $lastCft->hod_Store_person;
+            $history->current = $request->hod_Store_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Store_person) || $lastCft->hod_Store_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Store_assessment != $request->Store_assessment && $request->Store_assessment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Store Description of Action Item';
+            $history->previous = $lastCft->Store_assessment;
+            $history->current = $request->Store_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Store_assessment) || $lastCft->Store_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Store_feedback != $request->Store_feedback && $request->Store_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Store Status of Action Item';
+            $history->previous = $lastCft->Store_feedback;
+            $history->current = $request->Store_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Store_feedback) || $lastCft->Store_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+         if ($lastCft->Store_attachment != $request->Store_attachment && $request->Store_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Store Review Attachment';
+            $history->previous = $lastCft->Store_attachment;
+            $history->current =implode(',', $request->Store_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Store_attachment) || $lastCft->Store_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Store_by != $request->Store_by && $request->Store_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Store Review By';
+            $history->previous = $lastCft->Store_by;
+            $history->current = $request->Store_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Store_by) || $lastCft->Store_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Store_on != $request->Store_on && $request->Store_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Store Review On';
+            $history->previous = $lastCft->Store_on;
+            $history->current = $request->Store_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Store_on) || $lastCft->Store_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Quality Control ***************/
+        if ($lastCft->Quality_review != $request->Quality_review && $request->Quality_review != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Quality Control Required';
+            $history->previous = $lastCft->Quality_review;
+            $history->current = $request->Quality_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Quality_review) || $lastCft->Quality_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Quality_Control_Person != $request->Quality_Control_Person && $request->Quality_Control_Person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Quality Control Person';
+            $history->previous = $lastCft->Quality_Control_Person;
+            $history->current = $request->Quality_Control_Person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Quality_Control_Person) || $lastCft->Quality_Control_Person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+         if ($lastCft->hod_Quality_Control_Person != $request->hod_Quality_Control_Person && $request->hod_Quality_Control_Person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Quality Control Person';
+            $history->previous = $lastCft->hod_Quality_Control_Person;
+            $history->current = $request->hod_Quality_Control_Person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Quality_Control_Person) || $lastCft->hod_Quality_Control_Person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Quality_Control_assessment != $request->Quality_Control_assessment && $request->Quality_Control_assessment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Quality Control Description of Action Item';
+            $history->previous = $lastCft->Quality_Control_assessment;
+            $history->current = $request->Quality_Control_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Quality_Control_assessment) || $lastCft->Quality_Control_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Quality_Control_feedback != $request->Quality_Control_feedback && $request->Quality_Control_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Quality Control Status of Action Item';
+            $history->previous = $lastCft->Quality_Control_feedback;
+            $history->current = $request->Quality_Control_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Quality_Control_feedback) || $lastCft->Quality_Control_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        // if ($lastCft->Quality_Control_by != $request->Quality_Control_by && $request->Quality_Control_by != null) {
+        //     $history = new ManagementAuditTrial;
+        //     $history->ManagementReview_id = $id;
+        //     $history->activity_type = 'Quality Control By';
+        //     $history->previous = $lastCft->Quality_Control_by;
+        //     $history->current = $request->Quality_Control_by;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Quality_Control_by) || $lastCft->Quality_Control_by === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
+        // if ($lastCft->Quality_Control_on != $request->Quality_Control_on && $request->Quality_Control_on != null) {
+        //     $history = new ManagementAuditTrial;
+        //     $history->ManagementReview_id = $id;
+        //     $history->activity_type = 'Quality Control On';
+        //     $history->previous = $lastCft->Quality_Control_on;
+        //     $history->current = $request->Quality_Control_on;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Quality_Control_on) || $lastCft->Quality_Control_on === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
+        if ($lastCft->Quality_Control_attachment != $request->Quality_Control_attachment && $request->Quality_Control_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Quality Control On';
+            $history->previous = $lastCft->Quality_Control_attachment;
+            $history->current =implode(',', $request->Quality_Control_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Quality_Control_attachment) || $lastCft->Quality_Control_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Research & Development ***************/
+        if ($lastCft->ResearchDevelopment_Review != $request->ResearchDevelopment_Review && $request->ResearchDevelopment_Review != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Research & Development Required';
+            $history->previous = $lastCft->ResearchDevelopment_Review;
+            $history->current = $request->ResearchDevelopment_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ResearchDevelopment_Review) || $lastCft->ResearchDevelopment_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ResearchDevelopment_person != $request->ResearchDevelopment_person && $request->ResearchDevelopment_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Research & Development Person';
+            $history->previous = $lastCft->ResearchDevelopment_person;
+            $history->current = $request->ResearchDevelopment_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ResearchDevelopment_person) || $lastCft->ResearchDevelopment_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+         if ($lastCft->hod_ResearchDevelopment_person != $request->hod_ResearchDevelopment_person && $request->hod_ResearchDevelopment_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Research & Development Person';
+            $history->previous = $lastCft->hod_ResearchDevelopment_person;
+            $history->current = $request->hod_ResearchDevelopment_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_ResearchDevelopment_person) || $lastCft->hod_ResearchDevelopment_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ResearchDevelopment_assessment != $request->ResearchDevelopment_assessment && $request->ResearchDevelopment_assessment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Research & Development Description of Action Item';
+            $history->previous = $lastCft->ResearchDevelopment_assessment;
+            $history->current = $request->ResearchDevelopment_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ResearchDevelopment_assessment) || $lastCft->ResearchDevelopment_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ResearchDevelopment_feedback != $request->ResearchDevelopment_feedback && $request->ResearchDevelopment_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Research & Development Status of Action Item';
+            $history->previous = $lastCft->ResearchDevelopment_feedback;
+            $history->current = $request->ResearchDevelopment_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ResearchDevelopment_feedback) || $lastCft->ResearchDevelopment_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ResearchDevelopment_by != $request->ResearchDevelopment_by && $request->ResearchDevelopment_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Research & Development By';
+            $history->previous = $lastCft->ResearchDevelopment_by;
+            $history->current = $request->ResearchDevelopment_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ResearchDevelopment_by) || $lastCft->ResearchDevelopment_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ResearchDevelopment_on != $request->ResearchDevelopment_on && $request->ResearchDevelopment_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Research & Development On';
+            $history->previous = $lastCft->ResearchDevelopment_on;
+            $history->current = $request->ResearchDevelopment_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ResearchDevelopment_on) || $lastCft->ResearchDevelopment_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ResearchDevelopment_attachment != $request->ResearchDevelopment_attachment && $request->ResearchDevelopment_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Research & Development On';
+            $history->previous = $lastCft->ResearchDevelopment_attachment;
+            $history->current =implode(',', $request->ResearchDevelopment_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ResearchDevelopment_attachment) || $lastCft->ResearchDevelopment_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Engineering ***************/
+        if ($lastCft->Engineering_review != $request->Engineering_review && $request->Engineering_review != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Engineering Review Required';
+            $history->previous = $lastCft->Engineering_review;
+            $history->current = $request->Engineering_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Engineering_review) || $lastCft->Engineering_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Engineering_person != $request->Engineering_person && $request->Engineering_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Engineering Person';
+            $history->previous = $lastCft->Engineering_person;
+            $history->current = $request->Engineering_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Engineering_person) || $lastCft->Engineering_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Engineering_person != $request->hod_Engineering_person && $request->hod_Engineering_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Engineering Person';
+            $history->previous = $lastCft->hod_Engineering_person;
+            $history->current = $request->hod_Engineering_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Engineering_person) || $lastCft->hod_Engineering_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Engineering_assessment != $request->Engineering_assessment && $request->Engineering_assessment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Engineering Description of Action Item';
+            $history->previous = $lastCft->Engineering_assessment;
+            $history->current = $request->Engineering_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Engineering_assessment) || $lastCft->Engineering_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Engineering_feedback != $request->Engineering_feedback && $request->Engineering_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Engineering Status of Action Item';
+            $history->previous = $lastCft->Engineering_feedback;
+            $history->current = $request->Engineering_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Engineering_feedback) || $lastCft->Engineering_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Engineering_by != $request->Engineering_by && $request->Engineering_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Engineering Review By';
+            $history->previous = $lastCft->Engineering_by;
+            $history->current = $request->Engineering_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Engineering_by) || $lastCft->Engineering_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Engineering_on != $request->Engineering_on && $request->Engineering_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Engineering Review On';
+            $history->previous = $lastCft->Engineering_on;
+            $history->current = $request->Engineering_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Engineering_on) || $lastCft->Engineering_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Engineering_attachment != $request->Engineering_attachment && $request->Engineering_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Engineering Review On';
+            $history->previous = $lastCft->Engineering_attachment;
+            $history->current = implode(',',$request->Engineering_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Engineering_attachment) || $lastCft->Engineering_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Human Resource ***************/
+        if ($lastCft->Human_Resource_review != $request->Human_Resource_review && $request->Human_Resource_review != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Human Resource Review Required';
+            $history->previous = $lastCft->Human_Resource_review;
+            $history->current = $request->Human_Resource_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Human_Resource_review) || $lastCft->Human_Resource_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Human_Resource_person != $request->Human_Resource_person && $request->Human_Resource_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Human Resource Person';
+            $history->previous = $lastCft->Human_Resource_person;
+            $history->current = $request->Human_Resource_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Human_Resource_person) || $lastCft->Human_Resource_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Human_Resource_person != $request->hod_Human_Resource_person && $request->hod_Human_Resource_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Human Resource Person';
+            $history->previous = $lastCft->hod_Human_Resource_person;
+            $history->current = $request->hod_Human_Resource_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Human_Resource_person) || $lastCft->hod_Human_Resource_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Human_Resource_assessment != $request->Human_Resource_assessment && $request->Human_Resource_assessment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Human Resource Description of Action Item';
+            $history->previous = $lastCft->Human_Resource_assessment;
+            $history->current = $request->Human_Resource_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Human_Resource_assessment) || $lastCft->Human_Resource_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Human_Resource_feedback != $request->Human_Resource_feedback && $request->Human_Resource_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Human Resource Status of Action Item';
+            $history->previous = $lastCft->Human_Resource_feedback;
+            $history->current = $request->Human_Resource_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Human_Resource_feedback) || $lastCft->Human_Resource_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Human_Resource_by != $request->Human_Resource_by && $request->Human_Resource_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Human Resource Review By';
+            $history->previous = $lastCft->Human_Resource_by;
+            $history->current = $request->Human_Resource_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Human_Resource_by) || $lastCft->Human_Resource_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Human_Resource_on != $request->Human_Resource_on && $request->Human_Resource_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Human Resource Review On';
+            $history->previous = $lastCft->Human_Resource_on;
+            $history->current = $request->Human_Resource_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Human_Resource_on) || $lastCft->Human_Resource_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Human_Resource_attachment != $request->Human_Resource_attachment && $request->Human_Resource_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Human Resource Review On';
+            $history->previous = $lastCft->Human_Resource_attachment;
+            $history->current =implode(',', $request->Human_Resource_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Human_Resource_attachment) || $lastCft->Human_Resource_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Microbiology ***************/
+        if ($lastCft->Microbiology_Review != $request->Microbiology_Review && $request->Microbiology_Review != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Microbiology Review Required';
+            $history->previous = $lastCft->Microbiology_Review;
+            $history->current = $request->Microbiology_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Microbiology_Review) || $lastCft->Microbiology_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Microbiology_person != $request->Microbiology_person && $request->Microbiology_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Microbiology Person';
+            $history->previous = $lastCft->Microbiology_person;
+            $history->current = $request->Microbiology_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Microbiology_person) || $lastCft->Microbiology_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Microbiology_person != $request->hod_Microbiology_person && $request->hod_Microbiology_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Microbiology Person';
+            $history->previous = $lastCft->hod_Microbiology_person;
+            $history->current = $request->hod_Microbiology_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Microbiology_person) || $lastCft->hod_Microbiology_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Microbiology_assessment != $request->Microbiology_assessment && $request->Microbiology_assessment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Microbiology Description of Action Item';
+            $history->previous = $lastCft->Microbiology_assessment;
+            $history->current = $request->Microbiology_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Microbiology_assessment) || $lastCft->Microbiology_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Microbiology_feedback != $request->Microbiology_feedback && $request->Microbiology_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Microbiology Status of Action Item';
+            $history->previous = $lastCft->Microbiology_feedback;
+            $history->current = $request->Microbiology_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Microbiology_feedback) || $lastCft->Microbiology_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Microbiology_by != $request->Microbiology_by && $request->Microbiology_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Microbiology Review By';
+            $history->previous = $lastCft->Microbiology_by;
+            $history->current = $request->Microbiology_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Microbiology_by) || $lastCft->Microbiology_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Microbiology_on != $request->Microbiology_on && $request->Microbiology_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Microbiology Review On';
+            $history->previous = $lastCft->Microbiology_on;
+            $history->current = $request->Microbiology_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Microbiology_on) || $lastCft->Microbiology_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+         if ($lastCft->Microbiology_attachment != $request->Microbiology_attachment && $request->Microbiology_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Microbiology Review Attachment';
+            $history->previous = $lastCft->Microbiology_attachment;
+            $history->current = implode(',',$request->Microbiology_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Microbiology_attachment) || $lastCft->Microbiology_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Regulatory Affair ***************/
+        if ($lastCft->RegulatoryAffair_Review != $request->RegulatoryAffair_Review && $request->RegulatoryAffair_Review != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Regulatory Affair Review Required';
+            $history->previous = $lastCft->RegulatoryAffair_Review;
+            $history->current = $request->RegulatoryAffair_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->RegulatoryAffair_Review) || $lastCft->RegulatoryAffair_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->RegulatoryAffair_person != $request->RegulatoryAffair_person && $request->RegulatoryAffair_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Regulatory Affair Person';
+            $history->previous = $lastCft->RegulatoryAffair_person;
+            $history->current = $request->RegulatoryAffair_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->RegulatoryAffair_person) || $lastCft->RegulatoryAffair_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_RegulatoryAffair_person != $request->hod_RegulatoryAffair_person && $request->hod_RegulatoryAffair_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Regulatory Affair Person';
+            $history->previous = $lastCft->hod_RegulatoryAffair_person;
+            $history->current = $request->hod_RegulatoryAffair_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_RegulatoryAffair_person) || $lastCft->hod_RegulatoryAffair_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->RegulatoryAffair_assessment != $request->RegulatoryAffair_assessment && $request->RegulatoryAffair_assessment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Regulatory Affair Description of Action Item';
+            $history->previous = $lastCft->RegulatoryAffair_assessment;
+            $history->current = $request->RegulatoryAffair_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->RegulatoryAffair_assessment) || $lastCft->RegulatoryAffair_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->RegulatoryAffair_feedback != $request->RegulatoryAffair_feedback && $request->RegulatoryAffair_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Regulatory Affair Status of Action Item';
+            $history->previous = $lastCft->RegulatoryAffair_feedback;
+            $history->current = $request->RegulatoryAffair_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->RegulatoryAffair_feedback) || $lastCft->RegulatoryAffair_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->RegulatoryAffair_by != $request->RegulatoryAffair_by && $request->RegulatoryAffair_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Regulatory Affair Review By';
+            $history->previous = $lastCft->RegulatoryAffair_by;
+            $history->current = $request->RegulatoryAffair_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->RegulatoryAffair_by) || $lastCft->RegulatoryAffair_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->RegulatoryAffair_on != $request->RegulatoryAffair_on  && $request->RegulatoryAffair_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Regulatory Affair Review On';
+            $history->previous = $lastCft->RegulatoryAffair_on;
+            $history->current = $request->RegulatoryAffair_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->RegulatoryAffair_on) || $lastCft->RegulatoryAffair_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->RegulatoryAffair_attachment != $request->RegulatoryAffair_attachment  && $request->RegulatoryAffair_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Regulatory Affair Review Attachment';
+            $history->previous = $lastCft->RegulatoryAffair_attachment;
+            $history->current =implode(',', $request->RegulatoryAffair_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->RegulatoryAffair_attachment) || $lastCft->RegulatoryAffair_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Corporate Quality Assurance ***************/
+        if ($lastCft->CorporateQualityAssurance_Review != $request->CorporateQualityAssurance_Review && $request->CorporateQualityAssurance_Review != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Review Required';
+            $history->previous = $lastCft->CorporateQualityAssurance_Review;
+            $history->current = $request->CorporateQualityAssurance_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->CorporateQualityAssurance_Review) || $lastCft->CorporateQualityAssurance_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->CorporateQualityAssurance_person != $request->CorporateQualityAssurance_person && $request->CorporateQualityAssurance_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Person';
+            $history->previous = $lastCft->CorporateQualityAssurance_person;
+            $history->current = $request->CorporateQualityAssurance_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->CorporateQualityAssurance_person) || $lastCft->CorporateQualityAssurance_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_CorporateQualityAssurance_person != $request->hod_CorporateQualityAssurance_person && $request->hod_CorporateQualityAssurance_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Corporate Quality Assurance Person';
+            $history->previous = $lastCft->hod_CorporateQualityAssurance_person;
+            $history->current = $request->hod_CorporateQualityAssurance_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_CorporateQualityAssurance_person) || $lastCft->hod_CorporateQualityAssurance_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->CorporateQualityAssurance_assessment != $request->CorporateQualityAssurance_assessment && $request->CorporateQualityAssurance_assessment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Description of Action Item';
+            $history->previous = $lastCft->CorporateQualityAssurance_assessment;
+            $history->current = $request->CorporateQualityAssurance_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->CorporateQualityAssurance_assessment) || $lastCft->CorporateQualityAssurance_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->CorporateQualityAssurance_feedback != $request->CorporateQualityAssurance_feedback && $request->CorporateQualityAssurance_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Status of Action Item';
+            $history->previous = $lastCft->CorporateQualityAssurance_feedback;
+            $history->current = $request->CorporateQualityAssurance_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->CorporateQualityAssurance_feedback) || $lastCft->CorporateQualityAssurance_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->CorporateQualityAssurance_by != $request->CorporateQualityAssurance_by && $request->CorporateQualityAssurance_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Review By';
+            $history->previous = $lastCft->CorporateQualityAssurance_by;
+            $history->current = $request->CorporateQualityAssurance_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->CorporateQualityAssurance_by) || $lastCft->CorporateQualityAssurance_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->CorporateQualityAssurance_on != $request->CorporateQualityAssurance_on && $request->CorporateQualityAssurance_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Review On';
+            $history->previous = $lastCft->CorporateQualityAssurance_on;
+            $history->current = $request->CorporateQualityAssurance_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->CorporateQualityAssurance_on) || $lastCft->CorporateQualityAssurance_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->CorporateQualityAssurance_attachment != $request->CorporateQualityAssurance_attachment && $request->CorporateQualityAssurance_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Review Attachment';
+            $history->previous = $lastCft->CorporateQualityAssurance_attachment;
+            $history->current =implode(',', $request->CorporateQualityAssurance_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->CorporateQualityAssurance_attachment) || $lastCft->CorporateQualityAssurance_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Safety ***************/
+        if ($lastCft->Environment_Health_review != $request->Environment_Health_review && $request->Environment_Health_review != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Safety Review Required';
+            $history->previous = $lastCft->Environment_Health_review;
+            $history->current = $request->Environment_Health_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Environment_Health_review) || $lastCft->Environment_Health_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Environment_Health_Safety_person != $request->Environment_Health_Safety_person && $request->Environment_Health_Safety_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Safety Person';
+            $history->previous = $lastCft->Environment_Health_Safety_person;
+            $history->current = $request->Environment_Health_Safety_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Environment_Health_Safety_person) || $lastCft->Environment_Health_Safety_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Environment_Health_Safety_person != $request->hod_Environment_Health_Safety_person && $request->hod_Environment_Health_Safety_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Safety Person';
+            $history->previous = $lastCft->hod_Environment_Health_Safety_person;
+            $history->current = $request->hod_Environment_Health_Safety_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Environment_Health_Safety_person) || $lastCft->hod_Environment_Health_Safety_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Health_Safety_assessment != $request->Health_Safety_assessment && $request->Health_Safety_assessment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Safety Description of Action Item';
+            $history->previous = $lastCft->Health_Safety_assessment;
+            $history->current = $request->Health_Safety_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Health_Safety_assessment) || $lastCft->Health_Safety_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Health_Safety_feedback != $request->Health_Safety_feedback && $request->Health_Safety_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Safety Status of Action Item';
+            $history->previous = $lastCft->Health_Safety_feedback;
+            $history->current = $request->Health_Safety_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Health_Safety_feedback) || $lastCft->Health_Safety_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Environment_Health_Safety_by != $request->Environment_Health_Safety_by && $request->Environment_Health_Safety_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Safety Review By';
+            $history->previous = $lastCft->Environment_Health_Safety_by;
+            $history->current = $request->Environment_Health_Safety_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Environment_Health_Safety_by) || $lastCft->Environment_Health_Safety_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Environment_Health_Safety_on != $request->Environment_Health_Safety_on && $request->Environment_Health_Safety_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Safety Review On';
+            $history->previous = $lastCft->Environment_Health_Safety_on;
+            $history->current = $request->Environment_Health_Safety_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Environment_Health_Safety_on) || $lastCft->Environment_Health_Safety_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Environment_Health_Safety_attachment != $request->Environment_Health_Safety_attachment && $request->Environment_Health_Safety_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Safety Review Attachment';
+            $history->previous = $lastCft->Environment_Health_Safety_attachment;
+            $history->current =implode(',', $request->Environment_Health_Safety_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Environment_Health_Safety_attachment) || $lastCft->Environment_Health_Safety_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Contract Giver ***************/
+        if ($lastCft->ContractGiver_Review != $request->ContractGiver_Review && $request->ContractGiver_Review != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Contract Giver Review Required';
+            $history->previous = $lastCft->ContractGiver_Review;
+            $history->current = $request->ContractGiver_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ContractGiver_Review) || $lastCft->ContractGiver_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ContractGiver_person != $request->ContractGiver_person && $request->ContractGiver_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Contract Giver Person';
+            $history->previous = $lastCft->ContractGiver_person;
+            $history->current = $request->ContractGiver_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ContractGiver_person) || $lastCft->ContractGiver_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_ContractGiver_person != $request->hod_ContractGiver_person && $request->hod_ContractGiver_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Contract Giver Person';
+            $history->previous = $lastCft->hod_ContractGiver_person;
+            $history->current = $request->hod_ContractGiver_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_ContractGiver_person) || $lastCft->hod_ContractGiver_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ContractGiver_assessment != $request->ContractGiver_assessment && $request->ContractGiver_assessment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Contract Giver Description of Action Item';
+            $history->previous = $lastCft->ContractGiver_assessment;
+            $history->current = $request->ContractGiver_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ContractGiver_assessment) || $lastCft->ContractGiver_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ContractGiver_feedback != $request->ContractGiver_feedback && $request->ContractGiver_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Contract Giver Status of Action Item';
+            $history->previous = $lastCft->ContractGiver_feedback;
+            $history->current = $request->ContractGiver_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ContractGiver_feedback) || $lastCft->ContractGiver_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ContractGiver_by != $request->ContractGiver_by && $request->ContractGiver_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Contract Giver Review By';
+            $history->previous = $lastCft->ContractGiver_by;
+            $history->current = $request->ContractGiver_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ContractGiver_by) || $lastCft->ContractGiver_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ContractGiver_on != $request->ContractGiver_on && $request->ContractGiver_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Contract Giver Review On';
+            $history->previous = $lastCft->ContractGiver_on;
+            $history->current = $request->ContractGiver_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ContractGiver_on) || $lastCft->ContractGiver_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastCft->ContractGiver_attachment != $request->ContractGiver_attachment && $request->ContractGiver_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Contract Giver Review Attachment';
+            $history->previous = $lastCft->ContractGiver_attachment;
+            $history->current = implode(',',$request->ContractGiver_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->ContractGiver_attachment) || $lastCft->ContractGiver_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        /*************** Other 1 ***************/
+        if ($lastCft->Other1_review != $request->Other1_review && $request->Other1_review != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 1 Review Required';
+            $history->previous = $lastCft->Other1_review;
+            $history->current = $request->Other1_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other1_review) || $lastCft->Other1_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_person != $request->Other1_person && $request->Other1_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 1 Person';
+            $history->previous = $lastCft->Other1_person;
+            $history->current = $request->Other1_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other1_person) || $lastCft->Other1_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Other1_person != $request->hod_Other1_person && $request->hod_Other1_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 1 Person';
+            $history->previous = $lastCft->hod_Other1_person;
+            $history->current = $request->hod_Other1_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other1_person) || $lastCft->hod_Other1_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_Department_person != $request->Other1_Department_person && $request->Other1_Department_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 1 Department';
+            $history->previous = $lastCft->Other1_Department_person;
+            $history->current = $request->Other1_Department_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other1_Department_person) || $lastCft->Other1_Department_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_assessment != $request->Other1_assessment && $request->Other1_assessment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 1 Description of Action Item';
+            $history->previous = $lastCft->Other1_assessment;
+            $history->current = $request->Other1_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other1_assessment) || $lastCft->Other1_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_feedback != $request->Other1_feedback && $request->Other1_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 1 Status of Action Item';
+            $history->previous = $lastCft->Other1_feedback;
+            $history->current = $request->Other1_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other1_feedback) || $lastCft->Other1_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_by != $request->Other1_by && $request->Other1_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 1 Review By';
+            $history->previous = $lastCft->Other1_by;
+            $history->current = $request->Other1_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other1_by) || $lastCft->Other1_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_on != $request->Other1_on && $request->Other1_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 1 Review On';
+            $history->previous = $lastCft->Other1_on;
+            $history->current = $request->Other1_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other1_on) || $lastCft->Other1_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_attachment != $request->Other1_attachment && $request->Other1_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 1 Review Attachment';
+            $history->previous = $lastCft->Other1_attachment;
+            $history->current = implode(',',$request->Other1_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other1_attachment) || $lastCft->Other1_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+        /*************** Other 2 ***************/
+        if ($lastCft->Other2_review != $request->Other2_review && $request->Other2_review != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 2 Review Required';
+            $history->previous = $lastCft->Other2_review;
+            $history->current = $request->Other2_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other2_review) || $lastCft->Other2_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_person != $request->Other2_person && $request->Other2_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 2 Person';
+            $history->previous = $lastCft->Other2_person;
+            $history->current = $request->Other2_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other2_person) || $lastCft->Other2_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+         if ($lastCft->hod_Other2_person != $request->hod_Other2_person && $request->hod_Other2_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 2 Person';
+            $history->previous = $lastCft->hod_Other2_person;
+            $history->current = $request->hod_Other2_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other2_person) || $lastCft->hod_Other2_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_Department_person != $request->Other2_Department_person && $request->Other2_Department_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 2 Department';
+            $history->previous = $lastCft->Other2_Department_person;
+            $history->current = $request->Other2_Department_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other2_Department_person) || $lastCft->Other2_Department_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_assessment != $request->Other2_assessment && $request->Other2_assessment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 2 Description of Action Item';
+            $history->previous = $lastCft->Other2_assessment;
+            $history->current = $request->Other2_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other2_assessment) || $lastCft->Other2_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_feedback != $request->Other2_feedback && $request->Other2_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 2 Status of Action Item';
+            $history->previous = $lastCft->Other2_feedback;
+            $history->current = $request->Other2_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other2_feedback) || $lastCft->Other2_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_by != $request->Other2_by && $request->Other2_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 2 Review By';
+            $history->previous = $lastCft->Other2_by;
+            $history->current = $request->Other2_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other2_by) || $lastCft->Other2_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_on != $request->Other2_on && $request->Other2_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 2 Review On';
+            $history->previous = $lastCft->Other2_on;
+            $history->current = $request->Other2_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other2_on) || $lastCft->Other2_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_attachment != $request->Other2_attachment && $request->Other2_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 2 Review Attachment';
+            $history->previous = $lastCft->Other2_attachment;
+            $history->current =implode(',', $request->Other2_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other2_attachment) || $lastCft->Other2_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Other 3 ***************/
+        if ($lastCft->Other3_review != $request->Other3_review && $request->Other3_review != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 3 Review Required';
+            $history->previous = $lastCft->Other3_review;
+            $history->current = $request->Other3_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other3_review) || $lastCft->Other3_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_person != $request->Other3_person && $request->Other3_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 3 Person';
+            $history->previous = $lastCft->Other3_person;
+            $history->current = $request->Other3_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other3_person) || $lastCft->Other3_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+         if ($lastCft->hod_Other3_person != $request->hod_Other3_person && $request->hod_Other3_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 3 Person';
+            $history->previous = $lastCft->hod_Other3_person;
+            $history->current = $request->hod_Other3_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other3_person) || $lastCft->hod_Other3_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_Department_person != $request->Other3_Department_person && $request->Other3_Department_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 3 Department';
+            $history->previous = $lastCft->Other3_Department_person;
+            $history->current = $request->Other3_Department_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other3_Department_person) || $lastCft->Other3_Department_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_assessment != $request->Other3_assessment && $request->Other3_assessment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 3 Description of Action Item';
+            $history->previous = $lastCft->Other3_assessment;
+            $history->current = $request->Other3_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other3_assessment) || $lastCft->Other3_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_feedback != $request->Other3_feedback && $request->Other3_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 3 Status of Action Item';
+            $history->previous = $lastCft->Other3_feedback;
+            $history->current = $request->Other3_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other3_feedback) || $lastCft->Other3_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_by != $request->Other3_by && $request->Other3_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 3 Review By';
+            $history->previous = $lastCft->Other3_by;
+            $history->current = $request->Other3_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other3_by) || $lastCft->Other3_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 3 Review On';
+            $history->previous = $lastCft->Other3_on;
+            $history->current = $request->Other3_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other3_on) || $lastCft->Other3_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_attachment != $request->Other3_attachment && $request->Other3_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 3 Review Attachment';
+            $history->previous = $lastCft->Other3_attachment;
+            $history->current =implode(',', $request->Other3_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other3_attachment) || $lastCft->Other3_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Other 4 ***************/
+        if ($lastCft->Other4_review != $request->Other4_review && $request->Other4_review != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 4 Review Required';
+            $history->previous = $lastCft->Other4_review;
+            $history->current = $request->Other4_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other4_review) || $lastCft->Other4_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_person != $request->Other4_person && $request->Other4_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 4 Person';
+            $history->previous = $lastCft->Other4_person;
+            $history->current = $request->Other4_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other4_person) || $lastCft->Other4_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Other4_person != $request->hod_Other4_person && $request->hod_Other4_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 4 Person';
+            $history->previous = $lastCft->hod_Other4_person;
+            $history->current = $request->hod_Other4_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other4_person) || $lastCft->hod_Other4_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_Department_person != $request->Other4_Department_person && $request->Other4_Department_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Others 4 Department';
+            $history->previous = $lastCft->Other4_Department_person;
+            $history->current = $request->Other4_Department_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other4_Department_person) || $lastCft->Other4_Department_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_assessment != $request->Other4_assessment && $request->Other4_assessment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 4 Description of Action Item';
+            $history->previous = $lastCft->Other4_assessment;
+            $history->current = $request->Other4_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other4_assessment) || $lastCft->Other4_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_feedback != $request->Other4_feedback && $request->Other4_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 4 Status of Action Item';
+            $history->previous = $lastCft->Other4_feedback;
+            $history->current = $request->Other4_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other4_feedback) || $lastCft->Other4_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_by != $request->Other4_by && $request->Other4_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 4 Review By';
+            $history->previous = $lastCft->Other4_by;
+            $history->current = $request->Other4_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other4_by) || $lastCft->Other4_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_on != $request->Other4_on && $request->Other4_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 4 Review On';
+            $history->previous = $lastCft->Other4_on;
+            $history->current = $request->Other4_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other4_on) || $lastCft->Other4_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_attachment != $request->Other4_attachment && $request->Other4_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 4 Review Attachment';
+            $history->previous = $lastCft->Other4_attachment;
+            $history->current =implode(',', $request->Other4_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other4_attachment) || $lastCft->Other4_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+        /*************** Other 5 ***************/
+        if ($lastCft->Other5_review != $request->Other5_review && $request->Other5_review != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 5 Review Required';
+            $history->previous = $lastCft->Other5_review;
+            $history->current = $request->Other5_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other5_review) || $lastCft->Other5_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_person != $request->Other5_person && $request->Other5_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 5 Person';
+            $history->previous = $lastCft->Other5_person;
+            $history->current = $request->Other5_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other5_person) || $lastCft->Other5_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Other5_person != $request->hod_Other5_person && $request->hod_Other5_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 5 Person';
+            $history->previous = $lastCft->hod_Other5_person;
+            $history->current = $request->hod_Other5_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other5_person) || $lastCft->hod_Other5_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_Department_person != $request->Other5_Department_person && $request->Other5_Department_person != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 5 Department';
+            $history->previous = $lastCft->Other5_Department_person;
+            $history->current = $request->Other5_Department_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other5_Department_person) || $lastCft->Other5_Department_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_assessment != $request->Other5_assessment && $request->Other5_assessment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 5 Description of Action Item';
+            $history->previous = $lastCft->Other5_assessment;
+            $history->current = $request->Other5_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other5_assessment) || $lastCft->Other5_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_feedback != $request->Other5_feedback && $request->Other5_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 5 Status of Action Item';
+            $history->previous = $lastCft->Other5_feedback;
+            $history->current = $request->Other5_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other5_feedback) || $lastCft->Other5_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_by != $request->Other5_by && $request->Other5_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 5 Review By';
+            $history->previous = $lastCft->Other5_by;
+            $history->current = $request->Other5_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other5_by) || $lastCft->Other5_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_on != $request->Other5_on && $request->Other5_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 5 Review On';
+            $history->previous = $lastCft->Other5_on;
+            $history->current = $request->Other5_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other5_on) || $lastCft->Other5_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_attachment != $request->Other5_attachment && $request->Other5_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 5 Review Attachment';
+            $history->previous = $lastCft->Other5_attachment;
+            $history->current = implode(',',$request->Other5_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Other5_attachment) || $lastCft->Other5_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+
+        //----------------------HOD CFT-------------------------------------------------------//
+
+                  /*************** Quality Assurance ***************/
+
+        if ($lastCft->hod_QualityAssurance_feedback != $request->hod_QualityAssurance_feedback && $request->hod_QualityAssurance_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Quality Assurance Comments';
+            $history->previous = $lastCft->hod_QualityAssurance_feedback;
+            $history->current = $request->hod_QualityAssurance_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_QualityAssurance_feedback) || $lastCft->hod_QualityAssurance_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+         if ($lastCft->hod_Quality_Assurance_attachment != $request->hod_Quality_Assurance_attachment && $request->hod_Quality_Assurance_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Quality Assurance Attachment';
+            $history->previous = $lastCft->hod_Quality_Assurance_attachment;
+            $history->current =implode(',', $request->hod_Quality_Assurance_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Quality_Assurance_attachment) || $lastCft->hod_Quality_Assurance_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_QualityAssurance_by != $request->hod_QualityAssurance_by && $request->hod_QualityAssurance_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Quality Assurance Review By';
+            $history->previous = $lastCft->hod_QualityAssurance_by;
+            $history->current = $request->hod_QualityAssurance_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_QualityAssurance_by) || $lastCft->hod_QualityAssurance_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_QualityAssurance_on != $request->hod_QualityAssurance_on && $request->hod_QualityAssurance_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Quality Assurance Review On';
+            $history->previous = $lastCft->hod_QualityAssurance_on;
+            $history->current = $request->hod_QualityAssurance_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_QualityAssurance_on) || $lastCft->hod_QualityAssurance_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+        /*************** Production Tablet ***************/
+
+        if ($lastCft->hod_Production_Table_Feedback != $request->hod_Production_Table_Feedback && $request->hod_Production_Table_Feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Production Tablet/Capsule Powder Comments';
+            $history->previous = $lastCft->hod_Production_Table_Feedback;
+            $history->current = $request->hod_Production_Table_Feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Production_Table_Feedback) || $lastCft->hod_Production_Table_Feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Production_Table_Attachment != $request->hod_Production_Table_Attachment && $request->hod_Production_Table_Attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Production Tablet/Capsule Powder Attachment';
+            $history->previous = $lastCft->hod_Production_Table_Attachment;
+            $history->current = implode(',',$request->hod_Production_Table_Attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Production_Table_Attachment) || $lastCft->hod_Production_Table_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastCft->hod_Production_Table_On != $request->hod_Production_Table_On && $request->hod_Production_Table_On != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Production Tablet/Capsule Powder On';
+            $history->previous = $lastCft->hod_Production_Table_On;
+            $history->current = $request->hod_Production_Table_On;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Production_Table_On) || $lastCft->hod_Production_Table_On === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+         /*************** Production Liquid ***************/
+
+        if ($lastCft->hod_ProductionLiquid_feedback != $request->hod_ProductionLiquid_feedback && $request->hod_ProductionLiquid_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Production Liquid/Ointment Comments';
+            $history->previous = $lastCft->hod_ProductionLiquid_feedback;
+            $history->current = $request->hod_ProductionLiquid_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_ProductionLiquid_feedback) || $lastCft->hod_ProductionLiquid_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_ProductionLiquid_attachment != $request->hod_ProductionLiquid_attachment && $request->hod_ProductionLiquid_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Production Liquid/Ointment Attachment';
+            $history->previous = $lastCft->hod_ProductionLiquid_attachment;
+            $history->current = implode(',',$request->hod_ProductionLiquid_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_ProductionLiquid_attachment) || $lastCft->hod_ProductionLiquid_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_ProductionLiquid_by != $request->hod_ProductionLiquid_by && $request->hod_ProductionLiquid_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Production Liquid/Ointment Review By';
+            $history->previous = $lastCft->hod_ProductionLiquid_by;
+            $history->current = $request->hod_ProductionLiquid_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_ProductionLiquid_by) || $lastCft->hod_ProductionLiquid_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_ProductionLiquid_on != $request->hod_ProductionLiquid_on && $request->hod_ProductionLiquid_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Production Liquid/Ointment Review On';
+            $history->previous = $lastCft->hod_ProductionLiquid_on;
+            $history->current = $request->hod_ProductionLiquid_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_ProductionLiquid_on) || $lastCft->hod_ProductionLiquid_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Production Injection ***************/
+
+        if ($lastCft->hod_Production_Injection_Feedback != $request->hod_Production_Injection_Feedback && $request->hod_Production_Injection_Feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Production Injection Comments';
+            $history->previous = $lastCft->hod_Production_Injection_Feedback;
+            $history->current = $request->hod_Production_Injection_Feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Production_Injection_Feedback) || $lastCft->hod_Production_Injection_Feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Production_Injection_Attachment != $request->hod_Production_Injection_Attachment && $request->hod_Production_Injection_Attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Production Injection Attachment';
+            $history->previous = $lastCft->hod_Production_Injection_Attachment;
+            $history->current =implode(',', $request->hod_Production_Injection_Attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Production_Injection_Attachment) || $lastCft->hod_Production_Injection_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Production_Injection_By != $request->hod_Production_Injection_By && $request->hod_Production_Injection_By != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Production Injection Review By';
+            $history->previous = $lastCft->hod_Production_Injection_By;
+            $history->current = $request->hod_Production_Injection_By;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Production_Injection_By) || $lastCft->hod_Production_Injection_By === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Production_Injection_On != $request->hod_Production_Injection_On && $request->hod_Production_Injection_On != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Production Injection On';
+            $history->previous = $lastCft->hod_Production_Injection_On;
+            $history->current = $request->hod_Production_Injection_On;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Production_Injection_On) || $lastCft->hod_Production_Injection_On === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Stores ***************/
+
+        if ($lastCft->hod_Store_feedback != $request->hod_Store_feedback && $request->hod_Store_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Store Comments';
+            $history->previous = $lastCft->hod_Store_feedback;
+            $history->current = $request->hod_Store_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Store_feedback) || $lastCft->hod_Store_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+         if ($lastCft->hod_Store_attachment != $request->hod_Store_attachment && $request->hod_Store_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Store Review Attachment';
+            $history->previous = $lastCft->hod_Store_attachment;
+            $history->current =implode(',', $request->hod_Store_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Store_attachment) || $lastCft->hod_Store_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Store_by != $request->hod_Store_by && $request->hod_Store_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Store Review By';
+            $history->previous = $lastCft->hod_Store_by;
+            $history->current = $request->hod_Store_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Store_by) || $lastCft->hod_Store_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Store_on != $request->hod_Store_on && $request->hod_Store_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Store Review On';
+            $history->previous = $lastCft->hod_Store_on;
+            $history->current = $request->hod_Store_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Store_on) || $lastCft->hod_Store_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Quality Control ***************/
+
+        if ($lastCft->hod_Quality_Control_feedback != $request->hod_Quality_Control_feedback && $request->hod_Quality_Control_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Quality Control Comments';
+            $history->previous = $lastCft->hod_Quality_Control_feedback;
+            $history->current = $request->hod_Quality_Control_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Quality_Control_feedback) || $lastCft->hod_Quality_Control_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastCft->hod_Quality_Control_attachment != $request->hod_Quality_Control_attachment && $request->hod_Quality_Control_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Quality Control Attachment';
+            $history->previous = $lastCft->hod_Quality_Control_attachment;
+            $history->current =implode(',', $request->hod_Quality_Control_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Quality_Control_attachment) || $lastCft->hod_Quality_Control_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Research & Development ***************/
+
+        if ($lastCft->hod_ResearchDevelopment_feedback != $request->hod_ResearchDevelopment_feedback && $request->hod_ResearchDevelopment_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Research & Development Comments';
+            $history->previous = $lastCft->hod_ResearchDevelopment_feedback;
+            $history->current = $request->hod_ResearchDevelopment_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_ResearchDevelopment_feedback) || $lastCft->hod_ResearchDevelopment_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_ResearchDevelopment_by != $request->hod_ResearchDevelopment_by && $request->hod_ResearchDevelopment_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Research & Development By';
+            $history->previous = $lastCft->hod_ResearchDevelopment_by;
+            $history->current = $request->hod_ResearchDevelopment_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_ResearchDevelopment_by) || $lastCft->hod_ResearchDevelopment_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_ResearchDevelopment_on != $request->hod_ResearchDevelopment_on && $request->hod_ResearchDevelopment_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Research & Development On';
+            $history->previous = $lastCft->hod_ResearchDevelopment_on;
+            $history->current = $request->hod_ResearchDevelopment_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_ResearchDevelopment_on) || $lastCft->hod_ResearchDevelopment_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_ResearchDevelopment_attachment != $request->hod_ResearchDevelopment_attachment && $request->hod_ResearchDevelopment_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Research & Development On';
+            $history->previous = $lastCft->hod_ResearchDevelopment_attachment;
+            $history->current =implode(',', $request->hod_ResearchDevelopment_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_ResearchDevelopment_attachment) || $lastCft->hod_ResearchDevelopment_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Engineering ***************/
+
+        if ($lastCft->hod_Engineering_feedback != $request->hod_Engineering_feedback && $request->hod_Engineering_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Engineering Comments';
+            $history->previous = $lastCft->hod_Engineering_feedback;
+            $history->current = $request->hod_Engineering_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Engineering_feedback) || $lastCft->hod_Engineering_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Engineering_by != $request->hod_Engineering_by && $request->hod_Engineering_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Engineering Review By';
+            $history->previous = $lastCft->hod_Engineering_by;
+            $history->current = $request->hod_Engineering_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Engineering_by) || $lastCft->hod_Engineering_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Engineering_on != $request->hod_Engineering_on && $request->hod_Engineering_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Engineering Review On';
+            $history->previous = $lastCft->hod_Engineering_on;
+            $history->current = $request->hod_Engineering_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Engineering_on) || $lastCft->hod_Engineering_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Engineering_attachment != $request->hod_Engineering_attachment && $request->hod_Engineering_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Engineering Review Attachment';
+            $history->previous = $lastCft->hod_Engineering_attachment;
+            $history->current = implode(',',$request->hod_Engineering_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Engineering_attachment) || $lastCft->hod_Engineering_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Human Resource ***************/
+
+        if ($lastCft->hod_Human_Resource_feedback != $request->hod_Human_Resource_feedback && $request->hod_Human_Resource_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Human Resource Comments';
+            $history->previous = $lastCft->hod_Human_Resource_feedback;
+            $history->current = $request->hod_Human_Resource_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Human_Resource_feedback) || $lastCft->hod_Human_Resource_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Human_Resource_by != $request->hod_Human_Resource_by && $request->hod_Human_Resource_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Human Resource Review By';
+            $history->previous = $lastCft->hod_Human_Resource_by;
+            $history->current = $request->hod_Human_Resource_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Human_Resource_by) || $lastCft->hod_Human_Resource_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Human_Resource_on != $request->hod_Human_Resource_on && $request->hod_Human_Resource_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Human Resource Review On';
+            $history->previous = $lastCft->hod_Human_Resource_on;
+            $history->current = $request->hod_Human_Resource_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Human_Resource_on) || $lastCft->hod_Human_Resource_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Human_Resource_attachment != $request->hod_Human_Resource_attachment && $request->hod_Human_Resource_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Human Resource Review Attachment';
+            $history->previous = $lastCft->hod_Human_Resource_attachment;
+            $history->current =implode(',', $request->hod_Human_Resource_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Human_Resource_attachment) || $lastCft->hod_Human_Resource_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Microbiology ***************/
+
+        if ($lastCft->hod_Microbiology_feedback != $request->hod_Microbiology_feedback && $request->hod_Microbiology_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Microbiology Comments';
+            $history->previous = $lastCft->hod_Microbiology_feedback;
+            $history->current = $request->hod_Microbiology_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Microbiology_feedback) || $lastCft->hod_Microbiology_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Microbiology_by != $request->hod_Microbiology_by && $request->hod_Microbiology_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Microbiology Review By';
+            $history->previous = $lastCft->hod_Microbiology_by;
+            $history->current = $request->hod_Microbiology_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Microbiology_by) || $lastCft->hod_Microbiology_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Microbiology_on != $request->hod_Microbiology_on && $request->hod_Microbiology_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Microbiology Review On';
+            $history->previous = $lastCft->hod_Microbiology_on;
+            $history->current = $request->hod_Microbiology_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Microbiology_on) || $lastCft->hod_Microbiology_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+         if ($lastCft->hod_Microbiology_attachment != $request->hod_Microbiology_attachment && $request->hod_Microbiology_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Microbiology Review Attachment';
+            $history->previous = $lastCft->hod_Microbiology_attachment;
+            $history->current = implode(',',$request->hod_Microbiology_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Microbiology_attachment) || $lastCft->hod_Microbiology_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Regulatory Affair ***************/
+
+        if ($lastCft->hod_RegulatoryAffair_feedback != $request->hod_RegulatoryAffair_feedback && $request->hod_RegulatoryAffair_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Regulatory Affair Comments';
+            $history->previous = $lastCft->hod_RegulatoryAffair_feedback;
+            $history->current = $request->hod_RegulatoryAffair_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_RegulatoryAffair_feedback) || $lastCft->hod_RegulatoryAffair_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_RegulatoryAffair_by != $request->hod_RegulatoryAffair_by && $request->hod_RegulatoryAffair_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Regulatory Affair Review By';
+            $history->previous = $lastCft->hod_RegulatoryAffair_by;
+            $history->current = $request->hod_RegulatoryAffair_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_RegulatoryAffair_by) || $lastCft->hod_RegulatoryAffair_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_RegulatoryAffair_on != $request->hod_RegulatoryAffair_on  && $request->hod_RegulatoryAffair_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Regulatory Affair Review On';
+            $history->previous = $lastCft->hod_RegulatoryAffair_on;
+            $history->current = $request->hod_RegulatoryAffair_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_RegulatoryAffair_on) || $lastCft->hod_RegulatoryAffair_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_RegulatoryAffair_attachment != $request->hod_RegulatoryAffair_attachment  && $request->hod_RegulatoryAffair_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Regulatory Affair Review Attachment';
+            $history->previous = $lastCft->hod_RegulatoryAffair_attachment;
+            $history->current =implode(',', $request->hod_RegulatoryAffair_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_RegulatoryAffair_attachment) || $lastCft->hod_RegulatoryAffair_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Corporate Quality Assurance ***************/
+
+        if ($lastCft->hod_CorporateQualityAssurance_feedback != $request->hod_CorporateQualityAssurance_feedback && $request->hod_CorporateQualityAssurance_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Corporate Quality Assurance Comments';
+            $history->previous = $lastCft->hod_CorporateQualityAssurance_feedback;
+            $history->current = $request->hod_CorporateQualityAssurance_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_CorporateQualityAssurance_feedback) || $lastCft->hod_CorporateQualityAssurance_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_CorporateQualityAssurance_by != $request->hod_CorporateQualityAssurance_by && $request->hod_CorporateQualityAssurance_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Corporate Quality Assurance Review By';
+            $history->previous = $lastCft->hod_CorporateQualityAssurance_by;
+            $history->current = $request->hod_CorporateQualityAssurance_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_CorporateQualityAssurance_by) || $lastCft->hod_CorporateQualityAssurance_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_CorporateQualityAssurance_on != $request->hod_CorporateQualityAssurance_on && $request->hod_CorporateQualityAssurance_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Corporate Quality Assurance Review On';
+            $history->previous = $lastCft->hod_CorporateQualityAssurance_on;
+            $history->current = $request->hod_CorporateQualityAssurance_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_CorporateQualityAssurance_on) || $lastCft->hod_CorporateQualityAssurance_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_CorporateQualityAssurance_attachment != $request->hod_CorporateQualityAssurance_attachment && $request->hod_CorporateQualityAssurance_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Corporate Quality Assurance Review Attachment';
+            $history->previous = $lastCft->hod_CorporateQualityAssurance_attachment;
+            $history->current =implode(',', $request->hod_CorporateQualityAssurance_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_CorporateQualityAssurance_attachment) || $lastCft->hod_CorporateQualityAssurance_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Safety ***************/
+
+        if ($lastCft->hod_Health_Safety_feedback != $request->hod_Health_Safety_feedback && $request->hod_Health_Safety_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Safety Comments';
+            $history->previous = $lastCft->hod_Health_Safety_feedback;
+            $history->current = $request->hod_Health_Safety_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Health_Safety_feedback) || $lastCft->hod_Health_Safety_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Environment_Health_Safety_by != $request->hod_Environment_Health_Safety_by && $request->hod_Environment_Health_Safety_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Safety Review By';
+            $history->previous = $lastCft->hod_Environment_Health_Safety_by;
+            $history->current = $request->hod_Environment_Health_Safety_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Environment_Health_Safety_by) || $lastCft->hod_Environment_Health_Safety_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Environment_Health_Safety_on != $request->hod_Environment_Health_Safety_on && $request->hod_Environment_Health_Safety_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Safety Review On';
+            $history->previous = $lastCft->hod_Environment_Health_Safety_on;
+            $history->current = $request->hod_Environment_Health_Safety_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Environment_Health_Safety_on) || $lastCft->hod_Environment_Health_Safety_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Environment_Health_Safety_attachment != $request->hod_Environment_Health_Safety_attachment && $request->hod_Environment_Health_Safety_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Safety Review Attachment';
+            $history->previous = $lastCft->hod_Environment_Health_Safety_attachment;
+            $history->current =implode(',', $request->hod_Environment_Health_Safety_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Environment_Health_Safety_attachment) || $lastCft->hod_Environment_Health_Safety_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Contract Giver ***************/
+
+        if ($lastCft->hod_ContractGiver_feedback != $request->hod_ContractGiver_feedback && $request->hod_ContractGiver_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Contract Giver Comments';
+            $history->previous = $lastCft->hod_ContractGiver_feedback;
+            $history->current = $request->hod_ContractGiver_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_ContractGiver_feedback) || $lastCft->hod_ContractGiver_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_ContractGiver_by != $request->hod_ContractGiver_by && $request->hod_ContractGiver_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Contract Giver Review By';
+            $history->previous = $lastCft->hod_ContractGiver_by;
+            $history->current = $request->hod_ContractGiver_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_ContractGiver_by) || $lastCft->hod_ContractGiver_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_ContractGiver_on != $request->hod_ContractGiver_on && $request->hod_ContractGiver_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Contract Giver Review On';
+            $history->previous = $lastCft->hod_ContractGiver_on;
+            $history->current = $request->hod_ContractGiver_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_ContractGiver_on) || $lastCft->hod_ContractGiver_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastCft->hod_ContractGiver_attachment != $request->hod_ContractGiver_attachment && $request->hod_ContractGiver_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Contract Giver Review Attachment';
+            $history->previous = $lastCft->hod_ContractGiver_attachment;
+            $history->current = implode(',',$request->hod_ContractGiver_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_ContractGiver_attachment) || $lastCft->hod_ContractGiver_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        /*************** Other 1 ***************/
+
+        if ($lastCft->hod_Other1_feedback != $request->hod_Other1_feedback && $request->hod_Other1_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 1 Comments';
+            $history->previous = $lastCft->hod_Other1_feedback;
+            $history->current = $request->hod_Other1_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other1_feedback) || $lastCft->hod_Other1_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Other1_by != $request->hod_Other1_by && $request->hod_Other1_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 1 Review By';
+            $history->previous = $lastCft->hod_Other1_by;
+            $history->current = $request->hod_Other1_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other1_by) || $lastCft->hod_Other1_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Other1_on != $request->hod_Other1_on && $request->hod_Other1_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Other 1 Review On';
+            $history->previous = $lastCft->hod_Other1_on;
+            $history->current = $request->hod_Other1_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other1_on) || $lastCft->hod_Other1_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Other1_attachment != $request->hod_Other1_attachment && $request->hod_Other1_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 1 Review Attachment';
+            $history->previous = $lastCft->hod_Other1_attachment;
+            $history->current = implode(',',$request->hod_Other1_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other1_attachment) || $lastCft->hod_Other1_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+        /*************** Other 2 ***************/
+
+        if ($lastCft->hod_Other2_feedback != $request->hod_Other2_feedback && $request->hod_Other2_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 2 Comments';
+            $history->previous = $lastCft->hod_Other2_feedback;
+            $history->current = $request->hod_Other2_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other2_feedback) || $lastCft->hod_Other2_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Other2_by != $request->hod_Other2_by && $request->hod_Other2_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 2 Review By';
+            $history->previous = $lastCft->hod_Other2_by;
+            $history->current = $request->hod_Other2_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other2_by) || $lastCft->hod_Other2_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Other2_on != $request->hod_Other2_on && $request->hod_Other2_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 2 Review On';
+            $history->previous = $lastCft->hod_Other2_on;
+            $history->current = $request->hod_Other2_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other2_on) || $lastCft->hod_Other2_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Other2_attachment != $request->hod_Other2_attachment && $request->hod_Other2_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 2 Review Attachment';
+            $history->previous = $lastCft->hod_Other2_attachment;
+            $history->current =implode(',', $request->hod_Other2_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other2_attachment) || $lastCft->hod_Other2_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Other 3 ***************/
+
+        if ($lastCft->hod_Other3_feedback != $request->hod_Other3_feedback && $request->hod_Other3_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 3 Comments';
+            $history->previous = $lastCft->hod_Other3_feedback;
+            $history->current = $request->hod_Other3_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other3_feedback) || $lastCft->hod_Other3_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Other3_by != $request->hod_Other3_by && $request->hod_Other3_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 3 Review By';
+            $history->previous = $lastCft->hod_Other3_by;
+            $history->current = $request->hod_Other3_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other3_by) || $lastCft->hod_Other3_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Other3_on != $request->hod_Other3_on && $request->hod_Other3_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 3 Review On';
+            $history->previous = $lastCft->hod_Other3_on;
+            $history->current = $request->hod_Other3_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other3_on) || $lastCft->hod_Other3_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Other3_attachment != $request->hod_Other3_attachment && $request->hod_Other3_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 3 Review Attachment';
+            $history->previous = $lastCft->hod_Other3_attachment;
+            $history->current =implode(',', $request->hod_Other3_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other3_attachment) || $lastCft->hod_Other3_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Other 4 ***************/
+
+        if ($lastCft->hod_Other4_feedback != $request->hod_Other4_feedback && $request->hod_Other4_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 4 Comments';
+            $history->previous = $lastCft->hod_Other4_feedback;
+            $history->current = $request->hod_Other4_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other4_feedback) || $lastCft->hod_Other4_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Other4_by != $request->hod_Other4_by && $request->hod_Other4_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 4 Review By';
+            $history->previous = $lastCft->hod_Other4_by;
+            $history->current = $request->hod_Other4_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other4_by) || $lastCft->hod_Other4_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Other4_on != $request->hod_Other4_on && $request->hod_Other4_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 4 Review On';
+            $history->previous = $lastCft->hod_Other4_on;
+            $history->current = $request->hod_Other4_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other4_on) || $lastCft->hod_Other4_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Other4_attachment != $request->hod_Other4_attachment && $request->hod_Other4_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 4 Review Attachment';
+            $history->previous = $lastCft->hod_Other4_attachment;
+            $history->current =implode(',', $request->hod_Other4_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other4_attachment) || $lastCft->hod_Other4_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+        /*************** Other 5 ***************/
+
+        if ($lastCft->hod_Other5_feedback != $request->hod_Other5_feedback && $request->hod_Other5_feedback != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 5 Comments';
+            $history->previous = $lastCft->hod_Other5_feedback;
+            $history->current = $request->hod_Other5_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other5_feedback) || $lastCft->hod_Other5_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Other5_by != $request->hod_Other5_by && $request->hod_Other5_by != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 5 Review By';
+            $history->previous = $lastCft->hod_Other5_by;
+            $history->current = $request->hod_Other5_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other5_by) || $lastCft->hod_Other5_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Other5_on != $request->hod_Other5_on && $request->hod_Other5_on != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 5 Review On';
+            $history->previous = $lastCft->hod_Other5_on;
+            $history->current = $request->hod_Other5_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other5_on) || $lastCft->hod_Other5_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->hod_Other5_attachment != $request->hod_Other5_attachment && $request->hod_Other5_attachment != null) {
+            $history = new ManagementAuditTrial;
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'HOD Other 5 Review Attachment';
+            $history->previous = $lastCft->hod_Other5_attachment;
+            $history->current = implode(',',$request->hod_Other5_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->hod_Other5_attachment) || $lastCft->hod_Other5_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+                 if($lastDocument->additional_suport_required !=$management->additional_suport_required || !empty($request->additional_suport_required_comment)) {
                  $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Plans')
+                            ->where('activity_type', 'QA verification Comment')
                             ->exists();
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Plans';
-            $history->previous =  $lastDocument->plans_new;
-            $history->current = $management->plans_new;
-            $history->comment = $request->plans_new_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-           if($lastDocument->forecast_new !=$management->forecast_new || !empty($request->forecast_new_comment)) {
-             $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Forecast')
-                            ->exists();
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Forecast';
-            $history->previous =  $lastDocument->forecast_new;
-            $history->current = $management->forecast_new;
-            $history->comment = $request->forecast_new_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-            if($lastDocument->additional_suport_required !=$management->additional_suport_required || !empty($request->additional_suport_required_comment)) {
-                 $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Any Additional Support Required')
-                            ->exists();
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Any Additional Support Required';
+            $history->activity_type = 'QA verification Comment';
             $history->previous =  $lastDocument->additional_suport_required;
             $history->current = $management->additional_suport_required;
             $history->comment = $request->attendees_comment;
@@ -3837,131 +7951,16 @@ class ManagementReviewController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
-             if($lastDocument->file_attchment_if_any !=$management->file_attchment_if_any || !empty($request->file_attchment_if_any_comment)) {
+           if($lastDocument->qa_verification_file !=$management->qa_verification_file || !empty($request->qa_verification_file_comment)) {
                  $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'File Attachment')
+                            ->where('activity_type', 'Action Item Status Attachment')
                             ->exists();
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'File Attachment';
-            $history->previous =  $lastDocument->file_attchment_if_any;
-            $history->current = $management->file_attchment_if_any;
-            $history->comment = $request->file_attchment_if_any_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-          if($lastDocument->next_managment_review_date !=$management->next_managment_review_date || !empty($request->next_managment_review_date_comment)) {
-             $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Date Due')
-                            ->exists();
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Date Due';
-            $history->previous =  $lastDocument->next_managment_review_date;
-            $history->current = $management->next_managment_review_date;
-            $history->comment = $request->next_managment_review_date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-          if($lastDocument->summary_recommendation !=$management->summary_recommendation || !empty($request->summary_recommendation_comment)) {
-             $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Summary Recommendation')
-                            ->exists();
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Summary Recommendation';
-            $history->previous =  $lastDocument->summary_recommendation;
-            $history->current = $management->summary_recommendation;
-            $history->comment = $request->summary_recommendation_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-          if($lastDocument->conclusion_new !=$management->conclusion_new || !empty($request->conclusion_new_comment)) {
-             $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Conclusion')
-                            ->exists();
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Conclusion';
-            $history->previous =  $lastDocument->conclusion_new;
-            $history->current = $management->conclusion_new;
-            $history->comment = $request->conclusion_new_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-            if($lastDocument->closure_attachments !=$management->closure_attachments || !empty($request->closure_attachments_comment)) {
-                 $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'File Attachment')
-                            ->exists();
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'File Attachment';
-            $history->previous =  $lastDocument->closure_attachments;
-            $history->current = $management->closure_attachments;
-            $history->comment = $request->closure_attachments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-          if($lastDocument->due_date_extension !=$management->due_date_extension || !empty($request->due_date_extension_comment)) {
-             $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Due Date Extension Justification')
-                            ->exists();
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Due Date Extension Justification';
-            $history->previous =  $lastDocument->due_date_extension;
-            $history->current = $management->due_date_extension;
-            $history->comment = $request->due_date_extension_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-        //-------------------------
-          if($lastDocument->qa_verification_file !=$management->qa_verification_file || !empty($request->qa_verification_file_comment)) {
-                 $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'QA verification Attachment')
-                            ->exists();
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'QA verification Attachment';
+            $history->activity_type = 'Action Item Status Attachment';
             $history->previous =  $lastDocument->qa_verification_file;
             $history->current = $management->qa_verification_file;
             $history->comment = $request->qa_verification_file_comment;
@@ -3971,66 +7970,71 @@ class ManagementReviewController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
-          if($lastDocument->review_period_monthly !=$management->review_period_monthly || !empty($request->review_period_monthly_comment)) {
+          if($lastDocument->next_managment_review_date !=$management->next_managment_review_date || !empty($request->next_managment_review_date_comment)) {
              $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Review Period (Monthly)')
+                            ->where('activity_type', 'Date Due')
                             ->exists();
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Review Period (Monthly)';
-            $history->previous =  $lastDocument->review_period_monthly;
-            $history->current = $management->review_period_monthly;
-            $history->comment = $request->review_period_monthly_comment;
+            $history->activity_type = 'Date Due';
+            $history->previous =   Helpers::getdateFormat($lastDocument->next_managment_review_date);
+            $history->current =  Helpers::getdateFormat($management->next_managment_review_date);
+            $history->comment = $request->next_managment_review_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
-          if($lastDocument->cft_hod_attach !=$management->cft_hod_attach || !empty($request->cft_hod_attach_comment)) {
-                 $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'CFT Hod Attachment')
-                            ->exists();
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'CFT Hod Attachment';
-            $history->previous =  $lastDocument->cft_hod_attach;
-            $history->current = $management->cft_hod_attach;
-            $history->comment = $request->cft_hod_attach_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
-          if($lastDocument->review_period_six_monthly !=$management->review_period_six_monthly || !empty($request->review_period_six_monthly_comment)) {
+         if($lastDocument->conclusion_new !=$management->conclusion_new || !empty($request->conclusion_new_comment)) {
              $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Review Period (Six Monthly)')
+                            ->where('activity_type', 'QA Head Comment')
                             ->exists();
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Review Period (Six Monthly)';
-            $history->previous =  $lastDocument->review_period_six_monthly;
-            $history->current = $management->review_period_six_monthly;
-            $history->comment = $request->review_period_six_monthly_comment;
+            $history->activity_type = 'QA Head Comment';
+            $history->previous =  $lastDocument->conclusion_new;
+            $history->current = $management->conclusion_new;
+            $history->comment = $request->conclusion_new_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
+
+           if ($lastDocument->closure_attachments != $management->closure_attachments || !empty($request->closure_attachments_comment)) {
+             $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
+                            ->where('activity_type', 'Closure Attachment')
+                            ->exists();
+
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Closure Attachment';
+            $history->previous = $lastDocument->closure_attachments;
+            $history->current = $management->closure_attachments;
+            $history->comment = $request->closure_attachments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+                       $history->change_to= "Not Applicable";
+            $history->change_from= $lastDocument->status;
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+
+
+
 
         // --------------agenda--------------
         $data1 =  ManagementReviewDocDetails::where('review_id',$id)->where('type',"agenda")->first();
@@ -4118,7 +8122,7 @@ class ManagementReviewController extends Controller
         if (!empty($request->current_status)) {
             $data4->current_status = serialize($request->current_status);
         }
-        
+
         if (!empty($request->date_closed)) {
             $data4->date_closed = serialize($request->date_closed);
         }
@@ -4126,11 +8130,11 @@ class ManagementReviewController extends Controller
             $data4->remark = serialize($request->remark);
         }
         $data4->update();
-        
+
         $data5 = ManagementReviewDocDetails::where('review_id',$id)->where('type',"capa_detail_details")->first();
         $data5->review_id = $management->id;
         $data5->type = "capa_detail_details";
-      
+
         if (!empty($request->Details)) {
             $data5->Details = serialize($request->Details);
         }
@@ -4154,22 +8158,22 @@ class ManagementReviewController extends Controller
             $data5->remark2 = serialize($request->remark2);
         }
         $data5->update();
-        
-    }
+
+
     toastr()->success("Record is updated Successfully");
     return back();
 }
 
     public function ManagementReviewAuditTrial($id)
-    
+
       {
         $data= ManagementReview::find($id);
-        $audit = ManagementAuditTrial::where('ManagementReview_id', $id)->orderByDesc('id')->paginate(5);
+        $audit = ManagementAuditTrial::where('ManagementReview_id', $id)->orderByDESC('id')->paginate(15);
         $today = Carbon::now()->format('d-m-y');
         $document = ManagementReview::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
         $users = User::all();
-        $audits = ManagementAuditTrial::paginate(10);
+        // $audits = ManagementAuditTrial::paginate(10);
 
         return view('frontend.management-review.audit-trial', compact('audit', 'document', 'today','data','users'));
     }
@@ -4203,7 +8207,7 @@ class ManagementReviewController extends Controller
         $action_item_details=  ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"action_item_details")->first();
         //dd(unserialize($action_item_details->date_due));
         $capa_detail_details=  ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"capa_detail_details")->first();
-        
+
         return view('frontend.management-review.management_review', compact('userData','data5','data1', 'data','agenda','management_review_participants','performance_evaluation','action_item_details','capa_detail_details','due_date' ));
     }
 
@@ -4224,7 +8228,7 @@ class ManagementReviewController extends Controller
                 $changeControl->status = 'In Progress';
                 $changeControl->Submited_by = Auth::user()->name;
                 $changeControl->Submited_on = Carbon::now()->format('d-M-Y');
-                $changeControl->Submited_Comment  = 
+                $changeControl->Submited_Comment  =
                 $request->comment;
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
@@ -4235,7 +8239,7 @@ class ManagementReviewController extends Controller
                 } else {
                     $history->previous = $lastDocument->Submited_by . ' , ' . $lastDocument->Submited_on;
                 }
-                $history->current = $changeControl->Submited_by . ' , ' . $changeControl->Submited_on; 
+                $history->current = $changeControl->Submited_by . ' , ' . $changeControl->Submited_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -4250,7 +8254,7 @@ class ManagementReviewController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                
+
                 // $list = Helpers::getResponsibleUserList();
                 // foreach ($list as $u) {
                 //     if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -4265,7 +8269,7 @@ class ManagementReviewController extends Controller
                 //             }
                 //         );
                 //       }
-                //     } 
+                //     }
                 // }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -4317,7 +8321,7 @@ class ManagementReviewController extends Controller
             //     //             }
             //     //         );
             //     //       }
-            //     //     } 
+            //     //     }
             //     // }
             //     toastr()->success('Document Sent');
             //     return back();
@@ -4354,7 +8358,7 @@ class ManagementReviewController extends Controller
                 }
                  $history->save();
                  $changeControl->update();
-                 
+
                 // $list = Helpers::getInitiatorUserList();
                 // foreach ($list as $u) {
                 //     if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -4369,7 +8373,7 @@ class ManagementReviewController extends Controller
                 //             }
                 //         );
                 //       }
-                //     } 
+                //     }
                 // }
                 toastr()->success('Document Sent');
                 return back();
@@ -4414,7 +8418,7 @@ class ManagementReviewController extends Controller
                 }
                  $history->save();
                  $changeControl->update();
-                 
+
                 // $list = Helpers::getInitiatorUserList();
                 // foreach ($list as $u) {
                 //     if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -4429,7 +8433,7 @@ class ManagementReviewController extends Controller
                 //             }
                 //         );
                 //       }
-                //     } 
+                //     }
                 // }
                 toastr()->success('Document Sent');
                 return back();
@@ -4484,7 +8488,7 @@ class ManagementReviewController extends Controller
     }
 
     $history->action = 'CFT Review Complete';
-    
+
     // Make sure you're using the updated $updateCFT object here
     $history->current = $updateCFT->Quality_Control_by . ', ' . $updateCFT->Quality_Control_on;
 
@@ -4824,7 +8828,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                             $updateCFT->Production_Table_On = Carbon::now()->format('Y-m-d');
                             $history = new ManagementAuditTrial();
                             $history->ManagementReview_id = $id;
-                           $history->activity_type = 'Production Table Completed By, Production Table Completed On';
+                           $history->activity_type = 'Production Tablet/Capsule Powder Completed By, Production Tablet/Capsule Powder Completed On';
                     if(is_null($lastDocument->Production_Table_By) || $lastDocument->Production_Table_On == ''){
                         $history->previous = "";
                     }else{
@@ -5021,7 +9025,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     }
                             $history->save();
                         }
-                        
+
                         if($index == 19 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->CorporateQualityAssurance_by = Auth::user()->name;
                             $updateCFT->CorporateQualityAssurance_on = Carbon::now()->format('Y-m-d');
@@ -5109,35 +9113,35 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     }
 
                     $checkCFTCount = managementCft_Response::withoutTrashed()->where(['status' => 'Completed', 'ManagementReview_id' => $id])->count();
-                    
+
                     $Cft = managementCft::withoutTrashed()->where('ManagementReview_id', $id)->first();
 
-                    
+
                     if (!$IsCFTRequired || $checkCFTCount) {
-                        
+
 
                         $changeControl->stage = "5";
-                        $changeControl->status = "HOD Final Review";
+                        $changeControl->status = "CFT HOD Review";
                         $changeControl->ALLAICompleteby_by = Auth::user()->name;
                         $changeControl->ALLAICompleteby_on = Carbon::now()->format('d-M-Y');
                         $changeControl->ALLAICompleteby_comment = $request->comment;
 
                         $history = new ManagementAuditTrial();
                         $history->ManagementReview_id = $id;
-                        $history->activity_type = 'CFT Review Completed By, CFT Review Completed On';
+                        $history->activity_type = 'CFT Action Complete By, CFT Action Complete On';
                     if(is_null(value: $lastDocument->ALLAICompleteby_by) || $lastDocument->ALLAICompleteby_on == ''){
                         $history->previous = "";
                     }else{
                         $history->previous = $lastDocument->ALLAICompleteby_by. ' ,' . $lastDocument->ALLAICompleteby_on;
                     }
-                    $history->action='CFT Review Complete';
+                    $history->action='CFT Action Complete';
                     $history->current = $changeControl->ALLAICompleteby_by. ',' . $changeControl->ALLAICompleteby_on;
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
-                        $history->change_to =   "HOD Final Review";
+                        $history->change_to =   "CFT HOD Review";
                         $history->change_from = $lastDocument->status;
                         $history->stage = 'Complete';
                         if(is_null($lastDocument->ALLAICompleteby_by) || $lastDocument->ALLAICompleteby_on == '')
@@ -5181,22 +9185,22 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             //     $changeControl->ALLAICompleteby_comment  = $request->comment;
             //     $history = new ManagementAuditTrial();
             //     $history->ManagementReview_id = $id;
-            //     $history->activity_type = 'All AI Completed by Respective Department By     , All AI Completed by Respective Department On';
-            //     $history->action ='All AI Completed by Respective Department';
+            //     $history->activity_type = 'CFT Action Complete By     , CFT Action Complete On';
+            //     $history->action ='CFT Action Complete';
             //     // $history->previous = $lastDocument->completed_by;
             //     if (is_null($lastDocument->ALLAICompleteby_by) || $lastDocument->ALLAICompleteby_by === '') {
             //         $history->previous = "Null";
             //     } else {
             //         $history->previous = $lastDocument->ALLAICompleteby_by . ' , ' . $lastDocument->ALLAICompleteby_on;
             //     }
-                
+
             //     $history->current = $changeControl->ALLAICompleteby_by . ' , ' . $changeControl->ALLAICompleteby_on;
             //     $history->comment = $request->comment;
             //     $history->user_id = Auth::user()->id;
             //     $history->user_name = Auth::user()->name;
             //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             //     $history->origin_state = $lastDocument->status;
-            //     $history->stage='All AI Completed by Respective Department';
+            //     $history->stage='CFT Action Complete';
             //     $history->change_to= "HOD Final Review";
             //     $history->change_from= $lastDocument->status;
             //     if (is_null($lastDocument->ALLAICompleteby_by) || $lastDocument->ALLAICompleteby_by === '') {
@@ -5206,7 +9210,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             //     }
             //      $history->save();
             //      $changeControl->update();
-                 
+
             //     // $list = Helpers::getInitiatorUserList();
             //     // foreach ($list as $u) {
             //     //     if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -5221,11 +9225,752 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             //     //             }
             //     //         );
             //     //       }
-            //     //     } 
+            //     //     }
             //     // }
             //     toastr()->success('Document Sent');
             //     return back();
             // }
+
+//               if ($changeControl->stage == 5) {
+
+//                     // CFT review state update form_progress
+//                     // if ($changeControl->form_progress !== 'cft')
+//                     // {
+//                     //     Session::flash('swal', [
+//                     //         'type' => 'warning',
+//                     //         'title' => 'Mandatory Fields!',
+//                     //         'message' => 'CFT Tab is yet to be filled'
+//                     //     ]);
+
+//                     //     return redirect()->back();
+//                     // }
+//                     //  else {
+//                     //     Session::flash('swal', [
+//                     //         'type' => 'success',
+//                     //         'title' => 'Success',
+//                     //         'message' => 'Sent for Investigation and CAPA review state'
+//                     //     ]);
+//                     // }
+
+
+//                     $IsCFTRequired = hodmanagementCft_Response::withoutTrashed()->where(['is_required' => 1, 'ManagementReview_id' => $id])->latest()->first();
+//                     $hodcftUsers = DB::table('hodmanagement_cft__responses')->where(['ManagementReview_id' => $id])->first();
+//                     // Define the column names
+//                     $columns = ['hod_Quality_Control_Person', 'hod_QualityAssurance_person', 'hod_Engineering_person', 'hod_Environment_Health_Safety_person', 'hod_Human_Resource_person', 'hod_Other1_person', 'hod_Other2_person', 'hod_Other3_person', 'hod_Other4_person', 'hod_Other5_person', 'hod_Production_Table_Person','hod_ProductionLiquid_person','hod_Production_Injection_Person','hod_Store_person','hod_ResearchDevelopment_person','hod_Microbiology_person','hod_RegulatoryAffair_person','hod_CorporateQualityAssurance_person','hod_ContractGiver_person'];
+//                     // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
+
+//                     // Initialize an array to store the values
+//                     $valuesArray = [];
+
+//                     // Iterate over the columns and retrieve the values
+// //                     foreach ($columns as $index => $column) {
+// //                         $value = $hodcftUsers->$column;
+// //                        if ($index == 0 && $hodcftUsers->$column == Auth::user()->name) {
+// //     $updateCFT->hod_Quality_Control_by = Auth::user()->name;
+// //     $updateCFT->hod_Quality_Control_on = Carbon::now()->format('Y-m-d');
+
+// //     $history = new ManagementAuditTrial();
+// //     $history->ManagementReview_id = $id;
+// //     $history->activity_type = 'HOD Quality Control Completed By, HOD Quality Control Completed On';
+
+// //     if (is_null($lastDocument->hod_Quality_Control_by) || $lastDocument->hod_Quality_Control_on == '') {
+// //         $history->previous = "";
+// //     } else {
+// //         $history->previous = $lastDocument->hod_Quality_Control_by . ' , ' . $lastDocument->hod_Quality_Control_on;
+// //     }
+
+// //     $history->action = 'HOD Final Review Complete';
+
+// //     // Make sure you're using the updated $updateCFT object here
+// //     $history->current = $updateCFT->hod_Quality_Control_by . ', ' . $updateCFT->hod_Quality_Control_on;
+
+// //     $history->comment = $request->comment;
+// //     $history->user_id = Auth::user()->name;
+// //     $history->user_name = Auth::user()->name;
+// //     $history->change_to = "Not Applicable";
+// //     $history->change_from = $lastDocument->status;
+// //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //     $history->origin_state = $lastDocument->status;
+// //     $history->stage = 'HOD Final Review';
+
+// //     if (is_null($lastDocument->hod_Quality_Control_by) || $lastDocument->hod_Quality_Control_on == '') {
+// //         $history->action_name = 'New';
+// //     } else {
+// //         $history->action_name = 'Update';
+// //     }
+
+// //     $history->save();
+// // }
+
+// //                      if ($index == 1 && $hodcftUsers->$column == Auth::user()->name) {
+// //     $updateCFT->hod_QualityAssurance_by = Auth::user()->name;
+// //     $updateCFT->hod_QualityAssurance_on = Carbon::now()->format('Y-m-d'); // Corrected line
+
+// //     $history = new ManagementAuditTrial();
+// //     $history->ManagementReview_id = $id;
+// //     $history->activity_type = 'HOD Quality Assurance Completed By,HOD Quality Assurance Completed On';
+
+// //     if (is_null($lastDocument->hod_QualityAssurance_by) || $lastDocument->hod_QualityAssurance_on == '') {
+// //         $history->previous = "";
+// //     } else {
+// //         $history->previous = $lastDocument->hod_QualityAssurance_by . ' ,' .Helpers::getdateFormat ($lastDocument->hod_QualityAssurance_on);
+// //     }
+
+// //     $history->action = 'HOD Final Review Complete';
+// //     $history->current = $updateCFT->hod_QualityAssurance_by . ',' .Helpers::getdateFormat ($updateCFT->hod_QualityAssurance_on);
+// //     $history->comment = $request->comment;
+// //     $history->user_id = Auth::user()->id; // Use `id` instead of `name` for `user_id`
+// //     $history->user_name = Auth::user()->name;
+// //     $history->change_to = "Not Applicable";
+// //     $history->change_from = $lastDocument->status;
+// //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //     $history->origin_state = $lastDocument->status;
+// //     $history->stage = 'HOD Final Review';
+
+// //     if (is_null($lastDocument->hod_QualityAssurance_by) || $lastDocument->hod_QualityAssurance_on == '') {
+// //         $history->action_name = 'New';
+// //     } else {
+// //         $history->action_name = 'Update';
+// //     }
+
+// //     $history->save();
+// // }
+
+// //                         if($index == 2 && $hodcftUsers->$column == Auth::user()->name){
+// //                             $updateCFT->hod_Engineering_by = Auth::user()->name;
+// //                             $updateCFT->hod_Engineering_on = Carbon::now()->format('Y-m-d');
+// //                             $history = new ManagementAuditTrial();
+// //                             $history->ManagementReview_id = $id;
+// //                             $history->activity_type = 'HOD Engineering Completed By, HOD Engineering Completed On';
+// //                     if(is_null($lastDocument->hod_Engineering_by) || $lastDocument->hod_Engineering_on == ''){
+// //                         $history->previous = "";
+// //                     }else{
+// //                         $history->previous = $lastDocument->hod_Engineering_by. ' ,' .Helpers::getdateFormat ($lastDocument->hod_Engineering_on);
+// //                     }
+// //                     $history->action='HOD Final Review Complete';
+// //                     $history->current = $updateCFT->hod_Engineering_by. ',' . Helpers::getdateFormat($updateCFT->hod_Engineering_on);
+// //                             $history->comment = $request->comment;
+// //                             $history->user_id = Auth::user()->name;
+// //                             $history->user_name = Auth::user()->name;
+// //                             $history->change_to =   "Not Applicable";
+// //                             $history->change_from = $lastDocument->status;
+// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //                             $history->origin_state = $lastDocument->status;
+// //                             $history->stage = 'HOD Final Review';
+// //                             if(is_null($lastDocument->hod_Engineering_by) || $lastDocument->hod_Engineering_on == '')
+// //                     {
+// //                         $history->action_name = 'New';
+// //                     } else {
+// //                         $history->action_name = 'Update';
+// //                     }
+// //                             $history->save();
+// //                         }
+// //                         if($index == 3 && $hodcftUsers->$column == Auth::user()->name){
+// //                             $updateCFT->hod_Environment_Health_Safety_by = Auth::user()->name;
+// //                             $updateCFT->hod_Environment_Health_Safety_on = Carbon::now()->format('Y-m-d');
+// //                             $history = new ManagementAuditTrial();
+// //                             $history->ManagementReview_id = $id;
+// //                             $history->activity_type = 'HOD Safety Completed By, HOD Safety Completed On';
+// //                     if(is_null($lastDocument->hod_Environment_Health_Safety_by) || $lastDocument->hod_Environment_Health_Safety_on == ''){
+// //                         $history->previous = "";
+// //                     }else{
+// //                         $history->previous = $lastDocument->hod_Environment_Health_Safety_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_Environment_Health_Safety_on);
+// //                     }
+// //                     $history->action='HOD Final Review Complete';
+// //                     $history->current = $updateCFT->hod_Environment_Health_Safety_by. ',' . Helpers::getdateFormat($updateCFT->hod_Environment_Health_Safety_on);
+// //                             $history->comment = $request->comment;
+// //                             $history->user_id = Auth::user()->name;
+// //                             $history->user_name = Auth::user()->name;
+// //                             $history->change_to =   "Not Applicable";
+// //                             $history->change_from = $lastDocument->status;
+// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //                             $history->origin_state = $lastDocument->status;
+// //                             $history->stage = 'HOD Final Review';
+// //                             if(is_null($lastDocument->hod_Environment_Health_Safety_by) || $lastDocument->hod_Environment_Health_Safety_on == '')
+// //                     {
+// //                         $history->action_name = 'New';
+// //                     } else {
+// //                         $history->action_name = 'Update';
+// //                     }
+// //                             $history->save();
+// //                         }
+// //                         if($index == 4 && $hodcftUsers->$column == Auth::user()->name){
+// //                             $updateCFT->hod_Human_Resource_by = Auth::user()->name;
+// //                             $updateCFT->hod_Human_Resource_on = Carbon::now()->format('Y-m-d');
+// //                             $history = new ManagementAuditTrial();
+// //                             $history->ManagementReview_id = $id;
+// //                             $history->activity_type = 'HOD Human Resource Completed By, HOD Human Resource Completed On';
+// //                     if(is_null($lastDocument->hod_Human_Resource_by) || $lastDocument->hod_Human_Resource_on == ''){
+// //                         $history->previous = "";
+// //                     }else{
+// //                         $history->previous = $lastDocument->hod_Human_Resource_by. ' ,' .Helpers::getdateFormat ($lastDocument->hod_Human_Resource_on);
+// //                     }
+// //                     $history->action='HOD Final Review Complete';
+// //                     $history->current = $updateCFT->hod_Human_Resource_by. ',' . Helpers::getdateFormat($updateCFT->hod_Human_Resource_on);
+// //                             $history->comment = $request->comment;
+// //                             $history->user_id = Auth::user()->name;
+// //                             $history->user_name = Auth::user()->name;
+// //                             $history->change_to =   "Not Applicable";
+// //                             $history->change_from = $lastDocument->status;
+// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //                             $history->origin_state = $lastDocument->status;
+// //                             $history->stage = 'HOD Final Review';
+// //                             if(is_null($lastDocument->hod_Human_Resource_by) || $lastDocument->hod_Human_Resource_on == '')
+// //                     {
+// //                         $history->action_name = 'New';
+// //                     } else {
+// //                         $history->action_name = 'Update';
+// //                     }
+// //                             $history->save();
+// //                         }
+// //                     //     if($index == 5 && $hodcftUsers->$column == Auth::user()->name){
+// //                     //         $updateCFT->Information_Technology_by = Auth::user()->name;
+// //                     //         $updateCFT->Information_Technology_on = Carbon::now()->format('Y-m-d');
+// //                     //         $history = new ManagementAuditTrial();
+// //                     //         $history->ManagementReview_id = $id;
+// //                     //         $history->activity_type = 'HODCFT Review Completed By, CFT Review Completed On';
+// //                     // if(is_null($lastDocument->Information_Technology_by) || $lastDocument->Information_Technology_on == ''){
+// //                     //     $history->previous = "";
+// //                     // }else{
+// //                     //     $history->previous = $lastDocument->Information_Technology_by. ' ,' . Helpers::getdateFormat($lastDocument->Information_Technology_on);
+// //                     // }
+// //                     // $history->action='CFT Review Complete';
+// //                     // $history->current = $updateCFT->Information_Technology_by. ',' . Helpers::getdateFormat($updateCFT->Information_Technology_on);
+// //                     //         $history->user_id = Auth::user()->name;
+// //                     //         $history->user_name = Auth::user()->name;
+// //                     //         $history->change_to =   "Not Applicable";
+// //                     //         $history->change_from = $lastDocument->status;
+// //                     //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //                     //         $history->origin_state = $lastDocument->status;
+// //                     //         $history->stage = 'CFT Review';
+// //                     //         if(is_null($lastDocument->Information_Technology_by) || $lastDocument->Information_Technology_on == '')
+// //                     // {
+// //                     //     $history->action_name = 'New';
+// //                     // } else {
+// //                     //     $history->action_name = 'Update';
+// //                     // }
+// //                     //         $history->save();
+// //                     //     }
+// //                         if($index == 6 && $hodcftUsers->$column == Auth::user()->name){
+// //                             $updateCFT->hod_Other1_by = Auth::user()->name;
+// //                             $updateCFT->hod_Other1_on = Carbon::now()->format('Y-m-d');
+// //                             $history = new ManagementAuditTrial();
+// //                             $history->ManagementReview_id = $id;
+// //                             $history->activity_type = 'HOD Others 1 Completed By, HOD Others 1 Completed On';
+// //                     if(is_null($lastDocument->hod_Other1_by) || $lastDocument->hod_Other1_on == ''){
+// //                         $history->previous = "";
+// //                     }else{
+// //                         $history->previous = $lastDocument->hod_Other1_by. ' ,' .Helpers::getdateFormat ($lastDocument->hod_Other1_on);
+// //                     }
+// //                     $history->action='HOD Final Review Complete';
+// //                     $history->current = $updateCFT->hod_Other1_by. ',' . Helpers::getdateFormat($updateCFT->hod_Other1_on);
+// //                             $history->comment = $request->comment;
+// //                             $history->user_id = Auth::user()->name;
+// //                             $history->user_name = Auth::user()->name;
+// //                             $history->change_to =   "Not Applicable";
+// //                             $history->change_from = $lastDocument->status;
+// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //                             $history->origin_state = $lastDocument->status;
+// //                             $history->stage = 'HOD Final Review';
+// //                             if(is_null($lastDocument->hod_Other1_by) || $lastDocument->hod_Other1_on == '')
+// //                     {
+// //                         $history->action_name = 'New';
+// //                     } else {
+// //                         $history->action_name = 'Update';
+// //                     }
+// //                             $history->save();
+// //                         }
+// //                         if($index == 7 && $hodcftUsers->$column == Auth::user()->name){
+// //                             $updateCFT->hod_Other2_by = Auth::user()->name;
+// //                             $updateCFT->hod_Other2_on = Carbon::now()->format('Y-m-d');
+// //                             $history = new ManagementAuditTrial();
+// //                             $history->ManagementReview_id = $id;
+// //                             $history->activity_type = 'HOD Others 2 Completed By,HOD Others 2 Completed On';
+// //                     if(is_null($lastDocument->hod_Other2_by) || $lastDocument->hod_Other2_on == ''){
+// //                         $history->previous = "";
+// //                     }else{
+// //                         $history->previous = $lastDocument->hod_Other2_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_Other2_on);
+// //                     }
+// //                     $history->action='HOD Final Review Complete';
+// //                     $history->current = $updateCFT->hod_Other2_by. ',' .Helpers::getdateFormat($updateCFT->hod_Other2_on);
+// //                             $history->current = $updateCFT->hod_Other2_by;
+// //                             $history->comment = $request->comment;
+// //                             $history->user_id = Auth::user()->name;
+// //                             $history->user_name = Auth::user()->name;
+// //                             $history->change_to =   "Not Applicable";
+// //                             $history->change_from = $lastDocument->status;
+// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //                             $history->origin_state = $lastDocument->status;
+// //                             $history->stage = 'HOD Final Review';
+// //                             if(is_null($lastDocument->hod_Other2_by) || $lastDocument->hod_Other2_on == '')
+// //                     {
+// //                         $history->action_name = 'New';
+// //                     } else {
+// //                         $history->action_name = 'Update';
+// //                     }
+// //                             $history->save();
+// //                         }
+// //                         if($index == 8 && $hodcftUsers->$column == Auth::user()->name){
+// //                             $updateCFT->hod_Other3_by = Auth::user()->name;
+// //                             $updateCFT->hod_Other3_on = Carbon::now()->format('Y-m-d');
+// //                             $history = new ManagementAuditTrial();
+// //                             $history->ManagementReview_id = $id;
+// //                             $history->activity_type = 'HOD Others 3 Completed By,HOD Others 3 Completed On';
+// //                     if(is_null($lastDocument->hod_Other3_by) || $lastDocument->hod_Other3_on == ''){
+// //                         $history->previous = "";
+// //                     }else{
+// //                         $history->previous = $lastDocument->hod_Other3_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_Other3_on);
+// //                     }
+// //                     $history->action='HOD Final Review Complete';
+// //                     $history->current = $updateCFT->hod_Other3_by. ',' . Helpers::getdateFormat($updateCFT->hod_Other3_on);
+// //                             $history->comment = $request->comment;
+// //                             $history->user_id = Auth::user()->name;
+// //                             $history->user_name = Auth::user()->name;
+// //                             $history->change_to =   "Not Applicable";
+// //                             $history->change_from = $lastDocument->status;
+// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //                             $history->origin_state = $lastDocument->status;
+// //                             $history->stage = 'HOD Final Review';
+// //                             if(is_null($lastDocument->hod_Other3_by) || $lastDocument->hod_Other3_on == '')
+// //                     {
+// //                         $history->action_name = 'New';
+// //                     } else {
+// //                         $history->action_name = 'Update';
+// //                     }
+// //                             $history->save();
+// //                         }
+// //                         if($index == 9 && $hodcftUsers->$column == Auth::user()->name){
+// //                             $updateCFT->hod_Other4_by = Auth::user()->name;
+// //                             $updateCFT->hod_Other4_on = Carbon::now()->format('Y-m-d');
+// //                             $history = new ManagementAuditTrial();
+// //                             $history->ManagementReview_id = $id;
+// // $history->activity_type = 'HOD Others 4 Completed By,HOD Others 4 Completed On';
+// //                     if(is_null($lastDocument->hod_Other4_by) || $lastDocument->hod_Other4_on == ''){
+// //                         $history->previous = "";
+// //                     }else{
+// //                         $history->previous = $lastDocument->hod_Other4_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_Other4_on);
+// //                     }
+// //                     $history->action='HOD Final Review Complete';
+// //                     $history->current = $updateCFT->hod_Other4_by. ',' . Helpers::getdateFormat($updateCFT->hod_Other4_on);
+// //                             $history->user_id = Auth::user()->name;
+// //                             $history->user_name = Auth::user()->name;
+// //                             $history->change_to =   "Not Applicable";
+// //                             $history->change_from = $lastDocument->status;
+// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //                             $history->origin_state = $lastDocument->status;
+// //                             $history->stage = 'HOD Final Review';
+// //                             if(is_null($lastDocument->hod_Other4_by) || $lastDocument->hod_Other4_on == '')
+// //                     {
+// //                         $history->action_name = 'New';
+// //                     } else {
+// //                         $history->action_name = 'Update';
+// //                     }
+// //                             $history->save();
+// //                         }
+// //                         if($index == 10 && $hodcftUsers->$column == Auth::user()->name){
+// //                             $updateCFT->hod_Other5_by = Auth::user()->name;
+// //                             $updateCFT->hod_Other5_on = Carbon::now()->format('Y-m-d');
+// //                             $history = new ManagementAuditTrial();
+// //                             $history->ManagementReview_id = $id;
+// //                             $history->activity_type = 'HOD Others 5 Completed By, HOD Others 5 Completed On';
+// //                     if(is_null($lastDocument->hod_Other5_by) || $lastDocument->hod_Other5_on == ''){
+// //                         $history->previous = "";
+// //                     }else{
+// //                         $history->previous = $lastDocument->hod_Other5_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_Other5_on);
+// //                     }
+// //                     $history->action='HOD Final Review Complete';
+// //                     $history->current = $updateCFT->hod_Other5_by. ',' . Helpers::getdateFormat($updateCFT->hod_Other5_on);
+// //                             $history->user_id = Auth::user()->name;
+// //                             $history->user_name = Auth::user()->name;
+// //                             $history->change_to =   "Not Applicable";
+// //                             $history->change_from = $lastDocument->status;
+// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //                             $history->origin_state = $lastDocument->status;
+// //                             $history->stage = 'HOD Final Review';
+// //                            if(is_null($lastDocument->hod_Other5_by) || $lastDocument->hod_Other5_on == '')
+// //                     {
+// //                         $history->action_name = 'New';
+// //                     } else {
+// //                         $history->action_name = 'Update';
+// //                     }
+// //                             $history->save();
+// //                         }
+// //                         // if($index == 11 && $hodcftUsers->$column == Auth::user()->name){
+// //                         //     $updateCFT->RA_by = Auth::user()->name;
+// //                         //     $updateCFT->RA_on = Carbon::now()->format('Y-m-d');
+// //                         //     $history = new ManagementAuditTrial();
+// //                         //     $history->ManagementReview_id = $id;
+// //                         //     $history->activity_type = 'Activity Log';
+// //                         //     $history->previous = "";
+// //                         //     $history->action= 'CFT Review';
+// //                         //     $history->current = $updateCFT->RA_by;
+// //                         //     $history->comment = $request->comment;
+// //                         //     $history->user_id = Auth::user()->name;
+// //                         //     $history->user_name = Auth::user()->name;
+// //                         //     $history->change_to =   "Not Applicable";
+// //                         //     $history->change_from = $lastDocument->status;
+// //                         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //                         //     $history->origin_state = $lastDocument->status;
+// //                         //     $history->stage = 'CFT Review';
+// //                         //     $history->action_name = "Update";
+// //                         //     $history->save();
+// //                         // }
+// //                         if($index == 12 && $hodcftUsers->$column == Auth::user()->name){
+// //                             $updateCFT->hod_Production_Table_By = Auth::user()->name;
+// //                             $updateCFT->hod_Production_Table_On = Carbon::now()->format('Y-m-d');
+// //                             $history = new ManagementAuditTrial();
+// //                             $history->ManagementReview_id = $id;
+// //                            $history->activity_type = 'HOD Production Table Completed By,HOD Production Table Completed On';
+// //                     if(is_null($lastDocument->hod_Production_Table_By) || $lastDocument->hod_Production_Table_On == ''){
+// //                         $history->previous = "";
+// //                     }else{
+// //                         $history->previous = $lastDocument->hod_Production_Table_By. ' ,' . Helpers::getdateFormat($lastDocument->hod_Production_Table_On);
+// //                     }
+// //                    $history->action='HOD Final Review Complete';
+// //                     $history->current = $updateCFT->hod_Production_Table_By. ',' .Helpers::getdateFormat ($updateCFT->hod_Production_Table_On);
+// //                             $history->user_id = Auth::user()->name;
+// //                             $history->user_name = Auth::user()->name;
+// //                             $history->change_to =   "Not Applicable";
+// //                             $history->change_from = $lastDocument->status;
+// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //                             $history->origin_state = $lastDocument->status;
+// //                             $history->stage = 'HOD Final Review';
+// //                             if(is_null($lastDocument->hod_Production_Table_By) || $lastDocument->hod_Production_Table_On == '')
+// //                     {
+// //                         $history->action_name = 'New';
+// //                     } else {
+// //                         $history->action_name = 'Update';
+// //                     }
+// //                             $history->save();
+// //                         }
+// //                         if($index == 13 && $hodcftUsers->$column == Auth::user()->name){
+// //                             $updateCFT->hod_ProductionLiquid_by = Auth::user()->name;
+// //                             $updateCFT->hod_ProductionLiquid_on = Carbon::now()->format('Y-m-d');
+// //                             $history = new ManagementAuditTrial();
+// //                             $history->ManagementReview_id = $id;
+// //                             $history->activity_type = 'HOD Production Liquid Completed By, HOD Production Liquid Completed On';
+// //                     if(is_null($lastDocument->hod_ProductionLiquid_by) || $lastDocument->hod_ProductionLiquid_on == ''){
+// //                         $history->previous = "";
+// //                     }else{
+// //                         $history->previous = $lastDocument->hod_ProductionLiquid_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_ProductionLiquid_on);
+// //                     }
+// //                     $history->action='HOD Final Review Complete';
+// //                     $history->current = $updateCFT->hod_ProductionLiquid_by. ',' . Helpers::getdateFormat($updateCFT->hod_ProductionLiquid_on);
+// //                             $history->comment = $request->comment;
+// //                             $history->user_id = Auth::user()->name;
+// //                             $history->user_name = Auth::user()->name;
+// //                             $history->change_to =   "Not Applicable";
+// //                             $history->change_from = $lastDocument->status;
+// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //                             $history->origin_state = $lastDocument->status;
+// //                             $history->stage = 'HOD Final Review';
+// //                             if(is_null($lastDocument->hod_ProductionLiquid_by) || $lastDocument->hod_ProductionLiquid_on == '')
+// //                     {
+// //                         $history->action_name = 'New';
+// //                     } else {
+// //                         $history->action_name = 'Update';
+// //                     }
+// //                             $history->save();
+// //                         }
+// //                         if($index == 14 && $hodcftUsers->$column == Auth::user()->name){
+// //                             $updateCFT->Production_Injection_By = Auth::user()->name;
+// //                             $updateCFT->Production_Injection_On = Carbon::now()->format('Y-m-d');
+// //                             $history = new ManagementAuditTrial();
+// //                             $history->ManagementReview_id = $id;
+// //                             $history->activity_type = 'HOD Production Injection Completed By, HOD Production Injection Completed On';
+// //                     if(is_null($lastDocument->Production_Injection_By) || $lastDocument->Production_Injection_On == ''){
+// //                         $history->previous = "";
+// //                     }else{
+// //                         $history->previous = $lastDocument->Production_Injection_By. ' ,' .Helpers::getdateFormat( $lastDocument->Production_Injection_On);
+// //                     }
+// //                     $history->action='HOD Final Review Complete';
+// //                     $history->current = $updateCFT->Production_Injection_By. ',' . Helpers::getdateFormat($updateCFT->Production_Injection_On);
+// //                             $history->comment = $request->comment;
+// //                             $history->user_id = Auth::user()->name;
+// //                             $history->user_name = Auth::user()->name;
+// //                             $history->change_to =   "Not Applicable";
+// //                             $history->change_from = $lastDocument->status;
+// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //                             $history->origin_state = $lastDocument->status;
+// //                             $history->stage = 'HOD Final Review';
+// //                             if(is_null($lastDocument->Production_Injection_By) || $lastDocument->Production_Injection_On == '')
+// //                     {
+// //                         $history->action_name = 'New';
+// //                     } else {
+// //                         $history->action_name = 'Update';
+// //                     }
+// //                             $history->save();
+// //                         }
+// //                         if($index == 15 && $hodcftUsers->$column == Auth::user()->name){
+// //                             $updateCFT->hod_Store_on = Auth::user()->name;
+// //                             $updateCFT->hod_Store_on = Carbon::now()->format('Y-m-d');
+// //                             $history = new ManagementAuditTrial();
+// //                             $history->ManagementReview_id = $id;
+// //                            $history->activity_type = 'HOD Stores Completed By,HOD Stores Completed On';
+// //                     if(is_null($lastDocument->hod_Store_on) || $lastDocument->hod_Store_on == ''){
+// //                         $history->previous = "";
+// //                     }else{
+// //                         $history->previous = $lastDocument->hod_Store_on. ' ,' .Helpers::getdateFormat( $lastDocument->hod_Store_on);
+// //                     }
+// //                     $history->action='HOD Final Review Complete';
+// //                     $history->current = $updateCFT->hod_Store_on. ',' .Helpers::getdateFormat( $updateCFT->hod_Store_on);
+// //                             $history->comment = $request->comment;
+// //                             $history->user_id = Auth::user()->name;
+// //                             $history->user_name = Auth::user()->name;
+// //                             $history->change_to =   "Not Applicable";
+// //                             $history->change_from = $lastDocument->status;
+// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //                             $history->origin_state = $lastDocument->status;
+// //                             $history->stage = 'HOD Final Review';
+// //                             if(is_null($lastDocument->hod_Store_on) || $lastDocument->hod_Store_on == '')
+// //                     {
+// //                         $history->action_name = 'New';
+// //                     } else {
+// //                         $history->action_name = 'Update';
+// //                     }
+// //                             $history->save();
+// //                         }
+// //                         if($index == 16 && $hodcftUsers->$column == Auth::user()->name){
+// //                             $updateCFT->hod_ResearchDevelopment_by = Auth::user()->name;
+// //                             $updateCFT->hod_ResearchDevelopment_on = Carbon::now()->format('Y-m-d');
+// //                             $history = new ManagementAuditTrial();
+// //                             $history->ManagementReview_id = $id;
+// //                             $history->activity_type = 'HOD Research & Development Completed By,HOD Research & Development Completed On';
+// //                     if(is_null($lastDocument->hod_ResearchDevelopment_by) || $lastDocument->hod_ResearchDevelopment_on == ''){
+// //                         $history->previous = "";
+// //                     }else{
+// //                         $history->previous = $lastDocument->hod_ResearchDevelopment_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_ResearchDevelopment_on);
+// //                     }
+// //                     $history->action='HOD Final Review Complete';
+// //                     $history->current = $updateCFT->hod_ResearchDevelopment_by. ',' . Helpers::getdateFormat($updateCFT->hod_ResearchDevelopment_on);
+// //                             $history->comment = $request->comment;
+// //                             $history->user_id = Auth::user()->name;
+// //                             $history->user_name = Auth::user()->name;
+// //                             $history->change_to =   "Not Applicable";
+// //                             $history->change_from = $lastDocument->status;
+// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //                             $history->origin_state = $lastDocument->status;
+// //                             $history->stage = 'HOD Final Review';
+// //                             if(is_null($lastDocument->hod_ResearchDevelopment_by) || $lastDocument->hod_ResearchDevelopment_on == '')
+// //                     {
+// //                         $history->action_name = 'New';
+// //                     } else {
+// //                         $history->action_name = 'Update';
+// //                     }
+// //                             $history->save();
+// //                         }
+// //                         if($index == 17 && $hodcftUsers->$column == Auth::user()->name){
+// //                             $updateCFT->hod_Microbiology_by = Auth::user()->name;
+// //                             $updateCFT->hod_Microbiology_on = Carbon::now()->format('Y-m-d');
+// //                             $history = new ManagementAuditTrial();
+// //                             $history->ManagementReview_id = $id;
+// //                             $history->activity_type = 'HOD Microbiology Completed By,HOD Microbiology Completed On';
+// //                     if(is_null($lastDocument->hod_Microbiology_by) || $lastDocument->hod_Microbiology_on == ''){
+// //                         $history->previous = "";
+// //                     }else{
+// //                         $history->previous = $lastDocument->hod_Microbiology_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_Microbiology_on);
+// //                     }
+// //                     $history->action='HOD Final Review Complete';
+// //                     $history->current = $updateCFT->hod_Microbiology_by. ',' . Helpers::getdateFormat($updateCFT->hod_Microbiology_on);
+// //                             $history->comment = $request->comment;
+// //                             $history->user_id = Auth::user()->name;
+// //                             $history->user_name = Auth::user()->name;
+// //                             $history->change_to =   "Not Applicable";
+// //                             $history->change_from = $lastDocument->status;
+// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //                             $history->origin_state = $lastDocument->status;
+// //                             $history->stage = 'HOD Final Review';
+// //                             if(is_null($lastDocument->hod_Microbiology_by) || $lastDocument->hod_Microbiology_on == '')
+// //                     {
+// //                         $history->action_name = 'New';
+// //                     } else {
+// //                         $history->action_name = 'Update';
+// //                     }
+// //                             $history->save();
+// //                         }
+// //                         if($index == 18 && $hodcftUsers->$column == Auth::user()->name){
+// //                             $updateCFT->hod_RegulatoryAffair_by = Auth::user()->name;
+// //                             $updateCFT->hod_RegulatoryAffair_on = Carbon::now()->format('Y-m-d');
+// //                             $history = new ManagementAuditTrial();
+// //                             $history->ManagementReview_id = $id;
+// //                             $history->activity_type = 'HOD Regulatory Affair Completed By,HOD Regulatory Affair Completed On';
+// //                     if(is_null($lastDocument->hod_RegulatoryAffair_by) || $lastDocument->hod_RegulatoryAffair_on == ''){
+// //                         $history->previous = "";
+// //                     }else{
+// //                         $history->previous = $lastDocument->hod_RegulatoryAffair_by. ' ,' .Helpers::getdateFormat( $lastDocument->hod_RegulatoryAffair_on);
+// //                     }
+// //                    $history->action='HOD Final Review Complete';
+// //                     $history->current = $updateCFT->hod_RegulatoryAffair_by. ',' . Helpers::getdateFormat($updateCFT->hod_RegulatoryAffair_on);
+// //                             $history->comment = $request->comment;
+// //                             $history->user_id = Auth::user()->name;
+// //                             $history->user_name = Auth::user()->name;
+// //                             $history->change_to =   "Not Applicable";
+// //                             $history->change_from = $lastDocument->status;
+// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //                             $history->origin_state = $lastDocument->status;
+// //                             $history->stage = 'HOD Final Review';
+// //                             if(is_null($lastDocument->hod_RegulatoryAffair_by) || $lastDocument->hod_RegulatoryAffair_on == '')
+// //                     {
+// //                         $history->action_name = 'New';
+// //                     } else {
+// //                         $history->action_name = 'Update';
+// //                     }
+// //                             $history->save();
+// //                         }
+
+// //                         if($index == 19 && $hodcftUsers->$column == Auth::user()->name){
+// //                             $updateCFT->hod_CorporateQualityAssurance_by = Auth::user()->name;
+// //                             $updateCFT->hod_CorporateQualityAssurance_on = Carbon::now()->format('Y-m-d');
+// //                             $history = new ManagementAuditTrial();
+// //                             $history->ManagementReview_id = $id;
+// //                             $history->activity_type = 'HOD Corporate Quality Assurance Completed By,HOD Corporate Quality Assurance Completed On';
+// //                     if(is_null($lastDocument->hod_CorporateQualityAssurance_by) || $lastDocument->hod_CorporateQualityAssurance_on == ''){
+// //                         $history->previous = "";
+// //                     }else{
+// //                         $history->previous = $lastDocument->hod_CorporateQualityAssurance_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_CorporateQualityAssurance_on);
+// //                     }
+// //                     $history->action='HOD Final Review Complete';
+// //                     $history->current = $updateCFT->hod_CorporateQualityAssurance_by. ',' . Helpers::getdateFormat($updateCFT->hod_CorporateQualityAssurance_on);
+// //                             $history->comment = $request->comment;
+// //                             $history->user_id = Auth::user()->name;
+// //                             $history->user_name = Auth::user()->name;
+// //                             $history->change_to =   "Not Applicable";
+// //                             $history->change_from = $lastDocument->status;
+// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //                             $history->origin_state = $lastDocument->status;
+// //                             $history->stage = 'HOD Final Review';
+// //                             if(is_null($lastDocument->hod_CorporateQualityAssurance_by) || $lastDocument->hod_CorporateQualityAssurance_on == '')
+// //                     {
+// //                         $history->action_name = 'New';
+// //                     } else {
+// //                         $history->action_name = 'Update';
+// //                     }
+// //                             $history->save();
+// //                         }
+// //                         if($index == 20 && $hodcftUsers->$column == Auth::user()->name){
+// //                             $updateCFT->hod_ContractGiver_by = Auth::user()->name;
+// //                             $updateCFT->hod_ContractGiver_on = Carbon::now()->format('Y-m-d');
+// //                             $history = new ManagementAuditTrial();
+// //                             $history->ManagementReview_id = $id;
+// //                             $history->activity_type = 'HOD Contract Giver Completed By,HOD Contract Giver Completed On';
+// //                     if(is_null($lastDocument->hod_ContractGiver_by) || $lastDocument->hod_ContractGiver_on == ''){
+// //                         $history->previous = "";
+// //                     }else{
+// //                         $history->previous = $lastDocument->hod_ContractGiver_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_ContractGiver_on);
+// //                     }
+// //                     $history->action='HOD Final Review Complete';
+// //                     $history->current = $updateCFT->hod_ContractGiver_by. ',' . Helpers::getdateFormat($updateCFT->hod_ContractGiver_on);
+// //                             $history->comment = $request->comment;
+// //                             $history->user_id = Auth::user()->name;
+// //                             $history->user_name = Auth::user()->name;
+// //                             $history->change_to =   "Not Applicable";
+// //                             $history->change_from = $lastDocument->status;
+// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+// //                             $history->origin_state = $lastDocument->status;
+// //                             $history->stage = 'HOD Final Review';
+// //                             if(is_null($lastDocument->hod_ContractGiver_by) || $lastDocument->hod_ContractGiver_on == '')
+// //                     {
+// //                         $history->action_name = 'New';
+// //                     } else {
+// //                         $history->action_name = 'Update';
+// //                     }
+// //                             $history->save();
+// //                         }
+// //                         $updateCFT->update();
+
+// //                         // Check if the value is not null and not equal to 0
+// //                         if ($value != null && $value != 0) {
+// //                             $valuesArray[] = $value;
+// //                         }
+// //                     }
+//                     // dd($valuesArray, count(array_unique($valuesArray)), ($cftDetails+1));
+//                     if ($IsCFTRequired) {
+//                         if (count(array_unique($valuesArray)) == ($cftDetails + 1)) {
+//                             $stage = new hodmanagementCft_Response();
+//                             $stage->ManagementReview_id = $id;
+//                             $stage->cft_user_id = Auth::user()->id;
+//                             $stage->status = "Completed";
+//                             // $stage->cft_stage = ;
+//                             $stage->comment = $request->comment;
+//                             $stage->save();
+//                         } else {
+//                             $stage = new hodmanagementCft_Response();
+//                             $stage->ManagementReview_id = $id;
+//                             $stage->cft_user_id = Auth::user()->id;
+//                             $stage->status = "In-progress";
+//                             // $stage->cft_stage = ;
+//                             $stage->comment = $request->comment;
+//                             $stage->save();
+//                         }
+//                     }
+
+//                     $checkCFTCount = hodmanagementCft_Response::withoutTrashed()->where(['status' => 'Completed', 'ManagementReview_id' => $id])->count();
+
+//                     $Cft = hodmanagementCft::withoutTrashed()->where('ManagementReview_id', $id)->first();
+
+
+//                     if (!$IsCFTRequired || $checkCFTCount) {
+
+
+//                         $changeControl->stage = "6";
+//                         $changeControl->status = "QA Verification";
+//                         $changeControl->hodFinaleReviewComplete_by = Auth::user()->name;
+//                         $changeControl->hodFinaleReviewComplete_on = Carbon::now()->format('d-M-Y');
+//                         $changeControl->hodFinaleReviewComplete_comment = $request->comment;
+
+//                         $history = new ManagementAuditTrial();
+//                         $history->ManagementReview_id = $id;
+//                         $history->activity_type = 'CFT Review Completed By, CFT Review Completed On';
+//                     if(is_null(value: $lastDocument->hodFinaleReviewComplete_by) || $lastDocument->hodFinaleReviewComplete_on == ''){
+//                         $history->previous = "";
+//                     }else{
+//                         $history->previous = $lastDocument->hodFinaleReviewComplete_by. ' ,' . $lastDocument->hodFinaleReviewComplete_on;
+//                     }
+//                     $history->action='CFT Review Complete';
+//                     $history->current = $changeControl->hodFinaleReviewComplete_by. ',' . $changeControl->hodFinaleReviewComplete_on;
+//                         $history->comment = $request->comment;
+//                         $history->user_id = Auth::user()->id;
+//                         $history->user_name = Auth::user()->name;
+//                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+//                         $history->origin_state = $lastDocument->status;
+//                         $history->change_to =   "HOD Final Review";
+//                         $history->change_from = $lastDocument->status;
+//                         $history->stage = 'Complete';
+//                         if(is_null($lastDocument->hodFinaleReviewComplete_by) || $lastDocument->hodFinaleReviewComplete_on == '')
+//                     {
+//                         $history->action_name = 'New';
+//                     } else {
+//                         $history->action_name = 'Update';
+//                     }
+//                         $history->save();
+//                         // $list = Helpers::getQAUserList();
+//                         // foreach ($list as $u) {
+//                         //     if ($u->q_m_s_divisions_id == $changeControl->division_id) {
+//                         //         $email = Helpers::getInitiatorEmail($u->user_id);
+//                         //         if ($email !== null) {
+//                         //             try {
+//                         //                 Mail::send(
+//                         //                     'mail.view-mail',
+//                         //                     ['data' => $changeControl],
+//                         //                     function ($message) use ($email) {
+//                         //                         $message->to($email)
+//                         //                             ->subject("Activity Performed By " . Auth::user()->name);
+//                         //                     }
+//                         //                 );
+//                         //             } catch (\Exception $e) {
+//                         //                 //log error
+//                         //             }
+//                         //         }
+//                         //     }
+//                         // }
+//                         $changeControl->update();
+//                     }
+//                     toastr()->success('Document Sent');
+//                     return back();
+//                 }
+
+
+
 
             if ($changeControl->stage == 5) {
                 $changeControl->stage = "6";
@@ -5233,12 +9978,12 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $changeControl->hodFinaleReviewComplete_by = Auth::user()->name;
                 $changeControl->hodFinaleReviewComplete_on = Carbon::now()->format('d-M-Y');
                 $changeControl->hodFinaleReviewComplete_comment  = $request->comment;
-            
+
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
-                $history->activity_type = 'HOD Final Review Complete By, HOD Final Review Complete On';
-                $history->action = 'HOD Final Review Complete';
-            
+                $history->activity_type = 'CFT HOD Review Complete By, CFT HOD Review Complete On';
+                $history->action = 'CFT HOD Review Complete';
+
                 // Check and assign previous values correctly
                 if (is_null($lastDocument->hodFinaleReviewComplete_by) || $lastDocument->hodFinaleReviewComplete_by === '') {
                     $history->previous = "Null";
@@ -5246,10 +9991,10 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     // Assign previous user and date correctly
                     $history->previous = $lastDocument->hodFinaleReviewComplete_by . '  ' . $lastDocument->hodFinaleReviewComplete_on;
                 }
-            
+
                 // Assign current user and date correctly
                 $history->current = $changeControl->hodFinaleReviewComplete_by . '  ' . $changeControl->hodFinaleReviewComplete_on;
-                
+
                 // Other fields in history
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -5259,23 +10004,23 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $history->stage = 'HOD Final Review Complete';
                 $history->change_to = "QA Verification";
                 $history->change_from = $lastDocument->status;
-            
+
                 // Check action name
                 if (is_null($lastDocument->hodFinaleReviewComplete_by) || $lastDocument->hodFinaleReviewComplete_by === '') {
                     $history->action_name = 'New';
                 } else {
                     $history->action_name = 'Update';
                 }
-            
+
                 // Save history and update the change control
                 $history->save();
                 $changeControl->update();
-            
+
                 // Success message
                 toastr()->success('Document Sent');
                 return back();
             }
-            
+
 
             if ($changeControl->stage == 6) {
                 $changeControl->stage = "7";
@@ -5309,7 +10054,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 }
                  $history->save();
                  $changeControl->update();
-                 
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -5346,7 +10091,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 }
                  $history->save();
                  $changeControl->update();
-                 
+
                 // $list = Helpers::getInitiatorUserList();
                 // foreach ($list as $u) {
                 //     if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -5361,7 +10106,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 //             }
                 //         );
                 //       }
-                //     } 
+                //     }
                 // }
                 toastr()->success('Document Sent');
                 return back();
@@ -5383,8 +10128,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             $lastDocument =  ManagementReview::find($id);
             $data =  ManagementReview::find($id);
 
-            
-            
+
+
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "1";
                 $changeControl->status = 'Opened';
@@ -5419,7 +10164,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 // }
                  $history->save();
                  $changeControl->update();
-                 
+
                 // $list = Helpers::getInitiatorUserList();
                 // foreach ($list as $u) {
                 //     if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -5434,16 +10179,16 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 //             }
                 //         );
                 //       }
-                //     } 
+                //     }
                 // }
                 toastr()->success('Document Sent');
                 return back();
             }
-            
 
-            
 
-            if ($changeControl->stage == 6) {
+
+
+            if ($changeControl->stage == 5) {
                 $changeControl->stage = "3";
                 $changeControl->status = 'Meeting And Summary ';
                 $changeControl->requireactivitydepartment_by = "Not Applicable";
@@ -5477,7 +10222,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 // }
                  $history->save();
                  $changeControl->update();
-                 
+
                 // $list = Helpers::getInitiatorUserList();
                 // foreach ($list as $u) {
                 //     if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -5492,7 +10237,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 //             }
                 //         );
                 //       }
-                //     } 
+                //     }
                 // }
                 toastr()->success('Document Sent');
                 return back();
@@ -5533,7 +10278,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 // }
                  $history->save();
                  $changeControl->update();
-                 
+
                 // $list = Helpers::getInitiatorUserList();
                 // foreach ($list as $u) {
                 //     if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -5548,7 +10293,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 //             }
                 //         );
                 //       }
-                //     } 
+                //     }
                 // }
                 toastr()->success('Document Sent');
                 return back();
@@ -5588,7 +10333,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 // }
                  $history->save();
                  $changeControl->update();
-                 
+
                 // $list = Helpers::getInitiatorUserList();
                 // foreach ($list as $u) {
                 //     if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -5603,15 +10348,15 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 //             }
                 //         );
                 //       }
-                //     } 
+                //     }
                 // }
                 toastr()->success('Document Sent');
                 return back();
             }
 
-            
 
-            
+
+
 
 
         } else {
@@ -5641,8 +10386,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             $history->origin_state = $lastDocument->status;
             $history->stage = 'Send to HOD';
 
-            
-           
+
+
             $history->save();
             $changeControl->update();
             $history = new managementHistory();
@@ -5662,12 +10407,14 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
         }
     }
 
- 
+
 
     public function managementReport($id)
     {
-        $management = ManagementReview::find($id); 
-        $data1 =  ManagementReviewDocDetails::where('review_id',$id)->where('type',"agenda")->first();
+        $management = ManagementReview::find($id);
+        $data1 =  managementCft::where('ManagementReview_id', $id)->first();
+        $data5 =  hodmanagementCft::where('ManagementReview_id', $id)->first();
+        // $data1 =  ManagementReviewDocDetails::where('review_id',$id)->where('type',"agenda")->first();
         $data1->review_id = $management->id;
         $data1->type = "agenda";
         $agenda=$data1;
@@ -5683,10 +10430,10 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
         $data4->review_id = $management->id;
         $data4->type = "action_item_details";
         $action_item_details=$data4;
-         $data5 =  ManagementReviewDocDetails::where('review_id',$id)->where('type',"capa_detail_details")->first();
-        $data5->review_id = $management->id;
-        $data5->type = "capa_detail_details";
-        $capa_detail_details=$data5;
+        //  $data5 =  ManagementReviewDocDetails::where('review_id',$id)->where('type',"capa_detail_details")->first();
+        // $data5->review_id = $management->id;
+        // $data5->type = "capa_detail_details";
+        // $capa_detail_details=$data5;
         $users = User::all();
         //   $data5 =  ManagementReviewDocDetails::where('review_id',$id)->where('type',"capa_detail")->first();
         // $data5->review_id = $management->id;
@@ -5703,14 +10450,14 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
         $managementReview->changeControl = CC::all();
         $managementReview->actionItem = ActionItem::all();
         $managementReview->effectiveNess = EffectivenessCheck::all();
-        $pdf = PDF::loadview('frontend.management-review.report', compact('managementReview', 'agenda','management_review_participants','capa_detail_details', 'performance_evaluation','action_item_details', 'data1','data2','data3','data4','users','data5'))
+        $pdf = PDF::loadview('frontend.management-review.report', compact('managementReview', 'agenda','management_review_participants', 'performance_evaluation','action_item_details', 'data1','data2','data3','data4','users','data5'))
         ->setOptions([
             'defaultFont' => 'sans-serif',
             'isHtml5ParserEnabled' => true,
             'isRemoteEnabled' => true,
             'isPhpEnabled' => true,
         ]);
-        
+
         $pdf->setPaper('A4');
         $pdf->render();
         $canvas = $pdf->getDomPDF()->getCanvas();
@@ -5722,7 +10469,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
 
     }
-     
+
 
     public function child_management_Review(Request $request, $id)
     {
@@ -5798,13 +10545,13 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             case 'stage':
                 // Filter by activity log stage changes
                 $stage=['Submit','Completed','More Information Required','QA Head Review Complete','Meeting and Summary Complete',
-                'All AI Completed by Respective Department','HOD Final Review Complete','QA Verification Complete',''];
+                'CFT Action Complete','HOD Final Review Complete','QA Verification Complete',''];
                 $query->whereIn('action', $stage); // Ensure correct activity_type value
                 break;
 
             case 'user_action':
                 // Filter by various user actions
-                $user_action = [  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
+                $user_action = [  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation','CFT Action Complete','CFT HOD Review Complete',
                     'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
                     'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
                     'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
@@ -5851,5 +10598,5 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
     return response()->json(['html' => $responseHtml]);
 }
 
-    
+
 }

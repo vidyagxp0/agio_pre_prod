@@ -350,11 +350,166 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                             <input type="hidden" name="parent_type" value="{{ $parent_type }}">
                             @endif
 
+            <div class="sub-head">
+                Trainer Information
+            </div>
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="trainer">Trainer Name</label>
+                    <input id="trainer_name" type="text" name="trainer_name" maxlength="255">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="select-state">Name of Employee</label>
+                                    <select id="select-state" placeholder="Select..." name="employee_name" required {{ isset($employee) ? 'disabled' : '' }}>
+                                        <option value="">Select an employee</option>
+                                        @foreach ($employees as $emp)
+                                            <option value="{{ $emp->id }}" data-name="{{ $emp->employee_name }}" {{ isset($employee) && $employee->id == $emp->id ? 'selected' : '' }}>
+                                                {{ $emp->employee_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="employee_id">Employee ID </label>
+                                    <input type="text" name="employee_id" value ="{{ isset($employee) ? $employee->full_employee_id : '' }}" id="employee_id" required readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="department_location">Department</label>
+                                    <input type="text" name="department" value ="{{ isset($employee) ? Helpers::getFullDepartmentName($employee->department) ?? 'NA' : '' }}" id="department" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="designation">Designation </label>
+                                    <input type="text" name="designation" value ="{{ isset($employee) ? $employee->job_title : '' }}"  id="designee" required readonly>
+                                </div>
+                            </div>
+                            <input type="hidden" name="employee_name" id="employee_name">
+
+                            <div class="col-lg-6">
+                                <div class="group-input" id="repeat_nature">
+                                    <label for="repeat_nature">Experience (if any)</label>
+                                    <input type="number" name="experience_if_any" value =""  id="experience" required >
+                                </div>
+                            </div>
+
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="HOD Persons">HOD </label>
+                    <input id="" type="text" name="hod">
+                    <!-- <select name="hod" placeholder="Select HOD" data-search="false" data-silent-initial-value-set="true" id="hod">
+                        <option value="">-- Select Hod --</option>
+                        @foreach ($users as $value)
+                        <option value="{{ $value->id }}">{{ $value->name }}</option>
+                        @endforeach
+                    </select> -->
+                </div>
+            </div>
+
+            <!-- <div class="col-6">
+                <div class="group-input">
+                    <label for="qualification">Qualification</label>
+                    <input id="qualification" type="text" name="qualification" maxlength="255" >
+                </div>
+            </div> -->
+            <div class="col-6">
+                                <div class="group-input">
+                                    <label for="Short Description">Qualification </label>
+                                    <input id="qualification" type="text" value ="{{ isset($employee) ? $employee->qualification : '' }}"  name="qualification" readonly>
+                                </div>
+                            </div>
+            <script>
+                                document.getElementById('select-state').addEventListener('change', function() {
+                                    var selectedOption = this.options[this.selectedIndex];
+                                    var employeeId = selectedOption.value;
+                                    var employeeName = selectedOption.getAttribute('data-name');
+
+                                    if (employeeId) {
+                                        fetch(`/employees/${employeeId}`)
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                document.getElementById('employee_id').value = data.full_employee_id;
+                                                document.getElementById('department').value = data.department;
+                                                document.getElementById('designee').value = data.job_title;
+                                                // document.getElementById('experience').value = data.experience;
+                                                document.getElementById('qualification').value = data.qualification;
+                                            });
+                                        document.getElementById('employee_name').value = employeeName;
+                                    } else {
+                                        document.getElementById('employee_id').value = '';
+                                        document.getElementById('department').value = '';
+                                        document.getElementById('designee').value = '';
+                                        // document.getElementById('experience').value = '';
+                                        document.getElementById('qualification').value = '';
+                                        document.getElementById('employee_name').value = '';
+                          
+                                    }
+                                });
+
+                                function formatDate(dateString) {
+                                    const date = new Date(dateString);
+                                    const options = {
+                                        year: 'numeric',
+                                        month: 'short',
+                                        day: '2-digit'
+                                    };
+                                    return date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                }
+                            </script>
+
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="training_date">Training Date</label>
+                                    <input type="date" id="training_date" name="training_date" >
+                                </div>
+                            </div>
+
+                            <!-- Topic of Training -->
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="topic">Topic of Training</label>
+                                    <input type="text" id="" name="topic" >
+                                </div>
+                            </div>
+
+                            <!-- Type of Training -->
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="type">Type of Training</label>
+                                    <select name="type" id="type" >
+                                        <option value="technical">Technical</option>
+                                        <option value="non-technical">Non-Technical</option>
+                                        <option value="safety">Safety</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Evaluation Required -->
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="evaluation">Evaluation Required</label>
+                                    <select name="evaluation">
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="site_name">Site Division/Project<span class="text-danger">*</span></label>
-                                    <!-- <input type="text" id="site_code" name="site_code" required> -->
                                     <select name="site_code">
                                        <option value="">-- Select --</option>
                                        <option value="Corporate">Corporate</option>
@@ -422,18 +577,16 @@ $departments = DB::table('departments')->select('id', 'name')->get();
             </div>
 
 
-            <div class="col-lg-6 new-date-data-field">
+            {{-- <div class="col-lg-6 new-date-data-field">
                 <div class="group-input input-date">
                     <label for="Date Due">Due Date <span class="text-danger">*</span></label>
                     <div class="calenderauditee">
-                        <!-- <input type="text" name="due_date" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                <input required type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')" /> -->
 
                         <input type="hidden" value="{{$due_date}}" name="due_date">
                         <input disabled type="text" value="{{Helpers::getdateFormat($due_date)}}">
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
 
             <div class="col-12">
@@ -444,138 +597,9 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                 </div>
             </div>
 
-            <div class="sub-head">
-                Trainer Information
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="trainer">Trainer Name</label>
-                    <input id="trainer_name" type="text" name="trainer_name" maxlength="255">
-                </div>
-            </div>
-
-            <div class="col-6">
-                <div class="group-input">
-                    <label for="qualification">Qualification<span class="text-danger">*</span></label>
-                    <input id="qualification" type="text" name="qualification" maxlength="255" required>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Designation">Designation<span class="text-danger">*</span></label>
-                    <select name="designation" id="designation" required>
-                        <option value="">Select</option>
-                        <option value="lead_trainer">Lead Trainer</option>
-                        <option value="senior_trainer">Senior Trainer</option>
-                        <option value="Instructor">Instructor</option>
-                        <option value="Evaluator">Evaluator</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Department">Department</label>
-                    <select name="department">
-                        <option value="">-- Select --</option>
-                        {{-- @foreach ($departments as $department)
-                        <option value="{{ $department->id }}">{{ $department->name }}</option>
-                        @endforeach --}}
-
-                        @foreach (Helpers::getDepartments() as $code => $department)
-                        <option value="{{ $code }}">{{ $department }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Experience">Experience (No. of Years)<span class="text-danger">*</span></label>
-                    <select name="experience" id="Experience" required>
-                        <option value="">Select </option>
-                        @for ($i = 1; $i <= 70; $i++) <option value="{{ $i }}">{{ $i }}</option>
-                            @endfor
-                    </select>
-                </div>
-            </div>
-
-            {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="priority-level">Priority Level</label>
-                                        <span class="text-primary">Priority levels in TMS can be tailored to suit the specific needs of the institution in managing the training program.</span>
-                                        <select name="priority_level">
-                                            <option value="0">-- Select --</option>
-                                            <option value="low">Low Priority</option>
-                                            <option value="medium">Medium Priority</option>
-                                            <option value="high">High Priority</option>
-                                        </select>
-                                    </div>
-            </div> --}}
 
 
-            {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group">Initiated Through</label>
-                                        <div><small class="text-primary">Please select related information</small></div>
-                                        <select name="initiated_through"
-                                            onchange="otherController(this.value, 'others', 'initiated_through_req')">
-                                            <option value="">-- select --</option>
-                                            <option value="recall">Recall</option>
-                                            <option value="return">Return</option>
-                                            <option value="deviation">Deviation</option>
-                                            <option value="complaint">Complaint</option>
-                                            <option value="regulatory">Regulatory</option>
-                                            <option value="lab-incident">Lab Incident</option>
-                                            <option value="improvement">Improvement</option>
-                                            <option value="others">Others</option>
-                                        </select>
-                                    </div>
-                                </div> --}}
-            {{-- <div class="col-lg-6">
-                                    <div class="group-input" id="initiated_through_req">
-                                        <label for="If Other">Others<span class="text-danger d-none">*</span></label>
-                                        <textarea name="initiated_if_other"></textarea>
-                                    </div>
-                                </div> --}}
-
-
-            <!-- <div class="col-lg-6">
-
-                                    <div class="group-input">
-                                        <label for="external_agencies">External Agencies</label>
-                                        <select name="external_agencies"
-                                            onchange="otherController(this.value, 'others', 'external_agencies_req')">
-                                            <option value="">-- Select --</option>
-                                            <option value="jordan_fda">Jordan FDA</option>
-                                            <option value="us_fda">USFDA</option>
-                                            <option value="mhra">MHRA</option>
-                                            <option value="anvisa">ANVISA</option>
-                                            <option value="iso">ISO</option>
-                                            <option value="who">WHO</option>
-                                            <option value="local_fda">Local FDA</option>
-                                            <option value="tga">TGA</option>
-                                            <option value="others">Others</option>
-                                        </select>
-                                    </div>
-                                </div> -->
-
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="HOD Persons">HOD </label>
-
-                    <select name="hod" placeholder="Select HOD" data-search="false" data-silent-initial-value-set="true" id="hod">
-                        <option value="">-- Select Hod --</option>
-                        @foreach ($users as $value)
-                        <option value="{{ $value->id }}">{{ $value->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-
-            <div class="">
+            {{-- <div class="">
                 <div class="group-input">
                     <label for="audit-agenda-grid">
                         Trainer Skill Set<button type="button" name="audit-agenda-grid" id="Trainer_Skill_table">+</button>
@@ -623,7 +647,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div> --}}
 
 
             <div class="sub-head">Evaluation Criteria</div>

@@ -472,6 +472,134 @@ class AuditProgramController extends Controller
             $history->action_name="Create";
             $history->save();
         }
+        
+        if (!empty($data->assign_to_department)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Assigned To Department';
+            $history->previous = "Null";
+            $history->current = $data->assign_to_department;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+        
+        if (!empty($data->year)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Yearly Planner';
+            $history->previous = "Null";
+            $history->current = $data->year;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+        
+        if (!empty($data->yearly_other)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Yearly Planner(Others)';
+            $history->previous = "Null";
+            $history->current = $data->yearly_other;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+        
+        if (!empty($data->comment)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Comments';
+            $history->previous = "Null";
+            $history->current = $data->comment;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+        
+        if (!empty($data->hod_attached_File)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'HOD/Designee Review Attached Files';
+            $history->previous = "Null";
+            $history->current = $data->hod_attached_File;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+        if (!empty($data->hod_comment)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'HOD/Designee Review Comments';
+            $history->previous = "Null";
+            $history->current = $data->hod_comment;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+        
+        if (!empty($data->cqa_qa_comment)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'CQA/QA Approval Comments';
+            $history->previous = "Null";
+            $history->current = $data->cqa_qa_comment;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+        
+        if (!empty($data->cqa_qa_Attached_File)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'CQA/QA Attached Files';
+            $history->previous = "Null";
+            $history->current = $data->cqa_qa_Attached_File;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+        
           if (!empty($data->due_date_extension)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
@@ -915,11 +1043,11 @@ class AuditProgramController extends Controller
         }
         if($lastDocument->hod_comment !=$data->hod_comment || !empty($request->comments_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
-                            ->where('activity_type', 'HOD Comments')
+                            ->where('activity_type', 'HOD/Designee Review Comments')
                             ->exists();
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'HOD Comments';
+            $history->activity_type = 'HOD/Designee Review Comments';
             $history->previous =  $lastDocument->hod_comment;
             $history->current = $data->hod_comment;
             $history->comment = $request->comments_comment;
@@ -932,13 +1060,92 @@ class AuditProgramController extends Controller
             $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
             $history->save();
         }
-        if($lastDocument->hod_attached_File !=$data->hod_attached_File || !empty($request->comments_comment)) {
+        if($lastDocument->year !=$data->year || !empty($request->comments_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
-                            ->where('activity_type', 'HOD Attached Files')
+                            ->where('activity_type', 'Yearly Planner')
                             ->exists();
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'HOD Attached Files';
+            $history->activity_type = 'Yearly Planner';
+            $history->previous =  $lastDocument->year;
+            $history->current = $data->year;
+            $history->comment = $request->comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastDocument->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastDocument->status;
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->save();
+        }
+        if($lastDocument->through_req !=$data->through_req || !empty($request->comments_comment)) {
+            $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
+                            ->where('activity_type', 'Type(Others)')
+                            ->exists();
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Type(Others)';
+            $history->previous =  $lastDocument->through_req;
+            $history->current = $data->through_req;
+            $history->comment = $request->comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastDocument->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastDocument->status;
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->save();
+        }        
+        
+        if($lastDocument->yearly_other !=$data->yearly_other || !empty($request->comments_comment)) {
+            $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
+                            ->where('activity_type', 'Yearly Planner(Others)')
+                            ->exists();
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Yearly Planner(Others)';
+            $history->previous =  $lastDocument->yearly_other;
+            $history->current = $data->yearly_other;
+            $history->comment = $request->comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastDocument->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastDocument->status;
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->save();
+        }
+                
+        if($lastDocument->Attached_File !=$data->Attached_File || !empty($request->comments_comment)) {
+            $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
+                            ->where('activity_type', 'Attached Files')
+                            ->exists();
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Attached Files';
+            $history->previous =  $lastDocument->Attached_File;
+            $history->current = $data->Attached_File;
+            $history->comment = $request->comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastDocument->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastDocument->status;
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->save();
+        }
+                
+        if($lastDocument->hod_attached_File !=$data->hod_attached_File || !empty($request->comments_comment)) {
+            $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
+                            ->where('activity_type', 'HOD/Designee Review Attached Files')
+                            ->exists();
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'HOD/Designee Review Attached Files';
             $history->previous =  $lastDocument->hod_attached_File;
             $history->current = $data->hod_attached_File;
             $history->comment = $request->comments_comment;
@@ -953,11 +1160,11 @@ class AuditProgramController extends Controller
         }
         if($lastDocument->cqa_qa_comment !=$data->cqa_qa_comment || !empty($request->comments_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
-                            ->where('activity_type', 'CQA/QA Comments')
+                            ->where('activity_type', 'CQA/QA Approval Comments')
                             ->exists();
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'CQA/QA Comments';
+            $history->activity_type = 'CQA/QA Approval Comments';
             $history->previous =  $lastDocument->cqa_qa_comment;
             $history->current = $data->cqa_qa_comment;
             $history->comment = $request->comments_comment;
@@ -1218,25 +1425,25 @@ class AuditProgramController extends Controller
             $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
             $history->save();
         }
-          if($lastDocument->Attached_File !=$data->Attached_File || !empty($request->Attached_File_comment)) {
-            $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
-                            ->where('activity_type', 'File Attachment')
-                            ->exists();
-            $history = new AuditProgramAuditTrial();
-            $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'File Attachment';
-            $history->previous =  $lastDocument->Attached_File;
-            $history->current = $data->Attached_File;
-            $history->comment = $request->Attached_File_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
-            $history->save();
-        }
+        //   if($lastDocument->Attached_File !=$data->Attached_File || !empty($request->Attached_File_comment)) {
+        //     $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
+        //                     ->where('activity_type', 'File Attachment')
+        //                     ->exists();
+        //     $history = new AuditProgramAuditTrial();
+        //     $history->AuditProgram_id = $data->id;
+        //     $history->activity_type = 'File Attachment';
+        //     $history->previous =  $lastDocument->Attached_File;
+        //     $history->current = $data->Attached_File;
+        //     $history->comment = $request->Attached_File_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state= $lastDocument->status;
+        //     $history->change_to= "Not Applicable";
+        //     $history->change_from= $lastDocument->status;
+        //     $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+        //     $history->save();
+        // }
          if($lastDocument->comment !=$data->comment || !empty($request->comment_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
                             ->where('activity_type', 'Comments')
@@ -1339,7 +1546,7 @@ class AuditProgramController extends Controller
 
 
 
-        toastr()->success('Record is created Successfully');
+        toastr()->success('Record is Updated Successfully');
         return back();
     }
 

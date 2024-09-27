@@ -494,7 +494,7 @@
 
 
 
-            <div class="block-head">
+            {{-- <div class="block-head">
                 Extension Justification
             </div>
             <table>
@@ -508,7 +508,7 @@
                         @endif
                     </td>
                 </tr>
-            </table>
+            </table> --}}
 
             <div class="block-head">
                 Action Approval Attachment

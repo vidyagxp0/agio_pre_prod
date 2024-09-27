@@ -38,7 +38,7 @@
             border-radius: 20px 0px 0px 20px;
         }
 
-        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(4) {
+        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(10) {
             border-radius: 0px 20px 20px 0px;
 
         }
@@ -96,15 +96,38 @@
 
                         @if ($jobTraining->stage == 1)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Send to JD
+                              Submit
                             </button>
                         @elseif($jobTraining->stage == 2)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Send to Certification
+                              Accept Complete
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                              Reject
                             </button>
                         @elseif($jobTraining->stage == 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Complete
+                            Review Complete
+                            </button>
+                        @elseif($jobTraining->stage == 4)
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Approval Complete
+                            </button>
+                        @elseif($jobTraining->stage == 5)
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Answer Submit
+                            </button>
+                        @elseif($jobTraining->stage == 6)
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Evaluation Complete
+                            </button>
+                        @elseif($jobTraining->stage == 7)
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            QA/CQA Head Review Complete
+                            </button>
+                        @elseif($jobTraining->stage == 8)
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Verification and Approval Complete
                             </button>
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('TMS') }}"> Exit
@@ -128,16 +151,49 @@
                             @endif
 
                             @if ($jobTraining->stage >= 2)
-                                <div class="active">Send To JD</div>
+                                <div class="active">In Accept</div>
                             @else
-                                <div class="">Send To JD</div>
+                                <div class="">In Accept</div>
                             @endif
 
                             @if ($jobTraining->stage >= 3)
-                                <div class="active">Certification</div>
+                                <div class="active">QA Review</div>
+                            @else
+                                <div class="">QA Review</div>
                             @endif
 
+                            {{-- @if ($jobTraining->stage >= 4)
+                                <div class="active">QA/CQA Head Approval</div>
+                            @else
+                                <div class="">QA/CQA Head Approval</div>
+                            @endif --}}
                             @if ($jobTraining->stage >= 4)
+                                <div class="active">QA/CQA Head Approval</div>
+                            @else
+                                <div class="">QA/CQA Approval</div>
+                            @endif
+                            @if ($jobTraining->stage >= 5)
+                                <div class="active">Employee Answers</div>
+                            @else
+                                <div class="">Employee Answers</div>
+                            @endif
+                            @if ($jobTraining->stage >= 6)
+                                <div class="active">Evaluation</div>
+                            @else
+                                <div class="">Evaluation</div>
+                            @endif
+                            @if ($jobTraining->stage >= 7)
+                                <div class="active">QA/CQA Head Final Review</div>
+                            @else
+                                <div class="">QA/CQA Head Final Review</div>
+                            @endif
+
+                            @if ($jobTraining->stage >= 8)
+                                <div class="active">Verification and Approval</div>
+                            @else
+                                <div class="">Verification and Approval</div>
+                            @endif
+                            @if ($jobTraining->stage >= 9)
                                 <div class="bg-danger">Closed - Done</div>
                             @else
                                 <div class="">Closed - Done</div>
@@ -147,7 +203,6 @@
                 </div>
 
                 {{-- @endif --}}
-                {{-- ---------------------------------------------------------------------------------------- --}}
             </div>
         </div>
 
@@ -155,17 +210,26 @@
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
             <button class="cctablinks " onclick="openCity(event, 'CCForm2')">Job Description</button>
-            @if ($jobTraining->stage == 3)
-            <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Certificate</button>
-            @endif
-            <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm3')">Certificate</button> -->
+            
 
+            <button class="cctablinks " onclick="openCity(event, 'CCForm3')">QA Review</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm4')">QA/CQA Approval</button>
+
+            <button class="cctablinks " onclick="openCity(event, 'CCForm5')">Questionaries</button>
+
+            <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Evaluation</button>
+
+            @if ($jobTraining->stage >= 7)
+            <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Certificate</button>
+            @endif
+            <button class="cctablinks " onclick="openCity(event, 'CCForm8')">QA/CQA Head Final Review</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm9')">Final Approval</button>
 
         </div>
 
         <script>
             $(document).ready(function() {
-                <?php if (in_array($jobTraining->stage, [4])) : ?>
+                <?php if (in_array($jobTraining->stage, [9])) : ?>
                 $("#target :input").prop("disabled", true);
                 <?php endif; ?>
             });
@@ -188,7 +252,7 @@
                
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="RLS Record Number">Name </label>
+                                        <label for="RLS Record Number">Emp Name </label>
                                         <input type="text" name="name" id="name_employee"
                                             value="{{ $jobTraining->name }}" readonly>
                                     </div>
@@ -203,11 +267,11 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type_of_training">SOP Document</label>
 
-                                        <select name="sopdocument">
+                                        <select name="sopdocument" id="sopdocument" onchange="fetchQuestions(this.value)">
                                             <option value="">---Select SOP Document---</option>
 
                                             @foreach ($data as $dat)
@@ -218,9 +282,27 @@
                                                 </option>
                                             @endforeach
 
+                                        </select> 
+                                    </div>
+                                </div> --}}
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="type_of_training">SOP Document</label>
+
+                                        <select name="sopdocument" id="sopdocument" onchange="fetchQuestions(this.value)">
+                                            <option value="">---Select SOP Document---</option>
+
+                                            @foreach ($data as $dat)
+                                                <option
+                                                    value="{{ $dat->id }}"
+                                                    {{ $savedSop == $dat->id ? 'selected' : '' }}>
+                                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
+                                
 
 
                                 <div class="col-lg-6">
@@ -282,7 +364,7 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="HOD Persons">HOD</label>
                                         <select name="hod" id="hod">
@@ -295,8 +377,9 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div> --}}
-                                <div class="col-lg-6">
+                                </div>
+
+                                {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="hod">Revision Purpose</label>
                                     <select name="revision_purpose" id="" >
@@ -310,7 +393,49 @@
 
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
+
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="revision_purpose">Revision Purpose</label>
+        <select name="revision_purpose" id="revision_purpose" onchange="toggleRemarkInput()">
+            <option value="">----Select---</option>
+            <option value="New" {{ isset($jobTraining) && $jobTraining->revision_purpose == 'New' ? 'selected' : '' }}>New</option>
+            <option value="Old" {{ isset($jobTraining) && $jobTraining->revision_purpose == 'Old' ? 'selected' : '' }}>Old</option>
+        </select>
+    </div>
+</div>
+
+<!-- Remark Input Field -->
+<div class="col-lg-6" id="remark_container" style="display: {{ isset($jobTraining) && $jobTraining->revision_purpose == 'Old' ? 'block' : 'none' }};">
+    <div class="group-input">
+        <label for="remark">Remark</label>
+        <textarea name="remark" id="remark" rows="4" placeholder="Enter your remark here...">{{ isset($jobTraining) ? $jobTraining->remark : '' }}</textarea>
+    </div>
+</div>
+<script>
+    // Function to toggle the remark input based on selection
+    function toggleRemarkInput() {
+        const revisionPurposeSelect = document.getElementById('revision_purpose');
+        const remarkContainer = document.getElementById('remark_container');
+
+        // Show the remark input if "Old" is selected, otherwise hide it
+        if (revisionPurposeSelect.value === 'Old') {
+            remarkContainer.style.display = 'block';
+        } else {
+            remarkContainer.style.display = 'none';
+            // Clear the remark input when hiding (optional)
+            document.getElementById('remark').value = '';
+        }
+    }
+
+    // Call the function on page load to set the initial state
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleRemarkInput(); // Call the function to initialize display based on current selection
+    });
+</script>
+
+
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -453,14 +578,14 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="employee_id">Job Description Number</label>
-                                    <input type="text" name="job_description_no" value="{{ old('job_description_no', $jobTraining->job_description_no) }}" @if($jobTraining->stage != 2) disabled @endif>
+                                    <input type="text" name="job_description_no" value="{{ old('job_description_no', $jobTraining->job_description_no) }}" @if($jobTraining->stage != 3) disabled @endif>
                                 </div>
                             </div>
               
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="end_date">Effective Date </label>
-                                    <input id="end_date" type="date" value="{{ old('effective_date', $jobTraining->effective_date) }}" name="effective_date" @if($jobTraining->stage != 2) disabled @endif>
+                                    <input id="end_date" type="date" value="{{ old('effective_date', $jobTraining->effective_date) }}" name="effective_date" >
                                 </div>
                             </div>
 
@@ -585,12 +710,89 @@
                                     <input type="text" name="experience_if_any" id="" value="{{ $jobTraining->experience_if_any }}" readonly>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="For Revision">Reason For Revision </label>
                                     <input type="text" name="reason_for_revision" value="{{ old('reason_for_revision', $jobTraining->reason_for_revision) }}" @if($jobTraining->stage != 2) disabled @endif>
                                 </div>
+                            </div> --}}
+
+                            <div class="col-lg-6">
+    <div class="group-input">
+        <label for="jd_type">Job Description Status</label>
+        <select id="jd_type" name="jd_type" required>
+            <option value="">Select...</option>
+            <option value="new" {{ old('jd_type', $jobTraining->jd_type) === 'new' ? 'selected' : '' }}>New</option>
+            <option value="old" {{ old('jd_type', $jobTraining->jd_type) === 'old' ? 'selected' : '' }}>Old</option>
+        </select>
+    </div>
+</div>
+
+<div class="col-lg-6" id="revision_reason_div" style="{{ $jobTraining->jd_type === 'old' ? 'display: block;' : 'display: none;' }}">
+    <div class="group-input">
+        <label for="reason_for_revision">Reason for Revision</label>
+        <input type="text" name="reason_for_revision" id="reason_for_revision" value="{{ old('reason_for_revision', $jobTraining->reason_for_revision) }}">
+    </div>
+</div>
+
+<script>
+    // Initialize visibility of the revision reason field based on the current status
+    document.addEventListener('DOMContentLoaded', function() {
+        var statusSelect = document.getElementById('jd_type');
+        var selectedValue = statusSelect.value;
+
+        // Show or hide the reason for revision field based on selection
+        if (selectedValue === 'old') {
+            document.getElementById('revision_reason_div').style.display = 'block';
+        } else {
+            document.getElementById('revision_reason_div').style.display = 'none';
+        }
+    });
+
+    document.getElementById('jd_type').addEventListener('change', function() {
+        var selectedValue = this.value;
+
+        // Show or hide the reason for revision field based on selection
+        if (selectedValue === 'old') {
+            document.getElementById('revision_reason_div').style.display = 'block';
+        } else {
+            document.getElementById('revision_reason_div').style.display = 'none';
+            document.getElementById('reason_for_revision').value = ''; // Clear input when hiding
+        }
+    });
+</script>
+
+
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="For Revision">Delegate</label>
+                                    <select name="delegate" id="hod">
+                                            <option value="">-- Select Delegate --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}"
+                                                    {{ $user->id == old('delegate', $jobTraining->delegate) ? 'selected' : '' }}>
+                                                    {{ $user->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                </div>
                             </div>
+
+                            
+                            {{-- <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="For Revision">Delegate</label>
+                                    <select id="select-state" placeholder="Select..." name="delegate" required>
+                                        <option value="">Select an employee</option>
+                                        @foreach ($users as $user)
+                                        <option value="" data-name="">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div> --}}
+
+
                 
                     <div class="col-12 sub-head">
                         Job Responsibilities
@@ -633,6 +835,32 @@
                         </div>
                     </div> 
 
+                    {{-- <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Submitted By">Reporting Authority: </label>
+                            <div class="static"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Submitted On">Responsible Person/s in absence </label>
+                            <div class="static"></div>
+                        </div>
+                    </div> 
+
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Submitted By">Accepted by (Employee): </label>
+                            <div class="static"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Submitted On">Authorized by (Head QA/CQA):  </label>
+                            <div class="static"></div>
+                        </div>
+                    </div>--}}
+
             </div>
             <div class="button-block">
                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -644,11 +872,264 @@
         </div>
         </div>
 
-                @if ($jobTraining->stage == 3)
-                    <div id="CCForm3" class="inner-block cctabcontent">
+ 
+
+                <div id="CCForm3" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Activated On">Remark</label>
+                                <textarea name="qa_review" maxlength="255">{{ $jobTraining->qa_review }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="External Attachment">Induction Training Attachment</label>
+                                <input type="file" id="myfile" name="qa_review_attachment" value="{{ $jobTraining->qa_review_attachment }}">
+                                <a href="{{ asset('upload/' . $jobTraining->qa_review_attachment) }}" target="_blank">{{ $jobTraining->qa_review_attachment }}</a>
+                            </div>
+                        </div>
+  
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>                                    
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm4" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Activated On">Remark</label>
+                                <textarea name="qa_cqa_comment" maxlength="255">{{ $jobTraining->qa_cqa_comment }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="External Attachment">Induction Training Attachment</label>
+                                <input type="file" id="myfile" name="qa_cqa_attachment" value="{{ $jobTraining->qa_cqa_attachment }}">
+                                <a href="{{ asset('upload/' . $jobTraining->qa_cqa_attachment) }}" target="_blank">{{ $jobTraining->qa_cqa_attachment }}</a>
+                            </div>
+                        </div>
+  
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>                                    
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm5" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div id="questionsContainer" class="container">
+                                <div>
+                                    <!-- Questions will be dynamically injected here -->
+                                </div>
+                            </div>
+
+                            
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const selectedDocumentId = document.getElementById('sopdocument').value;
+        if (selectedDocumentId) {
+            fetchQuestions(selectedDocumentId); // Document select hote hi questions fetch kare
+        }
+    });
+
+    // Questions fetch kare aur quiz ko handle kare
+    function fetchQuestions(documentId) {
+        if (documentId) {
+            fetch(`/fetch-questions/${documentId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const questionsContainer = document.getElementById('questionsContainer');
+                    questionsContainer.innerHTML = ''; // Pehle ke questions clear kare
+
+                    if (data.length > 0) {
+                        window.quizData = data; // Globally save kare questions ko
+                        data.forEach((question, index) => {
+                            const questionBlock = `
+                                <div class="question-block">
+                                    <p><strong>Q${index + 1}: ${question.question}</strong></p>
+                                    <ul>
+                                        ${Object.entries(question.options).map(([key, option]) => `
+                                            <li>
+                                                <label>
+                                                    <input type="${question.answer_type === 'multiple' ? 'checkbox' : 'radio'}" 
+                                                        name="question_${question.id}" 
+                                                        value="${key}">
+                                                    ${option}
+                                                </label>
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+                            `;
+                            questionsContainer.innerHTML += questionBlock;
+                        });
+
+                        // Submit button add kare
+                        questionsContainer.innerHTML += `
+                            <div class="quiz-buttons">
+                                <button type="button" id="submit-btn" class="btn btn-primary">Submit</button>
+                            </div>
+                        `;
+
+                        // Submit button event listener add kare
+                        document.getElementById('submit-btn').addEventListener('click', submitQuiz);
+                    } else {
+                        questionsContainer.innerHTML = '<p>No questions available for this document.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching questions:', error);
+                    document.getElementById('questionsContainer').innerHTML = '<p>Error fetching questions.</p>';
+                });
+        } else {
+            document.getElementById('questionsContainer').innerHTML = ''; // Clear questions if no document selected
+        }
+    }
+
+    // Quiz submit kare aur result calculate kare
+    function submitQuiz() {
+        const userAnswers = [];
+
+        // User answers ko collect kare
+        quizData.forEach(question => {
+            const questionId = `question_${question.id}`;
+            const answerElements = document.querySelectorAll(`input[name="${questionId}"]:checked`);
+            const answers = [...answerElements].map(input => input.value);
+            userAnswers.push(answers);
+        });
+
+        calculateResults(userAnswers);
+    }
+
+    // Result ko calculate kare aur display kare
+    function calculateResults(userAnswers) {
+        let marks = 0;
+
+        // Compare kare correct answers ke saath
+        quizData.forEach((question, index) => {
+            const correctAnswer = question.answer;
+            const userAnswer = userAnswers[index];
+
+            // Single aur multiple answers ke liye check kare
+            if (typeof correctAnswer === 'string') {
+                if (correctAnswer.toLowerCase() === userAnswer[0]?.toLowerCase()) {
+                    marks++;
+                }
+            } else if (Array.isArray(correctAnswer)) {
+                if (arraysEqual(correctAnswer, userAnswer)) {
+                    marks++;
+                }
+            } else {
+                if (correctAnswer == userAnswer[0]) {
+                    marks++;
+                }
+            }
+        });
+
+        displaySummary(marks);
+        evaluatePassingCriteria(marks);
+    }
+
+    // Marks ko display kare
+    function displaySummary(marks) {
+        const totalQuestions = quizData.length;
+        alert(`You scored ${marks} out of ${totalQuestions}`);
+    }
+
+    // Passing criteria ko evaluate kare aur next steps show kare
+    function evaluatePassingCriteria(marks) {
+                                   // Calculate passing marks
+var passing = @json($quize ? $quize->passing : 0); // Use 0 or a default value if quize or passing is null
+var totalQuestions = quizData.length;
+var percentageRequired = (passing / 100) * totalQuestions;
+
+console.log("Marks Scored:", marks);
+console.log("Passing Marks:", percentageRequired);
+
+if (marks >= percentageRequired) {
+    var btnsElement = document.querySelector(".btns");
+    var button = document.createElement("button");
+    button.id = "complete-training";
+    button.setAttribute("data-bs-toggle", "modal");
+    button.setAttribute("data-bs-target", "#trainee-sign");
+    button.textContent = "Complete Training";
+
+    // Append button to the btnsElement
+    btnsElement.appendChild(button);
+} else {
+    alert("You did not pass the quiz.");
+}
+
+    }
+
+    // Helper function to compare arrays for multiple choice answers
+    function arraysEqual(arr1, arr2) {
+        return Array.isArray(arr1) &&
+            Array.isArray(arr2) &&
+            arr1.length === arr2.length &&
+            arr1.every((val, index) => val === arr2[index]);
+    }
+</script>
+
+                        
+  
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>                                    
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="CCForm6" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Activated On">Remark</label>
+                                <textarea name="evaluation_comment" maxlength="255">{{ $jobTraining->evaluation_comment }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="External Attachment">Induction Training Attachment</label>
+                                <input type="file" id="myfile" name="evaluation_attachment" value="{{ $jobTraining->evaluation_attachment }}">
+                                <a href="{{ asset('upload/' . $jobTraining->evaluation_attachment) }}" target="_blank">{{ $jobTraining->evaluation_attachment }}</a>
+                            </div>
+                        </div>
+  
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>                                    
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                @if ($jobTraining->stage >= 3)
+                    <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-12">
+                                <div class="button-block">
+                                        <button type="button" class="printButton" onclick="printCertificate()">
+                                            <i class="fas fa-print"></i> Print
+                                        </button>
+                                    </div>
                                     <div class="certificate-container">
                                         <div class="certificate-title">TRAINING CERTIFICATE</div>
 
@@ -663,26 +1144,202 @@
                                         </div>
 
                                         <div class="date-container">
-                                            <div>Sign/Date</div>
-                                            <div class="signature">Head Department</div>
+                                        <div class="signature-block">
+                                            <strong>Sign/Date:</strong>_________
+                                            <div>HR Department</div>
                                         </div>
 
-                                        <div class="signature-container">
-                                            <div>Sign/Date</div>
-                                            <div class="signature">Head QAICQA</div>
+                                        <div>
+                                                <strong>Sign/Date:</strong>_________
+                                                <div class="signature">Head QA/CQA<div></div></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div style="margin-top: 40px;" class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
-                                    <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                <button type="submit" class=" btn btn saveButton">Save</button>
+                                <button type="button" id="ChangeNextButton" class=" btn btn nextButton">Next</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 @endif
 
+    <style>
+                .certificate-container {
+                width: 685px;
+                height: 500px;
+                border: 4px solid #3d6186;
+                padding: 18px;
+                background-color: white;
+                position: relative;
+                margin: auto;
+                box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+            }
+            .certificate-title {
+                font-size: 30px;
+                font-weight: bold;
+                color: #677078;
+                display: flex;
+                justify-content: center;
+            }
+            .certificate-subtitle {
+                font-size: 18px;
+                color: #555;
+            }
+            .certificate-description {
+                margin-top: 30px;
+                font-size: 18px;
+                color: #333;
+            }
+            .date-container {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 60px;
+                font-size: 18px;
+            }
+            .signature-container {
+                position: absolute;
+                bottom: 40px;
+                right: 50px;
+                text-align: center;
+                font-size: 18px;
+                color: #333;
+            }
+
+            @media print {
+                .button-block {
+                    display: none !important;
+                }
+
+                body * {
+                    visibility: hidden;
+                }
+
+                #CCForm6, #CCForm6 * {
+                    visibility: visible;
+                }
+
+                #CCForm6 {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                }
+            }
+
+            .button-block {
+                display: flex;
+                justify-content: flex-end;
+                margin-top: 50px;
+            }
+
+            .printButton {
+                background-color: #2c3e50;
+                color: white;
+                border: none;
+                padding: 12px 24px;
+                font-size: 16px;
+                cursor: pointer;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+                float: right;
+            }
+
+            .printButton:hover {
+                background-color: #1a252f;
+            }
+
+            .printButton i {
+                margin-right: 8px;
+            }
+
+            @media print {
+                .button-block {
+                    display: none !important;
+                }
+
+                body * {
+                    visibility: hidden;
+                }
+
+                #CCForm6, #CCForm6 * {
+                    visibility: visible;
+                }
+
+                #CCForm6 {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                }
+            }
+
+    </style>
+      <script>
+        function printCertificate() {
+            var buttons = document.querySelectorAll(".button-block");
+            buttons.forEach(button => button.style.display = 'none');
+
+            window.print();
+
+            buttons.forEach(button => button.style.display = 'flex');
+        }
+    </script>
+
+
+                <div id="CCForm8" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Activated On">Remark</label>
+                                <textarea name="qa_cqa_head_comment" maxlength="255">{{ $jobTraining->qa_cqa_head_comment }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="External Attachment">Induction Training Attachment</label>
+                                <input type="file" id="myfile" name="qa_cqa_head_attachment" value="{{ $jobTraining->qa_cqa_head_attachment }}">
+                                <a href="{{ asset('upload/' . $jobTraining->qa_cqa_head_attachment) }}" target="_blank">{{ $jobTraining->qa_cqa_head_attachment }}</a>
+                            </div>
+                        </div>
+  
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>                                    
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm9" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Activated On">Remark</label>
+                                <textarea name="final_review_comment" maxlength="255">{{ $jobTraining->final_review_comment }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="External Attachment">Induction Training Attachment</label>
+                                <input type="file" id="myfile" name="final_review_attachment" value="{{ $jobTraining->final_review_attachment }}">
+                                <a href="{{ asset('upload/' . $jobTraining->final_review_attachment) }}" target="_blank">{{ $jobTraining->final_review_attachment }}</a>
+                            </div>
+                        </div>
+  
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>                                    
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        </div>
+                    </div>
+                </div>
         </form>
 
     </div>
@@ -853,55 +1510,6 @@
     });
 </script>
 
-<style>
- 
-        .certificate-container {
-            width: 1000px;
-            height: 500px;
-            border: 4px solid #00000061;
-            padding: 18px;
-            background-color: white;
-            position: relative;
-            margin: auto;
-        }
-        .certificate-title {
-            font-size: 30px;
-            font-weight: bold;
-            color: #00aaff;
-            display: flex;
-            justify-content: center;
-        }
-        .certificate-subtitle {
-            font-size: 18px;
-            color: #555;
-        }
- 
-        .certificate-description {
-            margin-top: 30px;
-            font-size: 18px;
-            color: #333;
-        }
-        .date-container {
-            position: absolute;
-            bottom: 40px;
-            left: 50px;
-            font-size: 18px;
-            color: #333;
-        }
-        .signature-container {
-            position: absolute;
-            bottom: 40px;
-            right: 50px;
-            text-align: center;
-            font-size: 18px;
-            color: #333;
-        }
-        .signature {
-            margin-top: 10px;
-            border-top: 1px solid #333;
-            width: 200px;
-        }
-</style>
 
     <div class="modal fade" id="signature-modal">
         <div class="modal-dialog modal-dialog-centered">
@@ -950,4 +1558,46 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="cancel-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <form action="{{ url('tms/jobTraining/cancelstage', $jobTraining->id) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment <span class="text-danger">*</span></label>
+                            <input type="comment" name="comments">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 @endsection

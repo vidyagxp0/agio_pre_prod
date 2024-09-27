@@ -385,7 +385,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Brief Description</th>
+                        <th class="w-20">Brief Description of error</th>
                         <td class="w-80">
                             @if ($data->brief_description)
                                 {{ $data->brief_description }}
@@ -469,7 +469,7 @@
 
                 <table>
                     <tr>
-                        <th class="w-20">Correction Of Error</th>
+                        <th class="w-20">Correction Of Error required</th>
                         <td class="w-80">
                             @if ($data->Correction_Of_Error)
                                 {{ $data->Correction_Of_Error }}
@@ -486,7 +486,7 @@
                         <th class="w-20">Department Head</th>
                         <td class="w-80">
                             @if ($data->department_head_to)
-                                {{ $data->department_head_to }}
+                                {{ Helpers::getInitiatorName($data->department_head_to) }}
                             @else
                                 Not Applicable
                             @endif
@@ -495,7 +495,7 @@
                         <th class="w-20">QA reviewer</th>
                         <td class="w-80">
                             @if ($data->qa_reviewer)
-                                {{ $data->qa_reviewer }}
+                                {{ Helpers::getInitiatorName($data->qa_reviewer) }}
                             @else
                                 Not Applicable
                             @endif
@@ -516,9 +516,9 @@
                         <tr class="table_bg">
                             <th class="w-20">SR no.</th>
                             <th class="w-20">List Of Impacting Document</th>
-                            <th class="w-20">Prepared By</th>
+                            <!-- <th class="w-20">Prepared By</th>
                             <th class="w-20">Checked By</th>
-                            <th class="w-20">Approved By</th>
+                            <th class="w-20">Approved By</th> -->
                         </tr>
                         @if ($grid_Data && is_array($grid_Data->data))
                             @foreach ($grid_Data->data as $grid_Data)
@@ -527,21 +527,21 @@
                                     <td class="w-20">
                                         {{ isset($grid_Data['ListOfImpactingDocument']) ? $grid_Data['ListOfImpactingDocument'] : '' }}
                                     </td>
-                                    <td class="w-20">
+                                    <!-- <td class="w-20">
                                         {{ isset($grid_Data['PreparedBy']) ? $grid_Data['PreparedBy'] : '' }}</td>
                                     <td class="w-20">
                                         {{ isset($grid_Data['CheckedBy']) ? $grid_Data['CheckedBy'] : '' }}</td>
                                     <td class="w-20">
-                                        {{ isset($grid_Data['ApprovedBy']) ? $grid_Data['ApprovedBy'] : '' }}</td>
+                                        {{ isset($grid_Data['ApprovedBy']) ? $grid_Data['ApprovedBy'] : '' }}</td> -->
                                 </tr>
                             @endforeach
                         @else
                             <tr>
                                 <td>Not Applicable</td>
                                 <td>Not Applicable</td>
+                                <!-- <td>Not Applicable</td>
                                 <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
+                                <td>Not Applicable</td> -->
                             </tr>
                         @endif
                     </table>
@@ -557,9 +557,9 @@
                             <tr class="table_bg">
                                 <th class="w-20">SR no.</th>
                                 <th class="w-20">List Of Impacting Document</th>
-                                <th class="w-20">Prepared By</th>
+                                <!-- <th class="w-20">Prepared By</th>
                                 <th class="w-20">Checked By</th>
-                                <th class="w-20">Approved By</th>
+                                <th class="w-20">Approved By</th> -->
                             </tr>
                             @if ($grid_Data && is_array($grid_Data->data))
                                 @foreach ($grid_Data->data as $grid_Data)
@@ -568,21 +568,21 @@
                                         <td class="w-20">
                                             {{ isset($grid_Data['ListOfImpactingDocument']) ? $grid_Data['ListOfImpactingDocument'] : '' }}
                                         </td>
-                                        <td class="w-20">
+                                        <!-- <td class="w-20">
                                             {{ isset($grid_Data['PreparedBy']) ? $grid_Data['PreparedBy'] : '' }}</td>
                                         <td class="w-20">
                                             {{ isset($grid_Data['CheckedBy']) ? $grid_Data['CheckedBy'] : '' }}</td>
                                         <td class="w-20">
-                                            {{ isset($grid_Data['ApprovedBy']) ? $grid_Data['ApprovedBy'] : '' }}</td>
+                                            {{ isset($grid_Data['ApprovedBy']) ? $grid_Data['ApprovedBy'] : '' }}</td> -->
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td>Not Applicable</td>
                                     <td>Not Applicable</td>
+                                    <!-- <td>Not Applicable</td>
                                     <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td> -->
                                 </tr>
                             @endif
                         </table>
@@ -662,7 +662,7 @@
 
             <div class="block">
                 <div class="block-head">
-                    QA Initial Review
+                    QA/CQA Initial Review
                 </div>
 
                 {{-- <label class="Summer" for="">QA Feedbacks</label>
@@ -677,7 +677,7 @@
 
                 <table>
                     <tr>
-                        <th class="w-20">QA Initial Comment</th>
+                        <th class="w-20">QA/CQA Initial Comment</th>
                         <td class="w-80">
                             @if ($data->QA_Feedbacks)
                                 {!! $data->QA_Feedbacks !!}
@@ -704,7 +704,7 @@
                 </table> --}}
                 <div class="border-table">
                     <div class="block-head">
-                        QA Initial Attachments
+                        QA/CQA Initial Attachments
                     </div>
                     <table>
 
@@ -733,7 +733,7 @@
 
             <div class="block">
                 <div class="block-head">
-                    QA Head Designee Approval
+                    QA/CQA Head Designee Approval
                 </div>
                 <table>
                     <tr>
@@ -784,7 +784,7 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Date Of Correction</th>
+                        <th class="w-20">Date Of Correction of documen</th>
                         <td class="w-80">
                             @if ($data->Date_and_time_of_correction)
                                 {{ $data->Date_and_time_of_correction }}
@@ -851,12 +851,12 @@
 
             <div class="block">
                 <div class="block-head">
-                    HOD Review
+                    HOD final Review
                 </div>
 
                 <table>
                     <tr>
-                        <th class="w-20">HOD Comment</th>
+                        <th class="w-20">HOD final review Comment</th>
                         <td class="w-80">
                             @if ($data->HOD_Comment1)
                                 {{ $data->HOD_Comment1 }}
@@ -869,7 +869,7 @@
 
                 <div class="border-table">
                     <div class="block-head">
-                        HOD Attachments
+                        HOD final Attachments
                     </div>
                     <table>
 

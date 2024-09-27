@@ -289,7 +289,7 @@
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Extension</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Incident Details</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QC Head Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QC Initial Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QA Initial Review</button>
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Pending Initiator Update</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation Details</button>
@@ -429,7 +429,8 @@
                                             <div class="group-input" id="incident_interval_others_gi">
                                                 <label for="incident_interval_others_gi">Name of Analyst<span
                                                         class="text-danger d-none">*</span></label>
-                                                <textarea type="text" name="name_of_analyst" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : "" }}>{{ $data->name_of_analyst }}</textarea>
+                                                <!-- <textarea type="text" name="name_of_analyst" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : "" }}>{{ $data->name_of_analyst }}</textarea> -->
+                                                 <input type="text" name="name_of_analyst" value="{{ $data->name_of_analyst }}" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : "" }}>
                                             </div>
 
                                         </div>
@@ -508,7 +509,8 @@
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
 
-                                        <textarea name="short_desc"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : "" }}>{{ $data->short_desc }}</textarea>
+                                        <!-- <textarea name="short_desc"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : "" }}>{{ $data->short_desc }}</textarea> -->
+                                         <input type="text" name="short_desc"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : "" }} value="{{ $data->short_desc }}">
                                     </div>
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
 
@@ -533,7 +535,7 @@
                                         <table class="table table-bordered" id="onservation-incident-table">
                                             <thead>
                                                 <tr>
-                                                    <th>Sr. No.</th>
+                                                    <th>Row #</th>
                                                     <th>Name of Product</th>
                                                     <th>B No./A.R. No.</th>
                                                     <th>Remarks</th>
@@ -778,7 +780,7 @@
 
                         <div class="col-lg-12 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="Date Due">Date Of Incidence</label>
+                                <label for="Date Due">Date of Incidence</label>
                                 <div><small class="text-primary">Please mention expected date of completion</small>
                                 </div>
                                 <div class="calenderauditee">
@@ -1527,15 +1529,13 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Action Taken">Action Taken @if($data->stage==4)<span class="text-danger">*</span>   
-                                            @endif</label>
+                                        <label for="Action Taken">Action Taken</label>
                                         <textarea name="Action_Taken" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{ $data->Action_Taken }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Root Cause">Root Cause @if($data->stage==4)<span class="text-danger">*</span>   
-                                            @endif</label>
+                                        <label for="Root Cause">Root Cause</label>
                                         <textarea name="Root_Cause" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{ $data->Root_Cause }}</textarea>
                                     </div>
                                 </div>
@@ -1744,7 +1744,7 @@
                         <label for="search">
                             QC Investigator <span class="text-danger"></span>
                         </label>
-                            <textarea name="investigator_data" id="" {{ $data->stage <= 3 || $data->stage >= 5 ? "disabled" : "" }}>{{ $data->investigator_data }}</textarea>
+                            <textarea name="investigator_data" id="" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{ $data->investigator_data }}</textarea>
                     </div>
                 </div>
 
@@ -2193,8 +2193,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="closure_incident">Closure of Incident @if($data->stage==7)<span class="text-danger">*</span>   
-                                        @endif</label>
+                                    <label for="closure_incident">Closure of Incident</label>
                                     <input type="text" name="closure_incident_c" {{ $data->stage <= 6 || $data->stage >= 8 ? "readonly" : "" }}  value="{{$labnew->closure_incident_c}}">
                                 </div>
 
@@ -2227,7 +2226,8 @@
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for=" qa head remark"><b>QA Head Comment</b></label>
+                                <label for=" qa head remark"><b>QA Head Comment</b> @if($data->stage==7)<span class="text-danger">*</span>   
+                                @endif</label>
                                <textarea name="qa_hear_remark_c" {{ $data->stage <= 6 || $data->stage >= 8 ? "readonly" : "" }}>{{$labnew->qa_hear_remark_c}}</textarea>
                             </div>
                         </div>
@@ -2464,17 +2464,17 @@
                                 </div>
 
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                    QA Head/HOD Secondary Review
+                                    QC Head/HOD Secondary Review
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="No Assignable Completed By">QA Head/HOD Secondary Review Complete By</label>
+                                        <label for="No Assignable Completed By">QC Head/HOD Secondary Review Complete By</label>
                                         <div class="static">{{$data->review_completed_by}}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="No Assignable Completed On">QA Head/HOD Secondary Review Complete On</label>
+                                        <label for="No Assignable Completed On">QC Head/HOD Secondary Review Complete On</label>
                                         <div class="Date">{{$data->review_completed_on}}</div>
                                     </div>
                                 </div>

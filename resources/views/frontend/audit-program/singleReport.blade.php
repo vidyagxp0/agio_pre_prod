@@ -161,16 +161,16 @@
 <footer>
     <table>
         <tr>
-            <td class="w-30">
+            <td class="w-50">
                 <strong>Printed On :</strong> {{ date('d-M-Y') }}
             </td>
-            <td class="w-40">
+            <td class="w-50">
                 <strong>Printed By :</strong> {{ Auth::user()->name }}
             </td>
-            <td class="w-30">
+            <!-- <td class="w-30">
                 <strong>Page :</strong> 1 of 1
             </td>
-        </tr>
+        </tr> -->
     </table>
 </footer>
 
@@ -234,17 +234,6 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
-                    <tr>
-
-                        <th class="w-20">Assigned To</th>
-                        <td class="w-30">
-                            @if ($data->assign_to)
-                                {{ $data->assign_to }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
                         <th class="w-20">Department code</th>
                         <td class="w-30">
                             @if ($data->initiator_group_code)
@@ -253,27 +242,25 @@
                                 Not Applicable
                             @endif
                         </td>
-
                     </tr>
                     <tr>
-                        <th class="w-20">Due Date</th>
+                         <th class="w-20">Assigned To</th>
                         <td class="w-30">
-                            @if ($data->due_date)
-                                {{ \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') }}
+                            @if ($data->assign_to)
+                                {{ $data->assign_to }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
 
-
-                        {{-- <th class="w-20">Short Description</th>
-                        <td class="w-80">
-                            @if ($data->short_description)
-                                {{ $data->short_description }}
+                        <th class="w-20">Assigned To Department</th>
+                        <td class="w-30">
+                            @if ($data->assign_to_department)
+                                {{ $data->assign_to_department }}
                             @else
                                 Not Applicable
                             @endif
-                        </td> --}}
+                        </td>
                     </tr>
                 </table>
                 <div class="inner-block">
@@ -297,17 +284,17 @@
                                 Not Applicable
                             @endif
                         </td>
-                        {{-- <th class="w-20">Due Date Extension Justification</th>
-                        <td class="w-30">
-                            @if ($data->due_date_extension)
-                                {{ $data->due_date_extension }}
+                        <th class="w-20">Type(Others)</th>
+                        <td class="">
+                            @if ($data->through_req)
+                                {{ $data->through_req }}
                             @else
                                 Not Applicable
                             @endif
-                        </td> --}}
+                        </td>
                     </tr>
                 </table>
-                <div class="inner-block">
+                <!-- <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px;">Due Date Extension Justification
                     </label>
                     <div style="font-size: 0.8rem">
@@ -317,18 +304,10 @@
                             Not Applicable
                         @endif
                     </div>
-                </div>
+                </div> -->
                 <table>
                     <tr>
-                        <th class="w-20">Quarter</th>
-                        <td class="w-30">
-                            @if ($data->Quarter)
-                                {{ $data->Quarter }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Year</th>
+                        <th class="w-20">Yearly Planner</th>
                         <td class="w-30">
                             @if ($data->year)
                                 {{ $data->year }}
@@ -336,38 +315,17 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">URl's description</th>
+                        <th class="w-20">Yearly Planner(Others)</th>
                         <td class="w-30">
-                            @if ($data->url_description)
-                                {{ $data->url_description }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Severity Level</th>
-                        <td class="w-30">
-                            @if ($data->severity1_level)
-                                {{ $data->severity1_level }}
+                            @if ($data->yearly_other)
+                                {{ $data->yearly_other }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
                     </tr>
-                </table>
-                <div class="inner-block">
-                    <label class="Summer" style="font-weight: bold; font-size: 13px;">Others
-                    </label>
-                    <div style="font-size: 0.8rem">
-                        @if ($data->initiated_through_req)
-                            {{ $data->initiated_through_req }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </div>
-                </div>
-                <div class="inner-block">
+                    </table>
+                    <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px;">Comments
                     </label>
                     <div style="font-size: 0.8rem">
@@ -378,45 +336,6 @@
                         @endif
                     </div>
                 </div>
-                <table>
-                    {{-- <tr>
-                        <th class="w-20">Comments</th>
-                        <td class="w-80">
-                            @if ($data->comments)
-                                {{ $data->comments }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Others</th>
-                        <td class="w-30">
-                            @if ($data->initiated_through_req)
-                                {{ $data->initiated_through_req }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr> --}}
-                    <tr>
-                        <th class="w-20">Related URl </th>
-                        <td class="w-30">
-                            @if ($data->related_url)
-                                {{ $data->related_url }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Initiated Through</th>
-                        <td class="w-30">
-                            @if ($data->initiated_through)
-                                {{ $data->initiated_through }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-
-                </table>
                 <div class="border-table">
                     <div class="block-head">
                         Attached Files
@@ -445,14 +364,161 @@
                     </table>
 
                 </div>
+                    <table>
+                    <tr>
+                    <th class="w-20">Related URl </th>
+                        <td class="w-30">
+                            @if ($data->related_url)
+                                {{ $data->related_url }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        <th class="w-20">URl's description</th>
+                        <td class="w-30">
+                            @if ($data->url_description)
+                                {{ $data->url_description }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+                </div>
+                
+         
             </div>
         </div>
     </div>
     </div>
 
 
+    <div class="inner-block">
+        <div class="content-table">
+            <div class="block">
+                <div class="block-head">
+                        Self Inspection Circular
+                </div>
+                        <table>
+                            <tr>
+                                <th>Comments</th>
+                                <td>@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
+                            </tr>
+                        </table>
+            </div>
+            <div class="border-table">
+                            <div class="block-head">
+                                Attached Files
+                            </div>
+                            <table>
 
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-60">Batch No</th>
+                                </tr>
+                                @if ($data->attachments)
+                                    @foreach (json_decode($data->attachments) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-20">Not Applicable</td>
+                                    </tr>
+                                @endif
 
+                            </table>
+
+                        </div>
+
+            <div class="block">
+                <div class="block-head">
+                    HOD/Designee Review
+                        </div>
+                        <table>
+                            <tr>
+                                <th>HOD/Designee Review Comments</th>
+                                <td>@if($data->hod_comment){{ $data->hod_comment }}@else Not Applicable @endif</td>
+                            </tr>
+                        </table>
+            </div>
+
+            <div class="border-table">
+                            <div class="block-head">
+                                HOD/Designee Review Attached Files
+                            </div>
+                            <table>
+
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-60">Batch No</th>
+                                </tr>
+                                @if ($data->hod_attached_File)
+                                    @foreach (json_decode($data->hod_attached_File) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-20">Not Applicable</td>
+                                    </tr>
+                                @endif
+
+                            </table>
+
+                        </div>
+
+            <div class="block">
+                <div class="block-head">
+                    CQA/QA Approval
+                        </div>
+                        <table>
+                            <tr>
+                                <th>CQA/QA Approval Comments</th>
+                                <td>@if($data->cqa_qa_comment){{ $data->cqa_qa_comment }}@else Not Applicable @endif</td>
+                            </tr>
+                        </table>
+            </div>
+
+            <div class="border-table">
+                            <div class="block-head">
+                                CQA/QA Attached Files
+                            </div>
+                            <table>
+
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-60">Batch No</th>
+                                </tr>
+                                @if ($data->cqa_qa_Attached_File)
+                                    @foreach (json_decode($data->cqa_qa_Attached_File) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-20">Not Applicable</td>
+                                    </tr>
+                                @endif
+
+                            </table>
+
+                        </div>
+
+        </div>
+    </div>
 
     <div class="inner-block">
         <div class="content-table">
@@ -593,7 +659,7 @@
                         <tr>
                             <td><?php echo $index2 + 1; ?></td>
                             <td><?php echo isset($data['department']) ? $data['department'] : 'N/A'; ?></td>
-                            <td><?php echo isset($data['Months']) ? $data['Months'] : 'N/A'; ?></td>
+                            <td><?php echo isset($data['Months']) ? str_replace(',', ', ', $data['Months']) : 'N/A';  ?></td>
                             <td><?php echo isset($data['Remarked']) ? $data['Remarked'] : 'N/A'; ?></td>
                         </tr>
                         <?php $index2++; ?>
@@ -646,7 +712,7 @@
         </div>
     </div>
     <!--  ------------------------------- audit program grid--------------------------------------- -->
-    <footer>
+    <!-- <footer>
         <table>
             <tr>
                 <td class="w-30">
@@ -660,7 +726,7 @@
                 </td>
             </tr>
         </table>
-    </footer>
+    </footer> -->
 </body>
 
 </html>

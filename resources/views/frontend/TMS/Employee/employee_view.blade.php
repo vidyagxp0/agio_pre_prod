@@ -139,7 +139,6 @@ $userDetails = DB::table('users')
                     @php
                     $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $employee->division_id])->get();
                     $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-                    // dd($employee->division_id);
                     @endphp
 
                     <button class="button_theme1">
@@ -216,7 +215,7 @@ $userDetails = DB::table('users')
         <div class="cctab">
 
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Employee</button>
-            <button class="cctablinks " onclick="openCity(event, 'CCForm2')">External Training</button>
+            <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm2')">External Training</button> -->
             <button class="cctablinks " onclick="openCity(event, 'CCForm12')">Induction Training</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Activity Log</button>
 
@@ -287,7 +286,7 @@ $userDetails = DB::table('users')
                     </div>
 
 
-                    <div class="col-lg-6 new-date-data-field">
+                    <!-- <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="Actual Start Date">Actual Start Date</label>
                             <div class="calenderauditee">
@@ -295,7 +294,7 @@ $userDetails = DB::table('users')
                                 <input type="date" name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $employee->start_date ?? '' }}" class="hide-input" oninput="handleDateInput(this, 'start_date')" />
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     {{-- <div class="col-lg-6">
                         <div class="group-input">
@@ -305,33 +304,53 @@ $userDetails = DB::table('users')
                     </div> --}}
 
                     <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Prefix">Prefix<span class="text-danger">*</span></label>
-                            <select name="prefix" required>
-                                <option value="">Enter Your Selection Here</option>
-                                <option value="PW" {{ (old('prefix') ?? $employee->prefix) == 'PW' ? 'selected' : '' }}>Permanent Workers</option>
-                                <option value="PS" {{ (old('prefix') ?? $employee->prefix) == 'PS' ? 'selected' : '' }}>Permanent Staff</option>
-                                <option value="OS" {{ (old('prefix') ?? $employee->prefix) == 'OS' ? 'selected' : '' }}>Others Separately</option>
+                     <div class="group-input">
+                      <label for="Prefix">Prefix<span class="text-danger">*</span></label>
+                         <select name="prefix" id="prefix-select" required onchange="toggleInputBox()">
+                            <option value="">Enter Your Selection Here</option>
+                            <option value="PW" {{ (old('prefix') ?? $employee->prefix) == 'PW' ? 'selected' : '' }}>Permanent Workers</option>
+                            <option value="PS" {{ (old('prefix') ?? $employee->prefix) == 'PS' ? 'selected' : '' }}>Permanent Staff</option>
+                            <option value="OS" {{ (old('prefix') ?? $employee->prefix) == 'OS' ? 'selected' : '' }}>Others Separately</option>
+                       </select>
+                        <div id="other-input" style="display: none; margin-top: 5px;">
+                        <label for="other">Others</label>
+                                            <input type="text" name="other" id="other" value="{{ $employee->other }}" style="width: 100%;">
+                                        </div>
+                                    </div>
+                                </div>
 
-                            </select>
-                        </div>
-                    </div>
+                                <script>
+                                    function toggleInputBox() {
+                                        const selectElement = document.getElementById('prefix-select');
+                                        const otherInput = document.getElementById('other-input');
+
+                                        
+                                        if (selectElement.value === 'OS') {
+                                            otherInput.style.display = 'block';
+                                        } else {
+                                            otherInput.style.display = 'none';
+                                        }
+                                    }
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        toggleInputBox();
+                                    });
+                                </script>
 
 
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Employee ID">Employee ID</label>
-                            <input type="text" name="employee_id" value="{{ $employee->employee_id }}" readonly>
+                            <input type="text" name="emp_id" value="{{ $employee->emp_id }}" readonly>
                         </div>
                     </div>
-
+                 
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="employee_name">Employee Name</label>
                             <input type="text" name="employee_name" value="{{ $employee->employee_name }}">
                         </div>
                     </div>
-
+                            
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Gender">Gender</label>
@@ -345,7 +364,7 @@ $userDetails = DB::table('users')
 
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Department">Department</label>
+                            <label for="Department">Department name</label>
                             <select name="department">
                                 <option>-- Select --</option>
                                 @php
@@ -397,6 +416,7 @@ $userDetails = DB::table('users')
                                 <option value="Sr.executive" @if($savedJobTitle=='Sr.executive' ) selected @endif>Sr.executive</option>
                                 <option value="Asst. manager" @if($savedJobTitle=='Asst. manager' ) selected @endif>Asst. manager</option>
                                 <option value="Manager" @if($savedJobTitle=='Manager' ) selected @endif>Manager</option>
+                                <option value="Sr.GM" @if($savedJobTitle=='Sr.GM' ) selected @endif>Sr.GM</option>
                                 <option value="Sr. manager" @if($savedJobTitle=='Sr. manager' ) selected @endif>Sr. manager</option>
                                 <option value="Deputy GM" @if($savedJobTitle=='Deputy GM' ) selected @endif>Deputy GM</option>
                                 <option value="AGM and GM" @if($savedJobTitle=='AGM and GM' ) selected @endif>AGM and GM</option>
@@ -406,7 +426,18 @@ $userDetails = DB::table('users')
                             </select>
                         </div>
                     </div>
-
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                         <label for="other_department">Other Department</label>
+                         <input type="text" name="other_department" value="{{ $employee->other_department }}">
+                     </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="group-input">
+                         <label for="other_designation">Other Designation<label>
+                         <input type="text" name="other_designation"  value="{{ $employee->other_designation }}">
+                        </div>
+                   </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Attached CV">Attached CV</label>
@@ -427,24 +458,48 @@ $userDetails = DB::table('users')
                         <div class="group-input">
                             <label for="Additional Medical Document">Medical Checkup Report?</label>
                         </div>
-                    </div> -->
+                    </div>
 
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Attached Medical Document">Medical Checkup Report?</label>
-                            <!-- @if($employee->has_additional_document === 'Yes')
+                            @if($employee->has_additional_document === 'Yes')
                             <input type="file" id="myfile" name="additional_document" value="{{ $employee->certification }}">
-                            @endif -->
+                            @endif
                         
                                 <p><a href="{{ asset('uploads/medical_docs/' . $employee->additional_document) }}" target="_blank">Download Document</a></p>
                            
-                                                      </div>
-                    </div>
+                        </div>
+                    </div> -->
+
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="Additional Medical Document">Medical Checkup Report?</label>
+        <select name="has_additional_document" id="has_additional_document">
+            <option value="">--Select--</option>
+            <option value="No" {{ $employee->has_additional_document == 'No' ? 'selected' : '' }}>No</option>
+            <option value="Yes" {{ $employee->has_additional_document == 'Yes' ? 'selected' : '' }}>Yes</option>
+        </select>
+    </div>
+</div>
+
+@if($employee->has_additional_document == 'Yes')
+    <div class="col-lg-6" id="medical_attachment">
+        <div class="group-input">
+            <label for="Attached Medical Document">Medical Checkup Attachment</label>
+            @if($employee->additional_document)
+                <a href="{{ asset('storage/' . $employee->additional_document) }}" target="_blank">View Attachment</a>
+            @endif
+            <input type="file" name="additional_document" id="additional_document">
+        </div>
+    </div>
+@endif
+
 
 
 
                     <div class="pt-2 col-12 sub-head">
-                        Employee Information
+                        Employee Address Details
                     </div>
                     {{-- <div class="col-lg-6">
                         <div class="group-input">
@@ -466,7 +521,7 @@ $userDetails = DB::table('users')
                         <div class="group-input">
                             <label for="Country">Country</label>
                             <select name="country" class="form-select country" aria-label="Default select example" disabled>
-                                <option value="IN" selected>India</option> <!-- Fixed to India -->
+                                <option value="IN" selected>India</option> 
                             </select>
                         </div>
                     </div>
@@ -475,7 +530,7 @@ $userDetails = DB::table('users')
                         <div class="group-input">
                             <label for="City">State</label>
                             <select name="state" class="form-select state" aria-label="Default select example" onchange="loadCities()">
-                                <option value="{{ $employee->state }}" selected>{{ $employee->state }}</option> <!-- Pre-selected state -->
+                                <option value="{{ $employee->state }}" selected>{{ $employee->state }}</option>
                             </select>
                         </div>
                     </div>
@@ -490,7 +545,7 @@ $userDetails = DB::table('users')
                     </div>
 
    
-                    <div class="col-lg-6">
+                    <!-- <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Site Name">Site Name</label>
                             <select name="site_name">
@@ -500,7 +555,7 @@ $userDetails = DB::table('users')
                              
                             </select>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="col-lg-6">
                         <div class="group-input">
@@ -569,7 +624,7 @@ $userDetails = DB::table('users')
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Comments">Comments</label>
-                            <textarea name="comment" maxlength="255">{{ $employee->comment }}</textarea>
+                            <textarea name="comment">{{ $employee->comment }}</textarea>
                         </div>
                     </div>
 
@@ -701,6 +756,7 @@ $userDetails = DB::table('users')
                                 </td>
                             </tr>
                             @endforeach
+
                             @else
                             <tr>
                                 <td><input disabled type="text" name="external_training[0][serial]" value="1"></td>
@@ -718,7 +774,7 @@ $userDetails = DB::table('users')
                 <div class="col-12">
                     <div class="group-input">
                         <label for="External Comments">External Comments</label>
-                        <textarea name="external_comment" maxlength="255">{{ $employee->external_comment }}</textarea>
+                        <textarea name="external_comment">{{ $employee->external_comment }}</textarea>
                     </div>
                 </div>
                 <div class="col-12">
@@ -775,6 +831,7 @@ $userDetails = DB::table('users')
         <div class="button-block">
             <button type="submit" id="ChangesaveButton02" class="saveButton">Save</button>
             {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
+            <button type="button" class="backButton" onclick="previousStep()">Back</button>
             <button type="button" class="cctablinks " onclick="openCity(event, 'CCForm3')">Next</button>
 
             <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
@@ -790,7 +847,7 @@ $userDetails = DB::table('users')
         <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Activated On">Remark</label>
-                    <textarea name="induction_comment" maxlength="255">{{ $employee->induction_comment }}</textarea>
+                    <textarea name="induction_comment">{{ $employee->induction_comment }}</textarea>
                 </div>
             </div>
         <div class="col-12">
@@ -804,10 +861,9 @@ $userDetails = DB::table('users')
         </div>
         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
-                        <a href="/rcms/qms-dashboard">
-                            <button type="button" class="backButton">Back</button>
-                        </a>
-                        <button type="submit">Submit</button>
+                        <!-- <a href="/rcms/qms-dashboard"> -->
+                        <button type="button" class="backButton">Back</button>
+                        <!-- </a> -->
                         <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
         Exit </a> </button>
     </div>
@@ -828,7 +884,7 @@ $userDetails = DB::table('users')
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Activated On">Activated On</label>
-                    <div class="static">{{ $employee->activated_on }}</div>
+                    <div class="static">{{ Carbon\Carbon::parse($employee->activated_on)->format('d-M-Y') }}</div>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -840,16 +896,17 @@ $userDetails = DB::table('users')
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Rejected On">Retired On</label>
-                    <div class="static">{{ $employee->retired_on }}</div>
+                    <div class="static">{{ Carbon\Carbon::parse($employee->retired_on)->format('d-M-Y') }}</div>
                 </div>
             </div>
         </div>
         <div class="button-block">
-            {{-- <button type="submit" class="saveButton">Save</button>
-            <a href="/rcms/qms-dashboard"> --}}
+            <button type="submit" class="saveButton"> <a href="{{ url('TMS') }}" class="text-white">
+            Save </a></button>
+            <!-- <a href="/rcms/qms-dashboard"> -->
             {{-- <button type="button" class="backButton">Back</button> --}}
             </a>
-            <button type="submit">Submit</button>
+            {{-- <button type="submit">Submit</button> --}}
             <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                     Exit </a> </button>
         </div>
@@ -963,14 +1020,13 @@ $userDetails = DB::table('users')
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div class="group-input">
-                            @if ($employee->stage == 2)
                             <label style="display: flex;" for="major">
-                                <input type="radio" name="child_type" id="major" value="correspondence">
-                                Training
+                                <input type="radio" name="child_type" id="major" value="induction_training">
+                                Induction Training
                             </label>
 
 
-                            <label style="display: flex;" for="major">
+                            {{-- <label style="display: flex;" for="major">
                                 <input type="radio" name="child_type" id="major" value="variation">
                                 Read and Understand
                             </label>
@@ -979,7 +1035,6 @@ $userDetails = DB::table('users')
                                 <input type="radio" name="child_type" id="major" value="renewal">
                                 Classroom
                             </label>
-                            @else($employee->stage == 3)
                             <label for="major">
                                 <input type="radio" name="child_type" id="major" value="correspondence">
                                 Correspondence
@@ -987,33 +1042,11 @@ $userDetails = DB::table('users')
                             <label for="major">
                                 <input type="radio" name="child_type" id="major" value="osur">
                                 PSUR
-                            </label>
-                            @endif
+                            </label> --}}
 
                         </div>
 
                     </div>
-
-                    <!-- <div class="modal-body">
-                        <div class="group-input">
-                            <label style="  display: flex;     gap: 18px; width: 60px;" for="capa-child">
-                                <input type="radio" name="revision" id="capa-child" value="training-child">
-                                Training
-                            </label>
-                        </div>
-                        <div class="group-input">
-                            <label style=" display: flex;     gap: 16px; width: 60px;" for="root-item">
-                                <input type="radio" name="revision" id="root-item" value="Action-Item">
-                                Read and Understand
-                            </label>
-                        </div>
-                        <div class="group-input">
-                            <label for="root-item">
-                                <input type="radio" name="revision" id="root-item" value="effectiveness-check">
-                                Classroom
-                            </label>
-                        </div>
-                    </div> -->
 
 
                     <div class="modal-footer">

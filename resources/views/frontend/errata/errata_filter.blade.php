@@ -22,7 +22,7 @@
                         :</strong>{{ $dataDemo->change_from ?: 'Null' }}
                 @else
                     <strong>Change From
-                        :</strong>{{ $dataDemo->previous ?: 'Null' }}
+                        :</strong>{{ str_replace(',', ', ',$dataDemo->previous) ?: 'Null' }}
                 @endif
             </div>
             <br>
@@ -30,7 +30,7 @@
                 @if ($dataDemo->activity_type == 'Activity Log')
                     <strong>Change To :</strong>{{ $dataDemo->change_to ?: 'Not Applicable' }}
                 @else
-                    <strong>Change To :</strong>{{ $dataDemo->current ?: 'Not Applicable' }}
+                    <strong>Change To :</strong>{{ str_replace(',', ', ',$dataDemo->current) ?: 'Not Applicable' }}
                 @endif
             </div>
             <div style="margin-top: 5px;">

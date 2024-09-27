@@ -51,7 +51,7 @@
 
 
     <!-- -----------------------------grid-1----------------------------script -->
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('#info_product_material').click(function(e) {
                 function generateTableRow(serialNumber) {
@@ -64,9 +64,9 @@
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="MM-YYYY" />' +
-                        '<input type="month" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
-                        '</div>' +
+                        '<input type="text" readonly id="info_mfg_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        '<input type="date" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_mfg_date' + serialNumber + '\')">' +
+                        '</div>' +  
                         '</div>' +
                         '</div>' +
                         '</td>' +
@@ -74,9 +74,9 @@
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="MM-YYYY" />' +
-                        '<input type="month" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_expiry_date' + serialNumber + '\')">' +
-                        '</div>' +
+                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        '<input type="date" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_expiry_date' + serialNumber + '\')">' +
+                        '</div>' +    
                         '</div>' +
                         '</div>' +
                         '</td>' +
@@ -102,7 +102,66 @@
                 tableBody.append(newRow);
             });
         });
+    </script> --}}
+    <script>
+        $(document).ready(function() {
+            $('#info_product_material').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var currentDate = new Date();
+                    var formattedCurrentDate = currentDate.toISOString().split('T')[0].slice(0, 7); // Format as YYYY-MM
+    
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_product_code]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_batch_no]" value=""></td>' +
+                        '<td>' +
+                        '<div class="col-lg-6 new-date-data-field">' +
+                        '<div class="group-input input-date">' +
+                        '<div class="calenderauditee">' +
+                        // '<input type="text" readonly id="info_mfg_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        // '<input type="date" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_mfg_date' + serialNumber + '\')" max="' + currentDate + '">' +  // Add min date here
+                        // '</div>' +
+                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="MM-YYYY" />' +
+                        '<input type="month" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_mfg_date_' + serialNumber + '\')" max="' + formattedCurrentDate + '">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>' +
+                        '<td>' +
+                        '<div class="col-lg-6 new-date-data-field">' +
+                        '<div class="group-input input-date">' +
+                        '<div class="calenderauditee">' +
+                        // '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        // '<input type="date" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_expiry_date' + serialNumber + '\')" min="' + currentDate + '">' + // Add min date here
+                        // '</div>' +
+                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="MM-YYYY" />' +
+                        '<input type="month" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_expiry_date' + serialNumber + '\')" min="' + formattedCurrentDate + '">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_label_claim]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_pack_size]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_analyst_name]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_others_specify]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_process_sample_stage]" value=""></td>' +
+                        '<td><select name="info_product_material[' + serialNumber + '][info_packing_material_type]"><option value="">--Select--</option><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><select name="info_product_material[' + serialNumber + '][info_stability_for]"><option value="">--Select--</option><option value="Submission">Submission</option><option value="Commercial">Commercial</option><option value="Pack Evaluation">Pack Evaluation</option><option value="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '</tr>';
+    
+                    return html;
+                }
+    
+                var tableBody = $('#info_product_material_details tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
     </script>
+    
     <!-- --------------------------------grid-2--------------------------->
     <script>
         $(document).ready(function() {
@@ -179,6 +238,8 @@
         $(document).ready(function() {
             $('#products_details').click(function(e) {
                 function generateTableRow(serialNumber) {
+                    var currentDate = new Date().toISOString().split('T')[0]; 
+
                     var html =
                         '<tr>' +
                             '<td><input disabled type="text" name="products_details['+ serialNumber +'][serial]" value="' + serialNumber +
@@ -190,7 +251,7 @@
                                 '<div class="group-input input-date">' +
                                 '<div class="calenderauditee">' +
                                 '<input type="text" readonly id="sampled_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                                '<input type="date" name="products_details[' + serialNumber + '][sampled_on]" value="" class="hide-input" oninput="handleDateInput(this, \'sampled_on' + serialNumber + '\')">' +
+                                '<input type="date" name="products_details[' + serialNumber + '][sampled_on]" value="" class="hide-input" oninput="handleDateInput(this, \'sampled_on' + serialNumber + '\')" max="' + currentDate + '">' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -201,7 +262,7 @@
                                 '<div class="group-input input-date">' +
                                 '<div class="calenderauditee">' +
                                 '<input type="text" readonly id="analyzed_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                                '<input type="date" name="products_details[' + serialNumber + '][analyzed_on]" value="" class="hide-input" oninput="handleDateInput(this, \'analyzed_on' + serialNumber + '\')">' +
+                                '<input type="date" name="products_details[' + serialNumber + '][analyzed_on]" value="" class="hide-input" oninput="handleDateInput(this, \'analyzed_on' + serialNumber + '\')" max="' + currentDate + '">' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -211,7 +272,7 @@
                                 '<div class="group-input input-date">' +
                                 '<div class="calenderauditee">' +
                                 '<input type="text" readonly id="observed_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                                '<input type="date" name="products_details[' + serialNumber + '][observed_on]" value="" class="hide-input" oninput="handleDateInput(this, \'observed_on' + serialNumber + '\')">' +
+                                '<input type="date" name="products_details[' + serialNumber + '][observed_on]" value="" class="hide-input" oninput="handleDateInput(this, \'observed_on' + serialNumber + '\')" max="' + currentDate + '">' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -245,7 +306,7 @@
                                 '<div class="group-input input-date">' +
                                 '<div class="calenderauditee">' +
                                 '<input type="text" readonly id="calibrated_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                                '<input type="date" name="products_details[' + serialNumber + '][calibrated_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibrated_on' + serialNumber + '\')">' +
+                                '<input type="date" name="instrument_detail[' + serialNumber + '][calibrated_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibrated_on' + serialNumber + '\')">' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -255,7 +316,7 @@
                                 '<div class="group-input input-date">' +
                                 '<div class="calenderauditee">' +
                                 '<input type="text" readonly id="calibratedduedate_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                                '<input type="date" name="products_details[' + serialNumber + '][calibratedduedate_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibratedduedate_on' + serialNumber + '\')">' +
+                                '<input type="date" name="instrument_detail[' + serialNumber + '][calibratedduedate_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibratedduedate_on' + serialNumber + '\')">' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -384,7 +445,7 @@
     <div class="form-field-head">
         <div class="division-bar pt-3">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / OOS/OOT
+            {{ Helpers::getDivisionName($data->division_id) }}/OOS/OOT
         </div>
     </div>
 
@@ -408,7 +469,7 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
                     @endif
                     
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
                     <button class="cctablinks button1" style="display:none;" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
                     <button class="cctablinks button2" style="display:none;" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
@@ -417,22 +478,22 @@
                     <button class="cctablinks button5" style="display:none;" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
                     <button class="cctablinks button6" style="display:none;" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
                    
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm42')">Phase IB Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm33')">Phase IB HOD Primary</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm34')">Phase IB CQA/QA</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm35')">Phase IB CQAH/QAH</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm33')">Phase IB HOD Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm34')">Phase IB CQA/QA Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm35')">Phase IB CQAH/QAH Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II A Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm36')">Phase II A HOD Primary</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm37')">Phase II A CQA/QA</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm38')">Phase II A QAH/CQAH</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm36')">Phase II A HOD Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm37')">Phase II A CQA/QA Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm38')">Phase II A QAH/CQAH Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm43')">Phase II B Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Primary</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH Review</button>
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
                 </div>
@@ -440,8 +501,10 @@
                  <div id="OOS_Micro_Buttons" style="display: none;">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm27')">HOD Primary Review</button>
+                    @if ($data->Stage == 3)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
+                    @endif
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
                     <button class="cctablinks button7" style="display:none;" onclick="openCity(event, 'CCForm50')">Checklist - Bacterial Endotoxin Test</button>
                     <button class="cctablinks button8" style="display:none;" onclick="openCity(event, 'CCForm51')">Checklist - Sterility</button>
@@ -449,22 +512,22 @@
                     <button class="cctablinks button10" style="display:none;"  onclick="openCity(event, 'CCForm53')">Checklist - Microbial assay</button>
                     <button class="cctablinks button11" style="display:none;"  onclick="openCity(event, 'CCForm54')">Checklist - Environmental Monitoring</button>
                     <button class="cctablinks button12" style="display:none;"  onclick="openCity(event, 'CCForm55')">Checklist - Media Suitability Test</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm42')">Phase IB Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm33')">Phase IB HOD Primary</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm34')">Phase IB CQA/QA</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm35')">Phase IB CQAH/QAH</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm33')">Phase IB HOD Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm34')">Phase IB CQA/QA Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm35')">Phase IB CQAH/QAH Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II A Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm36')">Phase II A HOD Primary</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm37')">Phase II A CQA/QA</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm38')">Phase II A QAH/CQAH</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm36')">Phase II A HOD Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm37')">Phase II A CQA/QA Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm38')">Phase II A QAH/CQAH Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm43')">Phase II B Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Primary</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH Review</button>
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal</button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
                 </div> 
@@ -474,7 +537,7 @@
                     @if ($data->stage == 3)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
                     @endif                    
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
                     <button class="cctablinks button1" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
                     <button class="cctablinks button2" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
@@ -482,13 +545,13 @@
                     <button class="cctablinks button4" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
                     <button class="cctablinks button5" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
                     <button class="cctablinks button6" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm42')">Phase IB Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm33')">Phase IB HOD Primary</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm34')">Phase IB CQA/QA</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm35')">Phase IB CQAH/QAH</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm33')">Phase IB HOD Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm34')">Phase IB CQA/QA Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm35')">Phase IB CQAH/QAH Review</button>
               
                     <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
                 </div> 
@@ -590,7 +653,7 @@
             <div id="CCForm27" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Hod Primary Review
                     </div>
                     <div class="row">
                         <div class="col-md-12 mb-3">
@@ -599,10 +662,9 @@
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
-                                <textarea 
-                                    name="hod_remark1" 
+                                <textarea name="hod_remark1" 
                                     class="form-control {{$errors->has('hod_remark1') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 2 ? 'required' : 'disabled' }}>{{$data->hod_remark1}}</textarea>
+                                    {{ $data->stage == 2 ? 'required' : 'readonly' }}>{{$data->hod_remark1}}</textarea>
                                 @if($errors->has('hod_remark1'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark1') }}
@@ -613,7 +675,7 @@
                     
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Audit Attachments">HOD Attachment</label>
+                                <label for="Audit Attachments">HOD Primary Attachment</label>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
                                 </small>
@@ -639,7 +701,7 @@
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="hod_attachment1[]" 
                                             oninput="addMultipleFiles(this, 'hod_attachment1')" 
-                                            {{ $data->stage == 2 ? '' : 'disabled' }} multiple>
+                                            {{ $data->stage == 2 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -662,7 +724,7 @@
             <div id="CCForm28" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        CQA/QA Head
                     </div>
                     <div class="row">
                          <!-- Others Field -->
@@ -676,7 +738,7 @@
                                 <textarea 
                                     name="QA_Head_remark1" 
                                     class="form-control {{$errors->has('QA_Head_remark1') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 3 ? '' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark1}}</textarea>
+                                    {{ $data->stage == 3 ? '' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark1}}</textarea>
                                     @if($errors->has('QA_Head_remark1'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark1') }}
@@ -712,7 +774,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment1[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment1')" {{$data->stage == 1 || $data->stage == 2 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment1')" {{$data->stage == 1 || $data->stage == 2 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -736,21 +798,21 @@
             <div id="CCForm29" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        CQA/QA Head Primary Review
                     </div>
                     <div class="row">
                          <!-- Others Field -->
                         
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">CQA/QA Head Primary Remark <span class="text-danger">*</span></label>
+                                <label for="Initiator Group">CQA/QA Head Remark <span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
                                 <textarea 
                                     name="QA_Head_primary_remark1" 
                                     class="form-control {{$errors->has('QA_Head_primary_remark1') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 4 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark1}}</textarea>
+                                    {{ $data->stage == 4 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark1}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark1'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_primary_remark1') }}
@@ -786,7 +848,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_primary_attachment1[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment1')" {{ $data->stage == 4 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment1')" {{ $data->stage == 4 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -1022,6 +1084,7 @@
                                     "While performing profilling ,  Does sample withdrawl at specific timeline as per STP?",
                                     "Was Glassware used as per STP?",
                                     "Was bowl temperature found 37°C ± 0.5 before start of analysis?",
+                                    "Is method validation/verification available ?",
                                 );
                         @endphp
     
@@ -1140,6 +1203,9 @@
                                  "Is there any system back pressure/Leakage observed during analysis?",
                                  "Is system suitability result as per acceptance criteria?",
                                  "Is there any hump interfering to peak integration, spilt peak observed?",
+                                 "Is peak integrated properly?",
+                                 "Is there any anomalous chromatographic elution pattern observed?",
+                                 "Were environmental condition within properly?",
                                  "Is Instrument calibrated state ?  ",
                                  "Was cylinder level good before start of analysis?",
                                  "Was instrument connected to properly during analysis?(Communication failure)",
@@ -1160,6 +1226,7 @@
                                  "Was chemical used of GC Grade?",
                                  "Was calibrated micropipettes used for analysis?",
                                  "Was tips sterilized before used?",
+                                 "Is method validation/verification available ?"
                              );
                      @endphp
                      <div class="col-12">
@@ -1646,16 +1713,576 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="button-block">
-                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                            
-                            @else
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            @endif
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
+                    </div>
+
+                    <div class="sub-head">Sample receiving & verification in lab</div>
+
+                    @php
+                        $check_sample_receiving_vars = [
+                        [
+                        'question' => "Was the sample container (Physical integrity) verified at the time of sample receipt?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Were clean and dehydrogenated sampling accessories and glassware used for sampling?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Was the correct quantity of the sample withdrawn ?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Was there any discrepancy observed during sampling ?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Was the sample container (Physical integrity) checked before testing ? ",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                        ],
+                        ];
+
+                @endphp
+                 <div class="col-12">
+                    <div class="group-input">
+                        <div class="why-why-chart">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 5%;">Sr.No.</th>
+                                        <th style="width: 40%;">Question</th>
+                                        <th style="width: 20%;">Response</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $main_question_index = 1.0;
+                                        $sub_question_index = 0;
+                                    @endphp
+                                    @foreach ($check_sample_receiving_vars as $index => $review_item)
+                                        @php
+                                            if ($review_item['is_sub_question']) {
+                                                $sub_question_index++;
+                                            } else {
+                                                $sub_question_index = 0;
+                                                $main_question_index += 0.1;
+                                            }
+                                        @endphp
+                                        <tr>
+                                            <td class="flex text-center">
+                                                {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                            </td>
+                                            <td>{{ $review_item['question'] }}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="sample_receiving_var[{{ $index }}][response]"
+                                                               value="{{ Helpers::getChemicalGridData($data, 'sample_receiving_var', true, 'response', true, $index) ?? '' }}"
+                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="sample_receiving_var[{{ $index }}][response]"
+                                                               value="{{ Helpers::getChemicalGridData($data, 'sample_receiving_var', true, 'response', true, $index) ?? '' }}"
+                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                        <select name="sample_receiving_var[{{ $index }}][response]"
+                                                                id="response"
+                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ Helpers::getChemicalGridData($data, 'sample_receiving_var', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ Helpers::getChemicalGridData($data, 'sample_receiving_var', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'sample_receiving_var', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        </select>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="sample_receiving_var[{{ $index }}][remark]"
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'sample_receiving_var', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
+                    </div>
+                </div>
+
+                <div class="sub-head">Method /procedure used during analysis</div>
+
+                                @php
+                                $check_method_procedure_during_analysis = [
+                                [
+                                'question' => "Was correct applicable specification/Test procedure/MOA/ used for analysis ?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Verified specification/Test procedure/MOA No.",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was the test procedure followed as per method validation ?",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was the any change in the validated change method ?if yes, was test performed with the new validated method ?",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was BET reagents (Lysate ,CSE,LRW and Buffer) procured from the approved vender ?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was lysate and CSE stored at the recommended temp.and duration? Storage condition:",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were all product /reagents contact parts of BET testing (Tips/Accessories /Sample Container) depayrogenated ?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Assay tube /Batch No.",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Expiry date:",
+                                'is_sub_question' => false,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "Tipe lot /Batch No.",
+                                'is_sub_question' => false,
+                                'input_type' => 'number'
+                                ],
+                                [
+                                'question' => "Expiry date:",
+                                'is_sub_question' => false,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "Was the test done at correct MVD as per validated method ?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were calculation of MVD/Test dilution done correctly?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were correct dilutions prepared ?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was labeled claim lysate sensitivity checked before the use of the lot?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were all reagents (LRW/CSE and Lysate) used in the test with in the expiry?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "LRW expiry date?",
+                                'is_sub_question' => false,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "CSE expiry date?",
+                                'is_sub_question' => false,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "Lysate expiry date?",
+                                'is_sub_question' => false,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "Buffer expiry date?",
+                                'is_sub_question' => false,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "Was рН of the test sample/dilution verified?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were appropriate рН strip /measuring device used, which provides the least count measurement of test sample/dilution wherever applicable?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were proper incubation conditions followed ?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+
+                                [
+                                'question' => "Was there any spillage that occurred during the vortexing of dilutions?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were the results of positive, negative and test controls found satisfactory?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Is the test incubator /heating block kept on a vibration –free surface ?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were measures established and implemented to prevent contamination from personal material, material during testing reviewed and found satisfactory? List the measures:",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                ]
+                                @endphp
+                                
+                               
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="group-input">
+                                <div class="why-why-chart">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">Sr.No.</th>
+                                                <th style="width: 40%;">Question</th>
+                                                <th style="width: 20%;">Response</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $main_question_index = 1.0;
+                                                $sub_question_index = 0;
+                                            @endphp
+                                            @foreach ($check_method_procedure_during_analysis as $index => $review_item)
+                                                @php
+                                                    if ($review_item['is_sub_question']) {
+                                                        $sub_question_index++;
+                                                    } else {
+                                                        $sub_question_index = 0;
+                                                        $main_question_index += 0.1;
+                                                    }
+                                                @endphp
+                                                <tr>
+                                                    <td class="flex text-center">
+                                                        {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                    </td>
+                                                    <td>{{ $review_item['question'] }}</td>
+                                                    <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                            @if ($review_item['input_type'] == 'date')
+                                                                <input type="date" name="method_used_during_analysis[{{ $index }}][response]"
+                                                                       value="{{ Helpers::getChemicalGridData($data, 'method_used_during_analysis', true, 'response', true, $index) ?? '' }}"
+                                                                       style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            @elseif ($review_item['input_type'] == 'number')
+                                                                <input type="number" name="method_used_during_analysis[{{ $index }}][response]"
+                                                                       value="{{ Helpers::getChemicalGridData($data, 'method_used_during_analysis', true, 'response', true, $index) ?? '' }}"
+                                                                       style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            @else
+                                                                <select name="method_used_during_analysis[{{ $index }}][response]"
+                                                                        id="response"
+                                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                    <option value="">Select an Option</option>
+                                                                    <option value="Yes" {{ Helpers::getChemicalGridData($data, 'method_used_during_analysis', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                    <option value="No" {{ Helpers::getChemicalGridData($data, 'method_used_during_analysis', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                    <option value="N/A" {{ Helpers::getChemicalGridData($data, 'method_used_during_analysis', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                </select>
+                                                            @endif
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="method_used_during_analysis[{{ $index }}][remark]"
+                                                                      style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'method_used_during_analysis', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-head">Instrument/Equipment Details</div>
+
+                        @php
+                        $check_Instrument_Equipment_Details = [
+                            [
+                            'question' => "Was the equipment used, calibrated/qualified and within the specified range? ",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Dry block /Heating block equipment ID:",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Calibration date & Next due date:",
+                            'is_sub_question' => false,
+                            'input_type' => 'date'
+                            ],
+                            [
+                            'question' => "Pipettes ID:",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Calibration date and Next due date:",
+                            'is_sub_question' => false,
+                            'input_type' => 'date'
+                            ],
+                            [
+                            'question' => "Refrigerator (2-8̊ C) ID:",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Validation date and next due date:",
+                            'is_sub_question' => false,
+                            'input_type' => 'date'
+                            ],
+                            [
+                            'question' => "Dehydrogenation over ID:",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Validation date and next due date:",
+                            'is_sub_question' => false,
+                            'input_type' => 'date'
+                            ],
+                            [
+                            'question' => "Did the dehydrogenation cycle challenge with endotoxin and found satisfactory during validation?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Was the depyrogenation done as per the validated load pattern?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Was there any power failure noticed during the incubation of samples in the heating block?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Was assay tubes incubated in the dry block (time and temp).as specified in the procedure?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Were any other samples tested along with this sample?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "If yes, whether those sample’s results found satisfactory?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Were any other sample’s analyzed on the same time on the same instruments ?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "If yes, what were the results of other Batches:",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            ]
+                            @endphp
+                        <div class="col-12">
+                            <div class="group-input">
+                                <div class="why-why-chart">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">Sr.No.</th>
+                                                <th style="width: 40%;">Question</th>
+                                                <th style="width: 20%;">Response</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $main_question_index = 1.0;
+                                                $sub_question_index = 0;
+                                            @endphp
+                                            @foreach ($check_Instrument_Equipment_Details as $index => $review_item)
+                                                @php
+                                                    if ($review_item['is_sub_question']) {
+                                                        $sub_question_index++;
+                                                    } else {
+                                                        $sub_question_index = 0;
+                                                        $main_question_index += 0.1;
+                                                    }
+                                                @endphp
+                                                <tr>
+                                                    <td class="flex text-center">
+                                                        {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                    </td>
+                                                    <td>{{ $review_item['question'] }}</td>
+                                                    <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                            @if ($review_item['input_type'] == 'date')
+                                                                <input type="date" name="instrument_equipment_detailss[{{ $index }}][response]"
+                                                                       value="{{ Helpers::getChemicalGridData($data, 'instrument_equipment_detailss', true, 'response', true, $index) ?? '' }}"
+                                                                       style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            @elseif ($review_item['input_type'] == 'number')
+                                                                <input type="number" name="instrument_equipment_detailss[{{ $index }}][response]"
+                                                                       value="{{ Helpers::getChemicalGridData($data, 'instrument_equipment_detailss', true, 'response', true, $index) ?? '' }}"
+                                                                       style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            @else
+                                                                <select name="instrument_equipment_detailss[{{ $index }}][response]"
+                                                                        id="response"
+                                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                    <option value="">Select an Option</option>
+                                                                    <option value="Yes" {{ Helpers::getChemicalGridData($data, 'instrument_equipment_detailss', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                    <option value="No" {{ Helpers::getChemicalGridData($data, 'instrument_equipment_detailss', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                    <option value="N/A" {{ Helpers::getChemicalGridData($data, 'instrument_equipment_detailss', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                </select>
+                                                            @endif
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="instrument_equipment_detailss[{{ $index }}][remark]"
+                                                                      style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'instrument_equipment_detailss', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-head">Results and Calculation</div>
+
+                        @php
+                        $Results_and_Calculation = [
+                            [
+                            'question' => "Were results taken properly ?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Raw data checked By……………….",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Was formula dilution factor used for calculating the results corrected?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            ];
+
+                    @endphp
+
+                        <div class="col-12">
+                            <div class="group-input">
+                                <div class="why-why-chart">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">Sr.No.</th>
+                                                <th style="width: 40%;">Question</th>
+                                                <th style="width: 20%;">Response</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $main_question_index = 1.0;
+                                                $sub_question_index = 0;
+                                            @endphp
+                                            @foreach ($Results_and_Calculation as $index => $review_item)
+                                                @php
+                                                    if ($review_item['is_sub_question']) {
+                                                        $sub_question_index++;
+                                                    } else {
+                                                        $sub_question_index = 0;
+                                                        $main_question_index += 0.1;
+                                                    }
+                                                @endphp
+                                                <tr>
+                                                    <td class="flex text-center">
+                                                        {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                    </td>
+                                                    <td>{{ $review_item['question'] }}</td>
+                                                    <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                            @if ($review_item['input_type'] == 'date')
+                                                                <input type="date" name="result_and_calculation[{{ $index }}][response]"
+                                                                       value="{{ Helpers::getChemicalGridData($data, 'result_and_calculation', true, 'response', true, $index) ?? '' }}"
+                                                                       style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            @elseif ($review_item['input_type'] == 'number')
+                                                                <input type="number" name="result_and_calculation[{{ $index }}][response]"
+                                                                       value="{{ Helpers::getChemicalGridData($data, 'result_and_calculation', true, 'response', true, $index) ?? '' }}"
+                                                                       style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            @else
+                                                                <select name="result_and_calculation[{{ $index }}][response]"
+                                                                        id="response"
+                                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                    <option value="">Select an Option</option>
+                                                                    <option value="Yes" {{ Helpers::getChemicalGridData($data, 'result_and_calculation', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                    <option value="No" {{ Helpers::getChemicalGridData($data, 'result_and_calculation', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                    <option value="N/A" {{ Helpers::getChemicalGridData($data, 'result_and_calculation', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                </select>
+                                                            @endif
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="result_and_calculation[{{ $index }}][remark]"
+                                                                      style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'result_and_calculation', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="button-block">
+                                @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                                
+                                @else
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                @endif
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -1987,7 +2614,7 @@
 
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Review of Media, Buffer, Standards preparation & test accessories </div>
+                    Checklist For Review of Media, Buffer, Standards preparation & test accessories </div>
                                 @php
                                 $Review_of_Media_Buffer_Standards_prepar = [
                                 [
@@ -2279,6 +2906,11 @@
                         ],
                         [
                         'question' => "Were there any spillages in the area?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Was viable environmental monitoring results of area and LAF within limit?",
                         'is_sub_question' => true,
                         'input_type' => 'text'
                         ]
@@ -4139,7 +4771,7 @@
                                             'input_type' => 'date'
                                         ],
                                         [
-                                            'question' => "Did appropriate size wells prepare in the media plates? (Applicable for Antibiotics –Microbial Assay)",
+                                            'question' => "Did appropriate size wells prepare in the media plates?",
                                             'is_sub_question' => true,
                                             'input_type' => 'text'
                                         ],
@@ -7119,13 +7751,13 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Outcome of Phase IA investigation<span class="text-danger">*</span></label>
-                                <textarea id="outcome_phase_IA" name="outcome_phase_IA" {{ $data->stage == 9 ? 'required' : 'disabled' }}>{{ $data->outcome_phase_IA }} </textarea>
+                                <textarea id="outcome_phase_IA" name="outcome_phase_IA" {{ $data->stage == 9 ? 'required' : 'readonly' }}>{{ $data->outcome_phase_IA }} </textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Reason for proceeding to Phase IB investigation</label>
-                                <textarea id="reason_for_proceeding" name="reason_for_proceeding" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->reason_for_proceeding }}</textarea>
+                                <textarea id="reason_for_proceeding" name="reason_for_proceeding" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->reason_for_proceeding }}</textarea>
                             </div>
                         </div>
                         @php
@@ -7145,7 +7777,7 @@
                                 );
                         @endphp
                         <div class="col-12">
-                                <label style="font-weight: bold; for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label>
+                                <label style="font-weight: bold; for="Audit Attachments">Phase IB investigation Checklist</label>
                             <div class="group-input">
                                 <div class="why-why-chart mx-auto" style="width: 100%">
                                     <table class="table table-bordered ">
@@ -7191,16 +7823,16 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Summary of Review</label>
-                                <textarea id="summaryy_of_review" name="summaryy_of_review" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->summaryy_of_review }}</textarea>
+                                <textarea id="summaryy_of_review" name="summaryy_of_review" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->summaryy_of_review }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Probable Cause Identification</label>
-                                <textarea id="Probable_cause_iden" name="Probable_cause_iden" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Probable_cause_iden }}</textarea>
+                                <textarea id="Probable_cause_iden" name="Probable_cause_iden" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Probable_cause_iden }}</textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        {{-- <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Proposal for Phase IB hypothesis</label>
                                     <select name="proposal_for_hypothesis_IB" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
@@ -7212,23 +7844,46 @@
                                     <option value="Other" {{ $data->proposal_for_hypothesis_IB == 'Other' ? 'selected' : '' }}>Other</option>
                                     </select>
                             </div>
+                        </div> --}}
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="checklists">Proposal for Phase IB hypothesis</label>
+                                @php
+                                $ChecklistData = $data->proposal_for_hypothesis_IB;
+                            
+                                if (is_array($ChecklistData) && array_key_exists('0', $ChecklistData) && is_string($ChecklistData[0]) && !empty($ChecklistData[0])) {
+                                    $selectedChecklist = explode(',', $ChecklistData[0]);
+                                } else {
+                                    $selectedChecklist = is_array($ChecklistData) ? $ChecklistData : [];
+                                }
+                            @endphp
+                                <select multiple id="reference_record" name="proposal_for_hypothesis_IB[]">
+                                    <option value="">--Select---</option>
+                                    <option value="Re-injection of the original vial" @if (in_array('Re-injection of the original vial', $selectedChecklist)) selected @endif>Re-injection of the original vial</option>
+                                    <option value="Re-filtration and Injection from final dilution" @if (in_array('Re-filtration and Injection from final dilution', $selectedChecklist)) selected @endif>Re-filtration and Injection from final dilution</option>
+                                    <option value="Re-dilution from the tock solution and injection" @if (in_array('Re-dilution from the tock solution and injection', $selectedChecklist)) selected @endif>Re-dilution from the tock solution and injection</option>
+                                    <option value="Re-sonication / re-shaking due to probable incomplete solubility and analyze" @if (in_array('Re-sonication / re-shaking due to probable incomplete solubility and analyze', $selectedChecklist)) selected @endif>Re-sonication / re-shaking due to probable incomplete solubility and analyze</option>
+                                    <option value="Other" @if (in_array('Other', $selectedChecklist)) selected @endif>Other</option>
+                                   
+                                </select>
+                            </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Others</label>
-                                <textarea id="proposal_for_hypothesis_others" name="proposal_for_hypothesis_others" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->proposal_for_hypothesis_others }}</textarea>
+                                <textarea id="proposal_for_hypothesis_others" name="proposal_for_hypothesis_others" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->proposal_for_hypothesis_others }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Details of results (Including original OOS results for side by side comparison)</label>
-                                <textarea id="details_of_result" name="details_of_result" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->details_of_result }}</textarea>
+                                <textarea id="details_of_result" name="details_of_result" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->details_of_result }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Probable Cause Identified in Phase IB investigation</label>
-                                    <select name="Probable_Cause_Identified" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
+                                    <select name="Probable_Cause_Identified" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->Probable_Cause_Identified == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->Probable_Cause_Identified == 'No' ? 'selected' : '' }}>No</option>
@@ -7238,25 +7893,25 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Any other Comments/ Probable Cause Evidence</label>
-                                <textarea id="Any_other_Comments" name="Any_other_Comments" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Any_other_Comments }}</textarea>
+                                <textarea id="Any_other_Comments" name="Any_other_Comments" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Any_other_Comments }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Proposal for Hypothesis testing to confirm Probable Cause identified</label>
-                                <textarea id="Proposal_for_Hypothesis" name="Proposal_for_Hypothesis" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Proposal_for_Hypothesis }}</textarea>
+                                <textarea id="Proposal_for_Hypothesis" name="Proposal_for_Hypothesis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Proposal_for_Hypothesis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Summary of Hypothesis</label>
-                                <textarea id="Summary_of_Hypothesis" name="Summary_of_Hypothesis" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Summary_of_Hypothesis }}</textarea>
+                                <textarea id="Summary_of_Hypothesis" name="Summary_of_Hypothesis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Summary_of_Hypothesis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Assignable Cause</label>
-                                    <select name="Assignable_Cause" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
+                                    <select name="Assignable_Cause" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Found" {{ $data->Assignable_Cause == 'Found' ? 'selected' : '' }}>Found</option>
                                     <option value="Not Found" {{ $data->Assignable_Cause == 'Not Found' ? 'selected' : '' }}>Not Found</option>
@@ -7266,7 +7921,7 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Types of assignable cause</label>
-                                    <select name="Types_of_assignable" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
+                                    <select name="Types_of_assignable" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Analyst error" {{ $data->Types_of_assignable == 'Analyst error' ? 'selected' : '' }}>Analyst error</option>
                                     <option value="Instrument error" {{ $data->Types_of_assignable == 'Instrument error' ? 'selected' : '' }}>Instrument error</option>
@@ -7279,19 +7934,19 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Others</label>
-                                <textarea id="Types_of_assignable_others" name="Types_of_assignable_others" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Types_of_assignable_others }}</textarea>
+                                <textarea id="Types_of_assignable_others" name="Types_of_assignable_others" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Types_of_assignable_others }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Evaluation of Phase IB investigation Timeline</label>
-                                <textarea id="Evaluation_Timeline" name="Evaluation_Timeline" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Evaluation_Timeline }}</textarea>
+                                <textarea id="Evaluation_Timeline" name="Evaluation_Timeline" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Evaluation_Timeline }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Is Phase IB investigation timeline met</label>
-                                    <select name="timeline_met" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
+                                    <select name="timeline_met" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->timeline_met == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->timeline_met == 'No' ? 'selected' : '' }}>No</option>
@@ -7301,47 +7956,100 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">If No, Justify for timeline extension</label>
-                                <textarea id="timeline_extension" name="timeline_extension" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->timeline_extension }}</textarea>
+                                <textarea id="timeline_extension" name="timeline_extension" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->timeline_extension }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">CAPA applicable</label>
+                                <textarea id="CAPA_applicable" name="CAPA_applicable" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->CAPA_applicable }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="If Others">CAPA applicable</label>
-                                    <select name="CAPA_applicable" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
+                                <label for="If Others">Resampling required</label>
+                                    <select name="resampling_required_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
-                                    <option value="Yes" {{ $data->CAPA_applicable == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                    <option value="No" {{ $data->CAPA_applicable == 'No' ? 'selected' : '' }}>No</option>
+                                    <option value="Yes" {{ $data->resampling_required_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->resampling_required_ib == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="If Others">Repeat testing required </label>
+                                    <select name="repeat_testing_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
+                                    <option value="" >--Select---</option>
+                                    <option value="Yes" {{ $data->repeat_testing_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->repeat_testing_ib == 'No' ? 'selected' : '' }}>No</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Repeat testing plan</label>
-                                <textarea id="Repeat_testing_plan" name="Repeat_testing_plan" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Repeat_testing_plan }}</textarea>
+                                <textarea id="Repeat_testing_plan" name="Repeat_testing_plan" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Repeat_testing_plan }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="If Others">Phase II investigation required</label>
+                                    <select name="phase_ii_inv_req_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
+                                    <option value="" >--Select---</option>
+                                    <option value="Yes" {{ $data->phase_ii_inv_req_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->phase_ii_inv_req_ib == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        {{-- <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="If Others">Production Person</label>
+                                    <select name="production_person_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
+                                    <option value="" >--Select---</option>
+                                    <option value="Yes" {{ $data->production_person_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->production_person_ib == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div> --}}
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Assigned To">Production Person</label>
+                                <select id="choices-multiple-remove" class="choices-multiple-reviewe"
+                                    name="production_person_ib" placeholder="Select Reviewers" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
+                                    <option value="">-- Select --</option>
+                                    @if (!empty(Helpers::getProductionDropdown()))
+                                        @foreach (Helpers::getProductionDropdown() as $listPersone)
+                                            <option value="{{ $listPersone['id'] }}"
+                                                @if ($listPersone['id'] == $data->production_person_ib) selected @endif>
+                                                {{ $listPersone['name'] }}
+                                            </option>
+                                        @endforeach
+                                    @endif
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Repeat analysis method/resampling</label>
-                                <textarea id="Repeat_analysis_method" name="Repeat_analysis_method" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Repeat_analysis_method }}</textarea>
+                                <textarea id="Repeat_analysis_method" name="Repeat_analysis_method" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Repeat_analysis_method }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Details of repeat analysis</label>
-                                <textarea id="Details_repeat_analysis" name="Details_repeat_analysis" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Details_repeat_analysis }}</textarea>
+                                <textarea id="Details_repeat_analysis" name="Details_repeat_analysis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Details_repeat_analysis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Impact assessment</label>
-                                <textarea id="Impact_assessment1" name="Impact_assessment1" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Impact_assessment1 }}</textarea>
+                                <textarea id="Impact_assessment1" name="Impact_assessment1" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Impact_assessment1 }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Conclusion</label>
-                                <textarea id="Conclusion1" name="Conclusion1" {{ $data->stagse == 9 ? '' : 'disabled' }}>{{ $data->Conclusion1 }}</textarea>
+                                <textarea id="Conclusion1" name="Conclusion1" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Conclusion1 }}</textarea>
                             </div>
                         </div>
 
@@ -7363,21 +8071,21 @@
             <div id="CCForm30" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase IA HOD Review
                     </div>
                     <div class="row">
                          <!-- Others Field -->
                         
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase IA HOD Primary Remark<span class="text-danger">*</span></label>
+                                <label for="Initiator Group">Phase IA HOD Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
                                 <textarea 
                                     name="hod_remark2" 
                                     class="form-control {{$errors->has('hod_remark2') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 6 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark2}}</textarea>
+                                    {{ $data->stage == 6 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark2}}</textarea>
                                     @if($errors->has('hod_remark2'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark2') }}
@@ -7388,7 +8096,7 @@
             
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Audit Attachments">Phase IA HOD Primary Attachment</label>
+                                <label for="Audit Attachments">Phase IA HOD Attachment</label>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
                                 </small>
@@ -7413,7 +8121,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="hod_attachment2[]"
-                                            oninput="addMultipleFiles(this, 'hod_attachment2')" {{ $data->stage == 6 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'hod_attachment2')" {{ $data->stage == 6 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7437,7 +8145,7 @@
             <div id="CCForm31" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase IA CQA/QA Review
                     </div>
                     <div class="row">
                          <!-- Others Field -->
@@ -7451,7 +8159,7 @@
                                 <textarea 
                                     name="QA_Head_remark2" 
                                     class="form-control {{$errors->has('QA_Head_remark2') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 7 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark2}}</textarea>
+                                    {{ $data->stage == 7 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark2}}</textarea>
                                     @if($errors->has('QA_Head_remark2'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark2') }}
@@ -7487,7 +8195,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment2[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment2')" {{ $data->stage == 7 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment2')" {{ $data->stage == 7 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7511,21 +8219,21 @@
             <div id="CCForm32" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase IA CQAH/QAH Review
                     </div>
                     <div class="row">
                          <!-- Others Field -->
                        
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">P-IA CQAH/QAH Primary Remark<span class="text-danger">*</span></label>
+                                <label for="Initiator Group">Phase IA CQAH/QAH Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
                                 <textarea 
                                     name="QA_Head_primary_remark2" 
                                     class="form-control {{$errors->has('QA_Head_primary_remark2') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 8 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark2}}</textarea>
+                                    {{ $data->stage == 8 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark2}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark2'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_primary_remark2') }}
@@ -7536,7 +8244,7 @@
             
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Audit Attachments">P-IA CQAH/QAH Primary Attachment</label>
+                                <label for="Audit Attachments">Phase IA CQAH/QAH Attachment</label>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
                                 </small>
@@ -7561,7 +8269,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_primary_attachment2[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment2')" {{ $data->stage == 8 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment2')" {{ $data->stage == 8 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7585,21 +8293,21 @@
             <div id="CCForm33" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase IB HOD Review
                     </div>
                     <div class="row">
                          <!-- Others Field -->
                          
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase IB HOD Primary Remark<span class="text-danger">*</span></label>
+                                <label for="Initiator Group">Phase IB HOD Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
                                 <textarea 
                                     name="hod_remark3" 
                                     class="form-control {{$errors->has('hod_remark3') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 10 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark3}}</textarea>
+                                    {{ $data->stage == 10 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark3}}</textarea>
                                     @if($errors->has('hod_remark3'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark3') }}
@@ -7610,7 +8318,7 @@
             
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Audit Attachments">Phase IB HOD Primary Attachment</label>
+                                <label for="Audit Attachments">Phase IB HOD Attachment</label>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
                                 </small>
@@ -7635,7 +8343,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="hod_attachment3[]"
-                                            oninput="addMultipleFiles(this, 'hod_attachment3')" {{ $data->stage == 10 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'hod_attachment3')" {{ $data->stage == 10 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7659,7 +8367,7 @@
             <div id="CCForm34" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase IB CQA/QA Review
                     </div>
                     <div class="row">
                          <!-- Others Field -->
@@ -7673,7 +8381,7 @@
                                 <textarea 
                                     name="QA_Head_remark3" 
                                     class="form-control {{$errors->has('QA_Head_remark3') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 11 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark3}}</textarea>
+                                    {{ $data->stage == 11 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark3}}</textarea>
                                     @if($errors->has('QA_Head_remark3'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark3') }}
@@ -7709,7 +8417,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment3[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment3')" {{ $data->stage == 11 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment3')" {{ $data->stage == 11 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7733,21 +8441,42 @@
             <div id="CCForm35" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase IB CQAH/QAH Review
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-
+                         <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="If Others">Escalation required</label>
+                                    <select name="escalation_required" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 12 ? '' : 'readonly' }}>
+                                    <option value="" >--Select---</option>
+                                    <option value="Yes" {{ $data->escalation_required == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->escalation_required == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Notification details</label>
+                                <textarea id="notification_ib" name="notification_ib" {{ $data->stage == 12 ? '' : 'readonly' }}>{{ $data->notification_ib }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Justification details</label>
+                                <textarea id="justification_ib" name="justification_ib" {{ $data->stage == 12 ? '' : 'readonly' }}>{{ $data->justification_ib }}</textarea>
+                            </div>
+                        </div>
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">P-IB CQAH/QAH Remark<span class="text-danger">*</span></label>
+                                <label for="Initiator Group">Phase IB CQAH/QAH Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
                                 <textarea 
                                     name="QA_Head_primary_remark3" 
                                     class="form-control {{$errors->has('QA_Head_primary_remark3') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 12 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark3}}</textarea>
+                                    {{ $data->stage == 12 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark3}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark3'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_primary_remark3') }}
@@ -7758,7 +8487,7 @@
             
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Audit Attachments">P-IB CQAH/QAH Attachment</label>
+                                <label for="Audit Attachments">Phase IB CQAH/QAH Attachment</label>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
                                 </small>
@@ -7783,7 +8512,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_primary_attachment3[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment3')" {{ $data->stage == 12 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment3')" {{ $data->stage == 12 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7809,7 +8538,7 @@
             <div id="CCForm36" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase II A HOD Primary
                     </div>
                     <div class="row">
                          <!-- Others Field -->
@@ -7823,7 +8552,7 @@
                                 <textarea 
                                     name="hod_remark4" 
                                     class="form-control {{$errors->has('hod_remark4') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 14 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark4}}</textarea>
+                                    {{ $data->stage == 14 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark4}}</textarea>
                                     @if($errors->has('hod_remark4'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark4') }}
@@ -7859,7 +8588,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="hod_attachment4[]"
-                                            oninput="addMultipleFiles(this, 'hod_attachment4')" {{ $data->stage == 14 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'hod_attachment4')" {{ $data->stage == 14 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7883,7 +8612,7 @@
             <div id="CCForm37" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase II A CQA/QA
                     </div>
                     <div class="row">
                          <!-- Others Field -->
@@ -7891,14 +8620,14 @@
                          
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase II A HOD Primary Remark<span class="text-danger">*</span></label>
+                                <label for="Initiator Group">Phase II A CQA/QA Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
                                 <textarea 
                                     name="QA_Head_remark4" 
                                     class="form-control {{$errors->has('QA_Head_remark4') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 15 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark4}}</textarea>
+                                    {{ $data->stage == 15 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark4}}</textarea>
                                     @if($errors->has('QA_Head_remark4'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark4') }}
@@ -7934,7 +8663,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment4[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment4')" {{ $data->stage == 15 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment4')" {{ $data->stage == 15 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7958,21 +8687,21 @@
             <div id="CCForm38" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase II A QAH/CQAH Review
                     </div>
                     <div class="row">
                          <!-- Others Field -->
                         
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">P-II A QAH/CQAH Remark<span class="text-danger">*</span></label>
+                                <label for="Initiator Group">Phase II A QAH/CQAH Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
                                 <textarea 
                                     name="QA_Head_primary_remark4" 
                                     class="form-control {{$errors->has('QA_Head_primary_remark4') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 16 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark4}}</textarea>
+                                    {{ $data->stage == 16 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark4}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark4'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_primary_remark4') }}
@@ -7983,7 +8712,7 @@
             
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Audit Attachments">P-II A QAH/CQAH Attachment</label>
+                                <label for="Audit Attachments">Phase II A QAH/CQAH Attachment</label>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
                                 </small>
@@ -8008,7 +8737,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_primary_attachment4[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment4')" {{ $data->stage == 16 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment4')" {{ $data->stage == 16 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -8032,33 +8761,90 @@
             <div id="CCForm43" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase IIB Investigation
                     </div>
                     <div class="row">
                          <!-- Others Field -->
                          <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
+                                <label for="If Others">Summary Of Investigation<span class="text-danger">*</span></label>
+                                <textarea id="Summary_Of_Inv_IIB" name="Summary_Of_Inv_IIB" {{ $data->stage == 17 ? 'required' : 'readonly' }}>{{ $data->Summary_Of_Inv_IIB }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Product/Material Name">CAPA Required</label>
+                                <select name="capa_required_IIB"  {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'readonly' }}>
+                                    <option value="" {{ $data->capa_required_IIB == '0' ? 'selected' : ''
+                                        }}>--Select---</option>
+                                    <option value="yes" {{ $data->capa_required_IIB == 'yes' ? 'selected' : ''
+                                        }}>Yes</option>
+                                    <option value="no" {{ $data->capa_required_IIB == 'no' ? 'selected' : '' }}>No
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Agenda">Reference CAPA No.</label>
+                                <input  {{Helpers::isOOSChemical($data->stage)}} type="text" value="{{$data->reference_capa_IIB}}" name="reference_capa_IIB" {{ $data->stage == 17 ? '' : 'readonly' }}>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Report Attachments">Resampling required IIB Inv.</label>
+                                <select name="resampling_req_IIB" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'readonly' }}>
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="Yes" {{ $data->resampling_req_IIB === 'Yes' ? 'selected' :
+                                            '' }}>Yes</option>
+                                    <option value="No" {{ $data->resampling_req_IIB === 'No' ? 'selected' : ''
+                                            }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Repeat testing required IIB Inv.</label>
+                                <select name="Repeat_testing_IIB" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'readonly' }}>
+                                   <option value="" {{ $data->Repeat_testing_IIB == '0' ? 'selected' : ''
+                                        }}>Enter Your Selection Here</option>
+                                    <option value="yes" {{ $data->Repeat_testing_IIB == 'yes' ?
+                                        'selected' : '' }}>Yes</option>
+                                    <option value="no" {{ $data->Repeat_testing_IIB == 'no' ?
+                                        'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Results Of Repeat testing required IIB Inv.</label>
+                                <textarea id="result_of_rep_test_IIB" name="result_of_rep_test_IIB" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->result_of_rep_test_IIB }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
                                 <label for="If Others">Laboratory Investigation Hypothesis details<span class="text-danger">*</span></label>
-                                <textarea id="Laboratory_Investigation_Hypothesis" name="Laboratory_Investigation_Hypothesis" {{ $data->stage == 17 ? 'required' : 'disabled' }}>{{ $data->Laboratory_Investigation_Hypothesis }}</textarea>
+                                <textarea id="Laboratory_Investigation_Hypothesis" name="Laboratory_Investigation_Hypothesis" {{ $data->stage == 17 ? 'required' : 'readonly' }}>{{ $data->Laboratory_Investigation_Hypothesis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Outcome of Laboratory Investigation</label>
-                                <textarea id="Outcome_of_Laboratory" name="Outcome_of_Laboratory" {{ $data->stage == 17 ? '' : 'disabled' }}>{{ $data->Outcome_of_Laboratory }}</textarea>
+                                <textarea id="Outcome_of_Laboratory" name="Outcome_of_Laboratory" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->Outcome_of_Laboratory }}</textarea>
                             </div>
                         </div>
             
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Evaluation</label>
-                                <textarea id="Evaluation_IIB" name="Evaluation_IIB" {{ $data->stage == 17 ? '' : 'disabled' }}>{{ $data->Evaluation_IIB }}</textarea>
+                                <textarea id="Evaluation_IIB" name="Evaluation_IIB" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->Evaluation_IIB }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Assignable Cause</label>
-                                    <select name="Assignable_Cause111" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'disabled' }}>
+                                    <select name="Assignable_Cause111" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Found" {{ $data->Assignable_Cause111 == 'Found' ? 'selected' : '' }}>Found</option>
                                     <option value="Not Found" {{ $data->Assignable_Cause111 == 'Not Found' ? 'selected' : '' }}>Not Found</option>
@@ -8068,16 +8854,47 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">If assignable cause identified perform re-testing</label>
-                                <textarea id="If_assignable_cause" name="If_assignable_cause" {{ $data->stage == 17 ? '' : 'disabled' }}>{{ $data->If_assignable_cause }}</textarea>
+                                <textarea id="If_assignable_cause" name="If_assignable_cause" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->If_assignable_cause }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">If assignable error is not identified proceed as per Phase III investigation</label>
-                                <textarea id="If_assignable_error" name="If_assignable_error" {{ $data->stage == 17 ? '' : 'disabled' }}>{{ $data->If_assignable_error }}</textarea>
+                                <textarea id="If_assignable_error" name="If_assignable_error" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->If_assignable_error }}</textarea>
                             </div>
                         </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase IIB inv. Attachments</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="phase_IIB_attachment">
             
+                                        @if ($data->phase_IIB_attachment)
+                                        @foreach ($data->phase_IIB_attachment as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+            
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="phase_IIB_attachment[]"
+                                            oninput="addMultipleFiles(this, 'phase_IIB_attachment')" {{ $data->stage == 15 ? '' : 'readonly' }} multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
                             
@@ -8095,21 +8912,21 @@
             <div id="CCForm39" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase II B HOD Review
                     </div>
                     <div class="row">
                          <!-- Others Field -->
                         
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase II B HOD Primary Remark<span class="text-danger">*</span></label>
+                                <label for="Initiator Group">Phase II B HOD Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
                                 <textarea 
                                     name="hod_remark5" 
                                     class="form-control {{$errors->has('hod_remark5') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 18 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark5}}</textarea>
+                                    {{ $data->stage == 18 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark5}}</textarea>
                                     @if($errors->has('hod_remark5'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark5') }}
@@ -8120,7 +8937,7 @@
             
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Audit Attachments">Phase II B HOD Primary Attachment</label>
+                                <label for="Audit Attachments">Phase II B HOD Attachment</label>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
                                 </small>
@@ -8145,7 +8962,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="hod_attachment5[]"
-                                            oninput="addMultipleFiles(this, 'hod_attachment5')" {{ $data->stage == 18 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'hod_attachment5')" {{ $data->stage == 18 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -8169,7 +8986,7 @@
             <div id="CCForm40" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase II B CQA/QA
                     </div>
                     <div class="row">
                          <!-- Others Field -->
@@ -8183,7 +9000,7 @@
                                 <textarea 
                                     name="QA_Head_remark5" 
                                     class="form-control {{$errors->has('QA_Head_remark5') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 19 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark5}}</textarea>
+                                    {{ $data->stage == 19 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark5}}</textarea>
                                     @if($errors->has('QA_Head_remark5'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark5') }}
@@ -8219,7 +9036,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment5[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment5')" {{ $data->stage == 19 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment5')" {{ $data->stage == 19 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -8504,7 +9321,7 @@
     
     <script>
         VirtualSelect.init({
-            ele: '#reference_record, #notify_to'
+            ele: '#reference_record, #notify_to ,#action_plan_ref_oosc, #capa_ref_no_oosc '
         });
 
         $('#summernote').summernote({

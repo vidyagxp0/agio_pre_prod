@@ -60,6 +60,8 @@ class RootCauseController extends Controller
         $root->root_cause_description = $request->root_cause_description;
         $root->due_date = $request->due_date;
         $root->cft_comments_new = $request->cft_comments_new;
+        $root->root_cause_Others = $request->root_cause_Others;
+
         $root->hod_final_comments = $request->hod_final_comments;
         $root->qa_final_comments = $request->qa_final_comments;
         $root->qah_final_comments = $request->qah_final_comments;
@@ -195,6 +197,17 @@ class RootCauseController extends Controller
             }
             $root->root_cause_initial_attachment = json_encode($files);
         }
+        if (!empty($request->investigation_attachment)) {
+            $files = [];
+            if ($request->hasfile('investigation_attachment')) {
+                foreach ($request->file('investigation_attachment') as $file) {
+                    $name = $request->name . 'investigation_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $root->investigation_attachment = json_encode($files);
+        }
         if (!empty($request->cft_attchament_new)) {
             $files = [];
             if ($request->hasfile('cft_attchament_new')) {
@@ -233,9 +246,7 @@ class RootCauseController extends Controller
         if (!empty($request->initial_rpn)) {
             $root->initial_rpn = serialize($request->initial_rpn);
         }
-        if (!empty($request->risk_acceptance)) {
-            $root->risk_acceptance = serialize($request->risk_acceptance);
-        }
+
         if (!empty($request->risk_control_measure)) {
             $root->risk_control_measure = serialize($request->risk_control_measure);
         }
@@ -251,6 +262,9 @@ class RootCauseController extends Controller
         if (!empty($request->residual_rpn)) {
             $root->residual_rpn = serialize($request->residual_rpn);
         }
+       if (!empty($request->risk_acceptance)) {
+            $root->risk_acceptance = serialize($request->risk_acceptance);
+        }
         if (!empty($request->risk_acceptance2)) {
             $root->risk_acceptance2 = serialize($request->risk_acceptance2);
         }
@@ -258,7 +272,7 @@ class RootCauseController extends Controller
             $root->mitigation_proposal = serialize($request->mitigation_proposal);
         }
 
-
+    //    dd($request->risk_factor);
         //observation changes
         $root->objective = $request->objective;
         $root->scope = $request->scope;
@@ -271,7 +285,7 @@ class RootCauseController extends Controller
 
         $root->impact_risk_assessment = $request->impact_risk_assessment;
         $root->capa = $request->capa;
-        $root->root_cause_description_rca = $request->root_cause_description_rca;
+        // $root->root_cause_description_rca = $request->root_cause_description_rca;
         $root->investigation_summary_rca = $request->investigation_summary_rca;
 
         $root->qa_reviewer = $request->qa_reviewer;
@@ -435,7 +449,7 @@ class RootCauseController extends Controller
             $history->root_id = $root->id;
             $history->activity_type = 'Initiator Department';
             $history->previous = "Null";
-            $history->current = $root->initiator_Group;
+            $history->current = Helpers::getFullDepartmentName($root->initiator_Group);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -484,7 +498,7 @@ class RootCauseController extends Controller
         if (!empty($request->assign_to)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
-            $history->activity_type = 'Responsible department Head';
+            $history->activity_type = ' Name of Responsible department Head';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($root->assign_to);
             $history->comment = "Not Applicable";
@@ -605,7 +619,7 @@ class RootCauseController extends Controller
             $history->root_id = $root->id;
             $history->activity_type = 'Responsible Department';
             $history->previous = "Null";
-            $history->current =   $root->department;
+            $history->current =  Helpers::getFullDepartmentName( $root->department);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -650,6 +664,39 @@ class RootCauseController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+        if (!empty($request->investigation_attachment)) {
+            $history = new RootAuditTrial();
+            $history->root_id = $root->id;
+            $history->activity_type = ' Attachment';
+            $history->previous = "Null";
+            $history->current =  $root->investigation_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $root->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty($request->root_cause_Others)) {
+            $history = new RootAuditTrial();
+            $history->root_id = $root->id;
+            $history->activity_type = ' Others';
+            $history->previous = "Null";
+            $history->current =  $root->root_cause_Others;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $root->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
 
         if (!empty($request->root_cause_initial_attachment)) {
             $history = new RootAuditTrial();
@@ -811,7 +858,7 @@ class RootCauseController extends Controller
         if (!empty($request->cft_comments_new)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
-            $history->activity_type = 'QA Review Comments';
+            $history->activity_type = 'Initial QA/CQA Review Comments';
             $history->previous = "Null";
             $history->current =  $root->cft_comments_new;
             $history->comment = "Not Applicable";
@@ -828,7 +875,7 @@ class RootCauseController extends Controller
         if (!empty($request->cft_attchament_new)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
-            $history->activity_type = 'QA Review Attachment';
+            $history->activity_type = 'Initial QA/CQA Review Attachment';
             $history->previous = "Null";
             $history->current =  $root->cft_attchament_new;
             $history->comment = "Not Applicable";
@@ -893,22 +940,22 @@ class RootCauseController extends Controller
             $history->save();
         }
 
-        if (!empty($request->root_cause_description_rca)) {
-            $history = new RootAuditTrial();
-            $history->root_id = $root->id;
-            $history->activity_type = 'Root Cause Description';
-            $history->previous = "Null";
-            $history->current =  $root->root_cause_description_rca;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $root->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
+        // if (!empty($request->root_cause_description_rca)) {
+        //     $history = new RootAuditTrial();
+        //     $history->root_id = $root->id;
+        //     $history->activity_type = 'Root Cause Description';
+        //     $history->previous = "Null";
+        //     $history->current =  $root->root_cause_description_rca;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $root->status;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->save();
+        // }
 
         if (!empty($request->investigation_summary_rca)) {
             $history = new RootAuditTrial();
@@ -1002,7 +1049,7 @@ class RootCauseController extends Controller
         if (!empty($request->qa_final_comments)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
-            $history->activity_type = 'QA Final Review Comments';
+            $history->activity_type = 'QA/CQA Final Review Comments';
             $history->previous = "Null";
             $history->current =  $root->qa_final_comments;
             $history->comment = "Not Applicable";
@@ -1019,7 +1066,7 @@ class RootCauseController extends Controller
         if (!empty($request->qa_final_attachments)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
-            $history->activity_type = 'QA Final Review Attachment';
+            $history->activity_type = 'QA/CQA Final Review Attachment';
             $history->previous = "Null";
             $history->current =  $root->qa_final_attachments;
             $history->comment = "Not Applicable";
@@ -1526,6 +1573,7 @@ class RootCauseController extends Controller
         $root->investigation_summary = ($request->investigation_summary);
         $root->root_cause_description = ($request->root_cause_description);
         $root->cft_comments_new = ($request->cft_comments_new);
+        $root->root_cause_Others = $request->root_cause_Others;
         $root->hod_final_comments = $request->hod_final_comments;
         $root->qa_final_comments = $request->qa_final_comments;
         $root->qah_final_comments = $request->qah_final_comments;
@@ -1610,7 +1658,7 @@ class RootCauseController extends Controller
 
         $root->impact_risk_assessment = $request->impact_risk_assessment;
         $root->capa = $request->capa;
-        $root->root_cause_description_rca = $request->root_cause_description_rca;
+        // $root->root_cause_description_rca = $request->root_cause_description_rca;
         $root->investigation_summary_rca = $request->investigation_summary_rca;
 
         $root->qa_reviewer = $request->qa_reviewer;
@@ -1639,6 +1687,17 @@ class RootCauseController extends Controller
                 }
             }
             $root->root_cause_initial_attachment = json_encode($files);
+        }
+        if (!empty($request->investigation_attachment)) {
+            $files = [];
+            if ($request->hasfile('investigation_attachment')) {
+                foreach ($request->file('investigation_attachment') as $file) {
+                    $name = $request->name . 'investigation_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $root->investigation_attachment = json_encode($files);
         }
 
         if (!empty($request->cft_attchament_new)) {
@@ -1729,9 +1788,7 @@ class RootCauseController extends Controller
         if (!empty($request->initial_rpn)) {
             $root->initial_rpn = serialize($request->initial_rpn);
         }
-        if (!empty($request->risk_acceptance)) {
-            $root->risk_acceptance = serialize($request->risk_acceptance);
-        }
+        
         if (!empty($request->risk_control_measure)) {
             $root->risk_control_measure = serialize($request->risk_control_measure);
         }
@@ -1746,6 +1803,9 @@ class RootCauseController extends Controller
         }
         if (!empty($request->residual_rpn)) {
             $root->residual_rpn = serialize($request->residual_rpn);
+        }
+        if (!empty($request->risk_acceptance)) {
+            $root->risk_acceptance = serialize($request->risk_acceptance);
         }
         if (!empty($request->risk_acceptance2)) {
             $root->risk_acceptance2 = serialize($request->risk_acceptance2);
@@ -1801,8 +1861,8 @@ class RootCauseController extends Controller
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Initiator Department';
-            $history->previous = $lastDocument->initiator_Group;
-            $history->current = $root->initiator_Group;
+            $history->previous = Helpers::getFullDepartmentName ($lastDocument->initiator_Group);
+            $history->current = Helpers::getFullDepartmentName($root->initiator_Group);
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1823,7 +1883,7 @@ class RootCauseController extends Controller
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Initiator Department Code';
-            $history->previous = $lastDocument->initiator_group_code;
+            $history->previous =  $lastDocument->initiator_group_code;
             $history->current = $root->initiator_group_code;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
@@ -1888,7 +1948,7 @@ class RootCauseController extends Controller
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'Responsible department Head';
+            $history->activity_type = 'Name of Responsible department Head';
             $history->previous = Helpers::getInitiatorName($root->assign_to);
             $history->current = Helpers::getInitiatorName($root->assign_to);
             $history->comment = $request->comment;
@@ -2021,8 +2081,8 @@ class RootCauseController extends Controller
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Responsible Department';
-            $history->previous = $lastDocument->department;
-            $history->current = $root->department;
+            $history->previous = Helpers::getFullDepartmentName($lastDocument->department);
+            $history->current =Helpers::getFullDepartmentName( $root->department);
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2083,6 +2143,27 @@ class RootCauseController extends Controller
             }
             $history->save();
         }
+        if ($lastDocument->root_cause_Others != $root->root_cause_Others || !empty($request->comment)) {
+
+            $history = new RootAuditTrial();
+            $history->root_id = $id;
+            $history->activity_type = 'Comments';
+            $history->previous = $lastDocument->root_cause_Others;
+            $history->current = $root->root_cause_Others;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->root_cause_Others) || $lastDocument->root_cause_Others === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
 
         if ($lastDocument->root_cause_initial_attachment != $root->root_cause_initial_attachment || !empty($request->comment)) {
 
@@ -2099,6 +2180,27 @@ class RootCauseController extends Controller
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->root_cause_initial_attachment) || $lastDocument->root_cause_initial_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastDocument->investigation_attachment != $root->investigation_attachment || !empty($request->comment)) {
+
+            $history = new RootAuditTrial();
+            $history->root_id = $id;
+            $history->activity_type = 'Initial Attachment';
+            $history->previous = $lastDocument->investigation_attachment;
+            $history->current = $root->investigation_attachment;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->investigation_attachment) || $lastDocument->investigation_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -2286,7 +2388,7 @@ class RootCauseController extends Controller
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'QA Review Comments';
+            $history->activity_type = 'Initial QA/CQA Review Comments';
             $history->previous = $lastDocument->cft_comments_new;
             $history->current = $root->cft_comments_new;
             $history->comment = $request->comment;
@@ -2308,7 +2410,7 @@ class RootCauseController extends Controller
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'QA Review Attachment';
+            $history->activity_type = 'Initial QA/CQA Review Attachment';
             $history->previous = $lastDocument->cft_attchament_new;
             $history->current = $root->cft_attchament_new;
             $history->comment = $request->comment;
@@ -2393,27 +2495,27 @@ class RootCauseController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->root_cause_description_rca != $root->root_cause_description_rca || !empty($request->comment)) {
+        // if ($lastDocument->root_cause_description_rca != $root->root_cause_description_rca || !empty($request->comment)) {
 
-            $history = new RootAuditTrial();
-            $history->root_id = $id;
-            $history->activity_type = 'Root Cause Description';
-            $history->previous = $lastDocument->root_cause_description_rca;
-            $history->current = $root->root_cause_description_rca;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->root_cause_description_rca) || $lastDocument->root_cause_description_rca === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        //     $history = new RootAuditTrial();
+        //     $history->root_id = $id;
+        //     $history->activity_type = 'Root Cause Description';
+        //     $history->previous = $lastDocument->root_cause_description_rca;
+        //     $history->current = $root->root_cause_description_rca;
+        //     $history->comment = $request->comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     if (is_null($lastDocument->root_cause_description_rca) || $lastDocument->root_cause_description_rca === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
 
         if ($lastDocument->investigation_summary_rca != $root->investigation_summary_rca || !empty($request->comment)) {
 
@@ -2596,7 +2698,7 @@ class RootCauseController extends Controller
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'QA Final Final Comments';
+            $history->activity_type = 'QA/CQA Final Review Comments';
             $history->previous = $lastDocument->qa_final_comments;
             $history->current = $root->qa_final_comments;
             $history->comment = $request->comment;
@@ -2618,7 +2720,7 @@ class RootCauseController extends Controller
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'QA Final Review Attachment';
+            $history->activity_type = 'QA/CQA Final Review Attachment';
             $history->previous = $lastDocument->qa_final_attachments;
             $history->current = $root->qa_final_attachments;
             $history->comment = $request->comment;
@@ -4323,7 +4425,10 @@ class RootCauseController extends Controller
 
         if ($request->revision == "Action-Item") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id'));
+            $record = $record_number;
+            $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+            $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+            return view('frontend.action-item.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id','record'));
         }
     }
 

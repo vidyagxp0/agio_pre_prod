@@ -42,11 +42,11 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm2')">HOD Initial Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Initial Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Initial Review</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">CFT</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA Head Designee Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA/CQA Head Designee Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Initiator Update</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">HOD Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">HOD final Review</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA Review</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA/CQA Head Designee Closure
                     Approval</button>
@@ -348,7 +348,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Brief Description</label>
+                                        <label class="mt-4" for="Audit Comments">Brief Description of error </label>
                                         <textarea class="summernote" name="brief_description" id="summernote-16"></textarea>
                                     </div>
                                 </div>
@@ -383,7 +383,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Correction Of Error">Correction Of Error</label>
+                                        <label class="mt-4" for="Correction Of Error">Correction Of Error required</label>
                                         <textarea class="summernote" name="Correction_Of_Error" id="summernote-16"></textarea>
                                     </div>
                                 </div>
@@ -484,12 +484,12 @@
                                         <table class="table table-bordered" id="Details-table">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 5%">Row#</th>
+                                                    <th style="width: 2%">Row#</th>
                                                     <th style="width: 12%">List Of Impacting Document (If Any)</th>
-                                                    <th style="width: 16%"> Prepared By</th>
+                                                    <!-- <th style="width: 16%"> Prepared By</th>
                                                     <th style="width: 15%">Checked By</th>
-                                                    <th style="width: 15%">Approved By</th>
-                                                    <th style="width: 15%">Action</th>
+                                                    <th style="width: 15%">Approved By</th> -->
+                                                    <th style="width: 3%">Action</th>
 
                                                 </tr>
                                             </thead>
@@ -497,9 +497,9 @@
                                                 <td><input disabled type="text" name="details[0][serial]"
                                                         value="1"></td>
                                                 <td><input type="text" name="details[0][ListOfImpactingDocument]"></td>
-                                                <td><input type="text" name="details[0][PreparedBy]"></td>
+                                                <!-- <td><input type="text" name="details[0][PreparedBy]"></td>
                                                 <td><input type="text" name="details[0][CheckedBy]"></td>
-                                                <td><input type="text" name="details[0][ApprovedBy]"></td>
+                                                <td><input type="text" name="details[0][ApprovedBy]"></td> -->
                                                 <td><button type="text" class="removeRowBtn">Remove</button></td>
                                             </tbody>
 
@@ -1827,14 +1827,14 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="QA Initial Comment">QA Initial Comment</label>
+                                        <label class="mt-4" for="QA Initial Comment">QA/CQA Initial Comment</label>
                                         <textarea class="summernote" name="QA_Feedbacks" id="summernote-16"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="QA Initial Attachments">QA Initial Attachmentss </label>
+                                        <label for="QA Initial Attachments">QA/CQA Initial Attachments </label>
                                         <div><small class="text-primary">
                                             </small>
                                         </div>
@@ -1988,7 +1988,7 @@
 
                                 <div class="col-lg-12 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Date Due">Date Of Correction</label>
+                                        <label for="Date Due">Date Of Correction of document</label>
                                         <div><small class="text-primary">Please mention expected date of completion</small>
                                         </div>
                                         <div class="calenderauditee">
@@ -2062,14 +2062,14 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="HOD Comment">HOD Comment</label>
+                                        <label class="mt-4" for="HOD Comment">HOD final review Comment</label>
                                         <textarea class="summernote" name="HOD_Comment1" id="summernote-16"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="HOD Attachments">HOD Attachments</label>
+                                        <label for="HOD Attachments">HOD final Attachments</label>
                                         <div><small class="text-primary">
                                             </small>
                                         </div>
@@ -2494,9 +2494,11 @@
                         '"></td>' +
                         '<td><input type="text" name="details[' + serialNumber +
                         '][ListOfImpactingDocument]"></td>' +
-                        '<td><input type="text" name="details[' + serialNumber + '][PreparedBy]"></td>' +
-                        '<td><input type="text" name="details[' + serialNumber + '][CheckedBy]"></td>' +
-                        '<td><input type="text" name="details[' + serialNumber + '][ApprovedBy]"></td>' +
+
+                        // '<td><input type="text" name="details[' + serialNumber + '][PreparedBy]"></td>' +
+                        // '<td><input type="text" name="details[' + serialNumber + '][CheckedBy]"></td>' +
+                        // '<td><input type="text" name="details[' + serialNumber + '][ApprovedBy]"></td>' +
+
                         '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
                         '</tr>';
 

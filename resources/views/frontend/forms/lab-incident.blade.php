@@ -36,7 +36,7 @@
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Extension</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Incident Details</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QC Head Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QC Initial Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QA Initial Review</button>
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Pending Initiator Update</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation Details</button>
@@ -218,7 +218,8 @@
                                             <div class="group-input" id="incident_interval_others_gi">
                                                 <label for="incident_interval_others_gi">Name of Analyst<span
                                                         class="text-danger d-none">*</span></label>
-                                                <textarea type="text" name="name_of_analyst" ></textarea>
+                                                <!-- <textarea type="text" name="name_of_analyst" ></textarea> -->
+                                                 <input type="text" name="name_of_analyst">
                                             </div>
 
                                         </div>
@@ -255,7 +256,7 @@
                                 <table class="table table-bordered" id="onservation-incident-table">
                                     <thead>
                                         <tr>
-                                            <th>Sr. No.</th>
+                                            <th>Row #</th>
                                             <th>Name of Product</th>
                                             <th>B No./A.R. No.</th>
                                             <th>Remarks</th>
@@ -502,7 +503,7 @@
                                 </div> -->
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="incident_date_incidence_gi">Date Of Incidence <span class="text-danger"></span></label>
+                                        <label for="incident_date_incidence_gi">Date of Incidence <span class="text-danger"></span></label>
                                         
                                         <div class="calenderauditee">
                                             <input type="text" id="incident_date_incidence_gi_display" readonly
@@ -525,15 +526,7 @@
                                         <label for="search">
                                             Reported By <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="analyst_sign_date_gi">
-                                            <option value="">Select a value</option>
-                                            @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('analyst_sign_date_gi')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror
+                                        <textarea name="analyst_sign_date_gi" id=""></textarea>
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-6">
@@ -952,13 +945,13 @@
                                
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="QA Review Comments">QA Review Comments</label>
+                                        <label for="QA Review Comments">QC Head Review Comments</label>
                                         <textarea name="QA_Review_Comments"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="QA Head Attachments">QA Head Attachment</label>
+                                        <label for="QA Head Attachments">QC Head Review Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         {{-- <input type="file" id="myfile" name="QA_Head_Attachment"> --}}
                                         <div class="file-attachment-field">
@@ -1651,7 +1644,25 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                {{-- @foreach($detail as $d) --}}
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
                                 <div class="col-12 sub-head" style="font-size: 16px">
                                     QA Initial Review
                                 </div>
@@ -1674,7 +1685,25 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                {{-- @foreach($detail as $d) --}}
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
                                     Pending Initiator Update
@@ -1699,6 +1728,25 @@
                                     </div>
                                 </div>
 
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                {{-- @foreach($detail as $d) --}}
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
 
 
                                <div class="col-12 sub-head" style="font-size: 16px">
@@ -1721,6 +1769,26 @@
                                     <div class="group-input">
                                         <label for="Comment">Comment</label>
                                         <div class="Date"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                {{-- @foreach($detail as $d) --}}
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                
@@ -1746,6 +1814,25 @@
                                     </div>
                                 </div>
                               
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                {{-- @foreach($detail as $d) --}}
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
                                 
                                 
                                 <div class="col-12 sub-head" style="font-size: 16px">
@@ -1789,6 +1876,26 @@
                                     </div>
                                 </div>
 
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                {{-- @foreach($detail as $d) --}}
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
                                 <div class="col-12 sub-head" style="font-size: 16px">
                                     QA Head/HOD Final Review
                                 </div>
@@ -1811,7 +1918,26 @@
                                     </div>
                                 </div>
                                
-                               
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                {{-- @foreach($detail as $d) --}}
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
                                 <div class="col-12 sub-head" style="font-size: 16px">
                                     QA Final Review 
                                 </div>
@@ -1834,6 +1960,27 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                {{-- @foreach($detail as $d) --}}
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
                                 <div class="col-12 sub-head" style="font-size: 16px">
                                     QAH Final Approval
                                 </div>
@@ -1874,6 +2021,26 @@
                                         <div class="static"></div>
                                     </div>
                                 </div> 
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                {{-- @foreach($detail as $d) --}}
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
                                 
 
                                 <div class="col-12 sub-head" style="font-size: 16px">

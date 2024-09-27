@@ -76,7 +76,6 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     <select id="select-employee-name" name="selected_employee_id" required>
                                         <option value="">Select an employee</option>
                                         @foreach ($employees as $employee)
-                                        <!-- The value is the employee ID, but the name is displayed -->
                                         <option value="{{ $employee->id }}">{{ $employee->employee_name }}</option>
                                         @endforeach
                                     </select>
@@ -85,6 +84,20 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     @enderror
                                 </div>
                             </div>
+
+                            <!-- <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="select-state">Name of Employee</label>
+                                    <select id="select-state" placeholder="Select..." name="selected_employee_id" required {{ isset($employee) ? 'disabled' : '' }}>
+                                        <option value="">Select an employee</option>
+                                        @foreach ($employees as $employee)
+                                            <option value="{{ $employee->id }}" data-name="{{ $employee->employee_name }}" {{ isset($employee) && $employee->id == $employee->id ? 'selected' : '' }}>
+                                                {{ $employee->employee_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div> -->
                             
                             <!-- Hidden Employee Name Field for Saving the Name -->
                             {{-- <div class="col-lg-6">
@@ -101,13 +114,13 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="employee_id">Emp Code </label>
-                                    <input id="employee_id" name="empcode" type="text" readonly>
+                                    <input id="employee_id" name="empcode" value="" type="text" readonly>
                                     @error('empcode')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
                             </div>
-                  <div class="col-lg-6">
+                  <!-- <div class="col-lg-6">
                         <div class="group-input">
                             <label for="type_of_training">SOP Document</label>      
                             <select name="sopdocument">
@@ -118,23 +131,22 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                 </option>
                                 @endforeach
                             </select>
-                        
-
                         </div>
+                    </div> -->
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="type_of_training">SOP Document</label>  
+                    <select name="sopdocument" id="sopdocument" onchange="fetchShortDescription(this.value)">
+                        <option value="">---Select SOP Document---</option>
+                        @foreach ($data as $dat)
+                        <option value="{{ $dat->id }}">
+                            {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                        </option>
+                        @endforeach
+                    </select>
+                    </div>
                     </div>
 
-
-                            {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="type_of_training">SOP Document</label>
-                                    <select name="sopdocument"  >
-                                        <option value="">---Select SOP Document---</option>
-                                        
-                                        <option value="on the job">abc</option>
-                                        <option value="classroom">dfg</option>
-                                    </select>
-                                </div>
-                            </div> --}}
                             
                             <!-- Type of Training -->
                             <div class="col-lg-6">
@@ -168,7 +180,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="department">Department</label>
-                                    <input id="department" type="text" name="department" readonly>
+                                    <input id="department" type="text" value="" name="department" readonly>
                                 </div>
                             </div>
                             
@@ -181,14 +193,29 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             </div>
                             
                             <!-- HOD -->
-                            <div class="col-lg-6">
+                            <!-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="hod">HOD</label>
                                     <input id="hod" type="text" name="hod" readonly>
                                 </div>
+                            </div> -->
+
+                            <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="hods">HOD</label>
+                                    <select class="choices-single-reviewer" name="hod" placeholder="Select HOD">
+                                        <option value="">Select HOD</option>
+                                        @foreach ($hods as $hod)
+                                            <option value="{{ $hod->id }}" {{ old('hod') == $hod->id ? 'selected' : '' }}>
+                                                {{ $hod->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
 
-                            <div class="col-lg-6">
+
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="hod">Revision Purpose</label>
                                     <select name="revision_purpose" id="" >
@@ -197,7 +224,44 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                         <option value="Old">Old</option>
                                     </select>
                                 </div>
+                            </div> --}}
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="revision_purpose">Revision Purpose</label>
+                                    <select name="revision_purpose" id="revision_purpose" onchange="toggleRemarkInput()">
+                                        <option value="">----Select---</option>
+                                        <option value="New">New</option>
+                                        <option value="Old">Old</option>
+                                    </select>
+                                </div>
                             </div>
+
+                            <!-- Remark Input Field -->
+                            <div class="col-lg-6" id="remark_container" style="display: none;">
+                                <div class="group-input">
+                                    <label for="remark">Remark</label>
+                                    <textarea name="remark" id="remark" rows="4" placeholder="Enter your remark here..."></textarea>
+                                </div>
+                            </div>
+
+                            <script>
+                                function toggleRemarkInput() {
+                                    const revisionPurposeSelect = document.getElementById('revision_purpose');
+                                    const remarkContainer = document.getElementById('remark_container');
+
+                                    // Show the remark input if "Old" is selected, otherwise hide it
+                                    if (revisionPurposeSelect.value === 'Old') {
+                                        remarkContainer.style.display = 'block';
+                                    } else {
+                                        remarkContainer.style.display = 'none';
+                                        // Optionally clear the remark input when hiding
+                                        document.getElementById('remark').value = '';
+                                    }
+                                }
+                            </script>
+
+
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -259,209 +323,116 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
             <div class="col-12">
                 <div class="group-input">
                     <div class="why-why-chart">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th style="width: 5%;">Sr.No.</th>
-                                    <th style="width: 30%;">Subject</th>
-                                    <th>Type of Training</th>
-                                    <th>Reference Document No.</th>
-                                    {{-- <th>Trainee Name</th> --}}
-                                    <th>Trainer </th>
-                                    <th>Date of Training</th>
-                                    <th>Date of Completion</th>
+                    <table class="table table-bordered">
+    <thead>
+        <tr>
+            <th style="width: 5%;">Sr.No.</th>
+            <th style="width: 30%;">Subject</th>
+            <th>Type of Training</th>
+            <th>Reference Document No.</th>
+            <th>Trainer</th>
+            <th>Date of Training</th>
+            <th>Date of Completion</th>
+        </tr>
+    </thead>
+    <tbody>
+        @php
+        $trainerIds = DB::table('user_roles')->where('q_m_s_roles_id', 6)->pluck('user_id');
+        $usersDetails = DB::table('users')->select('id', 'name')->get();
+        @endphp
+        
+        <!-- Row 1 -->
+        <tr>
+            <td>1</td>
+            <td><input type="text" id="subject_1" name="subject_1" placeholder="Subject"></td>
+            <td><input type="text" name="type_of_training_1"></td>
+            <td><input type="text" name="reference_document_no_1"></td>
+            <td>
+                <select name="trainer_1" id="trainer_1">
+                    <option value="">-- Select --</option>
+                    @foreach ($usersDetails as $u)
+                    <option value="{{ $u->id }}">{{ $u->name }}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td><input type="date" name="startdate_1" id="startdate_1" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+            <td><input type="date" name="enddate_1" id="enddate_1" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+        </tr>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                // Fetch the trainers' IDs
-                                $trainerIds = DB::table('user_roles')->where('q_m_s_roles_id', 6)->pluck('user_id');
-                                $usersDetails = DB::table('users')->select('id', 'name')->get();
-                                $trainers = DB::table('users')->whereIn('id', $trainerIds)->select('id', 'name')->get();
-                                @endphp
-                                <tr>
-                                    <td>1</td>
+        <!-- Row 2 -->
+        <tr>
+            <td>2</td>
+            <td><input type="text" name="subject_2"></td>
+            <td><input type="text" name="type_of_training_2"></td>
+            <td><input type="text" name="reference_document_no_2"></td>
+            <td>
+                <select name="trainer_2" id="trainer_2">
+                    <option value="">-- Select --</option>
+                    @foreach ($usersDetails as $u)
+                    <option value="{{ $u->id }}">{{ $u->name }}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td><input type="date" name="startdate_2" id="startdate_2" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+            <td><input type="date" name="enddate_2" id="enddate_2" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+        </tr>
 
+        <!-- Row 3 -->
+        <tr>
+            <td>3</td>
+            <td><input type="text" name="subject_3"></td>
+            <td><input type="text" name="type_of_training_3"></td>
+            <td><input type="text" name="reference_document_no_3"></td>
+            <td>
+                <select name="trainer_3" id="trainer_3">
+                    <option value="">-- Select --</option>
+                    @foreach ($usersDetails as $u)
+                    <option value="{{ $u->id }}">{{ $u->name }}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td><input type="date" name="startdate_3" id="startdate_3" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+            <td><input type="date" name="enddate_3" id="enddate_3" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+        </tr>
 
-                                    <td>
-                                        <input type="text" name="subject_1">
-                                    </td>
+        <!-- Row 4 -->
+        <tr>
+            <td>4</td>
+            <td><input type="text" name="subject_4"></td>
+            <td><input type="text" name="type_of_training_4"></td>
+            <td><input type="text" name="reference_document_no_4"></td>
+            <td>
+                <select name="trainer_4" id="trainer_4">
+                    <option value="">-- Select --</option>
+                    @foreach ($usersDetails as $u)
+                    <option value="{{ $u->id }}">{{ $u->name }}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td><input type="date" name="startdate_4" id="startdate_4" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+            <td><input type="date" name="enddate_4" id="enddate_4" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+        </tr>
 
-                                    <td>
-                                        <input type="text" name="type_of_training_1">
-                                    </td>
+        <!-- Row 5 -->
+        <tr>
+            <td>5</td>
+            <td><input type="text" name="subject_5"></td>
+            <td><input type="text" name="type_of_training_5"></td>
+            <td><input type="text" name="reference_document_no_5"></td>
+            <td>
+                <select name="trainer_5" id="trainer_5">
+                    <option value="">-- Select --</option>
+                    @foreach ($usersDetails as $u)
+                    <option value="{{ $u->id }}">{{ $u->name }}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td><input type="date" name="startdate_5" id="startdate_5" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+            <td><input type="date" name="enddate_5" id="enddate_5" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+        </tr>
+    </tbody>
+</table>
 
-                                    <td>
-                                        <input type="text" name="reference_document_no_1">
-                                    </td>
-                                    {{-- <td>
-                                        <select name="trainee_name_1" id="">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($trainers as $trainer)
-                                            <option value="{{ $trainer->id }}">{{ $trainer->name }}</option>
-                                    @endforeach
-                                    </select>
-                                    </td> --}}
-                                    <td>
-                                        <select name="trainer_1" id="">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($usersDetails as $u)
-                                            <option value="{{ $u->id }}">{{ $u->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-
-                                    <td>
-                                        <input type="date" name="startdate_1" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="startdate" value="" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate','enddate')">
-                                    </td>
-                                    <td>
-                                        <input type="date" name="enddate_1" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="enddate" value="" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>
-                                        <input type="text" name="subject_2">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="type_of_training_2">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="reference_document_no_2">
-                                    </td>
-                                    {{-- <td>
-                                         <select name="trainee_name_2" id="">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($trainers as $trainer)
-                                            <option value="{{ $trainer->id }}">{{ $trainer->name }}</option>
-                                    @endforeach
-                                    </select>
-                                    </td> --}}
-                                    <td>
-                                        <select name="trainer_2" id="">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($usersDetails as $u)
-                                            <option value="{{ $u->id }}">{{ $u->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-
-                                    <td>
-                                        <input type="date" name="startdate_2" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="startdate" value="" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate','enddate')">
-                                    </td>
-                                   <td>
-                                        <input type="date" name="enddate_2" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="enddate" value="" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>
-                                        <input type="text" name="subject_3">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="type_of_training_3">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="reference_document_no_3">
-                                    </td>
-                                    {{-- <td>
-                                        <select name="trainee_name_3" id="">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($trainers as $trainer)
-                                            <option value="{{ $trainer->id }}">{{ $trainer->name }}</option>
-                                    @endforeach
-                                    </select>
-                                    </td> --}}
-                                    <td>
-                                        <select name="trainer_3" id="">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($usersDetails as $u)
-                                            <option value="{{ $u->id }}">{{ $u->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-
-                                    <td>
-                                        <input type="date" name="startdate_3" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="startdate" value="" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate','enddate')">
-                                    </td>
-                                   <td>
-                                        <input type="date" name="enddate_3" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="enddate" value="" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>
-                                        <input type="text" name="subject_4">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="type_of_training_4">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="reference_document_no_4">
-                                    </td>
-                                    {{-- <td>
-                                        <select name="trainee_name_4" id="">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($trainers as $trainer)
-                                            <option value="{{ $trainer->id }}">{{ $trainer->name }}</option>
-                                    @endforeach
-                                    </select>
-                                    </td> --}}
-                                    <td>
-                                        <select name="trainer_4" id="">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($usersDetails as $u)
-                                            <option value="{{ $u->id }}">{{ $u->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-
-                                    <td>
-                                        <input type="date" name="startdate_4" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="startdate" value="" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate','enddate')">
-                                    </td>
-                                    <td>
-                                        <input type="date" name="enddate_4" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="enddate" value="" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>
-                                        <input type="text" name="subject_5">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="type_of_training_5">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="reference_document_no_5">
-                                    </td>
-                                    {{-- <td>
-                                        <select name="trainee_name_5" id="">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($trainers as $trainer)
-                                            <option value="{{ $trainer->id }}">{{ $trainer->name }}</option>
-                                    @endforeach
-                                    </select>
-                                    </td> --}}
-                                    <td>
-                                        <select name="trainer_5" id="">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($usersDetails as $u)
-                                            <option value="{{ $u->id }}">{{ $u->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="date" name="startdate_5" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="startdate" value="" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate}','enddate')">
-                                    </td>
-                                    <td>
-                                        <input type="date" name="enddate_5" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="enddate" value="" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>
@@ -476,6 +447,23 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
     </div>
 </div>
 </div>
+                <script>
+                    function fetchShortDescription(documentId) {
+                        if (documentId) {
+                            fetch(`/get-sop-description/${documentId}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    // Fill the subject field with the short description
+                                    document.getElementById('subject').value = data.short_description;
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching short description:', error);
+                                });
+                        } else {
+                            document.getElementById('subject').value = ''; // Clear the field if no document is selected
+                        }
+                    }
+                </script>
 
 
                 <div id="CCForm2" class="inner-block cctabcontent">
@@ -623,8 +611,54 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
+                                    <label for="jd_type">Job Description Type</label>
+                                    <select id="jd_type" name="jd_type" required>
+                                        <option value="">Select JD Type...</option>
+                                        <option value="new">New</option>
+                                        <option value="old">Old</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Reason for Revision Field -->
+                            <div class="col-lg-6" id="revision_reason_container" style="display: none;">
+                                <div class="group-input">
+                                    <label for="reason_for_revision">Reason For Revision</label>
+                                    <input type="text" name="reason_for_revision" id="reason_for_revision">
+                                </div>
+                            </div>
+                            {{-- <div class="col-lg-6">
+                                <div class="group-input">
                                     <label for="For Revision">Reason For Revision </label>
                                     <input type="text" name="reason_for_revision" id="" >
+                                </div>
+                            </div> --}}
+
+                            <script>
+                                    document.getElementById('jd_type').addEventListener('change', function() {
+                                        var selectedValue = this.value;
+
+                                        // Show the revision reason input if "Old" is selected
+                                        if (selectedValue === 'old') {
+                                            document.getElementById('revision_reason_container').style.display = 'block';
+                                        } else {
+                                            document.getElementById('revision_reason_container').style.display = 'none';
+                                        }
+                                    });
+
+                            </script>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="For Revision">Delegate</label>
+                                    <select id="select-state" placeholder="Select..." name="delegate" required>
+                                        <option value="">Select an delegate</option>
+                                        @foreach ($delegate as $delegates)
+                                        <option value="{{ $delegates->id }}" {{ old('delegates') == $delegates->id ? 'selected' : '' }}>
+                                                {{ $delegates->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 

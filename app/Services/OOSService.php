@@ -27,13 +27,15 @@ class OOSService
 
         $res = Helpers::getDefaultResponse();
 
+
         try {
 
-            $input = $request->all();
+            $input = $request->except(['proposal_for_hypothesis_IB']);
             $input['record_number'] = ((RecordNumber::first()->value('counter')) + 1);
             $input['form_type'] = "OOS Chemical";
             $input['status'] = 'Opened';
             $input['stage'] = 1;
+            $input['proposal_for_hypothesis_IB'] = implode(',', $request->proposal_for_hypothesis_IB);
            
            
             
@@ -101,6 +103,10 @@ class OOSService
                 'kF_Potentionmeter',
                 'RM_PM',
                 'analyst_training_procedure',
+                'sample_receiving_var',
+                'method_used_during_analysis',
+                'instrument_equipment_detailss',
+                'result_and_calculation',
                 'Training_records_Analyst_Involved1',
                 'sample_intactness_before_analysis1',
                 'test_methods_Procedure1',
@@ -1045,6 +1051,10 @@ class OOSService
                 'kF_Potentionmeter',
                 'RM_PM',
                 'analyst_training_procedure',
+                'sample_receiving_var',
+                'method_used_during_analysis',
+                'instrument_equipment_detailss',
+                'result_and_calculation',
                 'Training_records_Analyst_Involved1',
                 'sample_intactness_before_analysis1',
                 'test_methods_Procedure1',

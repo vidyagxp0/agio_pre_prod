@@ -325,7 +325,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
         border-radius: 20px 0px 0px 20px;
     }
 
-    #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(3) {
+    #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(6) {
         border-radius: 0px 20px 20px 0px;
 
     }
@@ -333,8 +333,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
 <div class="form-field-head">
 
     <div class="division-bar">
-        <strong>Site Division/Project</strong> :
-        {{ Helpers::getDivisionName(session()->get('division')) }} Trainer Qualification
+        <strong>Trainer Qualification</strong>
     </div>
 </div>
 
@@ -372,7 +371,25 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                     @elseif($trainer->stage == 2)
 
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                        Qualified
+                        Update Complete
+                    </button>
+                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                        Reject
+                    </button> --}}
+                    @elseif($trainer->stage == 3)
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Answer Complete
+                    </button>
+                    @elseif($trainer->stage == 4)
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Evaluation Complete
+                    </button>
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                        Reject
+                    </button>
+                    @elseif($trainer->stage == 5)
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Qualified
                     </button>
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                         Reject
@@ -403,12 +420,29 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                     @endif
 
                     @if ($trainer->stage >= 2)
-                    <div class="active">Pending HOD Review</div>
+                    <div class="active">Pending Trainer Update</div>
                     @else
-                    <div class="">Pending HOD Review</div>
+                    <div class="">Pending Trainer Update</div>
                     @endif
 
                     @if ($trainer->stage >= 3)
+                    <div class="active">Trainee Answer</div>
+                    @else
+                    <div class="">Trainee Answer</div>
+                    @endif
+
+                    @if ($trainer->stage >= 4)
+                    <div class="active">HOD Evaluation</div>
+                    @else
+                    <div class="">HOD Evaluation</div>
+                    @endif
+                    @if ($trainer->stage >= 5)
+                    <div class="active">QA/CQA Head Approval</div>
+                    @else
+                    <div class="">QA/CQA Head Approval</div>
+                    @endif
+
+                    @if ($trainer->stage >= 6)
                     <div class="bg-danger">Closed - Done</div>
                     @else
                     <div class="">Closed - Done</div>
@@ -425,12 +459,20 @@ $departments = DB::table('departments')->select('id', 'name')->get();
         <!-- Tab links -->
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Questionaries</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm3')">HOD Evaluation</button>
+
+            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Head Approval</button>
+            @if ($trainer->stage >= 5 && $trainer->trainer == "Qualified")
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Certificate</button>
+            @endif
+            <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Certificate</button> -->
 
             <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
         </div>
         <script>
             $(document).ready(function() {
-                <?php if ($trainer->stage == 3) : ?>
+                <?php if ($trainer->stage == 6) : ?>
                     $("#target :input").prop("disabled", true);
                 <?php endif; ?>
             });
@@ -449,6 +491,163 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                             <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                             <input type="hidden" name="parent_type" value="{{ $parent_type }}">
                             @endif
+
+                            <div class="sub-head">
+                Trainer Information
+            </div>
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="trainer">Trainer Name</label>
+                    <input id="trainer_name" type="text" name="trainer_name" maxlength="255" value="{{ $trainer->trainer_name }}">
+                </div>
+            </div>
+
+
+            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="RLS Record Number">Name of Employee</label>
+                                    <input  type="text" name="name_employee_display" id="name_employee_display" maxlength="255" value="{{ $trainer->employee_name }}">
+                                    <input type="hidden" name="employee_name" value="{{ $trainer->employee_name }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="RLS Record Number">Employee ID </label>
+                                    <input disabled type="text" name="employee_id_display" value="{{ $trainer->employee_id }}">
+                                    <input type="hidden" name="employee_id" value="{{ $trainer->employee_id }}">
+                                </div>
+                            </div>
+
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Department">Department</label>
+                    <select name="department">
+                        <option>-- Select --</option>
+                        {{-- @foreach ($departments as $department)
+                                <option value="{{ $department->id }}" @if ($department->id == $trainer->department) selected @endif>{{ $department->name }}</option>
+                        @endforeach --}}
+
+
+
+                        @php
+                        $savedDepartmentId = old('department', $trainer->department);
+                        @endphp
+
+                        @foreach (Helpers::getDepartments() as $code => $department)
+                        <option value="{{ $code }}" @if ($savedDepartmentId==$code) selected @endif>{{ $department }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <!-- <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Designation">Designation</label>
+                    <select name="designation" id="designation">
+                        <option>Select</option>
+                        <option value="lead_trainer" @if ($trainer->designation == "lead_trainer") selected @endif>Lead Trainer</option>
+                        <option value="senior_trainer" @if ($trainer->designation == "senior_trainer") selected @endif>Senior Trainer</option>
+                        <option value="Instructor" @if ($trainer->designation == "Instructor") selected @endif>Instructor</option>
+                        <option value="Evaluator" @if ($trainer->designation == "Evaluator") selected @endif>Evaluator</option>
+                    </select>
+                </div>
+            </div> -->
+
+            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Job Title">Designation<span class="text-danger">*</span></label>
+                                    <select name="designation" id="job_title" required onchange="checkDesignation()" readonly>
+                                        <option value="">----Select---</option>
+                                        <option value="Trainee" {{ $trainer->designation == 'Trainee' ? 'selected' : '' }}>Trainee</option>
+                                        <option value="Officer" {{ $trainer->designation == 'Officer' ? 'selected' : '' }}>Officer</option>
+                                        <option value="Sr. Officer" {{ $trainer->designation == 'Sr. Officer' ? 'selected' : '' }}>Sr. Officer</option>
+                                        <option value="Executive" {{ $trainer->designation == 'Executive' ? 'selected' : '' }}>Executive</option>
+                                        <option value="Sr.executive" {{ $trainer->designation == 'Sr.executive' ? 'selected' : '' }}>Sr. Executive</option>
+                                        <option value="Asst. manager" {{ $trainer->designation == 'Asst. manager' ? 'selected' : '' }}>Asst. Manager</option>
+                                        <option value="Manager" {{ $trainer->designation == 'Manager' ? 'selected' : '' }}>Manager</option>
+                                        <option value="Sr. manager" {{ $trainer->designation == 'Sr. manager' ? 'selected' : '' }}>Sr. Manager</option>
+                                        <option value="Deputy GM" {{ $trainer->designation == 'Deputy GM' ? 'selected' : '' }}>Deputy GM</option>
+                                        <option value="AGM and GM" {{ $trainer->designation == 'AGM and GM' ? 'selected' : '' }}>AGM and GM</option>
+                                        <option value="Head quality" {{ $trainer->designation == 'Head quality' ? 'selected' : '' }}>Head quality</option>
+                                        <option value="VP quality" {{ $trainer->designation == 'VP quality' ? 'selected' : '' }}>VP quality</option>
+                                        <option value="Plant head" {{ $trainer->designation == 'Plant head' ? 'selected' : '' }}>Plant head</option>
+                                    </select>
+                                </div>
+                            </div>
+
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Experience">Experience (No. of Years)</label>
+                    <select name="experience" id="experience">
+                        <option>Select </option>
+                        @for ($experience = 1; $experience <= 70; $experience++) <option value="{{ $experience }}" @if ($experience==$trainer->experience) selected @endif>{{ $experience }}</option>
+                            @endfor
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="HOD Persons">HOD</label>
+                    <input id="" type="text" name="hod" maxlength="255" value="{{ $trainer->hod }}">
+
+                    <!-- <select name="hod" id="hod">
+                        <option value="">-- Select HOD --</option>
+                        @foreach ($users as $user)
+                        <option value="{{ $user->id }}" {{ $user->id == old('hod', $trainer->hod) ? 'selected' : '' }}>
+                            {{ $user->name }}
+                        </option>
+                        @endforeach
+                    </select> -->
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="group-input">
+                    <label for="qualification">Qualification</label>
+                    <input id="qualification" type="text" name="qualification" maxlength="255" value="{{ $trainer->qualification }}">
+                </div>
+            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="training_date">Training Date</label>
+                                    <input type="date" id="training_date" name="training_date" value="{{$trainer->training_date}}">
+                                </div>
+                            </div>
+
+                            <!-- Topic of Training -->
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="topic">Topic of Training</label>
+                                    <input type="text" id="" name="topic" value="{{$trainer->topic}}">
+                                </div>
+                            </div>
+
+                            <!-- Type of Training -->
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="type">Type of Training</label>
+                                    <select name="type" id="type" >
+                                        <option value="">--Select--</option>
+                                        <option value="technical" @if ($trainer->type == "technical") selected @endif>Technical</option>
+                                        <option value="non-technical" @if ($trainer->type == "non-technical") selected @endif>Non-Technical</option>
+                                        <option value="safety" @if ($trainer->type == "technical") selected @endif>Safety</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Evaluation Required -->
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="evaluation">Evaluation Required</label>
+                                    <select name="evaluation">
+                                    <option value="">--Select--</option>
+                                    <option value="yes" @if ($trainer->evaluation == "yes") selected @endif>Yes</option>
+                                    <option value="no" @if ($trainer->evaluation == "no") selected @endif>No</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="site_name">Site Division/Project <span class="text-danger">*</span></label>
@@ -526,7 +725,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
             </div>
 
 
-            <div class="col-lg-6 new-date-data-field">
+            {{-- <div class="col-lg-6 new-date-data-field">
                 <div class="group-input input-date">
                     <label for="Date Due">Due Date</label>
                     <div class="calenderauditee">
@@ -535,7 +734,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                         <input disabled type="text" value="{{Helpers::getdateFormat($due_date)}}">
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
 
             <div class="col-12">
@@ -546,148 +745,8 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                 </div>
             </div>
 
-            <div class="sub-head">
-                Trainer Information
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="trainer">Trainer Name</label>
-                    <input id="trainer_name" type="text" name="trainer_name" maxlength="255" value="{{ $trainer->trainer_name }}">
-                </div>
-            </div>
-
-            <div class="col-6">
-                <div class="group-input">
-                    <label for="qualification">Qualification</label>
-                    <input id="qualification" type="text" name="qualification" maxlength="255" value="{{ $trainer->qualification }}">
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Designation">Designation</label>
-                    <select name="designation" id="designation">
-                        <option>Select</option>
-                        <option value="lead_trainer" @if ($trainer->designation == "lead_trainer") selected @endif>Lead Trainer</option>
-                        <option value="senior_trainer" @if ($trainer->designation == "senior_trainer") selected @endif>Senior Trainer</option>
-                        <option value="Instructor" @if ($trainer->designation == "Instructor") selected @endif>Instructor</option>
-                        <option value="Evaluator" @if ($trainer->designation == "Evaluator") selected @endif>Evaluator</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Department">Department</label>
-                    <select name="department">
-                        <option>-- Select --</option>
-                        {{-- @foreach ($departments as $department)
-                                <option value="{{ $department->id }}" @if ($department->id == $trainer->department) selected @endif>{{ $department->name }}</option>
-                        @endforeach --}}
-
-
-
-                        @php
-                        $savedDepartmentId = old('department', $trainer->department);
-                        @endphp
-
-                        @foreach (Helpers::getDepartments() as $code => $department)
-                        <option value="{{ $code }}" @if ($savedDepartmentId==$code) selected @endif>{{ $department }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Experience">Experience (No. of Years)</label>
-                    <select name="experience" id="experience">
-                        <option>Select </option>
-                        @for ($experience = 1; $experience <= 70; $experience++) <option value="{{ $experience }}" @if ($experience==$trainer->experience) selected @endif>{{ $experience }}</option>
-                            @endfor
-                    </select>
-                </div>
-            </div>
-
-            {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="priority-level">Priority Level</label>
-                                        <span class="text-primary">Priority levels in TMS can be tailored to suit the specific needs of the institution in managing the training program.</span>
-                                        <select name="priority_level">
-                                            <option value="0">-- Select --</option>
-                                            <option value="low">Low Priority</option>
-                                            <option value="medium">Medium Priority</option>
-                                            <option value="high">High Priority</option>
-                                        </select>
-                                    </div>
-                                </div> --}}
-
-
-
-
-
-            {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group">Initiated Through</label>
-                                        <div><small class="text-primary">Please select related information</small></div>
-                                        <select name="initiated_through"
-                                            onchange="otherController(this.value, 'others', 'initiated_through_req')">
-                                            <option value="">-- select --</option>
-                                            <option value="recall">Recall</option>
-                                            <option value="return">Return</option>
-                                            <option value="deviation">Deviation</option>
-                                            <option value="complaint">Complaint</option>
-                                            <option value="regulatory">Regulatory</option>
-                                            <option value="lab-incident">Lab Incident</option>
-                                            <option value="improvement">Improvement</option>
-                                            <option value="others">Others</option>
-                                        </select>
-                                    </div>
-                                </div> --}}
-            {{-- <div class="col-lg-6">
-                                    <div class="group-input" id="initiated_through_req">
-                                        <label for="If Other">Others<span class="text-danger d-none">*</span></label>
-                                        <textarea name="initiated_if_other"></textarea>
-                                    </div>
-                                </div> --}}
-
-
-            <!-- <div class="col-lg-6">
-                                   <div class="group-input">
-                                        <label for="external_agencies">External Agencies</label>
-                                        <select name="external_agencies"
-                                            onchange="otherController(this.value, 'others', 'external_agencies_req')">
-                                            <option>-- Select --</option>
-                                            <option value="jordan_fda" @if ($trainer->external_agencies == "jordan_fda") selected @endif>Jordan FDA</option>
-                                            <option value="us_fda" @if ($trainer->external_agencies == "us_fda") selected @endif>USFDA</option>
-                                            <option value="mhra" @if ($trainer->external_agencies == "mhra") selected @endif>MHRA</option>
-                                            <option value="anvisa" @if ($trainer->external_agencies == "anvisa") selected @endif>ANVISA</option>
-                                            <option value="iso" @if ($trainer->external_agencies == "iso") selected @endif>ISO</option>
-                                            <option value="who" @if ($trainer->external_agencies == "who") selected @endif>WHO</option>
-                                            <option value="local_fda" @if ($trainer->external_agencies == "local_fda") selected @endif>Local FDA</option>
-                                            <option value="tga" @if ($trainer->external_agencies == "tga") selected @endif>TGA</option>
-                                            <option value="others" @if ($trainer->external_agencies == "others") selected @endif>Others</option>
-                                        </select>
-                                    </div>
-                    </div> -->
-
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="HOD Persons">HOD</label>
-                    <select name="hod" id="hod">
-                        <option value="">-- Select HOD --</option>
-                        @foreach ($users as $user)
-                        <option value="{{ $user->id }}" {{ $user->id == old('hod', $trainer->hod) ? 'selected' : '' }}>
-                            {{ $user->name }}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-
             <div class="">
-                <div class="group-input">
+                {{-- <div class="group-input">
                     <label for="audit-agenda-grid">
                         Trainer Skill Set<button type="button" name="audit-agenda-grid" id="Trainer_Skill_table">+</button>
                     </label>
@@ -709,7 +768,6 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                                 </td>
                                 <td><input type="text" name="trainer_skill[{{ $loop->index }}][Trainer_skill_set]" value=" {{ array_key_exists('Trainer_skill_set', $skill) ? $skill['Trainer_skill_set'] : '' }}"></td>
                                 <td><input type="text" name="trainer_skill[{{ $loop->index }}][remarks]" value=" {{ array_key_exists('remarks', $skill) ? $skill['remarks'] : '' }}"></td>
-                                <!-- <td><button type="button" class="removeRowBtn">Remove</button></td> -->
                                 <td>
                                     <button type="button" onclick="removeRow(this)">Remove</button>
                                 </td>
@@ -725,7 +783,8 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                             @endif
                         </tbody>
                     </table>
-                </div>
+                </div> --}}
+
                 <script>
                     function removeRow(button) {
                         var row = button.closest('tr');
@@ -1000,8 +1059,317 @@ $departments = DB::table('departments')->select('id', 'name')->get();
 </div>
 </div>
 
+<div id="CCForm2" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="col-12 sub-head">
+                            Questionaries
+                        </div>
+                        <div class="pt-2 group-input">
+                            <label for="audit-agenda-grid">
+                                Questionaries
+                                <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
+                                <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                    (Launch Instruction)
+                                </span>
+                            </label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="job-responsibilty-table" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%;">Sr No.</th>
+                                            <th>Questions</th>
+                                            <th>Answer Fillup by Employee</th>
+                                            <th>Comments</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if ($employee_grid_data && is_array($employee_grid_data->data))
+                                            @foreach ($employee_grid_data->data as $index => $employee_grid)
+                                            <tr>
+                                                <td><input disabled type="text" name="jobResponsibilities[{{ $loop->index }}][serial]" value="{{ $loop->index+1 }}"></td>
+                                                <td><input type="text" name="jobResponsibilities[{{ $loop->index }}][job]" value="{{ array_key_exists('job', $employee_grid) ? $employee_grid['job'] : '' }}" class="question-input">
+                                                </td>
+                                                <td><input type="text" name="jobResponsibilities[{{ $loop->index }}][remarks]" value="{{ array_key_exists('remarks', $employee_grid) ? $employee_grid['remarks'] : '' }}" class="answer-input">
+                                                </td>
+                                                <td><input type="text" name="jobResponsibilities[{{ $loop->index }}][comments]" value="{{ array_key_exists('comments', $employee_grid) ? $employee_grid['comments'] : '' }}" class="answer-input">
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td><input disabled type="text" name="jobResponsibilities[0][serial]" value="1"></td>
+                                                <td><input type="text" name="jobResponsibilities[0][job]" class="question-input" >
+                                                </td>
+                                                <td><input type="text" name="jobResponsibilities[0][remarks]" class="answer-input">
+                                              
+                                                </td>
+                                                <td><input type="text" name="jobResponsibilities[0][comments]" class="answer-input" >
+                                            
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div> 
+                        <div class="button-block">
+                            <button type="submit" class="saveButton" id="">Save</button>
+           
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        </div>
+                    </div>
+                </div>
+<script>
+            $(document).ready(function() {
+                $('#ObservationAdd').click(function(e) {
+                    function generateTableRow(serialNumber) {
+
+                        var html =
+                            '<tr>' +
+                            '<td><input disabled type="text" name="jobResponsibilities[' + serialNumber +
+                            '][serial]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="jobResponsibilities[' + serialNumber +
+                            '][job]"></td>' +
+                            '<td><input type="text" class="Document_Remarks" name="jobResponsibilities[' +
+                            serialNumber + '][remarks]"></td>' +
 
 
+                            '</tr>';
+
+                        return html;
+                    }
+
+                    var tableBody = $('#job-responsibilty-table tbody');
+                    var rowCount = tableBody.children('tr').length;
+                    var newRow = generateTableRow(rowCount + 1);
+                    tableBody.append(newRow);
+                });
+            });
+</script>
+
+                <div id="CCForm3" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Activated On">Remarks</label>
+                                    <textarea name="hod_comment">{{ $trainer->hod_comment }}</textarea>
+                                </div>
+                            </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="External Attachment">HOD Evaluation Attachment</label>
+                                        <input type="file" id="myfile" name="hod_attachment" value="{{ $trainer->hod_attachment }}">
+                                        <a href="{{ asset('upload/' . $trainer->hod_attachment) }}" target="_blank">{{ $trainer->hod_attachment }}</a>
+                                    </div>
+                                </div>
+
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                 
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm4" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                        <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Activated On">Remarks</label>
+                                    <textarea name="qa_final_comment">{{ $trainer->qa_final_comment }}</textarea>
+                                </div>
+                            </div>
+                        <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="External Attachment">QA/CQA Attachment</label>
+                                        <input type="file" id="myfile" name="qa_final_attachment" value="{{ $trainer->qa_final_attachment }}">
+                                        <a href="{{ asset('upload/' . $trainer->qa_final_attachment) }}" target="_blank">{{ $trainer->qa_final_attachment }}</a>
+                                    </div>
+                                </div>
+
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                 
+                        </div>
+                    </div>
+                </div>
+
+                @if ($trainer->stage >= 5)
+                <div id="CCForm5" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                <div class="button-block">
+                                    <button type="button" class="printButton" onclick="printCertificate()">
+                                        <i class="fas fa-print"></i>Print
+                                    </button>
+                                </div>
+                                    <div class="certificate-container">
+                                        <div class="certificate-title">TRAINING CERTIFICATE</div>
+
+                                        <div class="certificate-description"><br><br>
+                                            This is to certify that Mr./Ms./Mrs. <strong>{{$trainer->employee_name}}</strong>.
+                                            has undergone Training Qualification including the requirement of cGMP and has shown a good attitude and thorough understanding in the subject.
+                                        </div>
+
+                                        <div class="certificate-description">
+                                            Therefore we certify that Mr. Ms. / Mrs. <strong>{{$trainer->name_employee}}</strong>.
+                                            is capable of performing his/her assigned duties in the <strong>{{$trainer->department}}</strong> Department independently.
+                                        </div>
+
+                                        <div class="date-container">
+                                        <div class="signature-block">
+                                            <strong>Sign/Date:</strong>_________
+                                            <div>HR Head</div>
+                                        </div>
+
+                                        <div>
+                                            <strong>Sign/Date:</strong>_________
+                                            <div class="signature">Head QA/CQA<div></div></div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 40px;" class="button-block">
+                                    <button type="submit" class=" btn btn saveButton">Save</button>
+                                    <button type="button" id="ChangeNextButton" class=" btn btn nextButton">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+
+                <style>
+           .certificate-container {
+            width: 685px;
+            height: 500px;
+            border: 4px solid #3d6186;
+            padding: 18px;
+            background-color: white;
+            position: relative;
+            margin: auto;
+            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        .certificate-title {
+            font-size: 30px;
+            font-weight: bold;
+            color: #677078;
+            display: flex;
+            justify-content: center;
+        }
+        .certificate-subtitle {
+            font-size: 18px;
+            color: #555;
+        }
+        .certificate-description {
+            margin-top: 30px;
+            font-size: 18px;
+            color: #333;
+        }
+       
+          .date-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 60px;
+            font-size: 18px;
+        }
+        .signature-container {
+            position: absolute;
+            bottom: 40px;
+            right: 50px;
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+        }
+       
+        @media print {
+            .button-block {
+                display: none !important; 
+            }
+
+            body * {
+                visibility: hidden;
+            }
+
+            #CCForm4, #CCForm4 * {
+                visibility: visible;
+            }
+
+            #CCForm4 {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+        }
+        .button-block {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 50px;
+        }
+
+        .printButton {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            float: right; 
+        }
+
+        .printButton:hover {
+            background-color: #1a252f;
+        }
+
+        .printButton i {
+            margin-right: 8px; 
+        }
+
+        @media print {
+    .button-block {
+        display: none !important; 
+    }
+
+    body * {
+        visibility: hidden;
+    }
+
+    .certificate-container, .certificate-container * {
+        visibility: visible;
+    }
+
+    .certificate-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+}
+
+            </style>
+
+<script>
+                        function printCertificate() {
+                        var buttons = document.querySelector(".button-block");
+                        buttons.style.display = 'none';
+                        window.print();
+                        buttons.style.display = 'block';
+                    }
+
+                </script>
 <!-- Activity Log content -->
 <div id="CCForm6" class="inner-block cctabcontent">
     <div class="inner-block-content">
@@ -1178,6 +1546,8 @@ $departments = DB::table('departments')->select('id', 'name')->get();
         display: block;
     }
 </style>
+
+
 <script>
     document.getElementById('myfile').addEventListener('change', function() {
         var fileListDiv = document.querySelector('.file-list');

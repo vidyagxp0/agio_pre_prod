@@ -61,6 +61,7 @@ class InternalauditController extends Controller
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assign_to = $request->assign_to;
         $internalAudit->due_date = $request->due_date;
+        // dd($internalAudit->due_date);
         $internalAudit->audit_schedule_start_date= $request->audit_schedule_start_date;
         $internalAudit->audit_schedule_end_date= $request->audit_schedule_end_date;
         $internalAudit->Initiator_Group= $request->Initiator_Group;
@@ -500,10 +501,10 @@ $newDataGridInitialClosure->save();
             $data3->end_time = serialize($request->scheduled_end_time);
         }
         if (!empty($request->auditor)) {
-            $data3->auditor = serialize($request->auditor);
+            $data3->auditor = serialize( $request->auditor);
         }
         if (!empty($request->auditee)) {
-            $data3->auditee = serialize($request->auditee);
+            $data3->auditee = serialize( $request->auditee);
         }
         if (!empty($request->remarks)) {
             $data3->remark = serialize($request->remarks);
@@ -573,13 +574,13 @@ $newDataGridInitialClosure->save();
         // }
         $data4->save();
         
-        if (!empty($internalAudit->date)) {
+        if (!empty($internalAudit->record)) {
             $history = new InternalAuditTrial();
-            $history->InternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Date of Initiator';
+            $history->internalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Record Number';
             $history->previous = "Null";
-            $history->current = $internalAudit->date;
-            $history->comment = "NA";
+            $history->current = Helpers::getDivisionName(session()->get('division')) . "/RCA/" . Helpers::year($internalAudit->created_at) . "/" . str_pad($internalAudit->record, 4, '0', STR_PAD_LEFT);
+            $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -589,6 +590,58 @@ $newDataGridInitialClosure->save();
             $history->action_name = 'Create';
             $history->save();
         }
+
+        if (!empty($request->division_code)) {
+            $history = new InternalAuditTrial();
+            $history->internalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Site/Location Code';
+            $history->previous = "Null";
+            $history->current = $internalAudit->division_code;
+            $history->comment = "Null";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($request->initiator_id)) {
+            $history = new InternalAuditTrial();
+            $history->internalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Initiator';
+            $history->previous = "Null";
+            $history->current = $request->initiator_id;
+            $history->comment = "Null";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($request->intiation_date)) {
+            $history = new InternalAuditTrial();
+            $history->internalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Date Of Initiation';
+            $history->previous = "Null";
+            $history->current =  Helpers::getdateFormat($request->intiation_date);
+            $history->comment = "Null";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
 
         if (!empty($internalAudit->assign_to)) {
             $history = new InternalAuditTrial();
@@ -606,13 +659,61 @@ $newDataGridInitialClosure->save();
             $history->action_name = 'Create';
             $history->save();
         }
+        if (!empty($internalAudit->assign_to)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Auditee Department Head';
+            $history->previous = "Null";
+            $history->current = $internalAudit->assign_to;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty($internalAudit->sch_audit_start_date)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Scheduled audit date';
+            $history->previous = "Null";
+            $history->current = $internalAudit->sch_audit_start_date;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty($internalAudit->auditee_department)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Auditee department Name';
+            $history->previous = "Null";
+            $history->current = $internalAudit->auditee_department;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
 
         if (!empty($internalAudit->Initiator_Group)) {
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Initiator Department ';
             $history->previous = "Null";
-            $history->current = $internalAudit->Initiator_Group;
+            $history->current = Helpers::getInitiatorGroupFullName($internalAudit->Initiator_Group);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -890,6 +991,22 @@ $newDataGridInitialClosure->save();
             $history->action_name = 'Create';
             $history->save();
         }
+        if (!empty($internalAudit->due_date_extension)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Due Date Extension Justification';
+            $history->previous = "Null";
+            $history->current = $internalAudit->due_date_extension;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
 
         // if (!empty($internalAudit->Audit_team)) {
         //     $history = new InternalAuditTrial();
@@ -1078,6 +1195,54 @@ $newDataGridInitialClosure->save();
             $history->action_name = 'Create';
             $history->save();
         }
+        if (!empty($internalAudit->refrence_record)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Reference Record';
+            $history->previous = "Null";
+            $history->current = $internalAudit->refrence_record;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty($internalAudit->res_ver)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Response Verification Comment';
+            $history->previous = "Null";
+            $history->current = $internalAudit->res_ver;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty($internalAudit->attach_file_rv)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Response verification Attachments';
+            $history->previous = "Null";
+            $history->current = $internalAudit->attach_file_rv;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
 
         if (!empty($internalAudit->Remarks)) {
             $history = new InternalAuditTrial();
@@ -1150,7 +1315,7 @@ $newDataGridInitialClosure->save();
         if (!empty($internalAudit->inv_attachment)) {
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Inv Attachment';
+            $history->activity_type = 'GI Attachment';
             $history->previous = "Null";
             $history->current = $internalAudit->inv_attachment;
             $history->comment = "NA";
@@ -1167,7 +1332,7 @@ $newDataGridInitialClosure->save();
         if (!empty($internalAudit->file_attachment)) {
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'File Attachment';
+            $history->activity_type = 'Acknowledment Attachment';
             $history->previous = "Null";
             $history->current = $internalAudit->file_attachment;
             $history->comment = "NA";
@@ -1180,19 +1345,19 @@ $newDataGridInitialClosure->save();
             $history->action_name = 'Create';
             $history->save();
         }
-        // if (!empty($internalAudit->file_attachment_guideline)) {
-        //     $history = new InternalAuditTrial();
-        //     $history->InternalAudit_id = $internalAudit->id;
-        //     $history->activity_type = 'File Attachment';
-        //     $history->previous = "Null";
-        //     $history->current = $internalAudit->file_attachment_guideline;
-        //     $history->comment = "NA";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $internalAudit->status;
-        //     $history->save();
-        // }
+        if (!empty($internalAudit->file_attachment_guideline)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Audit Preparation and Execution Attachment';
+            $history->previous = "Null";
+            $history->current = $internalAudit->file_attachment_guideline;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->save();
+        }
 
         if (!empty($internalAudit->Audit_file)) {
             $history = new InternalAuditTrial();
@@ -1231,7 +1396,7 @@ $newDataGridInitialClosure->save();
         if (!empty($internalAudit->myfile)) {
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Inv Attachment';
+            $history->activity_type = 'Audit Attachment';
             $history->previous = "Null";
             $history->current = $internalAudit->myfile;
             $history->comment = "NA";
@@ -1245,22 +1410,7 @@ $newDataGridInitialClosure->save();
             $history->save();
         }
 
-        if (!empty($internalAudit->myfile)) {
-            $history = new InternalAuditTrial();
-            $history->InternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Inv Attachment';
-            $history->previous = "Null";
-            $history->current = $internalAudit->myfile;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $internalAudit->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
+
 
         if (!empty($internalAudit->due_date)) {
             $history = new InternalAuditTrial();
@@ -1330,6 +1480,7 @@ $newDataGridInitialClosure->save();
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assign_to = $request->assign_to;
         $internalAudit->due_date= $request->due_date;
+        // dd($internalAudit->due_date);
         // $internalAudit->initiator_group= $request->initiator_group;
         $internalAudit->initiator_group_code= $request->initiator_group_code;
         $internalAudit->short_description = $request->short_description;
@@ -1339,6 +1490,7 @@ $newDataGridInitialClosure->save();
         // $internalAudit->external_others=$request->external_others;
         $internalAudit->Relevant_Guideline= $request->Relevant_Guideline;
         $internalAudit->initiated_through = $request->initiated_through;
+        // dd($internalAudit->initiated_through);
         $internalAudit->initiated_if_other = $request->initiated_if_other;
         $internalAudit->repeat = $request->repeat;
         $internalAudit->QA_Comments= $request->QA_Comments;
@@ -1353,6 +1505,7 @@ $newDataGridInitialClosure->save();
         $internalAudit->Initiator_Group= $request->Initiator_Group;
         $internalAudit->Auditor_comment = $request->Auditor_comment;
         $internalAudit->Auditee_comment = $request->Auditee_comment;
+        // dd($internalAudit->Auditee_comment);
         $internalAudit->auditee_department = $request->auditee_department;
         $internalAudit->sch_audit_start_date = $request->sch_audit_start_date;
 
@@ -2023,6 +2176,227 @@ $Checklist_Capsule->save();
 
             $internalAudit->myfile = json_encode($files);
         }
+        if (!empty($request->supproting_attachment)) {
+            $files = [];
+            if ($request->hasfile('supproting_attachment')) {
+                foreach ($request->file('supproting_attachment') as $file) {
+                    $name = $request->name . 'supproting_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->supproting_attachment = json_encode($files);
+        }
+        if (!empty($request->tablet_coating_supporting_attachment)) {
+            $files = [];
+            if ($request->hasfile('tablet_coating_supporting_attachment')) {
+                foreach ($request->file('tablet_coating_supporting_attachment') as $file) {
+                    $name = $request->name . 'tablet_coating_supporting_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->tablet_coating_supporting_attachment = json_encode($files);
+        }
+        if (!empty($request->dispensing_and_manufacturing_attachment)) {
+            $files = [];
+            if ($request->hasfile('dispensing_and_manufacturing_attachment')) {
+                foreach ($request->file('dispensing_and_manufacturing_attachment') as $file) {
+                    $name = $request->name . 'dispensing_and_manufacturing_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->dispensing_and_manufacturing_attachment = json_encode($files);
+        }
+        if (!empty($request->ointment_packing_attachment)) {
+            $files = [];
+            if ($request->hasfile('ointment_packing_attachment')) {
+                foreach ($request->file('ointment_packing_attachment') as $file) {
+                    $name = $request->name . 'ointment_packing_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->ointment_packing_attachment = json_encode($files);
+        }
+        if (!empty($request->engineering_response_attachment)) {
+            $files = [];
+            if ($request->hasfile('engineering_response_attachment')) {
+                foreach ($request->file('engineering_response_attachment') as $file) {
+                    $name = $request->name . 'engineering_response_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->engineering_response_attachment = json_encode($files);
+        }
+        if (!empty($request->quality_control_response_attachment)) {
+            $files = [];
+            if ($request->hasfile('quality_control_response_attachment')) {
+                foreach ($request->file('quality_control_response_attachment') as $file) {
+                    $name = $request->name . 'quality_control_response_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->quality_control_response_attachment = json_encode($files);
+        }
+        if (!empty($request->checklist_stores_response_attachment)) {
+            $files = [];
+            if ($request->hasfile('checklist_stores_response_attachment')) {
+                foreach ($request->file('checklist_stores_response_attachment') as $file) {
+                    $name = $request->name . 'checklist_stores_response_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->checklist_stores_response_attachment = json_encode($files);
+        }
+        if (!empty($request->checklist_hr_response_attachment)) {
+            $files = [];
+            if ($request->hasfile('checklist_hr_response_attachment')) {
+                foreach ($request->file('checklist_hr_response_attachment') as $file) {
+                    $name = $request->name . 'checklist_hr_response_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->checklist_hr_response_attachment = json_encode($files);
+        }
+        if (!empty($request->remark_injection_packing_attachment)) {
+            $files = [];
+            if ($request->hasfile('remark_injection_packing_attachment')) {
+                foreach ($request->file('remark_injection_packing_attachment') as $file) {
+                    $name = $request->name . 'remark_injection_packing_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->remark_injection_packing_attachment = json_encode($files);
+        }
+        if (!empty($request->remark_analytical_research_attachment)) {
+            $files = [];
+            if ($request->hasfile('remark_analytical_research_attachment')) {
+                foreach ($request->file('remark_analytical_research_attachment') as $file) {
+                    $name = $request->name . 'remark_analytical_research_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->remark_analytical_research_attachment = json_encode($files);
+        }
+        if (!empty($request->remark_powder_manufacturing_filling_attachment)) {
+            $files = [];
+            if ($request->hasfile('remark_powder_manufacturing_filling_attachment')) {
+                foreach ($request->file('remark_powder_manufacturing_filling_attachment') as $file) {
+                    $name = $request->name . 'remark_powder_manufacturing_filling_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->remark_powder_manufacturing_filling_attachment = json_encode($files);
+        }
+        if (!empty($request->remark_formulation_research_development_attachment)) {
+            $files = [];
+            if ($request->hasfile('remark_formulation_research_development_attachment')) {
+                foreach ($request->file('remark_formulation_research_development_attachment') as $file) {
+                    $name = $request->name . 'remark_formulation_research_development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->remark_formulation_research_development_attachment = json_encode($files);
+        }
+        if (!empty($request->remark_documentation_name_attachment)) {
+            $files = [];
+            if ($request->hasfile('remark_documentation_name_attachment')) {
+                foreach ($request->file('remark_documentation_name_attachment') as $file) {
+                    $name = $request->name . 'remark_documentation_name_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->remark_documentation_name_attachment = json_encode($files);
+        }
+        if (!empty($request->tablet_capsule_packing_attachmen)) {
+            $files = [];
+            if ($request->hasfile('tablet_capsule_packing_attachmen')) {
+                foreach ($request->file('tablet_capsule_packing_attachmen') as $file) {
+                    $name = $request->name . 'tablet_capsule_packing_attachmen' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->tablet_capsule_packing_attachmen = json_encode($files);
+        }
+        if (!empty($request->file_attach_add_2)) {
+            $files = [];
+            if ($request->hasfile('file_attach_add_2')) {
+                foreach ($request->file('file_attach_add_2') as $file) {
+                    $name = $request->name . 'file_attach_add_2' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->file_attach_add_2 = json_encode($files);
+        }
+        if (!empty($request->file_attach_add_1)) {
+            $files = [];
+            if ($request->hasfile('file_attach_add_1')) {
+                foreach ($request->file('file_attach_add_1') as $file) {
+                    $name = $request->name . 'file_attach_add_1' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->file_attach_add_1 = json_encode($files);
+        }
+        if (!empty($request->file_attach)) {
+            $files = [];
+            if ($request->hasfile('file_attach')) {
+                foreach ($request->file('file_attach') as $file) {
+                    $name = $request->name . 'file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->file_attach = json_encode($files);
+        }
 
 
         $internalAudit->update();
@@ -2204,14 +2578,16 @@ $Checklist_Capsule->save();
             $data3->end_time = serialize($request->scheduled_end_time);
         }
         if (!empty($request->auditor)) {
-            $data3->auditor = serialize($request->auditor);
+            $data3->auditor = serialize( $request->auditor);
         }
         if (!empty($request->auditee)) {
-            $data3->auditee = serialize($request->auditee);
+            $data3->auditee = serialize( $request->auditee);
+
         }
         if (!empty($request->remark)) {
             $data3->remark = serialize($request->remark);
         }
+        // dd($data3);
         $data3->update();
 
         $data4 = InternalAuditGrid::where('audit_id',$internalAudit->id)->where('type','Observation_field')->first();
@@ -2360,7 +2736,7 @@ $Checklist_Capsule->save();
             } else{
                 $history->previous = $lastDocument->Initiator_Group;
             }
-            $history->current = Helpers::getInitiatorGroupData($request->Initiator_Group);
+            $history->current = Helpers::getInitiatorGroupFullName($request->Initiator_Group);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2432,7 +2808,7 @@ $Checklist_Capsule->save();
         //     } else{
         //         $history->previous = $lastDocument->attach_file_rv;
         //     }
-        //     $history->current = implode(',', $request->attach_file_rv);
+        //     $history->current = $request->attach_file_rv;
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
@@ -2473,6 +2849,98 @@ $Checklist_Capsule->save();
                 $history->previous = $lastDocument->short_description;
             }
             $history->current = $request->short_description;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->auditee_department != $request->auditee_department){
+            $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+            ->where('activity_type', 'Auditee department Name')
+            ->exists();
+            $history = new InternalAuditTrial;
+            $history->InternalAudit_id = $lastDocument->id;
+            $history->activity_type = 'Auditee department Name';
+            if($lastDocument->auditee_department == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous =Helpers::getInitiatorGroupFullName ($lastDocument->auditee_department);
+            }
+            $history->current = Helpers::getInitiatorGroupFullName($request->auditee_department);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->sch_audit_start_date != $request->sch_audit_start_date){
+            $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+            ->where('activity_type', 'Scheduled audit date')
+            ->exists();
+            $history = new InternalAuditTrial;
+            $history->InternalAudit_id = $lastDocument->id;
+            $history->activity_type = 'Scheduled audit date';
+            if($lastDocument->sch_audit_start_date == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->sch_audit_start_date;
+            }
+            $history->current = $request->sch_audit_start_date;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->Auditee_comment != $request->Auditee_comment){
+            $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+            ->where('activity_type', 'Auditee Comment')
+            ->exists();
+            $history = new InternalAuditTrial;
+            $history->InternalAudit_id = $lastDocument->id;
+            $history->activity_type = 'Auditee Comment';
+            if($lastDocument->Auditee_comment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->Auditee_comment;
+            }
+            $history->current = $request->Auditee_comment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->Auditor_comment != $request->Auditor_comment){
+            $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+            ->where('activity_type', 'Auditor Comment')
+            ->exists();
+            $history = new InternalAuditTrial;
+            $history->InternalAudit_id = $lastDocument->id;
+            $history->activity_type = 'Auditor Comment';
+            if($lastDocument->Auditor_comment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->Auditor_comment;
+            }
+            $history->current = $request->Auditor_comment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3144,20 +3612,20 @@ $Checklist_Capsule->save();
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        // if ($lastDocument->file_attachment_guideline != $internalAudit->file_attachment_guideline || !empty($request->file_attachment_comment)) {
+        if ($lastDocument->file_attachment_guideline != $internalAudit->file_attachment_guideline || !empty($request->file_attachment_comment)) {
 
-        //     $history = new InternalAuditTrial();
-        //     $history->InternalAudit_id = $id;
-        //     $history->activity_type = 'File Attachment';
-        //     $history->previous = $lastDocument->file_attachment_guideline;
-        //     $history->current = $internalAudit->file_attachment_guideline;
-        //     $history->comment = $request->date_comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->save();
-        // }
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $id;
+            $history->activity_type = 'Audit Preparation and Execution Attachment';
+            $history->previous = $lastDocument->file_attachment_guideline;
+            $history->current = $internalAudit->file_attachment_guideline;
+            $history->comment = $request->date_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
         if($lastDocument->due_date_extension != $request->due_date_extension){
             $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
             ->where('activity_type', 'Due Date Extension Justification')
@@ -3216,11 +3684,11 @@ $areIniAttachmentsSame1 = $previousAttachments1 == $internalAudit->file_attachme
 
 if ($areIniAttachmentsSame1 != true) {
     $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
-        ->where('activity_type', 'File Attachment')
+        ->where('activity_type', 'Acknowledment Attachment')
         ->exists();
             $history = new InternalAuditTrial;
             $history->InternalAudit_id = $id;
-            $history->activity_type = 'File Attachment';
+            $history->activity_type = 'Acknowledment Attachment';
             $history->previous = $previousAttachments1;
             $history->current = $internalAudit->file_attachment;
             $history->comment = "Not Applicable";
@@ -3484,7 +3952,7 @@ if ($areIniAttachmentsSame2 != true) {
 
         //     $history = new InternalAuditTrial();
         //     $history->InternalAudit_id = $id;
-        //     $history->activity_type = 'Inv Attachment';
+        //     $history->activity_type = 'GI Attachment';
         //     $history->previous = $lastDocument->myfile;
         //     $history->current = $internalAudit->myfile;
         //     $history->comment = $request->date_comment;
@@ -3498,7 +3966,7 @@ if ($areIniAttachmentsSame2 != true) {
 
         //     $history = new InternalAuditTrial();
         //     $history->InternalAudit_id = $id;
-        //     $history->activity_type = 'Inv Attachment';
+        //     $history->activity_type = 'GI Attachment';
         //     $history->previous = $lastDocument->myfile;
         //     $history->current = $internalAudit->myfile;
         //     $history->comment = $request->date_comment;
@@ -4406,14 +4874,91 @@ if ($areIniAttachmentsSame2 != true) {
         }
 
 
+    // public static function singleReport($id)
+    // {
+    //     $data = InternalAudit::find($id);
+    //     $checklist1 = IA_checklist_tablet_compression::where('ia_id', $id)->first();
+    //     $checklist2 = IA_checklist_tablet_coating::where('ia_id', $id)->first();
+    //     $checklist3 = IA_checklist_capsule_paking::where('ia_id', $id)->first();
+    //     $checklist4 = Checklist_Capsule::where('ia_id', $id)->first();
+    //     $checklist5 = IA_liquid_ointment::where('ia_id', $id)->first();
+    //     $checklist6 = IA_dispencing_manufacturing::where('ia_id', $id)->first();
+    //     $checklist7 = IA_ointment_paking::where('ia_id', $id)->first();
+    //     $checklist9 = IA_checklist_engineering::where('ia_id', $id)->first();
+    //     $checklist10 = IA_quality_control::where('ia_id', $id)->first();
+    //     $checklist11 = IA_checklist_stores::where('ia_id', $id)->first();
+    //     $checklist12 = IA_checklist_hr::where('ia_id', $id)->first();
+    //     $checklist13 = IA_checklist_dispensing::where('ia_id', $id)->first();
+    //     $checklist14 = IA_checklist_production_injection::where('ia_id', $id)->first();
+    //     $checklist15 = IA_checklist_manufacturing_filling::where('ia_id', $id)->first();
+    //     $checklist16 = IA_checklist_analytical_research::where('ia_id', $id)->first();
+    //     $checklist17 = IA_checklist__formulation_research::where('ia_id', $id)->first();
+    //     $auditAssessmentChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditAssessmentChecklist'])->first();
+    //     $auditPersonnelChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditPersonnelChecklist'])->firstOrNew();
+    //     $auditfacilityChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditfacilityChecklist'])->firstOrNew();
+    //     $auditMachinesChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditMachinesChecklist'])->firstOrNew();
+    //     $auditProductionChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditProductionChecklist'])->firstOrNew();
+    //     $auditMaterialsChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditMaterialsChecklist'])->firstOrNew();
+    //     $auditQualityControlChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditQualityControlChecklist'])->firstOrNew();
+    //     $auditQualityAssuranceChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditQualityAssuranceChecklist'])->firstOrNew();
+    //     $auditPackagingChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditPackagingChecklist'])->firstOrNew();
+    //     $auditSheChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditSheChecklist'])->firstOrNew();
+        
+    
+
+
+
+
+    //     if (!empty($data)) {
+    //         $data->originator = User::where('id', $data->initiator_id)->value('name');
+    //         $pdf = App::make('dompdf.wrapper');
+    //         $time = Carbon::now();
+    //         $pdf = PDF::loadview('frontend.internalAudit.singleReport', compact('data','checklist1','checklist2','checklist3','checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','auditAssessmentChecklist','auditPersonnelChecklist','auditfacilityChecklist','auditMachinesChecklist','auditProductionChecklist','auditMaterialsChecklist','auditQualityControlChecklist','auditQualityAssuranceChecklist','auditPackagingChecklist','auditSheChecklist'))
+    //             ->setOptions([
+    //                 'defaultFont' => 'sans-serif',
+    //                 'isHtml5ParserEnabled' => true,
+    //                 'isRemoteEnabled' => true,
+    //                 'isPhpEnabled' => true,
+    //             ]);
+    //         $pdf->setPaper('A4');
+    //         $pdf->render();
+    //         $canvas = $pdf->getDomPDF()->getCanvas();
+    //         $height = $canvas->get_height();
+    //         $width = $canvas->get_width();
+    //         $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+    //         $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+    //         return $pdf->stream('Internal-Audit' . $id . '.pdf');
+    //     }
+    // }
     public static function singleReport($id)
     {
         $data = InternalAudit::find($id);
+        $checklist1 = IA_checklist_tablet_compression::where('ia_id', $id)->first();
+        $checklist2 = IA_checklist_tablet_coating::where('ia_id', $id)->first();
+        $checklist3 = IA_checklist_capsule_paking::where('ia_id', $id)->first();
+        $checklist4 = Checklist_Capsule::where('ia_id', $id)->first();
+        $checklist5 = IA_liquid_ointment::where('ia_id', $id)->first();
+        $checklist6 = IA_dispencing_manufacturing::where('ia_id', $id)->first();
+        $checklist7 = IA_ointment_paking::where('ia_id', $id)->first();
+        $checklist9 = IA_checklist_engineering::where('ia_id', $id)->first();
+        $checklist10 = IA_quality_control::where('ia_id', $id)->first();
+        $checklist11 = IA_checklist_stores::where('ia_id', $id)->first();
+        $checklist12 = IA_checklist_hr::where('ia_id', $id)->first();
+        $checklist13 = IA_checklist_dispensing::where('ia_id', $id)->first();
+        $checklist14 = IA_checklist_production_injection::where('ia_id', $id)->first();
+        $checklist15 = IA_checklist_manufacturing_filling::where('ia_id', $id)->first();
+        $checklist16 = IA_checklist_analytical_research::where('ia_id', $id)->first();
+        $checklist17 = IA_checklist__formulation_research::where('ia_id', $id)->first();
+       
+
+
+
+
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.internalAudit.singleReport', compact('data'))
+            $pdf = PDF::loadview('frontend.internalAudit.singleReport', compact('data','checklist1','checklist2','checklist3','checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

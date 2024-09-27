@@ -205,6 +205,17 @@
                     General Information
                 </div>
                 <table>
+
+                <tr>
+                        <th class="w-20">Record Number</th>
+                        <td class="w-30">@if($data->record){{  str_pad($data->record, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <th class="w-20">Division Code</th>
+                        <td class="w-30">@if($data->division_id){{  Helpers::getDivisionName($data->division_id) }} @else Not Applicable @endif</td>
+                    </tr>
+
+
+
+
                     <tr> On {{ Helpers::getDateFormat($data->created_at) }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
@@ -328,14 +339,14 @@
                             @endif
                         </td>
 
-                        <th class="w-20">Division Code</th>
-                        <td class="w-30" colspan="3">
-                            @if ($data->Division_Code)
-                                {{ $data->Division_Code }}
+                        <!-- <th class="w-20">Division Code</th>
+                       <td class="w-80">
+                            @if (Helpers::getDivisionName(session()->get('division')))
+                                {{ Helpers::getDivisionName($data->division_id) }}
                             @else
                                 Not Applicable
                             @endif
-                        </td>
+                        </td> -->
                     </tr>
 
                     <tr>
@@ -407,6 +418,8 @@
                         <td class="w-80" colspan="3">
                             <div>
                                 {{ $data->risk_assessment_related_record }}
+                                <!-- {{ Helpers::getInitiatorName($data->risk_assessment_related_record)  }} -->
+                        
                             </div>
                         </td>
                     </tr>
@@ -580,7 +593,7 @@ Not Applicable
 
                          <tr>
                             <th class="w-20">HOD Assessment Comments</th>
-                            <td class="w-80">{{ $data->hod_assessment_comments }}</td>
+                            <td class="w-80">{{$cc_cfts->hod_assessment_comments}}</td>
                         </tr>  
                     </table>
                     <div class="border-table">
@@ -593,8 +606,8 @@ Not Applicable
                                 <th class="w-20">S.N.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
-                            @if ($data->hod_assessment_attachment)
-                                @foreach (json_decode($data->hod_assessment_attachment) as $key => $file)
+                            @if ($cc_cfts->hod_assessment_attachment)
+                                @foreach (json_decode($cc_cfts->hod_assessment_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
                                         <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
@@ -631,8 +644,8 @@ Not Applicable
                         </tr>  --}}
                         <tr>
                             <th class="w-20">CFT Reviewer Person</th>
-                            <td class="w-30">{{ $data->due_days }}</td>
-
+                            <!-- <td class="w-30">  {{ Helpers::getInitiatorName($data->hod_person) }}{{ $data->reviewer_person_value }}</td> -->
+                            <td class="w-80">@if($data->reviewer_person_value){{  $cft_teamNamesString }}@else Not Applicable @endif</td>
 
                             <th class="w-20">Classification of Change</th>
                             <td class="w-30">{{ $data->severity_level1 }}</td>
@@ -648,13 +661,42 @@ Not Applicable
                             </td>
                         </tr>
 
-                        <tr>
+                </table>
+                  <table>
+                        <style>
+                    .head-number {
+                        font-weight: bold;
+                        font-size: 13px;
+                        padding-left: 8px;
+                    }
+
+                    .div-data {
+                        font-size: 13px;
+                        padding-left: 8px;
+                    }
+                </style>
+
+                <label class="head-number" for="Related Records">Related Records</label>
+                <div class="div-data">
+                    @if ($data->related_records)
+                        {{ str_replace(',', ', ', $data->related_records) }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
+
+
+                        
+                        <!-- <tr>
                             <th class="w-20">Related Records</th>
                             <td class="w-80">
                                 {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($review->related_records, 4, '0', STR_PAD_LEFT) }}
                             </td>
-                        </tr>
+                        </tr> -->
                     </table>
+
+
+                    
                     <div class="border-table">
                         <div class="block-head">
                             QA Attachments
@@ -665,8 +707,8 @@ Not Applicable
                                 <th class="w-20">S.N.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
-                            @if ($review->qa_head)
-                                @foreach (json_decode($review->qa_head) as $key => $file)
+                            @if ($data->qa_head)
+                                @foreach (json_decode($data->qa_head) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
                                         <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
@@ -808,7 +850,7 @@ Not Applicable
                         </div>
                         <table>
                             <tr>
-                                <th class="w-20">Quality Assurance Required ?
+                                <th class="w-20">Quality Assurance Review Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -853,7 +895,7 @@ Not Applicable
                                 </td>
                             </tr>
                             <tr>
-                                <th class="w-20">Quality Assurance Completed By</th>
+                                <th class="w-20">Quality Assurance Review Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->QualityAssurance_by)
@@ -863,7 +905,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Quality Assurance Completed On</th>
+                                <th class="w-20">Quality Assurance Review Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->QualityAssurance_on)
@@ -908,7 +950,7 @@ Not Applicable
                         </div>
                         <table>
                             <tr>
-                                <th class="w-20">Production Tablet Required ?
+                                <th class="w-20">Production Tablet/Capsule/Powder Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -919,7 +961,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production Tablet Person</th>
+                                <th class="w-20">Production Tablet/Capsule/Powder Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Production_Table_Person)
@@ -931,7 +973,7 @@ Not Applicable
                                 </td>
                             </tr>
                             <tr>
-                                <th class="w-20">Impact Assessment (By Production Tablet)</th>
+                                <th class="w-20">Impact Assessment(By Production (Tablet/Capsule/Powder))</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Production_Table_Assessment)
@@ -941,7 +983,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production Tablet Feedback</th>
+                                <th class="w-20">Production Tablet/Capsule/Powder Feedbacdk </th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Production_Table_Feedback)
@@ -953,7 +995,7 @@ Not Applicable
                                 </td>
                             </tr>
                             <tr>
-                                <th class="w-20">Production Tablet Completed By</th>
+                                <th class="w-20">Production Tablet/Capsule/Powder Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Production_Table_By)
@@ -963,7 +1005,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production Tablet Completed On</th>
+                                <th class="w-20">Production Tablet/Capsule/Powder Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Production_Table_On)
@@ -978,7 +1020,7 @@ Not Applicable
                     </div>
                     <div class="border-table">
                         <div class="block-">
-                            Production Tablet Attachments
+                        Production Tablet/Capsule/Powder Attachments
                         </div>
                         <table>
 
@@ -1008,7 +1050,7 @@ Not Applicable
                         </div>
                         <table>
                             <tr>
-                                <th class="w-20">Production Liquid Required ?
+                                <th class="w-20">Production Liquid/Ointment Required?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -1019,7 +1061,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production Liquid Person</th>
+                                <th class="w-20">Production Liquid/Ointment Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ProductionLiquid_person)
@@ -1031,7 +1073,7 @@ Not Applicable
                                 </td>
                             </tr>
                             <tr>
-                                <th class="w-20">Impact Assessment (By Production Liquid)</th>
+                                <th class="w-20">Impact Assessment(By Production Liquid/Ointment)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ProductionLiquid_assessment)
@@ -1041,7 +1083,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production Liquid Feedback</th>
+                                <th class="w-20">Production Liquid/Ointment Feedback</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ProductionLiquid_feedback)
@@ -1053,7 +1095,7 @@ Not Applicable
                                 </td>
                             </tr>
                             <tr>
-                                <th class="w-20">Production Liquid Completed By</th>
+                                <th class="w-20">Production Liquid/Ointment Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ProductionLiquid_by)
@@ -1063,7 +1105,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production Liquid Completed On</th>
+                                <th class="w-20">Production Liquid/Ointment Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ProductionLiquid_on)
@@ -1078,7 +1120,7 @@ Not Applicable
                     </div>
                     <div class="border-table">
                         <div class="block-">
-                            Production Liquid Attachments
+                        Production Liquid/Ointment Attachments
                         </div>
                         <table>
 
@@ -2517,8 +2559,8 @@ Not Applicable
                                     <th class="w-20">Impact Assessment (By Other's 2)</th>
                                     <td class="w-30">
                                         <div>
-                                            @if ($cftData->Other2_assessment)
-                                                {{ $cftData->Other2_assessment }}
+                                            @if ($cftData->Other2_Assessment)
+                                                {{ $cftData->Other2_Assessment }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2635,8 +2677,8 @@ Not Applicable
                                     <th class="w-20">Impact Assessment (By Other's 3)</th>
                                     <td class="w-30">
                                         <div>
-                                            @if ($cftData->Other3_assessment)
-                                                {{ $cftData->Other3_assessment }}
+                                            @if ($cftData->Other3_Assessment)
+                                                {{ $cftData->Other3_Assessment }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2753,8 +2795,8 @@ Not Applicable
                                     <th class="w-20">Impact Assessment (By Other's 4)</th>
                                     <td class="w-30">
                                         <div>
-                                            @if ($cftData->Other4_assessment)
-                                                {{ $cftData->Other4_assessment }}
+                                            @if ($cftData->Other4_Assessment)
+                                                {{ $cftData->Other4_Assessment }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2871,8 +2913,8 @@ Not Applicable
                                     <th class="w-20">Impact Assessment (By Other's 5)</th>
                                     <td class="w-30">
                                         <div>
-                                            @if ($cftData->Other5_assessment)
-                                                {{ $cftData->Other5_assessment }}
+                                            @if ($cftData->Other5_Assessment)
+                                                {{ $cftData->Other5_Assessment }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2949,16 +2991,16 @@ Not Applicable
               <div class="block">
                 <div class="head">
                     <div class="block-head">
-                      QA Final Review
+                      QA/CQA Final Review
                     </div>
                       <table>
                               <tr>
                                
-                                <th class="w-20">RA Person</th>
+                                <th class="w-20">RA Approval required</th>
                                 <td class="w-30">
                                     <div>
-                                        @if ($cc_cfts->RA_person)
-                                            {{ $cc_cfts->RA_person }}
+                                        @if ($cc_cfts->RA_data_person)
+                                            {{ $cc_cfts->RA_data_person }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -3034,11 +3076,11 @@ Not Applicable
                       <table>
                               <tr>
                                
-                                <th class="w-20">RA Person</th>
+                                <th class="w-20">RA Approval Comment</th>
                                 <td class="w-30">
                                     <div>
-                                        @if ($data->RA_person)
-                                            {{ $data->RA_person }}
+                                        @if ($cc_cfts->ra_tab_comments)
+                                            {{ $cc_cfts->ra_tab_comments }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -3090,7 +3132,7 @@ Not Applicable
              <div class="block">
                 <div class="head">
                     <div class="block-head">
-                      QA/CQA Designee Approval
+                    QA/CQA Head/Manager Designee Approval
                     </div>
                       <table>
                               <tr>
@@ -3098,8 +3140,8 @@ Not Applicable
                                 <th class="w-20">QA/CQA Head/Manager Designee Approval Comments</th>
                                 <td class="w-30">
                                     <div>
-                                        @if ($data->Production_Injection_Attachment)
-                                            {{ $data->Production_Injection_Attachment }}
+                                        @if ($cc_cfts->qa_cqa_comments)
+                                            {{ $cc_cfts->qa_cqa_comments }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -3146,7 +3188,7 @@ Not Applicable
 
             
 
-        <div class="block">
+        <!-- <div class="block">
                 <div class="head">
                     <div class="block-head">
                         Evaluation Details
@@ -3191,7 +3233,7 @@ Not Applicable
                         </table>
                 </div>
                 </div>
-            </div>
+            </div> -->
 
             
 
@@ -3306,11 +3348,11 @@ Not Applicable
         <div class="block">
                 <div class="head">
                             <div class="block-head">
-                             Implementation Verification
+                             Implementation Verification by QA/CQA
                             </div>
                             <table>
                                 <tr>
-                                    <th class="w-20">Implementation Verification Comments</th>
+                                    <th class="w-20">Implementation Verification by QA/CQA Comments</th>
                                     <td>
                                         <div>
                                             {{ $cc_cfts->implementation_verification_comments ?? 'Not Applicable'}}
@@ -3341,8 +3383,8 @@ Not Applicable
                                 <th class="w-20">S.N.</th>
                                 <th class="w-60">Implementation Verification Attachments</th>
                             </tr>
-                            @if ($data->Production_Injection_Attachment)
-                                @foreach (json_decode($data->Production_Injection_Attachment) as $key => $file)
+                            @if ($QaApprovalComments->tran_attach)
+                                @foreach (json_decode($QaApprovalComments->tran_attach) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
                                         <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
@@ -3379,6 +3421,15 @@ Not Applicable
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th class="w-20">Effectiveness check required</th>
+                                    <td>
+                                        <div>
+                                            {{  $cc_cfts->effect_check ?? 'Not Applicable' }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
                                     <th class="w-20">Due Date Extension Justification</th>
                                     <td>
                                         <div>
@@ -3387,7 +3438,6 @@ Not Applicable
                                     </td>
                                 </tr>
                                 
-
                             
                             </table>
                         
@@ -3747,6 +3797,24 @@ Not Applicable
                         <div class="static">{{ $data->pending_RA_review_comment }}</div>
                     </td>
                 </tr>
+
+
+                <tr>
+                    <th class="w-20">RA Approval Required By : </th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->RA_review_required_by }}</div>
+                    </td>
+                    <th class="w-20">RA Approval Required On :</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->RA_review_required_on }}</div>
+                    </td>
+                    <th class="w-20">RA Approval Required Comments</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->RA_review_required_comment }}</div>
+                    </td>
+                </tr>
+
+                
 
                 <tr>
                     <th class="w-20">RA Approval Complete By :</th>

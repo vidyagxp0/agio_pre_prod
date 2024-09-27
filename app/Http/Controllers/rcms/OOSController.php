@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActionItem;
+use App\Models\Capa;
 use Illuminate\Http\Request;
 use App\Models\OOS;
 use App\Models\User;
@@ -32,32 +34,23 @@ class OOSController extends Controller
         $cft = [];
 
         $old_records = OOS::select('id', 'division_id', 'record_number')->get();
-        
+        $old_record = ActionItem::select('id', 'division_id', 'record')->get();
+        $capa_record = Capa::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
-        // if ($division) {
-        //     $last_oos = OOS::where('division_id', $division->id)->latest()->first();
-        //     if ($last_oos) {
-        //         $record_number = $last_oos->record_number ? str_pad($last_oos->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
-                
-        //     } else {
-        //         $record_number = '0001';
-        //     }
-        // }
 
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date= $formattedDate->format('Y-m-d');
         // $changeControl = OpenStage::find(1);
         //  if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
-        return view("frontend.OOS.oos_form", compact('due_date', 'record_number', 'old_records', 'cft'));
+        return view("frontend.OOS.oos_form", compact('due_date', 'record_number', 'old_records', 'cft','old_record','capa_record'));
 
     }
     
     public function store(Request $request)
     { 
-        // dd($request->all());
         $res = Helpers::getDefaultResponse();
         try {
             
@@ -84,8 +77,11 @@ class OOSController extends Controller
         $cft = [];
         $revised_date = "";
         $data = OOS::find($id);
+
         // dd($data);
         $old_records = OOS::select('id', 'division_id', 'record_number')->get();
+        $old_record = ActionItem::select('id', 'division_id', 'record')->get();
+        $capa_record = Capa::select('id', 'division_id', 'record')->get();
         // $revised_date = Extension::where('parent_id', $id)->where('parent_type', "OOS Chemical")->value('revised_date');
         $record_number = str_pad($data->record_number, 4, '0', STR_PAD_LEFT);
         
@@ -127,48 +123,51 @@ class OOSController extends Controller
         $review_of_instrument_bioburden_and_waters = $data->grids()->where('identifier', 'review_of_instrument_bioburden_and_waters1')->first();
         $disinfectant_details_of_bioburden_and_water_tests = $data->grids()->where('identifier', 'disinfectant_details_of_bioburden_and_water_tests1')->first();
 
-            $training_records_analyst_involvedIn_testing_microbial_asssays = $data->grids()->where('identifier', 'training_records_analyst_involvedIn_testing_microbial_asssays1')->first();
-            $sample_intactness_before_analysis2 = $data->grids()->where('identifier', 'sample_intactness_before_analysis22')->first();
-            $checklist_for_review_of_test_method_IMAs = $data->grids()->where('identifier', 'checklist_for_review_of_test_method_IMA1')->first();
-            $cr_of_media_buffe_rst_IMAs = $data->grids()->where('identifier', 'cr_of_media_buffer_st_IMA1')->first();
-            $CR_of_microbial_cultures_inoculation_IMAs = $data->grids()->where('identifier', 'CR_of_microbial_cultures_inoculation_IMA1')->first();
-            $CR_of_Environmental_condition_in_testing_IMAs = $data->grids()->where('identifier', 'CR_of_Environmental_condition_in_testing_IMA1')->first();
-            $CR_of_instru_equipment_IMAs = $data->grids()->where('identifier', 'CR_of_instru_equipment_IMA1')->first();
-            $disinfectant_details_IMAs = $data->grids()->where('identifier', 'disinfectant_details_IMA1')->first();
+        $training_records_analyst_involvedIn_testing_microbial_asssays = $data->grids()->where('identifier', 'training_records_analyst_involvedIn_testing_microbial_asssays1')->first();
+        $sample_intactness_before_analysis2 = $data->grids()->where('identifier', 'sample_intactness_before_analysis22')->first();
+        $checklist_for_review_of_test_method_IMAs = $data->grids()->where('identifier', 'checklist_for_review_of_test_method_IMA1')->first();
+        $cr_of_media_buffe_rst_IMAs = $data->grids()->where('identifier', 'cr_of_media_buffer_st_IMA1')->first();
+        $CR_of_microbial_cultures_inoculation_IMAs = $data->grids()->where('identifier', 'CR_of_microbial_cultures_inoculation_IMA1')->first();
+        $CR_of_Environmental_condition_in_testing_IMAs = $data->grids()->where('identifier', 'CR_of_Environmental_condition_in_testing_IMA1')->first();
+        $CR_of_instru_equipment_IMAs = $data->grids()->where('identifier', 'CR_of_instru_equipment_IMA1')->first();
+        $disinfectant_details_IMAs = $data->grids()->where('identifier', 'disinfectant_details_IMA1')->first();
 
-            $CR_of_training_rec_anaylst_in_monitoring_CIEMs = $data->grids()->where('identifier', 'CR_of_training_rec_anaylst_in_monitoring_CIEM1')->first();
-            $Check_for_Sample_details_CIEMs = $data->grids()->where('identifier', 'Check_for_Sample_details_CIEM1')->first();
-            $Check_for_comparision_of_results_CIEMs = $data->grids()->where('identifier', 'Check_for_comparision_of_results_CIEM1')->first();
-            $checklist_for_media_dehydrated_CIEMs = $data->grids()->where('identifier', 'checklist_for_media_dehydrated_CIEM1')->first();
-            $checklist_for_media_prepara_sterilization_CIEMs = $data->grids()->where('identifier', 'checklist_for_media_prepara_sterilization_CIEM1')->first();
-            $CR_of_En_condition_in_testing_CIEMs = $data->grids()->where('identifier', 'CR_of_En_condition_in_testing_CIEM1')->first();
-            $check_for_disinfectant_CIEMs = $data->grids()->where('identifier', 'check_for_disinfectant_CIEM1')->first();
-            $checklist_for_fogging_CIEMs = $data->grids()->where('identifier', 'checklist_for_fogging_CIEM1')->first();
-            $CR_of_test_method_CIEMs = $data->grids()->where('identifier', 'CR_of_test_method_CIEM1')->first();
-            $CR_microbial_isolates_contamination_CIEMs = $data->grids()->where('identifier', 'CR_microbial_isolates_contamination_CIEM1')->first();
-            $CR_of_instru_equip_CIEMs = $data->grids()->where('identifier', 'CR_of_instru_equip_CIEM1')->first();
-            $Ch_Trend_analysis_CIEMs = $data->grids()->where('identifier', 'Ch_Trend_analysis_CIEM1')->first();
+        $CR_of_training_rec_anaylst_in_monitoring_CIEMs = $data->grids()->where('identifier', 'CR_of_training_rec_anaylst_in_monitoring_CIEM1')->first();
+        $Check_for_Sample_details_CIEMs = $data->grids()->where('identifier', 'Check_for_Sample_details_CIEM1')->first();
+        $Check_for_comparision_of_results_CIEMs = $data->grids()->where('identifier', 'Check_for_comparision_of_results_CIEM1')->first();
+        $checklist_for_media_dehydrated_CIEMs = $data->grids()->where('identifier', 'checklist_for_media_dehydrated_CIEM1')->first();
+        $checklist_for_media_prepara_sterilization_CIEMs = $data->grids()->where('identifier', 'checklist_for_media_prepara_sterilization_CIEM1')->first();
+        $CR_of_En_condition_in_testing_CIEMs = $data->grids()->where('identifier', 'CR_of_En_condition_in_testing_CIEM1')->first();
+        $check_for_disinfectant_CIEMs = $data->grids()->where('identifier', 'check_for_disinfectant_CIEM1')->first();
+        $checklist_for_fogging_CIEMs = $data->grids()->where('identifier', 'checklist_for_fogging_CIEM1')->first();
+        $CR_of_test_method_CIEMs = $data->grids()->where('identifier', 'CR_of_test_method_CIEM1')->first();
+        $CR_microbial_isolates_contamination_CIEMs = $data->grids()->where('identifier', 'CR_microbial_isolates_contamination_CIEM1')->first();
+        $CR_of_instru_equip_CIEMs = $data->grids()->where('identifier', 'CR_of_instru_equip_CIEM1')->first();
+        $Ch_Trend_analysis_CIEMs = $data->grids()->where('identifier', 'Ch_Trend_analysis_CIEM1')->first();
 
-            $checklist_for_analyst_training_CIMTs = $data->grids()->where('identifier', 'checklist_for_analyst_training_CIMT2')->first();
-            $checklist_for_comp_results_CIMTs = $data->grids()->where('identifier', 'checklist_for_comp_results_CIMT2')->first();
-            $checklist_for_Culture_verification_CIMTs = $data->grids()->where('identifier', 'checklist_for_Culture_verification_CIMT2')->first();
-            $sterilize_accessories_CIMTs = $data->grids()->where('identifier', 'sterilize_accessories_CIMT2')->first();
-            $checklist_for_intrument_equip_last_CIMTs = $data->grids()->where('identifier', 'checklist_for_intrument_equip_last_CIMT2')->first();
-            $disinfectant_details_last_CIMTs = $data->grids()->where('identifier', 'disinfectant_details_last_CIMT2')->first();
-            $checklist_for_result_calculation_CIMTs = $data->grids()->where('identifier', 'checklist_for_result_calculation_CIMT2')->first();
+        $checklist_for_analyst_training_CIMTs = $data->grids()->where('identifier', 'checklist_for_analyst_training_CIMT2')->first();
+        $checklist_for_comp_results_CIMTs = $data->grids()->where('identifier', 'checklist_for_comp_results_CIMT2')->first();
+        $checklist_for_Culture_verification_CIMTs = $data->grids()->where('identifier', 'checklist_for_Culture_verification_CIMT2')->first();
+        $sterilize_accessories_CIMTs = $data->grids()->where('identifier', 'sterilize_accessories_CIMT2')->first();
+        $checklist_for_intrument_equip_last_CIMTs = $data->grids()->where('identifier', 'checklist_for_intrument_equip_last_CIMT2')->first();
+        $disinfectant_details_last_CIMTs = $data->grids()->where('identifier', 'disinfectant_details_last_CIMT2')->first();
+        $checklist_for_result_calculation_CIMTs = $data->grids()->where('identifier', 'checklist_for_result_calculation_CIMT2')->first();
 
+        $check_sample_receiving_vars = $data->grids()->where('identifier', 'sample_receiving_var')->first();
+        $check_method_procedure_during_analysis = $data->grids()->where('identifier', 'method_used_during_analysis')->first();
+        $check_Instrument_Equipment_Details = $data->grids()->where('identifier', 'instrument_equipment_detailss')->first();
+        $Results_and_Calculation = $data->grids()->where('identifier', 'result_and_calculation')->first();
 
         $oos_conclusion = $data->grids()->where('identifier', 'oos_conclusion')->first();
         $oos_conclusion_review = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
         // dd($phase_two_invs);
         return view('frontend.OOS.oos_form_view', 
-        compact('data', 'old_records','revised_date','phase_two_invss','checklist_for_result_calculation_CIMTs','disinfectant_details_last_CIMTs','checklist_for_intrument_equip_last_CIMTs','sterilize_accessories_CIMTs','checklist_for_Culture_verification_CIMTs','checklist_for_comp_results_CIMTs','checklist_for_analyst_training_CIMTs','Ch_Trend_analysis_CIEMs','CR_of_instru_equip_CIEMs','CR_microbial_isolates_contamination_CIEMs','CR_of_test_method_CIEMs','checklist_for_fogging_CIEMs','check_for_disinfectant_CIEMs','CR_of_En_condition_in_testing_CIEMs','checklist_for_media_prepara_sterilization_CIEMs','checklist_for_media_dehydrated_CIEMs','Check_for_comparision_of_results_CIEMs','Check_for_Sample_details_CIEMs','CR_of_training_rec_anaylst_in_monitoring_CIEMs','cft','disinfectant_details_IMAs','CR_of_instru_equipment_IMAs','CR_of_Environmental_condition_in_testing_IMAs','CR_of_microbial_cultures_inoculation_IMAs','cr_of_media_buffe_rst_IMAs','checklist_for_review_of_test_method_IMAs','sample_intactness_before_analysis2','training_records_analyst_involvedIn_testing_microbial_asssays','disinfectant_details_of_bioburden_and_water_tests','review_of_instrument_bioburden_and_waters','Checklist_Review_Environment_condition_in_tests','Checklist_for_Review_Media_prepara_RTU_medias','Checklist_Review_of_Test_Method_proceds','Checklist_for_Review_of_sampling_and_Transports','Checklist_for_Review_of_Training_records_Analysts','Checklist_for_Review_of_instrument_equips','check_for_disinfectant_details','Checklist_for_Revi_of_Media_Buffer_Stand_preps','Review_of_Media_Buffer_Standards_prepar','test_methods_Procedures','sample_intactness_before_analysis','record_number','ph_meters','Viscometers','Melting_Points','Dis_solutions','HPLC_GCs','General_Checklists','kF_Potentionmeters','RM_PMs','check_analyst_training_procedures','Training_records_Analyst_Involveds', 'products_details','instrument_detail','info_product_materials', 'details_stabilities', 'oos_details', 'checklist_lab_invs', 'oos_capas', 'phase_two_invs', 'oos_conclusion', 'oos_conclusion_review','checklist_IB_invs'));
+        compact('data', 'old_records','capa_record','check_method_procedure_during_analysis','Results_and_Calculation','check_Instrument_Equipment_Details','check_sample_receiving_vars','old_record','revised_date','phase_two_invss','checklist_for_result_calculation_CIMTs','disinfectant_details_last_CIMTs','checklist_for_intrument_equip_last_CIMTs','sterilize_accessories_CIMTs','checklist_for_Culture_verification_CIMTs','checklist_for_comp_results_CIMTs','checklist_for_analyst_training_CIMTs','Ch_Trend_analysis_CIEMs','CR_of_instru_equip_CIEMs','CR_microbial_isolates_contamination_CIEMs','CR_of_test_method_CIEMs','checklist_for_fogging_CIEMs','check_for_disinfectant_CIEMs','CR_of_En_condition_in_testing_CIEMs','checklist_for_media_prepara_sterilization_CIEMs','checklist_for_media_dehydrated_CIEMs','Check_for_comparision_of_results_CIEMs','Check_for_Sample_details_CIEMs','CR_of_training_rec_anaylst_in_monitoring_CIEMs','cft','disinfectant_details_IMAs','CR_of_instru_equipment_IMAs','CR_of_Environmental_condition_in_testing_IMAs','CR_of_microbial_cultures_inoculation_IMAs','cr_of_media_buffe_rst_IMAs','checklist_for_review_of_test_method_IMAs','sample_intactness_before_analysis2','training_records_analyst_involvedIn_testing_microbial_asssays','disinfectant_details_of_bioburden_and_water_tests','review_of_instrument_bioburden_and_waters','Checklist_Review_Environment_condition_in_tests','Checklist_for_Review_Media_prepara_RTU_medias','Checklist_Review_of_Test_Method_proceds','Checklist_for_Review_of_sampling_and_Transports','Checklist_for_Review_of_Training_records_Analysts','Checklist_for_Review_of_instrument_equips','check_for_disinfectant_details','Checklist_for_Revi_of_Media_Buffer_Stand_preps','Review_of_Media_Buffer_Standards_prepar','test_methods_Procedures','sample_intactness_before_analysis','record_number','ph_meters','Viscometers','Melting_Points','Dis_solutions','HPLC_GCs','General_Checklists','kF_Potentionmeters','RM_PMs','check_analyst_training_procedures','Training_records_Analyst_Involveds', 'products_details','instrument_detail','info_product_materials', 'details_stabilities', 'oos_details', 'checklist_lab_invs', 'oos_capas', 'phase_two_invs', 'oos_conclusion', 'oos_conclusion_review','checklist_IB_invs'));
 
     }
 
     public function update(Request $request, $id)
     {
-        // dd($request->all());
         // if (!$request->short_description) {
         //     toastr()->error("Short description is required");
         //     return redirect()->back();
@@ -2481,12 +2480,18 @@ class OOSController extends Controller
             $disinfectant_details_last_CIMTs = $data->grids()->where('identifier', 'disinfectant_details_last_CIMT2')->first();
             $checklist_for_result_calculation_CIMTs = $data->grids()->where('identifier', 'checklist_for_result_calculation_CIMT2')->first();
 
+            $check_sample_receiving_vars = $data->grids()->where('identifier', 'sample_receiving_var')->first();
+            $check_method_procedure_during_analysis = $data->grids()->where('identifier', 'method_used_during_analysis')->first();
+            $check_Instrument_Equipment_Details = $data->grids()->where('identifier', 'instrument_equipment_detailss')->first();
+            $Results_and_Calculation = $data->grids()->where('identifier', 'result_and_calculation')->first();
+    
+
             $oos_conclusion = $data->grids()->where('identifier', 'oos_conclusion')->first();
             $oos_conclusion_review = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.OOS.comps.singleReport', compact('data','record_number','phase_two_invss','instrument_details','products_details','checklist_for_result_calculation_CIMTs','disinfectant_details_last_CIMTs','checklist_for_intrument_equip_last_CIMTs','sterilize_accessories_CIMTs','checklist_for_Culture_verification_CIMTs','checklist_for_comp_results_CIMTs','checklist_for_analyst_training_CIMTs','Ch_Trend_analysis_CIEMs','CR_of_instru_equip_CIEMs','CR_microbial_isolates_contamination_CIEMs','CR_of_test_method_CIEMs','checklist_for_fogging_CIEMs','check_for_disinfectant_CIEMs','CR_of_En_condition_in_testing_CIEMs','checklist_for_media_prepara_sterilization_CIEMs','checklist_for_media_dehydrated_CIEMs','Check_for_comparision_of_results_CIEMs','Check_for_Sample_details_CIEMs','CR_of_training_rec_anaylst_in_monitoring_CIEMs','disinfectant_details_IMAs','CR_of_instru_equipment_IMAs','CR_of_Environmental_condition_in_testing_IMAs','CR_of_microbial_cultures_inoculation_IMAs','cr_of_media_buffe_rst_IMAs','checklist_for_review_of_test_method_IMAs','sample_intactness_before_analysis2','training_records_analyst_involvedIn_testing_microbial_asssays','disinfectant_details_of_bioburden_and_water_tests','review_of_instrument_bioburden_and_waters','Checklist_Review_Environment_condition_in_tests','Checklist_for_Review_Media_prepara_RTU_medias','Checklist_Review_of_Test_Method_proceds','Checklist_for_Review_of_sampling_and_Transports','Checklist_for_Review_of_Training_records_Analysts','Checklist_for_Review_of_instrument_equips','check_for_disinfectant_details','Checklist_for_Revi_of_Media_Buffer_Stand_preps','Review_of_Media_Buffer_Standards_prepar','test_methods_Procedures','sample_intactness_before_analysis','Viscometers','Melting_Points','Dis_solutions','HPLC_GCs','General_Checklists','kF_Potentionmeters','check_analyst_training_procedures','Training_records_Analyst_Involveds','checklist_lab_invs','ph_meters','RM_PMs','checklist_IB_invs','phase_two_invs','oos_capas','oos_conclusion','oos_conclusion_review'))
+            $pdf = PDF::loadview('frontend.OOS.comps.singleReport', compact('data','Results_and_Calculation','check_Instrument_Equipment_Details','check_method_procedure_during_analysis','check_sample_receiving_vars','record_number','phase_two_invss','instrument_details','products_details','checklist_for_result_calculation_CIMTs','disinfectant_details_last_CIMTs','checklist_for_intrument_equip_last_CIMTs','sterilize_accessories_CIMTs','checklist_for_Culture_verification_CIMTs','checklist_for_comp_results_CIMTs','checklist_for_analyst_training_CIMTs','Ch_Trend_analysis_CIEMs','CR_of_instru_equip_CIEMs','CR_microbial_isolates_contamination_CIEMs','CR_of_test_method_CIEMs','checklist_for_fogging_CIEMs','check_for_disinfectant_CIEMs','CR_of_En_condition_in_testing_CIEMs','checklist_for_media_prepara_sterilization_CIEMs','checklist_for_media_dehydrated_CIEMs','Check_for_comparision_of_results_CIEMs','Check_for_Sample_details_CIEMs','CR_of_training_rec_anaylst_in_monitoring_CIEMs','disinfectant_details_IMAs','CR_of_instru_equipment_IMAs','CR_of_Environmental_condition_in_testing_IMAs','CR_of_microbial_cultures_inoculation_IMAs','cr_of_media_buffe_rst_IMAs','checklist_for_review_of_test_method_IMAs','sample_intactness_before_analysis2','training_records_analyst_involvedIn_testing_microbial_asssays','disinfectant_details_of_bioburden_and_water_tests','review_of_instrument_bioburden_and_waters','Checklist_Review_Environment_condition_in_tests','Checklist_for_Review_Media_prepara_RTU_medias','Checklist_Review_of_Test_Method_proceds','Checklist_for_Review_of_sampling_and_Transports','Checklist_for_Review_of_Training_records_Analysts','Checklist_for_Review_of_instrument_equips','check_for_disinfectant_details','Checklist_for_Revi_of_Media_Buffer_Stand_preps','Review_of_Media_Buffer_Standards_prepar','test_methods_Procedures','sample_intactness_before_analysis','Viscometers','Melting_Points','Dis_solutions','HPLC_GCs','General_Checklists','kF_Potentionmeters','check_analyst_training_procedures','Training_records_Analyst_Involveds','checklist_lab_invs','ph_meters','RM_PMs','checklist_IB_invs','phase_two_invs','oos_capas','oos_conclusion','oos_conclusion_review'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
