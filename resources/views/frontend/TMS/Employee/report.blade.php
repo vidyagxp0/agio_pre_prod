@@ -182,13 +182,7 @@
         </table>
         <table>
             <tr>
-                <!-- <td class="w-30">
-                    <strong>Employee Report</strong>
-                </td> -->
-                <!-- <td class="w-40">
-                </td>
-                <td class="w-30">
-                </td> -->
+                
             </tr>
         </table>
     </header>
@@ -198,98 +192,76 @@
                 <div class="block-head">
                     General Information
                 </div>
-<table>
-        @foreach($data as $emp)       
-                    <tr>
 
-                        <th class="w-20">Site Division/Project:</th>
-                        <td class="w-30">{{$emp->site_division}}</td>
-
+                <table>
+                       <tr>
+                            <th class="w-20">Site Division/Project:</th>
+                           
+                            <td class="w-30">@if($data->site_division){{ $data->site_division }}@else Not Applicable @endif</td>
+                     </tr>
+                     <tr>
                         <th class="w-20">Joining Date:</th>
-                        <td class="w-30">{{$emp->joining_date}}</td>
-                    </tr>
-                  
-                    <tr>
-
-                    <th class="w-20">Prefix:</th>
-                    <td class="w-30">{{$emp->prefix}}</td>
-
-                    <th class="w-20">Employee ID:</th>
-                    <td class="w-30">{{$emp->emp_id}}</td>
-                    </tr>
-
-                    
-                    <tr>
-
-                    <tr>
-
-                    <th class="w-20">Employee Name:</th>
-                    <td class="w-30">{{$emp->employee_name}}</td>
-
-                    <th class="w-20">Gender:</th>
-                    <td class="w-30">{{$emp->gender}}</td>
-                    </tr>
-                   
-
-                  
-                    <tr>
-
-                                <th class="w-20">Qualification:</th>
-                                <td class="w-30">{{$emp->qualification}}</td>
-
-                                <th class="w-20">Department:</th>
-                                <td class="w-30">{{$emp->department}}</td>
-                                </tr>
-
-
-
-                                <tr>
-
-                                <th class="w-20">Designation:</th>
-                                <td class="w-30">{{$emp->job_title}}</td>
-
-                                <th class="w-20">Other Department:</th>
-                                <td class="w-30">{{$emp->other_department}}</td>
-                                </tr>
-
-
-
-                                <tr>
-
-                                <th class="w-20">Other Designation:</th>
-                                <td class="w-30">{{$emp->other_designation}}</td>
-
-                                <th class="w-20">Experience (No. of Years):</th>
-                                <td class="w-30">{{$emp->experience}}</td>
-                                </tr>
-
-
-
-                                <tr>
-
-                                <th class="w-20">Attached CV:</th>
-                                <td class="w-30">{{$emp->attached_cv}}</td>
-
-
-                                <th class="w-20">Certification/Qualification:</th>
-                                <td class="w-30">{{$emp->certification}}</td>
-                                </tr>
-
-
-
-                                <tr>
-
-                                <th class="w-20">Medical Checkup Report?</th>
-                                <td class="w-30">{{$emp->has_additional_document}}</td>
-
-                                <th class="w-20">Medical Checkup Attachment:</th>
-                                <td class="w-30">{{$emp->additional_document}}</td>
-                                </tr>
-
-
-
-@endforeach
+                        <td class="w-30">@if($data->joining_date){{ $data->joining_date}}@else Not Applicable @endif</td>
+                     </tr>
+                     <tr>
+                        <th class="w-20">Prefix:</th>
+                        <td class="w-30">@if($data->prefix){{ $data->prefix}}@else Not Applicable @endif</td>
+                     </tr>
+                     <tr>
+                        <th class ="w-20">Employee ID</th>
+                        <td class="w-30">@if($data->emp_id){{ $data->emp_id}}@else Not Applicable @endif</td>
+                     </tr>
+                     <tr>
+                        <th class ="w-20">Employee Name</th>
+                        <td class="w-30">@if($data->employee_name){{ $data->employee_name}}@else Not Applicable @endif</td>
+                     </tr>
+                     <tr>
+                        <th class ="w-20">Gender</th>
+                        <td class="w-30">@if($data->gender){{ $data->gender}}@else Not Applicable @endif</td>
+                     </tr>
+                     <tr>
+                        <th class ="w-20">Department Name</th>
+                        <td class="w-30">@if($data->department){{ $data->department}}@else Not Applicable @endif</td>
+                     </tr>
+                     <tr>
+                        <th class ="w-20">Qualification</th>
+                        <td class="w-30">@if($data->qualification){{ $data->qualification}}@else Not Applicable @endif</td>
+                     </tr>
+                     <tr>
+                        <th class ="w-20">Experience (No. of Years)</</th>
+                        <td class="w-30">@if($data->experience){{ $data->experience}}@else Not Applicable @endif</td>
+                     </tr>
+                     <tr>
+                        <th class ="w-20">Designation</th>
+                        <td class="w-30">@if($data->job_title){{ $data->job_title}}@else Not Applicable @endif</td>
+                     </tr>
+                     <tr>
+                        <th class ="w-20">Other Department</th>
+                        <td class="w-30">@if($data->other_department){{ $data->other_department}}@else Not Applicable @endif</td>
+                     </tr>
+                     <tr>
+                        <th class ="w-20">Other Designation</th>
+                        <td class="w-30">@if($data->other_designation){{ $data->other_designation}}@else Not Applicable @endif</td>
+                     </tr>
+                     <tr>
+                        <th class ="w-20">Attached CV</th>
+                        <td class="w-30">@if($data->attached_cv){{ $data->attached_cv}}@else Not Applicable @endif</td>
+                     </tr>
+                     <tr>
+                        <th class ="w-20">Certification/Qualification</th>
+                        <td class="w-30">@if($data->certification){{ $data->certification}}@else Not Applicable @endif</td>
+                     </tr>
+                     <tr>
+                        <th class ="w-20">Medical Checkup Report</th>
+                        <td class="w-30">@if($data->has_additional_document){{ $data->has_additional_document}}@else Not Applicable @endif</td>
+                     </tr>
+                     <tr>
+                        <th class ="w-20">Medical Checkup Attachment</th>
+                        <td class="w-30">@if($data->additional_document){{ $data->additional_document}}@else Not Applicable @endif</td>
+                     </tr>
+                     
                     </table>
+
 </div>
 </div>
 </div>
@@ -301,81 +273,55 @@
                 <div class="block-head">
                 Employee Address Details
                 </div>
-                <table>
-        @foreach($data as $emp)       
-                    <tr>
+   
+                 <table>
+                       <tr>
+                         <th class="w-20">Country</th>
+                         <td class="w-30">@if($data->country){{ $data->country }}@else Not Applicable @endif</td>
+                     </tr>
+                       <tr>
+                            <th class="w-20">state</th>
+                            <td class="w-30">@if($data->state){{ $data->state }}@else Not Applicable @endif</td>
+                     </tr>
+                     <tr>
+                         <th class="w-20">City</th>
+                         <td class="w-30">@if($data->city){{ $data->city }}@else Not Applicable @endif</td>
+                     </tr>
+                       <tr>
+                            <th class="w-20">Building</th>
+                            <td class="w-30">@if($data->building){{ $data->building }}@else Not Applicable @endif</td>
+                     </tr>
+                     <tr>
+                         <th class="w-20">Floor</th>
+                         <td class="w-30">@if($data->floor){{ $data->floor }}@else Not Applicable @endif</td>
+                     </tr>
+                       <tr>
+                            <th class="w-20">Room</th>
+                            <td class="w-30">@if($data->room){{ $data->room }}@else Not Applicable @endif</td>
+                     </tr>
+                     <tr>
+                         <th class="w-20">Picture</th>
+                         <td class="w-30">@if($data->picture){{ $data->picture }}@else Not Applicable @endif</td>
+                     </tr>
+                       <tr>
+                            <th class="w-20">Speciman Signature</th>
+                            <td class="w-30">@if($data->specimen_signature){{ $data->specimen_signature }}@else Not Applicable @endif</td>
+                     </tr>
+                     <tr>
+                         <th class="w-20">HOD</th>
+                         <td class="w-30">@if($data->hod){{ $data->hod }}@else Not Applicable @endif</td>
+                     </tr>
+                       <tr>
+                            <th class="w-20">Comments</th>
+                            <td class="w-30">@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
+                     </tr>
+                     <tr>
+                            <th class="w-20">File Attachment</th>
+                            <td class="w-30">@if($data->file_attachment){{ $data->file_attachment }}@else Not Applicable @endif</td>
+                     </tr>
 
-                        <th class="w-20">Country:</th>
-                        <td class="w-30">{{$emp->country}}</td>
-
-                        <th class="w-20">State:</th>
-                        <td class="w-30">{{$emp->state}}</td>
-                    </tr>
-                 
-                   
-
-                    <tr>
-
-                    <th class="w-20">City:</th>
-                    <td class="w-30">{{$emp->city}}</td>
-
-                    <th class="w-20">Building:</th>
-                    <td class="w-30">{{$emp->building}}</td>
-                    </tr>
-
-                  
-                    <tr>
-
-                    <th class="w-20">Floor:</th>
-                    <td class="w-30">{{$emp->floor}}</td>
-
-                    <th class="w-20">Room:</th>
-                    <td class="w-30">{{$emp->room}}</td>
-                    </tr>
-
-                  
-
-                    <tr>
-
-                    <th class="w-20">Picture:</th>
-                    <td class="w-30">{{$emp->picture}}</td>
-
-                    <th class="w-20">Speciman Signature: </th>
-                    <td class="w-30">{{$emp->specimen_signature}}</td>
-                    </tr>
-
-                   
-
-                    <tr>
-
-                    <th class="w-20">HOD:</th>
-                    <td class="w-30">{{$emp->hod}}</td>
-
-                    <th class="w-20">Designee:</th>
-                    <td class="w-30">{{$emp->designee}}</td>
-                    </tr>
-
-                   
-
-                    <tr>
-
-                    <th class="w-20">Comments:</th>
-                    <td class="w-30">{{$emp->comment}}</td>
-
-                    <th class="w-20">File Attachment</th>
-                    <td class="w-30">{{$emp->file_attachment}}</td>
-                    </tr>
-
-                  
-
-                    <tr>
-
-                    <th class="w-20">Country:</th>
-                    <td class="w-30">{{$emp->country}}</td>
-                    </tr>
-                    @endforeach
                     </table>
-                
+
                 </div>
                 </div>
                 </div>
@@ -390,9 +336,7 @@
                 <td class="w-40">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
-                <!-- {{-- <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td> --}} -->
+               
             </tr>
         </table>
     </footer>

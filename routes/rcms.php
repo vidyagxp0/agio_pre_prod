@@ -57,6 +57,9 @@ Route::group(['prefix' => 'rcms'], function () {
         function () {
             Route::post('job_trainer_send/{id}', [JobTrainingController::class, 'sendStage']);
             Route::get('traineraudittrail/{id}', [TrainerController::class, 'trainerAuditTrial'])->name('trainer.audittrail');
+            Route::get('trainer_report/{id}', [TrainerController::class, 'trainerReport'])->name('trainer_report');   
+
+            Route::get('job_report/{id}', [JobTrainingController::class, 'jobReport'])->name('job_report');
             // Route::get('auditDetailsTrainer/{id}', [TrainerController::class, 'auditDetailstrainer'])->name('trainerauditDetails');
             Route::get('employeeaudittrail/{id}', [EmployeeController::class, 'AuditTrial'])->name('audittrail');
             Route::get('report/{id}', [EmployeeController::class, 'report'])->name('report');
@@ -64,6 +67,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('job_traineeaudittrail/{id}', [JobTrainingController::class, 'jobAuditTrial'])->name('job_audittrail');
             // Route::get('auditDetailsEmployee/{id}', [JobTrainingController::class, 'auditDetailsJobTrainee'])->name('jobTraineeauditDetails');
             Route::get('induction_traineeaudittrail/{id}', [InductionTrainingController::class, 'inductionAuditTrial'])->name('induction_audittrail');
+            Route::get('induction_report/{id}', [InductionTrainingController::class, 'inductionReport'])->name('induction_report');
             // Route::get('auditDetailsEmployee/{id}', [InductionTrainingController::class, 'auditDetailsInduction'])->name('InductionauditDetails');
             Route::post('employee_Child/{id}', [EmployeeController::class, 'Employee_Child'])->name('employee.child');
             Route::post('job_training_Child/{id}', [InductionTrainingController::class, 'Induction_Child'])->name('induction.child');
