@@ -1444,7 +1444,7 @@
 
 
                                 <!-- additional added -->
-                                <div class="col-md-12">
+                                {{-- <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="Description Deviation">Description of Deviation (5W/2H) </label>
                                     </div>
@@ -1501,7 +1501,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -1869,13 +1869,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                {{-- <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="CancellationQA">Cancellation <span
                                                 class="text-danger">*</span></label>
                                         <textarea name="CancellationQA" id="summernote-6"></textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
