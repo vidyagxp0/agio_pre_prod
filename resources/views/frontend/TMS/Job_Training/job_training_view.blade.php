@@ -214,14 +214,16 @@
 
             <button class="cctablinks " onclick="openCity(event, 'CCForm3')">QA Review</button>
             <button class="cctablinks " onclick="openCity(event, 'CCForm4')">QA/CQA Approval</button>
-            <button class="cctablinks " onclick="openCity(event, 'CCForm5')">Evaluation</button>
+
+            <button class="cctablinks " onclick="openCity(event, 'CCForm5')">Questionaries</button>
+
+            <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Evaluation</button>
 
             @if ($jobTraining->stage >= 7)
-            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Certificate</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Certificate</button>
             @endif
-            <button class="cctablinks " onclick="openCity(event, 'CCForm7')">QA/CQA Head Final Review</button>
-            <button class="cctablinks " onclick="openCity(event, 'CCForm8')">Final Approval</button>
-
+            <button class="cctablinks " onclick="openCity(event, 'CCForm8')">QA/CQA Head Final Review</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm9')">Final Approval</button>
 
         </div>
 
@@ -250,7 +252,7 @@
                
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="RLS Record Number">Name </label>
+                                        <label for="RLS Record Number">Emp Name </label>
                                         <input type="text" name="name" id="name_employee"
                                             value="{{ $jobTraining->name }}" readonly>
                                     </div>
@@ -265,11 +267,11 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type_of_training">SOP Document</label>
 
-                                        <select name="sopdocument">
+                                        <select name="sopdocument" id="sopdocument" onchange="fetchQuestions(this.value)">
                                             <option value="">---Select SOP Document---</option>
 
                                             @foreach ($data as $dat)
@@ -282,7 +284,25 @@
 
                                         </select> 
                                     </div>
+                                </div> --}}
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="type_of_training">SOP Document</label>
+
+                                        <select name="sopdocument" id="sopdocument" onchange="fetchQuestions(this.value)">
+                                            <option value="">---Select SOP Document---</option>
+
+                                            @foreach ($data as $dat)
+                                                <option
+                                                    value="{{ $dat->id }}"
+                                                    {{ $savedSop == $dat->id ? 'selected' : '' }}>
+                                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
+                                
 
 
                                 <div class="col-lg-6">
@@ -909,6 +929,174 @@
                 <div id="CCForm5" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
+                            <div id="questionsContainer" class="container">
+                                <div>
+                                    <!-- Questions will be dynamically injected here -->
+                                </div>
+                            </div>
+
+                            
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const selectedDocumentId = document.getElementById('sopdocument').value;
+        if (selectedDocumentId) {
+            fetchQuestions(selectedDocumentId); // Document select hote hi questions fetch kare
+        }
+    });
+
+    // Questions fetch kare aur quiz ko handle kare
+    function fetchQuestions(documentId) {
+        if (documentId) {
+            fetch(`/fetch-questions/${documentId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const questionsContainer = document.getElementById('questionsContainer');
+                    questionsContainer.innerHTML = ''; // Pehle ke questions clear kare
+
+                    if (data.length > 0) {
+                        window.quizData = data; // Globally save kare questions ko
+                        data.forEach((question, index) => {
+                            const questionBlock = `
+                                <div class="question-block">
+                                    <p><strong>Q${index + 1}: ${question.question}</strong></p>
+                                    <ul>
+                                        ${Object.entries(question.options).map(([key, option]) => `
+                                            <li>
+                                                <label>
+                                                    <input type="${question.answer_type === 'multiple' ? 'checkbox' : 'radio'}" 
+                                                        name="question_${question.id}" 
+                                                        value="${key}">
+                                                    ${option}
+                                                </label>
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+                            `;
+                            questionsContainer.innerHTML += questionBlock;
+                        });
+
+                        // Submit button add kare
+                        questionsContainer.innerHTML += `
+                            <div class="quiz-buttons">
+                                <button type="button" id="submit-btn" class="btn btn-primary">Submit</button>
+                            </div>
+                        `;
+
+                        // Submit button event listener add kare
+                        document.getElementById('submit-btn').addEventListener('click', submitQuiz);
+                    } else {
+                        questionsContainer.innerHTML = '<p>No questions available for this document.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching questions:', error);
+                    document.getElementById('questionsContainer').innerHTML = '<p>Error fetching questions.</p>';
+                });
+        } else {
+            document.getElementById('questionsContainer').innerHTML = ''; // Clear questions if no document selected
+        }
+    }
+
+    // Quiz submit kare aur result calculate kare
+    function submitQuiz() {
+        const userAnswers = [];
+
+        // User answers ko collect kare
+        quizData.forEach(question => {
+            const questionId = `question_${question.id}`;
+            const answerElements = document.querySelectorAll(`input[name="${questionId}"]:checked`);
+            const answers = [...answerElements].map(input => input.value);
+            userAnswers.push(answers);
+        });
+
+        calculateResults(userAnswers);
+    }
+
+    // Result ko calculate kare aur display kare
+    function calculateResults(userAnswers) {
+        let marks = 0;
+
+        // Compare kare correct answers ke saath
+        quizData.forEach((question, index) => {
+            const correctAnswer = question.answer;
+            const userAnswer = userAnswers[index];
+
+            // Single aur multiple answers ke liye check kare
+            if (typeof correctAnswer === 'string') {
+                if (correctAnswer.toLowerCase() === userAnswer[0]?.toLowerCase()) {
+                    marks++;
+                }
+            } else if (Array.isArray(correctAnswer)) {
+                if (arraysEqual(correctAnswer, userAnswer)) {
+                    marks++;
+                }
+            } else {
+                if (correctAnswer == userAnswer[0]) {
+                    marks++;
+                }
+            }
+        });
+
+        displaySummary(marks);
+        evaluatePassingCriteria(marks);
+    }
+
+    // Marks ko display kare
+    function displaySummary(marks) {
+        const totalQuestions = quizData.length;
+        alert(`You scored ${marks} out of ${totalQuestions}`);
+    }
+
+    // Passing criteria ko evaluate kare aur next steps show kare
+    function evaluatePassingCriteria(marks) {
+                                   // Calculate passing marks
+var passing = @json($quize ? $quize->passing : 0); // Use 0 or a default value if quize or passing is null
+var totalQuestions = quizData.length;
+var percentageRequired = (passing / 100) * totalQuestions;
+
+console.log("Marks Scored:", marks);
+console.log("Passing Marks:", percentageRequired);
+
+if (marks >= percentageRequired) {
+    var btnsElement = document.querySelector(".btns");
+    var button = document.createElement("button");
+    button.id = "complete-training";
+    button.setAttribute("data-bs-toggle", "modal");
+    button.setAttribute("data-bs-target", "#trainee-sign");
+    button.textContent = "Complete Training";
+
+    // Append button to the btnsElement
+    btnsElement.appendChild(button);
+} else {
+    alert("You did not pass the quiz.");
+}
+
+    }
+
+    // Helper function to compare arrays for multiple choice answers
+    function arraysEqual(arr1, arr2) {
+        return Array.isArray(arr1) &&
+            Array.isArray(arr2) &&
+            arr1.length === arr2.length &&
+            arr1.every((val, index) => val === arr2[index]);
+    }
+</script>
+
+                        
+  
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>                                    
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="CCForm6" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
 
                         <div class="col-lg-12">
                             <div class="group-input">
@@ -933,7 +1121,7 @@
                 </div>
 
                 @if ($jobTraining->stage >= 3)
-                    <div id="CCForm6" class="inner-block cctabcontent">
+                    <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-12">
@@ -978,115 +1166,115 @@
                     </div>
                 @endif
 
-                <style>
-       .certificate-container {
-    width: 685px;
-    height: 500px;
-    border: 4px solid #3d6186;
-    padding: 18px;
-    background-color: white;
-    position: relative;
-    margin: auto;
-    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
-}
-.certificate-title {
-    font-size: 30px;
-    font-weight: bold;
-    color: #677078;
-    display: flex;
-    justify-content: center;
-}
-.certificate-subtitle {
-    font-size: 18px;
-    color: #555;
-}
-.certificate-description {
-    margin-top: 30px;
-    font-size: 18px;
-    color: #333;
-}
-.date-container {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 60px;
-    font-size: 18px;
-}
-.signature-container {
-    position: absolute;
-    bottom: 40px;
-    right: 50px;
-    text-align: center;
-    font-size: 18px;
-    color: #333;
-}
+    <style>
+                .certificate-container {
+                width: 685px;
+                height: 500px;
+                border: 4px solid #3d6186;
+                padding: 18px;
+                background-color: white;
+                position: relative;
+                margin: auto;
+                box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+            }
+            .certificate-title {
+                font-size: 30px;
+                font-weight: bold;
+                color: #677078;
+                display: flex;
+                justify-content: center;
+            }
+            .certificate-subtitle {
+                font-size: 18px;
+                color: #555;
+            }
+            .certificate-description {
+                margin-top: 30px;
+                font-size: 18px;
+                color: #333;
+            }
+            .date-container {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 60px;
+                font-size: 18px;
+            }
+            .signature-container {
+                position: absolute;
+                bottom: 40px;
+                right: 50px;
+                text-align: center;
+                font-size: 18px;
+                color: #333;
+            }
 
-@media print {
-    .button-block {
-        display: none !important;
-    }
+            @media print {
+                .button-block {
+                    display: none !important;
+                }
 
-    body * {
-        visibility: hidden;
-    }
+                body * {
+                    visibility: hidden;
+                }
 
-    #CCForm6, #CCForm6 * {
-        visibility: visible;
-    }
+                #CCForm6, #CCForm6 * {
+                    visibility: visible;
+                }
 
-    #CCForm6 {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-    }
-}
+                #CCForm6 {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                }
+            }
 
-.button-block {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 50px;
-}
+            .button-block {
+                display: flex;
+                justify-content: flex-end;
+                margin-top: 50px;
+            }
 
-.printButton {
-    background-color: #2c3e50;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    float: right;
-}
+            .printButton {
+                background-color: #2c3e50;
+                color: white;
+                border: none;
+                padding: 12px 24px;
+                font-size: 16px;
+                cursor: pointer;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+                float: right;
+            }
 
-.printButton:hover {
-    background-color: #1a252f;
-}
+            .printButton:hover {
+                background-color: #1a252f;
+            }
 
-.printButton i {
-    margin-right: 8px;
-}
+            .printButton i {
+                margin-right: 8px;
+            }
 
-@media print {
-    .button-block {
-        display: none !important;
-    }
+            @media print {
+                .button-block {
+                    display: none !important;
+                }
 
-    body * {
-        visibility: hidden;
-    }
+                body * {
+                    visibility: hidden;
+                }
 
-    #CCForm6, #CCForm6 * {
-        visibility: visible;
-    }
+                #CCForm6, #CCForm6 * {
+                    visibility: visible;
+                }
 
-    #CCForm6 {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-    }
-}
+                #CCForm6 {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                }
+            }
 
     </style>
       <script>
@@ -1101,7 +1289,7 @@
     </script>
 
 
-                <div id="CCForm7" class="inner-block cctabcontent">
+                <div id="CCForm8" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
 
@@ -1127,7 +1315,7 @@
                     </div>
                 </div>
 
-                <div id="CCForm8" class="inner-block cctabcontent">
+                <div id="CCForm9" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
 

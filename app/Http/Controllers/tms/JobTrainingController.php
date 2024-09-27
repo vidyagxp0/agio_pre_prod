@@ -5,10 +5,16 @@ namespace App\Http\Controllers\tms;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\JobTraining;
+use App\Models\DocumentTraining;
+use App\Models\Training;
+use App\Models\Quize;
+use App\Models\Question;
 use App\Models\JobTrainingGrid;
 use App\Models\Department;
 use App\Models\JobTrainingAudit;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\App;
+use PDF;
 use App\Models\SetDivision;
 use App\Models\RoleGroup;
 use App\Models\QMSProcess;
@@ -42,6 +48,78 @@ class JobTrainingController extends Controller
 
         return view('frontend.TMS.Job_Training.job_training', compact('jobTraining','data','hods','delegate','employees'));
     }
+
+//     public function index()
+// {
+//     // All documents
+//     $data = Document::all();
+
+//     // Fetch questions for each document
+//     $documentQuestions = [];
+//     foreach ($data as $document) {
+//         $document_training = DocumentTraining::where('document_id', $document->id)->first();
+//         if ($document_training) {
+//             $training = Training::find($document_training->training_plan);
+//             if ($training && $training->training_plan_type == "Read & Understand with Questions") {
+//                 $quize = Quize::find($training->quize);
+//                 $questions = explode(',', $quize->question);
+//                 $question_list = [];
+
+//                 foreach ($questions as $question_id) {
+//                     $question = Question::find($question_id);
+//                     if ($question) {
+//                         $json_options = unserialize($question->options);
+//                         $options = [];
+//                         foreach ($json_options as $key => $value) {
+//                             $options[chr(97 + $key)] = $value; // Format options
+//                         }
+//                         $question->options = $options;
+//                         $question_list[] = $question;
+//                     }
+//                 }
+//                 $documentQuestions[$document->id] = $question_list;
+//             }
+//         }
+//     }
+
+//     $hods = User::all();
+//     $delegate = User::all();
+//     $jobTraining = JobTraining::all();
+//     $employees = Employee::all();
+
+//     return view('frontend.TMS.Job_Training.job_training', compact('jobTraining', 'data', 'hods', 'delegate', 'employees', 'documentQuestions'));
+// }
+
+
+public function fetchQuestions($id)
+{
+    $document_training = DocumentTraining::where('document_id', $id)->first();
+    if ($document_training) {
+        $training = Training::find($document_training->training_plan); 
+        if ($training && $training->training_plan_type == "Read & Understand with Questions") {
+            $quize = Quize::find($training->quize);
+            $questions = explode(',', $quize->question);
+            $question_list = [];
+
+            foreach ($questions as $question_id) {
+                $question = Question::find($question_id);
+                if ($question) {
+                    $json_options = unserialize($question->options);
+                    $options = [];
+                    foreach ($json_options as $key => $value) {
+                        $options[chr(97 + $key)] = $value; // Format options
+                    }
+                    $question->options = $options;
+                    $question_list[] = $question;
+                }
+            }
+            return response()->json($question_list); // Return questions array as JSON
+        }
+    }
+    return response()->json([]); // Return empty array if no questions found
+}
+
+    
 
 
     public function getEmployeeDetail($id)
@@ -205,9 +283,17 @@ class JobTrainingController extends Controller
 
         $jobTraining = JobTraining::find($id);
         $data = Document::all();
+        
         $record = JobTraining::findOrFail($id);
         $savedSop = $record->sopdocument;
         $employees = Employee::all();
+        
+        $document_training = DocumentTraining::where('document_id', $id)->first();
+         // Use optional() to avoid null errors when training_plan or quize is null
+         $training = optional($document_training)->training_plan ? Training::find($document_training->training_plan) : null;
+         $quize = optional($training)->quize ? Quize::find($training->quize) : null;
+        // $training = Training::find($document_training->training_plan); 
+        // $quize = Quize::find($training->quize);
         $employee_grid_data = JobTrainingGrid::where(['jobTraining_id' => $id, 'identifier' => 'jobResponsibilites'])->first();
 
         // dd($jobTraining);
@@ -217,7 +303,7 @@ class JobTrainingController extends Controller
         if (!$jobTraining) {
             return redirect()->route('job_training.index')->with('error', 'Job Training not found');
         }
-        return view('frontend.TMS.Job_Training.job_training_view', compact('jobTraining', 'id', 'departments', 'users','data','savedSop','employees','employee_grid_data'));
+        return view('frontend.TMS.Job_Training.job_training_view', compact('jobTraining', 'id', 'departments', 'users','data','savedSop','quize','training','document_training','employees','employee_grid_data'));
     }
 
     public function update(Request $request, $id)
@@ -680,5 +766,30 @@ class JobTrainingController extends Controller
         $document = JobTraining::where('id', $id)->first();
         $document->Initiation = User::where('id', $document->initiator_id)->value('name');
         return view('frontend.TMS.Job_Training.job_training_audit', compact('audit', 'document', 'today', 'jobTraining'));
+    }
+   
+    public static function jobReport($id)
+    {
+        $data = JobTraining::find($id);
+        if (!empty($data)) {
+            $data->originator_id = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.TMS.JOb_Training.job_report', compact('data'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('example.pdf' . $id . '.pdf');
+        }
     }
 }

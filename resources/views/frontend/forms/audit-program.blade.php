@@ -179,7 +179,7 @@ DATA FIELDS
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Audit Program</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Self Inspection Circular</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD/Designee Review</button>
+            <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD/Designee Review</button> -->
             <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA/QA Head Approval</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Activity Log</button>
         </div>
@@ -555,7 +555,7 @@ DATA FIELDS
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Year">Yearly Planner</label>
+                                <label for="Year">Initiated Through </label>
                                 <select name="year" id="year">
                                     <option value="">-- Select --</option>
                                     <option value="Deviation">Deviation</option>
@@ -568,7 +568,7 @@ DATA FIELDS
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" id="through_req_text" style="display: none;">
-                                <label for="type">Yearly Planners(Other)<span class="text-danger">*</span></label>
+                                <label for="type">Initiated Through(Other)<span class="text-danger">*</span></label>
                                 <textarea name="yearly_other" id="year_data"></textarea>
                             </div>
                         </div>
@@ -1055,7 +1055,7 @@ DATA FIELDS
                     </div>
                 </div>
             </div>
-            <div id="CCForm4" class="inner-block cctabcontent">
+            <!-- <div id="CCForm4" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
                         <div class="col-12">
@@ -1094,7 +1094,7 @@ DATA FIELDS
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div id="CCForm5" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">

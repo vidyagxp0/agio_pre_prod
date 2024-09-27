@@ -1690,7 +1690,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Initiator Group">Resampling required</label>
                                 <select name="is_repeat_assingable_pia">
-                                    <option value="NA">Select</option>
+                                    <option value="">Select</option>
                                     <option value="YES">YES</option>
                                     <option value="NO">NO</option>
                                 </select>
@@ -2083,19 +2083,36 @@ $users = DB::table('users')
                                 <textarea id="Probable_cause_iden"  name="Probable_cause_iden" ></textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="If Others">Proposal for Phase IB hypothesis</label>
-                                <select id="proposal_for_hypothesis_IB" name="proposal_for_hypothesis_IB">
+                                <label for="checklists">Proposal for Phase IB hypothesis</label>
+                                <select multiple id="reference_record" name="proposal_for_hypothesis_IB[]">
                                     <option value="">--Select---</option>
-                                    <option value="Re-injection of the original vial">Re-injection of the original vial</option>
-                                    <option value="Re-filtration and Injection from final dilution">Re-filtration and Injection from final dilution</option>
-                                    <option value="Re-dilution from the tock solution and injection">Re-dilution from the tock solution and injection</option>
-                                    <option value="Re-sonication / re-shaking due to probable incomplete solubility and analyze">Re-sonication / re-shaking due to probable incomplete solubility and analyze</option>
-                                    <option value="Other">Other</option>
+                                    <option value="Re-injection of the original vial" 
+                                        {{ in_array('Re-injection of the original vial', old('proposal_for_hypothesis_IB', $selectedHypotheses ?? [])) ? 'selected' : '' }}>
+                                        Re-injection of the original vial
+                                    </option>
+                                    <option value="Re-filtration and Injection from final dilution" 
+                                        {{ in_array('Re-filtration and Injection from final dilution', old('proposal_for_hypothesis_IB', $selectedHypotheses ?? [])) ? 'selected' : '' }}>
+                                        Re-filtration and Injection from final dilution
+                                    </option>
+                                    <option value="Re-dilution from the tock solution and injection" 
+                                        {{ in_array('Re-dilution from the tock solution and injection', old('proposal_for_hypothesis_IB', $selectedHypotheses ?? [])) ? 'selected' : '' }}>
+                                        Re-dilution from the tock solution and injection
+                                    </option>
+                                    <option value="Re-sonication / re-shaking due to probable incomplete solubility and analyze" 
+                                        {{ in_array('Re-sonication / re-shaking due to probable incomplete solubility and analyze', old('proposal_for_hypothesis_IB', $selectedHypotheses ?? [])) ? 'selected' : '' }}>
+                                        Re-sonication / re-shaking due to probable incomplete solubility and analyze
+                                    </option>
+                                    <option value="Other" 
+                                        {{ in_array('Other', old('proposal_for_hypothesis_IB', $selectedHypotheses ?? [])) ? 'selected' : '' }}>
+                                        Other
+                                    </option>
                                 </select>
                             </div>
                         </div>
+                        
+                        
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="If Others">Others</label>

@@ -662,10 +662,9 @@
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
-                                <textarea 
-                                    name="hod_remark1" 
+                                <textarea name="hod_remark1" 
                                     class="form-control {{$errors->has('hod_remark1') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 2 ? 'required' : 'disabled' }}>{{$data->hod_remark1}}</textarea>
+                                    {{ $data->stage == 2 ? 'required' : 'readonly' }}>{{$data->hod_remark1}}</textarea>
                                 @if($errors->has('hod_remark1'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark1') }}
@@ -702,7 +701,7 @@
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="hod_attachment1[]" 
                                             oninput="addMultipleFiles(this, 'hod_attachment1')" 
-                                            {{ $data->stage == 2 ? '' : 'disabled' }} multiple>
+                                            {{ $data->stage == 2 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -739,7 +738,7 @@
                                 <textarea 
                                     name="QA_Head_remark1" 
                                     class="form-control {{$errors->has('QA_Head_remark1') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 3 ? '' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark1}}</textarea>
+                                    {{ $data->stage == 3 ? '' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark1}}</textarea>
                                     @if($errors->has('QA_Head_remark1'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark1') }}
@@ -775,7 +774,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment1[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment1')" {{$data->stage == 1 || $data->stage == 2 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment1')" {{$data->stage == 1 || $data->stage == 2 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -813,7 +812,7 @@
                                 <textarea 
                                     name="QA_Head_primary_remark1" 
                                     class="form-control {{$errors->has('QA_Head_primary_remark1') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 4 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark1}}</textarea>
+                                    {{ $data->stage == 4 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark1}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark1'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_primary_remark1') }}
@@ -849,7 +848,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_primary_attachment1[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment1')" {{ $data->stage == 4 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment1')" {{ $data->stage == 4 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7752,13 +7751,13 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Outcome of Phase IA investigation<span class="text-danger">*</span></label>
-                                <textarea id="outcome_phase_IA" name="outcome_phase_IA" {{ $data->stage == 9 ? 'required' : 'disabled' }}>{{ $data->outcome_phase_IA }} </textarea>
+                                <textarea id="outcome_phase_IA" name="outcome_phase_IA" {{ $data->stage == 9 ? 'required' : 'readonly' }}>{{ $data->outcome_phase_IA }} </textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Reason for proceeding to Phase IB investigation</label>
-                                <textarea id="reason_for_proceeding" name="reason_for_proceeding" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->reason_for_proceeding }}</textarea>
+                                <textarea id="reason_for_proceeding" name="reason_for_proceeding" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->reason_for_proceeding }}</textarea>
                             </div>
                         </div>
                         @php
@@ -7824,16 +7823,16 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Summary of Review</label>
-                                <textarea id="summaryy_of_review" name="summaryy_of_review" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->summaryy_of_review }}</textarea>
+                                <textarea id="summaryy_of_review" name="summaryy_of_review" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->summaryy_of_review }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Probable Cause Identification</label>
-                                <textarea id="Probable_cause_iden" name="Probable_cause_iden" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Probable_cause_iden }}</textarea>
+                                <textarea id="Probable_cause_iden" name="Probable_cause_iden" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Probable_cause_iden }}</textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        {{-- <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Proposal for Phase IB hypothesis</label>
                                     <select name="proposal_for_hypothesis_IB" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
@@ -7845,23 +7844,46 @@
                                     <option value="Other" {{ $data->proposal_for_hypothesis_IB == 'Other' ? 'selected' : '' }}>Other</option>
                                     </select>
                             </div>
+                        </div> --}}
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="checklists">Proposal for Phase IB hypothesis</label>
+                                @php
+                                $ChecklistData = $data->proposal_for_hypothesis_IB;
+                            
+                                if (is_array($ChecklistData) && array_key_exists('0', $ChecklistData) && is_string($ChecklistData[0]) && !empty($ChecklistData[0])) {
+                                    $selectedChecklist = explode(',', $ChecklistData[0]);
+                                } else {
+                                    $selectedChecklist = is_array($ChecklistData) ? $ChecklistData : [];
+                                }
+                            @endphp
+                                <select multiple id="reference_record" name="proposal_for_hypothesis_IB[]">
+                                    <option value="">--Select---</option>
+                                    <option value="Re-injection of the original vial" @if (in_array('Re-injection of the original vial', $selectedChecklist)) selected @endif>Re-injection of the original vial</option>
+                                    <option value="Re-filtration and Injection from final dilution" @if (in_array('Re-filtration and Injection from final dilution', $selectedChecklist)) selected @endif>Re-filtration and Injection from final dilution</option>
+                                    <option value="Re-dilution from the tock solution and injection" @if (in_array('Re-dilution from the tock solution and injection', $selectedChecklist)) selected @endif>Re-dilution from the tock solution and injection</option>
+                                    <option value="Re-sonication / re-shaking due to probable incomplete solubility and analyze" @if (in_array('Re-sonication / re-shaking due to probable incomplete solubility and analyze', $selectedChecklist)) selected @endif>Re-sonication / re-shaking due to probable incomplete solubility and analyze</option>
+                                    <option value="Other" @if (in_array('Other', $selectedChecklist)) selected @endif>Other</option>
+                                   
+                                </select>
+                            </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Others</label>
-                                <textarea id="proposal_for_hypothesis_others" name="proposal_for_hypothesis_others" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->proposal_for_hypothesis_others }}</textarea>
+                                <textarea id="proposal_for_hypothesis_others" name="proposal_for_hypothesis_others" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->proposal_for_hypothesis_others }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Details of results (Including original OOS results for side by side comparison)</label>
-                                <textarea id="details_of_result" name="details_of_result" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->details_of_result }}</textarea>
+                                <textarea id="details_of_result" name="details_of_result" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->details_of_result }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Probable Cause Identified in Phase IB investigation</label>
-                                    <select name="Probable_Cause_Identified" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
+                                    <select name="Probable_Cause_Identified" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->Probable_Cause_Identified == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->Probable_Cause_Identified == 'No' ? 'selected' : '' }}>No</option>
@@ -7871,25 +7893,25 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Any other Comments/ Probable Cause Evidence</label>
-                                <textarea id="Any_other_Comments" name="Any_other_Comments" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Any_other_Comments }}</textarea>
+                                <textarea id="Any_other_Comments" name="Any_other_Comments" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Any_other_Comments }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Proposal for Hypothesis testing to confirm Probable Cause identified</label>
-                                <textarea id="Proposal_for_Hypothesis" name="Proposal_for_Hypothesis" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Proposal_for_Hypothesis }}</textarea>
+                                <textarea id="Proposal_for_Hypothesis" name="Proposal_for_Hypothesis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Proposal_for_Hypothesis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Summary of Hypothesis</label>
-                                <textarea id="Summary_of_Hypothesis" name="Summary_of_Hypothesis" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Summary_of_Hypothesis }}</textarea>
+                                <textarea id="Summary_of_Hypothesis" name="Summary_of_Hypothesis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Summary_of_Hypothesis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Assignable Cause</label>
-                                    <select name="Assignable_Cause" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
+                                    <select name="Assignable_Cause" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Found" {{ $data->Assignable_Cause == 'Found' ? 'selected' : '' }}>Found</option>
                                     <option value="Not Found" {{ $data->Assignable_Cause == 'Not Found' ? 'selected' : '' }}>Not Found</option>
@@ -7899,7 +7921,7 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Types of assignable cause</label>
-                                    <select name="Types_of_assignable" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
+                                    <select name="Types_of_assignable" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Analyst error" {{ $data->Types_of_assignable == 'Analyst error' ? 'selected' : '' }}>Analyst error</option>
                                     <option value="Instrument error" {{ $data->Types_of_assignable == 'Instrument error' ? 'selected' : '' }}>Instrument error</option>
@@ -7912,19 +7934,19 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Others</label>
-                                <textarea id="Types_of_assignable_others" name="Types_of_assignable_others" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Types_of_assignable_others }}</textarea>
+                                <textarea id="Types_of_assignable_others" name="Types_of_assignable_others" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Types_of_assignable_others }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Evaluation of Phase IB investigation Timeline</label>
-                                <textarea id="Evaluation_Timeline" name="Evaluation_Timeline" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Evaluation_Timeline }}</textarea>
+                                <textarea id="Evaluation_Timeline" name="Evaluation_Timeline" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Evaluation_Timeline }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Is Phase IB investigation timeline met</label>
-                                    <select name="timeline_met" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
+                                    <select name="timeline_met" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->timeline_met == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->timeline_met == 'No' ? 'selected' : '' }}>No</option>
@@ -7934,19 +7956,19 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">If No, Justify for timeline extension</label>
-                                <textarea id="timeline_extension" name="timeline_extension" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->timeline_extension }}</textarea>
+                                <textarea id="timeline_extension" name="timeline_extension" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->timeline_extension }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">CAPA applicable</label>
-                                <textarea id="CAPA_applicable" name="CAPA_applicable" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->CAPA_applicable }}</textarea>
+                                <textarea id="CAPA_applicable" name="CAPA_applicable" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->CAPA_applicable }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Resampling required</label>
-                                    <select name="resampling_required_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
+                                    <select name="resampling_required_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->resampling_required_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->resampling_required_ib == 'No' ? 'selected' : '' }}>No</option>
@@ -7956,7 +7978,7 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Repeat testing required </label>
-                                    <select name="repeat_testing_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
+                                    <select name="repeat_testing_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->repeat_testing_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->repeat_testing_ib == 'No' ? 'selected' : '' }}>No</option>
@@ -7966,13 +7988,13 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Repeat testing plan</label>
-                                <textarea id="Repeat_testing_plan" name="Repeat_testing_plan" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Repeat_testing_plan }}</textarea>
+                                <textarea id="Repeat_testing_plan" name="Repeat_testing_plan" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Repeat_testing_plan }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Phase II investigation required</label>
-                                    <select name="phase_ii_inv_req_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
+                                    <select name="phase_ii_inv_req_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->phase_ii_inv_req_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->phase_ii_inv_req_ib == 'No' ? 'selected' : '' }}>No</option>
@@ -7993,7 +8015,7 @@
                             <div class="group-input">
                                 <label for="Assigned To">Production Person</label>
                                 <select id="choices-multiple-remove" class="choices-multiple-reviewe"
-                                    name="production_person_ib" placeholder="Select Reviewers" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
+                                    name="production_person_ib" placeholder="Select Reviewers" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
                                     <option value="">-- Select --</option>
                                     @if (!empty(Helpers::getProductionDropdown()))
                                         @foreach (Helpers::getProductionDropdown() as $listPersone)
@@ -8009,25 +8031,25 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Repeat analysis method/resampling</label>
-                                <textarea id="Repeat_analysis_method" name="Repeat_analysis_method" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Repeat_analysis_method }}</textarea>
+                                <textarea id="Repeat_analysis_method" name="Repeat_analysis_method" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Repeat_analysis_method }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Details of repeat analysis</label>
-                                <textarea id="Details_repeat_analysis" name="Details_repeat_analysis" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Details_repeat_analysis }}</textarea>
+                                <textarea id="Details_repeat_analysis" name="Details_repeat_analysis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Details_repeat_analysis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Impact assessment</label>
-                                <textarea id="Impact_assessment1" name="Impact_assessment1" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Impact_assessment1 }}</textarea>
+                                <textarea id="Impact_assessment1" name="Impact_assessment1" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Impact_assessment1 }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Conclusion</label>
-                                <textarea id="Conclusion1" name="Conclusion1" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Conclusion1 }}</textarea>
+                                <textarea id="Conclusion1" name="Conclusion1" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Conclusion1 }}</textarea>
                             </div>
                         </div>
 
@@ -8063,7 +8085,7 @@
                                 <textarea 
                                     name="hod_remark2" 
                                     class="form-control {{$errors->has('hod_remark2') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 6 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark2}}</textarea>
+                                    {{ $data->stage == 6 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark2}}</textarea>
                                     @if($errors->has('hod_remark2'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark2') }}
@@ -8099,7 +8121,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="hod_attachment2[]"
-                                            oninput="addMultipleFiles(this, 'hod_attachment2')" {{ $data->stage == 6 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'hod_attachment2')" {{ $data->stage == 6 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -8137,7 +8159,7 @@
                                 <textarea 
                                     name="QA_Head_remark2" 
                                     class="form-control {{$errors->has('QA_Head_remark2') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 7 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark2}}</textarea>
+                                    {{ $data->stage == 7 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark2}}</textarea>
                                     @if($errors->has('QA_Head_remark2'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark2') }}
@@ -8173,7 +8195,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment2[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment2')" {{ $data->stage == 7 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment2')" {{ $data->stage == 7 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -8211,7 +8233,7 @@
                                 <textarea 
                                     name="QA_Head_primary_remark2" 
                                     class="form-control {{$errors->has('QA_Head_primary_remark2') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 8 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark2}}</textarea>
+                                    {{ $data->stage == 8 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark2}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark2'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_primary_remark2') }}
@@ -8247,7 +8269,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_primary_attachment2[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment2')" {{ $data->stage == 8 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment2')" {{ $data->stage == 8 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -8285,7 +8307,7 @@
                                 <textarea 
                                     name="hod_remark3" 
                                     class="form-control {{$errors->has('hod_remark3') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 10 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark3}}</textarea>
+                                    {{ $data->stage == 10 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark3}}</textarea>
                                     @if($errors->has('hod_remark3'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark3') }}
@@ -8321,7 +8343,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="hod_attachment3[]"
-                                            oninput="addMultipleFiles(this, 'hod_attachment3')" {{ $data->stage == 10 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'hod_attachment3')" {{ $data->stage == 10 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -8359,7 +8381,7 @@
                                 <textarea 
                                     name="QA_Head_remark3" 
                                     class="form-control {{$errors->has('QA_Head_remark3') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 11 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark3}}</textarea>
+                                    {{ $data->stage == 11 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark3}}</textarea>
                                     @if($errors->has('QA_Head_remark3'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark3') }}
@@ -8395,7 +8417,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment3[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment3')" {{ $data->stage == 11 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment3')" {{ $data->stage == 11 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -8426,7 +8448,7 @@
                          <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Escalation required</label>
-                                    <select name="escalation_required" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 12 ? '' : 'disabled' }}>
+                                    <select name="escalation_required" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 12 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->escalation_required == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->escalation_required == 'No' ? 'selected' : '' }}>No</option>
@@ -8436,13 +8458,13 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Notification details</label>
-                                <textarea id="notification_ib" name="notification_ib" {{ $data->stage == 12 ? '' : 'disabled' }}>{{ $data->notification_ib }}</textarea>
+                                <textarea id="notification_ib" name="notification_ib" {{ $data->stage == 12 ? '' : 'readonly' }}>{{ $data->notification_ib }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Justification details</label>
-                                <textarea id="justification_ib" name="justification_ib" {{ $data->stage == 12 ? '' : 'disabled' }}>{{ $data->justification_ib }}</textarea>
+                                <textarea id="justification_ib" name="justification_ib" {{ $data->stage == 12 ? '' : 'readonly' }}>{{ $data->justification_ib }}</textarea>
                             </div>
                         </div>
                         <div class="col-md-12 mb-3">
@@ -8454,7 +8476,7 @@
                                 <textarea 
                                     name="QA_Head_primary_remark3" 
                                     class="form-control {{$errors->has('QA_Head_primary_remark3') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 12 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark3}}</textarea>
+                                    {{ $data->stage == 12 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark3}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark3'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_primary_remark3') }}
@@ -8490,7 +8512,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_primary_attachment3[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment3')" {{ $data->stage == 12 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment3')" {{ $data->stage == 12 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -8530,7 +8552,7 @@
                                 <textarea 
                                     name="hod_remark4" 
                                     class="form-control {{$errors->has('hod_remark4') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 14 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark4}}</textarea>
+                                    {{ $data->stage == 14 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark4}}</textarea>
                                     @if($errors->has('hod_remark4'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark4') }}
@@ -8566,7 +8588,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="hod_attachment4[]"
-                                            oninput="addMultipleFiles(this, 'hod_attachment4')" {{ $data->stage == 14 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'hod_attachment4')" {{ $data->stage == 14 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -8605,7 +8627,7 @@
                                 <textarea 
                                     name="QA_Head_remark4" 
                                     class="form-control {{$errors->has('QA_Head_remark4') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 15 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark4}}</textarea>
+                                    {{ $data->stage == 15 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark4}}</textarea>
                                     @if($errors->has('QA_Head_remark4'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark4') }}
@@ -8641,7 +8663,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment4[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment4')" {{ $data->stage == 15 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment4')" {{ $data->stage == 15 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -8679,7 +8701,7 @@
                                 <textarea 
                                     name="QA_Head_primary_remark4" 
                                     class="form-control {{$errors->has('QA_Head_primary_remark4') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 16 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark4}}</textarea>
+                                    {{ $data->stage == 16 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark4}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark4'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_primary_remark4') }}
@@ -8715,7 +8737,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_primary_attachment4[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment4')" {{ $data->stage == 16 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment4')" {{ $data->stage == 16 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -8746,13 +8768,13 @@
                          <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Summary Of Investigation<span class="text-danger">*</span></label>
-                                <textarea id="Summary_Of_Inv_IIB" name="Summary_Of_Inv_IIB" {{ $data->stage == 17 ? 'required' : 'disabled' }}>{{ $data->Summary_Of_Inv_IIB }}</textarea>
+                                <textarea id="Summary_Of_Inv_IIB" name="Summary_Of_Inv_IIB" {{ $data->stage == 17 ? 'required' : 'readonly' }}>{{ $data->Summary_Of_Inv_IIB }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name">CAPA Required</label>
-                                <select name="capa_required_IIB"  {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'disabled' }}>
+                                <select name="capa_required_IIB"  {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'readonly' }}>
                                     <option value="" {{ $data->capa_required_IIB == '0' ? 'selected' : ''
                                         }}>--Select---</option>
                                     <option value="yes" {{ $data->capa_required_IIB == 'yes' ? 'selected' : ''
@@ -8765,14 +8787,14 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Agenda">Reference CAPA No.</label>
-                                <input  {{Helpers::isOOSChemical($data->stage)}} type="text" value="{{$data->reference_capa_IIB}}" name="reference_capa_IIB" {{ $data->stage == 17 ? '' : 'disabled' }}>
+                                <input  {{Helpers::isOOSChemical($data->stage)}} type="text" value="{{$data->reference_capa_IIB}}" name="reference_capa_IIB" {{ $data->stage == 17 ? '' : 'readonly' }}>
                             </div>
                         </div>
                         
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Report Attachments">Resampling required IIB Inv.</label>
-                                <select name="resampling_req_IIB" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'disabled' }}>
+                                <select name="resampling_req_IIB" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'readonly' }}>
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="Yes" {{ $data->resampling_req_IIB === 'Yes' ? 'selected' :
                                             '' }}>Yes</option>
@@ -8784,7 +8806,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Attachments">Repeat testing required IIB Inv.</label>
-                                <select name="Repeat_testing_IIB" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'disabled' }}>
+                                <select name="Repeat_testing_IIB" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'readonly' }}>
                                    <option value="" {{ $data->Repeat_testing_IIB == '0' ? 'selected' : ''
                                         }}>Enter Your Selection Here</option>
                                     <option value="yes" {{ $data->Repeat_testing_IIB == 'yes' ?
@@ -8797,32 +8819,32 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Results Of Repeat testing required IIB Inv.</label>
-                                <textarea id="result_of_rep_test_IIB" name="result_of_rep_test_IIB" {{ $data->stage == 17 ? '' : 'disabled' }}>{{ $data->result_of_rep_test_IIB }}</textarea>
+                                <textarea id="result_of_rep_test_IIB" name="result_of_rep_test_IIB" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->result_of_rep_test_IIB }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Laboratory Investigation Hypothesis details<span class="text-danger">*</span></label>
-                                <textarea id="Laboratory_Investigation_Hypothesis" name="Laboratory_Investigation_Hypothesis" {{ $data->stage == 17 ? 'required' : 'disabled' }}>{{ $data->Laboratory_Investigation_Hypothesis }}</textarea>
+                                <textarea id="Laboratory_Investigation_Hypothesis" name="Laboratory_Investigation_Hypothesis" {{ $data->stage == 17 ? 'required' : 'readonly' }}>{{ $data->Laboratory_Investigation_Hypothesis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Outcome of Laboratory Investigation</label>
-                                <textarea id="Outcome_of_Laboratory" name="Outcome_of_Laboratory" {{ $data->stage == 17 ? '' : 'disabled' }}>{{ $data->Outcome_of_Laboratory }}</textarea>
+                                <textarea id="Outcome_of_Laboratory" name="Outcome_of_Laboratory" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->Outcome_of_Laboratory }}</textarea>
                             </div>
                         </div>
             
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Evaluation</label>
-                                <textarea id="Evaluation_IIB" name="Evaluation_IIB" {{ $data->stage == 17 ? '' : 'disabled' }}>{{ $data->Evaluation_IIB }}</textarea>
+                                <textarea id="Evaluation_IIB" name="Evaluation_IIB" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->Evaluation_IIB }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Assignable Cause</label>
-                                    <select name="Assignable_Cause111" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'disabled' }}>
+                                    <select name="Assignable_Cause111" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Found" {{ $data->Assignable_Cause111 == 'Found' ? 'selected' : '' }}>Found</option>
                                     <option value="Not Found" {{ $data->Assignable_Cause111 == 'Not Found' ? 'selected' : '' }}>Not Found</option>
@@ -8832,13 +8854,13 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">If assignable cause identified perform re-testing</label>
-                                <textarea id="If_assignable_cause" name="If_assignable_cause" {{ $data->stage == 17 ? '' : 'disabled' }}>{{ $data->If_assignable_cause }}</textarea>
+                                <textarea id="If_assignable_cause" name="If_assignable_cause" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->If_assignable_cause }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">If assignable error is not identified proceed as per Phase III investigation</label>
-                                <textarea id="If_assignable_error" name="If_assignable_error" {{ $data->stage == 17 ? '' : 'disabled' }}>{{ $data->If_assignable_error }}</textarea>
+                                <textarea id="If_assignable_error" name="If_assignable_error" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->If_assignable_error }}</textarea>
                             </div>
                         </div>
                         <div class="col-12">
@@ -8868,7 +8890,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="phase_IIB_attachment[]"
-                                            oninput="addMultipleFiles(this, 'phase_IIB_attachment')" {{ $data->stage == 15 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'phase_IIB_attachment')" {{ $data->stage == 15 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -8904,7 +8926,7 @@
                                 <textarea 
                                     name="hod_remark5" 
                                     class="form-control {{$errors->has('hod_remark5') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 18 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark5}}</textarea>
+                                    {{ $data->stage == 18 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark5}}</textarea>
                                     @if($errors->has('hod_remark5'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark5') }}
@@ -8940,7 +8962,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="hod_attachment5[]"
-                                            oninput="addMultipleFiles(this, 'hod_attachment5')" {{ $data->stage == 18 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'hod_attachment5')" {{ $data->stage == 18 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -8978,7 +9000,7 @@
                                 <textarea 
                                     name="QA_Head_remark5" 
                                     class="form-control {{$errors->has('QA_Head_remark5') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 19 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark5}}</textarea>
+                                    {{ $data->stage == 19 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark5}}</textarea>
                                     @if($errors->has('QA_Head_remark5'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark5') }}
@@ -9014,7 +9036,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment5[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment5')" {{ $data->stage == 19 ? '' : 'disabled' }} multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment5')" {{ $data->stage == 19 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>

@@ -27,13 +27,15 @@ class OOSService
 
         $res = Helpers::getDefaultResponse();
 
+
         try {
 
-            $input = $request->all();
+            $input = $request->except(['proposal_for_hypothesis_IB']);
             $input['record_number'] = ((RecordNumber::first()->value('counter')) + 1);
             $input['form_type'] = "OOS Chemical";
             $input['status'] = 'Opened';
             $input['stage'] = 1;
+            $input['proposal_for_hypothesis_IB'] = implode(',', $request->proposal_for_hypothesis_IB);
            
            
             

@@ -539,6 +539,64 @@ class DeviationController extends Controller
         }
         $data5->save();
 
+        //  $data8 = new DeviationGrid();
+
+
+        // $data8->deviation_grid_id = $deviation->id;
+        // $data8->type = "effect_analysis";
+        // if (!empty($request->risk_factor)) {
+        //     $data8->risk_factor = serialize($request->risk_factor);
+        // }
+        // if (!empty($request->risk_element)) {
+        //     $data8->risk_element = serialize($request->risk_element);
+        // }
+        // if (!empty($request->problem_cause)) {
+        //     $data8->problem_cause = serialize($request->problem_cause);
+        // }
+        // if (!empty($request->existing_risk_control)) {
+        //     $data8->existing_risk_control = serialize($request->existing_risk_control);
+        // }
+        // if (!empty($request->initial_severity)) {
+        //     $data8->initial_severity = serialize($request->initial_severity);
+        // }
+        // if (!empty($request->initial_detectability)) {
+        //     $data8->initial_detectability = serialize($request->initial_detectability);
+        // }
+        // if (!empty($request->initial_probability)) {
+        //     $data8->initial_probability = serialize($request->initial_probability);
+        // }
+        // if (!empty($request->initial_rpn)) {
+        //     $data8->initial_rpn = serialize($request->initial_rpn);
+        // }
+        // if (!empty($request->risk_acceptance)) {
+        //     $data8->risk_acceptance = serialize($request->risk_acceptance);
+        // }
+        // if (!empty($request->risk_control_measure)) {
+        //     $data8->risk_control_measure = serialize($request->risk_control_measure);
+        // }
+        // if (!empty($request->residual_severity)) {
+        //     $data8->residual_severity = serialize($request->residual_severity);
+        // }
+        // if (!empty($request->residual_probability)) {
+        //     $data8->residual_probability = serialize($request->residual_probability);
+        // }
+        // if (!empty($request->residual_detectability)) {
+        //     $data8->residual_detectability = serialize($request->residual_detectability);
+        // }
+        // if (!empty($request->residual_rpn)) {
+        //     $data8->residual_rpn = serialize($request->residual_rpn);
+        // }
+
+        // if (!empty($request->risk_acceptance2)) {
+        //     $data8->risk_acceptance2 = serialize($request->risk_acceptance2);
+        // }
+        // if (!empty($request->mitigation_proposal)) {
+        //     $data8->mitigation_proposal = serialize($request->mitigation_proposal);
+        // }
+
+        // $data8->save();
+
+
 
 
         $Cft = new DeviationCft();
@@ -1255,6 +1313,22 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+         if (!empty ($request->discb_deviat)){
+            $history = new DeviationAuditTrail();
+            $history->deviation_id = $deviation->id;
+            $history->activity_type = 'Description of Deviation';
+            $history->previous = "Null";
+            $history->current = $deviation->discb_deviat;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $deviation->status;
+            $history->action_name = 'Create';
+            $history->save();
+        }
         if (!empty ($request->Hod_person_to)){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
@@ -1436,6 +1510,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $data1 = DeviationCft::where('deviation_id', $id)->latest()->first();
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
+        $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->first();
         $grid_data = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Deviation")->first();
         $grid_data1 = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Document")->first();
         $grid_data2 = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Product")->first();
@@ -1465,7 +1540,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $investigationExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "Investigation"])->first();
         $deviationExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "Deviation"])->first();
 
-        return view('frontend.forms.deviation.deviation_view', compact('data','userData', 'grid_data_qrms','grid_data_matrix_qrms', 'capaExtension','qrmExtension','investigationExtension','deviationExtension', 'old_record', 'pre', 'data1', 'divisionName','grid_data','grid_data1', 'deviationNewGrid','grid_data2','investigationTeamData','rootCauseData', 'why_data', 'fishbone_data'));
+        return view('frontend.forms.deviation.deviation_view', compact('riskEffectAnalysis','data','userData', 'grid_data_qrms','grid_data_matrix_qrms', 'capaExtension','qrmExtension','investigationExtension','deviationExtension', 'old_record', 'pre', 'data1', 'divisionName','grid_data','grid_data1', 'deviationNewGrid','grid_data2','investigationTeamData','rootCauseData', 'why_data', 'fishbone_data'));
     }
 
 
@@ -1664,19 +1739,44 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                 $deviation->Preventive_action_Taken = $request->Preventive_action_Taken ? $request->Preventive_action_Taken : $deviation->Preventive_action_Taken;
                 $deviation->CAPA_Closure_Comments = $request->CAPA_Closure_Comments ? $request->CAPA_Closure_Comments : $deviation->CAPA_Closure_Comments;
 
-                 if (!empty ($request->CAPA_Closure_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('CAPA_Closure_attachment')) {
+                //  if (!empty ($request->CAPA_Closure_attachment)) {
+                //     $files = [];
+                //     if ($request->hasfile('CAPA_Closure_attachment')) {
 
-                        foreach ($request->file('CAPA_Closure_attachment') as $file) {
-                            $name = 'capa_closure_attachment-' . time() . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $deviation->CAPA_Closure_attachment = json_encode($files);
+                //         foreach ($request->file('CAPA_Closure_attachment') as $file) {
+                //             $name = 'capa_closure_attachment-' . time() . '.' . $file->getClientOriginalExtension();
+                //             $file->move('upload/', $name);
+                //             $files[] = $name;
+                //         }
+                //     }
+                //     $deviation->CAPA_Closure_attachment = json_encode($files);
 
-                }
+                // }
+                   if (!empty($request->CAPA_Closure_attachment) || !empty($request->deleted_CAPA_Closure_attachment)) {
+       $existingFiles = json_decode($deviation->CAPA_Closure_attachment, true) ?? [];
+
+    // Handle deleted files
+    if (!empty($request->deleted_CAPA_Closure_attachment)) {
+        $filesToDelete = explode(',', $request->deleted_CAPA_Closure_attachment);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('CAPA_Closure_attachment')) {
+        foreach ($request->file('CAPA_Closure_attachment') as $file) {
+            $name = $request->name . 'CAPA_Closure_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
+        }
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $deviation->CAPA_Closure_attachment = json_encode($allFiles);
+}
                 $deviation->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1793,6 +1893,34 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $deviation->detection = $request->detection ? $request->detection: $deviation->detection;
         // $deviation->rpn = $request->rpn ? $request->rpn: $deviation->rpn;
         $deviation->rpn = $request->rpn;
+
+         $data8 = DeviationGrid::where('deviation_grid_id', $deviation->id)->where('type', 'effect_analysis')->first();
+
+         $data8 = new DeviationGrid();
+
+
+        $data8->deviation_grid_id = $deviation->id;
+        $data8->type = "effect_analysis";
+        // Serialize and update the data, ensuring that we always update the fields
+        $data8->risk_factor = serialize($request->risk_factor ?? []);
+        $data8->risk_element = serialize($request->risk_element ?? []);
+        $data8->problem_cause = serialize($request->problem_cause ?? []);
+        $data8->existing_risk_control = serialize($request->existing_risk_control ?? []);
+        $data8->initial_severity = serialize($request->initial_severity ?? []);
+        $data8->initial_detectability = serialize($request->initial_detectability ?? []);
+        $data8->initial_probability = serialize($request->initial_probability ?? []);
+        $data8->initial_rpn = serialize($request->initial_rpn ?? []);
+        $data8->risk_control_measure = serialize($request->risk_control_measure ?? []);
+        $data8->residual_severity = serialize($request->residual_severity ?? []);
+        $data8->residual_probability = serialize($request->residual_probability ?? []);
+        $data8->residual_detectability = serialize($request->residual_detectability ?? []);
+        $data8->residual_rpn = serialize($request->residual_rpn ?? []);
+        $data8->risk_acceptance = serialize($request->risk_acceptance ?? []);
+        $data8->risk_acceptance2 = serialize($request->risk_acceptance2 ?? []);
+        $data8->mitigation_proposal = serialize($request->mitigation_proposal ?? []);
+
+        $data8->save();
+
 
 
 
@@ -2328,26 +2456,77 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                 }
 
 
-            if (!empty ($request->Initial_attachment)) {
-                $files = [];
+            // if (!empty ($request->Initial_attachment)) {
+            //     $files = [];
 
-                if ($deviation->Initial_attachment) {
-                    $files = is_array(json_decode($deviation->Initial_attachment)) ? $deviation->Initial_attachment : [];
-                }
+            //     if ($deviation->Initial_attachment) {
+            //         $files = is_array(json_decode($deviation->Initial_attachment)) ? $deviation->Initial_attachment : [];
+            //     }
 
-                if ($request->hasfile('Initial_attachment')) {
-                    foreach ($request->file('Initial_attachment') as $file) {
-                        $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
+            //     if ($request->hasfile('Initial_attachment')) {
+            //         foreach ($request->file('Initial_attachment') as $file) {
+            //             $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //             $file->move('upload/', $name);
+            //             $files[] = $name;
+            //         }
+            //     }
 
 
-                $deviation->Initial_attachment = json_encode($files);
-            }
+            //     $deviation->Initial_attachment = json_encode($files);
+            // }
         }
 
+
+//         if (!empty($request->Initial_attachment) || !empty($request->deleted_Initial_attachment)) {
+//     $existingFiles = json_decode($deviation->Initial_attachment, true) ?? [];
+
+//     // Handle deleted files
+//     if (!empty($request->deleted_Initial_attachment)) {
+//         $filesToDelete = explode(',', $request->deleted_Initial_attachment);
+//         $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+//             return !in_array($file, $filesToDelete);
+//         });
+//     }
+
+//     // Handle new files
+//     $newFiles = [];
+//     if ($request->hasFile('Initial_attachment')) {
+//         foreach ($request->file('Initial_attachment') as $file) {
+//             $name = $request->name . 'Initial_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+//             $file->move(public_path('upload/'), $name);
+//             $newFiles[] = $name;
+//         }
+//     }
+
+//     // Merge existing and new files
+//     $allFiles = array_merge($existingFiles, $newFiles);
+//     $deviation->Initial_attachment = json_encode($allFiles);
+// }
+               if (!empty($request->Initial_attachment) || !empty($request->deleted_Initial_attachment)) {
+       $existingFiles = json_decode($deviation->Initial_attachment, true) ?? [];
+
+    // Handle deleted files
+    if (!empty($request->deleted_Initial_attachment)) {
+        $filesToDelete = explode(',', $request->deleted_Initial_attachment);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('Initial_attachment')) {
+        foreach ($request->file('Initial_attachment') as $file) {
+            $name = $request->name . 'Initial_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
+        }
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $deviation->Initial_attachment = json_encode($allFiles);
+}
 
 
         if (!empty ($request->Audit_file)) {
@@ -2392,61 +2571,91 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
             }
             $deviation->pending_attachment = json_encode($files);
         }
-           if (!empty ($request->hod_final_attachment)) {
+            if (!empty($request->hod_final_attachment) || !empty($request->deleted_hod_final_attachment)) {
+       $existingFiles = json_decode($deviation->hod_final_attachment, true) ?? [];
 
-            $files = [];
+    // Handle deleted files
+    if (!empty($request->deleted_hod_final_attachment)) {
+        $filesToDelete = explode(',', $request->deleted_hod_final_attachment);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
 
-            if ($deviation->hod_final_attachment) {
-                $existingFiles = json_decode($deviation->hod_final_attachment, true); // Convert to associative array
-                if (is_array($existingFiles)) {
-                    $files = $existingFiles;
-                }
-                // $files = is_array(json_decode($deviation->hod_final_attachment)) ? $deviation->hod_final_attachment : [];
-            }
-
-            if ($request->hasfile('hod_final_attachment')) {
-                foreach ($request->file('hod_final_attachment') as $file) {
-                    $name = $request->name . 'hod_final_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $deviation->hod_final_attachment = json_encode($files);
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('hod_final_attachment')) {
+        foreach ($request->file('hod_final_attachment') as $file) {
+            $name = $request->name . 'hod_final_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
         }
-            if (!empty($request->initial_file) || $request->removed_files) {
-            $files = [];
+    }
 
-            // Decode existing files if they exist
-            if ($deviation->initial_file) {
-                $existingFiles = json_decode($deviation->initial_file, true); // Convert to associative array
-                if (is_array($existingFiles)) {
-                    $files = $existingFiles;
-                }
-            }
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $deviation->hod_final_attachment = json_encode($allFiles);
+}
+        // if (!empty($request->initial_file) || $request->removed_files) {
+        //     $files = [];
 
-            // Remove files that were marked for deletion
-            if ($request->removed_files) {
-                $removedFiles = explode(',', $request->removed_files);
-                foreach ($removedFiles as $removedFile) {
-                    if (($key = array_search($removedFile, $files)) !== false) {
-                        unset($files[$key]);
-                        @unlink(public_path('upload/' . $removedFile)); // Delete the file from the server
-                    }
-                }
-            }
+        //     // Decode existing files if they exist
+        //     if ($deviation->initial_file) {
+        //         $existingFiles = json_decode($deviation->initial_file, true); // Convert to associative array
+        //         if (is_array($existingFiles)) {
+        //             $files = $existingFiles;
+        //         }
+        //     }
 
-            // Process and add new files
-            if ($request->hasfile('initial_file')) {
-                foreach ($request->file('initial_file') as $file) {
-                    $name = $request->name . 'initial_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
+        //     // Remove files that were marked for deletion
+        //     if ($request->removed_files) {
+        //         $removedFiles = explode(',', $request->removed_files);
+        //         foreach ($removedFiles as $removedFile) {
+        //             if (($key = array_search($removedFile, $files)) !== false) {
+        //                 unset($files[$key]);
+        //                 @unlink(public_path('upload/' . $removedFile)); // Delete the file from the server
+        //             }
+        //         }
+        //     }
 
-            // Re-index the array to remove gaps in keys and encode it
-            $deviation->initial_file = json_encode(array_values($files));
+        //     // Process and add new files
+        //     if ($request->hasfile('initial_file')) {
+        //         foreach ($request->file('initial_file') as $file) {
+        //             $name = $request->name . 'initial_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+        //     // Re-index the array to remove gaps in keys and encode it
+        //     $deviation->initial_file = json_encode(array_values($files));
+        // }
+
+        if (!empty($request->initial_file) || !empty($request->deleted_initial_file)) {
+    $existingFiles = json_decode($deviation->initial_file, true) ?? [];
+
+    // Handle deleted files
+    if (!empty($request->deleted_initial_file)) {
+        $filesToDelete = explode(',', $request->deleted_initial_file);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('initial_file')) {
+        foreach ($request->file('initial_file') as $file) {
+            $name = $request->name . 'initial_file' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
         }
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $deviation->initial_file = json_encode($allFiles);
+}
 
 
         if (!empty ($request->QA_attachment)) {
@@ -2471,6 +2680,32 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
             $deviation->QA_attachment = json_encode($files);
         }
+
+
+        if (!empty ($request->closure_attachment)) {
+            $files = [];
+
+            if ($deviation->closure_attachment) {
+                $existingFiles = json_decode($deviation->closure_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+                // $files = is_array(json_decode($deviation->closure_attachment)) ? $deviation->closure_attachment : [];
+            }
+
+            if ($request->hasfile('closure_attachment')) {
+                foreach ($request->file('closure_attachment') as $file) {
+                    $name = $request->name . 'closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $deviation->closure_attachment = json_encode($files);
+        }
+
+
 
         if (!empty ($request->Investigation_attachment)) {
 
@@ -2519,49 +2754,54 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
             $deviation->Capa_attachment = json_encode($files);
         }
-        if (!empty ($request->QA_attachments)) {
+          if (!empty($request->QA_attachments) || !empty($request->deleted_QA_attachments)) {
+       $existingFiles = json_decode($deviation->QA_attachments, true) ?? [];
 
-            $files = [];
+    // Handle deleted files
+    if (!empty($request->deleted_QA_attachments)) {
+        $filesToDelete = explode(',', $request->deleted_QA_attachments);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
 
-            if ($deviation->QA_attachments) {
-                $files = is_array(json_decode($deviation->QA_attachments)) ? $deviation->QA_attachments : [];
-            }
-
-            if ($request->hasfile('QA_attachments')) {
-                foreach ($request->file('QA_attachments') as $file) {
-                    $name = $request->name . 'QA_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-
-
-            $deviation->QA_attachments = json_encode($files);
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('QA_attachments')) {
+        foreach ($request->file('QA_attachments') as $file) {
+            $name = $request->name . 'QA_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
         }
+    }
 
-        if (!empty ($request->closure_attachment)) {
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $deviation->QA_attachments = json_encode($allFiles);
+}
+        // if (!empty ($request->closure_attachment)) {
 
-            $files = [];
+        //     $files = [];
 
-            if ($deviation->closure_attachment) {
-                $existingFiles = json_decode($deviation->closure_attachment, true); // Convert to associative array
-                if (is_array($existingFiles)) {
-                    $files = $existingFiles;
-                }
-                // $files = is_array(json_decode($deviation->closure_attachment)) ? $deviation->closure_attachment : [];
-            }
+        //     if ($deviation->closure_attachment) {
+        //         $existingFiles = json_decode($deviation->closure_attachment, true); // Convert to associative array
+        //         if (is_array($existingFiles)) {
+        //             $files = $existingFiles;
+        //         }
+        //         // $files = is_array(json_decode($deviation->closure_attachment)) ? $deviation->closure_attachment : [];
+        //     }
 
-            if ($request->hasfile('closure_attachment')) {
-                foreach ($request->file('closure_attachment') as $file) {
-                    $name = $request->name . 'closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
+        //     if ($request->hasfile('closure_attachment')) {
+        //         foreach ($request->file('closure_attachment') as $file) {
+        //             $name = $request->name . 'closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
 
 
-            $deviation->closure_attachment = json_encode($files);
-        }
+        //     $deviation->closure_attachment = json_encode($files);
+        // }
         if($deviation->stage > 0){
 
 
@@ -2633,14 +2873,14 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
 
           if (!empty($request->inference_type)) {
-          
+
                 $deviation->inference_type = serialize($request->inference_type);
         }
         if (!empty($request->inference_remarks)) {
             $deviation->inference_remarks = serialize($request->inference_remarks);
         }
 
-        
+
         $deviation->update();
         // grid
          $data3=DeviationGrid::where('deviation_grid_id', $deviation->id)->where('type', "Deviation")->first();
@@ -2684,9 +2924,9 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                 $data5->batch_no = serialize($request->batch_no);
             }
             $data5->update();
-           
 
-            
+
+
 
 
              if ($lastDeviation->due_date != $deviation->due_date || !empty ($request->comment)) {
@@ -3049,6 +3289,25 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
             $history->activity_type = 'HOD Person';
              $history->previous = $lastDeviation->Hod_person_to;
             $history->current = $deviation->Hod_person_to;
+            $history->comment = $deviation->submit_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+        if ($lastDeviation->discb_deviat != $deviation->discb_deviat || !empty ($request->comment)) {
+            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                            ->where('activity_type', 'Description of Deviation')
+                            ->exists();
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'Description of Deviation';
+             $history->previous = $lastDeviation->discb_deviat;
+            $history->current = $deviation->discb_deviat;
             $history->comment = $deviation->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -9299,6 +9558,8 @@ public function audit_trail_filter(Request $request, $id)
 
             $whyData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'why'])->first();
             $why_data = json_decode($whyData->data, true);
+        $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->first();
+
 
             $capaExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "Capa"])->first();
             $qrmExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "QRM"])->first();
@@ -9316,7 +9577,7 @@ public function audit_trail_filter(Request $request, $id)
             // }
 
 
-            $pdf = PDF::loadview('frontend.forms.deviation.SingleReportdeviation', compact('data','grid_data_qrms','grid_data_matrix_qrms','capaExtension','qrmExtension','investigationExtension','root_cause_data','why_data','investigation_data','grid_data','grid_data1', 'data1'))
+            $pdf = PDF::loadview('frontend.forms.deviation.SingleReportdeviation', compact('data','riskEffectAnalysis','grid_data_qrms','grid_data_matrix_qrms','capaExtension','qrmExtension','investigationExtension','root_cause_data','why_data','investigation_data','grid_data','grid_data1', 'data1'))
                 ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,
