@@ -945,13 +945,13 @@
                                
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="QA Review Comments">QA Review Comments</label>
+                                        <label for="QA Review Comments">QC Head Review Comments</label>
                                         <textarea name="QA_Review_Comments"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="QA Head Attachments">QA Head Attachment</label>
+                                        <label for="QA Head Attachments">QC Head Review Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         {{-- <input type="file" id="myfile" name="QA_Head_Attachment"> --}}
                                         <div class="file-attachment-field">
