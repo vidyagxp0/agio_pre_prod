@@ -92,8 +92,8 @@ class AuditeeController extends Controller
         $internalAudit->material_name = $request->material_name;
         $internalAudit->if_comments = $request->if_comments;
         $internalAudit->lead_auditor = $request->lead_auditor;
-        $internalAudit->Audit_team =  implode(',', $request->Audit_team);
-        $internalAudit->Auditee =  implode(',', $request->Auditee);
+        $internalAudit->Audit_team = is_array($request->Audit_team) ? implode(',', $request->Audit_team) : $request->Audit_team;
+        $internalAudit->Auditee =  is_array($request->Auditee) ? implode(',', $request->Auditee) : $request->Auditee; 
         $internalAudit->Auditor_Details = $request->Auditor_Details;
         $internalAudit->External_Auditing_Agency = $request->External_Auditing_Agency;
         $internalAudit->Relevant_Guidelines = $request->Relevant_Guidelines;
@@ -722,6 +722,29 @@ class AuditeeController extends Controller
             $history->save();
         }
 
+
+
+       
+
+
+      
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Inititator';
+            $history->previous = "Null";
+            $history->current =Auth::user()->name;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+
+            $history->save();
+    
+
         if (!empty($internalAudit->assign_to)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
@@ -1010,6 +1033,68 @@ class AuditeeController extends Controller
         }
 
 
+
+
+
+
+        if (!empty($internalAudit->start_date_gi)) {
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Start Date of Audit';
+            $history->previous = "Null";
+            $history->current = $internalAudit->start_date_gi;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+
+            $history->save();
+        }
+
+
+
+        if (!empty($internalAudit->end_date_gi)) {
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'End Date of Audit';
+            $history->previous = "Null";
+            $history->current = $internalAudit->end_date_gi;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+
+            $history->save();
+        }
+
+
+
+        
+        if (!empty($internalAudit->reviewer_person_value)) {
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'CFT review selection';
+            $history->previous = "Null";
+            $history->current = $internalAudit->reviewer_person_value;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+
+            $history->save();
+        }
 
         if (!empty($internalAudit->if_comments)) {
             $history = new AuditTrialExternal();
@@ -1482,7 +1567,7 @@ class AuditeeController extends Controller
         if (!empty($internalAudit->reviewer_person_value)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type =  'CFT Review';
+            $history->activity_type =  'CFT review selection';
             $history->previous = "Null";
             $history->current = $internalAudit->reviewer_person_value;
             $history->comment = "NA";
@@ -1712,21 +1797,50 @@ class AuditeeController extends Controller
 
 
         // $internalAudit->Reference_Recores1 =  implode(',', $request->refrence_record);
-        $internalAudit->qa_cqa_comment = $request->qa_cqa_comment;
-        if (!empty($request->qa_cqa_attach)) {
-            $files = [];
-            if ($request->hasfile('qa_cqa_attach')) {
+        // $internalAudit->qa_cqa_comment = $request->qa_cqa_comment;
+        // if (!empty($request->qa_cqa_attach)) {
+        //     $files = [];
+        //     if ($request->hasfile('qa_cqa_attach')) {
 
+        //         foreach ($request->file('qa_cqa_attach') as $file) {
+        //             $name = $request->name . 'qa_cqa_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $internalAudit->qa_cqa_attach = json_encode($files);
+        // }
+
+
+
+        if (!empty($request->qa_cqa_attach) || !empty($request->deleted_qa_cqa_attach)) {
+            $existingFiles = json_decode($internalAudit->qa_cqa_attach, true) ?? [];
+        
+            // Handle deleted files
+            if (!empty($request->deleted_qa_cqa_attach)) {
+                $filesToDelete = explode(',', $request->deleted_qa_cqa_attach);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+        
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('qa_cqa_attach')) {
                 foreach ($request->file('qa_cqa_attach') as $file) {
-                    $name = $request->name . 'qa_cqa_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
+                    $name = $request->name . 'qa_cqa_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
                 }
             }
-
-
-            $internalAudit->qa_cqa_attach = json_encode($files);
+        
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $internalAudit->qa_cqa_attach = json_encode($allFiles);
         }
+
         if (!empty($request->file_attachment_guideline)) {
             $files = [];
             if ($request->hasfile('file_attachment_guideline')) {
@@ -1748,18 +1862,46 @@ class AuditeeController extends Controller
         $internalAudit->audit_end_date = $request->audit_end_date;
         $internalAudit->severity_level = $request->severity_level;
 
-        if (!empty($request->inv_attachment)) {
-            $files = [];
-            if ($request->hasfile('inv_attachment')) {
+        // if (!empty($request->inv_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('inv_attachment')) {
+        //         foreach ($request->file('inv_attachment') as $file) {
+        //             $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $internalAudit->inv_attachment = json_encode($files);
+        // }
+
+
+
+        if (!empty($request->inv_attachment) || !empty($request->deleted_inv_attachment)) {
+            $existingFiles = json_decode($internalAudit->inv_attachment, true) ?? [];
+        
+            // Handle deleted files
+            if (!empty($request->deleted_inv_attachment)) {
+                $filesToDelete = explode(',', $request->deleted_inv_attachment);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+        
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('inv_attachment')) {
                 foreach ($request->file('inv_attachment') as $file) {
-                    $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
+                    $name = $request->name . 'inv_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
                 }
             }
-
-
-            $internalAudit->inv_attachment = json_encode($files);
+        
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $internalAudit->inv_attachment = json_encode($allFiles);
         }
 
 
@@ -1806,18 +1948,34 @@ class AuditeeController extends Controller
 
             $internalAudit->report_file = json_encode($files);
         }
-        if (!empty($request->myfile)) {
-            $files = [];
-            if ($request->hasfile('myfile')) {
+      
+
+
+
+        if (!empty($request->myfile) || !empty($request->deleted_myfile)) {
+            $existingFiles = json_decode($internalAudit->myfile, true) ?? [];
+        
+            // Handle deleted files
+            if (!empty($request->deleted_myfile)) {
+                $filesToDelete = explode(',', $request->deleted_myfile);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+        
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('myfile')) {
                 foreach ($request->file('myfile') as $file) {
-                    $name = $request->name . 'myfile' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
+                    $name = $request->name . 'myfile' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
                 }
             }
-
-
-            $internalAudit->myfile = json_encode($files);
+        
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $internalAudit->myfile = json_encode($allFiles);
         }
 
         if($internalAudit->stage == 2 || $internalAudit->stage == 3 ){
@@ -2528,7 +2686,7 @@ class AuditeeController extends Controller
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'CFT review ';
+            $history->activity_type = 'CFT review selection';
             $history->previous = $lastDocument->reviewer_person_value;
             $history->current = $internalAudit->reviewer_person_value;
             $history->comment = $request->date_comment;
@@ -3370,13 +3528,20 @@ class AuditeeController extends Controller
 
             $history->save();
         }
-        if ($lastDocument->audit_start_date != $internalAudit->audit_start_date || !empty($request->audit_start_date_comment)) {
+
+
+
+
+
+
+
+        if ($lastDocument->start_date_gi != $internalAudit->start_date_gi || !empty($request->start_date_gi_comment)) {
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Audit Start Date';
-            $history->previous = $lastDocument->audit_start_date;
-            $history->current = $internalAudit->audit_start_date;
+            $history->activity_type = 'Start Date of Audit';
+            $history->previous = $lastDocument->start_date_gi;
+            $history->current = $internalAudit->start_date_gi;
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3384,7 +3549,7 @@ class AuditeeController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->audit_start_date) || $lastDocument->audit_start_date === '') {
+            if (is_null($lastDocument->start_date_gi) || $lastDocument->start_date_gi === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -3394,13 +3559,13 @@ class AuditeeController extends Controller
 
             $history->save();
         }
-        if ($lastDocument->audit_end_date != $internalAudit->audit_end_date || !empty($request->audit_end_date_comment)) {
+        if ($lastDocument->end_date_gi != $internalAudit->end_date_gi || !empty($request->end_date_gi_comment)) {
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Audit End Date';
-            $history->previous = $lastDocument->audit_end_date;
-            $history->current = $internalAudit->audit_end_date;
+            $history->activity_type = 'End Date of Audit';
+            $history->previous = $lastDocument->end_date_gi;
+            $history->current = $internalAudit->end_date_gi;
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3408,7 +3573,7 @@ class AuditeeController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->audit_end_date) || $lastDocument->audit_end_date === '') {
+            if (is_null($lastDocument->end_date_gi) || $lastDocument->end_date_gi === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -3418,6 +3583,12 @@ class AuditeeController extends Controller
 
             $history->save();
         }
+
+
+
+
+
+
 
 
 
@@ -5004,11 +5175,19 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
     public static function singleReport($id)
     {
         $data = Auditee::find($id);
+       $grid_Data = SummaryGrid::where(['summary_id' => $id, 'identifier' => 'Auditors'])->first();
+       $grid_Data_2 = SummaryGrid::where(['summary_id' => $id, 'identifier' => 'Summary Response'])->first();
+
+
+       $data1 =  ExternalAuditCFT::where('external_audit_id', $id)->first();
+     //  $cc_cfts =  ExternalAuditCFT::where('external_audit_id', $id)->first();
+
+    //  $AuditorShow = SummaryGrid::where(['summary_id' => $AuditUpdate, 'identifier' => 'Auditors'])->firstOrNew();
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.externalAudit.singleReport', compact('data'))
+            $pdf = PDF::loadview('frontend.externalAudit.singleReport', compact('data','grid_Data','grid_Data_2','data1'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

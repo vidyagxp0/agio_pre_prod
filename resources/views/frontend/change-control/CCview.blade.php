@@ -8037,7 +8037,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-12 Other3_reviews">
+                                    <div class="col-lg-12 Other1_reviews">
 
                                     <div class="group-input">
                                         <label for="Department1">Other's 1 Department 
@@ -8183,7 +8183,7 @@
                                     </div>
 
 
-                                    <div class="col-lg-12 Other3_reviews">
+                                    <div class="col-lg-12 Other2_reviews">
 
                                         <div class="group-input">
                                             <label for="Department2">Other's 2 Department 
