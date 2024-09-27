@@ -248,7 +248,11 @@
                      
                         <!-- <td class="w-80">@if($data->hod_preson)  @foreach(explode(',',$data->hod_preson) as $hod) {{  Helpers::getInitiatorName($hod)  }} ,  @endforeach @else Not Applicable @endif</td> -->
                         <th class="w-20">Responsible Department</th>
-                        <td class="w-80">@if($data->departments){{ $data->departments }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->departments)
+                            {{ Helpers::getFullDepartmentName($data->departments) }}
+                            @else Not Applicable @endif
+                            
+                        </td>
 
                     </tr>
                   
@@ -581,12 +585,12 @@
              
                     <tr>
                         <th class="w-20">Verification Completed By </th>
-                        <td class="w-30">{{ $data->work_completion_by }}</td>
+                        <td class="w-30">{{ $data->completed_by }}</td>
                         <th class="w-20"> Verification Completed On</th>
-                        <td class="w-30">{{ $data->work_completion_on }}</td>
+                        <td class="w-30">{{ $data->completed_on }}</td>
                     </tr>
                    <tr>
-                    <th class="w-20"> Verification Completed On</th>
+                    <th class="w-20"> Verification Complete Comment</th>
                     <td class="w-80">{{ $data->completed_comment }}</td>
              
                    </tr>
