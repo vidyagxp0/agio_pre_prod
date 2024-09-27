@@ -362,6 +362,7 @@ Route::get('job_training/show/{id}',[JobTrainingController::class ,'edit'])->nam
 Route::post('tms/jobTraining/cancelstage/{id}',[JobTrainingController::class ,'cancelStage']);
 Route::get('/get-sop-description/{id}', [JobTrainingController::class, 'getSopDescription']);
 
+Route::get('/fetch-questions/{documentId}', [JobTrainingController::class, 'fetchQuestions']);
 
 Route::post('job_trainingcreate', [JobTrainingController::class, 'store'])->name('job_trainingcreate');
 Route::put('job_trainingupdate/{id}', [JobTrainingController::class, 'update'])->name('job_trainingupdate');
@@ -377,6 +378,9 @@ Route::post('induction_training', [InductionTrainingcontroller::class, 'store'])
 Route::put('induction_training/{id}', [InductionTrainingcontroller::class, 'update'])->name('induction_training.update');
 //new route 
 Route::get('/employees/{id}', [InductionTrainingController::class, 'getEmployeeDetails']);
+
+Route::get('/fetch-question/{documentId}', [InductionTrainingController::class, 'fetchQuestion']);
+
 
 
 //! ============================================
@@ -582,6 +586,11 @@ Route::post('/tms/employee/sendstage/{id}', [EmployeeController::class, 'sendSta
 Route::post('/tms/trainer/sendstage/{id}', [TrainerController::class, 'sendStage']);
 Route::post('/tms/trainer/rejectStage/{id}', [TrainerController::class, 'rejectStage']);
 Route::get('/getEmployeeDetails/{id}', [TrainerController::class, 'getEmployeeDetails']);
+
+Route::get('/fetch-questionss/{documentId}', [TrainerController::class, 'fetchQuestionss']);
+// Route::get('/training-questions/{id}', [TrainerController::class, 'trainingQuestion']);
+
+
 
 //new one
 Route::post('tms/induction/sendstage/{id}', [InductionTrainingController::class, 'sendStage']);
