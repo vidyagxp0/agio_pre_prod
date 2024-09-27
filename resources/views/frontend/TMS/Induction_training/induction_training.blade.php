@@ -123,12 +123,12 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="department_location">Location </label>
                                     <input type="text" name="location" value ="{{ isset($employee) ? $employee->site_name : '' }}" id="city" readonly>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-lg-6">
                                 <div class="group-input">

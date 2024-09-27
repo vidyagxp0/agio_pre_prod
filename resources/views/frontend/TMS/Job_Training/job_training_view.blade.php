@@ -355,14 +355,12 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code">Location</label>
-
                                         <input type="text" name="location" value="{{ $jobTraining->location }}" readonly>
-
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -886,7 +884,7 @@
                         </div>
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="External Attachment">Induction Training Attachment</label>
+                                <label for="External Attachment">Attachment</label>
                                 <input type="file" id="myfile" name="qa_review_attachment" value="{{ $jobTraining->qa_review_attachment }}">
                                 <a href="{{ asset('upload/' . $jobTraining->qa_review_attachment) }}" target="_blank">{{ $jobTraining->qa_review_attachment }}</a>
                             </div>
@@ -912,7 +910,7 @@
                         </div>
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="External Attachment">Induction Training Attachment</label>
+                                <label for="External Attachment">Attachment</label>
                                 <input type="file" id="myfile" name="qa_cqa_attachment" value="{{ $jobTraining->qa_cqa_attachment }}">
                                 <a href="{{ asset('upload/' . $jobTraining->qa_cqa_attachment) }}" target="_blank">{{ $jobTraining->qa_cqa_attachment }}</a>
                             </div>
@@ -999,48 +997,84 @@
     }
 
     // Quiz submit kare aur result calculate kare
+    // function submitQuiz() {
+    //     const userAnswers = [];
+
+    //     // User answers ko collect kare
+    //     quizData.forEach(question => {
+    //         const questionId = `question_${question.id}`;
+    //         const answerElements = document.querySelectorAll(`input[name="${questionId}"]:checked`);
+    //         const answers = [...answerElements].map(input => input.value);
+    //         userAnswers.push(answers);
+    //     });
+
+    //     calculateResults(userAnswers);
+    // }
     function submitQuiz() {
-        const userAnswers = [];
+    const userAnswers = [];
 
-        // User answers ko collect kare
-        quizData.forEach(question => {
-            const questionId = `question_${question.id}`;
-            const answerElements = document.querySelectorAll(`input[name="${questionId}"]:checked`);
-            const answers = [...answerElements].map(input => input.value);
-            userAnswers.push(answers);
-        });
+    // User answers ko collect kare
+    quizData.forEach(question => {
+        const questionId = `question_${question.id}`;
+        const answerElements = document.querySelectorAll(`input[name="${questionId}"]:checked`);
+        const answers = [...answerElements].map(input => input.value);
+        userAnswers.push({ questionId: question.id, answers: answers });
+    });
 
-        calculateResults(userAnswers);
-    }
+    // Answers ko server par bhejne ke liye
+    saveAnswers(userAnswers);
+}
+
+function saveAnswers(userAnswers) {
+    fetch('/save-answers', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}' // Laravel CSRF token
+        },
+        body: JSON.stringify({ answers: userAnswers })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            calculateResults(userAnswers); // Result calculate karne ke liye
+        } else {
+            alert('Error saving answers.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
 
     // Result ko calculate kare aur display kare
     function calculateResults(userAnswers) {
-        let marks = 0;
+    let marks = 0;
 
-        // Compare kare correct answers ke saath
-        quizData.forEach((question, index) => {
-            const correctAnswer = question.answer;
-            const userAnswer = userAnswers[index];
+    quizData.forEach((question, index) => {
+        const correctAnswer = question.answer;
+        const userAnswer = userAnswers[index]?.answers;
 
-            // Single aur multiple answers ke liye check kare
-            if (typeof correctAnswer === 'string') {
-                if (correctAnswer.toLowerCase() === userAnswer[0]?.toLowerCase()) {
-                    marks++;
-                }
-            } else if (Array.isArray(correctAnswer)) {
-                if (arraysEqual(correctAnswer, userAnswer)) {
-                    marks++;
-                }
-            } else {
-                if (correctAnswer == userAnswer[0]) {
-                    marks++;
-                }
+        if (typeof correctAnswer === 'string') {
+            if (correctAnswer.toLowerCase() === userAnswer[0]?.toLowerCase()) {
+                marks++;
             }
-        });
+        } else if (Array.isArray(correctAnswer)) {
+            if (arraysEqual(correctAnswer, userAnswer)) {
+                marks++;
+            }
+        } else {
+            if (correctAnswer == userAnswer[0]) {
+                marks++;
+            }
+        }
+    });
 
-        displaySummary(marks);
-        evaluatePassingCriteria(marks);
-    }
+    displaySummary(marks);
+    evaluatePassingCriteria(marks);
+}
+
 
     // Marks ko display kare
     function displaySummary(marks) {
@@ -1106,7 +1140,7 @@ if (marks >= percentageRequired) {
                         </div>
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="External Attachment">Induction Training Attachment</label>
+                                <label for="External Attachment">Attachment</label>
                                 <input type="file" id="myfile" name="evaluation_attachment" value="{{ $jobTraining->evaluation_attachment }}">
                                 <a href="{{ asset('upload/' . $jobTraining->evaluation_attachment) }}" target="_blank">{{ $jobTraining->evaluation_attachment }}</a>
                             </div>
@@ -1187,7 +1221,7 @@ if (marks >= percentageRequired) {
             .certificate-subtitle {
                 font-size: 18px;
                 color: #555;
-            }
+            } 
             .certificate-description {
                 margin-top: 30px;
                 font-size: 18px;
@@ -1301,7 +1335,7 @@ if (marks >= percentageRequired) {
                         </div>
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="External Attachment">Induction Training Attachment</label>
+                                <label for="External Attachment">Attachment</label>
                                 <input type="file" id="myfile" name="qa_cqa_head_attachment" value="{{ $jobTraining->qa_cqa_head_attachment }}">
                                 <a href="{{ asset('upload/' . $jobTraining->qa_cqa_head_attachment) }}" target="_blank">{{ $jobTraining->qa_cqa_head_attachment }}</a>
                             </div>
@@ -1327,7 +1361,7 @@ if (marks >= percentageRequired) {
                         </div>
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="External Attachment">Induction Training Attachment</label>
+                                <label for="External Attachment">Attachment</label>
                                 <input type="file" id="myfile" name="final_review_attachment" value="{{ $jobTraining->final_review_attachment }}">
                                 <a href="{{ asset('upload/' . $jobTraining->final_review_attachment) }}" target="_blank">{{ $jobTraining->final_review_attachment }}</a>
                             </div>

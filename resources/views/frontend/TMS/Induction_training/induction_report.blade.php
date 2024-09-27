@@ -169,12 +169,33 @@
                 </td>
             </tr>
         </table>
-        <table>
+
+          <table>
             <tr>
-                
+                <td class="w-70" style="height:1rem;">
+                @if($data->employee_id){{ $data->employee_id }}@else Not Applicable @endif
+                </td>
+        
+                <td class="w-70" style="height:1rem">
+                @if($data->name_employee_display){{ $data->name_employee_display }}@else Not Applicable @endif
+
+                </td>
             </tr>
         </table>
     </header>
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+               
+            </tr>
+        </table>
+    </footer>
     <div class="inner-block">
         <div class="content-table">
             <div class="block">
@@ -187,42 +208,42 @@
                 <th class="w-20">Name of Employee</th>
                             
                 <td class="w-30">@if($data->name_employee_display){{ $data->name_employee_display }}@else Not Applicable @endif</td>
-                </tr>
-                <tr>
+
                 <th class="w-20">Employee ID</th>
                             
                 <td class="w-30">@if($data->employee_id){{ $data->employee_id }}@else Not Applicable @endif</td>
                 </tr>
+
                 <tr>
                 <th class="w-20">Department</th>
                             
                 <td class="w-30">@if($data->department){{ $data->department }}@else Not Applicable @endif</td>
-                </tr>
-                <tr>
+           
                 <th class="w-20">Location</th>
                             
                 <td class="w-30">@if($data->location){{ $data->location }}@else Not Applicable @endif</td>
                 </tr>
+
                 <tr>
                 <th class="w-20">Designation</th>
                             
                 <td class="w-30">@if($data->designation){{ $data->designation }}@else Not Applicable @endif</td>
-                </tr>
-                <tr>
+              
                 <th class="w-20">Qualification</th>
                             
                 <td class="w-30">@if($data->qualification){{ $data->qualification }}@else Not Applicable @endif</td>
                 </tr>
+
                 <tr>
                 <th class="w-20">Experience (if any)</th>
                             
                 <td class="w-30">@if($data->experience_if_any){{ $data->experience_if_any }}@else Not Applicable @endif</td>
-                </tr>
-                <tr>
+
                 <th class="w-20">Date of Joining</th>
                             
                 <td class="w-30">@if($data->date_joining){{ $data->date_joining }}@else Not Applicable @endif</td>
                 </tr>
+
                 <tr>
                 <th class="w-20">Evaluation Required</th>
                             
@@ -770,4 +791,25 @@
 
                          
                             </table>
-          
+            </div>
+                </div>
+                </div>
+
+
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+               
+            </tr>
+        </table>
+    </footer>
+
+</body>
+
+</html>

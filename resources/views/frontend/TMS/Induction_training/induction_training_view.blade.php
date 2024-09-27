@@ -233,7 +233,7 @@ $users = DB::table('users')->get();
 
 
 
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Final Remarks</button>
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Final Remarks</button> -->
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Evaluation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">HR Head Approval</button>
@@ -288,7 +288,7 @@ $users = DB::table('users')->get();
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="RLS Record Number">Employee ID </label>
+                                    <label for="RLS Record Number">Employee Code </label>
                                     <input disabled type="text" name="employee_id_display" value="{{ $inductionTraining->employee_id }}">
                                     <input type="hidden" name="employee_id" value="{{ $inductionTraining->employee_id }}">
                                 </div>
@@ -311,13 +311,13 @@ $users = DB::table('users')->get();
                                         </select>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Division Code">Location </label>
                                     <input disabled type="text" name="location_display" maxlength="255" value="{{ $inductionTraining->location }}">
                                     <input type="hidden" name="location" value="{{ $inductionTraining->location }}">
                                 </div>
-                            </div>
+                            </div> --}}
 
                             {{-- <div class="col-lg-6">
                                 <div class="group-input">
@@ -465,7 +465,7 @@ $users = DB::table('users')->get();
 
                                                     <td>
                                                         <!-- <textarea name="document_number_1" value="">{{ $inductionTraining->{"document_number_1"} }}</textarea> -->
-                                                        <select name="document_number_1" id="sopdocument" onchange="fetchQuestion(this.value)">
+                                                        <!-- <select name="document_number_1" id="sopdocument" onchange="fetchQuestion(this.value)">
                                                             <option value="">---Select Document Number---</option>
 
                                                             @foreach ($data as $dat)
@@ -475,7 +475,21 @@ $users = DB::table('users')->get();
                                                                     {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
                                                                 </option>
                                                             @endforeach
-                                                        </select>
+                                                        </select> -->
+
+                                        <select name="document_number_1" id="sopdocument" onchange="fetchQuestion(this.value)">
+                                            <option value="">---Select SOP Document---</option>
+
+                                            @foreach ($data as $dat)
+                                                <option
+                                                    value="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}"
+                                                    {{ $savedSop == $dat->sop_type_short . '/' . $dat->department_id . '/000' . $dat->id . '/R' . $dat->major ? 'selected' : '' }}>
+                                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                </option>
+                                            @endforeach
+
+                                        </select> 
+                                    
                                                     </td>
                                                     <td>
                                                         <div class=" new-date-data-field">
@@ -1416,12 +1430,12 @@ if (marks >= percentageRequired) {
                                 <div class="certificate-title">TRAINING CERTIFICATE</div>
 
                                 <div class="certificate-description"><br><br>
-                                    This is to certify that Mr./Ms./Mrs. <strong>{{$inductionTraining->name_employee}}</strong>.
+                                    This is to certify that Mr./Ms./Mrs. <strong>{{ \App\Models\Employee::find($inductionTraining->name_employee)?->employee_name ?? 'Employee not found' }}</strong>.
                                     has undergone Induction training including the requirement of cGMP and has shown a good attitude and thorough understanding in the subject.
                                 </div>
 
                                 <div class="certificate-description">
-                                    Therefore, we certify that Mr./Ms./Mrs. <strong>{{$inductionTraining->name_employee}}</strong>.
+                                    Therefore, we certify that Mr./Ms./Mrs. <strong>{{ \App\Models\Employee::find($inductionTraining->name_employee)?->employee_name ?? 'Employee not found' }}</strong>.
                                     is capable of performing his/her assigned duties in the <strong>{{$inductionTraining->department}}</strong> Department independently.
                                 </div>
 

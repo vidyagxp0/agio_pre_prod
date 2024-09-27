@@ -363,6 +363,9 @@ Route::get('/get-sop-description/{id}', [JobTrainingController::class, 'getSopDe
 
 Route::get('/fetch-questions/{documentId}', [JobTrainingController::class, 'fetchQuestions']);
 
+Route::get('trainingQuestions/{id}/', [JobTrainingController::class, 'trainingQuestions']);
+
+
 Route::post('job_trainingcreate', [JobTrainingController::class, 'store'])->name('job_trainingcreate');
 Route::put('job_trainingupdate/{id}', [JobTrainingController::class, 'update'])->name('job_trainingupdate');
 Route::get('/employees/{id}', [JobTrainingController::class, 'getEmployeeDetail']);
@@ -588,6 +591,9 @@ Route::get('/getEmployeeDetails/{id}', [TrainerController::class, 'getEmployeeDe
 
 Route::get('/fetch-questionss/{documentId}', [TrainerController::class, 'fetchQuestionss']);
 // Route::get('/training-questions/{id}', [TrainerController::class, 'trainingQuestion']);
+Route::post('/save-answers', [TrainerController::class, 'saveAnswers']);
+Route::get('/get-questions/{documentId}', [TrainerController::class, 'getQuestions']);
+
 
 
 

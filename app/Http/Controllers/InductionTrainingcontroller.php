@@ -938,7 +938,7 @@ class InductionTrainingController extends Controller
             $data->originator_id = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.TMS.induction_training.induction_report', compact('data'))
+            $pdf = PDF::loadview('frontend.TMS.Induction_training.induction_report', compact('data'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

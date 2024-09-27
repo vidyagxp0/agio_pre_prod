@@ -119,7 +119,42 @@ public function fetchQuestions($id)
     return response()->json([]); // Return empty array if no questions found
 }
 
-    
+public function trainingQuestions($id){
+
+    $document = Document::find($id);
+    $document_training = DocumentTraining::where('document_id',$id)->first();
+    $training = Training::find($document_training->training_plan);
+    if($training->training_plan_type == "Read & Understand with Questions"){
+        $quize = Quize::find($training->quize);
+        $data = explode(',',$quize->question);
+        // dd($document_training);
+        $array = [];
+
+        for($i = 0; $i<count($data); $i++){
+            $question = Question::find($data[$i]);
+            $question->id = $i+1;
+            $json_option = unserialize($question->options);
+            $options = [];
+            foreach($json_option as $key => $value){
+                $options[chr(97 + $key)] = $value;
+            }
+            $question->options = array($options);
+            $ans = unserialize($question->answers);
+            $question->answers = implode("", $ans);
+            $question->score = 0;
+            $question->status = "";
+
+            array_push($array,$question);
+        }
+         $data_array = implode(',',$array);
+
+        return view('frontend.TMS.Job_Training.quize',compact('document','data_array','quize'));
+   }
+   else{
+    toastr()->error('Training not specified');
+    return back();
+   }
+}
 
 
     public function getEmployeeDetail($id)
@@ -775,7 +810,7 @@ public function fetchQuestions($id)
             $data->originator_id = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.TMS.JOb_Training.job_report', compact('data'))
+            $pdf = PDF::loadview('frontend.TMS.Job_Training.job_report', compact('data'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
