@@ -115,7 +115,7 @@
 
             var cell7 = newRow.insertCell(6);
 
-            var userHtml = '<select id="select-state-grid" name="auditee[]" multiple><option value="">-- Select --</option>';
+            var userHtml = '<select id="select-state" name="auditee[]" ><option value="">-- Select --</option>';
             for (var i = 0; i < users.length; i++) {
                 userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
             }
@@ -125,7 +125,7 @@
 
             var cell8 = newRow.insertCell(7);
 
-            var userHtml = '<select id="select-state-grid" name="auditor[]"multiple><option value="">-- Select --</option>';
+            var userHtml = '<select id="select-state" name="auditor[]"><option value="">-- Select --</option>';
             for (var i = 0; i < users.length; i++) {
                 userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
             }
@@ -474,21 +474,20 @@
                         <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Response Verification</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                         <button class="cctablinks" style="display:none;" id="button1"
-                            onclick="openCity(event, 'CCForm7')">Checklist - Tablet Dispensing &
-                            Granulation</button>
+                            onclick="openCity(event, 'CCForm7')">Checklist - Production (Tablet Dispensing & Tablet Granulation)</button>
                         <button class="cctablinks" style="display:none;" id="button2"
-                            onclick="openCity(event, 'CCForm8')">Checklist - Tablet Compression</button>
+                            onclick="openCity(event, 'CCForm8')">Checklist - Production (Tablet Compression)</button>
                         <button class="cctablinks" style="display:none;" id="button3"
                             onclick="openCity(event, 'CCForm9')">Checklist - Tablet Coating </button>
                         <button class="cctablinks" style="display:none;" id="button4"
                             onclick="openCity(event, 'CCForm10')">Checklist - Tablet/Capsule Packing
                         </button>
                         <button class="cctablinks" style="display:none;" id="button5"
-                            onclick="openCity(event, 'CCForm11')">Checklist - Capsule
+                            onclick="openCity(event, 'CCForm11')">Checklist - Production (Capsule)
                         </button>
 
                         <button class="cctablinks" style="display:none;" id="button6"
-                            onclick="openCity(event, 'CCForm12')">Checklist - Liquid/Ointment Dispensing & Manufacturing
+                            onclick="openCity(event, 'CCForm12')">Checklist - Production(Liquid/Ointment Dispensing & Manufacturing)
                         </button>
                         <button class="cctablinks" style="display:none;" id="button7"
                             onclick="openCity(event, 'CCForm13')">Checklist - Liquid/Ointment Packing
@@ -511,7 +510,7 @@
                         </button>
 
                         <button class="cctablinks" style="display:none;" id="button12"
-                            onclick="openCity(event, 'CCForm18')">Checklist - Human Resource
+                            onclick="openCity(event, 'CCForm18')">Checklist - Human Resource and Administration
                         </button>
 
                         <button class="cctablinks" style="display:none;" id="button13"
@@ -1277,7 +1276,7 @@
                                                     <option value="3" @if (in_array('3', $selectedChecklist)) selected @endif>Checklist - Tablet Coating</option>
                                                     <option value="4" @if (in_array('4', $selectedChecklist)) selected @endif>Checklist - Tablet/Capsule Packing</option>
                                                     <option value="5" @if (in_array('5', $selectedChecklist)) selected @endif>Checklist - Capsule</option>
-                                                    <option value="6" @if (in_array('6', $selectedChecklist)) selected @endif>Checklist - Liquid/Ointment Dispensing & Manufacturing</option>
+                                                    <option value="6" @if (in_array('6', $selectedChecklist)) selected @endif>Checklist - Production(Liquid/Ointment Dispensing & Manufacturing)</option>
                                                     <option value="7" @if (in_array('7', $selectedChecklist)) selected @endif>Checklist - Liquid/Ointment Packing</option>
                                                     <option value="8" @if (in_array('8', $selectedChecklist)) selected @endif>Checklist - Quality Assurance</option>
                                                     <option value="9" @if (in_array('9', $selectedChecklist)) selected @endif>Checklist - Engineering</option>
@@ -2050,9 +2049,9 @@
                                                                                 name="scheduled_end_time[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                                 value="{{ unserialize($grid_data->end_time)[$key] ? unserialize($grid_data->end_time)[$key] : '' }}">
                                                                         </td>
-                                                                        {{-- <td> <select id="select-state-grid"
+                                                                        <td> <select id="select-state"
                                                                                 placeholder="Select..."
-                                                                                name="auditor[]"multiple {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                                name="auditor[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                                 <option value="">-Select-</option>
                                                                                 @foreach ($users as $value)
                                                                                     <option
@@ -2062,12 +2061,12 @@
                                                                                     </option>
                                                                                 @endforeach
                                                                             </select>
-                                                                        </td> --}}
-                                                                        <td>
-                                                                            <select id="select-state-grid" 
+                                                                        </td>
+                                                                        {{-- <td>
+                                                                            <select id="select-state" 
                                                                                     placeholder="Select..." 
                                                                                     name="auditor[]" 
-                                                                                    multiple 
+                                                                                     
                                                                                     {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                                                                 <option value="">-Select-</option>
                                                                         
@@ -2085,13 +2084,13 @@
                                                                                     </option>
                                                                                 @endforeach
                                                                             </select>
-                                                                        </td>
+                                                                        </td> --}}
                                                                         
                                                                         
 
-                                                                        {{-- <td> <select id="select-state-grid"
+                                                                        <td> <select id="select-state"
                                                                                 placeholder="Select..."
-                                                                                name="auditee[]"multiple {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                                name="auditee[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                                 <option value="">-Select-</option>
                                                                                 @foreach ($users as $value)
                                                                                     <option
@@ -2101,9 +2100,9 @@
                                                                                     </option>
                                                                                 @endforeach
                                                                             </select>
-                                                                        </td> --}}
+                                                                        </td>
                                                                         {{-- <td>
-                                                                            <select id="select-state-grid" 
+                                                                            <select id="select-state" 
                                                                                     placeholder="Select..." 
                                                                                     name="auditee[]" 
                                                                                     multiple 
@@ -2123,8 +2122,8 @@
                                                                                 @endforeach
                                                                             </select>
                                                                         </td> --}}
-                                                                        <td>
-                                                                            <select id="select-state-grid" 
+                                                                        {{-- <td>
+                                                                            <select id="select-state" 
                                                                                     placeholder="Select..." 
                                                                                     name="auditee[]" 
                                                                                     multiple 
@@ -2145,7 +2144,7 @@
                                                                                     </option>
                                                                                 @endforeach
                                                                             </select>
-                                                                        </td>
+                                                                        </td> --}}
                                                                         
                                                                         
                                                                         <td><input type="text"
@@ -2160,11 +2159,7 @@
                                                 </table>
                                             </div>
                                         </div>
-                                        <script>
-                                     VirtualSelect.init({
-                                                        ele: '#select-state-grid'
-                                                    });
-                                    </script>
+                                       
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="checklists">Checklists</label>
@@ -3346,7 +3341,7 @@
                             <div class="inner-block-content">
                                 <div class="row">
                                     <div class="sub-head">
-                                        Checklist for Tablet Dispensing
+                                        STAGE 1 : DISPENSING
                                     </div>
 
                                     <div class="col-12">
@@ -3793,8 +3788,8 @@
                                     </div>
 
                                     <div class="sub-head">
-                                        Checklist for : INJECTION MANUFACTURING / FILTERATION / FILLING /VISUAL INSPECTION
-                                    </div>
+                                        Stage -02 Granulation                                 
+                                       </div>
 
                                     <div class="col-12">
                                         {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
@@ -5149,7 +5144,7 @@
                                     </div>
 
                                     <div class="sub-head">
-                                        Checklist for Tablet Documentation
+                                        Stage -03 Documentation
                                     </div>
 
                                     <div class="col-12">
@@ -5436,7 +5431,7 @@
                             <div class="inner-block-content">
                                 <div class="row">
                                     <div class="sub-head">
-                                        Checklist for Tablet Compression
+                                        STAGE 1: COMPRESSION 
                                     </div>
 
                                     <div class="col-12">
@@ -7096,7 +7091,7 @@
                                     </div>
 
                                     <div class="sub-head">
-                                        Checklist for Documentation
+                                        STAGE 2: DOCUMENTATION
                                     </div>
                                     <div class="col-12">
                                         {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
@@ -13847,13 +13842,25 @@
                                 $questions_packing_manufacturing = [
                                     'Status label of area & equipment available?',
                                     'Have you any proper storage area for primary and secondary packing material?',
+                                    'Do you have proper segregation system for keeping product/batch separately?',
+                                    'Where you keep the rejected strips / blisters / containers / cartons? ',
+                                    'Is there a written procedure for clearing the packaging area after one packaging operation, and cleaning before the next operation, especially if the area is used for packaging different materials?',
+                                    'Have you any standard procedure for removal of scrap?',
                                 ];
+                                // $powder_questions_packing_manufacturing = [
+                                //     'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch packing record.',
+                                //     'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.',
+                                //     'Is the batch record is on line up to the current stage of a process?',
+                                //     'In process carried out as per the written instruction describe in batch record?',
+                                //     'Is there any area cleaning record available for all individual areas?',
+                                //     "Current version of SOP's is available in respective areas?",
+                                // ];
                             @endphp
 
                             <div class="inner-block-content">
                                 <div class="row">
                                     <div class="sub-head">
-                                        Checklist for Powder Manufacturing & Filling
+                                        STAGE 1 : POWEDER MFG & FILLING
                                     </div>
 
                                     <div class="col-12">
@@ -13881,6 +13888,8 @@
                                                                         $remark_name_manufacturingnew =
                                                                             'remark_powder_manufacturing_filling_' .
                                                                             ($index + 1);
+                                                                            $powder_questions_packing_manufacturing=
+
                                                                     @endphp
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
@@ -13919,7 +13928,7 @@
                                     </div>
 
                                     <div class="sub-head">
-                                        Checklist for Packing
+                                        STAGE 2: PACKING
                                     </div>
 
                                     <div class="col-12">

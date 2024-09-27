@@ -501,10 +501,10 @@ $newDataGridInitialClosure->save();
             $data3->end_time = serialize($request->scheduled_end_time);
         }
         if (!empty($request->auditor)) {
-            $data3->auditor = implode(',', $request->auditor);
+            $data3->auditor = serialize( $request->auditor);
         }
         if (!empty($request->auditee)) {
-            $data3->auditee = implode(',', $request->auditee);
+            $data3->auditee = serialize( $request->auditee);
         }
         if (!empty($request->remarks)) {
             $data3->remark = serialize($request->remarks);
@@ -2578,10 +2578,10 @@ $Checklist_Capsule->save();
             $data3->end_time = serialize($request->scheduled_end_time);
         }
         if (!empty($request->auditor)) {
-            $data3->auditor = implode(',', $request->auditor);
+            $data3->auditor = serialize( $request->auditor);
         }
         if (!empty($request->auditee)) {
-            $data3->auditee = implode(',', $request->auditee);
+            $data3->auditee = serialize( $request->auditee);
 
         }
         if (!empty($request->remark)) {
