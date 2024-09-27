@@ -376,7 +376,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Product/Batch Required?</th>
+                        <th class="w-20">Product/Batch Details Required?</th>
                         <td class="w-30">
                             @if ($data->Product_Details_Required)
                                 {{ strip_tags($data->Product_Details_Required) }}
@@ -394,6 +394,17 @@
                     {{-- <td class="w-30">@if ($data->Product_Batch){{ ($data->Product_Batch) }} @else Not Applicable @endif</td> --}}
                     {{-- </tr> --}}
                 </table>
+                 <div class="inner-block">
+                    <label class="Summer"
+                        style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;"> Description of Deviation</label>
+                    <span style="font-size: 0.8rem; margin-left: 60px;">
+                        @if ($data->discb_deviat)
+                            {{ $data->discb_deviat }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </span>
+                </div>
 
                 <div class="inner-block">
                     <label class="Summer"
@@ -429,7 +440,7 @@
 
                 <table>
                     <tr>
-                        <th class="w-20">HOD To</th>
+                        <th class="w-20">HOD Person</th>
                         <td class="w-30">
                             @if ($hodPerson)
                                 {{ $hodPerson->name }}
@@ -437,7 +448,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Reviewer To</th>
+                        <th class="w-20">Reviewer Person</th>
                         <td class="w-30">
                             @if ($reviewerPerson)
                                 {{ $reviewerPerson->name }}
@@ -447,7 +458,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Approver To</th>
+                        <th class="w-20">Approver Person</th>
                         <td class="w-30">
                             @if ($approverPerson)
                                 {{ $approverPerson->name }}
@@ -463,7 +474,7 @@
 
                 <div class="block">
                     <div class="block-head">
-                        Description of Deviation
+                        Description of Deviation (5W/2H)
                     </div>
                     <div class="border-table">
                         <table>
@@ -473,31 +484,31 @@
                             </tr>
 
                             <tr>
-                                <td class="w-20" style="background-color: #91b4f7;">What</td>
+                                <td class="w-20" style="background-color: #91b4f7;">What / Remarks</td>
                                 <td class="w-80">{{ $data->what }}</td>
                             </tr>
                             <tr>
-                                <td class="w-20" style="background-color: #91b4f7;">Why</td>
+                                <td class="w-20" style="background-color: #91b4f7;">Why / Remarks</td>
                                 <td class="w-80">{{ $data->why_why }}</td>
                             </tr>
                             <tr>
-                                <td class="w-20" style="background-color: #91b4f7;">Where</td>
+                                <td class="w-20" style="background-color: #91b4f7;">Where / Remarks</td>
                                 <td class="w-80">{{ $data->where_where }}</td>
                             </tr>
                             <tr>
-                                <td class="w-20" style="background-color: #91b4f7;">When</td>
+                                <td class="w-20" style="background-color: #91b4f7;">When / Remarks</td>
                                 <td class="w-80">{{ $data->when_when }}</td>
                             </tr>
                             <tr>
-                                <td class="w-20" style="background-color: #91b4f7;">Who</td>
+                                <td class="w-20" style="background-color: #91b4f7;">Who / Remarks</td>
                                 <td class="w-80">{{ $data->who }}</td>
                             </tr>
                             <tr>
-                                <td class="w-20" style="background-color: #91b4f7;">How</td>
+                                <td class="w-20" style="background-color: #91b4f7;">How / Remarks</td>
                                 <td class="w-80">{{ $data->how }}</td>
                             </tr>
                             <tr>
-                                <td class="w-20" style="background-color: #91b4f7;">How much</td>
+                                <td class="w-20" style="background-color: #91b4f7;">How much / Remarks</td>
                                 <td class="w-80">{{ $data->how_much }}</td>
                             </tr>
 
@@ -517,8 +528,8 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-10">Sr. No.</th>
-                                <th class="w-25">Name</th>
-                                <th class="w-25">ID Number</th>
+                                <th class="w-25">Related to</th>
+                                <th class="w-25">Name & ID Number</th>
                                 <th class="w-25">Remarks</th>
                             </tr>
                             @php
@@ -562,8 +573,8 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-10">Sr. No.</th>
-                                <th class="w-25">Number</th>
-                                <th class="w-25">Reference Document Name</th>
+                                <th class="w-25">Document Name</th>
+                                <th class="w-25">Document Number</th>
                                 <th class="w-25">Remarks</th>
 
                             </tr>
@@ -824,7 +835,7 @@
 
                             <tr>
 
-                                <th class="w-20">Production (Tablet/Capsule/Powder) Review Required ?
+                                <th class="w-20">Production Tablet/Capsule/Powder Review Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -835,7 +846,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production (Tablet/Capsule/Powder) Person</th>
+                                <th class="w-20">Production Tablet/Capsule/Powder Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Production_Table_Person)
@@ -850,7 +861,7 @@
 
                             <tr>
 
-                                <th class="w-20">Impact Assessment (By Production (Tablet/Capsule/Powder))</th>
+                                <th class="w-20">Impact Assessment (By Production Tablet/Capsule/Powder)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Production_Table_Assessment)
@@ -860,7 +871,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production (Tablet/Capsule/Powder) Feedback</th>
+                                <th class="w-20">Production Tablet/Capsule/Powder Feedback</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Production_Table_By)
@@ -873,7 +884,7 @@
                             </tr>
                             <tr>
 
-                                <th class="w-20">Production (Tablet/Capsule/Powder) Review Completed By</th>
+                                <th class="w-20">Production Tablet/Capsule/Powder Review Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Production_Table_By)
@@ -883,7 +894,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production (Tablet/Capsule/Powder) Review Completed On</th>
+                                <th class="w-20">Production Tablet/Capsule/Powder Review Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Production_Table_On)
@@ -900,7 +911,7 @@
                     <div class="border-table">
                         <div class="head">
                             <div class="block-head">
-                                Production (Tablet/Capsule/Powder) Attachments
+                                Production Tablet/Capsule/Powder Attachments
                             </div>
                             <table>
 
@@ -4090,7 +4101,7 @@
                                     </td>
                                 </tr>
 
-                                
+
                                 <tr>
 
                                     <th class="w-20">CAPA Description</th>

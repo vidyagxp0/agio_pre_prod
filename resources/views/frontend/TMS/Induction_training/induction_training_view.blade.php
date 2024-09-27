@@ -214,7 +214,7 @@ $users = DB::table('users')->get();
                     <button class="cctablinks" id="questionariesTab" style="display: none;" onclick="openCity(event, 'CCForm2')">Questionaries</button>
                 @endif --}}
 
-                @php
+                <!-- @php
                     $lowerDesignations = ['Trainee', 'Officer', 'Sr. Officer', 'Executive', 'Sr.executive'];
                 @endphp
 
@@ -222,7 +222,15 @@ $users = DB::table('users')->get();
                     <button class="cctablinks" id="questionariesTab" onclick="openCity(event, 'CCForm2')">Questionaries</button>
                 @else
                     <button class="cctablinks" id="questionariesTab" style="display: none;" onclick="openCity(event, 'CCForm2')">Questionaries</button>
-                @endif
+                @endif -->
+
+                @php
+                    $lowerDesignations = ['Trainee', 'Officer', 'Sr. Officer', 'Executive', 'Sr. Executive'];
+                    $higherDesignations = ['Asst. manager', 'Manager', 'Sr. manager', 'Deputy GM', 'AGM and GM', 'Head quality', 'VP quality', 'Plant head'];
+                @endphp
+
+                <button class="cctablinks" id="questionariesTab" style="{{ in_array($inductionTraining->designation, $lowerDesignations) || $inductionTraining->questionaries_required == 'Yes' ? '' : 'display: none;' }}" onclick="openCity(event, 'CCForm2')">Questionaries</button>
+
 
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Final Remarks</button>
@@ -328,7 +336,7 @@ $users = DB::table('users')->get();
                                         <option value="Officer" {{ $inductionTraining->designation == 'Officer' ? 'selected' : '' }}>Officer</option>
                                         <option value="Sr. Officer" {{ $inductionTraining->designation == 'Sr. Officer' ? 'selected' : '' }}>Sr. Officer</option>
                                         <option value="Executive" {{ $inductionTraining->designation == 'Executive' ? 'selected' : '' }}>Executive</option>
-                                        <option value="Sr.executive" {{ $inductionTraining->designation == 'Sr.executive' ? 'selected' : '' }}>Sr. Executive</option>
+                                        <option value="Sr. Executive" {{ $inductionTraining->designation == 'Sr. Executive' ? 'selected' : '' }}>Sr. Executive</option>
                                         <option value="Asst. manager" {{ $inductionTraining->designation == 'Asst. manager' ? 'selected' : '' }}>Asst. Manager</option>
                                         <option value="Manager" {{ $inductionTraining->designation == 'Manager' ? 'selected' : '' }}>Manager</option>
                                         <option value="Sr. manager" {{ $inductionTraining->designation == 'Sr. manager' ? 'selected' : '' }}>Sr. Manager</option>
@@ -341,44 +349,33 @@ $users = DB::table('users')->get();
                                 </div>
                             </div>
 
-                            @if(in_array($inductionTraining->designation, ['Asst. manager', 'Manager', 'Sr. manager', 'Deputy GM', 'AGM and GM', 'Head quality', 'VP quality', 'Plant head']))
-                                <div class="col-lg-6" id="yesNoField">
+                            @if(in_array($inductionTraining->designation, $higherDesignations))
+                                <div class="col-lg-6" id="yesNoField" style="display: none;">
                                     <div class="group-input">
                                         <label for="questionariesRequired">Is Questionaries Required?<span class="text-danger">*</span></label>
                                         <select name="questionaries_required" id="questionaries_required" onchange="checkYesNo()">
                                             <option value="">Select</option>
                                             <option value="Yes" {{ $inductionTraining->questionaries_required == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                            <option value="No" {{  $inductionTraining->questionaries_required == 'No' ? 'selected' : '' }}>No</option>
+                                            <option value="No" {{ $inductionTraining->questionaries_required == 'No' ? 'selected' : '' }}>No</option>
                                         </select>
                                     </div>
                                 </div>
                             @endif
 
                             <script>
-                               function checkDesignation() {
+                                function checkDesignation() {
                                     const jobTitle = document.getElementById('job_title').value;
                                     const yesNoField = document.getElementById('yesNoField');
                                     const questionariesTab = document.getElementById('questionariesTab');
                                     const questionariesRequired = document.getElementById('questionaries_required').value;
 
-                                    // List of designations where Yes/No is required
-                                    const targetDesignations = ["Asst. manager", "Manager", "Sr. manager", "Deputy GM", "AGM and GM", "Head quality", "VP quality", "Plant head"];
-                                    
-                                    if (targetDesignations.includes(jobTitle)) {
-                                        // Show the Yes/No field if the designation is "Asst. manager" or higher
+                                    // Show Yes/No field for higher designations
+                                    if (higherDesignations.includes(jobTitle)) {
                                         yesNoField.style.display = "block";
-
-                                        // Check if Questionaries Required is already 'Yes'
-                                        if (questionariesRequired === "Yes") {
-                                            questionariesTab.style.display = "block"; // Show the Questionaries tab if 'Yes' is already selected
-                                        } else {
-                                            questionariesTab.style.display = "none"; // Hide the Questionaries tab if 'No' or empty
-                                        }
-
+                                        checkYesNo(); // Check if the Questionaries tab should be visible
                                     } else {
-                                        // Hide the Yes/No field and show the Questionaries tab for lower designations
                                         yesNoField.style.display = "none";
-                                        questionariesTab.style.display = "none"; // Always hide Questionaries tab for lower designations
+                                        questionariesTab.style.display = "none"; // Hide the Questionaries tab for lower designations
                                     }
                                 }
 
@@ -386,13 +383,19 @@ $users = DB::table('users')->get();
                                     const questionariesRequired = document.getElementById('questionaries_required').value;
                                     const questionariesTab = document.getElementById('questionariesTab');
 
+                                    // Show or hide the Questionaries tab based on Yes/No selection
                                     if (questionariesRequired === "Yes") {
-                                        questionariesTab.style.display = "block"; // Show the Questionaries tab if Yes is selected
+                                        questionariesTab.style.display = "block"; // Show the Questionaries tab
                                     } else {
-                                        questionariesTab.style.display = "none"; // Hide the Questionaries tab if No is selected
+                                        questionariesTab.style.display = "none"; // Hide the Questionaries tab
                                     }
                                 }
 
+                                // Ensure correct visibility on page load
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    checkDesignation(); // Check designation on load
+                                    checkYesNo(); // Check Yes/No field on load
+                                });
                             </script>
                             
                             <div class="col-6">
@@ -437,7 +440,6 @@ $users = DB::table('users')->get();
                                 </div>
                             </div>
 
-
                             <div class="col-12">
                                 <div class="group-input">
                                     <div class="why-why-chart">
@@ -462,8 +464,18 @@ $users = DB::table('users')->get();
                                                     <td style="background: #DCD8D8">Introduction of Agio Plant</td>
 
                                                     <td>
-                                                        <textarea name="document_number_1" value="">{{ $inductionTraining->{"document_number_1"} }}</textarea>
-                                                        
+                                                        <!-- <textarea name="document_number_1" value="">{{ $inductionTraining->{"document_number_1"} }}</textarea> -->
+                                                        <select name="document_number_1" id="sopdocument" onchange="fetchQuestion(this.value)">
+                                                            <option value="">---Select Document Number---</option>
+
+                                                            @foreach ($data as $dat)
+                                                                <option
+                                                                    value="{{ $dat->id }}"
+                                                                    {{ $savedSop == $dat->id ? 'selected' : '' }}>
+                                                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
                                                     </td>
                                                     <td>
                                                         <div class=" new-date-data-field">
@@ -493,7 +505,15 @@ $users = DB::table('users')->get();
                                                     <td>2</td>
                                                     <td style="background: #DCD8D8">Personnel Hygiene</td>
                                                     <td>
-                                                        <textarea name="document_number_2" value="">{{ $inductionTraining->{"document_number_2"} }}</textarea>
+                                                        <!-- <textarea name="document_number_2" value="">{{ $inductionTraining->{"document_number_2"} }}</textarea> -->
+                                                        <select name="document_number_2" id="sopdocument2" onchange="fetchQuestion(this.value)">
+                                                            <option value="">---Select Document Number---</option>
+                                                            @foreach ($data as $dat)
+                                                            <option value="{{ $dat->id }}">
+                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
                                                     </td>
                                                     <td>
                                                         <div class=" new-date-data-field">
@@ -520,7 +540,15 @@ $users = DB::table('users')->get();
                                                     <td>3</td>
                                                     <td style="background: #DCD8D8">Entry Exit Procedure in Factory premises</td>
                                                     <td>
-                                                        <textarea name="document_number_3" value="">{{ $inductionTraining->{"document_number_3"} }}</textarea>
+                                                        <!-- <textarea name="document_number_3" value="">{{ $inductionTraining->{"document_number_3"} }}</textarea> -->
+                                                        <select name="document_number_3" id="sopdocument3" onchange="fetchQuestion(this.value)">
+                                                            <option value="">---Select Document Number---</option>
+                                                            @foreach ($data as $dat)
+                                                            <option value="{{ $dat->id }}">
+                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
                                                     </td>
                                                     <td>
                                                         <div class=" new-date-data-field">
@@ -546,7 +574,15 @@ $users = DB::table('users')->get();
                                                     <td>4</td>
                                                     <td style="background: #DCD8D8">Good Documentation Practices</td>
                                                     <td>
-                                                        <textarea name="document_number_4" value="">{{ $inductionTraining->{"document_number_4"} }}</textarea>
+                                                        <!-- <textarea name="document_number_4" value="">{{ $inductionTraining->{"document_number_4"} }}</textarea> -->
+                                                        <select name="document_number_4" id="sopdocument4" onchange="fetchQuestion(this.value)">
+                                                            <option value="">---Select Document Number---</option>
+                                                            @foreach ($data as $dat)
+                                                            <option value="{{ $dat->id }}">
+                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
                                                     </td>
                                                     <td>
                                                         <div class=" new-date-data-field">
@@ -572,7 +608,15 @@ $users = DB::table('users')->get();
                                                     <td>5</td>
                                                     <td style="background: #DCD8D8">Data Integrity</td>
                                                     <td>
-                                                        <textarea name="document_number_5" value="">{{ $inductionTraining->{"document_number_5"} }}</textarea>
+                                                        <!-- <textarea name="document_number_5" value="">{{ $inductionTraining->{"document_number_5"} }}</textarea> -->
+                                                        <select name="document_number_5" id="sopdocument5" onchange="fetchQuestion(this.value)">
+                                                            <option value="">---Select Document Number---</option>
+                                                            @foreach ($data as $dat)
+                                                            <option value="{{ $dat->id }}">
+                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
                                                     </td>
                                                     <td>
                                                         <div class=" new-date-data-field">
@@ -604,7 +648,15 @@ $users = DB::table('users')->get();
                                                     <td>6 . a</td>
                                                     <td style="background: #DCD8D8"> GMP</td>
                                                     <td>
-                                                        <textarea name="document_number_6" value="">{{ $inductionTraining->{"document_number_6"} }}</textarea>
+                                                        <!-- <textarea name="document_number_6" value="">{{ $inductionTraining->{"document_number_6"} }}</textarea> -->
+                                                        <select name="document_number_6" id="sopdocument6" onchange="fetchQuestion(this.value)">
+                                                            <option value="">---Select Document Number---</option>
+                                                            @foreach ($data as $dat)
+                                                            <option value="{{ $dat->id }}">
+                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
                                                     </td>
                                                     <td>
                                                         <div class=" new-date-data-field">
@@ -630,7 +682,15 @@ $users = DB::table('users')->get();
                                                     <td>6 . b</td>
                                                     <td style="background: #DCD8D8"> Documentation</td>
                                                     <td>
-                                                        <textarea name="document_number_7" value="">{{ $inductionTraining->{"document_number_7"} }}</textarea>
+                                                        <!-- <textarea name="document_number_7" value="">{{ $inductionTraining->{"document_number_7"} }}</textarea> -->
+                                                        <select name="document_number_7" id="sopdocument7" onchange="fetchQuestion(this.value)">
+                                                            <option value="">---Select Document Number---</option>
+                                                            @foreach ($data as $dat)
+                                                            <option value="{{ $dat->id }}">
+                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
                                                     </td>
                                                     <td>
                                                         <div class=" new-date-data-field">
@@ -656,7 +716,15 @@ $users = DB::table('users')->get();
                                                     <td>6 . c</td>
                                                     <td style="background: #DCD8D8"> Process Control</td>
                                                     <td>
-                                                        <textarea name="document_number_8" value="">{{ $inductionTraining->{"document_number_8"} }}</textarea>
+                                                        <!-- <textarea name="document_number_8" value="">{{ $inductionTraining->{"document_number_8"} }}</textarea> -->
+                                                        <select name="document_number_8" id="sopdocument8" onchange="fetchQuestion(this.value)">
+                                                            <option value="">---Select Document Number---</option>
+                                                            @foreach ($data as $dat)
+                                                            <option value="{{ $dat->id }}">
+                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
                                                     </td>
                                                     <td>
                                                         <div class=" new-date-data-field">
@@ -682,7 +750,15 @@ $users = DB::table('users')->get();
                                                     <td>6 . d</td>
                                                     <td style="background: #DCD8D8"> Cross Contamination</td>
                                                     <td>
-                                                        <textarea name="document_number_9" value="">{{ $inductionTraining->{"document_number_9"} }}</textarea>
+                                                        <!-- <textarea name="document_number_9" value="">{{ $inductionTraining->{"document_number_9"} }}</textarea> -->
+                                                        <select name="document_number_9" id="sopdocument9" onchange="fetchQuestion(this.value)">
+                                                            <option value="">---Select Document Number---</option>
+                                                            @foreach ($data as $dat)
+                                                            <option value="{{ $dat->id }}">
+                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
                                                     </td>
                                                     <td>
                                                         <div class=" new-date-data-field">
@@ -708,7 +784,15 @@ $users = DB::table('users')->get();
                                                     <td>6 . e</td>
                                                     <td style="background: #DCD8D8"> Sanitization and Hygiene</td>
                                                     <td>
-                                                        <textarea name="document_number_10" value="">{{ $inductionTraining->{"document_number_10"} }}</textarea>
+                                                        <!-- <textarea name="document_number_10" value="">{{ $inductionTraining->{"document_number_10"} }}</textarea> -->
+                                                        <select name="document_number_10" id="sopdocument10" onchange="fetchQuestion(this.value)">
+                                                            <option value="">---Select Document Number---</option>
+                                                            @foreach ($data as $dat)
+                                                            <option value="{{ $dat->id }}">
+                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
                                                     </td>
                                                     <td>
                                                         <div class=" new-date-data-field">
@@ -734,7 +818,15 @@ $users = DB::table('users')->get();
                                                     <td>6 . f</td>
                                                     <td style="background: #DCD8D8"> Warehousing</td>
                                                     <td>
-                                                        <textarea name="document_number_11" value="">{{ $inductionTraining->{"document_number_11"} }}</textarea>
+                                                        <!-- <textarea name="document_number_11" value="">{{ $inductionTraining->{"document_number_11"} }}</textarea> -->
+                                                        <select name="document_number_11" id="sopdocument11" onchange="fetchQuestion(this.value)">
+                                                            <option value="">---Select Document Number---</option>
+                                                            @foreach ($data as $dat)
+                                                            <option value="{{ $dat->id }}">
+                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
                                                     </td>
                                                     <td>
                                                         <div class=" new-date-data-field">
@@ -760,7 +852,15 @@ $users = DB::table('users')->get();
                                                     <td>6 . g</td>
                                                     <td style="background: #DCD8D8"> Complaint and Recall</td>
                                                     <td>
-                                                        <textarea name="document_number_12" value="">{{ $inductionTraining->{"document_number_12"} }}</textarea>
+                                                        <!-- <textarea name="document_number_12" value="">{{ $inductionTraining->{"document_number_12"} }}</textarea> -->
+                                                        <select name="document_number_12" id="sopdocument12" onchange="fetchQuestion(this.value)">
+                                                            <option value="">---Select Document Number---</option>
+                                                            @foreach ($data as $dat)
+                                                            <option value="{{ $dat->id }}">
+                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
                                                     </td>
                                                     <td>
                                                         <div class=" new-date-data-field">
@@ -784,7 +884,15 @@ $users = DB::table('users')->get();
                                                     <td>6 . h</td>
                                                     <td style="background: #DCD8D8"> Utilities</td>
                                                     <td>
-                                                        <textarea name="document_number_13" value="">{{ $inductionTraining->{"document_number_13"} }}</textarea>
+                                                        <!-- <textarea name="document_number_13" value="">{{ $inductionTraining->{"document_number_13"} }}</textarea> -->
+                                                        <select name="document_number_13" id="sopdocument13" onchange="fetchQuestion(this.value)">
+                                                            <option value="">---Select Document Number---</option>
+                                                            @foreach ($data as $dat)
+                                                            <option value="{{ $dat->id }}">
+                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
                                                     </td>
                                                     <td>
                                                         <div class=" new-date-data-field">
@@ -810,7 +918,15 @@ $users = DB::table('users')->get();
                                                     <td>6 . i</td>
                                                     <td style="background: #DCD8D8"> Water</td>
                                                     <td>
-                                                        <textarea name="document_number_14" value="">{{ $inductionTraining->{"document_number_14"} }}</textarea>
+                                                        <!-- <textarea name="document_number_14" value="">{{ $inductionTraining->{"document_number_14"} }}</textarea> -->
+                                                        <select name="document_number_14" id="sopdocument14" onchange="fetchQuestion(this.value)">
+                                                            <option value="">---Select Document Number---</option>
+                                                            @foreach ($data as $dat)
+                                                            <option value="{{ $dat->id }}">
+                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
                                                     </td>
                                                     <td>
                                                         <div class=" new-date-data-field">
@@ -836,7 +952,15 @@ $users = DB::table('users')->get();
                                                     <td>6 . j</td>
                                                     <td style="background: #DCD8D8"> Safety Module</td>
                                                     <td>
-                                                        <textarea name="document_number_15" value="">{{ $inductionTraining->{"document_number_15"} }}</textarea>
+                                                        <!-- <textarea name="document_number_15" value="">{{ $inductionTraining->{"document_number_15"} }}</textarea> -->
+                                                        <select name="document_number_15" id="sopdocument15" onchange="fetchQuestion(this.value)">
+                                                            <option value="">---Select Document Number---</option>
+                                                            @foreach ($data as $dat)
+                                                            <option value="{{ $dat->id }}">
+                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
                                                     </td>
                                                     <td>
                                                         <div class=" new-date-data-field">
@@ -908,14 +1032,130 @@ $users = DB::table('users')->get();
                         </div>
                     </div>
                 </div>
-                
+
+
+                <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const selectedDocumentId = document.getElementById('sopdocument').value;
+                                    if (selectedDocumentId) {
+                                        fetchQuestion(selectedDocumentId); // Fetch questions on page load if a document is selected
+                                    }
+                                });
+
+                            function fetchQuestion(documentId) {
+                                if (documentId) {
+                                    fetch(`/fetch-question/${documentId}`)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            const questionsContainer = document.getElementById('questionsContainer');
+                                            questionsContainer.innerHTML = ''; // Clear previous questions
+
+                                            if (data.length > 0) {
+                                                data.forEach((question, index) => {
+                                                    // Create a form fieldset for each question
+                                                    const questionBlock = `
+                                                        <div class="question-block">
+                                                            <p><strong>Q${index + 1}: ${question.question}</strong></p>
+                                                            <ul>
+                                                                ${Object.entries(question.options).map(([key, option]) => `
+                                                                    <li>
+                                                                        <label>
+                                                                            <input type="${question.answer_type === 'multiple' ? 'checkbox' : 'radio'}" 
+                                                                                name="question_${question.id}" 
+                                                                                value="${key}">
+                                                                            ${option}
+                                                                        </label>
+                                                                    </li>
+                                                                `).join('')}
+                                                            </ul>
+                                                        </div>
+                                                    `;
+                                                    questionsContainer.innerHTML += questionBlock;
+                                                });
+
+                                                // Add Submit button
+                                                questionsContainer.innerHTML += `
+                                                    <div class="quiz-buttons">
+                                                        <button type="button" id="submit-btn" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                `;
+
+                                                // Add event listener to the submit button
+                                                document.getElementById('submit-btn').addEventListener('click', submitQuiz);
+                                            } else {
+                                                questionsContainer.innerHTML = '<p>No questions available for this document.</p>';
+                                            }
+                                        })
+                                        .catch(error => {
+                                            console.error('Error fetching questions:', error);
+                                            document.getElementById('questionsContainer').innerHTML = '<p>Error fetching questions.</p>';
+                                        });
+                                } else {
+                                    document.getElementById('questionsContainer').innerHTML = ''; // Clear questions if no document is selected
+                                }
+                            }
+
+                            function submitQuiz() {
+                                saveAnswer();
+                                
+                                var marks = 0;
+
+                                for (var i = 0; i < quizData.length; i++) {
+                                    var correctAnswer = quizData[i].answer;
+                                    var userAnswer = userAnswers[i];
+
+                                    console.log("Correct Answer:", correctAnswer);
+                                    console.log("User Answer:", userAnswer);
+
+                                    if (typeof correctAnswer === 'string') {
+                                        if (correctAnswer.toLowerCase() === userAnswer[0]?.toLowerCase()) {
+                                            marks++;
+                                        }
+                                    } else if (Array.isArray(correctAnswer)) {
+                                        if (arraysEqual(correctAnswer, userAnswer)) {
+                                            marks++;
+                                        }
+                                    } else {
+                                        if (correctAnswer == userAnswer[0]) {
+                                            marks++;
+                                        }
+                                    }
+                                }
+
+                                displaySummary(marks);
+
+                               // Calculate passing marks
+var passing = @json($quize ? $quize->passing : 0); // Use 0 or a default value if quize or passing is null
+var totalQuestions = quizData.length;
+var percentageRequired = (passing / 100) * totalQuestions;
+
+console.log("Marks Scored:", marks);
+console.log("Passing Marks:", percentageRequired);
+
+if (marks >= percentageRequired) {
+    var btnsElement = document.querySelector(".btns");
+    var button = document.createElement("button");
+    button.id = "complete-training";
+    button.setAttribute("data-bs-toggle", "modal");
+    button.setAttribute("data-bs-target", "#trainee-sign");
+    button.textContent = "Complete Training";
+
+    // Append button to the btnsElement
+    btnsElement.appendChild(button);
+} else {
+    alert("You did not pass the quiz.");
+}
+
+                            }
+                        </script>
+
 
                 <div id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="col-12 sub-head">
                             Questionaries
                         </div>
-                        <div class="pt-2 group-input">
+                        {{-- <div class="pt-2 group-input">
                             <label for="audit-agenda-grid">
                                 Questionaries
                                 <button type="button" name="audit-agenda-grid" id="ObservationAdd" @if($inductionTraining->stage != 2) disabled @endif>+</button>
@@ -960,23 +1200,20 @@ $users = DB::table('users')->get();
                                                 <td><input disabled type="text" name="jobResponsibilities[{{ $loop->index }}][serial]" value="{{ $loop->index+1 }}"></td>
                                                 <td><input type="text" name="jobResponsibilities[{{ $loop->index }}][job]" value="{{ array_key_exists('job', $employee_grid) ? $employee_grid['job'] : '' }}" class="question-input" 
                                                     @if($inductionTraining->stage == 2 || $inductionTraining->stage == 3) 
-                                                        {{-- Stage 2 or 3: Editable --}}
                                                     @else 
-                                                        readonly {{-- Other Stages: Read-only --}}
+                                                        readonly
                                                     @endif>
                                                 </td>
                                                 <td><input type="text" name="jobResponsibilities[{{ $loop->index }}][remarks]" value="{{ array_key_exists('remarks', $employee_grid) ? $employee_grid['remarks'] : '' }}" class="answer-input" 
                                                     @if($inductionTraining->stage == 3) 
-                                                        {{-- Stage 3: Editable --}}
                                                     @else 
-                                                        readonly {{-- Other Stages: Read-only --}}
+                                                        readonly
                                                     @endif>
                                                 </td>
                                                 <td><input type="text" name="jobResponsibilities[{{ $loop->index }}][comments]" value="{{ array_key_exists('comments', $employee_grid) ? $employee_grid['comments'] : '' }}" class="answer-input" 
                                                     @if($inductionTraining->stage == 2 || $inductionTraining->stage == 3) 
-                                                        {{-- Stage 2 or 3: Editable --}}
                                                     @else 
-                                                        readonly {{-- Other Stages: Read-only --}}
+                                                        readonly
                                                     @endif>
                                                 </td>
                                             </tr>
@@ -986,23 +1223,20 @@ $users = DB::table('users')->get();
                                                 <td><input disabled type="text" name="jobResponsibilities[0][serial]" value="1"></td>
                                                 <td><input type="text" name="jobResponsibilities[0][job]" class="question-input" 
                                                     @if($inductionTraining->stage == 2 || $inductionTraining->stage == 3) 
-                                                        {{-- Stage 2 or 3: Editable --}}
                                                     @else 
-                                                        readonly {{-- Other Stages: Read-only --}}
+                                                        readonly
                                                     @endif>
                                                 </td>
                                                 <td><input type="text" name="jobResponsibilities[0][remarks]" class="answer-input" 
                                                     @if($inductionTraining->stage == 3) 
-                                                        {{-- Stage 3: Editable --}}
                                                     @else 
-                                                        readonly {{-- Other Stages: Read-only --}}
+                                                        readonly
                                                     @endif>
                                                 </td>
                                                 <td><input type="text" name="jobResponsibilities[0][comments]" class="answer-input" 
                                                     @if($inductionTraining->stage == 2 || $inductionTraining->stage == 3) 
-                                                        {{-- Stage 2 or 3: Editable --}}
                                                     @else 
-                                                        readonly {{-- Other Stages: Read-only --}}
+                                                        readonly
                                                     @endif>
                                                 </td>
                                             </tr>
@@ -1011,7 +1245,15 @@ $users = DB::table('users')->get();
 
                                 </table>
                             </div>
-                        </div> 
+                        </div>  --}}
+
+                        <div id="questionsContainer" class="container">
+                                <div>
+                                    <!-- Questions will be dynamically injected here -->
+                                </div>
+                            </div>
+
+         
                         <div class="button-block">
                             <button type="submit" class="saveButton" id="" @if($inductionTraining->stage != 2 && $inductionTraining->stage != 3) disabled @endif>Save</button>
                          <!-- <a href="TMS"> -->
