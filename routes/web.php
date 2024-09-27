@@ -283,6 +283,7 @@ Route::post('mC/cftnotrequired/{id}', [MarketComplaintController::class, 'MarkCo
 
 
 
+Route::get('/observation/{id}',[ObservationController::class,'audit_trail_filter_observation'])->name('observation_filter');
 
 
 
