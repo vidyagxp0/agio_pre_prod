@@ -264,12 +264,11 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    @if ($data->stage == 1)
                                         <div class="group-input">
                                             <label for="search">
                                                 Assigned To <span class="text-danger"></span>
                                             </label>
-                                            <select {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                            <select {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}
                                                 id="select-state" placeholder="Select..." name="assign_to">
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $value)
@@ -278,21 +277,6 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    @else
-                                        <div class="group-input">
-                                            <label for="search">
-                                                Assigned To <span class="text-danger"></span>
-                                            </label>
-                                            <select disabled {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                id="select-state" placeholder="Select..." name="assign_to">
-                                                <option value="">Select a value</option>
-                                                @foreach ($users as $value)
-                                                    <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
-                                                        value="{{ $value->id }}">{{ $value->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    @endif
                                     @error('assign_to')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -321,9 +305,26 @@
                                             </div>
                                         </div>
                                     </div> --}}
+                                    <div class="col-md-6 new-date-data-field">
+                                            <div class="group-input input-date ">
+                                                <label for="capa_date_due">Due Date</label>
+                                                <div class="calenderauditee">
+                                                    <input type="text" name="due_date"
+                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                        id="due_date" readonly
+                                                        placeholder="DD-MMM-YYYY"
+                                                        value="{{ Helpers::getdateFormat($data->due_date) }}" />
+                                                    <input type="date" class="hide-input" 
+                                                      min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                        value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                                        oninput="handleDateInput(this, 'due_date')" />
+                                                </div>
+                                            </div>
+                                        </div>
 
-
-                                    <div class="col-lg-6 new-date-data-field">
+                                    <!-- <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Due Date"> Due Date</label>
                                             <div class="calenderauditee">
@@ -340,7 +341,7 @@
                                                     onchange="handleDateInput(this, 'due_date_display')" />
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     
                                     <script>
                                         function handleDateInput(dateInput, displayId) {
@@ -474,12 +475,11 @@
                                 </div>
 
                                 <div class="col-lg-6">
-                                    @if ($data->stage == 1)
                                         <div class="group-input">
                                             <label for="HOD Persons">HOD Persons</label>
                                             <select name="hod_preson[]" placeholder="Select HOD Persons"
                                                 data-search="false" data-silent-initial-value-set="true" id="hod"
-                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
+                                                {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}>
                                                 <option value="">Select Person</option>
                                                 @foreach ($users as $value)
                                                     <option value="{{ $value->name }}"
@@ -489,22 +489,6 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    @else
-                                        <div class="group-input">
-                                            <label for="HOD Persons">HOD Persons</label>
-                                            <select disabled name="hod_preson[]" placeholder="Select HOD Persons"
-                                                data-search="false" data-silent-initial-value-set="true" id="hod"
-                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
-                                                <option value="">Select Person</option>
-                                                @foreach ($users as $value)
-                                                    <option value="{{ $value->name }}"
-                                                        {{ in_array($value->name, explode(',', $data->hod_preson)) ? 'selected' : '' }}>
-                                                        {{ $value->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    @endif
                                     @error('hod_preson')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror

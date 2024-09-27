@@ -233,6 +233,7 @@ class MarketComplaintController extends Controller
             $marketComplaint->qa_cqa_head_attach = json_encode($files);
         }
 
+
         if (!empty($request->qa_cqa_he_attach)) {
             $files = [];
             if ($request->hasfile('qa_cqa_he_attach')) {
@@ -791,7 +792,7 @@ class MarketComplaintController extends Controller
         if (!empty($marketComplaint->conclusion_pi)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Conclusion (A dedicated provision must be established to record the inference or outcome of brainstorming sessions) ';
+            $history->activity_type = 'Conclusion';
             $history->previous = "Null";
             $history->current = $marketComplaint->conclusion_pi;
             $history->comment = "Not Applicable";
@@ -1333,7 +1334,7 @@ class MarketComplaintController extends Controller
         if (!empty($marketComplaint->root_cause_analysis_hodsr)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Root Cause Analysis';
+            $history->activity_type = 'Other Methodology';
             $history->previous = "Null";
             $history->current = $marketComplaint->root_cause_analysis_hodsr;
             $history->comment = "Not Applicable";
@@ -1350,7 +1351,7 @@ class MarketComplaintController extends Controller
         if (!empty($marketComplaint->probable_root_causes_complaint_hodsr)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'The most probable root causes identified of the complaint are as below';
+            $history->activity_type = 'Type of Market Complaints';
             $history->previous = "Null";
             $history->current = $marketComplaint->probable_root_causes_complaint_hodsr;
             $history->comment = "Not Applicable";
@@ -1895,7 +1896,7 @@ class MarketComplaintController extends Controller
         $marketComplaint->categorization_of_complaint_gi = $request->categorization_of_complaint_gi;
         $marketComplaint->review_of_complaint_sample_gi = $request->review_of_complaint_sample_gi;
         $marketComplaint->review_of_control_sample_gi = $request->review_of_control_sample_gi;
-       
+
         $marketComplaint->review_of_stability_study_gi = $request->review_of_stability_study_gi;
         $marketComplaint->review_of_product_manu_gi = $request->review_of_product_manu_gi;
         $marketComplaint->additional_inform = $request->additional_inform;
@@ -2533,24 +2534,12 @@ class MarketComplaintController extends Controller
         }
 
 
-        // ===============================work code attachement ==========
-        // if ($request->hasFile('initial_attachment_gi')) {
-        //     $files = [];
-        //     foreach ($request->file('initial_attachment_gi') as $file) {
-        //         $name = $request->name . '_initial_attachment_gi_' . uniqid() . '.' . $file->getClientOriginalExtension();
-        //         $file->move(public_path('upload/'), $name);
-        //         $files[] = $name;
-        //     }
-        //     $marketComplaint->initial_attachment_gi = json_encode($files);
-        // }
-
-        // $marketComplaint->fill($request->except('initial_attachment_gi'));
 
                               //first attchment ============================
                               if (!empty($request->initial_attachment_gi) || !empty($request->deleted_attachments_gi)) {
                                 $existingFiles = json_decode($marketComplaint->initial_attachment_gi, true) ?? [];
                                         if (!empty($request->deleted_attachments_gi)) {
-                                    $filesToDelete = explode(',', $request->deleted_attachments_gi);    
+                                    $filesToDelete = explode(',', $request->deleted_attachments_gi);
                                     $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
                                         return !in_array($file, $filesToDelete);
                                     });
@@ -2579,112 +2568,135 @@ class MarketComplaintController extends Controller
         $marketComplaint->fill($request->except('initial_attachment_hodsr'));
 
 
-        if ($request->hasFile('initial_attachment_ca')) {
-            $files = [];
-            foreach ($request->file('initial_attachment_ca') as $file) {
-                $name = $request->name . '_initial_attachment_ca_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
-            }
-            $marketComplaint->initial_attachment_ca = json_encode($files);
+       if (!empty($request->initial_attachment_ca) || !empty($request->deleted_initial_attachment_ca)) {
+    $existingFiles = json_decode($marketComplaint->initial_attachment_ca, true) ?? [];
+
+    // Handle deleted files
+    if (!empty($request->deleted_initial_attachment_ca)) {
+        $filesToDelete = explode(',', $request->deleted_initial_attachment_ca);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('initial_attachment_ca')) {
+        foreach ($request->file('initial_attachment_ca') as $file) {
+            $name = $request->name . 'initial_attachment_ca' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
         }
-        $marketComplaint->fill($request->except('initial_attachment_ca'));
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $marketComplaint->initial_attachment_ca = json_encode($allFiles);
+}
 
 
-        if ($request->hasFile('initial_attachment_c')) {
-            $files = [];
-            foreach ($request->file('initial_attachment_c') as $file) {
-                $name = $request->name . '_initial_attachment_c_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
-            }
-            $marketComplaint->initial_attachment_c = json_encode($files);
+       if (!empty($request->initial_attachment_c) || !empty($request->deleted_initial_attachment_c)) {
+    $existingFiles = json_decode($marketComplaint->initial_attachment_c, true) ?? [];
+
+    // Handle deleted files
+    if (!empty($request->deleted_initial_attachment_c)) {
+        $filesToDelete = explode(',', $request->deleted_initial_attachment_c);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('initial_attachment_c')) {
+        foreach ($request->file('initial_attachment_c') as $file) {
+            $name = $request->name . 'initial_attachment_c' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
         }
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $marketComplaint->initial_attachment_c = json_encode($allFiles);
+}
         $marketComplaint->fill($request->except('initial_attachment_c'));
 
 
 
-        if ($request->hasFile('qa_cqa_attachments')) {
-            $files = [];
-            foreach ($request->file('qa_cqa_attachments') as $file) {
-                $name = $request->name . '_qa_cqa_attachments_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
-            }
-            $marketComplaint->qa_cqa_attachments = json_encode($files);
+
+
+    if (!empty($request->qa_cqa_attachments) || !empty($request->deleted_qa_cqa_attachments)) {
+    $existingFiles = json_decode($marketComplaint->qa_cqa_attachments, true) ?? [];
+
+    // Handle deleted files
+    if (!empty($request->deleted_qa_cqa_attachments)) {
+        $filesToDelete = explode(',', $request->deleted_qa_cqa_attachments);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('qa_cqa_attachments')) {
+        foreach ($request->file('qa_cqa_attachments') as $file) {
+            $name = $request->name . 'qa_cqa_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
         }
+    }
 
-        if ($request->hasFile('qa_cqa_he_attach')) {
-            $files = [];
-            foreach ($request->file('qa_cqa_he_attach') as $file) {
-                $name = $request->name . '_qa_cqa_he_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
-            }
-            $marketComplaint->qa_cqa_he_attach = json_encode($files);
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $marketComplaint->qa_cqa_attachments = json_encode($allFiles);
+}
+    // Handle deleted files
+    if (!empty($request->deleted_qa_cqa_he_attach)) {
+        $filesToDelete = explode(',', $request->deleted_qa_cqa_he_attach);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('qa_cqa_he_attach')) {
+        foreach ($request->file('qa_cqa_he_attach') as $file) {
+            $name = $request->name . 'qa_cqa_he_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
         }
+    }
+       if (!empty($request->qa_cqa_head_attach) || !empty($request->deleted_qa_cqa_head_attach)) {
+       $existingFiles = json_decode($marketComplaint->qa_cqa_head_attach, true) ?? [];
 
+    // Handle deleted files
+    if (!empty($request->deleted_qa_cqa_head_attach)) {
+        $filesToDelete = explode(',', $request->deleted_qa_cqa_head_attach);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
 
-        $marketComplaint->fill($request->except('qa_cqa_head_attach'));if ($request->hasFile('qa_cqa_head_attach')) {
-            $files = [];
-            foreach ($request->file('qa_cqa_head_attach') as $file) {
-                $name = $request->name . '_qa_cqa_head_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
-            }
-            $marketComplaint->qa_cqa_head_attach = json_encode($files);
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('qa_cqa_head_attach')) {
+        foreach ($request->file('qa_cqa_head_attach') as $file) {
+            $name = $request->name . 'qa_cqa_head_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
         }
-        $marketComplaint->fill($request->except('qa_cqa_head_attach'));
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $marketComplaint->qa_cqa_head_attach = json_encode($allFiles);
+}
 
 
-        // $files = [];
-        // if ($request->hasFile('initial_attachment_hodsr')) {
-        //     foreach ($request->file('initial_attachment_hodsr') as $file) {
-        //         $name = $request->name . 'initial_attachment_hodsr' . uniqid() . '.' . $file->getClientOriginalExtension();
-
-        //         $file->move(public_path('upload/'), $name);
-
-        //         // Add the file name to the array
-        //         $files[] = $name;
-        //     }
-        // }
-        // // Encode the file names array to JSON and assign it to the model
-        // $marketComplaint->initial_attachment_hodsr = json_encode($files);
-
-        // $files = [];
-        // if ($request->hasFile('initial_attachment_ca')) {
-        //     foreach ($request->file('initial_attachment_ca') as $file) {
-        //         // Generate a unique name for the file
-        //         $name = $request->name . 'initial_attachment_ca' . uniqid() . '.' . $file->getClientOriginalExtension();
-
-        //         // Move the file to the upload directory
-        //         $file->move(public_path('upload/'), $name);
-
-        //         // Add the file name to the array
-        //         $files[] = $name;
-        //     }
-        // }
-        // // Encode the file names array to JSON and assign it to the model
-        // $marketComplaint->initial_attachment_ca = json_encode($files);
 
 
-        // $files = [];
-        // if ($request->hasFile('initial_attachment_c')) {
-        //     foreach ($request->file('initial_attachment_c') as $file) {
-        //         // Generate a unique name for the file
-        //         $name = $request->name . 'initial_attachment_c' . uniqid() . '.' . $file->getClientOriginalExtension();
-
-        //         // Move the file to the upload directory
-        //         $file->move(public_path('upload/'), $name);
-
-        //         // Add the file name to the array
-        //         $files[] = $name;
-        //     }
-        // }
-        // // Encode the file names array to JSON and assign it to the model
-        // $marketComplaint->initial_attachment_c = json_encode($files);
-
-        // dd($marketComplaint);
 
 
 
@@ -2758,7 +2770,7 @@ class MarketComplaintController extends Controller
 
             $history->save();
         }
-       
+
         if ($lastmarketComplaint->in_case_Invalide_com != $marketComplaint->in_case_Invalide_com) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
@@ -2785,7 +2797,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->conclusion_pi != $marketComplaint->conclusion_pi) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Conclusion (A dedicated provision must be established to record the inference or outcome of brainstorming sessions)';
+            $history->activity_type = 'Conclusion';
             $history->previous = $lastmarketComplaint->conclusion_pi;
             $history->current = $marketComplaint->conclusion_pi;
             $history->comment = $request->conclusion_pi_comment;
@@ -3502,7 +3514,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->conclusion_hodsr != $marketComplaint->conclusion_hodsr) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Conclusion';
+            $history->activity_type = 'Root Cause Analysis';
             $history->previous = $lastmarketComplaint->conclusion_hodsr;
             $history->current = $marketComplaint->conclusion_hodsr;
             $history->comment = $request->conclusion_hodsr_comment;
@@ -3522,7 +3534,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->root_cause_analysis_hodsr != $marketComplaint->root_cause_analysis_hodsr) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Root Cause Analysis';
+            $history->activity_type = 'Other Methodology';
             $history->previous = $lastmarketComplaint->root_cause_analysis_hodsr;
             $history->current = $marketComplaint->root_cause_analysis_hodsr;
             $history->comment = $request->root_cause_analysis_hodsr_comment;
@@ -3542,7 +3554,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->probable_root_causes_complaint_hodsr != $marketComplaint->probable_root_causes_complaint_hodsr) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'The most probable root causes identified of the complaint are as below';
+            $history->activity_type = 'Type of Market Complaints';
             $history->previous = $lastmarketComplaint->probable_root_causes_complaint_hodsr;
             $history->current = $marketComplaint->probable_root_causes_complaint_hodsr;
             $history->comment = $request->probable_root_causes_complaint_hodsr_comment;
@@ -4209,21 +4221,21 @@ class MarketComplaintController extends Controller
 
                     if ($marketstat->stage == 3) {
 
-                        // if (!$marketstat->review_of_batch_manufacturing_record_BMR_gi) {
-                        //     Session::flash('swal', [
-                        //         'title' => 'Mandatory Fields Required!',
-                        //         'message' => 'Review of Batch Tab is yet to be filled!',
-                        //         'type' => 'warning',
-                        //     ]);
+                        if (!$marketstat->review_of_batch_manufacturing_record_BMR_gi) {
+                            Session::flash('swal', [
+                                'title' => 'Mandatory Fields Required!',
+                                'message' => 'Review of Batch Manufacturing Record (BMR) Tab is yet to be filled!',
+                                'type' => 'warning',
+                            ]);
 
-                        //     return redirect()->back();
-                        // } else {
-                        //     Session::flash('swal', [
-                        //         'type' => 'success',
-                        //         'title' => 'Success',
-                        //         'message' => 'CFT Reviews'
-                        //     ]);
-                        // }
+                            return redirect()->back();
+                        } else {
+                            Session::flash('swal', [
+                                'type' => 'success',
+                                'title' => 'Success',
+                                'message' => 'CFT Reviews'
+                            ]);
+                        }
 
                         $marketstat->stage = "4";
                         $marketstat->status = "CFT Review";

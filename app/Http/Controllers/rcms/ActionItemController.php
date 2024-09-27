@@ -226,9 +226,26 @@ class ActionItemController extends Controller
             if (!empty($openState->division_id)) {
                 $history = new ActionItemHistory();
                 $history->cc_id = $openState->id;
-                $history->activity_type = 'Division Code';
+                $history->activity_type = 'Site/Location Code';
                 $history->previous = "Null";
                 $history->current = Helpers::getDivisionName($openState->division_id);
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $openState->status;
+                $history->change_to =   "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = 'Create';
+                $history->save();
+            }
+
+            if (!empty($openState->initiator_id)) {
+                $history = new ActionItemHistory();
+                $history->cc_id = $openState->id;
+                $history->activity_type = 'Initiator';
+                $history->previous = "Null";
+                $history->current = Helpers::getInitiatorName($openState->initiator_id);
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -595,7 +612,9 @@ class ActionItemController extends Controller
         $openState->title = $request->title;
         //$openState->hod_preson = json_encode($request->hod_preson);
         // $openState->hod_preson =  implode(',', $request->hod_preson);
-        $openState->hod_preson = is_array($request->hod_preson) ? implode(',', $request->hod_preson) : $request->hod_preson;
+        if($openState->stage == 1){
+            $openState->hod_preson = is_array($request->hod_preson) ? implode(',', $request->hod_preson) : $request->hod_preson;
+        }
 
         // $openState->hod_preson = $request->hod_preson;
         $openState->dept = $request->dept;
@@ -606,7 +625,10 @@ class ActionItemController extends Controller
         $openState->comments = $request->comments;
         $openState->qa_comments = $request->qa_comments;
         $openState->due_date_extension= $request->due_date_extension;
-        $openState->assign_to = $request->assign_to;
+        if($openState->stage == 1){
+            $openState->assign_to = $request->assign_to;
+            // dd($request->assign_to);
+            }
         $openState->departments = $request->departments;
         $request->validate([
             'due_date' => 'nullable|date', // Ensure 'due_date' is allowed to be a date

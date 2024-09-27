@@ -642,7 +642,7 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Initial Review</button>
-                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA Head Designee Approval</button>--}}
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA Head Designee Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Initiator Update</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm14')">HOD Final Review</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Extension</button> --}}
@@ -1731,7 +1731,7 @@
                                         <label for="HOD Remarks">Review Of Incident And Verfication Of Effectivess Of Correction</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="review_of_verific" >  </textarea>
+                                        <textarea class="tiny" name="review_of_verific">  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3">
