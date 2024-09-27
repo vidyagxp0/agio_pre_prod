@@ -4244,6 +4244,25 @@ $oocevaluation->save();
         $lastDocumentOOC = OutOfCalibration::find($id);
 
         if ($oocchange->stage == 1) {
+
+            if (!$oocchange->description_ooc) {
+                // Flash message for warning (field not filled)
+                Session::flash('swal', [
+                    'title' => 'Mandatory Fields Required!',
+                    'message' => 'Short Description is yet to be filled!',
+                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                ]);
+        
+                return redirect()->back();
+            } else {
+                // Flash message for success (when the form is filled correctly)
+                Session::flash('swal', [
+                    'title' => 'Success!',
+                    'message' => 'Sent for HOD Primary Review',
+                    'type' => 'success',
+                ]);
+            }
+            
            $oocchange->stage = "2";
             $oocchange->submitted_by = Auth::user()->name;
             $oocchange->submitted_on = Carbon::now()->format('d-M-Y');
@@ -4289,7 +4308,7 @@ $oocevaluation->save();
                 // Flash message for warning (field not filled)
                 Session::flash('swal', [
                     'title' => 'Mandatory Fields Required!',
-                    'message' => 'HOD Remarks is yet to be filled!',
+                    'message' => 'HOD Primary Remarks is yet to be filled!',
                     'type' => 'warning',  // Type can be success, error, warning, info, etc.
                 ]);
         
@@ -4345,7 +4364,7 @@ $oocevaluation->save();
                 // Flash message for warning (field not filled)
                 Session::flash('swal', [
                     'title' => 'Mandatory Fields Required!',
-                    'message' => 'QA Head Remarks is yet to be filled!',
+                    'message' => 'QA Head Primary Remarks is yet to be filled!',
                     'type' => 'warning',  // Type can be success, error, warning, info, etc.
                 ]);
         
@@ -4632,11 +4651,11 @@ $oocevaluation->save();
 
         if ($oocchange->stage == 10) {
 
-            if (!$oocchange->is_repeat_proposed_stage_ooc) {
+            if (!$oocchange->is_repeat_stageii_ooc && !$oocchange->is_repeat_proposed_stage_ooc) {
                 // Flash message for warning (field not filled)
                 Session::flash('swal', [
                     'title' => 'Mandatory Fields Required! Phase IB Investigation',
-                    'message' => 'Proposed By is yet to be filled!',
+                    'message' => 'Rectification by Service Engineer required and Proposed By is yet to be filled!',
                     'type' => 'warning',  // Type can be success, error, warning, info, etc.
                 ]);
         
@@ -4649,6 +4668,24 @@ $oocevaluation->save();
                     'type' => 'success',
                 ]);
             }
+
+            // if (!$oocchange->is_repeat_proposed_stage_ooc) {
+            //     // Flash message for warning (field not filled)
+            //     Session::flash('swal', [
+            //         'title' => 'Mandatory Fields Required! Phase IB Investigation',
+            //         'message' => 'Proposed By is yet to be filled!',
+            //         'type' => 'warning',  // Type can be success, error, warning, info, etc.
+            //     ]);
+        
+            //     return redirect()->back();
+            // } else {
+            //     // Flash message for success (when the form is filled correctly)
+            //     Session::flash('swal', [
+            //         'title' => 'Success!',
+            //         'message' => 'Sent for Phase IB HOD Primary Review',
+            //         'type' => 'success',
+            //     ]);
+            // }
             $oocchange->stage = "11";
             $oocchange->correction_ooc_completed_by = Auth::user()->name;
             $oocchange->correction_ooc_completed_on = Carbon::now()->format('d-M-Y');
@@ -4690,7 +4727,7 @@ $oocevaluation->save();
                 // Flash message for warning (field not filled)
                 Session::flash('swal', [
                     'title' => 'Mandatory Fields Required! Phase IB HOD Primary Review',
-                    'message' => 'Phase IB HOD Remarks is yet to be filled!',
+                    'message' => 'Phase IB HOD Primary Remarks is yet to be filled!',
                     'type' => 'warning',  // Type can be success, error, warning, info, etc.
                 ]);
         
@@ -5327,6 +5364,7 @@ return redirect()->back();
                $parent_type = "Out of Calibration";
                $currentDate = Carbon::now();
                $formattedDate = $currentDate->addDays(30);
+               $relatedRecords = Helpers::getAllRelatedRecords();
                $due_date= $formattedDate->format('d-M-Y');
                $old_record = Capa::select('id', 'division_id', 'record')->get();
                $record_number = ((RecordNumber::first()->value('counter')) + 1);
@@ -5337,6 +5375,7 @@ return redirect()->back();
                $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
                $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
                $parent_initiator_id = $id;
+               
 
 
                $formattedDate = $currentDate->addDays(30);
@@ -5368,7 +5407,7 @@ return redirect()->back();
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 $record_number = $record_number;
                 $old_records = $old_record;
-                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
+                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords'));
                 }
                if ($request->revision == "Extension") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -5383,7 +5422,7 @@ return redirect()->back();
         $cc = OutOfCalibration::find($id);
                $cft = [];
                $parent_id = $id;
-               $parent_type = "Out of Calibration";
+               $parent_type = "OOC";
                $currentDate = Carbon::now();
                $formattedDate = $currentDate->addDays(30);
                $due_date= $formattedDate->format('d-M-Y');
