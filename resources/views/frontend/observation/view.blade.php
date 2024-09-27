@@ -670,10 +670,12 @@
                                                 <div class="calenderauditee">
                                                     <input type="text" name="recomendation_capa_date_due"
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                         id="recomendation_capa_date_due" readonly
                                                         placeholder="DD-MMM-YYYY"
                                                         value="{{ Helpers::getdateFormat($data->recomendation_capa_date_due) }}" />
-                                                    <input type="date" class="hide-input"
+                                                    <input type="date" class="hide-input" 
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                         value="{{ Helpers::getdateFormat($data->recomendation_capa_date_due) }}"
                                                         oninput="handleDateInput(this, 'recomendation_capa_date_due')" />
                                                 </div>
@@ -767,19 +769,19 @@
                                         <div class="col-md-12 new-date-data-field">
                                             <div class="group-input input-date ">
                                                 <label for="date_Response_due1">Response Details (+) </label>
-                                                <textarea name="response_detail" id="">{{ $data->response_detail }}</textarea>
+                                                <textarea name="response_detail" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} id="">{{ $data->response_detail }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="date_due">Corrective Actions (+)</label>
-                                                <textarea name="corrective_action" id="">{{ $data->corrective_action }}</textarea>
+                                                <textarea name="corrective_action" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} id="">{{ $data->corrective_action }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="assign_to2">Preventive Action (+)</label>
-                                                    <textarea name="preventive_action">{{ $data->preventive_action }}</textarea>
+                                                    <textarea name="preventive_action" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->preventive_action }}</textarea>
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-6">
@@ -1315,7 +1317,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="impact">Response Verification Comment</label>
-                                                <textarea name="impact">{{ $data->impact }}</textarea>
+                                                <textarea name="impact" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->impact }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
