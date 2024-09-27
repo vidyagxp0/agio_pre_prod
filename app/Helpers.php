@@ -8,6 +8,8 @@ use App\Models\extension_new;
 use App\Models\QMSDivision;
 use App\Models\QMSProcess;
 use App\Models\User;
+use App\Models\OOCAuditTrail;
+use App\Models\RoleGroup;     
 use App\Models\Deviation;
 use App\Models\LabIncident;
 use App\Models\OOS_micro;
@@ -1390,5 +1392,65 @@ class Helpers
 
 
 
+     
+
+
+}
+if (!function_exists('createAuditTrail')) {
+    function createAuditTrail($ooc_id, $activity_type, array $oldArray, array $newArray, $origin_state = 'Open', $comment = "Not Applicable")
+    {
+        $changes = getChangedValues($oldArray, $newArray);
+
+        foreach ($changes as $key => $change) {
+            $history = new OOCAuditTrail();
+            $history->ooc_id = $ooc_id;
+            $history->activity_type = $activity_type . ' - ' . $key;
+            $history->previous = is_array($change['old_value']) ? json_encode($change['old_value']) : $change['old_value'];
+            $history->current = is_array($change['new_value']) ? json_encode($change['new_value']) : $change['new_value'];
+            $history->comment = $comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $origin_state;
+            $history->change_to = "Updated";
+            $history->change_from = "Initial State";
+            $history->action_name = empty($change['old_value']) ? "New" : "Update";
+            $history->save();
+        }
+    }
+}
+
+if (!function_exists('getChangedValues')) {
+    function getChangedValues(array $oldArray, array $newArray): array
+    {
+        $changedValues = [];
+
+        foreach ($newArray as $key => $newValue) {
+            if (array_key_exists($key, $oldArray)) {
+                if ($oldArray[$key] !== $newValue) {
+                    $changedValues[$key] = [
+                        'old_value' => $oldArray[$key],
+                        'new_value' => $newValue
+                    ];
+                }
+            } else {
+                $changedValues[$key] = [
+                    'old_value' => null,
+                    'new_value' => $newValue
+                ];
+            }
+        }
+
+        foreach ($oldArray as $key => $oldValue) {
+            if (!array_key_exists($key, $newArray)) {
+                $changedValues[$key] = [
+                    'old_value' => $oldValue,
+                    'new_value' => null
+                ];
+            }
+        }
+
+        return $changedValues;
+    }
 }
 

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\rcms;
-
+use App\Helpers\createAuditTrail;
 use App\Http\Controllers\Controller;
 use App\Models\OOC_Grid;
 use Illuminate\Support\Facades\Auth;
@@ -348,6 +348,37 @@ class OOCController extends Controller
         $record->update();
 
         //===================counter=======================//
+
+
+
+        // ===================================Grid Audit Trail Logic ==========================================//
+        $oocGrid = $data->id;
+
+        $instrumentDetail = OOC_Grid::create([
+            'ooc_id' => $oocGrid,
+            'identifier' => 'Instrument Details',
+            'identifier' => 'OOC Evaluation',
+            'data' => json_encode($request->instrumentdetails),
+        ]);
+
+        // 3. First time save kar rahe, so purana array (oldArray) khali rahega
+        $oldArray = [];
+
+        // 4. Naya data ko array mein le lo
+        $newArray = $request->instrumentdetails;
+
+        // 5. Audit trail banane ke liye helper ko call karo
+        createAuditTrail($oocGrid, 'Instrument Details ', $oldArray, $newArray);
+
+        // return response()->json(['message' => 'Data stored and audit trail created successfully.']);
+    
+
+
+
+
+
+        // ===================================Grid Audit Trail Logic ==========================================//
+
 
         //=========================================================Audit Trail Create ===========================================================================================//
 
@@ -1621,7 +1652,9 @@ if(!empty($data->Pib_attachements)) {
         $ooc->assign_to_name = User::where('id', $ooc->assign_id)->value('name');
         $ooc->initiator_name = User::where('id', $ooc->initiator_id)->value('name');
 
-        $oocgrid = OOC_Grid::where('ooc_id',$id)->first();
+        $oocgrid = OOC_Grid::where(['ooc_id'=>$id,'identifier'=> 'Instrument Details'])->first();
+        // foreach ($oocgrid->data as $ss)
+        // return $ss;
         $oocEvolution = OOC_Grid::where(['ooc_id'=>$id, 'identifier'=>'OOC Evaluation'])->first();
         
         return view('frontend.OOC.ooc_view' , compact('ooc','oocgrid','oocEvolution'));
@@ -1911,6 +1944,17 @@ if(!empty($data->Pib_attachements)) {
             }
             $ooc->initial_attachment_capa_ooc = json_encode($files);
         }
+
+
+
+        // ==========================Audit trail Grid  ============================//
+
+
+
+
+
+
+        // ===========================Audit Trail Grid   ================================//
 
 
 //=======================================================Audit Trail======================================================//
@@ -3503,6 +3547,7 @@ $oocevaluation->save();
 
         toastr()->success('Record is updated Successfully');
         $ooc->update();
+        
         // dd($ooc);
 
         $oocGrid = $ooc->id;
