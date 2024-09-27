@@ -196,6 +196,7 @@ class OOS extends Model
           'risk_assessment_req_ocr',
           'justify_if_no_risk_assessment_ocr',
           'conclusion_attachment_ocr',
+          'action_on_affected_batch',
           'cq_review_comments_ocqr',
           'capa_required_ocqr',
           'reference_of_capa_ocqr',
@@ -281,6 +282,7 @@ class OOS extends Model
       ];
 
     protected $casts = [
+      'proposal_for_hypothesis_IB' => 'array',
       'recommended_actions_reference_plic' => 'array',
       'reference_document' => 'array',
       'Comments_plidata' => 'array',
