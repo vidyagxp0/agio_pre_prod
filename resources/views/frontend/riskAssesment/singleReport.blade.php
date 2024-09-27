@@ -993,7 +993,7 @@
                 </table>
             </div>
 
-            <div class="block">
+            {{-- <div class="block">
                 <div class="block-head">
                     Risk Analysis
                 </div>
@@ -1115,12 +1115,9 @@
                             </div>
                         </td>
                     </tr>
-                    {{-- <tr>
-                            <th class="w-20">Risk Level</th>
-                            <td class="w-80">@if ($data->risk_level){{ $data->risk_level }}@else Not Applicable @endif</td>
-                        </tr> --}}
+
                 </table>
-            </div>
+            </div> --}}
 
             {{-- <div class="border">
                         <table>

@@ -422,27 +422,12 @@
                                             </select>
                                         </div>
                                     </div> --}}
-                                    {{-- <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="Team Members">Team Members</label>
-                                            <select multiple name="team_members[]" placeholder="Select Team Members"
-                                                data-search="false" data-silent-initial-value-set="true" id="team_members">
-                                                <option value="">select team member</option>
-                                                <option value="1">Amit Guru</option>
-                                                <option value="2">Anshul Patel</option>
-                                                <option value="3">Vikash Prajapati</option>
-                                                <option value="4">Amit Patel</option>
-                                                <option value="5">Shaleen Mishra</option>
-                                                <option value="6">Madhulika Mishra</option>
-                                            </select>
-                                        </div>
-                                    </div> --}}
+
 
 
                                     <div class="col-6">
                                         <div class="group-input">
-                                            <label for="search">Source of Risk/Opportunity<span class="text-danger"></span>
-                                            </label>
+                                            <label for="search">Source of Risk/Opportunity<span class="text-danger"></span></label>
                                             <select name="source_of_risk" id="source_of_risk">
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="Audit">Audit</option>
@@ -458,9 +443,8 @@
 
                                     <div id="typeOfErrorBlock" class="group-input col-6" style="display: none;">
                                         <label for="otherFieldsUser">Other(Source of Risk/Opportunity)</label>
-                                        <input type="text" name="source_of_risk" class="form-control"/>
+                                        <input type="text" name="other_source_of_risk" class="form-control"/>
                                     </div>
-
 
                                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -486,13 +470,14 @@
                                     </script>
 
 
+
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Type..">Type</label>
                                             <select name="type" id="type">
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="Business_Risk">Business Risk</option>
-                                                <option value="custumer_Related">Customer-Related Risk(Complaint)</option>
+                                                <option value="customer_Related">Customer-Related Risk (Complaint)</option>
                                                 <option value="Opportunity">Opportunity</option>
                                                 <option value="Market">Market</option>
                                                 <option value="Operational_Risk">Operational Risk</option>
@@ -503,10 +488,9 @@
                                     </div>
 
                                     <div id="typeOfError" class="group-input col-6" style="display: none;">
-                                        <label for="otherFieldsUser">Other(Type)</label>
-                                        <input type="text" name="type" class="form-control"/>
+                                        <label for="otherFieldsUser">Other (Type)</label>
+                                        <input type="text" name="other_type" class="form-control"/>
                                     </div>
-
 
                                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -530,6 +514,31 @@
                                             }
                                         });
                                     </script>
+
+                                    {{-- <script>
+                                        $(document).ready(function() {
+                                            $('select[name=type]').change(function() {
+                                                const selectedVal = $(this).val();
+                                                if (selectedVal === 'Other_data') {
+                                                    $('#typeOfError').show();
+                                                    $('#other_type').attr('name', 'type');
+                                                    $(this).attr('name', '');
+                                                } else {
+                                                    $('#typeOfError').hide();
+                                                    $('#other_type').attr('name', '');
+                                                    $(this).attr('name', 'type');
+                                                }
+                                            });
+
+                                            // Optionally, check the current value when the page loads in case of form errors
+                                            if ($('select[name=type]').val() === 'Other_data') {
+                                                $('#typeOfError').show();
+                                                $('#other_type').attr('name', 'type');
+                                                $('select[name=type]').attr('name', '');
+                                            }
+                                        });
+                                    </script> --}}
+
 
 
                                     <div class="col-lg-6">
@@ -682,7 +691,7 @@
                                         <select name="root_cause_methodology[]" multiple data-search="false" data-silent-initial-value-set="true" id="root-cause-methodology">
                                             <option value="Why-Why Chart">Why-Why Chart</option>
                                             <option value="Failure Mode and Effect Analysis">Failure Mode and Effect Analysis</option>
-                                            <option value="other_detail">Other</option>
+                                            <option value="Other_Detail">Other</option>
                                             {{-- <option value="Fishbone or Ishikawa Diagram">Fishbone or Ishikawa Diagram</option> --}}
                                             {{-- <option value="Is/Is Not Analysis">Is/Is Not Analysis</option> --}}
                                         </select>

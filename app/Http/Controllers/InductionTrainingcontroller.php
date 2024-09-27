@@ -7,8 +7,14 @@ use App\Models\Induction_training;
 use App\Models\InductionTrainingAudit;
 use App\Models\RecordNumber;
 use App\Models\JobTraining;
+use App\Models\DocumentTraining;
+use App\Models\Training;
+use App\Models\Quize;
+use App\Models\Question;
 use App\Models\RoleGroup;
 use App\Models\User;
+use Illuminate\Support\Facades\App;
+use PDF;
 use App\Models\Document;
 use App\Models\QuestionariesGrid;
 use Carbon\Carbon;
@@ -30,6 +36,34 @@ class InductionTrainingController extends Controller
         $data = Document::all();
 
         return view('frontend.TMS.Induction_training.induction_training', compact('due_date','data', 'record', 'employees'));
+    }
+
+    public function fetchQuestion($id)
+    {
+        $document_training = DocumentTraining::where('document_id', $id)->first();
+        if ($document_training) {
+            $training = Training::find($document_training->training_plan); 
+            if ($training && $training->training_plan_type == "Read & Understand with Questions") {
+                $quize = Quize::find($training->quize);
+                $questions = explode(',', $quize->question);
+                $question_list = [];
+    
+                foreach ($questions as $question_id) {
+                    $question = Question::find($question_id);
+                    if ($question) {
+                        $json_options = unserialize($question->options);
+                        $options = [];
+                        foreach ($json_options as $key => $value) {
+                            $options[chr(97 + $key)] = $value; // Format options
+                        }
+                        $question->options = $options;
+                        $question_list[] = $question;
+                    }
+                }
+                return response()->json($question_list); // Return questions array as JSON
+            }
+        }
+        return response()->json([]); // Return empty array if no questions found
     }
 
     public function getEmployeeDetails($id)
@@ -261,14 +295,35 @@ class InductionTrainingController extends Controller
 
     public function edit($id)
     {
+        // Find the Induction Training record by ID
         $inductionTraining = Induction_training::find($id);
+    
+        // Fetch the employee details related to this training
         $employee = Employee::where('id', $inductionTraining->name_employee)->first();
-        $employee_name = $employee ? $employee->employee_name : '';
+        $employee_name = $employee ? $employee->employee_name : ''; // If employee exists, get name, otherwise empty string
+    
+        // Fetch all employees and documents
         $employees = Employee::all();
+        $data = Document::all();
+    
+        // Fetch the record and document training by ID
+        $record = Induction_training::findOrFail($id);
+        $document_training = DocumentTraining::where('document_id', $id)->first();
+    
+        // Use optional() to avoid null errors when training_plan or quize is null
+        $training = optional($document_training)->training_plan ? Training::find($document_training->training_plan) : null;
+        $quize = optional($training)->quize ? Quize::find($training->quize) : null;
+    
+        // Get the saved SOP document and employee grid data
+        $savedSop = $record->sopdocument;
         $employee_grid_data = QuestionariesGrid::where(['induction_id' => $id, 'identifier' => 'Questionaries'])->first();
-
-        return view('frontend.TMS.Induction_training.induction_training_view', compact('inductionTraining', 'employees','employee_grid_data','employee_name'));
+    
+        // Return the view with all necessary data
+        return view('frontend.TMS.Induction_training.induction_training_view', compact(
+            'inductionTraining', 'employees', 'employee_grid_data', 'employee_name', 'data', 'savedSop', 'quize', 'document_training'
+        ));
     }
+    
 
 
     public function update(Request $request, $id)
@@ -861,52 +916,43 @@ class InductionTrainingController extends Controller
     
         $data = Document::all();
         $hods = User::get();
-
+        $delegate = User::get();
         $jobTraining = JobTraining::all();
         $record = ((RecordNumber::first()->value('counter')) + 1);
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        $employees = Employee::all();
+        $inductionTraining = Induction_training::all();
     
         if ($request->child_type == 'induction_training') {
-            return view('frontend.TMS.Job_Training.job_training', compact('employees','due_date','record','data','hods'));
+            return view('frontend.TMS.Job_Training.job_training', compact('employees','due_date','record','data','hods','jobTraining','delegate','inductionTraining'));
         } else {
-            return view('frontend.TMS.Job_Training.job_training', compact('employees','due_date','record','data','hods'));
+            return view('frontend.TMS.Job_Training.job_training', compact('employees','due_date','record','data','hods','jobTraining','delegate','inductionTraining'));
         }
     }
-    // public function report(Request $request, $id)
-    // {
-
-    //     $inductionTraining = Induction_training::find($id);
-    //     $employees = Employee::all();
-    //     $employee_grid_data = QuestionariesGrid::where(['induction_id' => $id, 'identifier' => 'Questionaries'])->first();
-
-    //     // $prductgigrid = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'ProductDetails'])->first();
-
-    //     // if (!empty($data)) {
-    //     //     $data->originator = User::where('id', $data->initiator_id)->value('name');
-    //         $pdf = App::make('dompdf.wrapper');
-    //         $time = Carbon::now();
-    //         $pdf = PDF::loadview('frontend.market_complaint.singleReport', compact('data', 'data1', 'prductgigrid'))
-    //             ->setOptions([
-    //                 'defaultFont' => 'sans-serif',
-    //                 'isHtml5ParserEnabled' => true,
-    //                 'isRemoteEnabled' => true,
-    //                 'isPhpEnabled' => true,
-    //             ]);
-    //         $pdf->setPaper('A4');
-    //         $pdf->render();
-    //         $canvas = $pdf->getDomPDF()->getCanvas();
-    //         $height = $canvas->get_height();
-    //         $width = $canvas->get_width();
-    //         $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-    //         $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
-    //         return $pdf->stream('InductionTraining' . $id . '.pdf');
-        
-
-
-    //     return view('frontend.TMS.Induction_training.induction_training_view');
-    // }
+    public static function inductionReport($id)
+    {
+        $data = Induction_training::find($id);
+        if (!empty($data)) {
+            $data->originator_id = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.TMS.induction_training.induction_report', compact('data'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('example.pdf' . $id . '.pdf');
+        }
+    }
 }

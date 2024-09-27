@@ -159,9 +159,13 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             <td>{{ Helpers::getdateFormat($employee->joining_date) }}</td>
                             <td>{{ $employee->status }}</td>
                             <td>
-                            <button type="button"  class="view-report-btn" onclick="window.location.href='{{ url('rcms/report/' . $employee->id) }}'" >
+                            <!-- <button type="button"  class="view-report-btn" onclick="window.location.href='{{ url('rcms/report/' . $employee->id) }}'" >
+                                View Report
+                            </button> -->
+                            <button type="button" class="view-report-btn" onclick="window.location.href='{{ url('rcms/report/' . $employee->id) }}'">
                                 View Report
                             </button>
+
                         </td>                  
 
                         </tr>
@@ -315,8 +319,9 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                 <th>Sr. No</th>
                                 <th>Trainer Name</th>
                                 <th>Department</th>
-                                <th>Due Date</th>
+                                <th>Training Date</th>
                                 <th>Status</th>
+                                <th>Report</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -325,8 +330,11 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                 <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">000{{ $trainer->id }}</a></td>
                                 <td>{{ $trainer->trainer_name ? $trainer->trainer_name : 'NA' }}</td>
                                 <td>{{ Helpers::getFullDepartmentName($trainer->department) ? Helpers::getFullDepartmentName($trainer->department) : 'NA' }}</td>
-                                <td>{{ Helpers::getdateFormat($trainer->due_date) }}</td>
+                                <td>{{ Helpers::getdateFormat($trainer->training_date) }}</td>
                                 <td>{{ $trainer->status }}</td>
+                                <td>     <button type="button" class="view-report-btn" onclick="window.location.href='{{ url('rcms/trainer_report/' . $trainer->id) }}'">
+                                                View Report
+                                            </button></td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -389,10 +397,11 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             <tr>
                                 <th>Name</th>
                                 <th>Department</th>
-                                <th>Site Location</th>
+                                <!-- <th>Site Location</th> -->
                                 <th>Start Date of Training</th>
                                 <th>End Date of Training</th>
                                 <th>Action</th>
+                                <th>Report</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -401,14 +410,34 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                 <td>{{ DB::table('job_trainings')->where('id', $job_training->id)->value('name') }}</td>
                                 {{-- <td>{{ DB::table('departments')->where('id', $job_training->department)->value('name') }}</td> --}}
                                 <td>{{ Helpers::getFullDepartmentName($job_training->department) ? Helpers::getFullDepartmentName($job_training->department) : 'NA' }}</td>
-                                <td>{{ $job_training->location}}</td>
-                                @for ($i = 1; $i <= 1; $i++) <td>{{ \Carbon\Carbon::parse($job_training->{"startdate_$i"})->format('d-M-Y') }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($job_training->{"enddate_$i"})->format('d-M-Y') }}</td>
-                                    @endfor
+                                <!-- <td>{{ $job_training->location}}</td> -->
+                                <!-- @for ($i = 1; $i <= 1; $i++)  -->
+                                <td>{{ \Carbon\Carbon::parse($job_training->{"start_date"})->format('d-M-Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($job_training->{"enddate_1"})->format('d-M-Y') }}</td>
+                                    <!-- @endfor -->
 
                                     <td>
-                                        <a href="{{ route('job_training_view', $job_training->id) }}">
-                                            <i class="fa-solid fa-pencil"></i>
+                                    
+                                        <!-- <a href="{{ route('job_training_view', $job_training->id) }}">
+                                            <i class="fa-solid fa-pencil"></i> -->
+
+                                            <div class="action-buttons">
+    
+                                            <a href="{{ route('job_training_view', $job_training->id) }}">
+                                                <i class="fa-solid fa-pencil"></i>
+                                            </a>
+                                            
+                                               </td>
+                                               <td>
+                                            <button type="button" class="view-report-btn"onclick="window.location.href='{{ url('rcms/job_report/' . $job_training->id) }}'" >
+                                                View Report
+                                            </button>
+                                        </div>
+
+                                           
+                                
+                                    
+                                            
                                     </td>
                             </tr>
                             @endforeach
@@ -428,10 +457,11 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             <th>Employee ID</th>
                             <th>Name Of Employee</th>
                             <th>Department</th>
-                            <th>Site Location</th>
+                            <!-- <th>Site Location</th> -->
                             <th>Qualification</th>
                             <th>Date Of Joining</th>
                             <th>Action</th>
+                            <th>Report</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -456,14 +486,49 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                 </td>
                 <td>{{ $induction->name_employee }}</td>
                 <td>{{ Helpers::getFullDepartmentName($induction->department ) }}</td>
-                <td>{{ $induction->location }}</td>
+                <!-- <td>{{ $induction->location }}</td> -->
                 <td>{{ $induction->qualification }}</td>
                 <td>{{ \Carbon\Carbon::parse($induction->date_joining)->format('d-M-Y') }}</td>
                 <td>
-                    <a href="{{ route('induction_training_view', $induction->id) }}">
+                    <!-- <a href="{{ route('induction_training_view', $induction->id) }}">
                         <i style="" class="fa-solid fa-pencil"></i>
-                    </a>
+                    </a> -->
+                    <div class="action-buttons">
+    
+                        <a href="{{ route('induction_training_view', $induction->id) }}">
+                            <i class="fa-solid fa-pencil"></i>
+                        </a>
+                        </td>
+                        <td>
+                        
+                        <button type="button" class="view-report-btn"onclick="window.location.href='{{ url('rcms/induction_report/' . $induction->id) }}'" >
+                            View Report
+                        </button>
+                    </div>
+                    </td>
+<style>
+    .action-buttons {
+    display: flex;
+    align-items: center;
+}
 
+.action-buttons a {
+    margin-right: 10px; 
+}
+
+.view-report-btn {
+    padding: 5px 10px;
+    background-color: #4274da; 
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.view-report-btn:hover {
+    background-color: #0056b3; 
+}
+
+</style>
                     
                 </td>
             </tr>
