@@ -113,7 +113,7 @@
                     '_checkdate`,`scheduled_end_date' + serialNumber +
                     '_checkdate`)" /></div></div></div></td>' +
                         '<td><input type="time" name="scheduled_end_time[]"></td>' +
-                        '<td><select name="auditor[]">' +
+                        '<td><select id="select-state-grid" name="auditor[]" multiple>' +
                         '<option value="">Select a value</option>';
 
                     for (var i = 0; i < users.length; i++) {
@@ -121,7 +121,7 @@
                     }
 
                     html += '</select></td>' +
-                        '<td><select name="auditee[]">' +
+                        '<td><select id="select-state-grid" name="auditee[]"multiple>' +
                         '<option value="">Select a value</option>';
 
                     for (var i = 0; i < users.length; i++) {
@@ -878,7 +878,7 @@
                                                 <tr>
                                                     <th>Row</th>
                                                     <th>Auditor Name</th>
-                                                    <th>Regulatory Agency</th>
+                                                    <th>Department</th>
                                                     <th>Designation</th>
                                                     <th>Remarks</th>
                                                     <th>Action</th>
@@ -1651,14 +1651,14 @@
                                                 </td>
 
                                                 <td><input type="time" name="scheduled_end_time[]"></td>
-                                                <td> <select id="select-state" placeholder="Select..." name="auditor[]">
+                                                <td> <select id="select-state-grid" placeholder="Select..." name="auditor[]"multiple>
                                                         <option value="">Select a value</option>
                                                         @foreach ($users as $data)
                                                             <option value="{{ $data->id }}">{{ $data->name }}
                                                             </option>
                                                         @endforeach
                                                     </select></td>
-                                                <td><select id="select-state" placeholder="Select..." name="auditee[]">
+                                                <td><select id="select-state-grid" placeholder="Select..." name="auditee[]"multiple>
                                                         <option value="">Select a value</option>
                                                         @foreach ($users as $data)
                                                             <option value="{{ $data->id }}">{{ $data->name }}
@@ -1670,6 +1670,12 @@
                                         </table>
                                     </div>
                                 </div>
+                                <script>
+                                     VirtualSelect.init({
+                                                        ele: '#select-state-grid'
+                                                    });
+                                    </script>
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="checklists">Checklists</label>
@@ -2403,7 +2409,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-4">
+                                        {{-- <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancelled By</label>
                                         <div class="static"></div>
@@ -2421,7 +2427,7 @@
                                                 <label for="Audit Schedule On">Comment</label>
                                                 <div class="static"></div>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                 <div class="col-lg-4">
                                     <div class="group-input">

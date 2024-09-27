@@ -115,7 +115,7 @@
 
             var cell7 = newRow.insertCell(6);
 
-            var userHtml = '<select name="auditee[]"><option value="">-- Select --</option>';
+            var userHtml = '<select id="select-state-grid" name="auditee[]" multiple><option value="">-- Select --</option>';
             for (var i = 0; i < users.length; i++) {
                 userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
             }
@@ -125,7 +125,7 @@
 
             var cell8 = newRow.insertCell(7);
 
-            var userHtml = '<select name="auditor[]"><option value="">-- Select --</option>';
+            var userHtml = '<select id="select-state-grid" name="auditor[]"multiple><option value="">-- Select --</option>';
             for (var i = 0; i < users.length; i++) {
                 userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
             }
@@ -1039,7 +1039,7 @@
                                                         <tr>
                                                             <th>Auditor No</th>
                                                             <th>Auditor Name</th>
-                                                            <th>Regulatory Agency</th>
+                                                            <th>Department</th>
                                                             <th>Designation</th>
                                                             <th>Remarks</th>
                                                             <th>Action</th>
@@ -2050,9 +2050,9 @@
                                                                                 name="scheduled_end_time[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                                 value="{{ unserialize($grid_data->end_time)[$key] ? unserialize($grid_data->end_time)[$key] : '' }}">
                                                                         </td>
-                                                                        <td> <select id="select-state"
+                                                                        {{-- <td> <select id="select-state-grid"
                                                                                 placeholder="Select..."
-                                                                                name="auditor[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                                name="auditor[]"multiple {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                                 <option value="">-Select-</option>
                                                                                 @foreach ($users as $value)
                                                                                     <option
@@ -2061,10 +2061,37 @@
                                                                                         {{ $value->name }}
                                                                                     </option>
                                                                                 @endforeach
-                                                                            </select></td>
-                                                                        <td> <select id="select-state"
+                                                                            </select>
+                                                                        </td> --}}
+                                                                        <td>
+                                                                            <select id="select-state-grid" 
+                                                                                    placeholder="Select..." 
+                                                                                    name="auditor[]" 
+                                                                                    multiple 
+                                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                                <option value="">-Select-</option>
+                                                                        
+                                                                                @php
+                                                                                    // Ensure grid_data->auditor is an array or serialized data
+                                                                                    // First access $grid_data->auditor[$key], then explode its value
+                                                                                    $auditorData = !empty($grid_data->auditor) && isset($grid_data->auditor[$key]) ? $grid_data->auditor[$key] : '';
+                                                                                    $selectedAuditors = !empty($auditorData) ? explode(',', $auditorData) : [];
+                                                                                @endphp
+                                                                        
+                                                                                @foreach ($users as $value)
+                                                                                    <option value="{{ $value->id }}" 
+                                                                                        {{ in_array($value->id, $selectedAuditors) ? 'selected' : '' }}>
+                                                                                        {{ $value->name }}
+                                                                                    </option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </td>
+                                                                        
+                                                                        
+
+                                                                        {{-- <td> <select id="select-state-grid"
                                                                                 placeholder="Select..."
-                                                                                name="auditee[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                                name="auditee[]"multiple {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                                 <option value="">-Select-</option>
                                                                                 @foreach ($users as $value)
                                                                                     <option
@@ -2073,7 +2100,54 @@
                                                                                         {{ $value->name }}
                                                                                     </option>
                                                                                 @endforeach
-                                                                            </select></td>
+                                                                            </select>
+                                                                        </td> --}}
+                                                                        {{-- <td>
+                                                                            <select id="select-state-grid" 
+                                                                                    placeholder="Select..." 
+                                                                                    name="auditee[]" 
+                                                                                    multiple 
+                                                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                                <option value="">-Select-</option>
+                                                                        
+                                                                                @php
+                                                                                    // Explode the comma-separated string into an array of auditee IDs
+                                                                                    $selectedauditee = !empty($grid_data->auditee[$key])  ? explode(',', $grid_data->auditee[$key])  : [];
+                                                                                @endphp
+                                                                        
+                                                                                @foreach ($users as $value)
+                                                                                    <option value="{{ $value->id }}" 
+                                                                                        {{ in_array($value->id, $selectedauditee) ? 'selected' : '' }}>
+                                                                                        {{ $value->name }}
+                                                                                    </option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </td> --}}
+                                                                        <td>
+                                                                            <select id="select-state-grid" 
+                                                                                    placeholder="Select..." 
+                                                                                    name="auditee[]" 
+                                                                                    multiple 
+                                                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                                <option value="">-Select-</option>
+                                                                        
+                                                                                @php
+                                                                                    // Ensure grid_data->auditee is an array or serialized data
+                                                                                    // First access $grid_data->auditee[$key], then explode its value
+                                                                                    $auditeeData = !empty($grid_data->auditee) && isset($grid_data->auditee[$key]) ? $grid_data->auditee[$key] : '';
+                                                                                    $selectedauditee = !empty($auditeeData) ? explode(',', $auditeeData) : [];
+                                                                                @endphp
+                                                                        
+                                                                                @foreach ($users as $value)
+                                                                                    <option value="{{ $value->id }}" 
+                                                                                        {{ in_array($value->id, $selectedauditee) ? 'selected' : '' }}>
+                                                                                        {{ $value->name }}
+                                                                                    </option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </td>
+                                                                        
+                                                                        
                                                                         <td><input type="text"
                                                                                 name="remark[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                                 value="{{ unserialize($grid_data->remark)[$key] ? unserialize($grid_data->remark)[$key] : '' }}">
@@ -2086,6 +2160,11 @@
                                                 </table>
                                             </div>
                                         </div>
+                                        <script>
+                                     VirtualSelect.init({
+                                                        ele: '#select-state-grid'
+                                                    });
+                                    </script>
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="checklists">Checklists</label>
@@ -3097,7 +3176,7 @@
                                                     </div>
                                                 </div> -->
 
-                                    <div class="col-lg-4">
+                                    {{-- <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Cancelled By">Cancelled By</label>
                                             <div class="static">{{ $data->cancelled_2_by }}</div>
@@ -3115,7 +3194,7 @@
                                             <label for="Audit Schedule On">Comment</label>
                                             <div class="static">{{ $data->cancel_2_comment }}</div>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
