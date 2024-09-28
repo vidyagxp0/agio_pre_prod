@@ -26,7 +26,7 @@ use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\ExtensionNewController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ResamplingController;
-use App\Http\Controllers\InductionTrainingcontroller;
+use App\Http\Controllers\InductionTrainingController;
 use App\Http\Controllers\OOSMicroController;
 use App\Http\Controllers\rcms\AuditeeController;
 use App\Http\Controllers\rcms\NonConformaceController;

@@ -214,23 +214,8 @@ $users = DB::table('users')->get();
                     <button class="cctablinks" id="questionariesTab" style="display: none;" onclick="openCity(event, 'CCForm2')">Questionaries</button>
                 @endif --}}
 
-                <!-- @php
-                    $lowerDesignations = ['Trainee', 'Officer', 'Sr. Officer', 'Executive', 'Sr.executive'];
-                @endphp
 
-                @if(in_array($inductionTraining->designation, $lowerDesignations) || $inductionTraining->questionaries_required == 'Yes')
-                    <button class="cctablinks" id="questionariesTab" onclick="openCity(event, 'CCForm2')">Questionaries</button>
-                @else
-                    <button class="cctablinks" id="questionariesTab" style="display: none;" onclick="openCity(event, 'CCForm2')">Questionaries</button>
-                @endif -->
-
-                @php
-                    $lowerDesignations = ['Trainee', 'Officer', 'Sr. Officer', 'Executive', 'Sr. Executive'];
-                    $higherDesignations = ['Asst. manager', 'Manager', 'Sr. manager', 'Deputy GM', 'AGM and GM', 'Head quality', 'VP quality', 'Plant head'];
-                @endphp
-
-                <button class="cctablinks" id="questionariesTab" style="{{ in_array($inductionTraining->designation, $lowerDesignations) || $inductionTraining->questionaries_required == 'Yes' ? '' : 'display: none;' }}" onclick="openCity(event, 'CCForm2')">Questionaries</button>
-
+                <button class="cctablinks" id="questionariesTab" style="display: none;" onclick="openCity(event, 'CCForm2')">Questionaries</button>
 
 
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Final Remarks</button> -->
@@ -328,75 +313,88 @@ $users = DB::table('users')->get();
                             </div> --}}
 
                             <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Job Title">Designation<span class="text-danger">*</span></label>
-                                    <select name="designation" id="job_title" required onchange="checkDesignation()" readonly>
-                                        <option value="">----Select---</option>
-                                        <option value="Trainee" {{ $inductionTraining->designation == 'Trainee' ? 'selected' : '' }}>Trainee</option>
-                                        <option value="Officer" {{ $inductionTraining->designation == 'Officer' ? 'selected' : '' }}>Officer</option>
-                                        <option value="Sr. Officer" {{ $inductionTraining->designation == 'Sr. Officer' ? 'selected' : '' }}>Sr. Officer</option>
-                                        <option value="Executive" {{ $inductionTraining->designation == 'Executive' ? 'selected' : '' }}>Executive</option>
-                                        <option value="Sr. Executive" {{ $inductionTraining->designation == 'Sr. Executive' ? 'selected' : '' }}>Sr. Executive</option>
-                                        <option value="Asst. manager" {{ $inductionTraining->designation == 'Asst. manager' ? 'selected' : '' }}>Asst. Manager</option>
-                                        <option value="Manager" {{ $inductionTraining->designation == 'Manager' ? 'selected' : '' }}>Manager</option>
-                                        <option value="Sr. manager" {{ $inductionTraining->designation == 'Sr. manager' ? 'selected' : '' }}>Sr. Manager</option>
-                                        <option value="Deputy GM" {{ $inductionTraining->designation == 'Deputy GM' ? 'selected' : '' }}>Deputy GM</option>
-                                        <option value="AGM and GM" {{ $inductionTraining->designation == 'AGM and GM' ? 'selected' : '' }}>AGM and GM</option>
-                                        <option value="Head quality" {{ $inductionTraining->designation == 'Head quality' ? 'selected' : '' }}>Head quality</option>
-                                        <option value="VP quality" {{ $inductionTraining->designation == 'VP quality' ? 'selected' : '' }}>VP quality</option>
-                                        <option value="Plant head" {{ $inductionTraining->designation == 'Plant head' ? 'selected' : '' }}>Plant head</option>
-                                    </select>
-                                </div>
-                            </div>
+    <div class="group-input">
+        <label for="Job Title">Designation<span class="text-danger">*</span></label>
+        <select name="designation" id="job_title" required onchange="checkDesignation()">
+            <option value="">----Select---</option>
+            <option value="Trainee" {{ $inductionTraining->designation == 'Trainee' ? 'selected' : '' }}>Trainee</option>
+            <option value="Officer" {{ $inductionTraining->designation == 'Officer' ? 'selected' : '' }}>Officer</option>
+            <option value="Sr. Officer" {{ $inductionTraining->designation == 'Sr. Officer' ? 'selected' : '' }}>Sr. Officer</option>
+            <option value="Executive" {{ $inductionTraining->designation == 'Executive' ? 'selected' : '' }}>Executive</option>
+            <option value="Sr. Executive" {{ $inductionTraining->designation == 'Sr. Executive' ? 'selected' : '' }}>Sr. Executive</option>
+            <option value="Asst. manager" {{ $inductionTraining->designation == 'Asst. manager' ? 'selected' : '' }}>Asst. Manager</option>
+            <option value="Manager" {{ $inductionTraining->designation == 'Manager' ? 'selected' : '' }}>Manager</option>
+            <option value="Sr. manager" {{ $inductionTraining->designation == 'Sr. manager' ? 'selected' : '' }}>Sr. Manager</option>
+            <option value="Deputy GM" {{ $inductionTraining->designation == 'Deputy GM' ? 'selected' : '' }}>Deputy GM</option>
+            <option value="AGM and GM" {{ $inductionTraining->designation == 'AGM and GM' ? 'selected' : '' }}>AGM and GM</option>
+            <option value="Head quality" {{ $inductionTraining->designation == 'Head quality' ? 'selected' : '' }}>Head quality</option>
+            <option value="VP quality" {{ $inductionTraining->designation == 'VP quality' ? 'selected' : '' }}>VP quality</option>
+            <option value="Plant head" {{ $inductionTraining->designation == 'Plant head' ? 'selected' : '' }}>Plant head</option>
+        </select>
+    </div>
+</div>
 
-                            @if(in_array($inductionTraining->designation, $higherDesignations))
-                                <div class="col-lg-6" id="yesNoField" style="display: none;">
-                                    <div class="group-input">
-                                        <label for="questionariesRequired">Is Questionaries Required?<span class="text-danger">*</span></label>
-                                        <select name="questionaries_required" id="questionaries_required" onchange="checkYesNo()">
-                                            <option value="">Select</option>
-                                            <option value="Yes" {{ $inductionTraining->questionaries_required == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                            <option value="No" {{ $inductionTraining->questionaries_required == 'No' ? 'selected' : '' }}>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            @endif
+<!-- The "Is Questionaries Required?" input field -->
+<div class="col-lg-6" id="yesNoField" style="display: none;">
+    <div class="group-input">
+        <label for="questionariesRequired">Evaluation Required Required?<span class="text-danger">*</span></label>
+        <select name="questionaries_required" id="questionaries_required" onchange="checkYesNo()">
+            <option value="">Select</option>
+            <option value="Yes" {{ $inductionTraining->questionaries_required == 'Yes' ? 'selected' : '' }}>Yes</option>
+            <option value="No" {{ $inductionTraining->questionaries_required == 'No' ? 'selected' : '' }}>No</option>
+        </select>
+    </div>
+</div>
 
-                            <script>
-                                function checkDesignation() {
-                                    const jobTitle = document.getElementById('job_title').value;
-                                    const yesNoField = document.getElementById('yesNoField');
-                                    const questionariesTab = document.getElementById('questionariesTab');
-                                    const questionariesRequired = document.getElementById('questionaries_required').value;
+<script>
+    // Arrays to identify lower and higher designations
+    const lowerDesignations = ['Trainee', 'Officer', 'Sr. Officer', 'Executive', 'Sr. Executive'];
+    const higherDesignations = ['Asst. manager', 'Manager', 'Sr. manager', 'Deputy GM', 'AGM and GM', 'Head quality', 'VP quality', 'Plant head'];
 
-                                    // Show Yes/No field for higher designations
-                                    if (higherDesignations.includes(jobTitle)) {
-                                        yesNoField.style.display = "block";
-                                        checkYesNo(); // Check if the Questionaries tab should be visible
-                                    } else {
-                                        yesNoField.style.display = "none";
-                                        questionariesTab.style.display = "none"; // Hide the Questionaries tab for lower designations
-                                    }
-                                }
+    // Function to check the selected designation and control the visibility of the Yes/No field and Questionaries tab
+    function checkDesignation() {
+        const selectedDesignation = document.getElementById('job_title').value;
+        const yesNoField = document.getElementById('yesNoField');
+        const questionariesTab = document.getElementById('questionariesTab');
 
-                                function checkYesNo() {
-                                    const questionariesRequired = document.getElementById('questionaries_required').value;
-                                    const questionariesTab = document.getElementById('questionariesTab');
+        if (lowerDesignations.includes(selectedDesignation)) {
+            // For lower designations, always show the Questionaries tab
+            questionariesTab.style.display = 'inline';
+            yesNoField.style.display = 'none';  // No need to show the Yes/No field
+        } else if (higherDesignations.includes(selectedDesignation)) {
+            // For higher designations, show the Yes/No field to ask if Questionaries is required
+            yesNoField.style.display = 'block';
+            // Hide the Questionaries tab initially until user selects "Yes"
+            questionariesTab.style.display = 'none';
+        } else {
+            // If no valid designation is selected, hide both fields
+            yesNoField.style.display = 'none';
+            questionariesTab.style.display = 'none';
+        }
+    }
 
-                                    // Show or hide the Questionaries tab based on Yes/No selection
-                                    if (questionariesRequired === "Yes") {
-                                        questionariesTab.style.display = "block"; // Show the Questionaries tab
-                                    } else {
-                                        questionariesTab.style.display = "none"; // Hide the Questionaries tab
-                                    }
-                                }
+    function checkYesNo() {
+        const questionariesRequired = document.getElementById('questionaries_required').value;
+        const questionariesTab = document.getElementById('questionariesTab');
 
-                                // Ensure correct visibility on page load
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    checkDesignation(); // Check designation on load
-                                    checkYesNo(); // Check Yes/No field on load
-                                });
-                            </script>
+        if (questionariesRequired === 'Yes') {
+            questionariesTab.style.display = 'inline';
+        } else {
+            questionariesTab.style.display = 'none';
+        }
+    }
+
+    // Initial check on page load (to handle pre-selected values)
+    document.addEventListener("DOMContentLoaded", function() {
+        checkDesignation();
+        // If higher designation and "Yes" is already selected, show the Questionaries tab
+        if (document.getElementById('questionaries_required').value === 'Yes') {
+            document.getElementById('questionariesTab').style.display = 'inline';
+        }
+    });
+</script>
+
+ 
                             
                             <div class="col-6">
                                 <div class="group-input">
@@ -425,6 +423,22 @@ $users = DB::table('users')->get();
                             </div>
 
                             <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="start_date">Start Date</label>
+                                        <input id="start_date" type="date" name="start_date"
+                                            value="{{ $inductionTraining->start_date }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="end_date">End Date</label>
+                                        <input id="end_date" type="date" name="end_date"
+                                            value="{{ $inductionTraining->end_date }}">
+                                    </div>
+                                </div>
+
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="hod">Evaluation Required</label>
                                     <select name="evaluation_required" id="" >
@@ -438,7 +452,7 @@ $users = DB::table('users')->get();
                                         </option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-12">
                                 <div class="group-input">
@@ -465,7 +479,7 @@ $users = DB::table('users')->get();
 
                                                     <td>
                                                         <!-- <textarea name="document_number_1" value="">{{ $inductionTraining->{"document_number_1"} }}</textarea> -->
-                                                        <!-- <select name="document_number_1" id="sopdocument" onchange="fetchQuestion(this.value)">
+                                                        <select name="document_number_1" id="sopdocument" onchange="fetchQuestion(this.value)">
                                                             <option value="">---Select Document Number---</option>
 
                                                             @foreach ($data as $dat)
@@ -475,11 +489,10 @@ $users = DB::table('users')->get();
                                                                     {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
                                                                 </option>
                                                             @endforeach
-                                                        </select> -->
+                                                        </select>
 
-                                        <select name="document_number_1" id="sopdocument" onchange="fetchQuestion(this.value)">
+                                        <!-- <select name="document_number_1" id="sopdocument" onchange="fetchQuestion(this.value)">
                                             <option value="">---Select SOP Document---</option>
-
                                             @foreach ($data as $dat)
                                                 <option
                                                     value="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}"
@@ -487,8 +500,7 @@ $users = DB::table('users')->get();
                                                     {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
                                                 </option>
                                             @endforeach
-
-                                        </select> 
+                                        </select>  -->
                                     
                                                     </td>
                                                     <td>

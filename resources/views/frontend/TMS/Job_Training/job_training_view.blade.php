@@ -215,7 +215,7 @@
             <button class="cctablinks " onclick="openCity(event, 'CCForm3')">QA Review</button>
             <button class="cctablinks " onclick="openCity(event, 'CCForm4')">QA/CQA Approval</button>
 
-            <button class="cctablinks " onclick="openCity(event, 'CCForm5')">Questionaries</button>
+            <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm5')">Questionaries</button> -->
 
             <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Evaluation</button>
 
@@ -252,14 +252,14 @@
                
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="RLS Record Number">Emp Name </label>
+                                        <label for="RLS Record Number">Employee Name </label>
                                         <input type="text" name="name" id="name_employee"
                                             value="{{ $jobTraining->name }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="employee_id">Emp Code</label>
+                                        <label for="employee_id">Employee Code</label>
                                         <input id="employee_id" name="empcode" type="text"
                                             value="{{ $jobTraining->empcode }}" readonly>
                                         @error('empcode')
@@ -285,7 +285,7 @@
                                         </select> 
                                     </div>
                                 </div> --}}
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type_of_training">SOP Document</label>
 
@@ -301,11 +301,11 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 
 
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type_of_training">Type of Training</label>
                                         <select name="type_of_training" id="type_of_training">
@@ -318,7 +318,7 @@
                                                 Classroom</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -331,8 +331,8 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="end_date">End Date</label>
-                                        <input id="end_date" type="date" name="enddate_1"
-                                            value="{{ $jobTraining->enddate_1 }}">
+                                        <input id="end_date" type="date" name="end_date"
+                                            value="{{ $jobTraining->end_date }}">
                                     </div>
                                 </div>
 
@@ -461,11 +461,12 @@
                                                         <th style="width: 5%;">Sr.No.</th>
                                                         <th style="width: 30%;">Subject</th>
                                                         <th>Type of Training</th>
-                                                        <th>Reference Document No.</th>
-                                                        {{-- <th>Trainee Name</th> --}}
+                                                        <th>SOP NO.</th>
                                                         <th>Trainer</th>
                                                         <th> Date of Training</th>
                                                         <th>Date of Completion </th>
+                                                        <th>SOP Preview</th>
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -481,9 +482,9 @@
                                                             ->get();
                                                     @endphp
 
-                                                    @for ($i = 1; $i <= 5; $i++)
+                                                    <!-- @for ($i = 1; $i <= 5; $i++)
                                                         <tr>
-                                                            <td>{{ $i }}</td>
+                                                            <td>{{ $i }} </td>
                                                             <td>
                                                                 <input type="text" name="subject_{{ $i }}"
                                                                     value="{{ $jobTraining->{'subject_' . $i} }}">
@@ -529,13 +530,271 @@
                                                             </td>
                               
                                                         </tr>
-                                                    @endfor
+                                                    @endfor -->
+<tr>
+<td>1</td>
+<td>
+                <select name="subject_1" id="sopdocument" onchange="fetchDocumentDetails(this)">
+                    <option value="">---Select Document Name---</option>
+                    @foreach ($data as $dat)
+                    <option value="{{ $dat->document_name }}" 
+                            data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                            data-sop-link="{{ $dat->id }}"
+                            @if(old('subject_1', $jobTraining->subject_1 ?? '') == $dat->document_name) selected @endif>
+                        {{ $dat->document_name }}
+                    </option>
+                    @endforeach
+                </select>
+            </td>
+            <td><input type="text" name="type_of_training_1" value="{{ old('type_of_training_1', $jobTraining->type_of_training_1 ?? '') }}"></td>
+            <td><input type="text" name="reference_document_no_1" id="document_number" value="{{ old('reference_document_no_1', $jobTraining->reference_document_no_1 ?? '') }}" readonly></td>
+            <td>
+                <select name="trainer_1" id="trainer_1">
+                    <option value="">-- Select --</option>
+                    @foreach ($usersDetails as $u)
+                    <option value="{{ $u->id }}" @if(old('trainer_1', $jobTraining->trainer_1 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td><input type="date" name="startdate_1" id="startdate_1" value="{{ old('startdate_1', $jobTraining->startdate_1 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+            <td><input type="date" name="enddate_1" id="enddate_1" value="{{ old('enddate_1', $jobTraining->enddate_1 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+            <td>
+                <a href="{{ $jobTraining->selected_document_id ? '/documents/viewpdf/' . $jobTraining->selected_document_id : '#' }}" id="view_sop" target="_blank" style="display: {{ $jobTraining->selected_document_id ? 'inline' : 'none' }};">View SOP</a>
+            </td>
+</tr>
+
+<input type="hidden" id="selected_document_id" name="selected_document_id" value="{{ old('selected_document_id', $jobTraining->selected_document_id ?? '') }}">
+
+                                                    <tr>
+                                                    <td>2</td>
+                                                    <td>
+        <select name="subject_2" id="sopdocument" onchange="fetchDocumentDetails2(this)">
+            <option value="">---Select Document Name---</option>
+            @foreach ($data as $dat)
+            <option value="{{ $dat->document_name }}" 
+                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                    data-sop-link="{{ $dat->id }}"
+                    @if(old('subject_2', $jobTraining->subject_2 ?? '') == $dat->document_name) selected @endif>
+                {{ $dat->document_name }}
+            </option>
+            @endforeach
+        </select>
+    </td>
+    <td><input type="text" name="type_of_training_2" value="{{ old('type_of_training_2', $jobTraining->type_of_training_2 ?? '') }}"></td>
+    <td><input type="text" name="reference_document_no_2" id="document_number2" value="{{ old('reference_document_no_2', $jobTraining->reference_document_no_2 ?? '') }}" readonly></td>
+    <td>
+        <select name="trainer_2" id="trainer_2">
+            <option value="">-- Select --</option>
+            @foreach ($usersDetails as $u)
+            <option value="{{ $u->id }}" @if(old('trainer_2', $jobTraining->trainer_2 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
+            @endforeach
+        </select>
+    </td>
+    <td><input type="date" name="startdate_2" id="startdate_2" value="{{ old('startdate_2', $jobTraining->startdate_2 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+    <td><input type="date" name="enddate_2" id="enddate_2" value="{{ old('enddate_2', $jobTraining->enddate_2 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+    <td>
+        <a href="{{ $jobTraining->selected_document_id ? '/documents/viewpdf/' . $jobTraining->selected_document_id : '#' }}" id="view_sop2" target="_blank" style="display: {{ $jobTraining->selected_document_id ? 'inline' : 'none' }};">View SOP</a>
+    </td>
+</tr>
+<input type="hidden" id="selected_document_id2" name="selected_document_id" value="{{ old('selected_document_id', $jobTraining->selected_document_id ?? '') }}">
+
+<tr>
+<td>3</td>
+<td>
+        <select name="subject_3" id="sopdocument" onchange="fetchDocumentDetails3(this)">
+            <option value="">---Select Document Name---</option>
+            @foreach ($data as $dat)
+            <option value="{{ $dat->document_name }}" 
+                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                    data-sop-link="{{ $dat->id }}"
+                    @if(old('subject_3', $jobTraining->subject_3 ?? '') == $dat->document_name) selected @endif>
+                {{ $dat->document_name }}
+            </option>
+            @endforeach
+        </select>
+    </td>
+    <td><input type="text" name="type_of_training_3" value="{{ old('type_of_training_3', $jobTraining->type_of_training_3 ?? '') }}"></td>
+    <td><input type="text" name="reference_document_no_3" id="document_number3" value="{{ old('reference_document_no_3', $jobTraining->reference_document_no_3 ?? '') }}" readonly></td>
+    <td>
+        <select name="trainer_3" id="trainer_3">
+            <option value="">-- Select --</option>
+            @foreach ($usersDetails as $u)
+            <option value="{{ $u->id }}" @if(old('trainer_3', $jobTraining->trainer_3 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
+            @endforeach
+        </select>
+    </td>
+    <td><input type="date" name="startdate_3" id="startdate_3" value="{{ old('startdate_3', $jobTraining->startdate_3 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+    <td><input type="date" name="enddate_3" id="enddate_3" value="{{ old('enddate_3', $jobTraining->enddate_3 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+    <td>
+        <a href="{{ $jobTraining->selected_document_id ? '/documents/viewpdf/' . $jobTraining->selected_document_id : '#' }}" id="view_sop3" target="_blank" style="display: {{ $jobTraining->selected_document_id ? 'inline' : 'none' }};">View SOP</a>
+    </td>
+</tr>
+<input type="hidden" id="selected_document_id3" name="selected_document_id" value="{{ old('selected_document_id', $jobTraining->selected_document_id ?? '') }}">
+<tr>
+<td>4</td>
+<td>
+        <select name="subject_4" id="sopdocument" onchange="fetchDocumentDetails4(this)">
+            <option value="">---Select Document Name---</option>
+            @foreach ($data as $dat)
+            <option value="{{ $dat->document_name }}" 
+                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                    data-sop-link="{{ $dat->id }}"
+                    @if(old('subject_4', $jobTraining->subject_4 ?? '') == $dat->document_name) selected @endif>
+                {{ $dat->document_name }}
+            </option>
+            @endforeach
+        </select>
+    </td>
+    <td><input type="text" name="type_of_training_4" value="{{ old('type_of_training_4', $jobTraining->type_of_training_4 ?? '') }}"></td>
+    <td><input type="text" name="reference_document_no_4" id="document_number4" value="{{ old('reference_document_no_4', $jobTraining->reference_document_no_4 ?? '') }}" readonly></td>
+    <td>
+        <select name="trainer_4" id="trainer_4">
+            <option value="">-- Select --</option>
+            @foreach ($usersDetails as $u)
+            <option value="{{ $u->id }}" @if(old('trainer_4', $jobTraining->trainer_4 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
+            @endforeach
+        </select>
+    </td>
+    <td><input type="date" name="startdate_4" id="startdate_4" value="{{ old('startdate_4', $jobTraining->startdate_4 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+    <td><input type="date" name="enddate_4" id="enddate_4" value="{{ old('enddate_4', $jobTraining->enddate_4 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+    <td>
+        <a href="{{ $jobTraining->selected_document_id ? '/documents/viewpdf/' . $jobTraining->selected_document_id : '#' }}" id="view_sop4" target="_blank" style="display: {{ $jobTraining->selected_document_id ? 'inline' : 'none' }};">View SOP</a>
+    </td>
+</tr>
+<input type="hidden" id="selected_document_id4" name="selected_document_id" value="{{ old('selected_document_id', $jobTraining->selected_document_id ?? '') }}">
+
+<tr>
+<td>5</td>
+<td>
+        <select name="subject_5" id="sopdocument" onchange="fetchDocumentDetails5(this)">
+            <option value="">---Select Document Name---</option>
+            @foreach ($data as $dat)
+            <option value="{{ $dat->document_name }}" 
+                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                    data-sop-link="{{ $dat->id }}"
+                    @if(old('subject_5', $jobTraining->subject_5 ?? '') == $dat->document_name) selected @endif>
+                {{ $dat->document_name }}
+            </option>
+            @endforeach
+        </select>
+    </td>
+    <td><input type="text" name="type_of_training_5" value="{{ old('type_of_training_5', $jobTraining->type_of_training_5 ?? '') }}"></td>
+    <td><input type="text" name="reference_document_no_5" id="document_number5" value="{{ old('reference_document_no_5', $jobTraining->reference_document_no_5 ?? '') }}" readonly></td>
+    <td>
+        <select name="trainer_5" id="trainer_5">
+            <option value="">-- Select --</option>
+            @foreach ($usersDetails as $u)
+            <option value="{{ $u->id }}" @if(old('trainer_5', $jobTraining->trainer_5 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
+            @endforeach
+        </select>
+    </td>
+    <td><input type="date" name="startdate_5" id="startdate_5" value="{{ old('startdate_5', $jobTraining->startdate_5 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+    <td><input type="date" name="enddate_5" id="enddate_5" value="{{ old('enddate_5', $jobTraining->enddate_5 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+    <td>
+        <a href="{{ $jobTraining->selected_document_id ? '/documents/viewpdf/' . $jobTraining->selected_document_id : '#' }}" id="view_sop5" target="_blank" style="display: {{ $jobTraining->selected_document_id ? 'inline' : 'none' }};">View SOP</a>
+    </td>
+</tr>
+<input type="hidden" id="selected_document_id5" name="selected_document_id" value="{{ old('selected_document_id', $jobTraining->selected_document_id ?? '') }}">
+
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- <script>
+                                function fetchDocumentDetails(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+                                    var documentNumber = selectedOption.getAttribute('data-doc-number');
+                                    
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+
+                                    document.getElementById('document_number').value = documentNumber;
+
+                                    var sopAnchor = document.getElementById('view_sop');
+                                    if (documentId) {
+                                        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+                                        sopAnchor.style.display = 'inline';
+                                    } else {
+                                        sopAnchor.style.display = 'none';
+                                    }
+                                }
+
+                                function fetchDocumentDetails2(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+                                    var documentNumber = selectedOption.getAttribute('data-doc-number');
+                                    
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+
+                                    document.getElementById('document_number1').value = documentNumber;
+
+                                    var sopAnchor = document.getElementById('view_sop1');
+                                    if (documentId) {
+                                        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+                                        sopAnchor.style.display = 'inline';
+                                    } else {
+                                        sopAnchor.style.display = 'none';
+                                    }
+                                }
+
+                                function fetchDocumentDetails3(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+                                    var documentNumber = selectedOption.getAttribute('data-doc-number');
+                                    
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+
+                                    document.getElementById('document_number2').value = documentNumber;
+
+                                    var sopAnchor = document.getElementById('view_sop2');
+                                    if (documentId) {
+                                        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+                                        sopAnchor.style.display = 'inline';
+                                    } else {
+                                        sopAnchor.style.display = 'none';
+                                    }
+                                }
+
+                                function fetchDocumentDetails4(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+                                    var documentNumber = selectedOption.getAttribute('data-doc-number');
+                                    
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+
+                                    document.getElementById('document_number3').value = documentNumber;
+
+                                    var sopAnchor = document.getElementById('view_sop3');
+                                    if (documentId) {
+                                        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+                                        sopAnchor.style.display = 'inline';
+                                    } else {
+                                        sopAnchor.style.display = 'none';
+                                    }
+                                }
+
+                                function fetchDocumentDetails5(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+                                    var documentNumber = selectedOption.getAttribute('data-doc-number');
+                                    
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+
+                                    document.getElementById('document_number4').value = documentNumber;
+
+                                    var sopAnchor = document.getElementById('view_sop4');
+                                    if (documentId) {
+                                        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+                                        sopAnchor.style.display = 'inline';
+                                    } else {
+                                        sopAnchor.style.display = 'none';
+                                    }
+                                }
+                            </script> -->
+
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
@@ -546,6 +805,106 @@
                     </div>
 
                 </div>
+<script>
+  function fetchDocumentDetails(selectElement) {
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+    var documentNumber = selectedOption.getAttribute('data-doc-number');
+    var documentId = selectedOption.getAttribute('data-sop-link');
+    
+    // Update document number input
+    document.getElementById('document_number').value = documentNumber;
+
+    // Update SOP link visibility
+    var sopAnchor = document.getElementById('view_sop');
+    if (documentId) {
+        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+        sopAnchor.style.display = 'inline';
+    } else {
+        sopAnchor.style.display = 'none';
+    }
+
+    // Update hidden input field
+    var hiddenField = document.getElementById('selected_document_id');
+    hiddenField.value = documentId;
+
+    // Log values for debugging
+    console.log("Document ID:", documentId);
+    console.log("Hidden field value:", hiddenField.value);
+}
+</script>
+<script>
+    function fetchDocumentDetails2(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+        var documentNumber = selectedOption.getAttribute('data-doc-number');
+        var documentId = selectedOption.getAttribute('data-sop-link');
+        
+        // Update document number input
+        document.getElementById('document_number2').value = documentNumber;
+
+        // Update SOP link visibility
+        var sopAnchor = document.getElementById('view_sop2');
+        if (documentId) {
+            sopAnchor.href = `/documents/viewpdf/${documentId}`;
+            sopAnchor.style.display = 'inline';
+        } else {
+            sopAnchor.style.display = 'none';
+        }
+
+        // Update hidden input field
+        document.getElementById('selected_document_id').value = documentId;
+    }
+
+
+    function fetchDocumentDetails3(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+        var documentNumber = selectedOption.getAttribute('data-doc-number');
+        var documentId = selectedOption.getAttribute('data-sop-link');
+        
+        // Update document number input
+        document.getElementById('document_number3').value = documentNumber;
+
+        // Update SOP link visibility
+        var sopAnchor = document.getElementById('view_sop3');
+        if (documentId) {
+            sopAnchor.href = `/documents/viewpdf/${documentId}`;
+            sopAnchor.style.display = 'inline';
+        } else {
+            sopAnchor.style.display = 'none';
+        }
+
+        // Update hidden input field
+        document.getElementById('selected_document_id').value = documentId;
+    }
+
+
+    function fetchDocumentDetails4(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+        var documentNumber = selectedOption.getAttribute('data-doc-number');
+        var documentId = selectedOption.getAttribute('data-sop-link');
+        
+        // Update document number input
+        document.getElementById('document_number4').value = documentNumber;
+
+        // Update SOP link visibility
+        var sopAnchor = document.getElementById('view_sop4');
+        if (documentId) {
+            sopAnchor.href = `/documents/viewpdf/${documentId}`;
+            sopAnchor.style.display = 'inline';
+        } else {
+            sopAnchor.style.display = 'none';
+        }
+
+        // Update hidden input field
+        document.getElementById('selected_document_id').value = documentId;
+    }
+
+
+   
+</script>
 
 
         <div id="CCForm2" class="inner-block cctabcontent">

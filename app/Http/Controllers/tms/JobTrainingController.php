@@ -193,6 +193,8 @@ public function trainingQuestions($id){
         $jobTraining->empcode = $request->input('empcode');
         $jobTraining->type_of_training = $request->input('type_of_training');
         $jobTraining->start_date = $request->input('start_date');
+        $jobTraining->end_date = $request->input('end_date');
+
         $jobTraining->sopdocument = $request->input('sopdocument');
 
         $jobTraining->name_employee = $request->input('name_employee');
@@ -212,6 +214,7 @@ public function trainingQuestions($id){
         $jobTraining->remark = $request->input('remark'); 
         $jobTraining->evaluation_required = $request->input('evaluation_required');
         $jobTraining->delegate = $request->input('delegate');
+        $jobTraining->selected_document_id = $request->input('selected_document_id');
 
 
       $jobTraining_id = $jobTraining->id;
@@ -356,6 +359,7 @@ public function trainingQuestions($id){
         $jobTraining->empcode = $request->input('empcode');
         $jobTraining->type_of_training = $request->input('type_of_training');
         $jobTraining->start_date = $request->input('start_date');
+        $jobTraining->end_date = $request->input('end_date');
         $jobTraining->sopdocument = $request->input('sopdocument');
 
 
@@ -382,6 +386,8 @@ public function trainingQuestions($id){
         $jobTraining->qa_cqa_comment = $request->input('qa_cqa_comment');
         $jobTraining->qa_cqa_head_comment = $request->input('qa_cqa_head_comment');
         $jobTraining->final_review_comment = $request->input('final_review_comment');
+        $jobTraining->selected_document_id = $request->input('selected_document_id');
+
 
         // $employeeJobGrid = EmployeeGrid::where(['employee_id' => $employee_id, 'identifier' => 'jobResponsibilites'])->firstOrNew();
         // $employeeJobGrid->employee_id = $employee_id;
@@ -439,7 +445,7 @@ public function trainingQuestions($id){
             $jobTraining->{"reference_document_no_$i"} = $request->input("reference_document_no_$i");
             $jobTraining->{"trainee_name_$i"} = $request->input("trainee_name_$i");
             $jobTraining->{"trainer_$i"} = $request->input("trainer_$i");
-
+            
             $jobTraining->{"startdate_$i"} = $request->input("startdate_$i");
             $jobTraining->{"enddate_$i"} = $request->input("enddate_$i");
         }
