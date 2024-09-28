@@ -260,6 +260,28 @@
                         </td>
                     </tr>
                     <tr>
+                        <th class="w-20">Source of Risk/Opportunity</th>
+                        <td class="w-80">
+                            @if ($data->source_of_risk)
+                                {{ $data->source_of_risk }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Other (Source of Risk/Opportunity)</th>
+                        <td class="w-80">
+                            @if ($data->other_source_of_risk)
+                                {{ $data->other_source_of_risk }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
+                    <tr>
                         <th class="w-20">Type</th>
                         <td class="w-80">
                             @if ($data->type)
@@ -270,12 +292,22 @@
                         </td>
                     </tr>
 
-                    {{-- <tr>
+                    <tr>
+                        <th class="w-20">Other (Type)</th>
+                        <td class="w-80">
+                            @if ($data->other_type)
+                                {{ $data->other_type }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
+                    <tr>
                         <th class="w-20">Priority Level</th>
                         <td class="w-80">@if ($data->priority_level){{ $data->priority_level }}@else Not Applicable @endif</td>
-                        <th class="w-20">Source of Risk/Opportunity</th>
-                        <td class="w-80">@if ($data->source_of_risk){{ $data->source_of_risk }}@else Not Applicable @endif</td>
-                    </tr> --}}
+
+                    </tr>
                 </table>
             </div>
 
@@ -729,6 +761,8 @@
                 </table>
             </div>
 
+
+
             {{-- <div class="block-head">
                     Fishbone or Ishikawa Diagram
                 </div>
@@ -965,8 +999,23 @@
                     </tr> --}}
             </table>
 
+
+
             <div class="border">
                 <table>
+
+                    <tr>
+                        <th class="w-80">Other (Root Cause Methodology)</th>
+                        <td class="w-80">
+                                @if ($data->other_root_cause_methodology)
+                                {{ $data->other_root_cause_methodology}}
+
+                                @else Not Applicable
+
+                                @endif
+
+                            </td>
+                    </tr>
 
                     <tr>
                         <th class="w-20">Risk Assessment Summary</th>

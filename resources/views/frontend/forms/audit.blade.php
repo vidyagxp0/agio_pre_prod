@@ -113,7 +113,7 @@
                     '_checkdate`,`scheduled_end_date' + serialNumber +
                     '_checkdate`)" /></div></div></div></td>' +
                         '<td><input type="time" name="scheduled_end_time[]"></td>' +
-                        '<td><select name="auditor[]">' +
+                        '<td><select id="select-state" name="auditor[]" >' +
                         '<option value="">Select a value</option>';
 
                     for (var i = 0; i < users.length; i++) {
@@ -121,7 +121,7 @@
                     }
 
                     html += '</select></td>' +
-                        '<td><select name="auditee[]">' +
+                        '<td><select id="select-state" name="auditee[]">' +
                         '<option value="">Select a value</option>';
 
                     for (var i = 0; i < users.length; i++) {
@@ -406,17 +406,16 @@
                       <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Pending Response</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Response Verification</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
-                      <button class="cctablinks" style="display:none;" id="button1" onclick="openCity(event, 'CCForm7')">Checklist - Tablet Dispensing &
-                      Granulation</button>
-                     <button class="cctablinks" style="display:none;" id="button2" onclick="openCity(event, 'CCForm8')">Checklist - Tablet Compression</button>
+                      <button class="cctablinks" style="display:none;" id="button1" onclick="openCity(event, 'CCForm7')">Checklist - Production (Tablet Dispensing & Tablet Granulation)</button>
+                     <button class="cctablinks" style="display:none;" id="button2" onclick="openCity(event, 'CCForm8')">Checklist - Production (Tablet Compression)</button>
                      <button class="cctablinks" style="display:none;" id="button3" onclick="openCity(event, 'CCForm9')">Checklist - Tablet Coating </button>
                      <button class="cctablinks" style="display:none;" id="button4" onclick="openCity(event, 'CCForm10')">Checklist - Tablet/Capsule Packing
                     </button>
-                      <button class="cctablinks" style="display:none;" id="button5" onclick="openCity(event, 'CCForm11')">Checklist - Capsule
+                      <button class="cctablinks" style="display:none;" id="button5" onclick="openCity(event, 'CCForm11')">Checklist - Production (Capsule)
                     </button>
 
-                     <button class="cctablinks" style="display:none;" id="button6" onclick="openCity(event, 'CCForm12')">Checklist - Liquid/Ointment Dispensing & Manufacturing
-                    </button>
+                    <button class="cctablinks" style="display:none;" id="button6" onclick="openCity(event, 'CCForm12')">Checklist - Production(Liquid/Ointment Dispensing & Manufacturing)
+                   </button>
                     <button class="cctablinks" style="display:none;" id="button7" onclick="openCity(event, 'CCForm13')">Checklist - Liquid/Ointment Packing
                     </button>
 
@@ -432,7 +431,7 @@
                     <button class="cctablinks" style="display:none;" id="button11" onclick="openCity(event, 'CCForm17')">Checklist - Stores
                     </button>
 
-                    <button class="cctablinks" style="display:none;" id="button12" onclick="openCity(event, 'CCForm18')">Checklist - Human Resource
+                    <button class="cctablinks" style="display:none;" id="button12" onclick="openCity(event, 'CCForm18')">Checklist - Human Resource and Administration
                     </button>
 
                     <button class="cctablinks" style="display:none;" id="button13" onclick="openCity(event, 'CCForm19')">Checklist - Production (Injection Dispensing & Manufacturing)
@@ -878,7 +877,7 @@
                                                 <tr>
                                                     <th>Row</th>
                                                     <th>Auditor Name</th>
-                                                    <th>Regulatory Agency</th>
+                                                    <th>Department</th>
                                                     <th>Designation</th>
                                                     <th>Remarks</th>
                                                     <th>Action</th>
@@ -1035,8 +1034,8 @@
                                         <option value="2">Checklist - Tablet Compression</option>
                                         <option value="3">Checklist - Tablet Coating</option>
                                         <option value="4">Checklist - Tablet/Capsule Packing</option>
-                                        <option value="5">Checklist - Capsule</option>
-                                        <option value="6">Checklist - Liquid/Ointment Dispensing & Manufacturing</option>
+                                        <option value="5">Checklist - Production (Capsule)</option>
+             Checklist - Production(Liquid/Ointment Dispensing & Manufacturing) - Liquid/Ointment Dispensing & Manufacturing</option>
                                         <option value="7">Checklist - Liquid/Ointment Packing</option>
                                         <option value="8">Checklist - Quality Assurance</option>
                                         <option value="9">Checklist - Engineering</option>
@@ -1670,22 +1669,24 @@
                                         </table>
                                     </div>
                                 </div>
+                                
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="checklists">Checklists</label>
                                         <select multiple  id="checklists" class="abc" name="checklists[]">
-                                            <option value="1">Checklist - Tablet Dispensing & Granulation</option>
-                                            <option value="2">Checklist - Tablet Compression</option>
+                                            <option value="1">Checklist - Production(Tablet Dispensing & Granulation)</option>
+                                            <option value="2">Checklist - Production (Tablet Compression)</option>
                                             <option value="3">Checklist - Tablet Coating</option>
                                             <option value="4">Checklist - Tablet/Capsule Packing</option>
-                                            <option value="5">Checklist - Capsule</option>
-                                            <option value="6">Checklist - Liquid/Ointment Dispensing & Manufacturing</option>
+                                            <option value="5">Checklist - Production (Capsule)</option>
+                                            <option value="6">Checklist - Production(Liquid/Ointment Dispensing & Manufacturing)</option>
                                             <option value="7">Checklist - Liquid/Ointment Packing</option>
                                             <option value="8">Checklist - Quality Assurance</option>
                                             <option value="9">Checklist - Engineering</option>
                                             <option value="10">Checklist - Quality Control</option>
                                             <option value="11">Checklist - Stores</option>
-                                            <option value="12">Checklist - Human Resource</option>
+                                            <option value="12">Checklist - Human Resource and Administration</option>
                                             <option value="13">Checklist - Production (Injection Dispensing & Manufacturing)</option>
                                             <option value="14">Checklist - Production (Injection Packing)</option>
                                             <option value="15">Checklist - Production (Powder Manufacturing and Packing)</option>
@@ -2403,7 +2404,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-4">
+                                        {{-- <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancelled By</label>
                                         <div class="static"></div>
@@ -2421,7 +2422,7 @@
                                                 <label for="Audit Schedule On">Comment</label>
                                                 <div class="static"></div>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -2533,7 +2534,7 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
-                                    Checklist for Tablet Dispensing
+                                    STAGE 1 : DISPENSING
                                 </div>
 
                                 <div class="col-12">
@@ -2903,8 +2904,8 @@
                                 </div>
 
                                 <div class="sub-head">
-                                    Checklist for : INJECTION MANUFACTURING / FILTERATION / FILLING /VISUAL INSPECTION
-                                </div>
+                                    Stage -02 Granulation
+                                 </div>
 
                                 <div class="col-12">
                                     {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
@@ -4006,7 +4007,7 @@
                                 </div>
 
                                 <div class="sub-head">
-                                    Checklist for Tablet Documentation
+                                    Stage -03 Documentation
                                 </div>
 
                                 <div class="col-12">
@@ -4235,7 +4236,7 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
-                                    Checklist for Tablet Compression
+                                    STAGE 1: COMPRESSION 
                                 </div>
 
                                 <div class="col-12">
@@ -5354,8 +5355,8 @@
                                 </div>
 
                                 <div class="sub-head">
-                                    Checklist for Documentation
-                                </div>
+                                    STAGE 2: DOCUMENTATION
+                                                                </div>
                                 <div class="col-12">
                                     {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
                                     <div class="group-input">
@@ -22175,7 +22176,7 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
-                                    Checklist for Powder Manufacturing & Filling
+                                    STAGE 1 : POWEDER MFG & FILLING
                                 </div>
 
                                 <div class="col-12">
@@ -23316,7 +23317,7 @@
                                 </div>
 
                                 <div class="sub-head">
-                                    Checklist for PACKING
+                                    STAGE 2: PACKING
                                 </div>
                                 <div class="col-12">
                                     {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}

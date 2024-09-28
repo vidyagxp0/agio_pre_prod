@@ -501,10 +501,10 @@ $newDataGridInitialClosure->save();
             $data3->end_time = serialize($request->scheduled_end_time);
         }
         if (!empty($request->auditor)) {
-            $data3->auditor = serialize($request->auditor);
+            $data3->auditor = serialize( $request->auditor);
         }
         if (!empty($request->auditee)) {
-            $data3->auditee = serialize($request->auditee);
+            $data3->auditee = serialize( $request->auditee);
         }
         if (!empty($request->remarks)) {
             $data3->remark = serialize($request->remarks);
@@ -2578,14 +2578,16 @@ $Checklist_Capsule->save();
             $data3->end_time = serialize($request->scheduled_end_time);
         }
         if (!empty($request->auditor)) {
-            $data3->auditor = serialize($request->auditor);
+            $data3->auditor = serialize( $request->auditor);
         }
         if (!empty($request->auditee)) {
-            $data3->auditee = serialize($request->auditee);
+            $data3->auditee = serialize( $request->auditee);
+
         }
         if (!empty($request->remark)) {
             $data3->remark = serialize($request->remark);
         }
+        // dd($data3);
         $data3->update();
 
         $data4 = InternalAuditGrid::where('audit_id',$internalAudit->id)->where('type','Observation_field')->first();
