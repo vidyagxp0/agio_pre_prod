@@ -51,6 +51,7 @@ class RiskManagementController extends Controller
     {
         // return dd($request);
         // return $request;
+        $form_progress = null;
 
         if (!$request->short_description) {
             toastr()->info("Short Description is required");
@@ -2929,11 +2930,9 @@ class RiskManagementController extends Controller
 
         if ($data->stage == 2 || $data->stage == 3) {
 
-
             if (!$form_progress) {
                 $form_progress = 'cft';
             }
-
 
 
             $Cft = RiskManagmentCft::withoutTrashed()->where('risk_id', $id)->first();
@@ -3474,6 +3473,9 @@ class RiskManagementController extends Controller
                 $data->Initial_attachment = json_encode($files);
             }
         }
+
+        $data->form_progress = isset($form_progress) ? $form_progress : null;
+
 
 
         $data1 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'effect_analysis')->first();
@@ -4230,8 +4232,8 @@ class RiskManagementController extends Controller
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
             $history->activity_type = 'CFT Reviewer Selection';
-            $history->previous = $lastDocument->reviewer_person_value;
-            $history->current = $data->reviewer_person_value;
+            $history->previous = Helpers::getInitiatorName($data->reviewer_person_value);
+            $history->current =  Helpers::getInitiatorName($data->reviewer_person_value);
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -8719,13 +8721,12 @@ class RiskManagementController extends Controller
                 }
                 if ($riskAssement->stage == 2) {
 
-                    // Check HOD remark value
-                    if (!$riskAssement->hod_des_rev_comm) {
-
+                     if ($riskAssement->form_progress !== 'cft')
+                    {
                         Session::flash('swal', [
-                            'title' => 'Mandatory Fields Required!',
-                            'message' => 'HOD/Designee Review Comment!',
                             'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'HOD/Designee Review Comment / CFT Mandatory Tab is yet to be filled!'
                         ]);
 
                         return redirect()->back();
@@ -8733,9 +8734,27 @@ class RiskManagementController extends Controller
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for CFT Review state'
+                            'message' => 'Sent for CFT review state'
                         ]);
                     }
+
+                    // Check HOD remark value
+                    // if (!$riskAssement->hod_des_rev_comm) {
+
+                    //     Session::flash('swal', [
+                    //         'title' => 'Mandatory Fields Required!',
+                    //         'message' => 'HOD/Designee Review Comment!',
+                    //         'type' => 'warning',
+                    //     ]);
+
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for CFT Review state'
+                    //     ]);
+                    // }
 
                     $riskAssement->stage = "3";
                     $riskAssement->status = "CFT Review";

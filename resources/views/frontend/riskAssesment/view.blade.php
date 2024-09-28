@@ -923,7 +923,7 @@
                                                                 <label for="agenda">
                                                                     Failure Mode and Effect Analysis
                                                                     <button type="button" name="agenda"
-                                                                        onclick="addRiskAssessmentdata('risk-assessment-risk-management')"
+                                                                        onclick="addRiskAssessmentdata1('risk-assessment-risk-management')"
                                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
                                                                 </label>
                                                                 <div class="table-responsive">
@@ -931,7 +931,7 @@
                                                                         <thead>
                                                                             <tr>
 
-                                                                                <th colspan="1"style="text-align:center;">Row #</th>
+                                                                                <th colspan="1"style="text-align:center;"></th>
                                                                                 <th colspan="2"style="text-align:center;">Risk Identification</th>
                                                                                 <th colspan="1"style="text-align:center;">Risk Analysis</th>
                                                                                 <th colspan="4"style="text-align:center;">Risk Evaluation</th>
@@ -11028,14 +11028,14 @@
         </style>
 
         <script>
-            function addRiskAssessmentdata(tableId) {
+            function addRiskAssessmentdata1(tableId) {
                 var table = document.getElementById(tableId);
-                var currentRowCount = table.rows.length;
-                var newRow = table.insertRow(currentRowCount);
-                newRow.setAttribute("id", "row" + currentRowCount);
+            var currentRowCount = table.children[1].rows.length;
+            var newRow = table.children[1].insertRow(currentRowCount);
+            newRow.setAttribute("id", "row" + currentRowCount);
 
                 var cell1 = newRow.insertCell(0);
-                cell1.innerHTML = currentRowCount;
+                cell1.innerHTML = currentRowCount +1;
 
                 var cell2 = newRow.insertCell(1);
                 cell2.innerHTML = "<input name='risk_factor[]' type='text'>";
@@ -11141,12 +11141,12 @@
                 cell18.innerHTML = "<button class='btn btn-dark removeBtn' onclick='removeRow(this)'>Remove</button>";
 
                 // Update row numbers
-                for (var i = 1; i <= currentRowCount; i++) {
-                    var row = table.rows[i];
-                    row.cells[0].innerHTML = i;
-                }
+                for (var i = 0; i < currentRowCount-1; i++) {
+                var row = table.children[1].rows[i];
+                row.cells[0].innerHTML = i+1;
+            }
 
-                initializeRiskAcceptance();
+                // initializeRiskAcceptance();
             }
         </script>
 
