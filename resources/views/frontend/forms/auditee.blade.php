@@ -3524,7 +3524,8 @@ $(document).ready(function() {
                                             <label for="Comments">Comments</label>
                                             <div class="static"></div>
                                         </div>
-                                    </div>
+                                </div>
+
                                 <div class="col-12 sub-head"  style="font-size: 16px">
                                 Cancel
                                      </div>

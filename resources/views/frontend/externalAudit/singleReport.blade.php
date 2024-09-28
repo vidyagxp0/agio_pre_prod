@@ -196,8 +196,17 @@
                 <table>
 
             <tr>
+                
+
                     <th class="w-20">Record Number</th>
-                    <td class="w-30">@if($data->record){{  str_pad($data->record, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <td class="w-30">
+                            @if ($data->record)
+                                {{ Helpers::divisionNameForQMS($data->division_id) }}/EA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                   
                     <th class="w-20">Site/Location Code</th>
                     <td class="w-30">@if($data->division_id){{  Helpers::getDivisionName($data->division_id) }} @else Not Applicable @endif</td>
                 </tr>
@@ -212,14 +221,9 @@
                     <td class="w-30">{{ Helpers::getDateFormat($data->intiation_date) }}</td>
                 </tr>
                 <tr>
-                    <th class="w-20">Due Date</th>
-                    <td class="w-30">
-                        @if ($data->due_date)
-                            {{ $data->due_date }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
+                     <th class="w-20">Due Date</th>
+                     <td class="w-80"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
+              
                     <th class="w-20">Initiaton Department</th>
                     <td class="w-30">
                         @if ($data->Initiator_Group)
@@ -279,7 +283,7 @@
 
                 <tr>
                     <th class="w-20">Type of Audit</th>
-                    <td class="w-80" colspan="3">
+                    <td class="w-30" colspan="3">
                         @if ($data->audit_type)
                             {{ $data->audit_type }}
                         @else
@@ -292,7 +296,7 @@
                 <tr>
 
                 <th class="w-20">If Other</th>
-                <td class="w-30">
+                <td class="w-80"  colspan="3">
                     @if ($data->if_other)
                         {{ $data->if_other }}
                     @else
@@ -313,7 +317,7 @@
 
             <tr>
                 <th class="w-20">Others</th>
-                <td class="w-30">
+                <td class="w-80"  colspan="3">
                     @if ($data->others)
                         {{ $data->others }}
                     @else
@@ -325,7 +329,7 @@
 
             <tr>
                 <th class="w-20">Description</th>
-                <td class="w-30">
+                <td class="w-80"  colspan="3">
                     @if ($data->initial_comments)
                         {{ $data->initial_comments }}
                     @else
@@ -570,7 +574,7 @@
                             <tr>
 
                                 <th class="w-20">Review comment (By Production Tablet/Capsule/Powder)</th>
-                                <td class="w-30">
+                                <td class="w-80" colspan="3">
                                     <div>
                                         @if ($data1->Production_Table_Assessment)
                                             {{ $data1->Production_Table_Assessment }}
@@ -684,7 +688,7 @@
                                 <tr>
 
                                     <th class="w-20">Review comment (By Production Injection)</th>
-                                    <td class="w-30">
+                                    <td class="w-80" colspan="3">
                                         <div>
                                             @if ($data1->Production_Injection_Assessment)
                                                 {{ $data1->Production_Injection_Assessment }}
@@ -784,7 +788,7 @@
                                 <tr>
 
                                     <th class="w-20">Review comment (By Research & Development)</th>
-                                    <td class="w-30">
+                                    <td class="w-80" colspan="3">
                                         <div>
                                             @if ($data1->ResearchDevelopment_assessment)
                                                 {{ $data1->ResearchDevelopment_assessment }}
@@ -883,7 +887,7 @@
                                 <tr>
 
                                     <th class="w-20">Review comment (By Human Resource)</th>
-                                    <td class="w-30">
+                                    <td class="w-80" colspan="3">
                                         <div>
                                             @if ($data1->Human_Resource_assessment)
                                                 {{ $data1->Human_Resource_assessment }}
@@ -983,7 +987,7 @@
                                 <tr>
 
                                     <th class="w-20">Review comment (By Corporate Quality Assurance)</th>
-                                    <td class="w-30">
+                                    <td class="w-80" colspan="3">
                                         <div>
                                             @if ($data1->CorporateQualityAssurance_assessment)
                                                 {{ $data1->CorporateQualityAssurance_assessment }}
@@ -1183,7 +1187,7 @@
                                 <tr>
 
                                     <th class="w-20">Review comment (By Engineering)</th>
-                                    <td class="w-30">
+                                    <td class="w-80" colspan="3">
                                         <div>
                                             @if ($data1->Engineering_assessment)
                                                 {{ $data1->Engineering_assessment }}
@@ -1282,7 +1286,7 @@
                                 <tr>
 
                                     <th class="w-20">Review comment (By Regulatory Affair)</th>
-                                    <td class="w-30">
+                                    <td class="w-80" colspan="3">
                                         <div>
                                             @if ($data1->RegulatoryAffair_assessment)
                                                 {{ $data1->RegulatoryAffair_assessment }}
@@ -1382,7 +1386,7 @@
                                 <tr>
 
                                     <th class="w-20">Review comment (By Quality Assurance)</th>
-                                    <td class="w-30">
+                                    <td class="w-80" colspan="3">
                                         <div>
                                             @if ($data1->QualityAssurance_assessment)
                                                 {{ $data1->QualityAssurance_assessment }}
@@ -1482,7 +1486,7 @@
                                 <tr>
 
                                     <th class="w-20">Review comment (By Production (Liquid/Ointment))</th>
-                                    <td class="w-30">
+                                    <td class="w-80" colspan="3">
                                         <div>
                                             @if ($data1->ProductionLiquid_assessment)
                                                 {{ $data1->ProductionLiquid_assessment }}
@@ -1581,7 +1585,7 @@
                                 <tr>
 
                                     <th class="w-20">Review comment (By Quality Control)</th>
-                                    <td class="w-30">
+                                    <td class="w-80" colspan="3">
                                         <div>
                                             @if ($data1->Quality_Control_attachment)
                                                 {{ $data1->Quality_Control_attachment }}
@@ -1682,7 +1686,7 @@
 
                                     <th class="w-20">Review comment (By Microbiology)
                                     </th>
-                                    <td class="w-30">
+                                    <td class="w-80" colspan="3">
                                         <div>
                                             @if ($data1->Microbiology_assessment)
                                                 {{ $data1->Microbiology_assessment }}
@@ -1785,7 +1789,7 @@
                                 <tr>
 
                                     <th class="w-20">Review comment (By Safety)</th>
-                                    <td class="w-30">
+                                    <td class="w-80" colspan="3">
                                         <div>
                                             @if ($data1->Health_Safety_assessment)
                                                 {{ $data1->Health_Safety_assessment }}
@@ -1850,7 +1854,7 @@
                         </div>
                     </div>
 
-                    <div class="block">
+                    <!-- <div class="block">
                         <div class="head">
                             <div class="block-head">
                                 Contract Giver
@@ -1921,8 +1925,8 @@
                                     </td>
                                 </tr>
                             </table>
-                        </div>
-                        <div class="border-table">
+                        </div> -->
+                        <!-- <div class="border-table">
                             <div class="block-head">
                                 Contract Giver Attachments
                             </div>
@@ -1949,7 +1953,7 @@
 
                             </table>
                         </div>
-                    </div>
+                    </div> -->
 
 
                     <div class="block">
@@ -1997,7 +2001,7 @@
                                 <tr>
 
                                     <th class="w-20">Review comment (By Other's 1)</th>
-                                    <td class="w-30">
+                                    <td class="w-80" colspan="5">
                                         <div>
                                             @if ($data1->Other1_assessment)
                                                 {{ $data1->Other1_assessment }}
@@ -2106,10 +2110,10 @@
                                 <tr>
 
                                     <th class="w-20">Review comment (By Other's 2)</th>
-                                    <td class="w-30">
+                                    <td class="w-80" colspan="5">
                                         <div>
-                                            @if ($data1->Other2_assessment)
-                                                {{ $data1->Other2_assessment }}
+                                            @if ($data1->Other2_Assessment)
+                                                {{ $data1->Other2_Assessment }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2215,10 +2219,10 @@
                                 <tr>
 
                                     <th class="w-20">Review comment (By Other's 3)</th>
-                                    <td class="w-30">
+                                    <td class="w-80" colspan="5">
                                         <div>
-                                            @if ($data1->Other3_assessment)
-                                                {{ $data1->Other3_assessment }}
+                                            @if ($data1->Other3_Assessment)
+                                                {{ $data1->Other3_Assessment }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2324,10 +2328,10 @@
                                 <tr>
 
                                     <th class="w-20">Review comment (By Other's 4)</th>
-                                    <td class="w-30">
+                                    <td class="w-80" colspan="5">
                                         <div>
-                                            @if ($data1->Other4_assessment)
-                                                {{ $data1->Other4_assessment }}
+                                            @if ($data1->Other4_Assessment)
+                                                {{ $data1->Other4_Assessment }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2433,10 +2437,10 @@
                                 <tr>
 
                                     <th class="w-20">Review comment (By Other's 5)</th>
-                                    <td class="w-30">
+                                    <td class="w-80" colspan="5">
                                         <div>
-                                            @if ($data1->Other5_assessment)
-                                                {{ $data1->Other5_assessment }}
+                                            @if ($data1->Other5_Assessment)
+                                                {{ $data1->Other5_Assessment }}
                                             @else
                                                 Not Applicable
                                             @endif
