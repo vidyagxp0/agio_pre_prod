@@ -81,14 +81,18 @@
                         {{-- {{ dd($data->stage);}} --}}
                        <a class="button_theme1 text-white"
                                 href="{{ route('resampling-audittrialshow', $data->id) }}"> Audit Trail </a> 
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+
+                         @if ($data->stage == 1 && (Helpers::check_roles($data->division_id, 'Resampling', 3)|| Helpers::check_roles($data->division_id, 'Resampling', 18)))
+                      
                             <a href="#signature-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button></a>
                            <a href="#cancel-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button></a>
-                            @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+
+                        @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 65) || Helpers::check_roles($data->division_id, 'Resampling', 18)))
+        
                            <a > <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
                             </button></a>
@@ -98,14 +102,17 @@
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approved
                             </button></a>
-                            @elseif($data->stage == 3 && (in_array(8, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Resampling', 8) || Helpers::check_roles($data->division_id, 'Resampling', 18)))
+
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledge  Complete
                             </button></a>
                             <a href="#more-info-required-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
                             </button></a>
-                            @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+
+                            @elseif($data->stage == 4 && (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 66)|| Helpers::check_roles($data->division_id, 'Resampling', 18)))
+                         
                            <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                            Varification  Complete
                             </button></a>

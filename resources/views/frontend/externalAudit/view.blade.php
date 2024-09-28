@@ -294,9 +294,11 @@
                                 href="{{ route('ShowexternalAuditTrial', $data->id) }}"> Audit Trail </a> </button>
 
 
-                        @if ($data->stage == 1 && (in_array(7, $userRoleIds) || in_array(66, $userRoleIds)))
-                    
-                     
+                      
+                        
+                        @if ($data->stage == 1 && (Helpers::check_roles($data->division_id, 'External Audit', 7) || Helpers::check_roles($data->division_id, 'External Audit', 66) || Helpers::check_roles($data->division_id, 'External Audit', 18)))
+
+
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Audit Details Summary
                             </button>
@@ -306,7 +308,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && (in_array(7, $userRoleIds) || in_array(66, $userRoleIds)))
+                        @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'External Audit', 7) || Helpers::check_roles($data->division_id, 'External Audit', 66) || Helpers::check_roles($data->division_id, 'External Audit', 18)))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                             More Info Required
                         </button>
@@ -320,7 +322,13 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal1">
                                 CFT Review Not Required
                             </button>
-                        @elseif($data->stage == 3 && (in_array(5, $userRoleIds)) || in_array(Auth::user()->id, $valuesArray))
+                       
+                            @elseif(
+                                ($data->stage == 3 && (Helpers::check_roles($data->division_id, 'External Audit', 5) || Helpers::check_roles($data->division_id, 'External Audit', 18))) ||
+                                in_array(Auth::user()->id, $valuesArray)
+                            )
+
+                       
                             <!-- @if (!$cftCompleteUser) -->
 
                              <button class="button_theme1" data-bs-toggle="modal"
@@ -343,7 +351,8 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 4 && (in_array(66, $userRoleIds) || in_array(43, $userRoleIds)))
+                            @elseif($data->stage == 4 && (Helpers::check_roles($data->division_id, 'External Audit', 66)|| Helpers::check_roles($data->division_id, 'External Audit', 43)|| Helpers::check_roles($data->division_id, 'External Audit', 18)))
+                       
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             Approval Complete
                             </button>
@@ -351,8 +360,8 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Send to Opened
                             </button>
-
-                        @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(11, $userRoleIds) ))
+                          
+                            @elseif($data->stage == 5 && (Helpers::check_roles($data->division_id, 'External Audit', 66) || Helpers::check_roles($data->division_id, 'External Audit', 43) || Helpers::check_roles($data->division_id, 'External Audit', 18)))
 
                         <button class="button_theme1"> <a class="text-white" href="{{ url('auditee') }}">
                             Reopen
@@ -672,7 +681,7 @@
                                                         value="recall">Recall</option>
                                                     <option @if ($data->initiated_through == 'return') selected @endif
                                                         value="return">Return</option>
-                                                    <!-- <option @if ($data->initiated_through == 'deviation') selected @endif
+                                                    <!-- <option @if ($data->initiated_through == 'External Audit') selected @endif
                                                             value="deviation">Deviation</option> -->
                                                     <option @if ($data->initiated_through == 'complaint') selected @endif
                                                         value="complaint">Complaint</option>

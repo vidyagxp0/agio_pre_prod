@@ -113,14 +113,14 @@
                                 href="{{ url('errataaudittrail', $showdata->id) }}">
                                 Audit Trail </a> </button>
 
-                        @if ($showdata->stage == 1 && Helpers::check_roles($showdata->division_id, 'ERRATA', 3))
+                        @if ($showdata->stage == 1 && (Helpers::check_roles($showdata->division_id, 'ERRATA', 3) || Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($showdata->stage == 2 && Helpers::check_roles($showdata->division_id, 'ERRATA', 4))
+                        @elseif($showdata->stage == 2 && (Helpers::check_roles($showdata->division_id, 'ERRATA', 4)|| Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#reject-modal">
                                 Reject
                             </button>
@@ -130,7 +130,7 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button> --}}
-                        @elseif($showdata->stage == 3 && Helpers::check_roles($showdata->division_id, 'ERRATA', 3))
+                        @elseif($showdata->stage == 3 && ( Helpers::check_roles($showdata->division_id, 'ERRATA', 7) || Helpers::check_roles($showdata->division_id, 'ERRATA', 66) || Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 Reject
                             </button>
@@ -140,7 +140,7 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button> --}}
-                        @elseif($showdata->stage == 4 && Helpers::check_roles($showdata->division_id, 'ERRATA', 43))
+                        @elseif($showdata->stage == 4 && (Helpers::check_roles($showdata->division_id, 'ERRATA', 65)|| Helpers::check_roles($showdata->division_id, 'ERRATA', 7) || Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#more-inform-required-modal">
                                 Reject
@@ -149,7 +149,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hod-rewieve-modal">
                                 Approval Complete
                             </button>
-                        @elseif($showdata->stage == 5 && Helpers::check_roles($showdata->division_id, 'ERRATA', 3))
+                        @elseif($showdata->stage == 5 && (Helpers::check_roles($showdata->division_id, 'ERRATA', 3)|| Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#more-inform-required-modal">
                                 Request More Info
@@ -157,7 +157,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qa-head-approval-model">
                                 Correction Completed
                             </button>
-                        @elseif($showdata->stage == 6 && Helpers::check_roles($showdata->division_id, 'ERRATA', 4))
+                        @elseif($showdata->stage == 6 && (Helpers::check_roles($showdata->division_id, 'ERRATA', 4) || Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#more-inform-required-modal">
                                 Request More Info
@@ -166,7 +166,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hod-rewieve-modal">
                                 HOD Review Completed
                             </button>
-                        @elseif($showdata->stage == 7 && Helpers::check_roles($showdata->division_id, 'ERRATA', 43))
+                        @elseif($showdata->stage == 7 && (Helpers::check_roles($showdata->division_id, 'ERRATA', 7)|| Helpers::check_roles($showdata->division_id, 'ERRATA', 65)|| Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-to-opened-modal">
                                 Sent To Opened State
                             </button>
