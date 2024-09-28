@@ -629,7 +629,9 @@ class ActionItemController extends Controller
             $openState->assign_to = $request->assign_to;
             // dd($request->assign_to);
             }
-        $openState->departments = $request->departments;
+        if($openState->stage == 1){
+            $openState->departments = $request->departments;
+            }
         $request->validate([
             'due_date' => 'nullable|date', // Ensure 'due_date' is allowed to be a date
             // Other fields...

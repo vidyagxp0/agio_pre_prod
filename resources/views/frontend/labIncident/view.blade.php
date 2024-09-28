@@ -121,7 +121,7 @@
                             @endif
                         @elseif($data->stage == 6 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            QA Secondry Review Complete
+                            QA Secondary Review Complete
                         </button>
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                             More Information Required

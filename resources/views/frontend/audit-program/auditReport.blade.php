@@ -168,7 +168,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Audit Program Audit Trial Report
+                    Audit Program Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -183,9 +183,7 @@
                     <strong> Audit Program No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::getDivisionName($doc->division_id) }}/ AP
-                    /{{ Helpers::year($doc->created_at) }}/
-                    {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::getDivisionName($doc->division_id) }}/AP/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}

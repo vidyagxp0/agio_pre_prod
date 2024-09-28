@@ -1789,12 +1789,14 @@ if(!empty($request->attach_files2)){
 
 
     public function ObservationAuditTrailPdf($id){
+      
         $doc = Observation::find($id);
+        $audit = AuditTrialObservation::where('observation_id', $id)->paginate(500);
         $doc->originator = User::where('id', $doc->initiator_id)->value('name');
         $data = AuditTrialObservation::where('observation_id', $doc->id)->orderByDesc('id')->get();
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
-        $pdf = PDF::loadview('frontend.observation.Obs_audittrail_PDF', compact('data', 'doc'))
+        $pdf = PDF::loadview('frontend.observation.Obs_audittrail_PDF', compact('data', 'audit', 'doc'))
             ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,

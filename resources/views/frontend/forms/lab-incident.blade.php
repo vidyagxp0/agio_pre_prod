@@ -32,18 +32,11 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Immediate Actions</button> -->
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Extension</button> --}}
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Incident Details</button> --}}
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QC Initial Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QA Initial Review</button>
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Pending Initiator Update</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QC Head/HOD Secondary Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm15')">QA Secondary Review</button>
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QA Head/Designee Approval</button> -->
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm10')">System Suitability Failure Inicidence</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
 
@@ -691,13 +684,32 @@
                         </div>
                     </div>
 
-                    <!-- Immediate Action -->
-                    <!-- <div id="CCForm2" class="inner-block cctabcontent">
+                                        <!-- QA Review content -->
+                    <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                
-                              
-
+                               
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="QA Review Comments">QC Head Review Comments</label>
+                                        <textarea name="QA_Review_Comments"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="QA Head Attachments">QC Head Review Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        {{-- <input type="file" id="myfile" name="QA_Head_Attachment"> --}}
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="QA_Head_Attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="QA_Head_Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'QA_Head_Attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -706,7 +718,42 @@
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
+
+                        {{-- ---------------QA Initial Review--------- --}}
+                        <div id="CCForm12" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Incident Category">QA Initial Review Comments</label>
+                                        <textarea name="QA_initial_Comments"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="QA Head Attachments">QA Initial Review Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        {{-- <input type="file" id="myfile" name="QA_Head_Attachment"> --}}
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="QA_Initial_Attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="QA_Initial_Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'QA_Initial_Attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
 
                      
                     <!-- Investigation Details content -->
@@ -934,116 +981,7 @@
                         </div>
 
                     </div>
-
-
-
-
-                    <!-- QA Review content -->
-                    <div id="CCForm5" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                               
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="QA Review Comments">QC Head Review Comments</label>
-                                        <textarea name="QA_Review_Comments"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="QA Head Attachments">QC Head Review Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="QA_Head_Attachment"> --}}
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="QA_Head_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="QA_Head_Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'QA_Head_Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- ---------------QA Initial Review--------- --}}
-                    <div id="CCForm12" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Incident Category">QA Initial Review Comments</label>
-                                        <textarea name="QA_initial_Comments"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="QA Head Attachments">QA Initial Review Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="QA_Head_Attachment"> --}}
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="QA_Initial_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="QA_Initial_Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'QA_Initial_Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- -------------------------------Pending Initiator Update---------------------- --}}
-
-                    <div id="CCForm13" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Incident Category">Pending Initiator Update Comments</label>
-                                        <textarea name="pending_update_Comments"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="QA Head Attachments">Pending Initiator Update Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="QA_Head_Attachment"> --}}
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="pending_update_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="pending_update_Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'pending_update_Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
+                
                     {{-- ---------------------------------------QC Head/HOD Secondary Review------------------------------------------------ --}}
                     <div id="CCForm14" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -1115,6 +1053,42 @@
                             </div>
                         </div>
                     </div>
+                    {{-- -------------------------------Pending Initiator Update---------------------- --}}
+
+                    <!-- <div id="CCForm13" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Incident Category">Pending Initiator Update Comments</label>
+                                        <textarea name="pending_update_Comments"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="QA Head Attachments">Pending Initiator Update Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        {{-- <input type="file" id="myfile" name="QA_Head_Attachment"> --}}
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="pending_update_Attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="pending_update_Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'pending_update_Attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            </div>
+                        </div>
+                    </div> -->
+                    
                                         {{-- ---------------------------------------QA Secondary Review----------------------------------------------- --}}
                     <div id="CCForm15" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -1149,375 +1123,7 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
-                    <!-- QA Head/Designee Approval content -->
-                    <!-- <div id="CCForm6" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-12 sub-head">
-                                    Closure
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="QA Head/Designee Comments">QA Head/Designee Comments</label>
-                                        <textarea name="QA_Head"></textarea>
-                                    </div>
-                                </div>
-                            
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Conclusion">Conclusion</label>
-                                        <textarea name="Conclusion"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12 sub-head">
-                                    Extension Justification
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="due_date_extension">Due Date Extension Justification</label>
-                                        <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                        <textarea id="duedoc" name="due_date_extension" type="text" maxlength="240"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-
-
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                            </div>
-                        </div>
-                    </div> -->
-
-                  <!-- Closure -->
-
-                  <!-- <div id="CCForm10" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                            <div class="row">
-
-                           
-                        <div class="col-12">
-                            <div class="group-input" id="suitabilityRow">
-                                <label for="audit-suitability-grid">
-                                    System Suitability Failure Incidence
-                                    <button type="button" name="audit-suitability-grid" id="ObservationAdd">+</button>
-                                    <span class="text-primary" data-bs-toggle="modal"
-                                        data-bs-target="#observation-field-instruction-modal"
-                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                        (Launch Instruction)
-                                    </span>
-                                </label>
-
-                                <table class="table table-bordered" id="onservation-field-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Sr. No.</th>
-                                            <th>Name of Product</th>
-                                            <th>B No./A.R. No.</th>
-                                            <th>Remarks</th>
-                                            <th>Action</th>
-
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $suitabilityNumber = 1;
-                                        @endphp
-                                                    <tr>
-                                            <td style="width: 6%">{{ $suitabilityNumber++ }}</td>
-                                              <td><input type="text" name="investigation[0][name_of_product_ssfi]" value="">
-                                               </td>
-                                            <td><input type="text" name="investigation[0][batch_no_ssfi]" value=""></td>
-                                             <td><input type="text" name="investigation[0][remarks_ssfi]" value="" ></td>
-                                             <td><button class="removeRowBtn">Remove</button></td>
-
-                                        </tr>
-                                     </tbody>
-                                </table>
-
-
-
-                </div>
-                            </div>
-
-
-
-                  <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        var selectField = document.getElementById('Facility_Equipment');
-                        var inputsToToggle = [];
-
-                        // Add elements with class 'facility-name' to inputsToToggle
-                        var facilityNameInputs = document.getElementsByClassName('facility-name');
-                        for (var i = 0; i < facilityNameInputs.length; i++) {
-                            inputsToToggle.push(facilityNameInputs[i]);
-                        }
-
-                        // Add elements with class 'id-number' to inputsToToggle
-                        var idNumberInputs = document.getElementsByClassName('id-number');
-                        for (var j = 0; j < idNumberInputs.length; j++) {
-                            inputsToToggle.push(idNumberInputs[j]);
-                        }
-
-                        // Add elements with class 'remarks' to inputsToToggle
-                        var remarksInputs = document.getElementsByClassName('remarks');
-                        for (var k = 0; k < remarksInputs.length; k++) {
-                            inputsToToggle.push(remarksInputs[k]);
-                        }
-
-
-                        selectField.addEventListener('change', function() {
-                            var isRequired = this.value === 'yes';
-                            console.log(this.value, isRequired, 'value');
-
-                            inputsToToggle.forEach(function(input) {
-                                input.required = isRequired;
-                                console.log(input.required, isRequired, 'input req');
-                            });
-
-                            document.getElementById('facilityRow').style.display = isRequired ? 'block' : 'none';
-                            // Show or hide the asterisk icon based on the selected value
-                            var asteriskIcon = document.getElementById('asteriskInvi');
-                            asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                        });
-                    });
-    </script>
-
-
-    <script>
-        $(document).ready(function() {
-            $('#ObservationAdd').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var users = @json($users);
-
-                    var html =
-                        '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td><input type="text" name="investigation['+ serialNumber +'][name_of_product_ssfi]" value=""></td/>' +
-                        '<td><input type="text" name="investigation['+ serialNumber +'][batch_no_ssfi]" value=""></td>' +
-                        '<td><input type="text" name="investigation['+ serialNumber +'][remarks_ssfi]" value=""></td>' +
-                        '<td><button class="removeRowBtn">Remove</button></td>' +
-
-
-                        '</tr>';
-
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-
-                    html += '</select></td>' +
-
-                        '</tr>';
-
-                    return html;
-                }
-
-                var tableBody = $('#onservation-field-table tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
-            });
-            $(document).on('click', '.removeRowBtn', function() {
-        $(this).closest('tr').remove();
-    });
-        });
-        </script>
-
-
-
-
-
-                                                        <div class="col-lg-12">
-                                                            <div class="group-input" id="Incident_invlvolved_others">
-                                                                <label for="instrument_involved_SSFI">Instrument Involved<span
-                                                                        class="text-danger d-none">*</span></label>
-                                                                <textarea name="involved_ssfi"></textarea>
-                                                            </div>
-
-                                                        </div>
-
-
-                                                        <div class="col-lg-4">
-                                                            <div class="group-input" id="Incident_stage">
-                                                                <label for="stage_SSFI">Stage<span
-                                                                        class="text-danger d-none">*</span></label>
-                                                                <input type="text" name="stage_stage_ssfi">
-                                                            </div>
-
-                                                        </div><br>
-                                                        <div class="col-lg-4">
-                                                            <div class="group-input" id="stability_condition_SSFI">
-                                                                <label for="stability_condition_SSFI">Stability Condition (If Applicable)<span
-                                                                        class="text-danger d-none">*</span></label>
-                                                                <input type="text" name="Incident_stability_cond_ssfi">
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="col-lg-4">
-                                                            <div class="group-input" id="interval_SSFI">
-                                                                <label for="interval_SSFI">Interval (If Applicable)<span
-                                                                        class="text-danger d-none">*</span></label>
-                                                                <input type="text" name="Incident_interval_ssfi">
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div class="col-lg-6">
-                                                            <div class="group-input" id="test_SSFI">
-                                                                <label for="test_SSFI">Test<span
-                                                                        class="text-danger d-none">*</span></label>
-                                                                <input type="text" name="test_ssfi">
-                                                            </div>
-
-                                                        </div>
-                        
-                                               
-                                                        <div class="col-lg-6 new-date-data-field">
-                                                            <div class="group-input input-date">
-                                                                <label for="Date Due"> Date Of Analysis</label>
-                                                                <div><small class="text-primary">Please mention expected date of completion</small>
-                                                                </div>
-                                                                <div class="calenderauditee">
-                                                                    <input type="text" id="Incident_date_analysis_ssfi" readonly
-                                                                        placeholder="DD-MMM-YYYY"/>
-                                                                    <input type="date" name="Incident_date_analysis_ssfi"  class="hide-input"
-                                                                        oninput="handleDateInput(this, 'Incident_date_analysis_ssfi')"  />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="group-input" id="Incident_specification_ssfi">
-                                                                <label for="Incident_specification_ssfi">Specification Number<span
-                                                                        class="text-danger d-none">*</span></label>
-                                                                <input type="text" name="Incident_specification_ssfi">
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="group-input" id="Incident_stp_ssfi">
-                                                                <label for="Incident_stp_ssfi">STP Number<span
-                                                                        class="text-danger d-none">*</span></label>
-                                                                <input type="text" name="Incident_stp_ssfi">
-                                                            </div>
-
-                                                        </div>
-                                                   
-
-                                                        <div class="col-lg-6 new-date-data-field">
-                                                            <div class="group-input input-date">
-                                                                <label for="Date Due"> Date Of Incidence</label>
-                                                                <div><small class="text-primary">Please mention expected date of completion</small>
-                                                                </div>
-                                                                <div class="calenderauditee">
-                                                                    <input type="text" id="Incident_date_incidence_ssfi" readonly
-                                                                        placeholder="DD-MMM-YYYY"/>
-                                                                    <input type="date" name="Incident_date_incidence_ssfi"  class="hide-input"
-                                                                        oninput="handleDateInput(this, 'Incident_date_incidence_ssfi')"  />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-lg-6">
-                                                            <div class="group-input">
-                                                                <label for="search">
-                                                                    QC Reviewer <span class="text-danger"></span>
-                                                                </label>
-                                                                <select id="select-state" placeholder="Select..." name="suit_qc_review_to">
-                                                                    <option value="">Select a value</option>
-                                                                    @foreach ($users as $data)
-                                                                        <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                                @error('suit_qc_review_to')
-                                                                    <p class="text-danger">{{ $message }}</p>
-                                                                @enderror
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <div class="group-input" id="Description_incidence_ssfi">
-                                                                <label for="Description_incidence_ssfi"> Description Of Incidence<span
-                                                                        class="text-danger d-none">*</span></label>
-                                                                <textarea name="Description_incidence_ssfi"></textarea>
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <div class="group-input" id="Detail_investigation_ssfi">
-                                                                <label for="Detail_investigation_ssfi"> Detail Investigation<span
-                                                                        class="text-danger d-none">*</span></label>
-                                                                <textarea name="Detail_investigation_ssfi"></textarea>
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div class="col-lg-12">
-                                                            <div class="group-input" id="proposed_corrective_ssfi">
-                                                                <label for="proposed_corrective_ssfi"> Proposed Corrective Action<span
-                                                                        class="text-danger d-none">*</span></label>
-                                                                <textarea name="proposed_corrective_ssfi"></textarea>
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div class="col-lg-12">
-                                                            <div class="group-input" id="root_cause_ssfi">
-                                                                <label for="root_cause_ssfi"> Root Cause<span
-                                                                        class="text-danger d-none">*</span></label>
-                                                                <textarea name="root_cause_ssfi"></textarea>
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div class="col-lg-12">
-                                                            <div class="group-input" id="incident summary ssfi">
-                                                                <label for="incident summary ssfi"> Incident Summary<span
-                                                                        class="text-danger d-none">*</span></label>
-                                                                <textarea name="incident_summary_ssfi"></textarea>
-                                                            </div>
-
-                                                        </div>
-
-                                                      
-                                                <div class="col-lg-12">
-                                                    <div class="group-input">
-                                                        <label for="system_suitable_attachments">File Attachment</label>
-                                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                        <div class="file-attachment-field">
-                                                            <div class="file-attachment-list" id="system_suitable_attachments"></div>
-                                                            <div class="add-btn">
-                                                                <div>Add</div>
-                                                                <input type="file" id="system_suitable_attachments" name="system_suitable_attachments[]"
-                                                                    oninput="addMultipleFiles(this, 'system_suitable_attachments')" multiple>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-
-                                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                                                </div>
-
-
-
-
-                        </div>
-                    </div>
-                </div> -->
+                   
 
                 <div id="CCForm11" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -1529,36 +1135,6 @@
                                     </div>
 
                                 </div>
-
-                                
-
-                                <!-- <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="head remark"><b>QC Head Remark</b></label>
-                                       <textarea name="qc_hear_remark_c"></textarea>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                          <label for="search">
-                                      QC Head Closure<span class="text-danger"></span>
-                                    </label>
-                                    <select id="select-state" placeholder="Select..." name="qc_head_closure">
-                                      <option value="">Select a value</option>
-                                      @foreach ($users as $data)
-                                          <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                      @endforeach
-                                   </select>
-                                    @error('qc_head_closure')
-                                      <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                             </div>
-                            </div> -->
-                            
-
 
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -1750,17 +1326,17 @@
 
 
                                <div class="col-12 sub-head" style="font-size: 16px">
-                                    QA Head/HOD Secondary Review
+                                    QC Head/HOD Secondary Review
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="No Assignable Completed By">QA Head/HOD Secondary Review Complete By</label>
+                                        <label for="No Assignable Completed By">QC Head/HOD Secondary Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="No Assignable Completed On">QA Head/HOD Secondary Review Complete On</label>
+                                        <label for="No Assignable Completed On">QC Head/HOD Secondary Review Complete On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
@@ -1840,32 +1416,13 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Solution Validation Completed By">Root Cause Found By</label>
+                                        <label for="Solution Validation Completed By">Approved By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input" >
-                                        <label for="Solution Validation Completed On">Root Cause Found On</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>                                
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Comment">Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Solution Validation Completed By">Root Cause Not Found By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input" >
-                                        <label for="Solution Validation Completed On">Root Cause Not Found On</label>
+                                        <label for="Solution Validation Completed On">Approved On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>                                
@@ -1895,153 +1452,6 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-
-                                <div class="col-12 sub-head" style="font-size: 16px">
-                                    QA Head/HOD Final Review
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="All Action Approved Completed By">QA Head/HOD Final Review Complete By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="All Action Approved Completed On">QA Head/HOD Final Review Complete On</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Comment">Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                               
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Verification Complete">More Info Required By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Incident Review Completed On">More Info Required On</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                {{-- @foreach($detail as $d) --}}
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Comment">Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 sub-head" style="font-size: 16px">
-                                    QA Final Review 
-                                </div>
-                                 <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Assessment Completed By">QA Final Review Complete By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Assemssment Completed On">QA Final Review Complete On</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Comment">Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Verification Complete">More Info Required By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Incident Review Completed On">More Info Required On</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                {{-- @foreach($detail as $d) --}}
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Comment">Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 sub-head" style="font-size: 16px">
-                                    QAH Final Approval
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Closure Completed By">Final Root Cause Found By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Closure Completed On">Final Root Cause Found On</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Comment" >Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div> 
-
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Closure Completed By">Final Root Cause Not Found By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Closure Completed On">Final Root Cause Not Found On</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Comment" >Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div> 
-
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Verification Complete">More Info Required By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Incident Review Completed On">More Info Required On</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                {{-- @foreach($detail as $d) --}}
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Comment">Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
                                     Cancel

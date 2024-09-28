@@ -174,7 +174,7 @@
                     '<div class="group-input input-date">' +
                     '<div class="calenderauditee">' +
                     '<input class="click_date" id="End_date_' + serialNumber + '" type="text" name="audit_program[' + serialNumber + '][End_date]" placeholder="DD-MMM-YYYY" readonly />' +
-                    '<input type="date" name="audit_program[' + serialNumber + '][End_date]" id="End_date_' + serialNumber + '_input" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, \'End_date_' + serialNumber + '\'); validateDates(\'Due_Date_' + serialNumber + '_input\', \'End_date_' + serialNumber + '_input\')" />' +
+                    '<input type="date" name="audit_program[' + serialNumber + '][End_date]" id="End_date_' + serialNumber + '_input" min="' + new Date().toISOString().split('T')[0] + '" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, \'End_date_' + serialNumber + '\'); validateDates(\'Due_Date_' + serialNumber + '_input\', \'End_date_' + serialNumber + '_input\')" />' +
                     '</div></div></div></td>' +
                     '<td><div class="group-input"><select name="audit_program[' + serialNumber + '][Lead_Investigator]">' +
                     '<option value="">Select a value</option>@foreach ($users as $value)<option value="{{ $value->name }}">{{ $value->name }}</option>@endforeach</select></div></td>' +
@@ -1331,6 +1331,7 @@
                                                                                         id="End_date_{{ $loop->index }}_input"
                                                                                         {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                                         value="{{ isset($grid['End_date']) ? $grid['End_date'] : '' }}"
+                                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                                                         class="hide-input show_date"
                                                                                         style="position: absolute; top: 0; left: 0; opacity: 0;"
                                                                                         onchange="handleDateInput(this, 'End_date_{{ $loop->index }}')" />
@@ -2032,7 +2033,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted_On">ApprovedComment</label>
+                                                <label for="Submitted_On">Approved Comment</label>
                                                 <div class="static">{{ $data->approved_comment }}</div>
                                             </div>
                                         </div>

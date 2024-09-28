@@ -698,8 +698,10 @@ DATA FIELDS
                                                             <input class="click_date" id="End_date_0" type="text"
                                                                 name="audit_program[0][End_date]"
                                                                 placeholder="DD-MMM-YYYY" readonly />
-                                                            <input type="date" name="audit_program[0][End_date]" min=""
-                                                                id="End_date_0_input" class="hide-input show_date"
+                                                            <input type="date" name="audit_program[0][End_date]" 
+                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                class="hide-input" id="End_date_0_input" 
+                                                                class="hide-input show_date"
                                                                 style="position: absolute; top: 0; left: 0; opacity: 0;"
                                                                 onchange="handleDateInput(this, 'End_date_0'); checkDate('Due_Date_0_input', 'End_date_0_input')" />
                                                         </div>

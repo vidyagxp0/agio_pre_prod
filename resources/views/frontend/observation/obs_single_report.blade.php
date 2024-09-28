@@ -488,22 +488,20 @@
                         @foreach (unserialize($griddata->action) as $key => $temps)
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
-                                <td>{{ unserialize($griddata->action)[$key] ? unserialize($griddata->action)[$key] : '' }}
-                                </td>
+                                <td>{{ unserialize($griddata->action)[$key] ? unserialize($griddata->action)[$key] : '' }}</td>
+                                <td>
                                 @foreach ($users as $value)
                                     @if ($griddata && unserialize($griddata->responsible)[$key] == $value->id)
                                         {{-- {{ unserialize($griddata->responsible)[$key] == $value->id ? 'selected' : '' }} --}}
-                                        <td>
+                                        <!-- <td> -->
                                             {{ $value->name }}
-                                        </td>
-                                        @else
-                                            Not Applicable
+                                        <!-- </td> -->
                                     @endif
             
                                 @endforeach
-                                <td>{{ Helpers::getdateFormat(unserialize($griddata->deadline)[$key]) }}</td>
-                                <td>{{ unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : '' }}
                                 </td>
+                                <td>{{ Helpers::getdateFormat(unserialize($griddata->deadline)[$key]) }}</td>
+                                <td>{{ unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : '' }}</td>
                             </tr>
                         @endforeach
                     </table>

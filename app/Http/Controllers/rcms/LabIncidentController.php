@@ -589,7 +589,7 @@ class LabIncidentController extends Controller
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Record Number';
             $history->previous = "Null";
-            $history->current = Helpers::getDivisionName(session()->get('division')) . "/LI/" . Helpers::year($data->created_at) . "/" . str_pad($data->record, 4, '0', STR_PAD_LEFT);;
+            $history->current = Helpers::getDivisionName(session()->get('division')) . "/LI/" . Helpers::year($data->created_at) . "/" . str_pad($data->record, 4, '0', STR_PAD_LEFT);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1787,7 +1787,7 @@ class LabIncidentController extends Controller
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'QC Review';
             $history->previous = "Null";
-            $history->current = $data->qc_review_data;
+            $history->current = Helpers::getInitiatorName($data->qc_review_data);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
