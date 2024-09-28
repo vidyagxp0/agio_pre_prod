@@ -1865,6 +1865,7 @@ class MarketComplaintController extends Controller
         // }
 
         $lastmarketComplaint = MarketComplaint::find($id);
+        $lastCft = MarketComplaintCft::where('mc_id', $lastmarketComplaint->id)->first();
 
         $marketComplaint = MarketComplaint::find($id);
         if (!$marketComplaint) {
@@ -3988,6 +3989,2813 @@ class MarketComplaintController extends Controller
             $history->save();
         }
 
+        ///------------------------CFT----------------------------------------------------
+
+        /************ CFT Review ************/
+          /*************** Quality Assurance ***************/
+        if ($lastCft->Quality_Assurance_Review != $request->Quality_Assurance_Review && $request->Quality_Assurance_Review != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Quality Assurance Review Required';
+            $history->previous = $lastCft->Quality_Assurance_Review;
+            $history->current = $request->Quality_Assurance_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Quality_Assurance_Review) || $lastCft->Quality_Assurance_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->QualityAssurance_person != $request->QualityAssurance_person && $request->QualityAssurance_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Quality Assurance Person';
+            $history->previous = $lastCft->QualityAssurance_person;
+            $history->current = $request->QualityAssurance_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->QualityAssurance_person) || $lastCft->QualityAssurance_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->QualityAssurance_assessment != $request->QualityAssurance_assessment && $request->QualityAssurance_assessment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Quality Assurance Assessment';
+            $history->previous = $lastCft->QualityAssurance_assessment;
+            $history->current = $request->QualityAssurance_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->QualityAssurance_assessment) || $lastCft->QualityAssurance_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->QualityAssurance_feedback != $request->QualityAssurance_feedback && $request->QualityAssurance_feedback != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Quality Assurance Feedback';
+            $history->previous = $lastCft->QualityAssurance_feedback;
+            $history->current = $request->QualityAssurance_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->QualityAssurance_feedback) || $lastCft->QualityAssurance_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+         if ($lastCft->Quality_Assurance_attachment != $request->Quality_Assurance_attachment && $request->Quality_Assurance_attachment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Quality Assurance Attachment';
+            $history->previous = $lastCft->Quality_Assurance_attachment;
+            $history->current =implode(',', $request->Quality_Assurance_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Quality_Assurance_attachment) || $lastCft->Quality_Assurance_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->QualityAssurance_by != $request->QualityAssurance_by && $request->QualityAssurance_by != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Quality Assurance Review By';
+            $history->previous = $lastCft->QualityAssurance_by;
+            $history->current = $request->QualityAssurance_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->QualityAssurance_by) || $lastCft->QualityAssurance_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->QualityAssurance_on != $request->QualityAssurance_on && $request->QualityAssurance_on != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Quality Assurance Review On';
+            $history->previous = $lastCft->QualityAssurance_on;
+            $history->current = $request->QualityAssurance_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->QualityAssurance_person) || $lastCft->QualityAssurance_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+        /*************** Production Tablet ***************/
+        if ($lastCft->Production_Table_Review != $request->Production_Table_Review && $request->Production_Table_Review != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule/Powder Review Required';
+            $history->previous = $lastCft->Production_Table_Review;
+            $history->current = $request->Production_Table_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Production_Table_Review) || $lastCft->Production_Table_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Table_Person != $request->Production_Table_Person && $request->Production_Table_Person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule/Powder Person';
+            $history->previous = $lastCft->Production_Table_Person;
+            $history->current = $request->Production_Table_Person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Production_Table_Person) || $lastCft->Production_Table_Person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Table_Assessment != $request->Production_Table_Assessment && $request->Production_Table_Assessment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule/Powder Assessment';
+            $history->previous = $lastCft->Production_Table_Assessment;
+            $history->current = $request->Production_Table_Assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Production_Table_Assessment) || $lastCft->Production_Table_Assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Table_Feedback != $request->Production_Table_Feedback && $request->Production_Table_Feedback != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule/Powder Feeback';
+            $history->previous = $lastCft->Production_Table_Feedback;
+            $history->current = $request->Production_Table_Feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Production_Table_Feedback) || $lastCft->Production_Table_Feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Table_Attachment != $request->Production_Table_Attachment && $request->Production_Table_Attachment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule/Powder Attachment';
+            $history->previous = $lastCft->Production_Table_Attachment;
+            $history->current = implode(',',$request->Production_Table_Attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Production_Table_Attachment) || $lastCft->Production_Table_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Table_By != $request->Production_Table_By && $request->Production_Table_By != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule/Powder Review By';
+            $history->previous = $lastCft->Production_Table_Review;
+            $history->current = $request->Production_Table_By;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Production_Table_By) || $lastCft->Production_Table_By === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Table_On != $request->Production_Table_On && $request->Production_Table_On != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Tablet/Capsule/Powder On';
+            $history->previous = $lastCft->Production_Table_On;
+            $history->current = $request->Production_Table_On;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Production_Table_On) || $lastCft->Production_Table_On === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+         /*************** Production Liquid ***************/
+         if ($lastCft->ProductionLiquid_Review != $request->ProductionLiquid_Review && $request->ProductionLiquid_Review != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Review Required';
+            $history->previous = $lastCft->ProductionLiquid_Review;
+            $history->current = $request->ProductionLiquid_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ProductionLiquid_Review) || $lastCft->ProductionLiquid_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ProductionLiquid_person != $request->ProductionLiquid_person && $request->ProductionLiquid_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Person';
+            $history->previous = $lastCft->ProductionLiquid_person;
+            $history->current = $request->ProductionLiquid_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ProductionLiquid_person) || $lastCft->ProductionLiquid_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ProductionLiquid_assessment != $request->ProductionLiquid_assessment && $request->ProductionLiquid_assessment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Assessment';
+            $history->previous = $lastCft->ProductionLiquid_assessment;
+            $history->current = $request->ProductionLiquid_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ProductionLiquid_assessment) || $lastCft->ProductionLiquid_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ProductionLiquid_feedback != $request->ProductionLiquid_feedback && $request->ProductionLiquid_feedback != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Feedback';
+            $history->previous = $lastCft->ProductionLiquid_feedback;
+            $history->current = $request->ProductionLiquid_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ProductionLiquid_feedback) || $lastCft->ProductionLiquid_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ProductionLiquid_attachment != $request->ProductionLiquid_attachment && $request->ProductionLiquid_attachment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Feedback';
+            $history->previous = $lastCft->ProductionLiquid_attachment;
+            $history->current = implode(',',$request->ProductionLiquid_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ProductionLiquid_attachment) || $lastCft->ProductionLiquid_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ProductionLiquid_by != $request->ProductionLiquid_by && $request->ProductionLiquid_by != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Review By';
+            $history->previous = $lastCft->ProductionLiquid_by;
+            $history->current = $request->ProductionLiquid_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ProductionLiquid_by) || $lastCft->ProductionLiquid_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ProductionLiquid_on != $request->ProductionLiquid_on && $request->ProductionLiquid_on != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Liquid/Ointment Review On';
+            $history->previous = $lastCft->ProductionLiquid_on;
+            $history->current = $request->ProductionLiquid_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ProductionLiquid_on) || $lastCft->ProductionLiquid_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Production Injection ***************/
+        if ($lastCft->Production_Injection_Review != $request->Production_Injection_Review && $request->Production_Injection_Review != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Injection Review Required';
+            $history->previous = $lastCft->Production_Injection_Review;
+            $history->current = $request->Production_Injection_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Production_Injection_Review) || $lastCft->Production_Injection_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Injection_Person != $request->Production_Injection_Person && $request->Production_Injection_Person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Injection Person';
+            $history->previous = $lastCft->Production_Injection_Person;
+            $history->current = $request->Production_Injection_Person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Production_Injection_Person) || $lastCft->Production_Injection_Person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Injection_Assessment != $request->Production_Injection_Assessment && $request->Production_Injection_Assessment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Injection Assessment';
+            $history->previous = $lastCft->Production_Injection_Assessment;
+            $history->current = $request->Production_Injection_Assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Production_Injection_Assessment) || $lastCft->Production_Injection_Assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Injection_Feedback != $request->Production_Injection_Feedback && $request->Production_Injection_Feedback != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Injection Feedback';
+            $history->previous = $lastCft->Production_Injection_Feedback;
+            $history->current = $request->Production_Injection_Feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Production_Injection_Feedback) || $lastCft->Production_Injection_Feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Injection_Attachment != $request->Production_Injection_Attachment && $request->Production_Injection_Attachment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Injection On';
+            $history->previous = $lastCft->Production_Injection_Attachment;
+            $history->current =implode(',', $request->Production_Injection_Attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Production_Injection_Attachment) || $lastCft->Production_Injection_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Injection_By != $request->Production_Injection_By && $request->Production_Injection_By != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Injection Review By';
+            $history->previous = $lastCft->Production_Injection_By;
+            $history->current = $request->Production_Injection_By;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Production_Injection_By) || $lastCft->Production_Injection_By === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Production_Injection_On != $request->Production_Injection_On && $request->Production_Injection_On != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Production Injection On';
+            $history->previous = $lastCft->Production_Injection_On;
+            $history->current = $request->Production_Injection_On;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Production_Injection_On) || $lastCft->Production_Injection_On === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Stores ***************/
+        if ($lastCft->Store_Review != $request->Store_Review && $request->Store_Review != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Store Review Required';
+            $history->previous = $lastCft->Store_Review;
+            $history->current = $request->Store_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Store_Review) || $lastCft->Store_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Store_person != $request->Store_person && $request->Store_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Store Person';
+            $history->previous = $lastCft->Store_person;
+            $history->current = $request->Store_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Store_person) || $lastCft->Store_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Store_assessment != $request->Store_assessment && $request->Store_assessment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Store Assessment';
+            $history->previous = $lastCft->Store_assessment;
+            $history->current = $request->Store_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Store_assessment) || $lastCft->Store_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Store_feedback != $request->Store_feedback && $request->Store_feedback != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Store Feedback';
+            $history->previous = $lastCft->Store_feedback;
+            $history->current = $request->Store_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Store_feedback) || $lastCft->Store_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+         if ($lastCft->Store_attachment != $request->Store_attachment && $request->Store_attachment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Store Review On';
+            $history->previous = $lastCft->Store_attachment;
+            $history->current =implode(',', $request->Store_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Store_attachment) || $lastCft->Store_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Store_by != $request->Store_by && $request->Store_by != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Store Review By';
+            $history->previous = $lastCft->Store_by;
+            $history->current = $request->Store_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Store_by) || $lastCft->Store_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Store_on != $request->Store_on && $request->Store_on != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Store Review On';
+            $history->previous = $lastCft->Store_on;
+            $history->current = $request->Store_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Store_on) || $lastCft->Store_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Quality Control ***************/
+        if ($lastCft->Quality_review != $request->Quality_review && $request->Quality_review != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Quality Control Required';
+            $history->previous = $lastCft->Quality_review;
+            $history->current = $request->Quality_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Quality_review) || $lastCft->Quality_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Quality_Control_Person != $request->Quality_Control_Person && $request->Quality_Control_Person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Quality Control Person';
+            $history->previous = $lastCft->Quality_Control_Person;
+            $history->current = $request->Quality_Control_Person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Quality_Control_Person) || $lastCft->Quality_Control_Person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Quality_Control_assessment != $request->Quality_Control_assessment && $request->Quality_Control_assessment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Quality Control Assessment';
+            $history->previous = $lastCft->Quality_Control_assessment;
+            $history->current = $request->Quality_Control_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Quality_Control_assessment) || $lastCft->Quality_Control_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Quality_Control_feedback != $request->Quality_Control_feedback && $request->Quality_Control_feedback != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Quality Control Feeback';
+            $history->previous = $lastCft->Quality_Control_feedback;
+            $history->current = $request->Quality_Control_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Quality_Control_feedback) || $lastCft->Quality_Control_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        // if ($lastCft->Quality_Control_by != $request->Quality_Control_by && $request->Quality_Control_by != null) {
+        //     $history = new MarketComplaintAuditTrial;
+        //     $history->mc_id = $id;
+        //     $history->activity_type = 'Quality Control By';
+        //     $history->previous = $lastCft->Quality_Control_by;
+        //     $history->current = $request->Quality_Control_by;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastmarketComplaint->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastmarketComplaint->status;
+        //      if (is_null($lastCft->Quality_Control_by) || $lastCft->Quality_Control_by === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
+        // if ($lastCft->Quality_Control_on != $request->Quality_Control_on && $request->Quality_Control_on != null) {
+        //     $history = new MarketComplaintAuditTrial;
+        //     $history->mc_id = $id;
+        //     $history->activity_type = 'Quality Control On';
+        //     $history->previous = $lastCft->Quality_Control_on;
+        //     $history->current = $request->Quality_Control_on;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastmarketComplaint->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastmarketComplaint->status;
+        //      if (is_null($lastCft->Quality_Control_on) || $lastCft->Quality_Control_on === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
+        if ($lastCft->Quality_Control_attachment != $request->Quality_Control_attachment && $request->Quality_Control_attachment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Quality Control On';
+            $history->previous = $lastCft->Quality_Control_attachment;
+            $history->current =implode(',', $request->Quality_Control_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Quality_Control_attachment) || $lastCft->Quality_Control_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Research & Development ***************/
+        if ($lastCft->ResearchDevelopment_Review != $request->ResearchDevelopment_Review && $request->ResearchDevelopment_Review != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Research & Development Required';
+            $history->previous = $lastCft->ResearchDevelopment_Review;
+            $history->current = $request->ResearchDevelopment_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ResearchDevelopment_Review) || $lastCft->ResearchDevelopment_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ResearchDevelopment_person != $request->ResearchDevelopment_person && $request->ResearchDevelopment_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Research & Development Person';
+            $history->previous = $lastCft->ResearchDevelopment_person;
+            $history->current = $request->ResearchDevelopment_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ResearchDevelopment_person) || $lastCft->ResearchDevelopment_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ResearchDevelopment_assessment != $request->ResearchDevelopment_assessment && $request->ResearchDevelopment_assessment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Research & Development Assessment';
+            $history->previous = $lastCft->ResearchDevelopment_assessment;
+            $history->current = $request->ResearchDevelopment_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ResearchDevelopment_assessment) || $lastCft->ResearchDevelopment_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ResearchDevelopment_feedback != $request->ResearchDevelopment_feedback && $request->ResearchDevelopment_feedback != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Research & Development Feedback';
+            $history->previous = $lastCft->ResearchDevelopment_feedback;
+            $history->current = $request->ResearchDevelopment_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ResearchDevelopment_feedback) || $lastCft->ResearchDevelopment_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ResearchDevelopment_by != $request->ResearchDevelopment_by && $request->ResearchDevelopment_by != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Research & Development By';
+            $history->previous = $lastCft->ResearchDevelopment_by;
+            $history->current = $request->ResearchDevelopment_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ResearchDevelopment_by) || $lastCft->ResearchDevelopment_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ResearchDevelopment_on != $request->ResearchDevelopment_on && $request->ResearchDevelopment_on != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Research & Development On';
+            $history->previous = $lastCft->ResearchDevelopment_on;
+            $history->current = $request->ResearchDevelopment_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ResearchDevelopment_on) || $lastCft->ResearchDevelopment_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ResearchDevelopment_attachment != $request->ResearchDevelopment_attachment && $request->ResearchDevelopment_attachment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Research & Development On';
+            $history->previous = $lastCft->ResearchDevelopment_attachment;
+            $history->current =implode(',', $request->ResearchDevelopment_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ResearchDevelopment_attachment) || $lastCft->ResearchDevelopment_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Engineering ***************/
+        if ($lastCft->Engineering_review != $request->Engineering_review && $request->Engineering_review != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Engineering Review Required';
+            $history->previous = $lastCft->Engineering_review;
+            $history->current = $request->Engineering_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Engineering_review) || $lastCft->Engineering_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Engineering_person != $request->Engineering_person && $request->Engineering_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Engineering Person';
+            $history->previous = $lastCft->Engineering_person;
+            $history->current = $request->Engineering_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Engineering_person) || $lastCft->Engineering_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Engineering_assessment != $request->Engineering_assessment && $request->Engineering_assessment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Engineering Assessment';
+            $history->previous = $lastCft->Engineering_assessment;
+            $history->current = $request->Engineering_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Engineering_assessment) || $lastCft->Engineering_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Engineering_feedback != $request->Engineering_feedback && $request->Engineering_feedback != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Engineering Feedback';
+            $history->previous = $lastCft->Engineering_feedback;
+            $history->current = $request->Engineering_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Engineering_feedback) || $lastCft->Engineering_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Engineering_by != $request->Engineering_by && $request->Engineering_by != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Engineering Review By';
+            $history->previous = $lastCft->Engineering_by;
+            $history->current = $request->Engineering_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Engineering_by) || $lastCft->Engineering_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Engineering_on != $request->Engineering_on && $request->Engineering_on != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Engineering Review On';
+            $history->previous = $lastCft->Engineering_on;
+            $history->current = $request->Engineering_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Engineering_on) || $lastCft->Engineering_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Engineering_attachment != $request->Engineering_attachment && $request->Engineering_attachment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Engineering Review On';
+            $history->previous = $lastCft->Engineering_attachment;
+            $history->current = implode(',',$request->Engineering_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Engineering_attachment) || $lastCft->Engineering_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Human Resource ***************/
+        if ($lastCft->Human_Resource_review != $request->Human_Resource_review && $request->Human_Resource_review != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Human Resource Review Required';
+            $history->previous = $lastCft->Human_Resource_review;
+            $history->current = $request->Human_Resource_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Human_Resource_review) || $lastCft->Human_Resource_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Human_Resource_person != $request->Human_Resource_person && $request->Human_Resource_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Human Resource Person';
+            $history->previous = $lastCft->Human_Resource_person;
+            $history->current = $request->Human_Resource_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Human_Resource_person) || $lastCft->Human_Resource_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Human_Resource_assessment != $request->Human_Resource_assessment && $request->Human_Resource_assessment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Human Resource Assessment';
+            $history->previous = $lastCft->Human_Resource_assessment;
+            $history->current = $request->Human_Resource_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Human_Resource_assessment) || $lastCft->Human_Resource_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Human_Resource_feedback != $request->Human_Resource_feedback && $request->Human_Resource_feedback != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Human Resource Feedback';
+            $history->previous = $lastCft->Human_Resource_feedback;
+            $history->current = $request->Human_Resource_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Human_Resource_feedback) || $lastCft->Human_Resource_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Human_Resource_by != $request->Human_Resource_by && $request->Human_Resource_by != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Human Resource Review By';
+            $history->previous = $lastCft->Human_Resource_by;
+            $history->current = $request->Human_Resource_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Human_Resource_by) || $lastCft->Human_Resource_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Human_Resource_on != $request->Human_Resource_on && $request->Human_Resource_on != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Human Resource Review On';
+            $history->previous = $lastCft->Human_Resource_on;
+            $history->current = $request->Human_Resource_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Human_Resource_on) || $lastCft->Human_Resource_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Human_Resource_attachment != $request->Human_Resource_attachment && $request->Human_Resource_attachment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Human Resource Review On';
+            $history->previous = $lastCft->Human_Resource_attachment;
+            $history->current =implode(',', $request->Human_Resource_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Human_Resource_attachment) || $lastCft->Human_Resource_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Microbiology ***************/
+        if ($lastCft->Microbiology_Review != $request->Microbiology_Review && $request->Microbiology_Review != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Microbiology Review Required';
+            $history->previous = $lastCft->Microbiology_Review;
+            $history->current = $request->Microbiology_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Microbiology_Review) || $lastCft->Microbiology_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Microbiology_person != $request->Microbiology_person && $request->Microbiology_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Microbiology Person';
+            $history->previous = $lastCft->Microbiology_person;
+            $history->current = $request->Microbiology_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Microbiology_person) || $lastCft->Microbiology_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Microbiology_assessment != $request->Microbiology_assessment && $request->Microbiology_assessment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Microbiology Assessment';
+            $history->previous = $lastCft->Microbiology_assessment;
+            $history->current = $request->Microbiology_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Microbiology_assessment) || $lastCft->Microbiology_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Microbiology_feedback != $request->Microbiology_feedback && $request->Microbiology_feedback != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Microbiology Feedback';
+            $history->previous = $lastCft->Microbiology_feedback;
+            $history->current = $request->Microbiology_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Microbiology_feedback) || $lastCft->Microbiology_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Microbiology_by != $request->Microbiology_by && $request->Microbiology_by != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Microbiology Review By';
+            $history->previous = $lastCft->Microbiology_by;
+            $history->current = $request->Microbiology_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Microbiology_by) || $lastCft->Microbiology_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Microbiology_on != $request->Microbiology_on && $request->Microbiology_on != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Microbiology Review On';
+            $history->previous = $lastCft->Microbiology_on;
+            $history->current = $request->Microbiology_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Microbiology_on) || $lastCft->Microbiology_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+         if ($lastCft->Microbiology_attachment != $request->Microbiology_attachment && $request->Microbiology_attachment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Microbiology Review On';
+            $history->previous = $lastCft->Microbiology_attachment;
+            $history->current = implode(',',$request->Microbiology_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Microbiology_attachment) || $lastCft->Microbiology_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Regulatory Affair ***************/
+        if ($lastCft->RegulatoryAffair_Review != $request->RegulatoryAffair_Review && $request->RegulatoryAffair_Review != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Regulatory Affair Review Required';
+            $history->previous = $lastCft->RegulatoryAffair_Review;
+            $history->current = $request->RegulatoryAffair_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->RegulatoryAffair_Review) || $lastCft->RegulatoryAffair_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->RegulatoryAffair_person != $request->RegulatoryAffair_person && $request->RegulatoryAffair_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Regulatory Affair Person';
+            $history->previous = $lastCft->RegulatoryAffair_person;
+            $history->current = $request->RegulatoryAffair_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->RegulatoryAffair_person) || $lastCft->RegulatoryAffair_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->RegulatoryAffair_assessment != $request->RegulatoryAffair_assessment && $request->RegulatoryAffair_assessment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Regulatory Affair Assessment';
+            $history->previous = $lastCft->RegulatoryAffair_assessment;
+            $history->current = $request->RegulatoryAffair_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->RegulatoryAffair_assessment) || $lastCft->RegulatoryAffair_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->RegulatoryAffair_feedback != $request->RegulatoryAffair_feedback && $request->RegulatoryAffair_feedback != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Regulatory Affair Feedback';
+            $history->previous = $lastCft->RegulatoryAffair_feedback;
+            $history->current = $request->RegulatoryAffair_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->RegulatoryAffair_feedback) || $lastCft->RegulatoryAffair_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->RegulatoryAffair_by != $request->RegulatoryAffair_by && $request->RegulatoryAffair_by != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Regulatory Affair Review By';
+            $history->previous = $lastCft->RegulatoryAffair_by;
+            $history->current = $request->RegulatoryAffair_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->RegulatoryAffair_by) || $lastCft->RegulatoryAffair_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->RegulatoryAffair_on != $request->RegulatoryAffair_on  && $request->RegulatoryAffair_on != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Regulatory Affair Review On';
+            $history->previous = $lastCft->RegulatoryAffair_on;
+            $history->current = $request->RegulatoryAffair_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->RegulatoryAffair_on) || $lastCft->RegulatoryAffair_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->RegulatoryAffair_attachment != $request->RegulatoryAffair_attachment  && $request->RegulatoryAffair_attachment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Regulatory Affair Review On';
+            $history->previous = $lastCft->RegulatoryAffair_attachment;
+            $history->current =implode(',', $request->RegulatoryAffair_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->RegulatoryAffair_attachment) || $lastCft->RegulatoryAffair_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Corporate Quality Assurance ***************/
+        if ($lastCft->CorporateQualityAssurance_Review != $request->CorporateQualityAssurance_Review && $request->CorporateQualityAssurance_Review != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Review Required';
+            $history->previous = $lastCft->CorporateQualityAssurance_Review;
+            $history->current = $request->CorporateQualityAssurance_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->CorporateQualityAssurance_Review) || $lastCft->CorporateQualityAssurance_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->CorporateQualityAssurance_person != $request->CorporateQualityAssurance_person && $request->CorporateQualityAssurance_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Person';
+            $history->previous = $lastCft->CorporateQualityAssurance_person;
+            $history->current = $request->CorporateQualityAssurance_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->CorporateQualityAssurance_person) || $lastCft->CorporateQualityAssurance_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->CorporateQualityAssurance_assessment != $request->CorporateQualityAssurance_assessment && $request->CorporateQualityAssurance_assessment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Assessment';
+            $history->previous = $lastCft->CorporateQualityAssurance_assessment;
+            $history->current = $request->CorporateQualityAssurance_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->CorporateQualityAssurance_assessment) || $lastCft->CorporateQualityAssurance_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->CorporateQualityAssurance_feedback != $request->CorporateQualityAssurance_feedback && $request->CorporateQualityAssurance_feedback != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Feedback';
+            $history->previous = $lastCft->CorporateQualityAssurance_feedback;
+            $history->current = $request->CorporateQualityAssurance_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->CorporateQualityAssurance_feedback) || $lastCft->CorporateQualityAssurance_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->CorporateQualityAssurance_by != $request->CorporateQualityAssurance_by && $request->CorporateQualityAssurance_by != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Review By';
+            $history->previous = $lastCft->CorporateQualityAssurance_by;
+            $history->current = $request->CorporateQualityAssurance_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->CorporateQualityAssurance_by) || $lastCft->CorporateQualityAssurance_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->CorporateQualityAssurance_on != $request->CorporateQualityAssurance_on && $request->CorporateQualityAssurance_on != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Review On';
+            $history->previous = $lastCft->CorporateQualityAssurance_on;
+            $history->current = $request->CorporateQualityAssurance_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->CorporateQualityAssurance_on) || $lastCft->CorporateQualityAssurance_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->CorporateQualityAssurance_attachment != $request->CorporateQualityAssurance_attachment && $request->CorporateQualityAssurance_attachment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Corporate Quality Assurance Review On';
+            $history->previous = $lastCft->CorporateQualityAssurance_attachment;
+            $history->current =implode(',', $request->CorporateQualityAssurance_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->CorporateQualityAssurance_attachment) || $lastCft->CorporateQualityAssurance_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Safety ***************/
+        if ($lastCft->Environment_Health_review != $request->Environment_Health_review && $request->Environment_Health_review != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Safety Review Required';
+            $history->previous = $lastCft->Environment_Health_review;
+            $history->current = $request->Environment_Health_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Environment_Health_review) || $lastCft->Environment_Health_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Environment_Health_Safety_person != $request->Environment_Health_Safety_person && $request->Environment_Health_Safety_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Safety Person';
+            $history->previous = $lastCft->Environment_Health_Safety_person;
+            $history->current = $request->Environment_Health_Safety_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Environment_Health_Safety_person) || $lastCft->Environment_Health_Safety_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Health_Safety_assessment != $request->Health_Safety_assessment && $request->Health_Safety_assessment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Safety Assessment';
+            $history->previous = $lastCft->Health_Safety_assessment;
+            $history->current = $request->Health_Safety_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Health_Safety_assessment) || $lastCft->Health_Safety_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Health_Safety_feedback != $request->Health_Safety_feedback && $request->Health_Safety_feedback != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Safety Feedback';
+            $history->previous = $lastCft->Health_Safety_feedback;
+            $history->current = $request->Health_Safety_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Health_Safety_feedback) || $lastCft->Health_Safety_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Environment_Health_Safety_by != $request->Environment_Health_Safety_by && $request->Environment_Health_Safety_by != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Safety Review By';
+            $history->previous = $lastCft->Environment_Health_Safety_by;
+            $history->current = $request->Environment_Health_Safety_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Environment_Health_Safety_by) || $lastCft->Environment_Health_Safety_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Environment_Health_Safety_on != $request->Environment_Health_Safety_on && $request->Environment_Health_Safety_on != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Safety Review On';
+            $history->previous = $lastCft->Environment_Health_Safety_on;
+            $history->current = $request->Environment_Health_Safety_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Environment_Health_Safety_on) || $lastCft->Environment_Health_Safety_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Environment_Health_Safety_attachment != $request->Environment_Health_Safety_attachment && $request->Environment_Health_Safety_attachment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Safety Review On';
+            $history->previous = $lastCft->Environment_Health_Safety_attachment;
+            $history->current =implode(',', $request->Environment_Health_Safety_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Environment_Health_Safety_attachment) || $lastCft->Environment_Health_Safety_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Contract Giver ***************/
+        if ($lastCft->ContractGiver_Review != $request->ContractGiver_Review && $request->ContractGiver_Review != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Contract Giver Review Required';
+            $history->previous = $lastCft->ContractGiver_Review;
+            $history->current = $request->ContractGiver_Review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ContractGiver_Review) || $lastCft->ContractGiver_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ContractGiver_person != $request->ContractGiver_person && $request->ContractGiver_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Contract Giver Person';
+            $history->previous = $lastCft->ContractGiver_person;
+            $history->current = $request->ContractGiver_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ContractGiver_person) || $lastCft->ContractGiver_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ContractGiver_assessment != $request->ContractGiver_assessment && $request->ContractGiver_assessment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Contract Giver Assessment';
+            $history->previous = $lastCft->ContractGiver_assessment;
+            $history->current = $request->ContractGiver_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ContractGiver_assessment) || $lastCft->ContractGiver_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ContractGiver_feedback != $request->ContractGiver_feedback && $request->ContractGiver_feedback != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Contract Giver Feedback';
+            $history->previous = $lastCft->ContractGiver_feedback;
+            $history->current = $request->ContractGiver_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ContractGiver_feedback) || $lastCft->ContractGiver_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ContractGiver_by != $request->ContractGiver_by && $request->ContractGiver_by != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Contract Giver Review By';
+            $history->previous = $lastCft->ContractGiver_by;
+            $history->current = $request->ContractGiver_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ContractGiver_by) || $lastCft->ContractGiver_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->ContractGiver_on != $request->ContractGiver_on && $request->ContractGiver_on != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Contract Giver Review On';
+            $history->previous = $lastCft->ContractGiver_on;
+            $history->current = $request->ContractGiver_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ContractGiver_on) || $lastCft->ContractGiver_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastCft->ContractGiver_attachment != $request->ContractGiver_attachment && $request->ContractGiver_attachment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Contract Giver Review On';
+            $history->previous = $lastCft->ContractGiver_attachment;
+            $history->current = implode(',',$request->ContractGiver_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->ContractGiver_attachment) || $lastCft->ContractGiver_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        /*************** Other 1 ***************/
+        if ($lastCft->Other1_review != $request->Other1_review && $request->Other1_review != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 1 Review Required';
+            $history->previous = $lastCft->Other1_review;
+            $history->current = $request->Other1_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other1_review) || $lastCft->Other1_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_person != $request->Other1_person && $request->Other1_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 1 Person';
+            $history->previous = $lastCft->Other1_person;
+            $history->current = $request->Other1_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other1_person) || $lastCft->Other1_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_Department_person != $request->Other1_Department_person && $request->Other1_Department_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 1 Review Required';
+            $history->previous = $lastCft->Other1_Department_person;
+            $history->current = $request->Other1_Department_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other1_Department_person) || $lastCft->Other1_Department_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_assessment != $request->Other1_assessment && $request->Other1_assessment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 1 Assessment';
+            $history->previous = $lastCft->Other1_assessment;
+            $history->current = $request->Other1_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other1_assessment) || $lastCft->Other1_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_feedback != $request->Other1_feedback && $request->Other1_feedback != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 1 Feedback';
+            $history->previous = $lastCft->Other1_feedback;
+            $history->current = $request->Other1_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other1_feedback) || $lastCft->Other1_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_by != $request->Other1_by && $request->Other1_by != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 1 Review By';
+            $history->previous = $lastCft->Other1_by;
+            $history->current = $request->Other1_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other1_by) || $lastCft->Other1_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_on != $request->Other1_on && $request->Other1_on != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 1 Review On';
+            $history->previous = $lastCft->Other1_on;
+            $history->current = $request->Other1_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other1_on) || $lastCft->Other1_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other1_attachment != $request->Other1_attachment && $request->Other1_attachment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 1 Review On';
+            $history->previous = $lastCft->Other1_attachment;
+            $history->current = implode(',',$request->Other1_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other1_attachment) || $lastCft->Other1_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+        /*************** Other 2 ***************/
+        if ($lastCft->Other2_review != $request->Other2_review && $request->Other2_review != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 2 Review Required';
+            $history->previous = $lastCft->Other2_review;
+            $history->current = $request->Other2_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other2_review) || $lastCft->Other2_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_person != $request->Other2_person && $request->Other2_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 2 Person';
+            $history->previous = $lastCft->Other2_person;
+            $history->current = $request->Other2_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other2_person) || $lastCft->Other2_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_Department_person != $request->Other2_Department_person && $request->Other2_Department_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 2 Review Required';
+            $history->previous = $lastCft->Other2_Department_person;
+            $history->current = $request->Other2_Department_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other2_Department_person) || $lastCft->Other2_Department_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_assessment != $request->Other2_assessment && $request->Other2_assessment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 2 Assessment';
+            $history->previous = $lastCft->Other2_assessment;
+            $history->current = $request->Other2_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other2_assessment) || $lastCft->Other2_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_feedback != $request->Other2_feedback && $request->Other2_feedback != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 2 Feedback';
+            $history->previous = $lastCft->Other2_feedback;
+            $history->current = $request->Other2_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other2_feedback) || $lastCft->Other2_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_by != $request->Other2_by && $request->Other2_by != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 2 Review By';
+            $history->previous = $lastCft->Other2_by;
+            $history->current = $request->Other2_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other2_by) || $lastCft->Other2_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_on != $request->Other2_on && $request->Other2_on != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 2 Review On';
+            $history->previous = $lastCft->Other2_on;
+            $history->current = $request->Other2_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other2_on) || $lastCft->Other2_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other2_attachment != $request->Other2_attachment && $request->Other2_attachment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 2 Review On';
+            $history->previous = $lastCft->Other2_attachment;
+            $history->current =implode(',', $request->Other2_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other2_attachment) || $lastCft->Other2_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Other 3 ***************/
+        if ($lastCft->Other3_review != $request->Other3_review && $request->Other3_review != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 3 Review Required';
+            $history->previous = $lastCft->Other3_review;
+            $history->current = $request->Other3_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other3_review) || $lastCft->Other3_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_person != $request->Other3_person && $request->Other3_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 3 Person';
+            $history->previous = $lastCft->Other3_person;
+            $history->current = $request->Other3_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other3_person) || $lastCft->Other3_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_Department_person != $request->Other3_Department_person && $request->Other3_Department_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 3 Review Required';
+            $history->previous = $lastCft->Other3_Department_person;
+            $history->current = $request->Other3_Department_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other3_Department_person) || $lastCft->Other3_Department_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_assessment != $request->Other3_assessment && $request->Other3_assessment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 3 Assessment';
+            $history->previous = $lastCft->Other3_assessment;
+            $history->current = $request->Other3_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other3_assessment) || $lastCft->Other3_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_feedback != $request->Other3_feedback && $request->Other3_feedback != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 3 Feedback';
+            $history->previous = $lastCft->Other3_feedback;
+            $history->current = $request->Other3_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other3_feedback) || $lastCft->Other3_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_by != $request->Other3_by && $request->Other3_by != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 3 Review By';
+            $history->previous = $lastCft->Other3_by;
+            $history->current = $request->Other3_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other3_by) || $lastCft->Other3_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 3 Review On';
+            $history->previous = $lastCft->Other3_on;
+            $history->current = $request->Other3_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other3_on) || $lastCft->Other3_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other3_attachment != $request->Other3_attachment && $request->Other3_attachment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 3 Review On';
+            $history->previous = $lastCft->Other3_attachment;
+            $history->current =implode(',', $request->Other3_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other3_attachment) || $lastCft->Other3_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        /*************** Other 4 ***************/
+        if ($lastCft->Other4_review != $request->Other4_review && $request->Other4_review != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 4 Review Required';
+            $history->previous = $lastCft->Other4_review;
+            $history->current = $request->Other4_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other4_review) || $lastCft->Other4_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_person != $request->Other4_person && $request->Other4_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 4 Person';
+            $history->previous = $lastCft->Other4_person;
+            $history->current = $request->Other4_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other4_person) || $lastCft->Other4_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_Department_person != $request->Other4_Department_person && $request->Other4_Department_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 4 Review Required';
+            $history->previous = $lastCft->Other4_Department_person;
+            $history->current = $request->Other4_Department_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other4_Department_person) || $lastCft->Other4_Department_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_assessment != $request->Other4_assessment && $request->Other4_assessment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 4 Assessment';
+            $history->previous = $lastCft->Other4_assessment;
+            $history->current = $request->Other4_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other4_assessment) || $lastCft->Other4_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_feedback != $request->Other4_feedback && $request->Other4_feedback != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 4 Feedback';
+            $history->previous = $lastCft->Other4_feedback;
+            $history->current = $request->Other4_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other4_feedback) || $lastCft->Other4_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_by != $request->Other4_by && $request->Other4_by != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 4 Review By';
+            $history->previous = $lastCft->Other4_by;
+            $history->current = $request->Other4_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other4_by) || $lastCft->Other4_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_on != $request->Other4_on && $request->Other4_on != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 4 Review On';
+            $history->previous = $lastCft->Other4_on;
+            $history->current = $request->Other4_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other4_on) || $lastCft->Other4_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other4_attachment != $request->Other4_attachment && $request->Other4_attachment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 4 Review On';
+            $history->previous = $lastCft->Other4_attachment;
+            $history->current =implode(',', $request->Other4_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other4_attachment) || $lastCft->Other4_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+        /*************** Other 5 ***************/
+        if ($lastCft->Other5_review != $request->Other5_review && $request->Other5_review != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 5 Review Required';
+            $history->previous = $lastCft->Other5_review;
+            $history->current = $request->Other5_review;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other5_review) || $lastCft->Other5_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_person != $request->Other5_person && $request->Other5_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 5 Person';
+            $history->previous = $lastCft->Other5_person;
+            $history->current = $request->Other5_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other5_person) || $lastCft->Other5_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_Department_person != $request->Other5_Department_person && $request->Other5_Department_person != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 5 Review Required';
+            $history->previous = $lastCft->Other5_Department_person;
+            $history->current = $request->Other5_Department_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other5_Department_person) || $lastCft->Other5_Department_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_assessment != $request->Other5_assessment && $request->Other5_assessment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 5 Assessment';
+            $history->previous = $lastCft->Other5_assessment;
+            $history->current = $request->Other5_assessment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other5_assessment) || $lastCft->Other5_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_feedback != $request->Other5_feedback && $request->Other5_feedback != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 5 Feedback';
+            $history->previous = $lastCft->Other5_feedback;
+            $history->current = $request->Other5_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other5_feedback) || $lastCft->Other5_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_by != $request->Other5_by && $request->Other5_by != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 5 Review By';
+            $history->previous = $lastCft->Other5_by;
+            $history->current = $request->Other5_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other5_by) || $lastCft->Other5_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_on != $request->Other5_on && $request->Other5_on != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 5 Review On';
+            $history->previous = $lastCft->Other5_on;
+            $history->current = $request->Other5_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other5_on) || $lastCft->Other5_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastCft->Other5_attachment != $request->Other5_attachment && $request->Other5_attachment != null) {
+            $history = new MarketComplaintAuditTrial;
+            $history->mc_id = $id;
+            $history->activity_type = 'Other 5 Review On';
+            $history->previous = $lastCft->Other5_attachment;
+            $history->current = implode(',',$request->Other5_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+             if (is_null($lastCft->Other5_attachment) || $lastCft->Other5_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+
+
         // -------------------------end audit show conditon end code ----------------------------------
 
 
@@ -5806,7 +8614,7 @@ class MarketComplaintController extends Controller
 
     public function audit_filter(Request $request, $id)
     {
-        // Start query for DeviationAuditTrail
+        // Start query for MarketComplaintAuditTrial
         $query = MarketComplaintAuditTrial::query();
         $query->where('market_id', $id);
 
