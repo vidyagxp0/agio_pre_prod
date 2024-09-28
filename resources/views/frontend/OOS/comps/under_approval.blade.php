@@ -85,11 +85,11 @@
                 <div class="group-input">
                     <label for="Reference Records">Material/Batch Release</label>
                     <select name="material_batch_release_bd" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'readonly' }}>
-                        <option value="default" {{ $data->material_batch_release_bd == 'default' ? 'selected' : ''
+                        <option value="" {{ $data->material_batch_release_bd == '' ? 'selected' : ''
                             }}>Enter Your Selection Here</option>
-                        <option value="release" {{ $data->material_batch_release_bd == 'release' ? 'selected' : ''
+                        <option value="To Be Released" {{ $data->material_batch_release_bd == 'To Be Released' ? 'selected' : ''
                             }}>To Be Released</option>
-                        <option value="reject" {{ $data->material_batch_release_bd == 'reject' ? 'selected' : ''
+                        <option value="To Be Rejected" {{ $data->material_batch_release_bd == 'To Be Rejected' ? 'selected' : ''
                             }}>To Be Rejected</option>
                         <option value="other" {{ $data->material_batch_release_bd == 'other' ? 'selected' : ''
                             }}>Other Action (Specify)</option>
