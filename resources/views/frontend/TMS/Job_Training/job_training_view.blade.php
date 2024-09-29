@@ -459,7 +459,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 5%;">Sr.No.</th>
-                                                        <th style="width: 30%;">Subject</th>
+                                                        <th style="width: 30%;">Document Title</th>
                                                         <th>Type of Training</th>
                                                         <th>SOP NO.</th>
                                                         <th>Trainer</th>
@@ -534,167 +534,170 @@
 <tr>
 <td>1</td>
 <td>
-                <select name="subject_1" id="sopdocument" onchange="fetchDocumentDetails(this)">
-                    <option value="">---Select Document Name---</option>
-                    @foreach ($data as $dat)
-                    <option value="{{ $dat->document_name }}" 
-                            data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
-                            data-sop-link="{{ $dat->id }}"
-                            @if(old('subject_1', $jobTraining->subject_1 ?? '') == $dat->document_name) selected @endif>
-                        {{ $dat->document_name }}
-                    </option>
-                    @endforeach
-                </select>
-            </td>
-            <td><input type="text" name="type_of_training_1" value="{{ old('type_of_training_1', $jobTraining->type_of_training_1 ?? '') }}"></td>
-            <td><input type="text" name="reference_document_no_1" id="document_number" value="{{ old('reference_document_no_1', $jobTraining->reference_document_no_1 ?? '') }}" readonly></td>
-            <td>
-                <select name="trainer_1" id="trainer_1">
-                    <option value="">-- Select --</option>
-                    @foreach ($usersDetails as $u)
-                    <option value="{{ $u->id }}" @if(old('trainer_1', $jobTraining->trainer_1 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
-                    @endforeach
-                </select>
-            </td>
-            <td><input type="date" name="startdate_1" id="startdate_1" value="{{ old('startdate_1', $jobTraining->startdate_1 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-            <td><input type="date" name="enddate_1" id="enddate_1" value="{{ old('enddate_1', $jobTraining->enddate_1 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-            <td>
-                <a href="{{ $jobTraining->selected_document_id ? '/documents/viewpdf/' . $jobTraining->selected_document_id : '#' }}" id="view_sop" target="_blank" style="display: {{ $jobTraining->selected_document_id ? 'inline' : 'none' }};">View SOP</a>
-            </td>
-</tr>
+    <select name="subject_1" id="sopdocument" onchange="fetchDocumentDetails(this)">
+        <option value="">---Select Document Name---</option>
+        @foreach ($data as $dat)
+        <option value="{{ $dat->document_name }}" 
+                data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                data-sop-id="{{ $dat->id }}"
+                @if(old('subject_1', $jobTraining->subject_1 ?? '') == $dat->document_name) selected @endif>
+            {{ $dat->document_name }}
+        </option>
+        @endforeach
+    </select>
+</td>
+<td><input type="text" name="type_of_training_1" value="{{ old('type_of_training_1', $jobTraining->type_of_training_1 ?? '') }}"></td>
+<td><input type="text" name="reference_document_no_1" id="document_number" value="{{ old('reference_document_no_1', $jobTraining->reference_document_no_1 ?? '') }}" readonly></td>
+<td>
+    <select name="trainer_1" id="trainer_1">
+        <option value="">-- Select --</option>
+        @foreach ($usersDetails as $u)
+        <option value="{{ $u->id }}" @if(old('trainer_1', $jobTraining->trainer_1 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
+        @endforeach
+    </select>
+</td>
+<td><input type="date" name="startdate_1" id="startdate_1" value="{{ old('startdate_1', $jobTraining->startdate_1 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+<td><input type="date" name="enddate_1" id="enddate_1" value="{{ old('enddate_1', $jobTraining->enddate_1 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+<td>
+    <a href="{{ $jobTraining->reference_document_no_1 ? '/documents/viewpdf/' . $jobTraining->reference_document_no_1 : '#' }}" id="view_sop" target="_blank" style="display: {{ $jobTraining->reference_document_no_1 ? 'inline' : 'none' }};">View SOP</a>
+</td>
 
-<input type="hidden" id="selected_document_id" name="selected_document_id" value="{{ old('selected_document_id', $jobTraining->selected_document_id ?? '') }}">
+<input type="hidden" name="reference_document_no_1" id="selected_document_id" value="{{ old('reference_document_no_1', $jobTraining->reference_document_no_1 ?? '') }}">
+</tr>
 
                                                     <tr>
                                                     <td>2</td>
                                                     <td>
-        <select name="subject_2" id="sopdocument" onchange="fetchDocumentDetails2(this)">
-            <option value="">---Select Document Name---</option>
-            @foreach ($data as $dat)
-            <option value="{{ $dat->document_name }}" 
-                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
-                    data-sop-link="{{ $dat->id }}"
-                    @if(old('subject_2', $jobTraining->subject_2 ?? '') == $dat->document_name) selected @endif>
-                {{ $dat->document_name }}
-            </option>
-            @endforeach
-        </select>
-    </td>
-    <td><input type="text" name="type_of_training_2" value="{{ old('type_of_training_2', $jobTraining->type_of_training_2 ?? '') }}"></td>
-    <td><input type="text" name="reference_document_no_2" id="document_number2" value="{{ old('reference_document_no_2', $jobTraining->reference_document_no_2 ?? '') }}" readonly></td>
-    <td>
-        <select name="trainer_2" id="trainer_2">
-            <option value="">-- Select --</option>
-            @foreach ($usersDetails as $u)
-            <option value="{{ $u->id }}" @if(old('trainer_2', $jobTraining->trainer_2 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
-            @endforeach
-        </select>
-    </td>
-    <td><input type="date" name="startdate_2" id="startdate_2" value="{{ old('startdate_2', $jobTraining->startdate_2 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-    <td><input type="date" name="enddate_2" id="enddate_2" value="{{ old('enddate_2', $jobTraining->enddate_2 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-    <td>
-        <a href="{{ $jobTraining->selected_document_id ? '/documents/viewpdf/' . $jobTraining->selected_document_id : '#' }}" id="view_sop2" target="_blank" style="display: {{ $jobTraining->selected_document_id ? 'inline' : 'none' }};">View SOP</a>
-    </td>
+    <select name="subject_2" id="sopdocument" onchange="fetchDocumentDetails2(this)">
+        <option value="">---Select Document Name---</option>
+        @foreach ($data as $dat)
+        <option value="{{ $dat->document_name }}" 
+                data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                data-sop-id="{{ $dat->id }}"
+                @if(old('subject_2', $jobTraining->subject_2 ?? '') == $dat->document_name) selected @endif>
+            {{ $dat->document_name }}
+        </option>
+        @endforeach
+    </select>
+</td>
+<td><input type="text" name="type_of_training_2" value="{{ old('type_of_training_2', $jobTraining->type_of_training_2 ?? '') }}"></td>
+<td><input type="text" name="reference_document_no_2" id="document_number2" value="{{ old('reference_document_no_2', $jobTraining->reference_document_no_2 ?? '') }}" readonly></td>
+<td>
+    <select name="trainer_2" id="trainer_2">
+        <option value="">-- Select --</option>
+        @foreach ($usersDetails as $u)
+        <option value="{{ $u->id }}" @if(old('trainer_2', $jobTraining->trainer_2 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
+        @endforeach
+    </select>
+</td>
+<td><input type="date" name="startdate_2" id="startdate_2" value="{{ old('startdate_2', $jobTraining->startdate_2 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+<td><input type="date" name="enddate_2" id="enddate_2" value="{{ old('enddate_2', $jobTraining->enddate_2 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+<td>
+    <a href="{{ $jobTraining->reference_document_no_2 ? '/documents/viewpdf/' . $jobTraining->reference_document_no_2 : '#' }}" id="view_sop2" target="_blank" style="display: {{ $jobTraining->reference_document_no_2 ? 'inline' : 'none' }};">View SOP</a>
+</td>
+<!-- Hidden field to store the document ID (which will go to the database) -->
+<input type="hidden" name="reference_document_no_2" id="selected_document_id2" value="{{ old('reference_document_no_2', $jobTraining->reference_document_no_2 ?? '') }}">
 </tr>
-<input type="hidden" id="selected_document_id2" name="selected_document_id" value="{{ old('selected_document_id', $jobTraining->selected_document_id ?? '') }}">
 
 <tr>
 <td>3</td>
 <td>
-        <select name="subject_3" id="sopdocument" onchange="fetchDocumentDetails3(this)">
-            <option value="">---Select Document Name---</option>
-            @foreach ($data as $dat)
-            <option value="{{ $dat->document_name }}" 
-                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
-                    data-sop-link="{{ $dat->id }}"
-                    @if(old('subject_3', $jobTraining->subject_3 ?? '') == $dat->document_name) selected @endif>
-                {{ $dat->document_name }}
-            </option>
-            @endforeach
-        </select>
-    </td>
-    <td><input type="text" name="type_of_training_3" value="{{ old('type_of_training_3', $jobTraining->type_of_training_3 ?? '') }}"></td>
-    <td><input type="text" name="reference_document_no_3" id="document_number3" value="{{ old('reference_document_no_3', $jobTraining->reference_document_no_3 ?? '') }}" readonly></td>
-    <td>
-        <select name="trainer_3" id="trainer_3">
-            <option value="">-- Select --</option>
-            @foreach ($usersDetails as $u)
-            <option value="{{ $u->id }}" @if(old('trainer_3', $jobTraining->trainer_3 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
-            @endforeach
-        </select>
-    </td>
-    <td><input type="date" name="startdate_3" id="startdate_3" value="{{ old('startdate_3', $jobTraining->startdate_3 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-    <td><input type="date" name="enddate_3" id="enddate_3" value="{{ old('enddate_3', $jobTraining->enddate_3 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-    <td>
-        <a href="{{ $jobTraining->selected_document_id ? '/documents/viewpdf/' . $jobTraining->selected_document_id : '#' }}" id="view_sop3" target="_blank" style="display: {{ $jobTraining->selected_document_id ? 'inline' : 'none' }};">View SOP</a>
-    </td>
+    <select name="subject_3" id="sopdocument" onchange="fetchDocumentDetails3(this)">
+        <option value="">---Select Document Name---</option>
+        @foreach ($data as $dat)
+        <option value="{{ $dat->document_name }}" 
+                data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                data-sop-id="{{ $dat->id }}"
+                @if(old('subject_3', $jobTraining->subject_3 ?? '') == $dat->document_name) selected @endif>
+            {{ $dat->document_name }}
+        </option>
+        @endforeach
+    </select>
+</td>
+<td><input type="text" name="type_of_training_3" value="{{ old('type_of_training_3', $jobTraining->type_of_training_3 ?? '') }}"></td>
+<td><input type="text" name="reference_document_no_3" id="document_number3" value="{{ old('reference_document_no_3', $jobTraining->reference_document_no_3 ?? '') }}" readonly></td>
+<td>
+    <select name="trainer_3" id="trainer_3">
+        <option value="">-- Select --</option>
+        @foreach ($usersDetails as $u)
+        <option value="{{ $u->id }}" @if(old('trainer_3', $jobTraining->trainer_3 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
+        @endforeach
+    </select>
+</td>
+<td><input type="date" name="startdate_3" id="startdate_3" value="{{ old('startdate_3', $jobTraining->startdate_3 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+<td><input type="date" name="enddate_3" id="enddate_3" value="{{ old('enddate_3', $jobTraining->enddate_3 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+<td>
+    <a href="{{ $jobTraining->reference_document_no_3 ? '/documents/viewpdf/' . $jobTraining->reference_document_no_3 : '#' }}" id="view_sop3" target="_blank" style="display: {{ $jobTraining->reference_document_no_3 ? 'inline' : 'none' }};">View SOP</a>
+</td>
+<!-- Hidden field to store the document ID (which will go to the database) -->
+<input type="hidden" name="reference_document_no_3" id="selected_document_id3" value="{{ old('reference_document_no_3', $jobTraining->reference_document_no_3 ?? '') }}">
 </tr>
-<input type="hidden" id="selected_document_id3" name="selected_document_id" value="{{ old('selected_document_id', $jobTraining->selected_document_id ?? '') }}">
+
 <tr>
 <td>4</td>
 <td>
-        <select name="subject_4" id="sopdocument" onchange="fetchDocumentDetails4(this)">
-            <option value="">---Select Document Name---</option>
-            @foreach ($data as $dat)
-            <option value="{{ $dat->document_name }}" 
-                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
-                    data-sop-link="{{ $dat->id }}"
-                    @if(old('subject_4', $jobTraining->subject_4 ?? '') == $dat->document_name) selected @endif>
-                {{ $dat->document_name }}
-            </option>
-            @endforeach
-        </select>
-    </td>
-    <td><input type="text" name="type_of_training_4" value="{{ old('type_of_training_4', $jobTraining->type_of_training_4 ?? '') }}"></td>
-    <td><input type="text" name="reference_document_no_4" id="document_number4" value="{{ old('reference_document_no_4', $jobTraining->reference_document_no_4 ?? '') }}" readonly></td>
-    <td>
-        <select name="trainer_4" id="trainer_4">
-            <option value="">-- Select --</option>
-            @foreach ($usersDetails as $u)
-            <option value="{{ $u->id }}" @if(old('trainer_4', $jobTraining->trainer_4 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
-            @endforeach
-        </select>
-    </td>
-    <td><input type="date" name="startdate_4" id="startdate_4" value="{{ old('startdate_4', $jobTraining->startdate_4 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-    <td><input type="date" name="enddate_4" id="enddate_4" value="{{ old('enddate_4', $jobTraining->enddate_4 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-    <td>
-        <a href="{{ $jobTraining->selected_document_id ? '/documents/viewpdf/' . $jobTraining->selected_document_id : '#' }}" id="view_sop4" target="_blank" style="display: {{ $jobTraining->selected_document_id ? 'inline' : 'none' }};">View SOP</a>
-    </td>
+    <select name="subject_4" id="sopdocument" onchange="fetchDocumentDetails4(this)">
+        <option value="">---Select Document Name---</option>
+        @foreach ($data as $dat)
+        <option value="{{ $dat->document_name }}" 
+                data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                data-sop-id="{{ $dat->id }}"
+                @if(old('subject_4', $jobTraining->subject_4 ?? '') == $dat->document_name) selected @endif>
+            {{ $dat->document_name }}
+        </option>
+        @endforeach
+    </select>
+</td>
+<td><input type="text" name="type_of_training_4" value="{{ old('type_of_training_4', $jobTraining->type_of_training_4 ?? '') }}"></td>
+<td><input type="text" name="reference_document_no_4" id="document_number4" value="{{ old('reference_document_no_4', $jobTraining->reference_document_no_4 ?? '') }}" readonly></td>
+<td>
+    <select name="trainer_4" id="trainer_4">
+        <option value="">-- Select --</option>
+        @foreach ($usersDetails as $u)
+        <option value="{{ $u->id }}" @if(old('trainer_4', $jobTraining->trainer_4 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
+        @endforeach
+    </select>
+</td>
+<td><input type="date" name="startdate_4" id="startdate_4" value="{{ old('startdate_4', $jobTraining->startdate_4 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+<td><input type="date" name="enddate_4" id="enddate_4" value="{{ old('enddate_4', $jobTraining->enddate_4 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+<td>
+    <a href="{{ $jobTraining->reference_document_no_4 ? '/documents/viewpdf/' . $jobTraining->reference_document_no_4 : '#' }}" id="view_sop4" target="_blank" style="display: {{ $jobTraining->reference_document_no_4 ? 'inline' : 'none' }};">View SOP</a>
+</td>
+<input type="hidden" name="reference_document_no_4" id="selected_document_id4" value="{{ old('reference_document_no_4', $jobTraining->reference_document_no_4 ?? '') }}">
 </tr>
-<input type="hidden" id="selected_document_id4" name="selected_document_id" value="{{ old('selected_document_id', $jobTraining->selected_document_id ?? '') }}">
 
 <tr>
 <td>5</td>
 <td>
-        <select name="subject_5" id="sopdocument" onchange="fetchDocumentDetails5(this)">
-            <option value="">---Select Document Name---</option>
-            @foreach ($data as $dat)
-            <option value="{{ $dat->document_name }}" 
-                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
-                    data-sop-link="{{ $dat->id }}"
-                    @if(old('subject_5', $jobTraining->subject_5 ?? '') == $dat->document_name) selected @endif>
-                {{ $dat->document_name }}
-            </option>
-            @endforeach
-        </select>
-    </td>
-    <td><input type="text" name="type_of_training_5" value="{{ old('type_of_training_5', $jobTraining->type_of_training_5 ?? '') }}"></td>
-    <td><input type="text" name="reference_document_no_5" id="document_number5" value="{{ old('reference_document_no_5', $jobTraining->reference_document_no_5 ?? '') }}" readonly></td>
-    <td>
-        <select name="trainer_5" id="trainer_5">
-            <option value="">-- Select --</option>
-            @foreach ($usersDetails as $u)
-            <option value="{{ $u->id }}" @if(old('trainer_5', $jobTraining->trainer_5 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
-            @endforeach
-        </select>
-    </td>
-    <td><input type="date" name="startdate_5" id="startdate_5" value="{{ old('startdate_5', $jobTraining->startdate_5 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-    <td><input type="date" name="enddate_5" id="enddate_5" value="{{ old('enddate_5', $jobTraining->enddate_5 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-    <td>
-        <a href="{{ $jobTraining->selected_document_id ? '/documents/viewpdf/' . $jobTraining->selected_document_id : '#' }}" id="view_sop5" target="_blank" style="display: {{ $jobTraining->selected_document_id ? 'inline' : 'none' }};">View SOP</a>
-    </td>
+    <select name="subject_5" id="sopdocument" onchange="fetchDocumentDetails5(this)">
+        <option value="">---Select Document Name---</option>
+        @foreach ($data as $dat)
+        <option value="{{ $dat->document_name }}" 
+                data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                data-sop-id="{{ $dat->id }}"
+                @if(old('subject_5', $jobTraining->subject_5 ?? '') == $dat->document_name) selected @endif>
+            {{ $dat->document_name }}
+        </option>
+        @endforeach
+    </select>
+</td>
+<td><input type="text" name="type_of_training_5" value="{{ old('type_of_training_5', $jobTraining->type_of_training_5 ?? '') }}"></td>
+<td><input type="text" name="reference_document_no_5" id="document_number5" value="{{ old('reference_document_no_5', $jobTraining->reference_document_no_5 ?? '') }}" readonly></td>
+<td>
+    <select name="trainer_5" id="trainer_5">
+        <option value="">-- Select --</option>
+        @foreach ($usersDetails as $u)
+        <option value="{{ $u->id }}" @if(old('trainer_5', $jobTraining->trainer_5 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
+        @endforeach
+    </select>
+</td>
+<td><input type="date" name="startdate_5" id="startdate_5" value="{{ old('startdate_5', $jobTraining->startdate_5 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+<td><input type="date" name="enddate_5" id="enddate_5" value="{{ old('enddate_5', $jobTraining->enddate_5 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+<td>
+    <a href="{{ $jobTraining->reference_document_no_5 ? '/documents/viewpdf/' . $jobTraining->reference_document_no_5 : '#' }}" id="view_sop5" target="_blank" style="display: {{ $jobTraining->reference_document_no_5 ? 'inline' : 'none' }};">View SOP</a>
+</td>
+<input type="hidden" name="reference_document_no_5" id="selected_document_id5" value="{{ old('reference_document_no_5', $jobTraining->reference_document_no_5 ?? '') }}">
 </tr>
-<input type="hidden" id="selected_document_id5" name="selected_document_id" value="{{ old('selected_document_id', $jobTraining->selected_document_id ?? '') }}">
 
                                                 </tbody>
                                             </table>
@@ -809,101 +812,136 @@
   function fetchDocumentDetails(selectElement) {
     var selectedOption = selectElement.options[selectElement.selectedIndex];
 
+    var documentName = selectedOption.value;
     var documentNumber = selectedOption.getAttribute('data-doc-number');
-    var documentId = selectedOption.getAttribute('data-sop-link');
-    
-    // Update document number input
-    document.getElementById('document_number').value = documentNumber;
+    var documentId = selectedOption.getAttribute('data-sop-id');
 
-    // Update SOP link visibility
+    document.getElementById('document_number').value = documentNumber;
+    document.getElementById('selected_document_id').value = documentId;
+
+    // Update the "View SOP" link's href based on the selected document's ID
     var sopAnchor = document.getElementById('view_sop');
     if (documentId) {
-        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+        sopAnchor.href = '/documents/viewpdf/' + documentId; // Correct SOP path
+        sopAnchor.style.display = 'inline'; // Show the "View SOP" link
+    } else {
+        sopAnchor.style.display = 'none'; // Hide the "View SOP" link if no document is selected
+    }
+
+    // Log values for debugging
+    console.log("Document Name:", documentName);
+    console.log("Document Number (displayed):", documentNumber);
+    console.log("Document ID (stored):", documentId);
+}
+
+</script>
+<script>
+    function fetchDocumentDetails2(selectElement) {
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+    var documentName = selectedOption.value; 
+    var documentNumber = selectedOption.getAttribute('data-doc-number');
+    var documentId = selectedOption.getAttribute('data-sop-id');
+    
+    // Update document number input (this shows the document number, but ID will be stored in the database)
+    document.getElementById('document_number2').value = documentNumber;
+
+    // Update the hidden field where the actual document ID will be stored for the database
+    document.getElementById('selected_document_id2').value = documentId;
+
+    // Update the "View SOP" link's href based on the selected document's ID
+    var sopAnchor = document.getElementById('view_sop2');
+    if (documentId) {
+        sopAnchor.href = '/documents/viewpdf/' + documentId; // Correct SOP path
+        sopAnchor.style.display = 'inline'; // Show the "View SOP" link
+    } else {
+        sopAnchor.style.display = 'none';
+    }
+
+    console.log("Document Name:", documentName);
+    console.log("Document Number (displayed):", documentNumber);
+    console.log("Document ID (stored):", documentId);
+}
+</script>
+
+<script>
+     function fetchDocumentDetails3(selectElement) {
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+    var documentName = selectedOption.value; 
+    var documentNumber = selectedOption.getAttribute('data-doc-number');
+    var documentId = selectedOption.getAttribute('data-sop-id');
+    
+    document.getElementById('document_number3').value = documentNumber;
+
+    document.getElementById('selected_document_id3').value = documentId;
+
+    // Update the "View SOP" link's href based on the selected document's ID
+    var sopAnchor = document.getElementById('view_sop3');
+    if (documentId) {
+        sopAnchor.href = '/documents/viewpdf/' + documentId;
         sopAnchor.style.display = 'inline';
     } else {
         sopAnchor.style.display = 'none';
     }
 
-    // Update hidden input field
-    var hiddenField = document.getElementById('selected_document_id');
-    hiddenField.value = documentId;
-
-    // Log values for debugging
-    console.log("Document ID:", documentId);
-    console.log("Hidden field value:", hiddenField.value);
+    console.log("Document Name:", documentName);
+    console.log("Document Number (displayed):", documentNumber);
+    console.log("Document ID (stored):", documentId);
 }
 </script>
+
 <script>
-    function fetchDocumentDetails2(selectElement) {
-        var selectedOption = selectElement.options[selectElement.selectedIndex];
+     function fetchDocumentDetails4(selectElement) {
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
 
-        var documentNumber = selectedOption.getAttribute('data-doc-number');
-        var documentId = selectedOption.getAttribute('data-sop-link');
-        
-        // Update document number input
-        document.getElementById('document_number2').value = documentNumber;
+    var documentName = selectedOption.value; 
+    var documentNumber = selectedOption.getAttribute('data-doc-number');
+    var documentId = selectedOption.getAttribute('data-sop-id');
+    
+    document.getElementById('document_number4').value = documentNumber;
 
-        // Update SOP link visibility
-        var sopAnchor = document.getElementById('view_sop2');
-        if (documentId) {
-            sopAnchor.href = `/documents/viewpdf/${documentId}`;
-            sopAnchor.style.display = 'inline';
-        } else {
-            sopAnchor.style.display = 'none';
-        }
+    document.getElementById('selected_document_id4').value = documentId;
 
-        // Update hidden input field
-        document.getElementById('selected_document_id').value = documentId;
+    // Update the "View SOP" link's href based on the selected document's ID
+    var sopAnchor = document.getElementById('view_sop4');
+    if (documentId) {
+        sopAnchor.href = '/documents/viewpdf/' + documentId;
+        sopAnchor.style.display = 'inline';
+    } else {
+        sopAnchor.style.display = 'none';
     }
 
+    console.log("Document Name:", documentName);
+    console.log("Document Number (displayed):", documentNumber);
+    console.log("Document ID (stored):", documentId);
+}
+</script>
 
-    function fetchDocumentDetails3(selectElement) {
-        var selectedOption = selectElement.options[selectElement.selectedIndex];
+<script>
+     function fetchDocumentDetails5(selectElement) {
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
 
-        var documentNumber = selectedOption.getAttribute('data-doc-number');
-        var documentId = selectedOption.getAttribute('data-sop-link');
-        
-        // Update document number input
-        document.getElementById('document_number3').value = documentNumber;
+    var documentName = selectedOption.value; 
+    var documentNumber = selectedOption.getAttribute('data-doc-number');
+    var documentId = selectedOption.getAttribute('data-sop-id');
+    
+    document.getElementById('document_number5').value = documentNumber;
 
-        // Update SOP link visibility
-        var sopAnchor = document.getElementById('view_sop3');
-        if (documentId) {
-            sopAnchor.href = `/documents/viewpdf/${documentId}`;
-            sopAnchor.style.display = 'inline';
-        } else {
-            sopAnchor.style.display = 'none';
-        }
+    document.getElementById('selected_document_id5').value = documentId;
 
-        // Update hidden input field
-        document.getElementById('selected_document_id').value = documentId;
+    var sopAnchor = document.getElementById('view_sop5');
+    if (documentId) {
+        sopAnchor.href = '/documents/viewpdf/' + documentId;
+        sopAnchor.style.display = 'inline';
+    } else {
+        sopAnchor.style.display = 'none';
     }
 
-
-    function fetchDocumentDetails4(selectElement) {
-        var selectedOption = selectElement.options[selectElement.selectedIndex];
-
-        var documentNumber = selectedOption.getAttribute('data-doc-number');
-        var documentId = selectedOption.getAttribute('data-sop-link');
-        
-        // Update document number input
-        document.getElementById('document_number4').value = documentNumber;
-
-        // Update SOP link visibility
-        var sopAnchor = document.getElementById('view_sop4');
-        if (documentId) {
-            sopAnchor.href = `/documents/viewpdf/${documentId}`;
-            sopAnchor.style.display = 'inline';
-        } else {
-            sopAnchor.style.display = 'none';
-        }
-
-        // Update hidden input field
-        document.getElementById('selected_document_id').value = documentId;
-    }
-
-
-   
+    console.log("Document Name:", documentName);
+    console.log("Document Number (displayed):", documentNumber);
+    console.log("Document ID (stored):", documentId);
+}
 </script>
 
 

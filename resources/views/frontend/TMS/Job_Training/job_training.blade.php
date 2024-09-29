@@ -339,176 +339,201 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
         <tr>
         <td>1</td>
         <td>
-            <select name="subject_1" id="sopdocument" onchange="fetchDocumentDetails(this)">
-                <option value="">---Select Document Name---</option>
-                @foreach ($data as $dat)
-                <option value="{{ $dat->document_name }}"
-                        data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
-                        data-sop-link="{{ $dat->id }}">
-                    {{ $dat->document_name }}
-                </option>
-                @endforeach
-            </select>
-        </td>
-        <td><input type="text" name="type_of_training_1"></td>
+        <select name="subject_1" id="sopdocument" onchange="fetchDocumentDetails(this)">
+            <option value="">---Select Document Name---</option>
+            @foreach ($data as $dat)
+            <option value="{{ $dat->document_name }}"
+                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                    data-sop-link="{{ $dat->id }}" 
+                    data-id="{{ $dat->id }}">
+                {{ $dat->document_name }}
+            </option>
+            @endforeach
+        </select>
+    </td>
 
-        <td><input type="text" name="reference_document_no_1" id="document_number" readonly></td>
+    <td><input type="text" name="type_of_training_1"></td>
 
+    <td><input type="text" name="reference_document_no_1" id="document_number" readonly></td>
 
-            <td>
-                <select name="trainer_1" id="trainer_1">
-                    <option value="">-- Select --</option>
-                    @foreach ($usersDetails as $u)
-                    <option value="{{ $u->id }}">{{ $u->name }}</option>
-                    @endforeach
-                </select>
-            </td>
-            <td><input type="date" name="startdate_1" id="startdate_1" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-            <td><input type="date" name="enddate_1" id="enddate_1" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-            <td>
-            <a href="" id="view_sop" target="_blank" style="display:none;">View SOP</a>
-        </td>
-        </tr>
-        <input type="hidden" id="selected_document_id" name="selected_document_id">
+    <td>
+        <select name="trainer_1" id="trainer_1">
+            <option value="">-- Select --</option>
+            @foreach ($usersDetails as $u)
+            <option value="{{ $u->id }}">{{ $u->name }}</option>
+            @endforeach
+        </select>
+    </td>
+
+    <td><input type="date" name="startdate_1" id="startdate_1" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+
+    <td><input type="date" name="enddate_1" id="enddate_1" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+
+    <td>
+        <a href="" id="view_sop" target="_blank" style="display:none;">View SOP</a>
+    </td>
+</tr>
+<input type="hidden" id="selected_document_id" name="selected_document_id">
 
         <!-- Row 2 -->
         <tr>
             <td>2</td>
             <td>
-            <select name="subject_2" id="sopdocument" onchange="fetchDocumentDetails2(this)">
-                <option value="">---Select Document Name---</option>
-                @foreach ($data as $dat)
-                <option value="{{ $dat->document_name }}"
-                        data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
-                        data-sop-link="{{ $dat->id }}">
-                    {{ $dat->document_name }}
-                </option>
-                @endforeach
-            </select>
-        </td>
-        <td><input type="text" name="type_of_training_2"></td>
+        <select name="subject_2" id="sopdocument" onchange="fetchDocumentDetails2(this)">
+            <option value="">---Select Document Name---</option>
+            @foreach ($data as $dat)
+            <option value="{{ $dat->document_name }}"
+                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                    data-sop-link="{{ $dat->id }}" 
+                    data-id="{{ $dat->id }}">
+                {{ $dat->document_name }}
+            </option>
+            @endforeach
+        </select>
+    </td>
 
-        <td><input type="text" name="reference_document_no_2" id="document_number1" readonly></td>
- 
-            <td>
-                <select name="trainer_2" id="trainer_2">
-                    <option value="">-- Select --</option>
-                    @foreach ($usersDetails as $u)
-                    <option value="{{ $u->id }}">{{ $u->name }}</option>
-                    @endforeach
-                </select>
-            </td>
-            <td><input type="date" name="startdate_2" id="startdate_2" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-            <td><input type="date" name="enddate_2" id="enddate_2" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-            <td>
-            <a href="" id="view_sop1" target="_blank" style="display:none;">View SOP</a>
-            </td>
-            </tr>
-            <input type="hidden" id="selected_document_id1" name="selected_document_id">
+    <td><input type="text" name="type_of_training_2"></td>
+
+    <td><input type="text" name="reference_document_no_2" id="document_number2" readonly></td>
+
+    <td>
+        <select name="trainer_2" id="trainer_2">
+            <option value="">-- Select --</option>
+            @foreach ($usersDetails as $u)
+            <option value="{{ $u->id }}">{{ $u->name }}</option>
+            @endforeach
+        </select>
+    </td>
+
+    <td><input type="date" name="startdate_2" id="startdate_2" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+
+    <td><input type="date" name="enddate_2" id="enddate_2" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+
+    <td>
+        <a href="" id="view_sop2" target="_blank" style="display:none;">View SOP</a>
+    </td>
+</tr>
+<input type="hidden" id="selected_document_id2" name="selected_document_id">
 
         <!-- Row 3 -->
         <tr>
             <td>3</td>
-            <td>
-            <select name="subject_3" id="sopdocument" onchange="fetchDocumentDetails3(this)">
-                <option value="">---Select Document Name---</option>
-                @foreach ($data as $dat)
-                <option value="{{ $dat->document_name }}"
-                        data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
-                        data-sop-link="{{ $dat->id }}">
-                    {{ $dat->document_name }}
-                </option>
-                @endforeach
-            </select>
-        </td>
-        <td><input type="text" name="type_of_training_3"></td>
+        <td>
+        <select name="subject_3" id="sopdocument" onchange="fetchDocumentDetails3(this)">
+            <option value="">---Select Document Name---</option>
+            @foreach ($data as $dat)
+            <option value="{{ $dat->document_name }}"
+                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                    data-sop-link="{{ $dat->id }}" 
+                    data-id="{{ $dat->id }}">
+                {{ $dat->document_name }}
+            </option>
+            @endforeach
+        </select>
+    </td>
 
-        <td><input type="text" name="reference_document_no_3" id="document_number2" readonly></td>
+    <td><input type="text" name="type_of_training_3"></td>
 
-            <td>
-                <select name="trainer_3" id="trainer_3">
-                    <option value="">-- Select --</option>
-                    @foreach ($usersDetails as $u)
-                    <option value="{{ $u->id }}">{{ $u->name }}</option>
-                    @endforeach
-                </select>
-            </td>
-            <td><input type="date" name="startdate_3" id="startdate_3" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-            <td><input type="date" name="enddate_3" id="enddate_3" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-            <td>
-            <a href="" id="view_sop2" target="_blank" style="display:none;">View SOP</a>
-            </td>
-        </tr>
-        <input type="hidden" id="selected_document_id2" name="selected_document_id">
+    <td><input type="text" name="reference_document_no_3" id="document_number3" readonly></td>
+
+    <td>
+        <select name="trainer_3" id="trainer_3">
+            <option value="">-- Select --</option>
+            @foreach ($usersDetails as $u)
+            <option value="{{ $u->id }}">{{ $u->name }}</option>
+            @endforeach
+        </select>
+    </td>
+
+    <td><input type="date" name="startdate_3" id="startdate_3" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+
+    <td><input type="date" name="enddate_3" id="enddate_3" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+
+    <td>
+        <a href="" id="view_sop3" target="_blank" style="display:none;">View SOP</a>
+    </td>
+</tr>
+<input type="hidden" id="selected_document_id3" name="selected_document_id">
 
         <!-- Row 4 -->
         <tr>
             <td>4</td>
             <td>
-            <select name="subject_4" id="sopdocument" onchange="fetchDocumentDetails4(this)">
-                <option value="">---Select Document Name---</option>
-                @foreach ($data as $dat)
-                <option value="{{ $dat->document_name }}"
-                        data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
-                        data-sop-link="{{ $dat->id }}">
-                    {{ $dat->document_name }}
-                </option>
-                @endforeach
-            </select>
-        </td>
-        <td><input type="text" name="type_of_training_4"></td>
+        <select name="subject_4" id="sopdocument" onchange="fetchDocumentDetails4(this)">
+            <option value="">---Select Document Name---</option>
+            @foreach ($data as $dat)
+            <option value="{{ $dat->document_name }}"
+                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                    data-sop-link="{{ $dat->id }}" 
+                    data-id="{{ $dat->id }}">
+                {{ $dat->document_name }}
+            </option>
+            @endforeach
+        </select>
+    </td>
 
-        <td><input type="text" name="reference_document_no_4" id="document_number3" readonly></td>
-            <td>
-                <select name="trainer_4" id="trainer_4">
-                    <option value="">-- Select --</option>
-                    @foreach ($usersDetails as $u)
-                    <option value="{{ $u->id }}">{{ $u->name }}</option>
-                    @endforeach
-                </select>
-            </td>
-            <td><input type="date" name="startdate_4" id="startdate_4" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-            <td><input type="date" name="enddate_4" id="enddate_4" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-            <td>
-            <a href="" id="view_sop3" target="_blank" style="display:none;">View SOP</a>
-            </td>
-        </tr>
-        <input type="hidden" id="selected_document_id3" name="selected_document_id">
+    <td><input type="text" name="type_of_training_4"></td>
+
+    <td><input type="text" name="reference_document_no_4" id="document_number4" readonly></td>
+
+    <td>
+        <select name="trainer_4" id="trainer_4">
+            <option value="">-- Select --</option>
+            @foreach ($usersDetails as $u)
+            <option value="{{ $u->id }}">{{ $u->name }}</option>
+            @endforeach
+        </select>
+    </td>
+
+    <td><input type="date" name="startdate_4" id="startdate_4" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+
+    <td><input type="date" name="enddate_4" id="enddate_4" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+
+    <td>
+        <a href="" id="view_sop4" target="_blank" style="display:none;">View SOP</a>
+    </td>
+</tr>
+<input type="hidden" id="selected_document_id4" name="selected_document_id">
 
         <!-- Row 5 -->
         <tr>
             <td>5</td>
             <td>
-            <select name="subject_5" id="sopdocument" onchange="fetchDocumentDetails5(this)">
-                <option value="">---Select Document Name---</option>
-                @foreach ($data as $dat)
-                <option value="{{ $dat->document_name }}"
-                        data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
-                        data-sop-link="{{ $dat->id }}">
-                    {{ $dat->document_name }}
-                </option>
-                @endforeach
-            </select>
-        </td>
-        <td><input type="text" name="type_of_training_5"></td>
+        <select name="subject_5" id="sopdocument" onchange="fetchDocumentDetails5(this)">
+            <option value="">---Select Document Name---</option>
+            @foreach ($data as $dat)
+            <option value="{{ $dat->document_name }}"
+                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                    data-sop-link="{{ $dat->id }}" 
+                    data-id="{{ $dat->id }}">
+                {{ $dat->document_name }}
+            </option>
+            @endforeach
+        </select>
+    </td>
 
-        <td><input type="text" name="reference_document_no_5" id="document_number4" readonly></td>
+    <td><input type="text" name="type_of_training_5"></td>
 
-            <td>
-                <select name="trainer_5" id="trainer_5">
-                    <option value="">-- Select --</option>
-                    @foreach ($usersDetails as $u)
-                    <option value="{{ $u->id }}">{{ $u->name }}</option>
-                    @endforeach
-                </select>
-            </td>
-            <td><input type="date" name="startdate_5" id="startdate_5" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-            <td><input type="date" name="enddate_5" id="enddate_5" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-            <td>
-            <a href="" id="view_sop4" target="_blank" style="display:none;">View SOP</a>
-            </td>
-        </tr>
-        <input type="hidden" id="selected_document_id4" name="selected_document_id">
+    <td><input type="text" name="reference_document_no_5" id="document_number5" readonly></td>
+
+    <td>
+        <select name="trainer_5" id="trainer_5">
+            <option value="">-- Select --</option>
+            @foreach ($usersDetails as $u)
+            <option value="{{ $u->id }}">{{ $u->name }}</option>
+            @endforeach
+        </select>
+    </td>
+
+    <td><input type="date" name="startdate_5" id="startdate_5" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+
+    <td><input type="date" name="enddate_5" id="enddate_5" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+
+    <td>
+        <a href="" id="view_sop5" target="_blank" style="display:none;">View SOP</a>
+    </td>
+</tr>
+<input type="hidden" id="selected_document_id5" name="selected_document_id">
     </tbody>
 </table>
 
@@ -528,136 +553,149 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
 </div>
 <script>
     function fetchDocumentDetails(selectElement) {
-        var selectedOption = selectElement.options[selectElement.selectedIndex];
-        var documentNumber = selectedOption.getAttribute('data-doc-number');
-        var documentId = selectedOption.getAttribute('data-sop-link');
-        
-        // Update the reference document number field
-        document.getElementById('document_number').value = documentNumber;
-        
-        // Update hidden input field for document ID
-        document.getElementById('selected_document_id').value = documentId;
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
 
-        // Update SOP view link
-        var sopAnchor = document.getElementById('view_sop');
-        if (documentId) {
-            sopAnchor.href = `/documents/viewpdf/${documentId}`;
-            sopAnchor.style.display = 'inline';  // Show the link
-        } else {
-            sopAnchor.style.display = 'none';  // Hide if no document selected
-        }}
-        document.addEventListener("DOMContentLoaded", function() {
-        var selectedDocumentId = document.getElementById('selected_document_id').value;
-        var sopAnchor = document.getElementById('view_sop');
-        
-        if (selectedDocumentId) {
-            sopAnchor.href = `/documents/viewpdf/${selectedDocumentId}`;
-            sopAnchor.style.display = 'inline';  // Show the link if document ID exists
-        }
-    });
+    var documentId = selectedOption.getAttribute('data-id');
+
+    document.getElementById('document_number').value = documentId;
+
+    document.getElementById('selected_document_id').value = documentId;
+
+    var sopAnchor = document.getElementById('view_sop');
+    if (documentId) {
+        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+        sopAnchor.style.display = 'inline';
+    } else {
+        sopAnchor.style.display = 'none';
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    var selectedDocumentId = document.getElementById('selected_document_id').value;
+    var sopAnchor = document.getElementById('view_sop');
+    
+    if (selectedDocumentId) {
+        sopAnchor.href = `/documents/viewpdf/${selectedDocumentId}`;
+        sopAnchor.style.display = 'inline';
+    }
+});
 </script>
 
 <script>
     function fetchDocumentDetails2(selectElement) {
-        var selectedOption = selectElement.options[selectElement.selectedIndex];
-        var documentNumber = selectedOption.getAttribute('data-doc-number');
-        var documentId = selectedOption.getAttribute('data-sop-link');
-        
-        // Update the reference document number field
-        document.getElementById('document_number1').value = documentNumber;
-        
-        // Update hidden input field for document ID
-        document.getElementById('selected_document_id').value = documentId;
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
 
-        // Update SOP view link
-        var sopAnchor = document.getElementById('view_sop1');
-        if (documentId) {
-            sopAnchor.href = `/documents/viewpdf/${documentId}`;
-            sopAnchor.style.display = 'inline';  // Show the link
-        } else {
-            sopAnchor.style.display = 'none';  // Hide if no document selected
-        }}
-        document.addEventListener("DOMContentLoaded", function() {
-        var selectedDocumentId = document.getElementById('selected_document_id').value;
-        var sopAnchor = document.getElementById('view_sop');
-        
-        if (selectedDocumentId) {
-            sopAnchor.href = `/documents/viewpdf/${selectedDocumentId}`;
-            sopAnchor.style.display = 'inline';  // Show the link if document ID exists
-        }
-    });
+    var documentId = selectedOption.getAttribute('data-id');
+
+    document.getElementById('document_number2').value = documentId;
+
+    document.getElementById('selected_document_id2').value = documentId;
+
+    var sopAnchor = document.getElementById('view_sop2');
+    if (documentId) {
+        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+        sopAnchor.style.display = 'inline';
+    } else {
+        sopAnchor.style.display = 'none';
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    var selectedDocumentId = document.getElementById('selected_document_id2').value;
+    var sopAnchor = document.getElementById('view_sop2');
+    
+    if (selectedDocumentId) {
+        sopAnchor.href = `/documents/viewpdf/${selectedDocumentId}`;
+        sopAnchor.style.display = 'inline';
+    }
+});
 </script>
 <script>
-      function fetchDocumentDetails3(selectElement) {
-        var selectedOption = selectElement.options[selectElement.selectedIndex];
-        var documentNumber = selectedOption.getAttribute('data-doc-number');
-        var documentId = selectedOption.getAttribute('data-sop-link');
-        
-        // Update the reference document number field
-        document.getElementById('document_number2').value = documentNumber;
-        
-        // Update hidden input field for document ID
-        document.getElementById('selected_document_id').value = documentId;
+     function fetchDocumentDetails3(selectElement) {
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
 
-        // Update SOP view link
-        var sopAnchor = document.getElementById('view_sop2');
-        if (documentId) {
-            sopAnchor.href = `/documents/viewpdf/${documentId}`;
-            sopAnchor.style.display = 'inline';  // Show the link
-        } else {
-            sopAnchor.style.display = 'none';  // Hide if no document selected
-        }}
-        document.addEventListener("DOMContentLoaded", function() {
-        var selectedDocumentId = document.getElementById('selected_document_id').value;
-        var sopAnchor = document.getElementById('view_sop');
-        
-        if (selectedDocumentId) {
-            sopAnchor.href = `/documents/viewpdf/${selectedDocumentId}`;
-            sopAnchor.style.display = 'inline';  // Show the link if document ID exists
-        }
-    });
+    var documentId = selectedOption.getAttribute('data-id');
+
+    document.getElementById('document_number3').value = documentId;
+
+    document.getElementById('selected_document_id3').value = documentId;
+
+    var sopAnchor = document.getElementById('view_sop3');
+    if (documentId) {
+        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+        sopAnchor.style.display = 'inline';
+    } else {
+        sopAnchor.style.display = 'none';
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    var selectedDocumentId = document.getElementById('selected_document_id3').value;
+    var sopAnchor = document.getElementById('view_sop3');
+    
+    if (selectedDocumentId) {
+        sopAnchor.href = `/documents/viewpdf/${selectedDocumentId}`;
+        sopAnchor.style.display = 'inline';
+    }
+});
 </script>
 <script>
-        function fetchDocumentDetails4(selectElement) {
-        var selectedOption = selectElement.options[selectElement.selectedIndex];
-        var documentNumber = selectedOption.getAttribute('data-doc-number');
-        var documentId = selectedOption.getAttribute('data-sop-link');
-        
-        // Update the reference document number field
-        document.getElementById('document_number3').value = documentNumber;
-        
-        // Update hidden input field for document ID
-        document.getElementById('selected_document_id').value = documentId;
+    function fetchDocumentDetails4(selectElement) {
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
 
-        // Update SOP view link
-        var sopAnchor = document.getElementById('view_sop3');
-        if (documentId) {
-            sopAnchor.href = `/documents/viewpdf/${documentId}`;
-            sopAnchor.style.display = 'inline';  // Show the link
-        } else {
-            sopAnchor.style.display = 'none';  // Hide if no document selected
-        }}
+    var documentId = selectedOption.getAttribute('data-id');
+
+    document.getElementById('document_number4').value = documentId;
+
+    document.getElementById('selected_document_id4').value = documentId;
+
+    var sopAnchor = document.getElementById('view_sop4');
+    if (documentId) {
+        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+        sopAnchor.style.display = 'inline';
+    } else {
+        sopAnchor.style.display = 'none';
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    var selectedDocumentId = document.getElementById('selected_document_id4').value;
+    var sopAnchor = document.getElementById('view_sop4');
+    
+    if (selectedDocumentId) {
+        sopAnchor.href = `/documents/viewpdf/${selectedDocumentId}`;
+        sopAnchor.style.display = 'inline';
+    }
+});
 </script>
 <script>
-        function fetchDocumentDetails5(selectElement) {
-        var selectedOption = selectElement.options[selectElement.selectedIndex];
-        var documentNumber = selectedOption.getAttribute('data-doc-number');
-        var documentId = selectedOption.getAttribute('data-sop-link');
-        
-        // Update the reference document number field
-        document.getElementById('document_number4').value = documentNumber;
-        
-        // Update hidden input field for document ID
-        document.getElementById('selected_document_id').value = documentId;
+    function fetchDocumentDetails5(selectElement) {
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
 
-        // Update SOP view link
-        var sopAnchor = document.getElementById('view_sop4');
-        if (documentId) {
-            sopAnchor.href = `/documents/viewpdf/${documentId}`;
-            sopAnchor.style.display = 'inline';  // Show the link
-        } else {
-            sopAnchor.style.display = 'none';  // Hide if no document selected
-        }}
+    var documentId = selectedOption.getAttribute('data-id');
+
+    document.getElementById('document_number5').value = documentId;
+
+    document.getElementById('selected_document_id5').value = documentId;
+
+    var sopAnchor = document.getElementById('view_sop5');
+    if (documentId) {
+        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+        sopAnchor.style.display = 'inline';
+    } else {
+        sopAnchor.style.display = 'none';
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    var selectedDocumentId = document.getElementById('selected_document_id5').value;
+    var sopAnchor = document.getElementById('view_sop5');
+    
+    if (selectedDocumentId) {
+        sopAnchor.href = `/documents/viewpdf/${selectedDocumentId}`;
+        sopAnchor.style.display = 'inline';
+    }
+});
 </script>
 
 

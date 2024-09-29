@@ -258,16 +258,18 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>1</td>
                                                     <td style="background: #DCD8D8">Introduction of Agio Plant</td>
                                                     <td>
-                                                        <!-- <textarea name="document_number_1"></textarea> -->
                                                         <select name="document_number_1" id="document_number_select" onchange="fetchSopLink(this)">
                                                             <option value="">----Select---</option>
                                                             @foreach ($data as $item)
-                                                            <option value="{{ $item->id }}" data-sop-link="{{ $item->id }}">
+                                                            <option value="{{ $item->id }}" 
+                                                                    data-sop-link="{{ $item->id }}">
                                                                 {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
                                                             </option>
                                                             @endforeach
                                                         </select>
                                                     </td>
+
+                                                    <!-- Date Input Field -->
                                                     <td>
                                                         <div class="new-date-data-field">
                                                             <div class="group-input input-date">
@@ -278,14 +280,19 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                             </div>
                                                         </div>
                                                     </td>
+
+                                                    <!-- File Upload Input -->
                                                     <td>
                                                         <label for="Attached "></label>
                                                         <input type="file" id="myfile" name="attachment_1">
                                                     </td>
 
+                                                    <!-- Remarks -->
                                                     <td>
                                                         <textarea name="remark_1"></textarea>
                                                     </td>
+
+                                                    <!-- View SOP Link -->
                                                     <td>
                                                         <a href="#" id="view_sop_link" target="_blank" style="display: none;">View SOP</a>
                                                     </td>
@@ -767,6 +774,26 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     </div>
                                 </div>
                             </div>
+
+
+                            <script>
+                                function fetchSopLink(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+
+                                    // Update the SOP link visibility
+                                    var sopLink = document.getElementById('view_sop_link');
+                                    
+                                    if (documentId) {
+                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.style.display = 'inline';
+                                    } else {
+                                        sopLink.style.display = 'none';
+                                    }
+
+                                    console.log('Selected Document ID: ', documentId); // For debugging to check selected ID
+                                }
+                                </script>
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="severity-level">HR Department</label>
@@ -822,23 +849,6 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
 
     </div>
 </div>
-
-<script>
-    function fetchSopLink(selectElement) {
-    var selectedOption = selectElement.options[selectElement.selectedIndex];
-    var documentId = selectedOption.getAttribute('data-sop-link');
-
-    // Update the SOP link visibility
-    var sopLink = document.getElementById('view_sop_link');
-    
-    if (documentId) {
-        sopLink.href = `/documents/viewpdf/${documentId}`; // Set the URL to the correct document link
-        sopLink.style.display = 'inline';  // Show the link
-    } else {
-        sopLink.style.display = 'none'; // Hide if no valid document ID is selected
-    }
-}
-</script>
 
 <script>
 function handleTrainingTypeChange() {

@@ -40,7 +40,7 @@ use App\Http\Controllers\rcms\OOCController;
 use App\Http\Controllers\rcms\OOSController;
 use App\Http\Controllers\rcms\RcmsDashboardController;
 use App\Http\Controllers\tms\EmployeeController;
-// use App\Http\Controllers\tms\JobTrainingController;
+use App\Http\Controllers\JobDescriptionController;
 
 use App\Http\Controllers\tms\QuestionBankController;
 use App\Http\Controllers\tms\QuestionController;
@@ -351,6 +351,16 @@ Route::view('audit-pdf', 'frontend.documents.audit-pdf');
 // Route::view('employee_new', 'frontend.TMS.Employee.employee_new')->name('employee_new');
 
 Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer_qualification')->name('trainer_qualification');
+
+
+//---------------- Job Description--------------------------
+Route::get('/employees/{id}', [JobDescriptionController::class, 'getEmployeeData']);
+Route::get('job_description',[JobDescriptionController::class ,'index'])->name('job_description');
+Route::get('job_description/show/{id}',[JobDescriptionController::class ,'edit'])->name('job_description_view');
+Route::post('job_descriptioncreate', [JobDescriptionController::class, 'store'])->name('job_descriptioncreate');
+
+
+
 
 // ====================induction training =================
 
