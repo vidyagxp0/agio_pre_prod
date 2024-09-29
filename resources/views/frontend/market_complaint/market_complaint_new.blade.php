@@ -185,7 +185,7 @@
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Closure</button>
 
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Signature</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity</button>
 
             </div>
 
@@ -980,7 +980,7 @@
                                     <div class="group-input">
                                         <label for="Additional information if require ">Type of Market Complaints </label>
                                         <select name="probable_root_causes_complaint_hodsr" id="probable_root_causes_complaint_hodsr">
-                                            {{-- <option value="">-- select --</option> --}}
+                                            <option value="">-- select --</option>
                                             <option value="valid">Valid</option>
                                             <option value="invalid">Invalid</option>
                                         </select>
@@ -4576,186 +4576,201 @@
                                 Activity Log
                             </div>
 
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Initiator Group">Submit By : </label>
+                            <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Submit By : </label>
+                                <div class="static"></div>
 
-                                </div>
                             </div>
+                        </div>
 
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Submit On : </label>
-                                </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Submit On : </label>
+                                <div class="Date"></div>
+
                             </div>
-
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Comment : </label>
-                                </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Comment">Submit Comment</label>
+                                <div class="static"></div>
                             </div>
+                        </div>
 
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Initiator Group">QA/CQA Head Review by : </label>
-                                </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Complete Review By: </label>
+                                <div class="static"></div>
+
                             </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Complete Review On : </label>
+                                <div class="date"></div>
 
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">QA/ CQA Head Review On :</label>
-                                </div>
                             </div>
-
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Comment :</label>
-                                </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Comment">Complete Review Comment</label>
+                                <div class="static"></div>
                             </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Cancel By : </label>
+                                <div class="static"></div>
 
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Initiator Group">Cancel By :</label>
-
-                                </div>
                             </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Cancel On : </label>
+                                <div class="date"></div>
 
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Cancel On :</label>
-                                </div>
                             </div>
-
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Comment</label>
-                                </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Comment">Cancel Comment</label>
+                                <div class="static"></div>
                             </div>
+                        </div>
 
 
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Initiator Group">Send CFT By : </label>
-                                </div>
+
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Send CFT By :</label>
+                                <div class="static"></div>
+
                             </div>
+                        </div>
 
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Send CFT On :</label>
-                                </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Send CFT On :</label>
+                                <div class="date"></div>
                             </div>
-
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Comment :</label>
-                                </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Comment">Send CFT Comment</label>
+                                <div class="static"></div>
                             </div>
+                        </div>
 
 
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Initiator Group">Quality Control Completed By :</label>
-                                </div>
+
+
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">CFT Review Complete By :</label>
+                                <div class="static"></div>
+
                             </div>
+                        </div>
 
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Quality Control Completed On :</label>
-
-                                </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">CFT Review Complete On :</label>
+                                <div class="date"></div>
                             </div>
-
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Comment :</label>
-
-                                </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Comment">CFT Review Complete Comment</label>
+                                <div class="static"></div>
                             </div>
+                        </div>
 
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">QA CQA Verify Complete By :</label>
 
-                                </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">QA/CQA Verification Complete By :</label>
+                                <div class="static"></div>
                             </div>
+                        </div>
 
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">QA CQA Verify Complete On :</label>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">QA/CQA Verification Complete On :</label>
 
-                                </div>
+                                <div class="date"></div>
                             </div>
-
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Comment :</label>
-
-                                </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Comment">QA/CQA Verification Complete Comment</label>
+                                <div class="static"></div>
                             </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Reject By : </label>
+                                <div class="static"></div>
 
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Reject By :</label>
-
-                                </div>
                             </div>
+                        </div>
 
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Reject On :</label>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Reject On : </label>
 
-                                </div>
+                                <div class="date"></div>
                             </div>
-
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Comment :</label>
-
-                                </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Comment">Reject Comment</label>
+                                <div class="static"></div>
                             </div>
+                        </div>
 
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Approve Plan By :</label>
 
-                                </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Approval Complete By : </label>
+                                <div class="static"></div>
+
                             </div>
+                        </div>
 
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Approve Plan On :</label>
-
-                                </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Approval Complete On : </label>
+                                <div class="date"></div>
                             </div>
-
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Comment :</label>
-
-                                </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Comment">Approval Complete Comment</label>
+                                <div class="static"></div>
                             </div>
+                        </div>
 
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Send Letter By :</label>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Send Letter By : </label>
+                                <div class="static"></div>
 
-                                </div>
                             </div>
+                        </div>
 
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Send Letter On :</label>
-
-                                </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Send Letter On : </label>
+                                <div class="date"></div>
                             </div>
-
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Comment :</label>
-
-                                </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Comment">Send Letter Comment</label>
+                                <div class="static"></div>
                             </div>
+                        </div>
 
                         </div>
                         <div class="button-block">

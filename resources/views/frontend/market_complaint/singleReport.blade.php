@@ -270,9 +270,10 @@
                     <tr>
                         <th class="w-20">Due Date</th>
                         <td class="w-80">{{ Helpers::getdateFormat($data->due_date_gi) ?? 'Not Applicable' }}</td>
-                        <th class="w-20">Repeat Nature</th>
-                        <td class="w-80">{!! $data->repeat_nature_gi ?? 'Not Applicable' !!}</td>
+                        {{-- <th class="w-20">Repeat Nature</th>
+                        <td class="w-80">{!! $data->repeat_nature_gi ?? 'Not Applicable' !!}</td> --}}
                     </tr>
+
                     <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80">{{ $data->description_gi ?? 'Not Applicable' }}</td>
@@ -286,6 +287,10 @@
                         <th class="w-20">Complaint</th>
                         <td class="w-80">{{ $data->complainant_gi ?? 'Not Applicable' }}</td>
 
+                    </tr>
+                    <tr>
+                        <th class="w-20">Repeat Nature</th>
+                        <td class="w-80">{{ $data->repeat_nature_gi ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Complaint Reported On</th>
@@ -712,6 +717,117 @@
                         <td class="w-80">{!! $data->comments_ifany_ca ?? 'Not Applicable' !!}</td>
                     </tr>
                 </table>
+                {{-- <div class="report-section">
+                    <h3>Proposal to Accomplish Investigation Report</h3>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr class="table_bg">
+                                <th style="width: 5%;">Sr. No.</th>
+                                <th style="width: 40%;">Requirements</th>
+                                <th style="width: 10%;">Yes/No</th>
+                                <th style="width: 20%;">Expected Date of Investigation Completion</th>
+                                <th>Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">1</td>
+                                <td>Complaint Sample Required</td>
+                                <td>{{ $proposalData['Complaint sample Required']['csr3'] ?? 'N/A' }}</td>
+                                <td>{{ $proposalData['Complaint sample Required']['csr1'] ?? 'N/A' }}</td>
+                                <td>{{ $proposalData['Complaint sample Required']['csr2'] ?? 'N/A' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">2</td>
+                                <td>Additional Info. From Complaint</td>
+                                <td>{{ $proposalData['Additional info. From Complainant']['afc3'] ?? 'N/A' }}</td>
+                                <td>{{ $proposalData['Additional info. From Complainant']['afc1'] ?? 'N/A' }}</td>
+                                <td>{{ $proposalData['Additional info. From Complainant']['afc2'] ?? 'N/A' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">3</td>
+                                <td>Analysis of Complaint Sample</td>
+                                <td>{{ $proposalData['Analysis of complaint Sample']['acs3'] ?? 'N/A' }}</td>
+                                <td>{{ $proposalData['Analysis of complaint Sample']['acs1'] ?? 'N/A' }}</td>
+                                <td>{{ $proposalData['Analysis of complaint Sample']['acs2'] ?? 'N/A' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">4</td>
+                                <td>QRM Approach</td>
+                                <td>{{ $proposalData['QRM Approach']['qrm3'] ?? 'N/A' }}</td>
+                                <td>{{ $proposalData['QRM Approach']['qrm1'] ?? 'N/A' }}</td>
+                                <td>{{ $proposalData['QRM Approach']['qrm2'] ?? 'N/A' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">5</td>
+                                <td>Others</td>
+                                <td>{{ $proposalData['Others']['oth3'] ?? 'N/A' }}</td>
+                                <td>{{ $proposalData['Others']['oth1'] ?? 'N/A' }}</td>
+                                <td>{{ $proposalData['Others']['oth2'] ?? 'N/A' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> --}}
+                <div class="border-table">
+                    <div class="block-head">
+                        Proposal to Accomplish Investigation Report
+                    </div>
+
+                    <table>
+
+
+                        <thead>
+                            <tr class="table_bg">
+                                <th style="width: 5%;">Sr. No.</th>
+                                <th style="width: 40%;">Requirements</th>
+                                <th style="width: 10%;">Yes/No</th>
+                                <th style="width: 20%;">Expected Date of Investigation Completion</th>
+                                <th>Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">1</td>
+                                <td>Complaint Sample Required</td>
+                                <td>{{ $proposalData['Complaint sample Required']['csr3'] ?? 'N/A' }}</td>
+                                <td>{{ $proposalData['Complaint sample Required']['csr1'] ?? 'N/A' }}</td>
+                                <td>{{ $proposalData['Complaint sample Required']['csr2'] ?? 'N/A' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">2</td>
+                                <td>Additional Info. From Complaint</td>
+                                <td>{{ $proposalData['Additional info. From Complainant']['afc3'] ?? 'N/A' }}</td>
+                                <td>{{ $proposalData['Additional info. From Complainant']['afc1'] ?? 'N/A' }}</td>
+                                <td>{{ $proposalData['Additional info. From Complainant']['afc2'] ?? 'N/A' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">3</td>
+                                <td>Analysis of Complaint Sample</td>
+                                <td>{{ $proposalData['Analysis of complaint Sample']['acs3'] ?? 'N/A' }}</td>
+                                <td>{{ $proposalData['Analysis of complaint Sample']['acs1'] ?? 'N/A' }}</td>
+                                <td>{{ $proposalData['Analysis of complaint Sample']['acs2'] ?? 'N/A' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">4</td>
+                                <td>QRM Approach</td>
+                                <td>{{ $proposalData['QRM Approach']['qrm3'] ?? 'N/A' }}</td>
+                                <td>{{ $proposalData['QRM Approach']['qrm1'] ?? 'N/A' }}</td>
+                                <td>{{ $proposalData['QRM Approach']['qrm2'] ?? 'N/A' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">5</td>
+                                <td>Others</td>
+                                <td>{{ $proposalData['Others']['oth3'] ?? 'N/A' }}</td>
+                                <td>{{ $proposalData['Others']['oth1'] ?? 'N/A' }}</td>
+                                <td>{{ $proposalData['Others']['oth2'] ?? 'N/A' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+
 
 
                 <table>

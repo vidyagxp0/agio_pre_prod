@@ -61,6 +61,10 @@ class ManagementReviewController extends Controller
             toastr()->error("Short description is required");
             return redirect()->back();
         }
+         if (!$request->initiator_Group) {
+            toastr()->error("Initiator Department is required");
+            return redirect()->back();
+        }
         $management = new ManagementReview();
         //$management->record_number = ($request->record_number);
         // $management->assign_to = 1;//$request->assign_to;
@@ -1595,6 +1599,34 @@ class ManagementReviewController extends Controller
             toastr()->error("Short description is required");
             return redirect()->back();
         }
+         if (!$request->summary_recommendation) {
+            toastr()->error("Type is required");
+            return redirect()->back();
+        }
+         if (!$request->start_date) {
+            toastr()->error("Proposed Scheduled Start Date is required");
+            return redirect()->back();
+        }
+        // if (!$request->assign_to) {
+        //     toastr()->error("Invite Person Notify is required");
+        //     return redirect()->back();
+        // }
+        // // if (!$request->external_supplier_performance) {
+        // //     toastr()->error("Meeting End Date is required");
+        // //     return redirect()->back();
+        // // }
+        // if (!$request->customer_satisfaction_level) {
+        //     toastr()->error("Meeting Start Date is required");
+        //     return redirect()->back();
+        // }
+        // if (!$request->additional_suport_required) {
+        //     toastr()->error("QA verification Comment  is required");
+        //     return redirect()->back();
+        // }
+        // if (!$request->conclusion_new) {
+        //     toastr()->error("QA Head Comment is required");
+        //     return redirect()->back();
+        // }
         $lastDocument = ManagementReview::find($id);
         $management = ManagementReview::find($id);
         $lastCft = managementCft::where('ManagementReview_id', $management->id)->first();
@@ -8224,6 +8256,22 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
              $cftDetails = managementCft_Response::withoutTrashed()->where(['status' => 'In-progress', 'ManagementReview_id' => $id])->distinct('cft_user_id')->count();
 
             if ($changeControl->stage == 1) {
+                 if (!$changeControl->short_description || !$changeControl->summary_recommendation || !$changeControl->start_date) {
+
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => ' Short Discription and Type and Proposed Scheduled Start Date is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for QA Head Review state'
+                        ]);
+                    }
                 $changeControl->stage = "2";
                 $changeControl->status = 'In Progress';
                 $changeControl->Submited_by = Auth::user()->name;
@@ -8327,6 +8375,22 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
             //     return back();
             // }
             if ($changeControl->stage == 2) {
+                 if (!$changeControl->assign_to || !$changeControl->Operations) {
+
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'Invite Person Notify and QA review comment is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for QA Head Review state'
+                        ]);
+                    }
                 $changeControl->stage = "3";
                 $changeControl->status = 'Meeting And Summary';
                 $changeControl->qaHeadReviewComplete_By = Auth::user()->name;
@@ -8379,6 +8443,22 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
                 return back();
             }
             if ($changeControl->stage == 3) {
+                 if (!$changeControl->customer_satisfaction_level || !$changeControl->external_supplier_performance) {
+
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'Meeting Start Date and Meeting End Date is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for CFT actions state'
+                        ]);
+                    }
                 $changeControl->stage = "4";
                 $changeControl->status = 'CFT actions';
                  $stage = new managementCft_Response();
@@ -9973,6 +10053,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
 
             if ($changeControl->stage == 5) {
+
                 $changeControl->stage = "6";
                 $changeControl->status = 'QA Verification';
                 $changeControl->hodFinaleReviewComplete_by = Auth::user()->name;
@@ -10023,6 +10104,22 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
 
             if ($changeControl->stage == 6) {
+                 if (!$changeControl->additional_suport_required) {
+
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'QA verification Comment  is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for QA Head Closure Approval state'
+                        ]);
+                    }
                 $changeControl->stage = "7";
                 $changeControl->status = 'QA Head Closure Approval';
                 $changeControl->QAVerificationComplete_by = Auth::user()->name;
@@ -10060,6 +10157,22 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             }
 
             if ($changeControl->stage == 7) {
+                 if (!$changeControl->conclusion_new) {
+
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'QA Head Comment is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for Closed - Done state'
+                        ]);
+                    }
                 $changeControl->stage = "8";
                 $changeControl->status = 'Closed-Done';
                 $changeControl->Approved_by = Auth::user()->name;
