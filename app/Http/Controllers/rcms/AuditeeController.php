@@ -81,7 +81,7 @@ class AuditeeController extends Controller
         $internalAudit->initial_comments = $request->initial_comments;
         $internalAudit->severity_level = $request->severity_level;
 
-        $internalAudit->reviewer_person_value = implode(',', $request->reviewer_person_value);
+        $internalAudit->reviewer_person_value = is_array($request->reviewer_person_value) ? implode(',',$request->reviewer_person_value) : $request->reviewer_person_value;
 
 
         $internalAudit->start_date = $request->start_date;
@@ -1787,7 +1787,7 @@ class AuditeeController extends Controller
         $internalAudit->Remarks = $request->Remarks;
 
 
-        $internalAudit->reviewer_person_value = implode(',', $request->reviewer_person_value);
+        $internalAudit->reviewer_person_value = is_array($request->reviewer_person_value) ? implode(',',$request->reviewer_person_value) : $request->reviewer_person_value;
 
 
 
