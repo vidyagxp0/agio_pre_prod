@@ -1696,7 +1696,7 @@ dd($pre);
                                 </div> --}}
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Audit Attachments">Initial Attachments</label>
+                                        <label for="Audit Attachments">Initial Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -1730,7 +1730,7 @@ dd($pre);
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="HOD Remarks">Review Of Incident And Verfication Of Effectivess Of Correction</label>
+                                        <label for="HOD Remarks">Review of Incident And Verfication of Effectivess of Correction</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="tiny" name="review_of_verific" disabled>  </textarea>
@@ -2017,7 +2017,7 @@ dd($pre);
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="HOD Remarks">QA Head/Designee approval comment</label>
+                                        <label for="HOD Remarks">QA Head/Designee Approval Comment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="tiny" name="qa_head_deginee_comment" id="summernote-4" disabled></textarea>
@@ -2025,7 +2025,7 @@ dd($pre);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Audit Attachments">QA Head/Designee approval attachement</label>
+                                        <label for="Audit Attachments">QA Head/Designee Approval Attachement</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -2561,7 +2561,7 @@ dd($pre);
                                     <div class="static"></div>
                                 </div>
                             </div> --}}
-                            <div class="sub-head">HOD Initial Review Completed</div>
+                            <div class="sub-head">HOD Initial Review Complete</div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="HOD Review Complete By">HOD Initial Review Complete By :-</label>
@@ -2576,7 +2576,7 @@ dd($pre);
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="HOD Initial Review Complete On">HOD Initial Review Comments :-</label>
+                                    <label for="HOD Initial Review Complete On">HOD Initial Review Complete Comment :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -2604,7 +2604,7 @@ dd($pre);
                             </div> --}}
 
 
-                            <div class="sub-head">QA Initial Review Completed</div>
+                            <div class="sub-head">QA Initial Review Complete</div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="QA Initial Review Complete By">QA Initial Review Complete By
@@ -2704,7 +2704,7 @@ dd($pre);
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="CFT Review Comments">HOD Final Review Comments :-</label>
+                                    <label for="CFT Review Comments">HOD Final Review Complete Comment :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -2722,7 +2722,7 @@ dd($pre);
                                     <div class="static"></div>
                                 </div>
                             </div> --}}
-                            <div class="sub-head"> QA Final Review Completed</div>
+                            <div class="sub-head"> QA Final Review Complete</div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="QA Final Review Complete By"> QA Final Review Complete By :-</label>
@@ -2781,43 +2781,43 @@ dd($pre);
                                     <div class="static"></div>
                                 </div>
                             </div> --}}
-                            <div class="sub-head">cancelled</div>
+                            {{--<div class="sub-head">cancel</div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="submit by">cancelled By :-</label>
+                                    <label for="submit by">cancel By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="cancelled on">cancelled On :-</label>
+                                    <label for="cancelled on">cancel On :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="cancelled on">cancelled Cooment :-</label>
+                                    <label for="cancelled on">cancel Comment :-</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div>--}}
                             <div class="sub-head">
-                                cancelled
+                                cancel
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="submit by">cancelled By :-</label>
+                                    <label for="submit by">cancel By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="cancelled on">cancelled On :-</label>
+                                    <label for="cancelled on">cancel On :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="cancelled on">cancelled Comment :-</label>
+                                    <label for="cancelled on">cancel Comment :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>

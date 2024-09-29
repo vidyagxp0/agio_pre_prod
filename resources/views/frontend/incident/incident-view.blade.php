@@ -763,13 +763,8 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                         Child
                                     </button>
-                                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cft-not-reqired">
-                                        CFT Review Not Required
-                                    </button>
-                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                                                Child
-                                            </button> --}}
-                                @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Incident', 9))
+
+                                @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Incident', 43))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                         More Info Required
                                     </button>
@@ -778,7 +773,6 @@
                                     </button>
                                 @elseif(
                                     $data->stage == 5 && Helpers::check_roles($data->division_id, 'Incident', 3))
-                                    {{-- @if (!$cftCompleteUser) --}}
                                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                             Pending Initiator Update Complete
                                             </button>
@@ -789,17 +783,7 @@
                                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                             Child
                                         </button>
-                                    {{-- @endif --}}
                                 @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Incident', 4))
-                                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
-                                        Send to Initiator
-                                    </button>
-                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
-                                        Send to HOD
-                                    </button>
-                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
-                                        Send to QA Initial Review
-                                    </button> --}}
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         HOD Final Review Complete
                                     </button>
@@ -819,10 +803,7 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                         Child
                                     </button>
-                                @elseif($data->stage == 8 && Helpers::check_roles($data->division_id, 'Incident', 9))
-                                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
-                                        Send to Opened
-                                    </button> --}}
+                                @elseif($data->stage == 8 && Helpers::check_roles($data->division_id, 'Incident', 43))
 
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         Approved                            </button>
@@ -832,22 +813,7 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                         Child
                                     </button>
-                                {{-- @elseif($data->stage == 8 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
-                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
-                                        Send to Opened
-                                    </button>
-                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
-                                        Send to HOD Review
-                                    </button>
-                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
-                                        Send to QA Initial Review
-                                    </button>
-                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#pending-initiator-update">
-                                        Send to Pending Initiator Update
-                                    </button>
-                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                        QA Final Review Complete
-                                    </button> --}}
+
                                 @endif
                                 <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                                     </a> </button>
@@ -2127,7 +2093,7 @@
                                             </div> --}}
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="Audit Attachments">Initial Attachments</label>
+                                                    <label for="Audit Attachments">Initial Attachment</label>
                                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                     <div class="file-attachment-field">
                                                         <div class="file-attachment-list" id="Audit_file">
@@ -2209,7 +2175,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                     <div class="group-input">
-                                                        <label for="HOD Remarks">Review Of Incident And Verfication Of Effectivess Of Correction </label>
+                                                        <label for="HOD Remarks">Review of Incident And Verfication of Effectivess of Correction </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="review_of_verific" {{ $data->stage == 2 ? '' : 'readonly' }}>{{ $data->review_of_verific }}</textarea>
@@ -2253,7 +2219,7 @@
                                     <div class="col-md-12">
                                         @if ($data->stage == 2)
                                             <div class="group-input">
-                                                <label for="HOD Remarks">HOD Remarks <span
+                                                <label for="HOD Remarks">HOD Remark<span
                                                         class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
@@ -2261,7 +2227,7 @@
                                             </div>
                                         @else
                                             <div class="group-input">
-                                                <label for="HOD Remarks">HOD Remarks</label>
+                                                <label for="HOD Remarks">HOD Remark</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                                 <textarea  class="tiny" name="HOD_Remarks" id="summernote-4" {{ $data->stage == 2 ? '' : 'readonly' }}>{{ $data->HOD_Remarks }}</textarea>
@@ -3542,7 +3508,7 @@
                                 <div class="col-md-12 mb-3">
                                     @if ($data->stage == 4)
                                     <div class="group-input">
-                                        <label for="HOD Remarks">QA Head/Designee approval comment<span
+                                        <label for="HOD Remarks">QA Head/Designee Approval Comment<span
                                             class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
@@ -3550,7 +3516,7 @@
                                     </div>
                                     @else
                                     <div class="group-input">
-                                        <label for="HOD Remarks">QA Head/Designee approval comment</label>
+                                        <label for="HOD Remarks">QA Head/Designee Approval Comment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="tiny" name="qa_head_deginee_comment" id="summernote-4" {{ $data->stage == 4 ? '' : 'readonly' }}>{{ $data->qa_head_deginee_comment }}</textarea>
@@ -3560,7 +3526,7 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Audit Attachments">QA Head/Designee approval attachement</label>
+                                        <label for="Audit Attachments">QA Head/Designee Approval Attachement</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -7412,7 +7378,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
-                                <label for="submit comment">Submit Comments :-</label>
+                                <label for="submit comment">Submit Comment :-</label>
                                 <div class="">{{ $data->submit_comment }}</div>
                             </div>
                         </div>
@@ -7432,7 +7398,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style=" ">
-                                <label for="HOD Review Comments">HOD Initial Review Comments :-</label>
+                                <label for="HOD Review Comments">HOD Initial Review Complete Comment :-</label>
                                 <div class="">{{ $data->HOD_Initial_Review_Comments }}</div>
                             </div>
                         </div>
@@ -7495,7 +7461,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
-                                <label for="QA Initial Review Comments">QA Initial Review Comments:-</label>
+                                <label for="QA Initial Review Comments">QA Initial Review Complete Comment:-</label>
                                 <div class="">{{ $data->QA_Initial_Review_Comments }}</div>
                             </div>
                         </div>
@@ -7522,22 +7488,22 @@
                         </div> --}}
 
 
-                        <div class="sub-head">QAH/Designee Approval Completed</div>
+                        <div class="sub-head">QAH/Designee Approval Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="QA Initial Review Complete By">QAH/Designee Approval Completed By:-</label>
+                                <label for="QA Initial Review Complete By">QAH/Designee Approval Complete By:-</label>
                                 <div class="static">{{ $data->QAH_Designee_Approval_Complete_By }}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="QA Initial Review Complete On">QAH/Designee Approval Completed On:-</label>
+                                <label for="QA Initial Review Complete On">QAH/Designee Approval Complete On:-</label>
                                 <div class="static">{{ $data->QAH_Designee_Approval_Complete_On }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
-                                <label for="QA Initial Review Comments">QAH/Designee Approval Completed Comments:-</label>
+                                <label for="QA Initial Review Comments">QAH/Designee Approval Complete Comment:-</label>
                                 <div class="">{{ $data->QAH_Designee_Approval_Complete_Comments }}</div>
                             </div>
                         </div>
@@ -7557,7 +7523,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="CFT Review Comments">Pending Initiator Update Comments:-</label>
+                                <label for="CFT Review Comments">Pending Initiator Update Complete Comment:-</label>
                                 <div class="">{{ $data->Pending_Review_Comments }}</div>
                             </div>
                         </div>
@@ -7584,7 +7550,7 @@
                         </div> --}}
 
 
-                        <div class="sub-head"> HOD Final Review Completed</div>
+                        <div class="sub-head"> HOD Final Review Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="QA Final Review Complete By"> HOD Final Review Complete By:-</label>
@@ -7599,14 +7565,14 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="QA Final Review Comments">HOD Final Review Comments:-</label>
+                                <label for="QA Final Review Comments">HOD Final Review Complete Comment:-</label>
                                 <div class="">{{ $data->Hod_Final_Review_Comments }}</div>
                             </div>
                         </div>
                         {{--@php
                         dd($data->QA_Final_Review_Complete_By);
                         @endphp--}}
-                        <div class="sub-head"> QA Final Review Completed</div>
+                        <div class="sub-head"> QA Final Review Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="QA Final Review Complete By"> QA Final Review Complete By:-</label>
@@ -7621,7 +7587,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="QA Final Review Comments"> QA Final Review Comments:-</label>
+                                <label for="QA Final Review Comments"> QA Final Review Complete Comment:-</label>
                                 <div class="">{{ $data->QA_Final_Review_Comments}}</div>
                             </div>
                         </div>
@@ -7688,7 +7654,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="QA Final Review Comments">Approved Comments :-</label>
+                                <label for="QA Final Review Comments">Approved Comment :-</label>
                                 <div class="">{{ $data->QA_head_approved_comment }}</div>
                             </div>
                         </div>
@@ -7800,22 +7766,22 @@
                                 <div class="static">{{ $data->more_info_req_cmt }}</div>
                             </div>
                         </div> --}}
-                        <div class="sub-head">cancelled</div>
+                        <div class="sub-head">cancel</div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="submit by">cancelled By:-</label>
+                                <label for="submit by">cancel By:-</label>
                                 <div class="static">{{ $data->Cancelled_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="cancelled on">cancelled On:-</label>
+                                <label for="cancelled on">cancel On:-</label>
                                 <div class="static">{{ $data->Cancelled_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="submit on">Cancelled Comments:-</label>
+                                <label for="submit on">Cancel Comment:-</label>
                                 <div class="static">{{ $data->Cancelled_cmt }}</div>
                             </div>
                         </div>
