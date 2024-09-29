@@ -1172,25 +1172,25 @@
                                         </div>
 
                                         <div class="col-12">
-                                            <div class="sub-head">Cancelled</div>
+                                            <div class="sub-head">Cancel</div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Cancel By">Cancelled By</label>
+                                                <label for="Cancel By">Cancel By</label>
                                                 <div class="static">{{ $data->cancel_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Cancelled On">Cancelled On</label>
+                                                <label for="Cancel On">Cancel On</label>
                                                 <div class="static">{{ $data->cancel_on }}</div>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted on">Cancelled Comment</label>
+                                                <label for="Submitted on">Cancel Comment</label>
                                                 <div class="Date">{{ $data->cancel_comment }}</div>
                                             </div>
                                         </div>
@@ -1242,26 +1242,26 @@
                                         </div>
 
                                         <div class="col-12">
-                                            <div class="sub-head">No CAPA's Plan Proposed</div>
+                                            <div class="sub-head">No CAPAs Plan Proposed</div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="QA Approval Without CAPA By">No CAPA's Plan Proposed
+                                                <label for="QA Approval Without CAPA By">No CAPAs Plan Proposed
                                                     By</label>
                                                 <div class="static">{{ $data->qa_approval_without_capa_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="No CAPA's Plan Proposed On">No CAPA's Plan Proposed
+                                                <label for="No CAPA's Plan Proposed On">No CAPAs Plan Proposed
                                                     On</label>
                                                 <div class="static">{{ $data->qa_approval_without_capa_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted on">No CAPA's Plan Proposed Comment</label>
+                                                <label for="Submitted on">No CAPAs Plan Proposed Comment</label>
                                                 <div class="Date">{{ $data->qa_approval_without_capa_comment }}</div>
                                             </div>
                                         </div>
@@ -1295,11 +1295,11 @@
 
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton"
-                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Save</button>
+                                        <!-- <button type="submit" class="saveButton"
+                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Save</button> -->
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="submit"
-                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Submit</button>
+                                        <!-- <button type="submit"
+                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Submit</button> -->
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a>
                                         </button>
@@ -1569,7 +1569,7 @@
                                     <input class="observation_style" type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="comment">Comment</label>
+                                    <label for="comment">Comment <span class="text-danger">*</span></label>
                                     <input class="observation_style" type="comment" required name="comment">
                                 </div>
                                 {{-- <div class="group-input">
