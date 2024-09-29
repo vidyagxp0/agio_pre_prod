@@ -501,10 +501,10 @@ $newDataGridInitialClosure->save();
             $data3->end_time = serialize($request->scheduled_end_time);
         }
         if (!empty($request->auditor)) {
-            $data3->auditor = serialize($request->auditor);
+            $data3->auditor = serialize( $request->auditor);
         }
         if (!empty($request->auditee)) {
-            $data3->auditee = serialize($request->auditee);
+            $data3->auditee = serialize( $request->auditee);
         }
         if (!empty($request->remarks)) {
             $data3->remark = serialize($request->remarks);
@@ -1993,15 +1993,25 @@ $Checklist_Capsule->save();
       $string = 'remark_powder_manufacturing_filling_'. $i;
       $checklist_manufacturing_production->$string = $request->$string;
   }
-  for ($i = 1; $i <= 3; $i++)
+  for ($i = 1; $i <= 6; $i++)
   {
       $string = 'response_packing_'. $i;
       $checklist_manufacturing_production->$string = $request->$string;
   }
  
-  for ($i = 1; $i <= 3; $i++)
+  for ($i = 1; $i <= 6; $i++)
   {
-      $string = 'remark_packing_'. $i;
+      $string = 'powder_response_packing_'. $i;
+      $checklist_manufacturing_production->$string = $request->$string;
+  }
+  for ($i = 1; $i <= 6; $i++)
+  {
+      $string = 'response_packing_'. $i;
+      $checklist_manufacturing_production->$string = $request->$string;
+  }
+  for ($i = 1; $i <= 6; $i++)
+  {
+      $string = 'powder_remark_packing_'. $i;
       $checklist_manufacturing_production->$string = $request->$string;
   }
   // dd($checklistTabletCompression->tablet_compress_remark_1)
@@ -2578,14 +2588,16 @@ $Checklist_Capsule->save();
             $data3->end_time = serialize($request->scheduled_end_time);
         }
         if (!empty($request->auditor)) {
-            $data3->auditor = serialize($request->auditor);
+            $data3->auditor = serialize( $request->auditor);
         }
         if (!empty($request->auditee)) {
-            $data3->auditee = serialize($request->auditee);
+            $data3->auditee = serialize( $request->auditee);
+
         }
         if (!empty($request->remark)) {
             $data3->remark = serialize($request->remark);
         }
+        // dd($data3);
         $data3->update();
 
         $data4 = InternalAuditGrid::where('audit_id',$internalAudit->id)->where('type','Observation_field')->first();
@@ -4872,6 +4884,62 @@ if ($areIniAttachmentsSame2 != true) {
         }
 
 
+    // public static function singleReport($id)
+    // {
+    //     $data = InternalAudit::find($id);
+    //     $checklist1 = IA_checklist_tablet_compression::where('ia_id', $id)->first();
+    //     $checklist2 = IA_checklist_tablet_coating::where('ia_id', $id)->first();
+    //     $checklist3 = IA_checklist_capsule_paking::where('ia_id', $id)->first();
+    //     $checklist4 = Checklist_Capsule::where('ia_id', $id)->first();
+    //     $checklist5 = IA_liquid_ointment::where('ia_id', $id)->first();
+    //     $checklist6 = IA_dispencing_manufacturing::where('ia_id', $id)->first();
+    //     $checklist7 = IA_ointment_paking::where('ia_id', $id)->first();
+    //     $checklist9 = IA_checklist_engineering::where('ia_id', $id)->first();
+    //     $checklist10 = IA_quality_control::where('ia_id', $id)->first();
+    //     $checklist11 = IA_checklist_stores::where('ia_id', $id)->first();
+    //     $checklist12 = IA_checklist_hr::where('ia_id', $id)->first();
+    //     $checklist13 = IA_checklist_dispensing::where('ia_id', $id)->first();
+    //     $checklist14 = IA_checklist_production_injection::where('ia_id', $id)->first();
+    //     $checklist15 = IA_checklist_manufacturing_filling::where('ia_id', $id)->first();
+    //     $checklist16 = IA_checklist_analytical_research::where('ia_id', $id)->first();
+    //     $checklist17 = IA_checklist__formulation_research::where('ia_id', $id)->first();
+    //     $auditAssessmentChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditAssessmentChecklist'])->first();
+    //     $auditPersonnelChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditPersonnelChecklist'])->firstOrNew();
+    //     $auditfacilityChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditfacilityChecklist'])->firstOrNew();
+    //     $auditMachinesChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditMachinesChecklist'])->firstOrNew();
+    //     $auditProductionChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditProductionChecklist'])->firstOrNew();
+    //     $auditMaterialsChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditMaterialsChecklist'])->firstOrNew();
+    //     $auditQualityControlChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditQualityControlChecklist'])->firstOrNew();
+    //     $auditQualityAssuranceChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditQualityAssuranceChecklist'])->firstOrNew();
+    //     $auditPackagingChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditPackagingChecklist'])->firstOrNew();
+    //     $auditSheChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditSheChecklist'])->firstOrNew();
+        
+    
+
+
+
+
+    //     if (!empty($data)) {
+    //         $data->originator = User::where('id', $data->initiator_id)->value('name');
+    //         $pdf = App::make('dompdf.wrapper');
+    //         $time = Carbon::now();
+    //         $pdf = PDF::loadview('frontend.internalAudit.singleReport', compact('data','checklist1','checklist2','checklist3','checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','auditAssessmentChecklist','auditPersonnelChecklist','auditfacilityChecklist','auditMachinesChecklist','auditProductionChecklist','auditMaterialsChecklist','auditQualityControlChecklist','auditQualityAssuranceChecklist','auditPackagingChecklist','auditSheChecklist'))
+    //             ->setOptions([
+    //                 'defaultFont' => 'sans-serif',
+    //                 'isHtml5ParserEnabled' => true,
+    //                 'isRemoteEnabled' => true,
+    //                 'isPhpEnabled' => true,
+    //             ]);
+    //         $pdf->setPaper('A4');
+    //         $pdf->render();
+    //         $canvas = $pdf->getDomPDF()->getCanvas();
+    //         $height = $canvas->get_height();
+    //         $width = $canvas->get_width();
+    //         $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+    //         $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+    //         return $pdf->stream('Internal-Audit' . $id . '.pdf');
+    //     }
+    // }
     public static function singleReport($id)
     {
         $data = InternalAudit::find($id);
@@ -4891,18 +4959,7 @@ if ($areIniAttachmentsSame2 != true) {
         $checklist15 = IA_checklist_manufacturing_filling::where('ia_id', $id)->first();
         $checklist16 = IA_checklist_analytical_research::where('ia_id', $id)->first();
         $checklist17 = IA_checklist__formulation_research::where('ia_id', $id)->first();
-        $auditAssessmentChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditAssessmentChecklist'])->first();
-        $auditPersonnelChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditPersonnelChecklist'])->firstOrNew();
-        $auditfacilityChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditfacilityChecklist'])->firstOrNew();
-        $auditMachinesChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditMachinesChecklist'])->firstOrNew();
-        $auditProductionChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditProductionChecklist'])->firstOrNew();
-        $auditMaterialsChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditMaterialsChecklist'])->firstOrNew();
-        $auditQualityControlChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditQualityControlChecklist'])->firstOrNew();
-        $auditQualityAssuranceChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditQualityAssuranceChecklist'])->firstOrNew();
-        $auditPackagingChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditPackagingChecklist'])->firstOrNew();
-        $auditSheChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditSheChecklist'])->firstOrNew();
-        
-    
+       
 
 
 
@@ -4911,7 +4968,7 @@ if ($areIniAttachmentsSame2 != true) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.internalAudit.singleReport', compact('data','checklist1','checklist2','checklist3','checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','auditAssessmentChecklist','auditPersonnelChecklist','auditfacilityChecklist','auditMachinesChecklist','auditProductionChecklist','auditMaterialsChecklist','auditQualityControlChecklist','auditQualityAssuranceChecklist','auditPackagingChecklist','auditSheChecklist'))
+            $pdf = PDF::loadview('frontend.internalAudit.singleReport', compact('data','checklist1','checklist2','checklist3','checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

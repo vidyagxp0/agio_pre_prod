@@ -516,9 +516,9 @@
                         <tr class="table_bg">
                             <th class="w-20">SR no.</th>
                             <th class="w-20">List Of Impacting Document</th>
-                            <th class="w-20">Prepared By</th>
+                            <!-- <th class="w-20">Prepared By</th>
                             <th class="w-20">Checked By</th>
-                            <th class="w-20">Approved By</th>
+                            <th class="w-20">Approved By</th> -->
                         </tr>
                         @if ($grid_Data && is_array($grid_Data->data))
                             @foreach ($grid_Data->data as $grid_Data)
@@ -527,21 +527,21 @@
                                     <td class="w-20">
                                         {{ isset($grid_Data['ListOfImpactingDocument']) ? $grid_Data['ListOfImpactingDocument'] : '' }}
                                     </td>
-                                    <td class="w-20">
+                                    <!-- <td class="w-20">
                                         {{ isset($grid_Data['PreparedBy']) ? $grid_Data['PreparedBy'] : '' }}</td>
                                     <td class="w-20">
                                         {{ isset($grid_Data['CheckedBy']) ? $grid_Data['CheckedBy'] : '' }}</td>
                                     <td class="w-20">
-                                        {{ isset($grid_Data['ApprovedBy']) ? $grid_Data['ApprovedBy'] : '' }}</td>
+                                        {{ isset($grid_Data['ApprovedBy']) ? $grid_Data['ApprovedBy'] : '' }}</td> -->
                                 </tr>
                             @endforeach
                         @else
                             <tr>
                                 <td>Not Applicable</td>
                                 <td>Not Applicable</td>
+                                <!-- <td>Not Applicable</td>
                                 <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
+                                <td>Not Applicable</td> -->
                             </tr>
                         @endif
                     </table>
@@ -580,9 +580,9 @@
                                 <tr>
                                     <td>Not Applicable</td>
                                     <td>Not Applicable</td>
+                                    <!-- <td>Not Applicable</td>
                                     <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td> -->
                                 </tr>
                             @endif
                         </table>

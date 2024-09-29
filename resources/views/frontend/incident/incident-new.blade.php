@@ -7,7 +7,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
-
+{{--@php
+dd($pre);
+@endphp--}}
     <style>
         textarea.note-codable {
             display: none !important;
@@ -642,7 +644,7 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Initial Review</button>
-                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA Head Designee Approval</button>--}}
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA Head Designee Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Initiator Update</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm14')">HOD Final Review</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Extension</button> --}}
@@ -742,7 +744,7 @@
                                         </div>
                                     </div>
                                 </div> --}}
-                                <div class="col-lg-6 new-date-data-field">
+                                <div class="col-lg-12 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule Start Date">Due Date</label>
                                         <div class="calenderauditee">
@@ -1694,7 +1696,7 @@
                                 </div> --}}
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Audit Attachments">Initial Attachments</label>
+                                        <label for="Audit Attachments">Initial Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -1728,10 +1730,10 @@
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="HOD Remarks">Review Of Incident And Verfication Of Effectivess Of Correction</label>
+                                        <label for="HOD Remarks">Review of Incident And Verfication of Effectivess of Correction</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="review_of_verific" >  </textarea>
+                                        <textarea class="tiny" name="review_of_verific" disabled>  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3">
@@ -1739,7 +1741,7 @@
                                         <label for="HOD Remarks">Recommendations</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Recommendations">  </textarea>
+                                        <textarea class="tiny" name="Recommendations" disabled>  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3">
@@ -1747,7 +1749,7 @@
                                         <label for="HOD Remarks">Impact Assessment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Impact_Assessmenta">  </textarea>
+                                        <textarea class="tiny" name="Impact_Assessmenta" disabled>  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -1755,7 +1757,7 @@
                                         <label for="Comments"> HOD Remark </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                        <textarea name="HOD_Remarks"> </textarea>
+                                        <textarea name="HOD_Remarks" disabled> </textarea>
                                     </div>
                                 </div>
                                  <div class="col-lg-12">
@@ -1768,7 +1770,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="HOD_Attachments" name="hod_attachments[]"
-                                                    oninput="addMultipleFiles(this, 'hod_attachments')" multiple>
+                                                    oninput="addMultipleFiles(this, 'hod_attachments')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -1847,9 +1849,9 @@
                                                 <label>Product Quality Impact:</label>
                                             </div>
                                             <div class="checkbox-group">
-                                                <label><input type="checkbox" name="product_quality_imapct" value="yes" onclick="selectOne(this)"> Yes</label>
-                                                <label><input type="checkbox" name="product_quality_imapct" value="no" onclick="selectOne(this)"> No</label>
-                                                <label><input type="checkbox" name="product_quality_imapct" value="na" onclick="selectOne(this)"> N/A</label>
+                                                <label><input type="checkbox" name="product_quality_imapct" value="yes" onclick="selectOne(this)" disabled> Yes</label>
+                                                <label><input type="checkbox" name="product_quality_imapct" value="no" onclick="selectOne(this)" disabled> No</label>
+                                                <label><input type="checkbox" name="product_quality_imapct" value="na" onclick="selectOne(this)" disabled> N/A</label>
                                             </div>
                                         </div>
                                         <br>
@@ -1860,9 +1862,9 @@
                                             <label>Process Performance Impact:</label>
                                            </div>
                                         <div class="checkbox-group">
-                                            <label><input type="checkbox" name="process_performance_impact" value="yes" onclick="selectOne(this)"> Yes</label>
-                                            <label><input type="checkbox" name="process_performance_impact" value="no" onclick="selectOne(this)"> No</label>
-                                            <label><input type="checkbox" name="process_performance_impact" value="na" onclick="selectOne(this)"> N/A</label>
+                                            <label><input type="checkbox" name="process_performance_impact" value="yes" onclick="selectOne(this)" disabled> Yes</label>
+                                            <label><input type="checkbox" name="process_performance_impact" value="no" onclick="selectOne(this)" disabled> No</label>
+                                            <label><input type="checkbox" name="process_performance_impact" value="na" onclick="selectOne(this)" disabled> N/A</label>
                                         </div>
                                         </div>
                                         <br>
@@ -1888,9 +1890,9 @@
                                                 <label>GMP Impact:</label>
                                             </div>
                                         <div class="checkbox-group">
-                                            <label><input type="checkbox" name="gmp_impact" value="yes" onclick="selectOne(this)"> Yes</label>
-                                            <label><input type="checkbox" name="gmp_impact" value="no" onclick="selectOne(this)"> No</label>
-                                            <label><input type="checkbox" name="gmp_impact" value="na" onclick="selectOne(this)"> N/A</label>
+                                            <label><input type="checkbox" name="gmp_impact" value="yes" onclick="selectOne(this)" disabled> Yes</label>
+                                            <label><input type="checkbox" name="gmp_impact" value="no" onclick="selectOne(this)" disabled> No</label>
+                                            <label><input type="checkbox" name="gmp_impact" value="na" onclick="selectOne(this)" disabled> N/A</label>
                                         </div>
 
                                         </div>
@@ -1901,9 +1903,9 @@
                                             </div>
                                         <!-- Additional Testing Required -->
                                         <div class="checkbox-group">
-                                            <label><input type="checkbox" name="additionl_testing_required" value="yes" onclick="selectOne(this)"> Yes</label>
-                                            <label><input type="checkbox" name="additionl_testing_required" value="no" onclick="selectOne(this)"> No</label>
-                                            <label><input type="checkbox" name="additionl_testing_required" value="na" onclick="selectOne(this)"> N/A</label>
+                                            <label><input type="checkbox" name="additionl_testing_required" value="yes" onclick="selectOne(this)" disabled> Yes</label>
+                                            <label><input type="checkbox" name="additionl_testing_required" value="no" onclick="selectOne(this)" disabled> No</label>
+                                            <label><input type="checkbox" name="additionl_testing_required" value="na" onclick="selectOne(this)" disabled> N/A</label>
                                         </div>
                                         </div>
                                         <br>
@@ -1913,7 +1915,7 @@
                                             <label for="QAInitialRemark">If Yes, Then Mention:</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-                                            <textarea class="tiny" name="any_similar_incident_in_past"></textarea>
+                                            <textarea class="tiny" name="any_similar_incident_in_past" disabled></textarea>
                                         </div>
                                     </div>
 
@@ -1930,9 +1932,9 @@
                                             </div>
                                         <!-- Similar Incident in Past -->
                                         <div class="checkbox-group">
-                                            <label><input type="checkbox" name="capa_require" value="yes" onclick="selectOne(this)"> Yes</label>
-                                            <label><input type="checkbox" name="capa_require" value="no" onclick="selectOne(this)"> No</label>
-                                            <label><input type="checkbox" name="capa_require" value="na" onclick="selectOne(this)"> N/A</label>
+                                            <label><input type="checkbox" name="capa_require" value="yes" onclick="selectOne(this)" disabled> Yes</label>
+                                            <label><input type="checkbox" name="capa_require" value="no" onclick="selectOne(this)" disabled> No</label>
+                                            <label><input type="checkbox" name="capa_require" value="na" onclick="selectOne(this)" disabled> N/A</label>
                                         </div>
                                         </div>
                                         <br>
@@ -1943,8 +1945,8 @@
                                                 <label>Classification by QA:</label>
                                             </div>
                                         <div class="checkbox-group">
-                                            <label><input type="checkbox" name="classification_by_qa" value="critical" onclick="selectOne(this)"> Critical</label>
-                                            <label><input type="checkbox" name="classification_by_qa" value="non_critical" onclick="selectOne(this)"> Non-Critical</label>
+                                            <label><input type="checkbox" name="classification_by_qa" value="critical" onclick="selectOne(this)" disabled> Critical</label>
+                                            <label><input type="checkbox" name="classification_by_qa" value="non_critical" onclick="selectOne(this)" disabled> Non-Critical</label>
                                         </div>
                                         </div>
                                     </div>
@@ -1954,7 +1956,7 @@
                                         <label for="QAInitialRemark">QA Initial Review Remarks</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="QAInitialRemark" id="summernote-7"></textarea>
+                                        <textarea class="tiny" name="QAInitialRemark" id="summernote-7" disabled></textarea>
                                     </div>
                                 </div>
 
@@ -1970,7 +1972,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="Initial_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'QA_attachmentss')" multiple>
+                                                    oninput="addMultipleFiles(this, 'QA_attachmentss')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -2015,15 +2017,15 @@
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="HOD Remarks">QA Head/Designee approval comment</label>
+                                        <label for="HOD Remarks">QA Head/Designee Approval Comment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="qa_head_deginee_comment" id="summernote-4"></textarea>
+                                        <textarea class="tiny" name="qa_head_deginee_comment" id="summernote-4" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Audit Attachments">QA Head/Designee approval attachement</label>
+                                        <label for="Audit Attachments">QA Head/Designee Approval Attachement</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -2031,7 +2033,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="qa_head_deginee_attachments[]"
-                                                    oninput="addMultipleFiles(this, 'QA_Desinee_attachments')" multiple>
+                                                    oninput="addMultipleFiles(this, 'QA_Desinee_attachments')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -2106,9 +2108,9 @@
                                             </div>
 
                                         <div class="checkbox-group">
-                                            <label><input type="checkbox" name="capa_implementation" value="yes" onclick="selectOne(this)"> Yes</label>
-                                            <label><input type="checkbox" name="capa_implementation" value="no" onclick="selectOne(this)"> No</label>
-                                            <label><input type="checkbox" name="capa_implementation" value="na" onclick="selectOne(this)"> N/A</label>
+                                            <label><input type="checkbox" name="capa_implementation" value="yes" onclick="selectOne(this)" disabled> Yes</label>
+                                            <label><input type="checkbox" name="capa_implementation" value="no" onclick="selectOne(this)" disabled> No</label>
+                                            <label><input type="checkbox" name="capa_implementation" value="na" onclick="selectOne(this)" disabled> N/A</label>
                                         </div>
                                         </div>
                                         <br>
@@ -2120,9 +2122,9 @@
                                             </div>
 
                                         <div class="checkbox-group">
-                                            <label><input type="checkbox" name="check_points" value="yes" onclick="selectOne(this)"> Yes</label>
-                                            <label><input type="checkbox" name="check_points" value="no" onclick="selectOne(this)"> No</label>
-                                            <label><input type="checkbox" name="check_points" value="na" onclick="selectOne(this)"> N/A</label>
+                                            <label><input type="checkbox" name="check_points" value="yes" onclick="selectOne(this)" disabled> Yes</label>
+                                            <label><input type="checkbox" name="check_points" value="no" onclick="selectOne(this)" disabled> No</label>
+                                            <label><input type="checkbox" name="check_points" value="na" onclick="selectOne(this)" disabled> N/A</label>
                                         </div>
                                         </div>
                                         <br>
@@ -2134,9 +2136,9 @@
                                             </div>
 
                                         <div class="checkbox-group">
-                                            <label><input type="checkbox" name="corrective_actions" value="yes" onclick="selectOne(this)"> Yes</label>
-                                            <label><input type="checkbox" name="corrective_actions" value="no" onclick="selectOne(this)"> No</label>
-                                            <label><input type="checkbox" name="corrective_actions" value="na" onclick="selectOne(this)"> N/A</label>
+                                            <label><input type="checkbox" name="corrective_actions" value="yes" onclick="selectOne(this)" disabled> Yes</label>
+                                            <label><input type="checkbox" name="corrective_actions" value="no" onclick="selectOne(this)" disabled> No</label>
+                                            <label><input type="checkbox" name="corrective_actions" value="na" onclick="selectOne(this)" disabled> N/A</label>
                                         </div>
                                        </div>
                                         <br>
@@ -2148,9 +2150,9 @@
                                             </div>
 
                                           <div class="checkbox-group">
-                                            <label><input type="checkbox" name="batch_release" value="yes" onclick="selectOne(this)"> Yes</label>
-                                            <label><input type="checkbox" name="batch_release" value="no" onclick="selectOne(this)"> No</label>
-                                            <label><input type="checkbox" name="batch_release" value="na" onclick="selectOne(this)"> N/A</label>
+                                            <label><input type="checkbox" name="batch_release" value="yes" onclick="selectOne(this)" disabled> Yes</label>
+                                            <label><input type="checkbox" name="batch_release" value="no" onclick="selectOne(this)" disabled> No</label>
+                                            <label><input type="checkbox" name="batch_release" value="na" onclick="selectOne(this)" disabled> N/A</label>
                                           </div>
                                         </div>
                                         <br>
@@ -2169,9 +2171,9 @@
                                             </div>
 
                                         <div class="checkbox-group">
-                                            <label><input type="checkbox" name="affected_documents" value="yes" onclick="selectOne(this)"> Yes</label>
-                                            <label><input type="checkbox" name="affected_documents" value="no" onclick="selectOne(this)"> No</label>
-                                            <label><input type="checkbox" name="affected_documents" value="na" onclick="selectOne(this)"> N/A</label>
+                                            <label><input type="checkbox" name="affected_documents" value="yes" onclick="selectOne(this)" disabled> Yes</label>
+                                            <label><input type="checkbox" name="affected_documents" value="no" onclick="selectOne(this)" disabled> No</label>
+                                            <label><input type="checkbox" name="affected_documents" value="na" onclick="selectOne(this)" disabled> N/A</label>
                                         </div>
                                         </div>
                                         <br>
@@ -2198,7 +2200,7 @@
                                         <label for="QA Feedbacks">Initiator Update Comments</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="QA_Feedbacks" id="summernote-14">  </textarea>
+                                        <textarea class="tiny" name="QA_Feedbacks" id="summernote-14" disabled>  </textarea>
                                     </div>
                                     </div>
                                   <div class="col-lg-12">
@@ -2211,7 +2213,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="QA_attachments[]"
-                                                    oninput="addMultipleFiles(this, 'QA_attachmentsa')" multiple>
+                                                    oninput="addMultipleFiles(this, 'QA_attachmentsa')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -2250,7 +2252,7 @@
                                         <label for="HOD Remarks">HOD Final Review  Comments</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="qa_head_Remarks" id="summernote-4">  </textarea>
+                                        <textarea class="tiny" name="qa_head_Remarks" id="summernote-4" disabled>  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -2263,7 +2265,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="qa_head_attachments[]"
-                                                    oninput="addMultipleFiles(this, 'QA_attachments')" multiple>
+                                                    oninput="addMultipleFiles(this, 'QA_attachments')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -2396,7 +2398,7 @@
                                         <label for="HOD Remarks">QA Final Review Comments</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="qa_final_review" id="summernote-4">  </textarea>
+                                        <textarea class="tiny" name="qa_final_review" id="summernote-4" disabled>  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -2409,7 +2411,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="QA_attachments" name="qa_final_ra_attachments[]"
-                                                    oninput="addMultipleFiles(this, 'hod_attachmentsb')" multiple>
+                                                    oninput="addMultipleFiles(this, 'hod_attachmentsb')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -2469,13 +2471,13 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Remarks">Closure Comments</label>
-                                        <textarea class="tiny" name="Closure_Comments" id="summernote-15"></textarea>
+                                        <textarea class="tiny" name="Closure_Comments" id="summernote-15" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Audit Comments">Disposition of Batch</label>
-                                        <textarea class="tiny" name="Disposition_Batch" id="summernote-16"></textarea>
+                                        <textarea class="tiny" name="Disposition_Batch" id="summernote-16" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -2489,7 +2491,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="closure_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'closure_attachment')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -2559,7 +2561,7 @@
                                     <div class="static"></div>
                                 </div>
                             </div> --}}
-                            <div class="sub-head">HOD Initial Review Completed</div>
+                            <div class="sub-head">HOD Initial Review Complete</div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="HOD Review Complete By">HOD Initial Review Complete By :-</label>
@@ -2574,7 +2576,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="HOD Initial Review Complete On">HOD Initial Review Comments :-</label>
+                                    <label for="HOD Initial Review Complete On">HOD Initial Review Complete Comment :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -2602,7 +2604,7 @@
                             </div> --}}
 
 
-                            <div class="sub-head">QA Initial Review Completed</div>
+                            <div class="sub-head">QA Initial Review Complete</div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="QA Initial Review Complete By">QA Initial Review Complete By
@@ -2702,7 +2704,7 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="CFT Review Comments">HOD Final Review Comments :-</label>
+                                    <label for="CFT Review Comments">HOD Final Review Complete Comment :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -2720,7 +2722,7 @@
                                     <div class="static"></div>
                                 </div>
                             </div> --}}
-                            <div class="sub-head"> QA Final Review Completed</div>
+                            <div class="sub-head"> QA Final Review Complete</div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="QA Final Review Complete By"> QA Final Review Complete By :-</label>
@@ -2779,43 +2781,43 @@
                                     <div class="static"></div>
                                 </div>
                             </div> --}}
-                            <div class="sub-head">cancelled</div>
+                            {{--<div class="sub-head">cancel</div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="submit by">cancelled By :-</label>
+                                    <label for="submit by">cancel By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="cancelled on">cancelled On :-</label>
+                                    <label for="cancelled on">cancel On :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="cancelled on">cancelled Cooment :-</label>
+                                    <label for="cancelled on">cancel Comment :-</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div>--}}
                             <div class="sub-head">
-                                cancelled
+                                cancel
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="submit by">cancelled By :-</label>
+                                    <label for="submit by">cancel By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="cancelled on">cancelled On :-</label>
+                                    <label for="cancelled on">cancel On :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="cancelled on">cancelled Comment :-</label>
+                                    <label for="cancelled on">cancel Comment :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>

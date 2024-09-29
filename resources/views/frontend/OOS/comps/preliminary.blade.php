@@ -53,7 +53,7 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="RootCause">Immediate action taken</label>
-                    <textarea name="root_comment" id="rootCauseTextarea" rows="4" placeholder="Describe the root cause here" {{ $data->stage == 5 ? '' : 'disabled' }}> {{ $data->root_comment }}</textarea>
+                    <textarea name="root_comment" id="rootCauseTextarea" rows="4" placeholder="Describe the root cause here" {{ $data->stage == 5 ? '' : 'readonly' }}> {{ $data->root_comment }}</textarea>
                 </div>
             </div>
             
@@ -105,7 +105,7 @@
                             <div>Add</div>
                             <input type="file" id="myfile" name="file_attachments_pli[]" 
                             oninput="addMultipleFiles(this, 'file_attachments_pli')"
-                            {{ $data->stage == 5 ? '' : 'disabled' }}   multiple {{Helpers::isOOSChemical($data->stage)}}>
+                            {{ $data->stage == 5 ? '' : 'readonly' }}   multiple {{Helpers::isOOSChemical($data->stage)}}>
                         </div>
                     </div>
                 </div>
@@ -155,7 +155,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Product/Material Name">OOS cause identified</label>
-                    <select name="phase_i_investigation_pli" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'disabled' }}>
+                    <select name="phase_i_investigation_pli" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'readonly' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Yes"{{ $data->phase_i_investigation_pli ==
                             'Yes' ? 'selected' : '' }}>Yes</option>
@@ -201,7 +201,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Team"> OOS Category</label>
-                    <select name="oos_category_root_cause_ident_plic"  {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'disabled' }}>
+                    <select name="oos_category_root_cause_ident_plic"  {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'readonly' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Analyst Error"{{ $data->oos_category_root_cause_ident_plic ==
                             'Analyst Error' ? 'selected' : '' }}>Analyst Error</option>
@@ -229,7 +229,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Product/Material Name">CAPA Required</label>
-                    <select name="capa_required_plic"  {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'disabled' }}>
+                    <select name="capa_required_plic"  {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'readonly' }}>
                         <option value="" {{ $data->capa_required_plic == '0' ? 'selected' : ''
                             }}>--Select---</option>
                         <option value="yes" {{ $data->capa_required_plic == 'yes' ? 'selected' : ''
@@ -242,7 +242,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Agenda">Reference CAPA No.</label>
-                    <input  {{Helpers::isOOSChemical($data->stage)}} type="text" value="{{$data->reference_capa_no_plic}}" name="reference_capa_no_plic" {{ $data->stage == 5 ? '' : 'disabled' }}>
+                    <input  {{Helpers::isOOSChemical($data->stage)}} type="text" value="{{$data->reference_capa_no_plic}}" name="reference_capa_no_plic" {{ $data->stage == 5 ? '' : 'readonly' }}>
                 </div>
             </div>
             {{-- <div class="col-md-12 mb-4">
@@ -393,7 +393,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Start Date">Phase IB Inv. Required?</label>
-                    <select name="phase_ib_inv_required_plir" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'disabled' }}>
+                    <select name="phase_ib_inv_required_plir" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'readonly' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="yes" {{ $data && $data->phase_ib_inv_required_plir == 'yes' ?
                             'selected' : '' }}>Yes</option>
@@ -405,7 +405,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Start Date">Phase II Inv. Required?</label>
-                    <select name="phase_ii_inv_required_plir" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'disabled' }}>
+                    <select name="phase_ii_inv_required_plir" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'readonly' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="yes" {{ $data && $data->phase_ii_inv_required_plir == 'yes' ?
                             'selected' : '' }}>Yes</option>
@@ -418,7 +418,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Start Date">Retest/Re-measurement required</label>
-                    <select name="root_cause_identified_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'disabled' }}>
+                    <select name="root_cause_identified_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'readonly' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="yes" {{ $data && $data->root_cause_identified_pia == 'yes' ?
                             'selected' : '' }}>Yes</option>
@@ -430,7 +430,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Start Date">Resampling required</label>
-                    <select name="is_repeat_assingable_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'disabled' }}>
+                    <select name="is_repeat_assingable_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'readonly' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="YES" {{ $data && $data->is_repeat_assingable_pia == 'YES' ?
                             'selected' : '' }}>Yes</option>
@@ -442,7 +442,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Start Date">Repeat testing required</label>
-                    <select name="repeat_testing_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'disabled' }}>
+                    <select name="repeat_testing_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'readonly' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="YES" {{ $data && $data->repeat_testing_pia == 'YES' ?
                             'selected' : '' }}>Yes</option>
@@ -500,7 +500,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="supporting_attachments_plir[]"
-                                oninput="addMultipleFiles(this, 'supporting_attachments_plir')" {{ $data->stage == 5 ? '' : 'disabled' }} multiple {{Helpers::isOOSChemical($data->stage)}}>
+                                oninput="addMultipleFiles(this, 'supporting_attachments_plir')" {{ $data->stage == 5 ? '' : 'readonly' }} multiple {{Helpers::isOOSChemical($data->stage)}}>
                         </div>
                     </div>
 

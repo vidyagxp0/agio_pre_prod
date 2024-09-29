@@ -196,7 +196,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="related_records">Parent Record Number</label>
+                                        <label for="related_records">Parent Records Number</label>
                                         <select multiple name="related_records[]" placeholder="Select Parent Record Number"
                                             data-silent-initial-value-set="true" id="related_records">
 
@@ -232,7 +232,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Assigned To">QA approval </label>
+                                        <label for="Assigned To">QA Approval </label>
                                         <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
                                             name="approvers" placeholder="Select Approvers">
                                             <option value="">-- Select --</option>
@@ -438,7 +438,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Activated On">Comment</label>
+                                    <label for="Activated On">Submit Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -456,7 +456,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">Cancel Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -475,7 +475,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">More Information Required Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -495,7 +495,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">Review Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -515,7 +515,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">Reject Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -534,7 +534,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">More Information Required Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -553,7 +553,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">Send for CQA Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -566,13 +566,13 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On"> Approved On</label>
+                                    <label for="Rejected On">Approved On</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">Approved Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -591,7 +591,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">CQA Approval Complete Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>

@@ -186,7 +186,7 @@
                             ->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         $auditCollect = DB::table('audit_reviewers_details')
-                            ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id])
+                            ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id,  'type' => 'Lab-Incident'])
                             ->latest()
                             ->first();
                     @endphp
@@ -285,7 +285,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- <form action="" method="POST"> -->
-                                    <form action="{{ route('store_audit_reviewlab',$document->id)}}" method="POST">
+                                    <form action="{{ route('store_audit_review',$document->id)}}" method="POST">
                                         @csrf
                                         <!-- Modal body -->
                                         <div class="modal-body">

@@ -229,7 +229,7 @@
                         <th class="w-20">Initiation Department</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
-                                {{ Helpers::getFullDepartmentName($data->Initiator_Group) }}
+                                {{ $data->Initiator_Group }}
                             @else
                                 Not Applicable
                             @endif
@@ -394,9 +394,10 @@
                     {{-- <td class="w-30">@if ($data->Product_Batch){{ ($data->Product_Batch) }} @else Not Applicable @endif</td> --}}
                     {{-- </tr> --}}
                 </table>
-                 <div class="inner-block">
+                <div class="inner-block">
                     <label class="Summer"
-                        style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;"> Description of Deviation</label>
+                        style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;"> Description of
+                        Deviation</label>
                     <span style="font-size: 0.8rem; margin-left: 60px;">
                         @if ($data->discb_deviat)
                             {{ $data->discb_deviat }}
@@ -472,7 +473,7 @@
 
 
 
-                <div class="block">
+                {{-- <div class="block">
                     <div class="block-head">
                         Description of Deviation (5W/2H)
                     </div>
@@ -514,7 +515,7 @@
 
                         </table>
                     </div>
-                </div>
+                </div> --}}
 
 
 
@@ -747,6 +748,24 @@
                         <td class="w-30">
                             @if ($data->Investigation_required)
                                 {{ $data->Investigation_required }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">CAPA Required</th>
+                        <td class="w-30">
+                            @if ($data->capa_required)
+                                {{ $data->capa_required }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        <th class="w-20">QRM Required?</th>
+                        <td class="w-30">
+                            @if ($data->qrm_required)
+                                {{ $data->qrm_required }}
                             @else
                                 Not Applicable
                             @endif
@@ -3131,7 +3150,7 @@
 
                                 </tr>
                             </table>
-                            <div class="inner-block">
+                            {{-- <div class="inner-block">
                                 <label class="Summer"
                                     style="font-weight: bold; font-size: 13px; display: inline; width:5%">QA
                                     Description of Event </label>
@@ -3142,7 +3161,7 @@
                                         Not Applicable
                                     @endif
                                 </span>
-                            </div>
+                            </div> --}}
                             <div class="inner-block">
                                 <label class="Summer"
                                     style="font-weight: bold; font-size: 13px; display: inline; width:5%">QA
@@ -3243,6 +3262,51 @@
                                     </tbody>
                                 </table>
                             </div>
+                            {{-- <div class="col-12" id="HideInference" style="display:none;"> --}}
+                            <div class="border-table">
+                                <div class="col-12 mb-4" id="fmea-section-part3">
+                                    <div class="group-input">
+                                        <div class="block-head">Inference</div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="risk-acceptance">
+                                                <thead>
+                                                    <tr class="table_bg">
+                                                        <th style="width: 5%;">Row #</th>
+                                                        <th style="width: 30%;">Type</th>
+                                                        <th>Remarks</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (!empty($data->inference_type) && !empty($data->inference_remarks))
+                                                        @php
+                                                            $inference_types = unserialize($data->inference_type);
+                                                            $inference_remarks = unserialize($data->inference_remarks);
+                                                        @endphp
+
+                                                        @foreach ($inference_types as $key => $inference_type)
+                                                            <tr>
+                                                                <td>{{ $key + 1 }}</td>
+                                                                <td>
+                                                                    {{ $inference_type == 'Measurement' ? 'Measurement' : '' }}
+                                                                    {{ $inference_type == 'Materials' ? 'Materials' : '' }}
+                                                                    {{ $inference_type == 'Methods' ? 'Methods' : '' }}
+                                                                    {{ $inference_type == 'Environment' ? 'Environment' : '' }}
+                                                                    {{ $inference_type == 'Manpower' ? 'Manpower' : '' }}
+                                                                    {{ $inference_type == 'Machine' ? 'Machine' : '' }}
+                                                                </td>
+                                                                <td>{{ $inference_remarks[$key] ?? '' }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
 
                             <div class="border-table" style="margin-bottom: 15px;">
                                 <div class="block-head">
@@ -3593,7 +3657,7 @@
                             <div class="block-head">
                                 QRM
                             </div>
-                            <table>
+                            {{-- <table>
                                 <tr>
                                     <th class="w-20">Proposed Due Date
                                     </th>
@@ -3675,130 +3739,135 @@
                                         </div>
                                     </td>
                                 </tr>
-                            </table>
+                            </table> --}}
 
-                            <div class="border-table">
-                                <div class="block-head" style="margin:bottom:5px;">
+                            <div class="border-table  tbl-bottum">
+                                <div class="block-head">
                                     Failure Mode and Effect Analysis
                                 </div>
                                 <table>
+
                                     <tr class="table_bg">
-                                        <th>Row #</th>
-                                        <th>Risk Factor</th>
-                                        <th>Risk element </th>
-                                        <th>Probable cause of risk element</th>
-                                        <th>Existing Risk Controls</th>
-                                        <th>Initial Severity- H(3)/M(2)/L(1)</th>
+                                        <th class="w-10">Row #</th>
+                                        <th class="w-30">Risk Factor</th>
+                                        <th class="w-30">Risk element</th>
+                                        <th class="w-30">Probable cause of risk element</th>
+                                        <th class="w-30">Existing Risk Controls</th>
                                     </tr>
-
-                                    <tbody>
-                                        @if ($grid_data_qrms && is_array($grid_data_qrms->data))
-                                            @php
-                                                $serialNumber = 1;
-                                            @endphp
-                                            @foreach ($grid_data_qrms->data as $grid_item)
-                                                <tr>
-                                                    <td>{{ $serialNumber++ }}</td>
-                                                    <td>{{ $grid_item['risk_factor'] }}</td>
-                                                    <td>{{ $grid_item['risk_element'] }}</td>
-                                                    <td>{{ $grid_item['probale_of_risk_element'] }}</td>
-                                                    <td>{{ $grid_item['existing_risk_control'] }}</td>
-                                                    <td>{{ $grid_item['initial_severity'] }}</td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td class="w-20">1</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                            </tr>`
-                                        @endif
-                                    </tbody>
-                                </table>
-
-
-                                <table style="margin-top:10px;">
-                                    <tr class="table_bg">
-                                        <th>Row #</th>
-                                        <th>Initial Probability- H(3)/M(2)/L(1)</th>
-                                        <th>Initial Detectability- H(1)/M(2)/L(3)</th>
-                                        <th>Initial RPN</th>
-                                        <th>Risk Acceptance (Y/N)</th>
-                                        <th>Proposed Additional Risk control measure</th>
+                                    {{-- @if ($data->root_cause_initial_attachment)
+                                @foreach (json_decode($data->root_cause_initial_attachment) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
-                                    <tbody>
-                                        @if ($grid_data_qrms && is_array($grid_data_qrms->data))
-                                            @php
-                                                $serialNumber = 1;
-                                            @endphp
-                                            @foreach ($grid_data_qrms->data as $grid_item)
-                                                <tr>
-                                                    <td>{{ $serialNumber++ }}</td>
-                                                    <td>{{ $grid_item['initial_probability'] }}</td>
-                                                    <td>{{ $grid_item['initial_detectability'] }}</td>
-                                                    <td>{{ $grid_item['initial_rpn'] }}</td>
-                                                    <td>{{ $grid_item['risk_acceptance'] }}</td>
-                                                    <td>{{ $grid_item['proposed_additional_risk_control'] }}</td>
-                                                </tr>
-                                            @endforeach
-                                        @else
+                                @endforeach
+                                @else --}}
+                                    @if (!empty($data->risk_factor))
+                                        @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
                                             <tr>
-                                                <td class="w-20">1</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
+                                                <td class="w-10">{{ $key + 1 }}</td>
+                                                <td class="w-30">{{ $riskFactor }}</td>
+                                                <td class="w-30">
+                                                    {{ unserialize($data->risk_element)[$key] ?? null }}</td>
+                                                <td class="w-30">
+                                                    {{ unserialize($data->problem_cause)[$key] ?? null }}</td>
+                                                <td class="w-30">
+                                                    {{ unserialize($data->existing_risk_control)[$key] ?? null }}
+                                                </td>
                                             </tr>
-                                        @endif
-                                    </tbody>
+                                        @endforeach
+                                    @else
+                                    @endif
+
                                 </table>
-
-                                <table style="margin-top:10px;">
-                                    <tr class="table_bg">
-                                        <th>Row #</th>
-                                        <th>Residual Severity- H(3)/M(2)/L(1)</th>
-                                        <th>Residual Probability- H(3)/M(2)/L(1)</th>
-                                        <th>Residual Detectability- H(1)/M(2)/L(3)</th>
-                                        <th>Residual RPN</th>
-                                        <th>Risk Acceptance (Y/N)</th>
-                                        <th>Mitigation proposal</th>
-                                    </tr>
-
-                                    <tbody>
-                                        @if ($grid_data_qrms && is_array($grid_data_qrms->data))
-                                            @php
-                                                $serialNumber = 1;
-                                            @endphp
-                                            @foreach ($grid_data_qrms->data as $grid_item)
-                                                <tr>
-                                                    <td>{{ $serialNumber++ }}</td>
-                                                    <td>{{ $grid_item['residual_severity'] }}</td>
-                                                    <td>{{ $grid_item['residual_probability'] }}</td>
-                                                    <td>{{ $grid_item['residual_detectability'] }}</td>
-                                                    <td>{{ $grid_item['residual_rpn'] }}</td>
-                                                    <td>{{ $grid_item['risk_acceptance'] }}</td>
-                                                    <td>{{ $grid_item['mitigation_proposal'] }}</td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td class="w-20">1</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                            </tr>`
-                                        @endif
-                                    </tbody>
-                                </table>
-
 
                             </div>
+                            <div class="border-table  tbl-bottum">
+                                <table>
+                                    <tr class="table_bg">
+                                        <th class="w-10">Row #</th>
+                                        <th class="w-30">Initial Severity</th>
+                                        <th class="w-30">Initial Probability</th>
+                                        <th class="w-30">Initial Detectability</th>
+                                        <th class="w-30">Initial RPN</th>
+                                    </tr>
+                                    @if (!empty($data->risk_factor))
+                                        @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
+                                            <tr>
+                                                <td class="w-10">{{ $key + 1 }}</td>
+                                                <td class="w-30">{{ unserialize($data->initial_severity)[$key] }}
+                                                </td>
+                                                <td class="w-30">
+                                                    {{ unserialize($data->initial_detectability)[$key] }}</td>
+                                                <td class="w-30">
+                                                    {{ unserialize($data->initial_probability)[$key] }}</td>
+                                                <td class="w-30">{{ unserialize($data->initial_rpn)[$key] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                    @endif
+                                </table>
+                            </div>
+                            <div class="border-table  tbl-bottum">
+                                <table>
+                                    <tr class="table_bg">
+                                        <th class="w-10">Row #</th>
+                                        <th class="w-30">Risk Acceptance (Y/N)</th>
+                                        <th class="w-30">Proposed Additional Risk control measure (Mandatory for Risk
+                                            elements
+                                            having RPN>4)</th>
+                                        <th class="w-30">Residual Severity</th>
+                                        <th class="w-30">Residual Probability</th>
+                                    </tr>
+                                    @if (!empty($data->risk_factor))
+                                        @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
+                                            <tr>
+                                                <td class="w-10">{{ $key + 1 }}</td>
+                                                <td class="w-30">{{ unserialize($data->risk_acceptance)[$key] }}
+                                                </td>
+                                                <td class="w-30">
+                                                    {{ unserialize($data->risk_control_measure)[$key] }}</td>
+                                                <td class="w-30">{{ unserialize($data->residual_severity)[$key] }}
+                                                </td>
+                                                <td class="w-30">
+                                                    {{ unserialize($data->residual_probability)[$key] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                    @endif
+                                </table>
+                            </div>
+                            <div class="border-table  tbl-bottum">
+                                <table>
+                                    <tr class="table_bg">
+                                        <th class="w-10">Row #</th>
+                                        <th class="w-30">Residual Detectability</th>
+                                        <th class="w-30">Residual RPN</th>
+                                        <th class="w-30">Risk Acceptance (Y/N)</th>
+                                        <th class="w-30">Mitigation proposal (Mention either CAPA reference number,
+                                            IQ, OQ or PQ)
+                                        </th>
+                                    </tr>
+                                    @if (!empty($data->risk_factor))
+                                        @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
+                                            <tr>
+                                                <td class="w-10">{{ $key + 1 }}</td>
+                                                <td class="w-30">
+                                                    {{ unserialize($data->residual_detectability)[$key] }}</td>
+                                                <td class="w-30">{{ unserialize($data->residual_rpn)[$key] }}</td>
+                                                <td class="w-30">{{ unserialize($data->risk_acceptance2)[$key] }}
+                                                </td>
+                                                <td class="w-30">
+                                                    {{ unserialize($data->mitigation_proposal)[$key] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                    @endif
+                                </table>
+                            </div>
 
+
+                            {{--
                             <div class="border-table">
                                 <div class="block-head" style=" font-weight:bold; margin-bottom:5px;">
                                     Risk Matrix
@@ -3840,7 +3909,7 @@
                                         @endif
                                     </tbody>
                                 </table>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 
@@ -3856,7 +3925,7 @@
                             </div>
                             <table>
                                 <tr>
-                                    <th class="w-20">Proposed Due Date
+                                    {{-- <th class="w-20">Proposed Due Date
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -3866,7 +3935,7 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                     <th class="w-20">Name of the Department</th>
                                     <td class="w-30">
                                         <div>
@@ -4341,7 +4410,7 @@
                         <table>
 
                             <tr>
-                                <th class="w-20">QA Feedbacks</th>
+                                <th class="w-20">QA Enaluation</th>
                                 <td class="w-30">
                                     @if ($data->QA_Feedbacks)
                                         {{ strip_tags($data->QA_Feedbacks) }}
@@ -4384,7 +4453,33 @@
                             QAH/Designee Approval
                         </div>
 
+                        <div class="inner-block">
+                            <label class="Summer"
+                                style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
 
+                                Post Categorization Of Deviation </label>
+                            <span style="font-size: 0.8rem; margin-left: 60px;">
+                                @if ($data->Post_Categorization)
+                                    {{ $data->Post_Categorization }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </span>
+                        </div>
+
+                        <div class="inner-block">
+                            <label class="Summer"
+                                style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+
+                                Justification for Revised Category </label>
+                            <span style="font-size: 0.8rem; margin-left: 60px;">
+                                @if ($data->Investigation_Of_Review)
+                                    {{ $data->Investigation_Of_Review }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </span>
+                        </div>
                         <div class="inner-block">
                             <label class="Summer"
                                 style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
