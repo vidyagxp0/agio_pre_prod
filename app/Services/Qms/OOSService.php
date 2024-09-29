@@ -671,7 +671,7 @@ class OOSService
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
-                $history->activity_type = 'CQA/QA Head Primary Remark';
+                $history->activity_type = 'CQA/QA Head Remark';
                 $history->current = $oos->QA_Head_primary_remark1;
                 $history->save();
             }
@@ -1268,7 +1268,7 @@ class OOSService
                 $history->save();
             }
 
-            //P-IA CQAH/QAH Primary Remark
+            //Phase IA CQAH/QAH Remark
             if (!empty($request->QA_Head_primary_remark2)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
@@ -1282,12 +1282,12 @@ class OOSService
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
-                $history->activity_type = 'P-IA CQAH/QAH Primary Remark';
+                $history->activity_type = 'Phase IA CQAH/QAH Remark';
                 $history->current = $request->QA_Head_primary_remark2;
                 $history->save();
             }
 
-            //P-IA CQAH/QAH Primary Remark
+            //Phase IA CQAH/QAH Remark
             if (!empty($request->outcome_phase_IA)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
@@ -1719,7 +1719,7 @@ class OOSService
                 $history->save();
             }
 
-            //Phase IB HOD Primary Remark
+            //Phase IB HOD Remark
             if (!empty($request->hod_remark3)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
@@ -1733,7 +1733,7 @@ class OOSService
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
-                $history->activity_type = 'Phase IB HOD Primary Remark';
+                $history->activity_type = 'Phase IB HOD Remark';
                 $history->current = $request->hod_remark3;
                 $history->save();
             }
@@ -1757,7 +1757,7 @@ class OOSService
                 $history->save();
             }
 
-             //P-IB CQAH/QAH Remark
+             //Phase IB CQAH/QAH Remark
              if (!empty($request->escalation_required)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
@@ -1824,7 +1824,7 @@ class OOSService
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
-                $history->activity_type = 'P-IB CQAH/QAH Remark';
+                $history->activity_type = 'Phase IB CQAH/QAH Remark';
                 $history->current = $request->QA_Head_primary_remark3;
                 $history->save();
             }
@@ -2804,7 +2804,7 @@ class OOSService
                 $history->save();
             }  
             
-            //P-II A QAH/CQAH Remark
+            //Phase II A QAH/CQAH Remark
             if (!empty($request->QA_Head_primary_remark4)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
@@ -2818,7 +2818,7 @@ class OOSService
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
-                $history->activity_type = 'P-II A QAH/CQAH Remark';
+                $history->activity_type = 'Phase II A QAH/CQAH Remark';
                 $history->current = $request->QA_Head_primary_remark4;
                 $history->save();
             } 
@@ -2932,7 +2932,7 @@ class OOSService
                 $history->save();
             }
 
-            //Phase II B HOD Primary Remark
+            //Phase II B HOD Remark
             if (!empty($request->hod_remark5)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
@@ -2946,7 +2946,7 @@ class OOSService
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
-                $history->activity_type = 'Phase II B HOD Primary Remark';
+                $history->activity_type = 'Phase II B HOD Remark';
                 $history->current = $request->hod_remark5;
                 $history->save();
             }
@@ -3299,7 +3299,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                 // $history->action_name = 'update';
                 if (is_null($lastOosRecod->due_date) || $lastOosRecod->due_date === '') {
@@ -3351,7 +3351,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                 // $history->action_name = 'update';
                 if (is_null($lastOosRecod->initiator_group) || $lastOosRecod->initiator_group === '') {
@@ -3377,7 +3377,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->initiator_group_code) || $lastOosRecod->initiator_group_code === '') {
                         $history->action_name = "New";
@@ -3403,7 +3403,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->if_others_gi) || $lastOosRecod->if_others_gi === '') {
                     $history->action_name = "New";
@@ -3427,7 +3427,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->is_repeat_gi) || $lastOosRecod->is_repeat_gi === '') {
                     $history->action_name = "New";
@@ -3452,7 +3452,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->repeat_nature) || $lastOosRecod->repeat_nature === '') {
                     $history->action_name = "New";
@@ -3477,7 +3477,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->nature_of_change_gi) || $lastOosRecod->nature_of_change_gi === '') {
                     $history->action_name = "New";
@@ -3501,7 +3501,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->deviation_occured_on_gi) || $lastOosRecod->deviation_occured_on_gi === '') {
                     $history->action_name = "New";
@@ -3526,7 +3526,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->source_document_type_gi) || $lastOosRecod->source_document_type_gi === '') {
                     $history->action_name = "New";
@@ -3550,7 +3550,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->sample_type_gi) || $lastOosRecod->sample_type_gi === '') {
                     $history->action_name = "New";
@@ -3575,7 +3575,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->product_material_name_gi) || $lastOosRecod->product_material_name_gi === '') {
                     $history->action_name = "New";
@@ -3600,7 +3600,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->market_gi) || $lastOosRecod->market_gi === '') {
                     $history->action_name = "New";
@@ -3625,7 +3625,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
            if (is_null($lastOosRecod->customer_gi) || $lastOosRecod->customer_gi === '') {
                 $history->action_name = "New";
@@ -3651,7 +3651,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
             if (is_null($lastOosRecod->specification_details) || $lastOosRecod->specification_details === '') {
                     $history->action_name = "New";
@@ -3676,7 +3676,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
         if (is_null($lastOosRecod->STP_details) || $lastOosRecod->STP_details === '') {
                 $history->action_name = "New";
@@ -3701,7 +3701,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
         if (is_null($lastOosRecod->manufacture_vendor) || $lastOosRecod->manufacture_vendor === '') {
                 $history->action_name = "New";
@@ -3728,7 +3728,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
         if (is_null($lastOosRecod->hod_remark1) || $lastOosRecod->hod_remark1 === '') {
                 $history->action_name = "New";
@@ -3755,7 +3755,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->QA_Head_remark1) || $lastOosRecod->QA_Head_remark1 === '') {
                     $history->action_name = "New";
@@ -3768,12 +3768,12 @@ class OOSService
             // if ($lastOosRecod->QA_Head_primary_remark1 != $request->QA_Head_primary_remark1){
                 if ($lastOosRecod->QA_Head_primary_remark1 !=  $request->QA_Head_primary_remark1 || !empty($request->QA_Head_primary_remark1_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                            ->where('activity_type', 'CQA/QA Head Primary Remark')
+                            ->where('activity_type', 'CQA/QA Head Remark')
                             ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->QA_Head_primary_remark1;
-                $history->activity_type = 'CQA/QA Head Primary Remark';
+                $history->activity_type = 'CQA/QA Head Remark';
                 $history->current = $request->QA_Head_primary_remark1;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
@@ -3781,7 +3781,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->QA_Head_primary_remark1) || $lastOosRecod->QA_Head_primary_remark1 === '') {
                     $history->action_name = "New";
@@ -3807,7 +3807,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->Comments_plidata) || $lastOosRecod->Comments_plidata === '') {
                     $history->action_name = "New";
@@ -3831,7 +3831,7 @@ class OOSService
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         //     $history->origin_state = $lastOosRecod->status;
         //     $history->stage = $lastOosRecod->stage;
-        //     $history->change_to =   "Opened";
+        //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastOosRecod->status;
         //    if (is_null($lastOosRecod->checklists) || $lastOosRecod->checklists === '') {
         //         $history->action_name = "New";
@@ -3856,7 +3856,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->justify_if_no_field_alert_pli) || $lastOosRecod->justify_if_no_field_alert_pli === '') {
                     $history->action_name = "New";
@@ -3880,7 +3880,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
            if (is_null($lastOosRecod->root_comment) || $lastOosRecod->root_comment === '') {
                 $history->action_name = "New";
@@ -3905,7 +3905,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->justify_if_no_analyst_int_pli) || $lastOosRecod->justify_if_no_analyst_int_pli === '') {
                     $history->action_name = "New";
@@ -3929,7 +3929,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
            if (is_null($lastOosRecod->analyst_interview_pli) || $lastOosRecod->analyst_interview_pli === '') {
                 $history->action_name = "New";
@@ -3954,7 +3954,7 @@ class OOSService
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastOosRecod->status;
         $history->stage = $lastOosRecod->stage;
-        $history->change_to =   "Opened";
+        $history->change_to =   "Not Applicable";
         $history->change_from = $lastOosRecod->status;
        if (is_null($lastOosRecod->Any_other_cause) || $lastOosRecod->Any_other_cause === '') {
             $history->action_name = "New";
@@ -3979,7 +3979,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
             if (is_null($lastOosRecod->Any_other_batches) || $lastOosRecod->Any_other_batches === '') {
                     $history->action_name = "New";
@@ -4004,7 +4004,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
         if (is_null($lastOosRecod->details_of_trend) || $lastOosRecod->details_of_trend === '') {
                 $history->action_name = "New";
@@ -4029,7 +4029,7 @@ class OOSService
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastOosRecod->status;
         $history->stage = $lastOosRecod->stage;
-        $history->change_to =   "Opened";
+        $history->change_to =   "Not Applicable";
         $history->change_from = $lastOosRecod->status;
     if (is_null($lastOosRecod->rational_for_assingnable) || $lastOosRecod->rational_for_assingnable === '') {
             $history->action_name = "New";
@@ -4055,7 +4055,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->phase_i_investigation_pli) || $lastOosRecod->phase_i_investigation_pli === '') {
                     $history->action_name = "New";
@@ -4076,7 +4076,7 @@ class OOSService
             //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             //     $history->origin_state = $lastOosRecod->status;
             //     $history->stage = $lastOosRecod->stage;
-            //     $history->change_to =   "Opened";
+            //     $history->change_to =   "Not Applicable";
             //     $history->change_from = $lastOosRecod->status;
             //    if (is_null($lastOosRecod->phase_i_investigation_ref_pli) || $lastOosRecod->phase_i_investigation_ref_pli === '') {
             //         $history->action_name = "New";
@@ -4102,7 +4102,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->summary_of_prelim_investiga_plic) || $lastOosRecod->summary_of_prelim_investiga_plic === '') {
                     $history->action_name = "New";
@@ -4127,7 +4127,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->root_cause_identified_plic) || $lastOosRecod->root_cause_identified_plic === '') {
                     $history->action_name = "New";
@@ -4152,7 +4152,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->oos_category_root_cause_ident_plic) || $lastOosRecod->oos_category_root_cause_ident_plic === '') {
                     $history->action_name = "New";
@@ -4177,7 +4177,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->root_cause_details_plic) || $lastOosRecod->root_cause_details_plic === '') {
                     $history->action_name = "New";
@@ -4203,7 +4203,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->oos_category_others_plic) || $lastOosRecod->oos_category_others_plic === '') {
                     $history->action_name = "New";
@@ -4228,7 +4228,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->capa_required_plic) || $lastOosRecod->capa_required_plic === '') {
                     $history->action_name = "New";
@@ -4253,7 +4253,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->reference_capa_no_plic) || $lastOosRecod->reference_capa_no_plic === '') {
                     $history->action_name = "New";
@@ -4278,7 +4278,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->delay_justification_for_pi_plic) || $lastOosRecod->delay_justification_for_pi_plic === '') {
                     $history->action_name = "New";
@@ -4304,7 +4304,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->review_comments_plir) || $lastOosRecod->review_comments_plir === '') {
                     $history->action_name = "New";
@@ -4329,7 +4329,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->phase_ii_inv_required_plir) || $lastOosRecod->phase_ii_inv_required_plir === '') {
                     $history->action_name = "New";
@@ -4354,7 +4354,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
            if (is_null($lastOosRecod->root_cause_identified_pia) || $lastOosRecod->root_cause_identified_pia === '') {
                 $history->action_name = "New";
@@ -4379,7 +4379,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->phase_ib_inv_required_plir) || $lastOosRecod->phase_ib_inv_required_plir === '') {
                     $history->action_name = "New";
@@ -4404,7 +4404,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
            if (is_null($lastOosRecod->phase_ib_inv_required_plir) || $lastOosRecod->phase_ib_inv_required_plir === '') {
                 $history->action_name = "New";
@@ -4430,7 +4430,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->hod_remark2) || $lastOosRecod->hod_remark2 === '') {
                     $history->action_name = "New";
@@ -4456,7 +4456,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->QA_Head_remark2) || $lastOosRecod->QA_Head_remark2 === '') {
                     $history->action_name = "New";
@@ -4466,16 +4466,16 @@ class OOSService
                 $history->save();
             }
 
-             //P-IA CQAH/QAH Primary Remark
+             //Phase IA CQAH/QAH Remark
             //  if ($lastOosRecod->QA_Head_primary_remark2 != $request->QA_Head_primary_remark2){
                 if ($lastOosRecod->QA_Head_primary_remark2 !=  $request->QA_Head_primary_remark2 || !empty($request->QA_Head_primary_remark2_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                            ->where('activity_type', 'P-IA CQAH/QAH Primary Remark')
+                            ->where('activity_type', 'Phase IA CQAH/QAH Remark')
                             ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->QA_Head_primary_remark2;
-                $history->activity_type = 'P-IA CQAH/QAH Primary Remark';
+                $history->activity_type = 'Phase IA CQAH/QAH Remark';
                 $history->current = $request->QA_Head_primary_remark2;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
@@ -4483,7 +4483,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->QA_Head_primary_remark2) || $lastOosRecod->QA_Head_primary_remark2 === '') {
                     $history->action_name = "New";
@@ -4510,7 +4510,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->outcome_phase_IA) || $lastOosRecod->outcome_phase_IA === '') {
                         $history->action_name = "New";
@@ -4536,7 +4536,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->reason_for_proceeding) || $lastOosRecod->reason_for_proceeding === '') {
                         $history->action_name = "New";
@@ -4562,7 +4562,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->summaryy_of_review) || $lastOosRecod->summaryy_of_review === '') {
                         $history->action_name = "New";
@@ -4588,7 +4588,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Probable_cause_iden) || $lastOosRecod->Probable_cause_iden === '') {
                         $history->action_name = "New";
@@ -4614,7 +4614,7 @@ class OOSService
                 //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 //     $history->origin_state = $lastOosRecod->status;
                 //     $history->stage = $lastOosRecod->stage;
-                //     $history->change_to =   "Opened";
+                //     $history->change_to =   "Not Applicable";
                 //     $history->change_from = $lastOosRecod->status;
                 // if (is_null($lastOosRecod->proposal_for_hypothesis_IB) || $lastOosRecod->proposal_for_hypothesis_IB === '') {
                 //         $history->action_name = "New";
@@ -4640,7 +4640,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->proposal_for_hypothesis_others) || $lastOosRecod->proposal_for_hypothesis_others === '') {
                         $history->action_name = "New";
@@ -4666,7 +4666,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->details_of_result) || $lastOosRecod->details_of_result === '') {
                         $history->action_name = "New";
@@ -4692,7 +4692,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Probable_Cause_Identified) || $lastOosRecod->Probable_Cause_Identified === '') {
                         $history->action_name = "New";
@@ -4718,7 +4718,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Any_other_Comments) || $lastOosRecod->Any_other_Comments === '') {
                         $history->action_name = "New";
@@ -4744,7 +4744,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Proposal_for_Hypothesis) || $lastOosRecod->Proposal_for_Hypothesis === '') {
                         $history->action_name = "New";
@@ -4770,7 +4770,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Summary_of_Hypothesis) || $lastOosRecod->Summary_of_Hypothesis === '') {
                         $history->action_name = "New";
@@ -4796,7 +4796,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Assignable_Cause) || $lastOosRecod->Assignable_Cause === '') {
                         $history->action_name = "New";
@@ -4822,7 +4822,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Types_of_assignable) || $lastOosRecod->Types_of_assignable === '') {
                         $history->action_name = "New";
@@ -4848,7 +4848,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Types_of_assignable_others) || $lastOosRecod->Types_of_assignable_others === '') {
                         $history->action_name = "New";
@@ -4874,7 +4874,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Evaluation_Timeline) || $lastOosRecod->Evaluation_Timeline === '') {
                         $history->action_name = "New";
@@ -4900,7 +4900,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->timeline_met) || $lastOosRecod->timeline_met === '') {
                         $history->action_name = "New";
@@ -4926,7 +4926,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->timeline_extension) || $lastOosRecod->timeline_extension === '') {
                         $history->action_name = "New";
@@ -4952,7 +4952,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->CAPA_applicable) || $lastOosRecod->CAPA_applicable === '') {
                         $history->action_name = "New";
@@ -4977,7 +4977,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
             if (is_null($lastOosRecod->resampling_required_ib) || $lastOosRecod->resampling_required_ib === '') {
                     $history->action_name = "New";
@@ -5002,7 +5002,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
         if (is_null($lastOosRecod->is_repeat_assingable_pia) || $lastOosRecod->is_repeat_assingable_pia === '') {
                 $history->action_name = "New";
@@ -5027,7 +5027,7 @@ class OOSService
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastOosRecod->status;
         $history->stage = $lastOosRecod->stage;
-        $history->change_to =   "Opened";
+        $history->change_to =   "Not Applicable";
         $history->change_from = $lastOosRecod->status;
     if (is_null($lastOosRecod->repeat_testing_pia) || $lastOosRecod->repeat_testing_pia === '') {
             $history->action_name = "New";
@@ -5052,7 +5052,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
         if (is_null($lastOosRecod->repeat_testing_ib) || $lastOosRecod->repeat_testing_ib === '') {
                 $history->action_name = "New";
@@ -5077,7 +5077,7 @@ class OOSService
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastOosRecod->status;
         $history->stage = $lastOosRecod->stage;
-        $history->change_to =   "Opened";
+        $history->change_to =   "Not Applicable";
         $history->change_from = $lastOosRecod->status;
     if (is_null($lastOosRecod->phase_ii_inv_req_ib) || $lastOosRecod->phase_ii_inv_req_ib === '') {
             $history->action_name = "New";
@@ -5102,7 +5102,7 @@ class OOSService
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastOosRecod->status;
                         $history->stage = $lastOosRecod->stage;
-                        $history->change_to =   "Opened";
+                        $history->change_to =   "Not Applicable";
                         $history->change_from = $lastOosRecod->status;
                     if (is_null($lastOosRecod->production_person_ib) || $lastOosRecod->production_person_ib === '') {
                             $history->action_name = "New";
@@ -5130,7 +5130,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Repeat_testing_plan) || $lastOosRecod->Repeat_testing_plan === '') {
                         $history->action_name = "New";
@@ -5156,7 +5156,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Repeat_analysis_method) || $lastOosRecod->Repeat_analysis_method === '') {
                         $history->action_name = "New";
@@ -5182,7 +5182,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Details_repeat_analysis) || $lastOosRecod->Details_repeat_analysis === '') {
                         $history->action_name = "New";
@@ -5208,7 +5208,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Impact_assessment1) || $lastOosRecod->Impact_assessment1 === '') {
                         $history->action_name = "New";
@@ -5234,7 +5234,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Conclusion1) || $lastOosRecod->Conclusion1 === '') {
                         $history->action_name = "New";
@@ -5247,12 +5247,12 @@ class OOSService
                 // if ($lastOosRecod->hod_remark3 != $request->hod_remark3){
                     if ($lastOosRecod->hod_remark3 !=  $request->hod_remark3 || !empty($request->hod_remark3_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                                ->where('activity_type', 'Phase IB HOD Primary Remark')
+                                ->where('activity_type', 'Phase IB HOD Remark')
                                 ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->hod_remark3;
-                    $history->activity_type = 'Phase IB HOD Primary Remark';
+                    $history->activity_type = 'Phase IB HOD Remark';
                     $history->current = $request->hod_remark3;
                     $history->comment = "Not Applicable";
                     $history->user_id = Auth::user()->id;
@@ -5260,7 +5260,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->hod_remark3) || $lastOosRecod->hod_remark3 === '') {
                         $history->action_name = "New";
@@ -5286,7 +5286,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->QA_Head_remark3) || $lastOosRecod->QA_Head_remark3 === '') {
                         $history->action_name = "New";
@@ -5311,7 +5311,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
             if (is_null($lastOosRecod->escalation_required) || $lastOosRecod->escalation_required === '') {
                     $history->action_name = "New";
@@ -5336,7 +5336,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
         if (is_null($lastOosRecod->notification_ib) || $lastOosRecod->notification_ib === '') {
                 $history->action_name = "New";
@@ -5361,7 +5361,7 @@ class OOSService
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastOosRecod->status;
         $history->stage = $lastOosRecod->stage;
-        $history->change_to =   "Opened";
+        $history->change_to =   "Not Applicable";
         $history->change_from = $lastOosRecod->status;
     if (is_null($lastOosRecod->justification_ib) || $lastOosRecod->justification_ib === '') {
             $history->action_name = "New";
@@ -5375,12 +5375,12 @@ class OOSService
                 // if ($lastOosRecod->QA_Head_primary_remark3 != $request->QA_Head_primary_remark3){
                     if ($lastOosRecod->QA_Head_primary_remark3 !=  $request->QA_Head_primary_remark3 || !empty($request->QA_Head_primary_remark3_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                                ->where('activity_type', 'P-IB CQAH/QAH Remark')
+                                ->where('activity_type', 'Phase IB CQAH/QAH Remark')
                                 ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->QA_Head_primary_remark3;
-                    $history->activity_type = 'P-IB CQAH/QAH Remark';
+                    $history->activity_type = 'Phase IB CQAH/QAH Remark';
                     $history->current = $request->QA_Head_primary_remark3;
                     $history->comment = "Not Applicable";
                     $history->user_id = Auth::user()->id;
@@ -5388,7 +5388,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->QA_Head_primary_remark3) || $lastOosRecod->QA_Head_primary_remark3 === '') {
                         $history->action_name = "New";
@@ -5415,7 +5415,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
            if (is_null($lastOosRecod->checklist_outcome_iia) || $lastOosRecod->checklist_outcome_iia === '') {
                 $history->action_name = "New";
@@ -5440,7 +5440,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
         if (is_null($lastOosRecod->production_head_person) || $lastOosRecod->production_head_person === '') {
                 $history->action_name = "New";
@@ -5465,7 +5465,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->qa_approver_comments_piii) || $lastOosRecod->qa_approver_comments_piii === '') {
                     $history->action_name = "New";
@@ -5490,7 +5490,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
             if (is_null($lastOosRecod->reason_manufacturing_delay) || $lastOosRecod->reason_manufacturing_delay === '') {
                     $history->action_name = "New";
@@ -5515,7 +5515,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->reason_manufacturing_piii) || $lastOosRecod->reason_manufacturing_piii === '') {
                     $history->action_name = "New";
@@ -5541,7 +5541,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->manufact_invest_required_piii) || $lastOosRecod->manufact_invest_required_piii === '') {
                     $history->action_name = "New";
@@ -5566,7 +5566,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->manufacturing_invest_type_piii) || $lastOosRecod->manufacturing_invest_type_piii === '') {
                     $history->action_name = "New";
@@ -5590,7 +5590,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = "Initiator";
                if (is_null($lastOosRecod->audit_comments_piii) || $lastOosRecod->audit_comments_piii === '') {
                     $history->action_name = "New";
@@ -5615,7 +5615,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->hypo_exp_required_piii) || $lastOosRecod->hypo_exp_required_piii === '') {
                     $history->action_name = "New";
@@ -5640,7 +5640,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->hypo_exp_reference_piii) || $lastOosRecod->hypo_exp_reference_piii === '') {
                     $history->action_name = "New";
@@ -5665,7 +5665,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
            if (is_null($lastOosRecod->if_others_oos_category) || $lastOosRecod->if_others_oos_category === '') {
                 $history->action_name = "New";
@@ -5691,7 +5691,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->summary_of_exp_hyp_piiqcr) || $lastOosRecod->summary_of_exp_hyp_piiqcr === '') {
                     $history->action_name = "New";
@@ -5716,7 +5716,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->summary_mfg_investigation_piiqcr) || $lastOosRecod->summary_mfg_investigation_piiqcr === '') {
                     $history->action_name = "New";
@@ -5741,7 +5741,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->reference_system_document_gi) || $lastOosRecod->reference_system_document_gi === '') {
                     $history->action_name = "New";
@@ -5766,7 +5766,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->oos_observed_on) || $lastOosRecod->oos_observed_on === '') {
                     $history->action_name = "New";
@@ -5791,7 +5791,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->root_casue_identified_piiqcr) || $lastOosRecod->root_casue_identified_piiqcr === '') {
                     $history->action_name = "New";
@@ -5816,7 +5816,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->reference_document) || $lastOosRecod->reference_document === '') {
                     $history->action_name = "New";
@@ -5841,7 +5841,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->oos_category_reason_identified_piiqcr) || $lastOosRecod->oos_category_reason_identified_piiqcr === '') {
                     $history->action_name = "New";
@@ -5867,7 +5867,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->others_oos_category_piiqcr) || $lastOosRecod->others_oos_category_piiqcr === '') {
                     $history->action_name = "New";
@@ -5892,7 +5892,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->oos_details_obvious_error) || $lastOosRecod->oos_details_obvious_error === '') {
                     $history->action_name = "New";
@@ -5917,7 +5917,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->delay_justification) || $lastOosRecod->delay_justification === '') {
                     $history->action_name = "New";
@@ -5942,7 +5942,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->oos_reported_date) || $lastOosRecod->oos_reported_date === '') {
                     $history->action_name = "New";
@@ -5966,7 +5966,7 @@ class OOSService
             //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             //     $history->origin_state = $lastOosRecod->status;
             //     $history->stage = $lastOosRecod->stage;
-            //     $history->change_to =   "Opened";
+            //     $history->change_to =   "Not Applicable";
             //     $history->change_from = $lastOosRecod->status;
             //    if (is_null($lastOosRecod->initial_attachment_gi) || $lastOosRecod->initial_attachment_gi === '') {
             //         $history->action_name = "New";
@@ -5991,7 +5991,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
            if (is_null($lastOosRecod->immediate_action) || $lastOosRecod->immediate_action === '') {
                 $history->action_name = "New";
@@ -6016,7 +6016,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->Description_Deviation) || $lastOosRecod->Description_Deviation === '') {
                     $history->action_name = "New";
@@ -6040,7 +6040,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
            if (is_null($lastOosRecod->result_of_repeat) || $lastOosRecod->result_of_repeat === '') {
                 $history->action_name = "New";
@@ -6065,7 +6065,7 @@ class OOSService
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastOosRecod->status;
         $history->stage = $lastOosRecod->stage;
-        $history->change_to =   "Opened";
+        $history->change_to =   "Not Applicable";
         $history->change_from = $lastOosRecod->status;
        if (is_null($lastOosRecod->impact_assesment_pia) || $lastOosRecod->impact_assesment_pia === '') {
             $history->action_name = "New";
@@ -6090,7 +6090,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->details_of_root_cause_piiqcr) || $lastOosRecod->details_of_root_cause_piiqcr === '') {
                     $history->action_name = "New";
@@ -6115,7 +6115,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->impact_assessment_piiqcr) || $lastOosRecod->impact_assessment_piiqcr === '') {
                     $history->action_name = "New";
@@ -6141,7 +6141,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->capa_required_iia) || $lastOosRecod->capa_required_iia === '') {
                     $history->action_name = "New";
@@ -6166,7 +6166,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
            if (is_null($lastOosRecod->reference_capa_no_iia) || $lastOosRecod->reference_capa_no_iia === '') {
                 $history->action_name = "New";
@@ -6191,7 +6191,7 @@ class OOSService
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastOosRecod->status;
         $history->stage = $lastOosRecod->stage;
-        $history->change_to =   "Opened";
+        $history->change_to =   "Not Applicable";
         $history->change_from = $lastOosRecod->status;
        if (is_null($lastOosRecod->OOS_review_similar) || $lastOosRecod->OOS_review_similar === '') {
             $history->action_name = "New";
@@ -6216,7 +6216,7 @@ class OOSService
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastOosRecod->status;
     $history->stage = $lastOosRecod->stage;
-    $history->change_to =   "Opened";
+    $history->change_to =   "Not Applicable";
     $history->change_from = $lastOosRecod->status;
    if (is_null($lastOosRecod->impact_assessment_IIA) || $lastOosRecod->impact_assessment_IIA === '') {
         $history->action_name = "New";
@@ -6241,7 +6241,7 @@ $history->user_name = Auth::user()->name;
 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 $history->origin_state = $lastOosRecod->status;
 $history->stage = $lastOosRecod->stage;
-$history->change_to =   "Opened";
+$history->change_to =   "Not Applicable";
 $history->change_from = $lastOosRecod->status;
 if (is_null($lastOosRecod->Summary_Of_Inv_IIB) || $lastOosRecod->Summary_Of_Inv_IIB === '') {
     $history->action_name = "New";
@@ -6266,7 +6266,7 @@ $history->user_name = Auth::user()->name;
 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 $history->origin_state = $lastOosRecod->status;
 $history->stage = $lastOosRecod->stage;
-$history->change_to =   "Opened";
+$history->change_to =   "Not Applicable";
 $history->change_from = $lastOosRecod->status;
 if (is_null($lastOosRecod->capa_required_IIB) || $lastOosRecod->capa_required_IIB === '') {
     $history->action_name = "New";
@@ -6291,7 +6291,7 @@ $history->user_name = Auth::user()->name;
 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 $history->origin_state = $lastOosRecod->status;
 $history->stage = $lastOosRecod->stage;
-$history->change_to =   "Opened";
+$history->change_to =   "Not Applicable";
 $history->change_from = $lastOosRecod->status;
 if (is_null($lastOosRecod->reference_capa_IIB) || $lastOosRecod->reference_capa_IIB === '') {
     $history->action_name = "New";
@@ -6317,7 +6317,7 @@ $history->user_name = Auth::user()->name;
 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 $history->origin_state = $lastOosRecod->status;
 $history->stage = $lastOosRecod->stage;
-$history->change_to =   "Opened";
+$history->change_to =   "Not Applicable";
 $history->change_from = $lastOosRecod->status;
 if (is_null($lastOosRecod->resampling_req_IIB) || $lastOosRecod->resampling_req_IIB === '') {
     $history->action_name = "New";
@@ -6342,7 +6342,7 @@ $history->user_name = Auth::user()->name;
 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 $history->origin_state = $lastOosRecod->status;
 $history->stage = $lastOosRecod->stage;
-$history->change_to =   "Opened";
+$history->change_to =   "Not Applicable";
 $history->change_from = $lastOosRecod->status;
 if (is_null($lastOosRecod->Repeat_testing_IIB) || $lastOosRecod->Repeat_testing_IIB === '') {
     $history->action_name = "New";
@@ -6368,7 +6368,7 @@ $history->user_name = Auth::user()->name;
 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 $history->origin_state = $lastOosRecod->status;
 $history->stage = $lastOosRecod->stage;
-$history->change_to =   "Opened";
+$history->change_to =   "Not Applicable";
 $history->change_from = $lastOosRecod->status;
 if (is_null($lastOosRecod->result_of_rep_test_IIB) || $lastOosRecod->result_of_rep_test_IIB === '') {
     $history->action_name = "New";
@@ -6395,7 +6395,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->review_comment_atp) || $lastOosRecod->review_comment_atp === '') {
                     $history->action_name = "New";
@@ -6420,7 +6420,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->additional_test_proposal_atp) || $lastOosRecod->additional_test_proposal_atp === '') {
                     $history->action_name = "New";
@@ -6441,7 +6441,7 @@ $history->save();
             //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             //     $history->origin_state = $lastOosRecod->status;
             //     $history->stage = $lastOosRecod->stage;
-            //     $history->change_to =   "Opened";
+            //     $history->change_to =   "Not Applicable";
             //     $history->change_from = $lastOosRecod->status;
             //    if (is_null($lastOosRecod->additional_test_reference_atp) || $lastOosRecod->additional_test_reference_atp === '') {
             //         $history->action_name = "New";
@@ -6465,7 +6465,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->any_other_actions_required_atp) || $lastOosRecod->any_other_actions_required_atp === '') {
                     $history->action_name = "New";
@@ -6491,7 +6491,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->conclusion_comments_oosc) || $lastOosRecod->conclusion_comments_oosc === '') {
                     $history->action_name = "New";
@@ -6516,7 +6516,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->specification_limit_oosc) || $lastOosRecod->specification_limit_oosc === '') {
                     $history->action_name = "New";
@@ -6541,7 +6541,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->results_to_be_reported_oosc) || $lastOosRecod->results_to_be_reported_oosc === '') {
                     $history->action_name = "New";
@@ -6566,7 +6566,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->final_reportable_results_oosc) || $lastOosRecod->final_reportable_results_oosc === '') {
                     $history->action_name = "New";
@@ -6591,7 +6591,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->justifi_for_averaging_results_oosc) || $lastOosRecod->justifi_for_averaging_results_oosc === '') {
                     $history->action_name = "New";
@@ -6616,7 +6616,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->oos_stands_oosc) || $lastOosRecod->oos_stands_oosc === '') {
                     $history->action_name = "New";
@@ -6641,7 +6641,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->capa_req_oosc) || $lastOosRecod->capa_req_oosc === '') {
                     $history->action_name = "New";
@@ -6662,7 +6662,7 @@ $history->save();
             //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             //     $history->origin_state = $lastOosRecod->status;
             //     $history->stage = $lastOosRecod->stage;
-            //     $history->change_to =   "Opened";
+            //     $history->change_to =   "Not Applicable";
             //     $history->change_from = $lastOosRecod->status;
             //    if (is_null($lastOosRecod->capa_ref_no_oosc) || $lastOosRecod->capa_ref_no_oosc === '') {
             //         $history->action_name = "New";
@@ -6687,7 +6687,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->Field_alert_QA_initial_approval) || $lastOosRecod->Field_alert_QA_initial_approval === '') {
                     $history->action_name = "New";
@@ -6712,7 +6712,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->phase_iib_inv_required_plir) || $lastOosRecod->phase_iib_inv_required_plir === '') {
                     $history->action_name = "New";
@@ -6738,7 +6738,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->hod_remark4) || $lastOosRecod->hod_remark4 === '') {
                     $history->action_name = "New";
@@ -6764,7 +6764,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->QA_Head_remark4) || $lastOosRecod->QA_Head_remark4 === '') {
                     $history->action_name = "New";
@@ -6777,12 +6777,12 @@ $history->save();
             // if ($lastOosRecod->QA_Head_primary_remark4 != $request->QA_Head_primary_remark4){
                 if ($lastOosRecod->QA_Head_primary_remark4 !=  $request->QA_Head_primary_remark4 || !empty($request->QA_Head_primary_remark4_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                            ->where('activity_type', 'P-II A QAH/CQAH Remark')
+                            ->where('activity_type', 'Phase II A QAH/CQAH Remark')
                             ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->QA_Head_primary_remark4;
-                $history->activity_type = 'P-II A QAH/CQAH Remark';
+                $history->activity_type = 'Phase II A QAH/CQAH Remark';
                 $history->current = $request->QA_Head_primary_remark4;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
@@ -6790,7 +6790,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->QA_Head_primary_remark4) || $lastOosRecod->QA_Head_primary_remark4 === '') {
                     $history->action_name = "New";
@@ -6816,7 +6816,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->Laboratory_Investigation_Hypothesis) || $lastOosRecod->Laboratory_Investigation_Hypothesis === '') {
                     $history->action_name = "New";
@@ -6842,7 +6842,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->Outcome_of_Laboratory) || $lastOosRecod->Outcome_of_Laboratory === '') {
                     $history->action_name = "New";
@@ -6868,7 +6868,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->Evaluation_IIB) || $lastOosRecod->Evaluation_IIB === '') {
                     $history->action_name = "New";
@@ -6894,7 +6894,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->Assignable_Cause111) || $lastOosRecod->Assignable_Cause111 === '') {
                     $history->action_name = "New";
@@ -6907,12 +6907,12 @@ $history->save();
             // if ($lastOosRecod->hod_remark5 != $request->hod_remark5){
                 if ($lastOosRecod->hod_remark5 !=  $request->hod_remark5 || !empty($request->hod_remark5_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                            ->where('activity_type', 'Phase II B HOD Primary Remark')
+                            ->where('activity_type', 'Phase II B HOD Remark')
                             ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->hod_remark5;
-                $history->activity_type = 'Phase II B HOD Primary Remark';
+                $history->activity_type = 'Phase II B HOD Remark';
                 $history->current = $request->hod_remark5;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
@@ -6920,7 +6920,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->hod_remark5) || $lastOosRecod->hod_remark5 === '') {
                     $history->action_name = "New";
@@ -6947,7 +6947,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->QA_Head_remark5) || $lastOosRecod->QA_Head_remark5 === '') {
                     $history->action_name = "New";
@@ -6973,7 +6973,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->If_assignable_cause) || $lastOosRecod->If_assignable_cause === '') {
                     $history->action_name = "New";
@@ -6999,7 +6999,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->If_assignable_error) || $lastOosRecod->If_assignable_error === '') {
                     $history->action_name = "New";
@@ -7020,7 +7020,7 @@ $history->save();
             //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             //     $history->origin_state = $lastOosRecod->status;
             //     $history->stage = $lastOosRecod->stage;
-            //     $history->change_to =   "Opened";
+            //     $history->change_to =   "Not Applicable";
             //     $history->change_from = $lastOosRecod->status;
             //    if (is_null($lastOosRecod->reference_record) || $lastOosRecod->reference_record === '') {
             //         $history->action_name = "New";
@@ -7045,7 +7045,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->justify_if_capa_not_required_oosc) || $lastOosRecod->justify_if_capa_not_required_oosc === '') {
                     $history->action_name = "New";
@@ -7070,7 +7070,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->action_plan_req_oosc) || $lastOosRecod->action_plan_req_oosc === '') {
                     $history->action_name = "New";
@@ -7095,7 +7095,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->justification_for_delay_oosc) || $lastOosRecod->justification_for_delay_oosc === '') {
                     $history->action_name = "New";
@@ -7121,7 +7121,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->conclusion_review_comments_ocr) || $lastOosRecod->conclusion_review_comments_ocr === '') {
                     $history->action_name = "New";
@@ -7146,7 +7146,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->action_taken_on_affec_batch_ocr) || $lastOosRecod->action_taken_on_affec_batch_ocr === '') {
                     $history->action_name = "New";
@@ -7171,7 +7171,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->capa_req_ocr) || $lastOosRecod->capa_req_ocr === '') {
                     $history->action_name = "New";
@@ -7196,7 +7196,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->justify_if_no_risk_assessment_ocr) || $lastOosRecod->justify_if_no_risk_assessment_ocr === '') {
                     $history->action_name = "New";
@@ -7221,7 +7221,7 @@ $history->save();
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
            if (is_null($lastOosRecod->action_on_affected_batch) || $lastOosRecod->action_on_affected_batch === '') {
                 $history->action_name = "New";
@@ -7246,7 +7246,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->cq_approver) || $lastOosRecod->cq_approver === '') {
                     $history->action_name = "New";
@@ -7272,7 +7272,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = "Initiator";
                if (is_null($lastOosRecod->cq_review_comments_ocqr) || $lastOosRecod->cq_review_comments_ocqr === '') {
                     $history->action_name = "New";
@@ -7298,7 +7298,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->oos_category_bd) || $lastOosRecod->oos_category_bd === '') {
                     $history->action_name = "New";
@@ -7323,7 +7323,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->others_bd) || $lastOosRecod->others_bd === '') {
                     $history->action_name = "New";
@@ -7349,7 +7349,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->material_batch_release_bd) || $lastOosRecod->material_batch_release_bd === '') {
                     $history->action_name = "New";
@@ -7374,7 +7374,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->other_action_bd) || $lastOosRecod->other_action_bd === '') {
                     $history->action_name = "New";
@@ -7399,7 +7399,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->other_parameters_results_bd) || $lastOosRecod->other_parameters_results_bd === '') {
                     $history->action_name = "New";
@@ -7424,7 +7424,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->trend_of_previous_batches_bd) || $lastOosRecod->trend_of_previous_batches_bd === '') {
                     $history->action_name = "New";
@@ -7449,7 +7449,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->stability_data_bd) || $lastOosRecod->stability_data_bd === '') {
                     $history->action_name = "New";
@@ -7474,7 +7474,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->process_validation_data_bd) || $lastOosRecod->process_validation_data_bd === '') {
                     $history->action_name = "New";
@@ -7499,7 +7499,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->method_validation_bd) || $lastOosRecod->method_validation_bd === '') {
                     $history->action_name = "New";
@@ -7524,7 +7524,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->any_market_complaints_bd) || $lastOosRecod->any_market_complaints_bd === '') {
                     $history->action_name = "New";
@@ -7550,7 +7550,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->statistical_evaluation_bd) || $lastOosRecod->statistical_evaluation_bd === '') {
                     $history->action_name = "New";
@@ -7576,7 +7576,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->risk_analysis_disposition_bd) || $lastOosRecod->risk_analysis_disposition_bd === '') {
                     $history->action_name = "New";
@@ -7602,7 +7602,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->conclusion_bd) || $lastOosRecod->conclusion_bd === '') {
                     $history->action_name = "New";
@@ -7632,7 +7632,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                 $history->save();
             }
@@ -7649,7 +7649,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->reopen_approval_comments_uaa) || $lastOosRecod->reopen_approval_comments_uaa === '') {
                     $history->action_name = "New";

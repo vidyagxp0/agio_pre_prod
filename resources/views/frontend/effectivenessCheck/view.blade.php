@@ -29,12 +29,12 @@
             border-radius: 5px;
             margin-bottom: 11px;
         }
-       
+
     </style>
     {{-- ======================================
                 CHANGE CONTROL VIEW
     ======================================= --}}
- 
+
     <div class="form-field-head">
         <div class="division-bar">
             <!-- <strong>Site Division/Project</strong> :
@@ -42,7 +42,7 @@
             <strong>Site Division/Project :</strong>
             {{ Helpers::getDivisionName(session()->get('division')) }} / Effectiveness-Check
         </div>
-        
+
     </div>
     <div id="change-control-view">
         <div class="container-fluid">
@@ -105,7 +105,7 @@
                             @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                                 <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     Effective Approval Completed
-                                </button> 
+                                </button>
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                     More Information Required
                                 </button>  -->
@@ -114,7 +114,7 @@
                                 </button>
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#not-effective-modal">
                                     Not Effective
-                                </button> 
+                                </button>
                             @elseif($data->stage == 6 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     Effective Approval Completed
@@ -133,7 +133,7 @@
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#not-effective-child-model">
                                  Child
                                 </button>
-                                
+
                             @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                     </div>
@@ -163,7 +163,7 @@
                         @else
                             <div class="">Work Completion </div>
                         @endif
-                        
+
                         @if ($data->stage >= 4)
                             <div class="active">HOD Review</div>
                         @else
@@ -214,11 +214,11 @@
 
         </div>
         <form   action="{{ route('effectiveness.update', $data->id) }}" method="POST" enctype="multipart/form-data">
-           
-            
+
+
             @csrf
             @method('PUT')
-          
+
             {{-- ======================================
                             DATA FIELDS
             ======================================= --}}
@@ -229,13 +229,13 @@
                     <div class="cctab">
                 <button type="button"  class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button type="button" class="cctablinks " onclick="openCity(event, 'CCForm2')">Acknowledge</button>
-                          
+
                 <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm3')">Effectiveness check Results</button>
                 <button type="button" class="cctablinks " onclick="openCity(event, 'CCForm4')">HOD Review</button>
                 <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm5')">QA/CQA  Review</button>
                 <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm6')">QA/CQA  Approval </button>
-                           
-                         <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button> 
+
+                         <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
                     </div>
 
                     <!-- General Information -->
@@ -258,13 +258,13 @@
                                         <label for="Division Code"><b>Site/Location code</b></label>
                                         <input disabled type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                      
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="originator">Initiator</label>
-                                        <input disabled type="text" name="initiator_id" 
+                                        <input disabled type="text" name="initiator_id"
                                         value="{{ Helpers::getInitiatorName($data->initiator_id) }}">
                                     </div>
                                 </div>
@@ -279,7 +279,7 @@
                                         <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="search">
-                                                    Assigned To 
+                                                    Assigned To
                                                 </label>
                                                 <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8||  $data->stage == 9  || $data->stage == 10   ? 'disabled' : ''}} >
                                                     <option value="">Select a value</option>
@@ -291,7 +291,7 @@
 
                                             </div>
                                         </div>
-                                      
+
 
                                         <div class="col-md-6 new-unique-date-data-field">
     <div class="group-input input-unique-date">
@@ -302,13 +302,13 @@
             <!-- Display Field (Formatted Date) -->
             <input type="text" id="unique_due_date_display" readonly
                 placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"
-                {{ $data->stage == 0 || $data->stage == 2  || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 || $data->stage == 10 ? 'disabled' : ''}} 
-                
+                {{ $data->stage == 0 || $data->stage == 2  || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 || $data->stage == 10 ? 'disabled' : ''}}
+
                 onclick="document.getElementById('unique_due_date').click();" />
 
             <!-- Hidden Actual Date Picker -->
             <input type="date" id="unique_due_date" name="due_date"
-                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : ''}} 
+                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : ''}}
                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-unique-input"
                 value="{{ $data->due_date }}"
                 oninput="handleUniqueDateInput(this, 'unique_due_date_display')"
@@ -353,15 +353,15 @@
 
 
 
-                        
-                            
-                           
-        
+
+
+
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
-                                        characters remaining              
+                                        characters remaining
                                         {{-- <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? "disabled" : "" }}>{{ $data->short_description }}</textarea> --}}
                                         <input type="text" name="short_description" id="docname" required    {{ $data->stage == 0 || $data->stage == 2  || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 || $data->stage == 10 ? 'disabled' : ''}}  value="{{ $data->short_description }}" >
                                     </div>
@@ -374,8 +374,8 @@
                                         <textarea  name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                     </div>
                                 </div> -->
-                               
-                               
+
+
 
                             </div>
                             <div class="sub-head">
@@ -385,7 +385,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness check Plan"><b>Effectiveness check Plan</b></label>
-                                        <input type="text" name="Effectiveness_check_Plan"  {{ $data->stage == 0 || $data->stage == 2  || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 || $data->stage == 10 ? 'disabled' : ''}} 
+                                        <input type="text" name="Effectiveness_check_Plan"  {{ $data->stage == 0 || $data->stage == 2  || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 || $data->stage == 10 ? 'disabled' : ''}}
                                             value="{{ $data->Effectiveness_check_Plan }}">
                                     </div>
                                 </div>
@@ -416,7 +416,7 @@
                                             </div>
                                         </div>
                             </div>
-                             
+
                             <div class="button-block">
                                         @if ($data->stage != 0)
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
@@ -433,7 +433,7 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <!-- Effectiveness check Results -->
-                                
+
                                <div class="sub-head">
                                 Acknowledge
                                </div>
@@ -455,8 +455,8 @@
                                         </div>
                                     </div>
                                 @endif
-                              
-                
+
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Acknowledge Attachment">Acknowledge Attachment</label>
@@ -482,7 +482,7 @@
                                         </div>
                                     </div>
                                </div>
-                               
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -497,7 +497,7 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <!-- Effectiveness check Results -->
-                               
+
                                 <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description</label>
@@ -511,13 +511,13 @@
                                     @if ($data->stage == 3)
                                     <div class="group-input">
                                         <label for="Effectiveness Results">Effectiveness Results <span style="color: red;">*</span>
-                                            
+
                                         </label>
                                             <textarea type="text" name="Effectiveness_Results" id="Effectiveness_Results" required>{{ $data->Effectiveness_Results }}   {{ $data->stage == 0 || $data->stage == 1  || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 || $data->stage == 10 ? 'disabled' : ''}} </textarea>
                                     </div>
                                 </div>
                                 @else
- 
+
                                 <div class="group-input">
                                     <label for="Effectiveness Results">Effectiveness Results</label>
                                         <textarea type="text" name="Effectiveness_Results" id="Effectiveness_Results" >{{ $data->Effectiveness_Results }} </textarea>
@@ -724,7 +724,7 @@
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                                 class="text-white"> Exit </a> </button>
-                                       
+
                                     </div>
                     </div>
                     <div id="CCForm5" class="inner-block cctabcontent">
@@ -734,7 +734,7 @@
                                 <div class="sub-head">
                                     QA/CQA Review
                                 </div>
-                            
+
                                 <div class="col-lg-12">
                                     @if ($data->stage == 6)
                                     <div class="group-input">
@@ -749,7 +749,7 @@
                                 <textarea type="text" name="qa_cqa_review_comment">{{ $data->qa_cqa_review_comment }}</textarea>
                             </div>
                         </div>
-                               @endif 
+                               @endif
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Acknowledge Attachment">QA/CQA Review Attachment</label>
@@ -775,7 +775,7 @@
                                         </div>
                                     </div>
                                </div>
-                            
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -789,7 +789,7 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <!-- Effectiveness check Results -->
-                                
+
                             <div class="sub-head">
                                 QA/CQA Approval
                             </div>
@@ -808,8 +808,8 @@
                                 </div>
                             </div>
                             @endif
-                            
-                               
+
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Acknowledge Attachment">QA/CQA Approval Attachment</label>
@@ -835,7 +835,7 @@
                                         </div>
                                     </div>
                                </div>
-                            
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -963,7 +963,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Effective by"><b>Effective by</b></label>
+                                        <label for="Effective by"><b>Effective By</b></label>
                                         <div class="static">{{ $data->effective_by }}</div>
                                     </div>
                                 </div>
@@ -979,7 +979,7 @@
                                         <div class="static">{{ $data->effective_comment }}</div>
                                     </div>
                                 </div>
-                               
+
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Effective Approval Complete By"><b>Effective Approval Complete By</b></label>
@@ -1024,13 +1024,13 @@
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
                                                 {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }}>Save</button>
                                         @endif
-                                    
+
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="submit">Submit</button>
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                                 class="text-white"> Exit </a> </button>
                                     </div>
-                    </div> 
+                    </div>
 
             </div>
         </form>
@@ -1385,10 +1385,10 @@
                                     <input type="radio" name="child_type" id="major" value="capa-child">
                                     CAPA
                                 </label>
-                               
+
                             {{-- @endif --}}
 
-                           
+
                         </div>
 
                     </div>
@@ -1450,7 +1450,7 @@
                 confirmButtonColor: '#3085d6', // Customize the confirm button color
             });
         </script>
-        
+
         @php session()->forget('errorMessages'); @endphp
     @endif
     <script>

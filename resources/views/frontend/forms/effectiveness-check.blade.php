@@ -39,7 +39,7 @@
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA/CQA  Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QA/CQA  Approval </button>
-                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button> 
+                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
             </div>
 
             <form action="{{ route('effectiveness.store') }}" method="post" , enctype="multipart/form-data">
@@ -49,8 +49,8 @@
                     <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                     <input type="hidden" name="parent_type" value="{{ $parent_type }}">
                     <input type="hidden" name="parent_record" value="{{ $parent_record }}">
-                @else 
-                    
+                @else
+
                 @endif
                 <div id="step-form">
                     <div id="CCForm1" class="inner-block cctabcontent">
@@ -113,18 +113,18 @@
                                         <div class="calenderauditee">
                                             <!-- Display the manually selectable date input -->
                                             <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
-                                
+
                                             <!-- Editable date input (hidden) -->
                                             <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date_display')" />
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const date = new Date(dateInput.value);
-                                        
+
                                         // If date is valid, format it to 'DD-MMM-YYYY'
                                         if (!isNaN(date.getTime())) {
                                             const day = ("0" + date.getDate()).slice(-2); // Add leading 0 if needed
@@ -138,11 +138,11 @@
                                             document.getElementById(displayId).value = ""; // Clear value to avoid NaN issue
                                         }
                                     }
-                                
+
                                     // Initialize the display field to show placeholder on load
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const dateInput = document.querySelector('input[name="due_date"]');
-                                        
+
                                         // If there's an initial date, handle it; otherwise, show placeholder
                                         if (dateInput.value) {
                                             handleDateInput(dateInput, 'due_date_display');
@@ -169,7 +169,7 @@
                                         characters remaining
                                         <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
-                                </div>  
+                                </div>
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Original Date Due"><b>Original Date Due</b></label>
@@ -215,7 +215,7 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <!-- Effectiveness check Results -->
-                                
+
                                <div class="sub-head">
                                 Acknowledge
                                </div>
@@ -225,7 +225,7 @@
                                         <textarea type="text" id="acknowledge_comment" name="acknowledge_comment"></textarea>
                                     </div>
                                 </div>
-                              
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Effectiveness check Attachments">Acknowledge Attachment</label>
@@ -240,8 +240,8 @@
                                         </div>
                                     </div>
                                 </div>
-                               
-                               
+
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -251,12 +251,12 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <!-- Effectiveness check Results -->
-                                
+
                                 <div class="col-12 sub-head">
                                     Effectiveness Check Results
                                 </div>
@@ -267,7 +267,7 @@
                                     </div>
                                 </div>
 
-                               
+
                                 <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness check Attachments"><b>Effectiveness check
@@ -336,14 +336,14 @@
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white"> Exit </a> </button>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <!-- Reference Info comments -->
                                 <div class="col-12 sub-head">
-                                    HOD  comments
+                                    HOD Review
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
@@ -376,7 +376,7 @@
                                 <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Reference Records"><b>Reference Records</b></label>
-                                          <div class="static"></div>  
+                                          <div class="static"></div>
                                         <input type="file" id="myfile" name="refer_record">
                                     </div>
                                 </div> -->
@@ -412,14 +412,14 @@
                                 <div class="sub-head">
                                     QA/CQA Review
                                 </div>
-                               
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Results">QA/CQA Review Comment</label>
                                         <textarea type="text" name="qa_cqa_review_comment"></textarea>
                                     </div>
                                 </div>
-                              
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Effectiveness check Attachments">QA/CQA Review Attachment</label>
@@ -434,8 +434,8 @@
                                         </div>
                                     </div>
                                 </div>
-                               
-                               
+
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -449,7 +449,7 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <!-- Effectiveness check Results -->
-                                
+
                                <div class="sub-head">
                                 QA/CQA Approval
                                </div>
@@ -459,7 +459,7 @@
                                         <textarea type="text" name="qa_cqa_approval_comment"></textarea>
                                     </div>
                                 </div>
-                              
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Effectiveness check Attachments">QA/CQA Approval Attachment</label>
@@ -474,8 +474,8 @@
                                         </div>
                                     </div>
                                 </div>
-                               
-                               
+
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -602,7 +602,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Effective by"><b>Effective by</b></label>
+                                        <label for="Effective by"><b>Effective By</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -618,7 +618,7 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                               
+
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Effective Approval Complete By"><b>Effective Approval Complete By</b></label>
@@ -657,13 +657,13 @@
                                     </div>
                                 </div>
                                 </div>
-                                 
+
                      <div class="button-block">
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                 class="text-white"> Exit </a> </button>
                     </div>
-                    </div> 
+                    </div>
             </div>
             </form>
 
