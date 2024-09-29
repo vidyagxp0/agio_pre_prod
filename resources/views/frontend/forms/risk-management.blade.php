@@ -211,7 +211,7 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk Assessment </button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm12')">HOD/Designee</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">CFT Review</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm9')">CQA/QA Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA/CQA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm11')">CQA/QA Head</button>
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Work Group Assignment</button> --}}
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk/Opportunity Analysis</button> --}}
@@ -1006,7 +1006,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="CAPA Attachments">Risk Assesment Attachments</label>
+                                        <label for="CAPA Attachments">Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
@@ -1084,7 +1084,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="CAPA Attachments"> HOD/Designee Attachment</label>
+                                        <label for="CAPA Attachments"> HOD/Designee Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
@@ -3362,7 +3362,7 @@
                             <div class="row">
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    Opened
+                                    Submit
                                 </div>
 
                                 <div class="col-lg-4">
@@ -3380,13 +3380,13 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comments">Comments:</label>
+                                        <label for="Comments">Submit Comment:</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    HOD Review
+                                    HOD Review Complete
                                 </div>
 
                                 <div class="col-lg-4">
@@ -3404,13 +3404,13 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comments">Comments:</label>
+                                        <label for="Comments">HOD Review Comment:</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    CFT Review
+                                    CFT Review Complete
                                 </div>
 
                                 <div class="col-lg-4">
@@ -3427,13 +3427,13 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comments">Comments:</label>
+                                        <label for="Comments">CFT Review Complete Comment:</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    In QA/CQA Review
+                                     QA/CQA Review
                                 </div>
 
                                 <div class="col-lg-4">
@@ -3450,7 +3450,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comments">Comments:</label>
+                                        <label for="Comments">QA/CQA Review Complete Comment:</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -3467,13 +3467,13 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Plan Approved On">Approved On:</label>
+                                        <label for="Plan Approved On">Approved  On:</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comments">Comments:</label>
+                                        <label for="Comments">Approved Comment:</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -3519,7 +3519,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comments">Cancel Comments:</label>
+                                        <label for="Comments">Cancel Comment:</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -4695,3 +4695,16 @@
         </script>
 
 @endsection
+
+
+
+
+
+
+
+
+
+
+
+
+
