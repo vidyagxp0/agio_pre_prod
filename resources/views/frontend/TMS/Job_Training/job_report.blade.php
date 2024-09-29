@@ -159,7 +159,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                Job Training Report
+                On The Job Training Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -171,10 +171,36 @@
         </table>
         <table>
             <tr>
+                <td class="w-70" style="height:1rem;">
+                @if($data->empcode){{ $data->empcode }}@else Not Applicable @endif
+                </td>
+        
+                <td class="w-70" style="height:1rem">
+                @if($data->name){{ $data->name }}@else Not Applicable @endif
+
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
                 
             </tr>
         </table>
     </header>
+
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+               
+            </tr>
+        </table>
+    </footer>
     <div class="inner-block">
         <div class="content-table">
             <div class="block">
@@ -186,84 +212,60 @@
                     <th class="w-20">Emp Name</th>
                             
                     <td class="w-30">@if($data->name){{ $data->name }}@else Not Applicable @endif</td>
-                    </tr>
-                    </tr>
-
-                    <tr>
+             
                     <th class="w-20">Emp Code</th>
                             
                     <td class="w-30">@if($data->empcode){{ $data->empcode }}@else Not Applicable @endif</td>
-                    </tr>
                     </tr>
 
                     <tr>
                     <th class="w-20">SOP Document</th>
                             
                     <td class="w-30">@if($data->sopdocument){{ $data->sopdocument }}@else Not Applicable @endif</td>
-                    </tr>
-                    </tr>
-
-                    <tr>
+              
                     <th class="w-20">Type of Training</th>
                             
                     <td class="w-30">@if($data->type_of_training){{ $data->type_of_training }}@else Not Applicable @endif</td>
-                    </tr>
                     </tr>
 
                     <tr>
                     <th class="w-20">Start Date</th>
                             
                     <td class="w-30">@if($data->start_date){{ $data->start_date }}@else Not Applicable @endif</td>
-                    </tr>
-                    </tr>
-
-                    <tr>
+            
                     <th class="w-20">End Date</th>
                             
                     <td class="w-30">@if($data->end_date){{ $data->end_date }}@else Not Applicable @endif</td>
-                    </tr>
                     </tr>
 
                     <tr>
                     <th class="w-20">Department</th>
                             
                     <td class="w-30">@if($data->department){{ $data->department }}@else Not Applicable @endif</td>
-                    </tr>
-                    </tr>
-
-                    <tr>
+         
                     <th class="w-20">Location</th>
                             
                     <td class="w-30">@if($data->location){{ $data->location }}@else Not Applicable @endif</td>
-                    </tr>
                     </tr>
 
                     <tr>
                     <th class="w-20">HOD</th>
                             
                     <td class="w-30">@if($data->hod){{ $data->hod }}@else Not Applicable @endif</td>
-                    </tr>
+            
+                    <th class="w-20">Revision Purpose</th>
+                            
+                    <td class="w-30">@if($data->revision_purpose){{ $data->revision_purpose }}@else Not Applicable @endif</td>
                     </tr>
 
                     <tr>
                     <th class="w-20">Revision Purpose</th>
                             
                     <td class="w-30">@if($data->revision_purpose){{ $data->revision_purpose }}@else Not Applicable @endif</td>
-                    </tr>
-                    </tr>
-
-                    <tr>
-                    <th class="w-20">Revision Purpose</th>
-                            
-                    <td class="w-30">@if($data->revision_purpose){{ $data->revision_purpose }}@else Not Applicable @endif</td>
-                    </tr>
-                    </tr>
-
-                    <tr>
+           
                     <th class="w-20">Remark</th>
                             
                     <td class="w-30">@if($data->remark){{ $data->remark }}@else Not Applicable @endif</td>
-                    </tr>
                     </tr>
 
                     <tr>
@@ -378,3 +380,21 @@
         </div>
         </div>
         </div>
+
+        <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+               
+            </tr>
+        </table>
+    </footer>
+
+    </body>
+
+</html>

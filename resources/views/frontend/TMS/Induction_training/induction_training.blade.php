@@ -111,7 +111,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="employee_id">Employee ID </label>
+                                    <label for="employee_id">Employee Code </label>
                                     <input type="text" name="employee_id" value ="{{ isset($employee) ? $employee->full_employee_id : '' }}" id="employee_id" required readonly>
                                 </div>
                             </div>
@@ -123,12 +123,12 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="department_location">Location </label>
                                     <input type="text" name="location" value ="{{ isset($employee) ? $employee->site_name : '' }}" id="city" readonly>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -164,6 +164,21 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                 </div>
                             </div>
 
+                            <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="start_date">Start Date</label>
+                                        <input id="start_date" type="date" name="start_date">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="end_date">End Date</label>
+                                        <input id="end_date" type="date" name="end_date">
+                                           
+                                    </div>
+                                </div>
+
                             <script>
                                 document.getElementById('select-state').addEventListener('change', function() {
                                     var selectedOption = this.options[this.selectedIndex];
@@ -177,7 +192,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                 document.getElementById('employee_id').value = data.full_employee_id;
                                                 document.getElementById('department').value = data.department;
                                                 // document.getElementById('department').value = data.department; 
-                                                document.getElementById('city').value = data.site_name;
+                                                // document.getElementById('city').value = data.site_name;
                                                 document.getElementById('designee').value = data.job_title;
                                                 document.getElementById('experience').value = data.experience;
                                                 document.getElementById('qualification').value = data.qualification;
@@ -188,7 +203,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     } else {
                                         document.getElementById('employee_id').value = '';
                                         document.getElementById('department').value = '';
-                                        document.getElementById('city').value = '';
+                                        // document.getElementById('city').value = '';
                                         document.getElementById('designee').value = '';
                                         document.getElementById('experience').value = '';
                                         document.getElementById('qualification').value = '';
@@ -235,6 +250,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     {{-- <th>Trainee Sign/Date </th>--}}
                                                         <th>Attachment</th>
                                                     <th>Remark</th>
+                                                    <th>View SOP</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -242,16 +258,18 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>1</td>
                                                     <td style="background: #DCD8D8">Introduction of Agio Plant</td>
                                                     <td>
-                                                        <!-- <textarea name="document_number_1"></textarea> -->
-                                                    <select name="document_number_1">
-                                                        @foreach ($data as $item)
-                                                        <option value="">----Select---</option>
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
+                                                        <select name="document_number_1" id="document_number_select" onchange="fetchSopLink(this)">
+                                                            <option value="">----Select---</option>
+                                                            @foreach ($data as $item)
+                                                            <option value="{{ $item->id }}" 
+                                                                    data-sop-link="{{ $item->id }}">
+                                                                {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
                                                     </td>
+
+                                                    <!-- Date Input Field -->
                                                     <td>
                                                         <div class="new-date-data-field">
                                                             <div class="group-input input-date">
@@ -262,13 +280,21 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                             </div>
                                                         </div>
                                                     </td>
+
+                                                    <!-- File Upload Input -->
                                                     <td>
                                                         <label for="Attached "></label>
                                                         <input type="file" id="myfile" name="attachment_1">
                                                     </td>
 
+                                                    <!-- Remarks -->
                                                     <td>
                                                         <textarea name="remark_1"></textarea>
+                                                    </td>
+
+                                                    <!-- View SOP Link -->
+                                                    <td>
+                                                        <a href="#" id="view_sop_link" target="_blank" style="display: none;">View SOP</a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -748,6 +774,26 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     </div>
                                 </div>
                             </div>
+
+
+                            <script>
+                                function fetchSopLink(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+
+                                    // Update the SOP link visibility
+                                    var sopLink = document.getElementById('view_sop_link');
+                                    
+                                    if (documentId) {
+                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.style.display = 'inline';
+                                    } else {
+                                        sopLink.style.display = 'none';
+                                    }
+
+                                    console.log('Selected Document ID: ', documentId); // For debugging to check selected ID
+                                }
+                                </script>
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="severity-level">HR Department</label>
