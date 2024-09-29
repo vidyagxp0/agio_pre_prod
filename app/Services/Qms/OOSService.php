@@ -27,12 +27,13 @@ class OOSService
 
         try {
 
-            $input = $request->except(['proposal_for_hypothesis_IB']);
+            $input = $request->except(['proposal_for_hypothesis_IB','checklists']);
             $input['form_type'] = "OOS Chemical";
             $input['status'] = 'Opened';
             $input['stage'] = 1;
             $input['record_number'] = ((RecordNumber::first()->value('counter')) + 1);
             $input['proposal_for_hypothesis_IB'] = implode(',', $request->proposal_for_hypothesis_IB);
+            $input['checklists'] = implode(',', $request->checklists);
 
 
             $file_input_names = [
@@ -216,7 +217,7 @@ class OOSService
                 $history->previous = "Null";
                 $history->comment = "Not Applicable";
                 $history->activity_type = 'Due Date';
-                $history->current = $request->due_date;
+                $history->current = Helpers::getdateFormat($request->due_date);
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -378,7 +379,7 @@ class OOSService
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
                 $history->activity_type = 'OOS occurred On';
-                $history->current = $request->deviation_occured_on_gi;
+                $history->current = Helpers::getdateFormat($request->deviation_occured_on_gi);
                 $history->save();
             }
             if (!empty($request->oos_observed_on)){
@@ -395,7 +396,7 @@ class OOSService
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
                 $history->activity_type = 'OOS Observed On';
-                $history->current = $request->oos_observed_on;
+                $history->current = Helpers::getdateFormat($request->oos_observed_on);
                 $history->save();
             }
             if (!empty($request->source_document_type_gi)){
@@ -480,7 +481,7 @@ class OOSService
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
                 $history->activity_type = 'OOS Reported On';
-                $history->current = $request->oos_reported_date;
+                $history->current = Helpers::getdateFormat($request->oos_reported_date);
                 $history->save();
             }   
             if (!empty($request->immediate_action)){
@@ -499,7 +500,24 @@ class OOSService
                 $history->activity_type = 'Immediate Action';
                 $history->current = $request->immediate_action;
                 $history->save();
-            }         
+            }    
+            // if (!empty($request->initial_attachment_gi)){
+            //     $history = new OosAuditTrial();
+            //     $history->oos_id = $oos->id;
+            //     $history->previous = "Null";
+            //     $history->comment = "Not Applicable";
+            //     $history->user_id = Auth::user()->id;
+            //     $history->user_name = Auth::user()->name;
+            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->origin_state = $oos->status;
+            //     $history->stage = $oos->stage;
+            //     $history->change_to =   "Opened";
+            //     $history->change_from = "Initiation";
+            //     $history->action_name = 'Create';
+            //     $history->activity_type = 'Initial Attachment';
+            //     $history->current = $request->initial_attachment_gi;
+            //     $history->save();
+            // }         
             if (!empty($request->sample_type_gi)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
@@ -653,7 +671,7 @@ class OOSService
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
-                $history->activity_type = 'CQA/QA Head Primary Remark';
+                $history->activity_type = 'CQA/QA Head Remark';
                 $history->current = $oos->QA_Head_primary_remark1;
                 $history->save();
             }
@@ -673,6 +691,24 @@ class OOSService
                 $history->action_name = 'Create';
                 $history->activity_type = 'Workbench evaluation';
                 $history->current = $oos->Comments_plidata;
+                $history->save();
+            }
+            if (!empty($request->checklists)){
+                $history = new OosAuditTrial();
+                $history->oos_id = $oos->id;
+                $history->previous = "Null";
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $oos->status;
+                $history->stage = $oos->stage;
+                $history->change_to =   "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = 'Create';
+                $history->activity_type = 'Checklists';
+                $history->current = implode(', ', $request->checklists);
+                // $history->current = $oos->checklists;
                 $history->save();
             }
             if (!empty($request->justify_if_no_field_alert_pli)){
@@ -743,7 +779,7 @@ class OOSService
                 $history->current = $request->analyst_interview_pli;
                 $history->save();
             }
-            if (!empty($request->deviation_time)){
+            if (!empty($request->Any_other_cause)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
                 $history->previous = "Null";
@@ -757,7 +793,7 @@ class OOSService
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
                 $history->activity_type = 'Any other cause/suspected cause';
-                $history->current = $request->deviation_time;
+                $history->current = $request->Any_other_cause;
                 $history->save();
             }
             if (!empty($request->Any_other_batches)){
@@ -1121,6 +1157,23 @@ class OOSService
                 $history->current = $request->is_repeat_assingable_pia;
                 $history->save();
             }
+            if (!empty($request->repeat_testing_pia)){
+                $history = new OosAuditTrial();
+                $history->oos_id = $oos->id;
+                $history->previous = "Null";
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $oos->status;
+                $history->stage = $oos->stage;
+                $history->change_to =   "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = 'Create';
+                $history->activity_type = 'Repeat testing required';
+                $history->current = $request->repeat_testing_pia;
+                $history->save();
+            }
 
             if (!empty($request->repeat_testing_ib)){
                 $history = new OosAuditTrial();
@@ -1172,7 +1225,7 @@ class OOSService
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
                 $history->activity_type = 'Production Person';
-                $history->current = $request->production_person_ib;
+                $history->current = Helpers::getInitiatorName($request->production_person_ib);
                 $history->save();
             }
 
@@ -1215,7 +1268,7 @@ class OOSService
                 $history->save();
             }
 
-            //P-IA CQAH/QAH Primary Remark
+            //Phase IA CQAH/QAH Remark
             if (!empty($request->QA_Head_primary_remark2)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
@@ -1229,12 +1282,12 @@ class OOSService
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
-                $history->activity_type = 'P-IA CQAH/QAH Primary Remark';
+                $history->activity_type = 'Phase IA CQAH/QAH Remark';
                 $history->current = $request->QA_Head_primary_remark2;
                 $history->save();
             }
 
-            //P-IA CQAH/QAH Primary Remark
+            //Phase IA CQAH/QAH Remark
             if (!empty($request->outcome_phase_IA)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
@@ -1666,7 +1719,7 @@ class OOSService
                 $history->save();
             }
 
-            //Phase IB HOD Primary Remark
+            //Phase IB HOD Remark
             if (!empty($request->hod_remark3)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
@@ -1680,7 +1733,7 @@ class OOSService
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
-                $history->activity_type = 'Phase IB HOD Primary Remark';
+                $history->activity_type = 'Phase IB HOD Remark';
                 $history->current = $request->hod_remark3;
                 $history->save();
             }
@@ -1704,7 +1757,7 @@ class OOSService
                 $history->save();
             }
 
-             //P-IB CQAH/QAH Remark
+             //Phase IB CQAH/QAH Remark
              if (!empty($request->escalation_required)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
@@ -1771,7 +1824,7 @@ class OOSService
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
-                $history->activity_type = 'P-IB CQAH/QAH Remark';
+                $history->activity_type = 'Phase IB CQAH/QAH Remark';
                 $history->current = $request->QA_Head_primary_remark3;
                 $history->save();
             }
@@ -1809,7 +1862,7 @@ class OOSService
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
                 $history->activity_type = 'Production Head Person';
-                $history->current = $request->production_head_person;
+                $history->current = Helpers::getInitiatorName($request->production_head_person);
                 $history->save();
             }
 
@@ -1911,7 +1964,7 @@ class OOSService
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
-                $history->activity_type = 'Audit Comments';
+                $history->activity_type = 'Any Other Cause/Suspected Cause';
                 $history->current = $request->audit_comments_piii;
                 $history->save();
             }
@@ -2206,7 +2259,7 @@ class OOSService
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
-                $history->activity_type = 'CAPA Required IIB';
+                $history->activity_type = 'CAPA Required';
                 $history->current = $request->capa_required_IIB;
                 $history->save();
             }
@@ -2625,6 +2678,23 @@ class OOSService
                 $history->current = $request->justify_if_no_risk_assessment_ocr;
                 $history->save();
             }
+            if (!empty($request->action_on_affected_batch)){
+                $history = new OosAuditTrial();
+                $history->oos_id = $oos->id;
+                $history->previous = "Null";
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $oos->status;
+                $history->stage = $oos->stage;
+                $history->change_to =   "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = 'Create';
+                $history->activity_type = 'Action On affected batches';
+                $history->current = $request->action_on_affected_batch;
+                $history->save();
+            }
             if (!empty($request->cq_approver)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
@@ -2734,7 +2804,7 @@ class OOSService
                 $history->save();
             }  
             
-            //P-II A QAH/CQAH Remark
+            //Phase II A QAH/CQAH Remark
             if (!empty($request->QA_Head_primary_remark4)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
@@ -2748,7 +2818,7 @@ class OOSService
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
-                $history->activity_type = 'P-II A QAH/CQAH Remark';
+                $history->activity_type = 'Phase II A QAH/CQAH Remark';
                 $history->current = $request->QA_Head_primary_remark4;
                 $history->save();
             } 
@@ -2862,7 +2932,7 @@ class OOSService
                 $history->save();
             }
 
-            //Phase II B HOD Primary Remark
+            //Phase II B HOD Remark
             if (!empty($request->hod_remark5)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
@@ -2876,7 +2946,7 @@ class OOSService
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
-                $history->activity_type = 'Phase II B HOD Primary Remark';
+                $history->activity_type = 'Phase II B HOD Remark';
                 $history->current = $request->hod_remark5;
                 $history->save();
             }
@@ -3214,7 +3284,31 @@ class OOSService
             // }
 
             // jdsklfadsklajf string
-
+            if ($lastOosRecod->due_date !=  $request->due_date || !empty($request->due_date_comment)) {
+                $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                        ->where('activity_type', 'Due Date')
+                        ->exists();
+                $history = new OosAuditTrial();
+                $history->oos_id = $lastOosRecod->id;
+                $history->previous = Helpers::getdateFormat($lastOosRecod->due_date);
+                $history->activity_type = 'Due Date';
+                $history->current = Helpers::getdateFormat($request->due_date);
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastOosRecod->status;
+                $history->stage = $lastOosRecod->stage;
+                $history->change_to =   "Not Applicable";
+                $history->change_from = $lastOosRecod->status;
+                // $history->action_name = 'update';
+                if (is_null($lastOosRecod->due_date) || $lastOosRecod->due_date === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+                $history->save();
+            }
              if ($lastOosRecod->description_gi !=  $request->description_gi || !empty($request->description_gi_comment)) {
                 $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                       ->where('activity_type', 'Short Description')
@@ -3257,7 +3351,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                 // $history->action_name = 'update';
                 if (is_null($lastOosRecod->initiator_group) || $lastOosRecod->initiator_group === '') {
@@ -3283,7 +3377,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->initiator_group_code) || $lastOosRecod->initiator_group_code === '') {
                         $history->action_name = "New";
@@ -3309,7 +3403,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->if_others_gi) || $lastOosRecod->if_others_gi === '') {
                     $history->action_name = "New";
@@ -3333,7 +3427,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->is_repeat_gi) || $lastOosRecod->is_repeat_gi === '') {
                     $history->action_name = "New";
@@ -3358,7 +3452,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->repeat_nature) || $lastOosRecod->repeat_nature === '') {
                     $history->action_name = "New";
@@ -3383,7 +3477,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->nature_of_change_gi) || $lastOosRecod->nature_of_change_gi === '') {
                     $history->action_name = "New";
@@ -3398,16 +3492,16 @@ class OOSService
                             ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
-                $history->previous = $lastOosRecod->deviation_occured_on_gi;
+                $history->previous = Helpers::getdateFormat($lastOosRecod->deviation_occured_on_gi);
                 $history->activity_type = 'OOS occurred On';
-                $history->current = $request->deviation_occured_on_gi;
+                $history->current = Helpers::getdateFormat($request->deviation_occured_on_gi);
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->deviation_occured_on_gi) || $lastOosRecod->deviation_occured_on_gi === '') {
                     $history->action_name = "New";
@@ -3432,7 +3526,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->source_document_type_gi) || $lastOosRecod->source_document_type_gi === '') {
                     $history->action_name = "New";
@@ -3456,7 +3550,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->sample_type_gi) || $lastOosRecod->sample_type_gi === '') {
                     $history->action_name = "New";
@@ -3481,7 +3575,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->product_material_name_gi) || $lastOosRecod->product_material_name_gi === '') {
                     $history->action_name = "New";
@@ -3506,7 +3600,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->market_gi) || $lastOosRecod->market_gi === '') {
                     $history->action_name = "New";
@@ -3531,7 +3625,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
            if (is_null($lastOosRecod->customer_gi) || $lastOosRecod->customer_gi === '') {
                 $history->action_name = "New";
@@ -3557,7 +3651,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
             if (is_null($lastOosRecod->specification_details) || $lastOosRecod->specification_details === '') {
                     $history->action_name = "New";
@@ -3582,7 +3676,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
         if (is_null($lastOosRecod->STP_details) || $lastOosRecod->STP_details === '') {
                 $history->action_name = "New";
@@ -3607,7 +3701,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
         if (is_null($lastOosRecod->manufacture_vendor) || $lastOosRecod->manufacture_vendor === '') {
                 $history->action_name = "New";
@@ -3634,7 +3728,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
         if (is_null($lastOosRecod->hod_remark1) || $lastOosRecod->hod_remark1 === '') {
                 $history->action_name = "New";
@@ -3646,7 +3740,7 @@ class OOSService
         
             //CQA/QA Head Remark
             // if ($lastOosRecod->QA_Head_remark1 != $request->QA_Head_remark1){
-                if ($lastOosRecod->QA_Head_remark1 !=  $request->QA_Head_remark1 || ! empty($request->QA_Head_remark1_comment)) {
+                if ($lastOosRecod->QA_Head_remark1 !=  $request->QA_Head_remark1 || !empty($request->QA_Head_remark1_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'CQA/QA Head Remark')
                             ->exists();
@@ -3661,7 +3755,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->QA_Head_remark1) || $lastOosRecod->QA_Head_remark1 === '') {
                     $history->action_name = "New";
@@ -3672,14 +3766,14 @@ class OOSService
             }
             //CQA/QA Head Primary Remark
             // if ($lastOosRecod->QA_Head_primary_remark1 != $request->QA_Head_primary_remark1){
-                if ($lastOosRecod->QA_Head_primary_remark1 !=  $request->QA_Head_primary_remark1 || ! empty($request->QA_Head_primary_remark1_comment)) {
+                if ($lastOosRecod->QA_Head_primary_remark1 !=  $request->QA_Head_primary_remark1 || !empty($request->QA_Head_primary_remark1_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                            ->where('activity_type', 'CQA/QA Head Primary Remark')
+                            ->where('activity_type', 'CQA/QA Head Remark')
                             ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->QA_Head_primary_remark1;
-                $history->activity_type = 'CQA/QA Head Primary Remark';
+                $history->activity_type = 'CQA/QA Head Remark';
                 $history->current = $request->QA_Head_primary_remark1;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
@@ -3687,7 +3781,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->QA_Head_primary_remark1) || $lastOosRecod->QA_Head_primary_remark1 === '') {
                     $history->action_name = "New";
@@ -3698,7 +3792,7 @@ class OOSService
             }
             // TapII
             // if ($lastOosRecod->Comments_plidata != $request->Comments_plidata){
-                if ($lastOosRecod->Comments_plidata !=  $request->Comments_plidata || ! empty($request->Comments_plidata_comment)) {
+                if ($lastOosRecod->Comments_plidata !=  $request->Comments_plidata || !empty($request->Comments_plidata_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Workbench evaluation')
                             ->exists();
@@ -3713,7 +3807,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->Comments_plidata) || $lastOosRecod->Comments_plidata === '') {
                     $history->action_name = "New";
@@ -3722,8 +3816,32 @@ class OOSService
                 }
                 $history->save();
             }
+        //     if ($lastOosRecod->checklists !=  $request->checklists || !empty($request->Comments_plidata_comment)) {
+        //         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+        //                 ->where('activity_type', 'Checklists')
+        //                 ->exists();
+        //     $history = new OosAuditTrial();
+        //     $history->oos_id = $lastOosRecod->id;
+        //     $history->previous = $lastOosRecod->checklists;
+        //     $history->activity_type = 'Checklists';
+        //     $history->current = $request->checklists;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastOosRecod->status;
+        //     $history->stage = $lastOosRecod->stage;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastOosRecod->status;
+        //    if (is_null($lastOosRecod->checklists) || $lastOosRecod->checklists === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
             // if ($lastOosRecod->justify_if_no_field_alert_pli != $request->justify_if_no_field_alert_pli){
-                if ($lastOosRecod->justify_if_no_field_alert_pli !=  $request->justify_if_no_field_alert_pli || ! empty($request->justify_if_no_field_alert_pli_comment)) {
+                if ($lastOosRecod->justify_if_no_field_alert_pli !=  $request->justify_if_no_field_alert_pli || !empty($request->justify_if_no_field_alert_pli_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Checklist outcome')
                             ->exists();
@@ -3738,7 +3856,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->justify_if_no_field_alert_pli) || $lastOosRecod->justify_if_no_field_alert_pli === '') {
                     $history->action_name = "New";
@@ -3747,7 +3865,7 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->root_comment !=  $request->root_comment || ! empty($request->root_comment_comment)) {
+            if ($lastOosRecod->root_comment !=  $request->root_comment || !empty($request->root_comment_comment)) {
                 $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                         ->where('activity_type', 'Immediate action taken')
                         ->exists();
@@ -3762,7 +3880,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
            if (is_null($lastOosRecod->root_comment) || $lastOosRecod->root_comment === '') {
                 $history->action_name = "New";
@@ -3787,7 +3905,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->justify_if_no_analyst_int_pli) || $lastOosRecod->justify_if_no_analyst_int_pli === '') {
                     $history->action_name = "New";
@@ -3796,7 +3914,7 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->analyst_interview_pli !=  $request->analyst_interview_pli || ! empty($request->analyst_interview_pli_comment)) {
+            if ($lastOosRecod->analyst_interview_pli !=  $request->analyst_interview_pli || !empty($request->analyst_interview_pli_comment)) {
                 $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                         ->where('activity_type', 'Analyst interview details')
                         ->exists();
@@ -3811,7 +3929,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
            if (is_null($lastOosRecod->analyst_interview_pli) || $lastOosRecod->analyst_interview_pli === '') {
                 $history->action_name = "New";
@@ -3821,24 +3939,24 @@ class OOSService
             $history->save();
         }
 
-        if ($lastOosRecod->deviation_time !=  $request->deviation_time || ! empty($request->deviation_time_comment)) {
+        if ($lastOosRecod->Any_other_cause !=  $request->Any_other_cause || !empty($request->deviation_time_comment)) {
             $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                     ->where('activity_type', 'Any other cause/suspected cause')
                     ->exists();
         $history = new OosAuditTrial();
         $history->oos_id = $lastOosRecod->id;
-        $history->previous = $lastOosRecod->deviation_time;
+        $history->previous = $lastOosRecod->Any_other_cause;
         $history->activity_type = 'Any other cause/suspected cause';
-        $history->current = $request->deviation_time;
+        $history->current = $request->Any_other_cause;
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastOosRecod->status;
         $history->stage = $lastOosRecod->stage;
-        $history->change_to =   "Opened";
+        $history->change_to =   "Not Applicable";
         $history->change_from = $lastOosRecod->status;
-       if (is_null($lastOosRecod->deviation_time) || $lastOosRecod->deviation_time === '') {
+       if (is_null($lastOosRecod->Any_other_cause) || $lastOosRecod->Any_other_cause === '') {
             $history->action_name = "New";
         } else {
             $history->action_name = "Update";
@@ -3846,7 +3964,7 @@ class OOSService
         $history->save();
     }
 
-                if ($lastOosRecod->Any_other_batches !=  $request->Any_other_batches || ! empty($request->Any_other_batches_comment)) {
+                if ($lastOosRecod->Any_other_batches !=  $request->Any_other_batches || !empty($request->Any_other_batches_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Any other batches analyzed')
                             ->exists();
@@ -3861,7 +3979,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
             if (is_null($lastOosRecod->Any_other_batches) || $lastOosRecod->Any_other_batches === '') {
                     $history->action_name = "New";
@@ -3871,7 +3989,7 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->details_of_trend !=  $request->details_of_trend || ! empty($request->details_of_trend_comment)) {
+            if ($lastOosRecod->details_of_trend !=  $request->details_of_trend || !empty($request->details_of_trend_comment)) {
                 $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                         ->where('activity_type', 'Details of trend')
                         ->exists();
@@ -3886,7 +4004,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
         if (is_null($lastOosRecod->details_of_trend) || $lastOosRecod->details_of_trend === '') {
                 $history->action_name = "New";
@@ -3896,7 +4014,7 @@ class OOSService
             $history->save();
         }
 
-        if ($lastOosRecod->rational_for_assingnable !=  $request->rational_for_assingnable || ! empty($request->rational_for_assingnable_comment)) {
+        if ($lastOosRecod->rational_for_assingnable !=  $request->rational_for_assingnable || !empty($request->rational_for_assingnable_comment)) {
             $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                     ->where('activity_type', 'Assignable cause and rational for assignable cause')
                     ->exists();
@@ -3911,7 +4029,7 @@ class OOSService
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastOosRecod->status;
         $history->stage = $lastOosRecod->stage;
-        $history->change_to =   "Opened";
+        $history->change_to =   "Not Applicable";
         $history->change_from = $lastOosRecod->status;
     if (is_null($lastOosRecod->rational_for_assingnable) || $lastOosRecod->rational_for_assingnable === '') {
             $history->action_name = "New";
@@ -3922,7 +4040,7 @@ class OOSService
     }
 
             // if ($lastOosRecod->phase_i_investigation_pli != $request->phase_i_investigation_pli){
-                if ($lastOosRecod->phase_i_investigation_pli !=  $request->phase_i_investigation_pli || ! empty($request->phase_i_investigation_pli_comment)) {
+                if ($lastOosRecod->phase_i_investigation_pli !=  $request->phase_i_investigation_pli || !empty($request->phase_i_investigation_pli_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'OOS cause identified')
                             ->exists();
@@ -3937,7 +4055,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->phase_i_investigation_pli) || $lastOosRecod->phase_i_investigation_pli === '') {
                     $history->action_name = "New";
@@ -3958,7 +4076,7 @@ class OOSService
             //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             //     $history->origin_state = $lastOosRecod->status;
             //     $history->stage = $lastOosRecod->stage;
-            //     $history->change_to =   "Opened";
+            //     $history->change_to =   "Not Applicable";
             //     $history->change_from = $lastOosRecod->status;
             //    if (is_null($lastOosRecod->phase_i_investigation_ref_pli) || $lastOosRecod->phase_i_investigation_ref_pli === '') {
             //         $history->action_name = "New";
@@ -3969,7 +4087,7 @@ class OOSService
             // }
             // TapIV
             // if ($lastOosRecod->summary_of_prelim_investiga_plic != $request->summary_of_prelim_investiga_plic){
-                if ($lastOosRecod->summary_of_prelim_investiga_plic !=  $request->summary_of_prelim_investiga_plic || ! empty($request->summary_of_prelim_investiga_plic_comment)) {
+                if ($lastOosRecod->summary_of_prelim_investiga_plic !=  $request->summary_of_prelim_investiga_plic || !empty($request->summary_of_prelim_investiga_plic_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Summary of investigation')
                             ->exists();
@@ -3984,7 +4102,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->summary_of_prelim_investiga_plic) || $lastOosRecod->summary_of_prelim_investiga_plic === '') {
                     $history->action_name = "New";
@@ -3994,7 +4112,7 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->root_cause_identified_plic != $request->root_cause_identified_plic){
-                if ($lastOosRecod->root_cause_identified_plic !=  $request->root_cause_identified_plic || ! empty($request->root_cause_identified_plic_comment)) {
+                if ($lastOosRecod->root_cause_identified_plic !=  $request->root_cause_identified_plic || !empty($request->root_cause_identified_plic_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Root Cause Identified')
                             ->exists();
@@ -4009,7 +4127,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->root_cause_identified_plic) || $lastOosRecod->root_cause_identified_plic === '') {
                     $history->action_name = "New";
@@ -4019,7 +4137,7 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->oos_category_root_cause_ident_plic != $request->oos_category_root_cause_ident_plic){
-                if ($lastOosRecod->oos_category_root_cause_ident_plic !=  $request->oos_category_root_cause_ident_plic || ! empty($request->oos_category_root_cause_ident_plic_comment)) {
+                if ($lastOosRecod->oos_category_root_cause_ident_plic !=  $request->oos_category_root_cause_ident_plic || !empty($request->oos_category_root_cause_ident_plic_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'OOS Category')
                             ->exists();
@@ -4034,7 +4152,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->oos_category_root_cause_ident_plic) || $lastOosRecod->oos_category_root_cause_ident_plic === '') {
                     $history->action_name = "New";
@@ -4044,7 +4162,7 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->root_cause_details_plic != $request->root_cause_details_plic){
-                if ($lastOosRecod->root_cause_details_plic !=  $request->root_cause_details_plic || ! empty($request->root_cause_details_plic_comment)) {
+                if ($lastOosRecod->root_cause_details_plic !=  $request->root_cause_details_plic || !empty($request->root_cause_details_plic_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Root Cause Details')
                             ->exists();
@@ -4059,7 +4177,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->root_cause_details_plic) || $lastOosRecod->root_cause_details_plic === '') {
                     $history->action_name = "New";
@@ -4070,7 +4188,7 @@ class OOSService
             }
             
             // if ($lastOosRecod->oos_category_others_plic != $request->oos_category_others_plic){
-                if ($lastOosRecod->oos_category_others_plic !=  $request->oos_category_others_plic || ! empty($request->oos_category_others_plic_comment)) {
+                if ($lastOosRecod->oos_category_others_plic !=  $request->oos_category_others_plic || !empty($request->oos_category_others_plic_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'OOS Category(if Others)')
                             ->exists();
@@ -4085,7 +4203,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->oos_category_others_plic) || $lastOosRecod->oos_category_others_plic === '') {
                     $history->action_name = "New";
@@ -4095,7 +4213,7 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->capa_required_plic != $request->capa_required_plic){
-                if ($lastOosRecod->capa_required_plic !=  $request->capa_required_plic || ! empty($request->capa_required_plic_comment)) {
+                if ($lastOosRecod->capa_required_plic !=  $request->capa_required_plic || !empty($request->capa_required_plic_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'CAPA Required')
                             ->exists();
@@ -4110,7 +4228,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->capa_required_plic) || $lastOosRecod->capa_required_plic === '') {
                     $history->action_name = "New";
@@ -4120,7 +4238,7 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->reference_capa_no_plic != $request->reference_capa_no_plic){
-                if ($lastOosRecod->reference_capa_no_plic !=  $request->reference_capa_no_plic || ! empty($request->reference_capa_no_plic_comment)) {
+                if ($lastOosRecod->reference_capa_no_plic !=  $request->reference_capa_no_plic || !empty($request->reference_capa_no_plic_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Reference CAPA No')
                             ->exists();
@@ -4135,7 +4253,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->reference_capa_no_plic) || $lastOosRecod->reference_capa_no_plic === '') {
                     $history->action_name = "New";
@@ -4145,7 +4263,7 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->delay_justification_for_pi_plic != $request->delay_justification_for_pi_plic){
-                if ($lastOosRecod->delay_justification_for_pi_plic !=  $request->delay_justification_for_pi_plic || ! empty($request->delay_justification_for_pi_plic_comment)) {
+                if ($lastOosRecod->delay_justification_for_pi_plic !=  $request->delay_justification_for_pi_plic || !empty($request->delay_justification_for_pi_plic_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Delay Justification for Preliminary Investigation')
                             ->exists();
@@ -4160,7 +4278,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->delay_justification_for_pi_plic) || $lastOosRecod->delay_justification_for_pi_plic === '') {
                     $history->action_name = "New";
@@ -4171,7 +4289,7 @@ class OOSService
             }
             // TapV5
             // if ($lastOosRecod->review_comments_plir != $request->review_comments_plir){
-                if ($lastOosRecod->review_comments_plir !=  $request->review_comments_plir || ! empty($request->review_comments_plir_comment)) {
+                if ($lastOosRecod->review_comments_plir !=  $request->review_comments_plir || !empty($request->review_comments_plir_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'OOS review for similar nature')
                             ->exists();
@@ -4186,7 +4304,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->review_comments_plir) || $lastOosRecod->review_comments_plir === '') {
                     $history->action_name = "New";
@@ -4196,7 +4314,7 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->phase_ii_inv_required_plir != $request->phase_ii_inv_required_plir){
-                if ($lastOosRecod->phase_ii_inv_required_plir !=  $request->phase_ii_inv_required_plir || ! empty($request->phase_ii_inv_required_plir_comment)) {
+                if ($lastOosRecod->phase_ii_inv_required_plir !=  $request->phase_ii_inv_required_plir || !empty($request->phase_ii_inv_required_plir_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Phase II Inv. Required')
                             ->exists();
@@ -4211,7 +4329,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->phase_ii_inv_required_plir) || $lastOosRecod->phase_ii_inv_required_plir === '') {
                     $history->action_name = "New";
@@ -4221,7 +4339,7 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->root_cause_identified_pia !=  $request->root_cause_identified_pia || ! empty($request->root_cause_identified_pia_comment)) {
+            if ($lastOosRecod->root_cause_identified_pia !=  $request->root_cause_identified_pia || !empty($request->root_cause_identified_pia_comment)) {
                 $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                         ->where('activity_type', 'Retest/Re-measurement required')
                         ->exists();
@@ -4236,7 +4354,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
            if (is_null($lastOosRecod->root_cause_identified_pia) || $lastOosRecod->root_cause_identified_pia === '') {
                 $history->action_name = "New";
@@ -4246,7 +4364,7 @@ class OOSService
             $history->save();
         }
             // if ($lastOosRecod->phase_ib_inv_required_plir != $request->phase_ib_inv_required_plir){
-                if ($lastOosRecod->phase_ib_inv_required_plir !=  $request->phase_ib_inv_required_plir || ! empty($request->phase_ib_inv_required_plir_comment)) {
+                if ($lastOosRecod->phase_ib_inv_required_plir !=  $request->phase_ib_inv_required_plir || !empty($request->phase_ib_inv_required_plir_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Phase IB Inv. Required?')
                             ->exists();
@@ -4261,7 +4379,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->phase_ib_inv_required_plir) || $lastOosRecod->phase_ib_inv_required_plir === '') {
                     $history->action_name = "New";
@@ -4271,7 +4389,7 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->phase_ib_inv_required_plir !=  $request->phase_ib_inv_required_plir || ! empty($request->phase_ib_inv_required_plir_comment)) {
+            if ($lastOosRecod->phase_ib_inv_required_plir !=  $request->phase_ib_inv_required_plir || !empty($request->phase_ib_inv_required_plir_comment)) {
                 $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                         ->where('activity_type', 'Resampling required')
                         ->exists();
@@ -4286,7 +4404,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
            if (is_null($lastOosRecod->phase_ib_inv_required_plir) || $lastOosRecod->phase_ib_inv_required_plir === '') {
                 $history->action_name = "New";
@@ -4297,7 +4415,7 @@ class OOSService
         }
             //Phase IA HOD Primary Remark
             // if ($lastOosRecod->hod_remark2 != $request->hod_remark2){
-                if ($lastOosRecod->hod_remark2 !=  $request->hod_remark2 || ! empty($request->hod_remark2_comment)) {
+                if ($lastOosRecod->hod_remark2 !=  $request->hod_remark2 || !empty($request->hod_remark2_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Phase IA HOD Primary Remark')
                             ->exists();
@@ -4312,7 +4430,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->hod_remark2) || $lastOosRecod->hod_remark2 === '') {
                     $history->action_name = "New";
@@ -4323,7 +4441,7 @@ class OOSService
             }
             //Phase IA CQA/QA Remark
             // if ($lastOosRecod->QA_Head_remark2 != $request->QA_Head_remark2){
-                if ($lastOosRecod->QA_Head_remark2 !=  $request->QA_Head_remark2 || ! empty($request->QA_Head_remark2_comment)) {
+                if ($lastOosRecod->QA_Head_remark2 !=  $request->QA_Head_remark2 || !empty($request->QA_Head_remark2_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Phase IA CQA/QA Remark')
                             ->exists();
@@ -4338,7 +4456,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->QA_Head_remark2) || $lastOosRecod->QA_Head_remark2 === '') {
                     $history->action_name = "New";
@@ -4348,16 +4466,16 @@ class OOSService
                 $history->save();
             }
 
-             //P-IA CQAH/QAH Primary Remark
+             //Phase IA CQAH/QAH Remark
             //  if ($lastOosRecod->QA_Head_primary_remark2 != $request->QA_Head_primary_remark2){
-                if ($lastOosRecod->QA_Head_primary_remark2 !=  $request->QA_Head_primary_remark2 || ! empty($request->QA_Head_primary_remark2_comment)) {
+                if ($lastOosRecod->QA_Head_primary_remark2 !=  $request->QA_Head_primary_remark2 || !empty($request->QA_Head_primary_remark2_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                            ->where('activity_type', 'P-IA CQAH/QAH Primary Remark')
+                            ->where('activity_type', 'Phase IA CQAH/QAH Remark')
                             ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->QA_Head_primary_remark2;
-                $history->activity_type = 'P-IA CQAH/QAH Primary Remark';
+                $history->activity_type = 'Phase IA CQAH/QAH Remark';
                 $history->current = $request->QA_Head_primary_remark2;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
@@ -4365,7 +4483,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->QA_Head_primary_remark2) || $lastOosRecod->QA_Head_primary_remark2 === '') {
                     $history->action_name = "New";
@@ -4377,7 +4495,7 @@ class OOSService
 
                 //Phase IB Investigation
                 // if ($lastOosRecod->outcome_phase_IA != $request->outcome_phase_IA){
-                    if ($lastOosRecod->outcome_phase_IA !=  $request->outcome_phase_IA || ! empty($request->outcome_phase_IA_comment)) {
+                    if ($lastOosRecod->outcome_phase_IA !=  $request->outcome_phase_IA || !empty($request->outcome_phase_IA_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Outcome of Phase IA investigation')
                                 ->exists();
@@ -4392,7 +4510,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->outcome_phase_IA) || $lastOosRecod->outcome_phase_IA === '') {
                         $history->action_name = "New";
@@ -4403,7 +4521,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->reason_for_proceeding != $request->reason_for_proceeding){
-                    if ($lastOosRecod->reason_for_proceeding !=  $request->reason_for_proceeding || ! empty($request->reason_for_proceeding_comment)) {
+                    if ($lastOosRecod->reason_for_proceeding !=  $request->reason_for_proceeding || !empty($request->reason_for_proceeding_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Reason for proceeding to Phase IB investigation')
                                 ->exists();
@@ -4418,7 +4536,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->reason_for_proceeding) || $lastOosRecod->reason_for_proceeding === '') {
                         $history->action_name = "New";
@@ -4429,7 +4547,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->summaryy_of_review != $request->summaryy_of_review){
-                    if ($lastOosRecod->summaryy_of_review !=  $request->summaryy_of_review || ! empty($request->summaryy_of_review_comment)) {
+                    if ($lastOosRecod->summaryy_of_review !=  $request->summaryy_of_review || !empty($request->summaryy_of_review_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Summary of Review')
                                 ->exists();
@@ -4444,7 +4562,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->summaryy_of_review) || $lastOosRecod->summaryy_of_review === '') {
                         $history->action_name = "New";
@@ -4455,7 +4573,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->Probable_cause_iden != $request->Probable_cause_iden){
-                    if ($lastOosRecod->Probable_cause_iden !=  $request->Probable_cause_iden || ! empty($request->Probable_cause_iden_comment)) {
+                    if ($lastOosRecod->Probable_cause_iden !=  $request->Probable_cause_iden || !empty($request->Probable_cause_iden_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Probable Cause Identification')
                                 ->exists();
@@ -4470,7 +4588,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Probable_cause_iden) || $lastOosRecod->Probable_cause_iden === '') {
                         $history->action_name = "New";
@@ -4481,7 +4599,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->proposal_for_hypothesis_IB != $request->proposal_for_hypothesis_IB){
-                //     if ($lastOosRecod->proposal_for_hypothesis_IB !=  $request->proposal_for_hypothesis_IB || ! empty($request->proposal_for_hypothesis_IB_comment)) {
+                //     if ($lastOosRecod->proposal_for_hypothesis_IB !=  $request->proposal_for_hypothesis_IB || !empty($request->proposal_for_hypothesis_IB_comment)) {
                 //         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                 //                 ->where('activity_type', 'Proposal for Phase IB hypothesis')
                 //                 ->exists();
@@ -4496,7 +4614,7 @@ class OOSService
                 //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 //     $history->origin_state = $lastOosRecod->status;
                 //     $history->stage = $lastOosRecod->stage;
-                //     $history->change_to =   "Opened";
+                //     $history->change_to =   "Not Applicable";
                 //     $history->change_from = $lastOosRecod->status;
                 // if (is_null($lastOosRecod->proposal_for_hypothesis_IB) || $lastOosRecod->proposal_for_hypothesis_IB === '') {
                 //         $history->action_name = "New";
@@ -4507,7 +4625,7 @@ class OOSService
                 // }
 
                 // if ($lastOosRecod->proposal_for_hypothesis_others != $request->proposal_for_hypothesis_others){
-                    if ($lastOosRecod->proposal_for_hypothesis_others !=  $request->proposal_for_hypothesis_others || ! empty($request->proposal_for_hypothesis_others_comment)) {
+                    if ($lastOosRecod->proposal_for_hypothesis_others !=  $request->proposal_for_hypothesis_others || !empty($request->proposal_for_hypothesis_others_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Others')
                                 ->exists();
@@ -4522,7 +4640,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->proposal_for_hypothesis_others) || $lastOosRecod->proposal_for_hypothesis_others === '') {
                         $history->action_name = "New";
@@ -4533,7 +4651,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->details_of_result != $request->details_of_result){
-                    if ($lastOosRecod->details_of_result !=  $request->details_of_result || ! empty($request->details_of_result_comment)) {
+                    if ($lastOosRecod->details_of_result !=  $request->details_of_result || !empty($request->details_of_result_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Details of results (Including original OOS results for side by side comparison)')
                                 ->exists();
@@ -4548,7 +4666,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->details_of_result) || $lastOosRecod->details_of_result === '') {
                         $history->action_name = "New";
@@ -4559,7 +4677,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->Probable_Cause_Identified != $request->Probable_Cause_Identified){
-                    if ($lastOosRecod->Probable_Cause_Identified !=  $request->Probable_Cause_Identified || ! empty($request->Probable_Cause_Identified_comment)) {
+                    if ($lastOosRecod->Probable_Cause_Identified !=  $request->Probable_Cause_Identified || !empty($request->Probable_Cause_Identified_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Probable Cause Identified in Phase IB investigation')
                                 ->exists();
@@ -4574,7 +4692,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Probable_Cause_Identified) || $lastOosRecod->Probable_Cause_Identified === '') {
                         $history->action_name = "New";
@@ -4585,7 +4703,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->Any_other_Comments != $request->Any_other_Comments){
-                    if ($lastOosRecod->Any_other_Comments !=  $request->Any_other_Comments || ! empty($request->Any_other_Comments_comment)) {
+                    if ($lastOosRecod->Any_other_Comments !=  $request->Any_other_Comments || !empty($request->Any_other_Comments_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Any other Comments/ Probable Cause Evidence')
                                 ->exists();
@@ -4600,7 +4718,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Any_other_Comments) || $lastOosRecod->Any_other_Comments === '') {
                         $history->action_name = "New";
@@ -4611,7 +4729,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->Proposal_for_Hypothesis != $request->Proposal_for_Hypothesis){
-                    if ($lastOosRecod->Proposal_for_Hypothesis !=  $request->Proposal_for_Hypothesis || ! empty($request->Proposal_for_Hypothesis_comment)) {
+                    if ($lastOosRecod->Proposal_for_Hypothesis !=  $request->Proposal_for_Hypothesis || !empty($request->Proposal_for_Hypothesis_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Proposal for Hypothesis testing to confirm Probable Cause identified')
                                 ->exists();
@@ -4626,7 +4744,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Proposal_for_Hypothesis) || $lastOosRecod->Proposal_for_Hypothesis === '') {
                         $history->action_name = "New";
@@ -4637,7 +4755,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->Summary_of_Hypothesis != $request->Summary_of_Hypothesis){
-                    if ($lastOosRecod->Summary_of_Hypothesis !=  $request->Summary_of_Hypothesis || ! empty($request->Summary_of_Hypothesis_comment)) {
+                    if ($lastOosRecod->Summary_of_Hypothesis !=  $request->Summary_of_Hypothesis || !empty($request->Summary_of_Hypothesis_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Summary of Hypothesis')
                                 ->exists();
@@ -4652,7 +4770,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Summary_of_Hypothesis) || $lastOosRecod->Summary_of_Hypothesis === '') {
                         $history->action_name = "New";
@@ -4663,7 +4781,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->Assignable_Cause != $request->Assignable_Cause){
-                    if ($lastOosRecod->Assignable_Cause !=  $request->Assignable_Cause || ! empty($request->Assignable_Cause_comment)) {
+                    if ($lastOosRecod->Assignable_Cause !=  $request->Assignable_Cause || !empty($request->Assignable_Cause_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Assignable Cause')
                                 ->exists();
@@ -4678,7 +4796,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Assignable_Cause) || $lastOosRecod->Assignable_Cause === '') {
                         $history->action_name = "New";
@@ -4689,7 +4807,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->Types_of_assignable != $request->Types_of_assignable){
-                    if ($lastOosRecod->Types_of_assignable !=  $request->Types_of_assignable || ! empty($request->Types_of_assignable_comment)) {
+                    if ($lastOosRecod->Types_of_assignable !=  $request->Types_of_assignable || !empty($request->Types_of_assignable_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Types of assignable cause')
                                 ->exists();
@@ -4704,7 +4822,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Types_of_assignable) || $lastOosRecod->Types_of_assignable === '') {
                         $history->action_name = "New";
@@ -4715,7 +4833,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->Types_of_assignable_others != $request->Types_of_assignable_others){
-                    if ($lastOosRecod->Types_of_assignable_others !=  $request->Types_of_assignable_others || ! empty($request->Types_of_assignable_others_comment)) {
+                    if ($lastOosRecod->Types_of_assignable_others !=  $request->Types_of_assignable_others || !empty($request->Types_of_assignable_others_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Others1')
                                 ->exists();
@@ -4730,7 +4848,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Types_of_assignable_others) || $lastOosRecod->Types_of_assignable_others === '') {
                         $history->action_name = "New";
@@ -4741,7 +4859,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->Evaluation_Timeline != $request->Evaluation_Timeline){
-                    if ($lastOosRecod->Evaluation_Timeline !=  $request->Evaluation_Timeline || ! empty($request->Evaluation_Timeline_comment)) {
+                    if ($lastOosRecod->Evaluation_Timeline !=  $request->Evaluation_Timeline || !empty($request->Evaluation_Timeline_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Evaluation of Phase IB investigation Timeline')
                                 ->exists();
@@ -4756,7 +4874,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Evaluation_Timeline) || $lastOosRecod->Evaluation_Timeline === '') {
                         $history->action_name = "New";
@@ -4767,7 +4885,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->timeline_met != $request->timeline_met){
-                    if ($lastOosRecod->timeline_met !=  $request->timeline_met || ! empty($request->timeline_met_comment)) {
+                    if ($lastOosRecod->timeline_met !=  $request->timeline_met || !empty($request->timeline_met_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Is Phase IB investigation timeline met')
                                 ->exists();
@@ -4782,7 +4900,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->timeline_met) || $lastOosRecod->timeline_met === '') {
                         $history->action_name = "New";
@@ -4793,7 +4911,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->timeline_extension != $request->timeline_extension){
-                    if ($lastOosRecod->timeline_extension !=  $request->timeline_extension || ! empty($request->timeline_extension_comment)) {
+                    if ($lastOosRecod->timeline_extension !=  $request->timeline_extension || !empty($request->timeline_extension_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'If No, Justify for timeline extension')
                                 ->exists();
@@ -4808,7 +4926,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->timeline_extension) || $lastOosRecod->timeline_extension === '') {
                         $history->action_name = "New";
@@ -4819,7 +4937,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->CAPA_applicable != $request->CAPA_applicable){
-                    if ($lastOosRecod->CAPA_applicable !=  $request->CAPA_applicable || ! empty($request->CAPA_applicable_comment)) {
+                    if ($lastOosRecod->CAPA_applicable !=  $request->CAPA_applicable || !empty($request->CAPA_applicable_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'CAPA applicable')
                                 ->exists();
@@ -4834,7 +4952,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->CAPA_applicable) || $lastOosRecod->CAPA_applicable === '') {
                         $history->action_name = "New";
@@ -4844,7 +4962,7 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->resampling_required_ib !=  $request->resampling_required_ib || ! empty($request->resampling_required_ib_comment)) {
+                if ($lastOosRecod->resampling_required_ib !=  $request->resampling_required_ib || !empty($request->resampling_required_ib_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Resampling required')
                             ->exists();
@@ -4859,7 +4977,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
             if (is_null($lastOosRecod->resampling_required_ib) || $lastOosRecod->resampling_required_ib === '') {
                     $history->action_name = "New";
@@ -4869,7 +4987,57 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->repeat_testing_ib !=  $request->repeat_testing_ib || ! empty($request->repeat_testing_ib_comment)) {
+            if ($lastOosRecod->is_repeat_assingable_pia !=  $request->is_repeat_assingable_pia || !empty($request->repeat_testing_ib_comment)) {
+                $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                        ->where('activity_type', 'Resampling required')
+                        ->exists();
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = $lastOosRecod->is_repeat_assingable_pia;
+            $history->activity_type = 'Resampling required';
+            $history->current = $request->is_repeat_assingable_pia;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        if (is_null($lastOosRecod->is_repeat_assingable_pia) || $lastOosRecod->is_repeat_assingable_pia === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastOosRecod->repeat_testing_pia !=  $request->repeat_testing_pia || !empty($request->repeat_testing_ib_comment)) {
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                    ->where('activity_type', 'Repeat testing required')
+                    ->exists();
+        $history = new OosAuditTrial();
+        $history->oos_id = $lastOosRecod->id;
+        $history->previous = $lastOosRecod->repeat_testing_pia;
+        $history->activity_type = 'Repeat testing required';
+        $history->current = $request->repeat_testing_pia;
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastOosRecod->status;
+        $history->stage = $lastOosRecod->stage;
+        $history->change_to =   "Not Applicable";
+        $history->change_from = $lastOosRecod->status;
+    if (is_null($lastOosRecod->repeat_testing_pia) || $lastOosRecod->repeat_testing_pia === '') {
+            $history->action_name = "New";
+        } else {
+            $history->action_name = "Update";
+        }
+        $history->save();
+    }
+
+            if ($lastOosRecod->repeat_testing_ib !=  $request->repeat_testing_ib || !empty($request->repeat_testing_ib_comment)) {
                 $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                         ->where('activity_type', 'Repeat testing required')
                         ->exists();
@@ -4884,7 +5052,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
         if (is_null($lastOosRecod->repeat_testing_ib) || $lastOosRecod->repeat_testing_ib === '') {
                 $history->action_name = "New";
@@ -4894,7 +5062,7 @@ class OOSService
             $history->save();
         }
 
-        if ($lastOosRecod->phase_ii_inv_req_ib !=  $request->phase_ii_inv_req_ib || ! empty($request->phase_ii_inv_req_ib_comment)) {
+        if ($lastOosRecod->phase_ii_inv_req_ib !=  $request->phase_ii_inv_req_ib || !empty($request->phase_ii_inv_req_ib_comment)) {
             $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                     ->where('activity_type', 'Phase II investigation required')
                     ->exists();
@@ -4909,7 +5077,7 @@ class OOSService
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastOosRecod->status;
         $history->stage = $lastOosRecod->stage;
-        $history->change_to =   "Opened";
+        $history->change_to =   "Not Applicable";
         $history->change_from = $lastOosRecod->status;
     if (is_null($lastOosRecod->phase_ii_inv_req_ib) || $lastOosRecod->phase_ii_inv_req_ib === '') {
             $history->action_name = "New";
@@ -4919,22 +5087,22 @@ class OOSService
         $history->save();
     }
 
-                        if ($lastOosRecod->production_person_ib !=  $request->production_person_ib || ! empty($request->production_person_ib_comment)) {
+                        if ($lastOosRecod->production_person_ib !=  $request->production_person_ib || !empty($request->production_person_ib_comment)) {
                             $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                     ->where('activity_type', 'Production Person')
                                     ->exists();
                         $history = new OosAuditTrial();
                         $history->oos_id = $lastOosRecod->id;
-                        $history->previous = $lastOosRecod->production_person_ib;
+                        $history->previous = Helpers::getInitiatorName($lastOosRecod->production_person_ib);
                         $history->activity_type = 'Production Person';
-                        $history->current = $request->production_person_ib;
+                        $history->current = Helpers::getInitiatorName($request->production_person_ib);
                         $history->comment = "Not Applicable";
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastOosRecod->status;
                         $history->stage = $lastOosRecod->stage;
-                        $history->change_to =   "Opened";
+                        $history->change_to =   "Not Applicable";
                         $history->change_from = $lastOosRecod->status;
                     if (is_null($lastOosRecod->production_person_ib) || $lastOosRecod->production_person_ib === '') {
                             $history->action_name = "New";
@@ -4947,7 +5115,7 @@ class OOSService
 
 
                 // if ($lastOosRecod->Repeat_testing_plan != $request->Repeat_testing_plan){
-                    if ($lastOosRecod->Repeat_testing_plan !=  $request->Repeat_testing_plan || ! empty($request->Repeat_testing_plan_comment)) {
+                    if ($lastOosRecod->Repeat_testing_plan !=  $request->Repeat_testing_plan || !empty($request->Repeat_testing_plan_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Repeat testing plan')
                                 ->exists();
@@ -4962,7 +5130,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Repeat_testing_plan) || $lastOosRecod->Repeat_testing_plan === '') {
                         $history->action_name = "New";
@@ -4973,7 +5141,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->Repeat_analysis_method != $request->Repeat_analysis_method){
-                    if ($lastOosRecod->Repeat_analysis_method !=  $request->Repeat_analysis_method || ! empty($request->Repeat_analysis_method_comment)) {
+                    if ($lastOosRecod->Repeat_analysis_method !=  $request->Repeat_analysis_method || !empty($request->Repeat_analysis_method_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Repeat analysis method/resampling')
                                 ->exists();
@@ -4988,7 +5156,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Repeat_analysis_method) || $lastOosRecod->Repeat_analysis_method === '') {
                         $history->action_name = "New";
@@ -4999,7 +5167,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->Details_repeat_analysis != $request->Details_repeat_analysis){
-                    if ($lastOosRecod->Details_repeat_analysis !=  $request->Details_repeat_analysis || ! empty($request->Details_repeat_analysis_comment)) {
+                    if ($lastOosRecod->Details_repeat_analysis !=  $request->Details_repeat_analysis || !empty($request->Details_repeat_analysis_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Details of repeat analysis')
                                 ->exists();
@@ -5014,7 +5182,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Details_repeat_analysis) || $lastOosRecod->Details_repeat_analysis === '') {
                         $history->action_name = "New";
@@ -5025,7 +5193,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->Impact_assessment1 != $request->Impact_assessment1){
-                    if ($lastOosRecod->Impact_assessment1 !=  $request->Impact_assessment1 || ! empty($request->Impact_assessment1_comment)) {
+                    if ($lastOosRecod->Impact_assessment1 !=  $request->Impact_assessment1 || !empty($request->Impact_assessment1_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Impact assessment')
                                 ->exists();
@@ -5040,7 +5208,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Impact_assessment1) || $lastOosRecod->Impact_assessment1 === '') {
                         $history->action_name = "New";
@@ -5051,7 +5219,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->Conclusion1 != $request->Conclusion1){
-                    if ($lastOosRecod->Conclusion1 !=  $request->Conclusion1 || ! empty($request->Conclusion1_comment)) {
+                    if ($lastOosRecod->Conclusion1 !=  $request->Conclusion1 || !empty($request->Conclusion1_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Conclusion')
                                 ->exists();
@@ -5066,7 +5234,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->Conclusion1) || $lastOosRecod->Conclusion1 === '') {
                         $history->action_name = "New";
@@ -5077,14 +5245,14 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->hod_remark3 != $request->hod_remark3){
-                    if ($lastOosRecod->hod_remark3 !=  $request->hod_remark3 || ! empty($request->hod_remark3_comment)) {
+                    if ($lastOosRecod->hod_remark3 !=  $request->hod_remark3 || !empty($request->hod_remark3_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                                ->where('activity_type', 'Phase IB HOD Primary Remark')
+                                ->where('activity_type', 'Phase IB HOD Remark')
                                 ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->hod_remark3;
-                    $history->activity_type = 'Phase IB HOD Primary Remark';
+                    $history->activity_type = 'Phase IB HOD Remark';
                     $history->current = $request->hod_remark3;
                     $history->comment = "Not Applicable";
                     $history->user_id = Auth::user()->id;
@@ -5092,7 +5260,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->hod_remark3) || $lastOosRecod->hod_remark3 === '') {
                         $history->action_name = "New";
@@ -5103,7 +5271,7 @@ class OOSService
                 }
 
                 // if ($lastOosRecod->QA_Head_remark3 != $request->QA_Head_remark3){
-                    if ($lastOosRecod->QA_Head_remark3 !=  $request->QA_Head_remark3 || ! empty($request->QA_Head_remark3_comment)) {
+                    if ($lastOosRecod->QA_Head_remark3 !=  $request->QA_Head_remark3 || !empty($request->QA_Head_remark3_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Phase IB CQA/QA Remark')
                                 ->exists();
@@ -5118,7 +5286,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->QA_Head_remark3) || $lastOosRecod->QA_Head_remark3 === '') {
                         $history->action_name = "New";
@@ -5128,7 +5296,7 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->escalation_required !=  $request->escalation_required || ! empty($request->escalation_required_comment)) {
+                if ($lastOosRecod->escalation_required !=  $request->escalation_required || !empty($request->escalation_required_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Escalation required')
                             ->exists();
@@ -5143,7 +5311,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
             if (is_null($lastOosRecod->escalation_required) || $lastOosRecod->escalation_required === '') {
                     $history->action_name = "New";
@@ -5153,7 +5321,7 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->notification_ib !=  $request->notification_ib || ! empty($request->notification_ib_comment)) {
+            if ($lastOosRecod->notification_ib !=  $request->notification_ib || !empty($request->notification_ib_comment)) {
                 $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                         ->where('activity_type', 'Notification details')
                         ->exists();
@@ -5168,7 +5336,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
         if (is_null($lastOosRecod->notification_ib) || $lastOosRecod->notification_ib === '') {
                 $history->action_name = "New";
@@ -5178,7 +5346,7 @@ class OOSService
             $history->save();
         }
 
-        if ($lastOosRecod->justification_ib !=  $request->justification_ib || ! empty($request->justification_ib_comment)) {
+        if ($lastOosRecod->justification_ib !=  $request->justification_ib || !empty($request->justification_ib_comment)) {
             $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                     ->where('activity_type', 'Justification details')
                     ->exists();
@@ -5193,7 +5361,7 @@ class OOSService
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastOosRecod->status;
         $history->stage = $lastOosRecod->stage;
-        $history->change_to =   "Opened";
+        $history->change_to =   "Not Applicable";
         $history->change_from = $lastOosRecod->status;
     if (is_null($lastOosRecod->justification_ib) || $lastOosRecod->justification_ib === '') {
             $history->action_name = "New";
@@ -5205,14 +5373,14 @@ class OOSService
 
 
                 // if ($lastOosRecod->QA_Head_primary_remark3 != $request->QA_Head_primary_remark3){
-                    if ($lastOosRecod->QA_Head_primary_remark3 !=  $request->QA_Head_primary_remark3 || ! empty($request->QA_Head_primary_remark3_comment)) {
+                    if ($lastOosRecod->QA_Head_primary_remark3 !=  $request->QA_Head_primary_remark3 || !empty($request->QA_Head_primary_remark3_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                                ->where('activity_type', 'P-IB CQAH/QAH Remark')
+                                ->where('activity_type', 'Phase IB CQAH/QAH Remark')
                                 ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->QA_Head_primary_remark3;
-                    $history->activity_type = 'P-IB CQAH/QAH Remark';
+                    $history->activity_type = 'Phase IB CQAH/QAH Remark';
                     $history->current = $request->QA_Head_primary_remark3;
                     $history->comment = "Not Applicable";
                     $history->user_id = Auth::user()->id;
@@ -5220,7 +5388,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastOosRecod->status;
                     $history->stage = $lastOosRecod->stage;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Not Applicable";
                     $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->QA_Head_primary_remark3) || $lastOosRecod->QA_Head_primary_remark3 === '') {
                         $history->action_name = "New";
@@ -5232,7 +5400,7 @@ class OOSService
 
             // TapVI6
             // if ($lastOosRecod->qa_approver_comments_piii != $request->qa_approver_comments_piii){
-                if ($lastOosRecod->checklist_outcome_iia !=  $request->checklist_outcome_iia || ! empty($request->checklist_outcome_iia_comment)) {
+                if ($lastOosRecod->checklist_outcome_iia !=  $request->checklist_outcome_iia || !empty($request->checklist_outcome_iia_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Checklist Outcome')
                             ->exists();
@@ -5247,7 +5415,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
            if (is_null($lastOosRecod->checklist_outcome_iia) || $lastOosRecod->checklist_outcome_iia === '') {
                 $history->action_name = "New";
@@ -5257,22 +5425,22 @@ class OOSService
             $history->save();
         }
 
-        if ($lastOosRecod->production_head_person !=  $request->production_head_person || ! empty($request->production_head_person_comment)) {
+        if ($lastOosRecod->production_head_person !=  $request->production_head_person || !empty($request->production_head_person_comment)) {
             $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                     ->where('activity_type', 'Production Head Person')
                     ->exists();
             $history = new OosAuditTrial();
             $history->oos_id = $lastOosRecod->id;
-            $history->previous = $lastOosRecod->production_head_person;
+            $history->previous = Helpers::getInitiatorName($lastOosRecod->production_head_person);
             $history->activity_type = 'Production Head Person';
-            $history->current = $request->production_head_person;
+            $history->current = Helpers::getInitiatorName($request->production_head_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
         if (is_null($lastOosRecod->production_head_person) || $lastOosRecod->production_head_person === '') {
                 $history->action_name = "New";
@@ -5282,7 +5450,7 @@ class OOSService
             $history->save();
         }
 
-             if ($lastOosRecod->qa_approver_comments_piii !=  $request->qa_approver_comments_piii || ! empty($request->qa_approver_comments_piii_comment)) {
+             if ($lastOosRecod->qa_approver_comments_piii !=  $request->qa_approver_comments_piii || !empty($request->qa_approver_comments_piii_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'QA Approver Comments')
                                 ->exists();
@@ -5297,7 +5465,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->qa_approver_comments_piii) || $lastOosRecod->qa_approver_comments_piii === '') {
                     $history->action_name = "New";
@@ -5307,7 +5475,7 @@ class OOSService
                 $history->save();
             }
 
-                    if ($lastOosRecod->reason_manufacturing_delay !=  $request->reason_manufacturing_delay || ! empty($request->reason_manufacturing_delay_comment)) {
+                    if ($lastOosRecod->reason_manufacturing_delay !=  $request->reason_manufacturing_delay || !empty($request->reason_manufacturing_delay_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                 ->where('activity_type', 'Delay Justification For Investigation')
                                 ->exists();
@@ -5322,7 +5490,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
             if (is_null($lastOosRecod->reason_manufacturing_delay) || $lastOosRecod->reason_manufacturing_delay === '') {
                     $history->action_name = "New";
@@ -5332,7 +5500,7 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->reason_manufacturing_piii != $request->reason_manufacturing_piii){
-                if ($lastOosRecod->reason_manufacturing_piii !=  $request->reason_manufacturing_piii || ! empty($request->reason_manufacturing_piii_comment)) {
+                if ($lastOosRecod->reason_manufacturing_piii !=  $request->reason_manufacturing_piii || !empty($request->reason_manufacturing_piii_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Reason for manufacturing')
                             ->exists();
@@ -5347,7 +5515,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->reason_manufacturing_piii) || $lastOosRecod->reason_manufacturing_piii === '') {
                     $history->action_name = "New";
@@ -5358,7 +5526,7 @@ class OOSService
             }
 
             // if ($lastOosRecod->manufact_invest_required_piii != $request->manufact_invest_required_piii){
-                if ($lastOosRecod->manufact_invest_required_piii !=  $request->manufact_invest_required_piii || ! empty($request->manufact_invest_required_piii_comment)) {
+                if ($lastOosRecod->manufact_invest_required_piii !=  $request->manufact_invest_required_piii || !empty($request->manufact_invest_required_piii_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'OOS Cause Identified II A')
                             ->exists();
@@ -5373,7 +5541,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->manufact_invest_required_piii) || $lastOosRecod->manufact_invest_required_piii === '') {
                     $history->action_name = "New";
@@ -5383,7 +5551,7 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->manufacturing_invest_type_piii != $request->manufacturing_invest_type_piii){
-                if ($lastOosRecod->manufacturing_invest_type_piii !=  $request->manufacturing_invest_type_piii || ! empty($request->manufacturing_invest_type_piii_comment)) {
+                if ($lastOosRecod->manufacturing_invest_type_piii !=  $request->manufacturing_invest_type_piii || !empty($request->manufacturing_invest_type_piii_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Manufacturing Invest. Type')
                             ->exists();
@@ -5398,7 +5566,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->manufacturing_invest_type_piii) || $lastOosRecod->manufacturing_invest_type_piii === '') {
                     $history->action_name = "New";
@@ -5407,14 +5575,14 @@ class OOSService
                 }
             }
             // if ($lastOosRecod->audit_comments_piii != $request->audit_comments_piii){
-                if ($lastOosRecod->audit_comments_piii !=  $request->audit_comments_piii || ! empty($request->audit_comments_piii_comment)) {
+                if ($lastOosRecod->audit_comments_piii !=  $request->audit_comments_piii || !empty($request->audit_comments_piii_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                            ->where('activity_type', 'Audit Comments')
+                            ->where('activity_type', 'Any Other Cause/Suspected Cause')
                             ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->audit_comments_piii;
-                $history->activity_type = 'Audit Comments';
+                $history->activity_type = 'Any Other Cause/Suspected Cause';
                 $history->current = $request->audit_comments_piii;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
@@ -5422,7 +5590,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = "Initiator";
                if (is_null($lastOosRecod->audit_comments_piii) || $lastOosRecod->audit_comments_piii === '') {
                     $history->action_name = "New";
@@ -5432,7 +5600,7 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->hypo_exp_required_piii != $request->hypo_exp_required_piii){
-                if ($lastOosRecod->hypo_exp_required_piii !=  $request->hypo_exp_required_piii || ! empty($request->hypo_exp_required_piii_comment)) {
+                if ($lastOosRecod->hypo_exp_required_piii !=  $request->hypo_exp_required_piii || !empty($request->hypo_exp_required_piii_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'OOS Category II A')
                             ->exists();
@@ -5447,7 +5615,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->hypo_exp_required_piii) || $lastOosRecod->hypo_exp_required_piii === '') {
                     $history->action_name = "New";
@@ -5457,7 +5625,7 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->hypo_exp_reference_piii != $request->hypo_exp_reference_piii){
-                if ($lastOosRecod->hypo_exp_reference_piii !=  $request->hypo_exp_reference_piii || ! empty($request->hypo_exp_reference_piii_comment)) {
+                if ($lastOosRecod->hypo_exp_reference_piii !=  $request->hypo_exp_reference_piii || !empty($request->hypo_exp_reference_piii_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Summary Investigation')
                             ->exists();
@@ -5472,7 +5640,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->hypo_exp_reference_piii) || $lastOosRecod->hypo_exp_reference_piii === '') {
                     $history->action_name = "New";
@@ -5482,7 +5650,7 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->if_others_oos_category !=  $request->if_others_oos_category || ! empty($request->if_others_oos_category_comment)) {
+            if ($lastOosRecod->if_others_oos_category !=  $request->if_others_oos_category || !empty($request->if_others_oos_category_comment)) {
                 $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                         ->where('activity_type', 'OOS Category If Others')
                         ->exists();
@@ -5497,7 +5665,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
            if (is_null($lastOosRecod->if_others_oos_category) || $lastOosRecod->if_others_oos_category === '') {
                 $history->action_name = "New";
@@ -5508,7 +5676,7 @@ class OOSService
         }
             // TapVIII8
             // if ($lastOosRecod->summary_of_exp_hyp_piiqcr != $request->summary_of_exp_hyp_piiqcr){
-                if ($lastOosRecod->summary_of_exp_hyp_piiqcr !=  $request->summary_of_exp_hyp_piiqcr || ! empty($request->summary_of_exp_hyp_piiqcr_comment)) {
+                if ($lastOosRecod->summary_of_exp_hyp_piiqcr !=  $request->summary_of_exp_hyp_piiqcr || !empty($request->summary_of_exp_hyp_piiqcr_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Summary of Exp./Hyp.')
                             ->exists();
@@ -5523,7 +5691,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->summary_of_exp_hyp_piiqcr) || $lastOosRecod->summary_of_exp_hyp_piiqcr === '') {
                     $history->action_name = "New";
@@ -5533,7 +5701,7 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->summary_mfg_investigation_piiqcr != $request->summary_mfg_investigation_piiqcr){
-                if ($lastOosRecod->summary_mfg_investigation_piiqcr !=  $request->summary_mfg_investigation_piiqcr || ! empty($request->summary_mfg_investigation_piiqcr_comment)) {
+                if ($lastOosRecod->summary_mfg_investigation_piiqcr !=  $request->summary_mfg_investigation_piiqcr || !empty($request->summary_mfg_investigation_piiqcr_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Summary Mfg. Investigation')
                             ->exists();
@@ -5548,7 +5716,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->summary_mfg_investigation_piiqcr) || $lastOosRecod->summary_mfg_investigation_piiqcr === '') {
                     $history->action_name = "New";
@@ -5558,7 +5726,7 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->reference_system_document_gi != $request->reference_system_document_gi){
-                if ($lastOosRecod->reference_system_document_gi !=  $request->reference_system_document_gi || ! empty($request->reference_system_document_gi_comment)) {
+                if ($lastOosRecod->reference_system_document_gi !=  $request->reference_system_document_gi || !empty($request->reference_system_document_gi_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Reference System Document')
                             ->exists();
@@ -5573,7 +5741,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->reference_system_document_gi) || $lastOosRecod->reference_system_document_gi === '') {
                     $history->action_name = "New";
@@ -5583,22 +5751,22 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->oos_observed_on != $request->oos_observed_on){
-                if ($lastOosRecod->oos_observed_on !=  $request->oos_observed_on || ! empty($request->oos_observed_on_comment)) {
+                if ($lastOosRecod->oos_observed_on !=  $request->oos_observed_on || !empty($request->oos_observed_on_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'OOS Observed On')
                             ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
-                $history->previous = $lastOosRecod->oos_observed_on;
+                $history->previous = Helpers::getdateFormat($lastOosRecod->oos_observed_on);
                 $history->activity_type = 'OOS Observed On';
-                $history->current = $request->oos_observed_on;
+                $history->current = Helpers::getdateFormat($request->oos_observed_on);
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->oos_observed_on) || $lastOosRecod->oos_observed_on === '') {
                     $history->action_name = "New";
@@ -5608,7 +5776,7 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->root_casue_identified_piiqcr != $request->root_casue_identified_piiqcr){
-                if ($lastOosRecod->root_casue_identified_piiqcr !=  $request->root_casue_identified_piiqcr || ! empty($request->root_casue_identified_piiqcr_comment)) {
+                if ($lastOosRecod->root_casue_identified_piiqcr !=  $request->root_casue_identified_piiqcr || !empty($request->root_casue_identified_piiqcr_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Root Casue Identified')
                             ->exists();
@@ -5623,7 +5791,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->root_casue_identified_piiqcr) || $lastOosRecod->root_casue_identified_piiqcr === '') {
                     $history->action_name = "New";
@@ -5633,7 +5801,7 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->reference_document != $request->reference_document){
-                if ($lastOosRecod->reference_document !=  $request->reference_document || ! empty($request->reference_document_comment)) {
+                if ($lastOosRecod->reference_document !=  $request->reference_document || !empty($request->reference_document_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Reference document')
                             ->exists();
@@ -5648,7 +5816,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->reference_document) || $lastOosRecod->reference_document === '') {
                     $history->action_name = "New";
@@ -5658,7 +5826,7 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->oos_category_reason_identified_piiqcr != $request->oos_category_reason_identified_piiqcr){
-                if ($lastOosRecod->oos_category_reason_identified_piiqcr !=  $request->oos_category_reason_identified_piiqcr || ! empty($request->oos_category_reason_identified_piiqcr_comment)) {
+                if ($lastOosRecod->oos_category_reason_identified_piiqcr !=  $request->oos_category_reason_identified_piiqcr || !empty($request->oos_category_reason_identified_piiqcr_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'OOS Category-Reason identified')
                             ->exists();
@@ -5673,7 +5841,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->oos_category_reason_identified_piiqcr) || $lastOosRecod->oos_category_reason_identified_piiqcr === '') {
                     $history->action_name = "New";
@@ -5684,7 +5852,7 @@ class OOSService
             }
             
             // if ($lastOosRecod->others_oos_category_piiqcr != $request->others_oos_category_piiqcr){
-                if ($lastOosRecod->others_oos_category_piiqcr !=  $request->others_oos_category_piiqcr || ! empty($request->others_oos_category_piiqcr_comment)) {
+                if ($lastOosRecod->others_oos_category_piiqcr !=  $request->others_oos_category_piiqcr || !empty($request->others_oos_category_piiqcr_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Others (OOS category)')
                             ->exists();
@@ -5699,7 +5867,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->others_oos_category_piiqcr) || $lastOosRecod->others_oos_category_piiqcr === '') {
                     $history->action_name = "New";
@@ -5709,7 +5877,7 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->oos_details_obvious_error != $request->oos_details_obvious_error){
-                if ($lastOosRecod->oos_details_obvious_error !=  $request->oos_details_obvious_error || ! empty($request->oos_details_obvious_error_comment)) {
+                if ($lastOosRecod->oos_details_obvious_error !=  $request->oos_details_obvious_error || !empty($request->oos_details_obvious_error_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Details of Obvious Error')
                             ->exists();
@@ -5724,7 +5892,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->oos_details_obvious_error) || $lastOosRecod->oos_details_obvious_error === '') {
                     $history->action_name = "New";
@@ -5749,7 +5917,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->delay_justification) || $lastOosRecod->delay_justification === '') {
                     $history->action_name = "New";
@@ -5759,22 +5927,22 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->oos_reported_date != $request->oos_reported_date){
-                if ($lastOosRecod->oos_reported_date !=  $request->oos_reported_date || ! empty($request->oos_reported_date_comment)) {
+                if ($lastOosRecod->oos_reported_date !=  $request->oos_reported_date || !empty($request->oos_reported_date_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'OOS Reported On')
                             ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
-                $history->previous = $lastOosRecod->oos_reported_date;
+                $history->previous = Helpers::getdateFormat($lastOosRecod->oos_reported_date);
                 $history->activity_type = 'OOS Reported On';
-                $history->current = $request->oos_reported_date;
+                $history->current = Helpers::getdateFormat($request->oos_reported_date);
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->oos_reported_date) || $lastOosRecod->oos_reported_date === '') {
                     $history->action_name = "New";
@@ -5783,33 +5951,57 @@ class OOSService
                 }
                 $history->save();
             }
-            // if ($lastOosRecod->immediate_action != $request->immediate_action){
-                if ($lastOosRecod->immediate_action !=  $request->immediate_action || ! empty($request->immediate_action_comment)) {
-                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                            ->where('activity_type', 'Immediate Action')
-                            ->exists();
-                $history = new OosAuditTrial();
-                $history->oos_id = $lastOosRecod->id;
-                $history->previous = $lastOosRecod->immediate_action;
-                $history->activity_type = 'Immediate Action';
-                $history->current = $request->immediate_action;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastOosRecod->status;
-                $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
-                $history->change_from = $lastOosRecod->status;
-               if (is_null($lastOosRecod->immediate_action) || $lastOosRecod->immediate_action === '') {
-                    $history->action_name = "New";
-                } else {
-                    $history->action_name = "Update";
-                }
-                $history->save();
+            //     if ($lastOosRecod->initial_attachment_gi !=  $request->initial_attachment_gi || !empty($request->initial_attachment_gi_comment)) {
+            //         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+            //                 ->where('activity_type', 'Initial Attachment')
+            //                 ->exists();
+            //     $history = new OosAuditTrial();
+            //     $history->oos_id = $lastOosRecod->id;
+            //     $history->previous = $lastOosRecod->initial_attachment_gi;
+            //     $history->activity_type = 'Initial Attachment';
+            //     $history->current = $request->initial_attachment_gi;
+            //     $history->comment = "Not Applicable";
+            //     $history->user_id = Auth::user()->id;
+            //     $history->user_name = Auth::user()->name;
+            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->origin_state = $lastOosRecod->status;
+            //     $history->stage = $lastOosRecod->stage;
+            //     $history->change_to =   "Not Applicable";
+            //     $history->change_from = $lastOosRecod->status;
+            //    if (is_null($lastOosRecod->initial_attachment_gi) || $lastOosRecod->initial_attachment_gi === '') {
+            //         $history->action_name = "New";
+            //     } else {
+            //         $history->action_name = "Update";
+            //     }
+            //     $history->save();
+            // }
+
+            if ($lastOosRecod->immediate_action !=  $request->immediate_action || !empty($request->immediate_action_comment)) {
+                $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                        ->where('activity_type', 'Immediate Action')
+                        ->exists();
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = $lastOosRecod->immediate_action;
+            $history->activity_type = 'Immediate Action';
+            $history->current = $request->immediate_action;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+           if (is_null($lastOosRecod->immediate_action) || $lastOosRecod->immediate_action === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
             }
+            $history->save();
+        }
             // if ($lastOosRecod->Description_Deviation != $request->Description_Deviation){
-                if ($lastOosRecod->Description_Deviation !=  $request->Description_Deviation || ! empty($request->Description_Deviation_comment)) {
+                if ($lastOosRecod->Description_Deviation !=  $request->Description_Deviation || !empty($request->Description_Deviation_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Results of Retest/re-measurement')
                             ->exists();
@@ -5824,7 +6016,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->Description_Deviation) || $lastOosRecod->Description_Deviation === '') {
                     $history->action_name = "New";
@@ -5833,7 +6025,7 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->result_of_repeat !=  $request->result_of_repeat || ! empty($request->result_of_repeat_comment)) {
+            if ($lastOosRecod->result_of_repeat !=  $request->result_of_repeat || !empty($request->result_of_repeat_comment)) {
                 $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                         ->where('activity_type', 'Results of Repeat testing')
                         ->exists();
@@ -5848,7 +6040,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
            if (is_null($lastOosRecod->result_of_repeat) || $lastOosRecod->result_of_repeat === '') {
                 $history->action_name = "New";
@@ -5858,7 +6050,7 @@ class OOSService
             $history->save();
         }
 
-        if ($lastOosRecod->impact_assesment_pia !=  $request->impact_assesment_pia || ! empty($request->impact_assesment_pia_comment)) {
+        if ($lastOosRecod->impact_assesment_pia !=  $request->impact_assesment_pia || !empty($request->impact_assesment_pia_comment)) {
             $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                     ->where('activity_type', 'Impact assessment')
                     ->exists();
@@ -5873,7 +6065,7 @@ class OOSService
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastOosRecod->status;
         $history->stage = $lastOosRecod->stage;
-        $history->change_to =   "Opened";
+        $history->change_to =   "Not Applicable";
         $history->change_from = $lastOosRecod->status;
        if (is_null($lastOosRecod->impact_assesment_pia) || $lastOosRecod->impact_assesment_pia === '') {
             $history->action_name = "New";
@@ -5883,7 +6075,7 @@ class OOSService
         $history->save();
     }
             // if ($lastOosRecod->details_of_root_cause_piiqcr != $request->details_of_root_cause_piiqcr){
-                if ($lastOosRecod->details_of_root_cause_piiqcr !=  $request->details_of_root_cause_piiqcr || ! empty($request->details_of_root_cause_piiqcr_comment)) {
+                if ($lastOosRecod->details_of_root_cause_piiqcr !=  $request->details_of_root_cause_piiqcr || !empty($request->details_of_root_cause_piiqcr_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Details of Root Cause')
                             ->exists();
@@ -5898,7 +6090,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->details_of_root_cause_piiqcr) || $lastOosRecod->details_of_root_cause_piiqcr === '') {
                     $history->action_name = "New";
@@ -5908,7 +6100,7 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->impact_assessment_piiqcr != $request->impact_assessment_piiqcr){
-                if ($lastOosRecod->impact_assessment_piiqcr !=  $request->impact_assessment_piiqcr || ! empty($request->impact_assessment_piiqcr_comment)) {
+                if ($lastOosRecod->impact_assessment_piiqcr !=  $request->impact_assessment_piiqcr || !empty($request->impact_assessment_piiqcr_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Impact Assessment.')
                             ->exists();
@@ -5923,7 +6115,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->impact_assessment_piiqcr) || $lastOosRecod->impact_assessment_piiqcr === '') {
                     $history->action_name = "New";
@@ -5934,7 +6126,7 @@ class OOSService
             }
 
             // if ($lastOosRecod->capa_required_iia != $request->capa_required_iia){
-                if ($lastOosRecod->capa_required_iia !=  $request->capa_required_iia || ! empty($request->capa_required_iia_comment)) {
+                if ($lastOosRecod->capa_required_iia !=  $request->capa_required_iia || !empty($request->capa_required_iia_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'CAPA Required')
                             ->exists();
@@ -5949,7 +6141,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->capa_required_iia) || $lastOosRecod->capa_required_iia === '') {
                     $history->action_name = "New";
@@ -5959,7 +6151,7 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->reference_capa_no_iia !=  $request->reference_capa_no_iia || ! empty($request->reference_capa_no_iia_comment)) {
+            if ($lastOosRecod->reference_capa_no_iia !=  $request->reference_capa_no_iia || !empty($request->reference_capa_no_iia_comment)) {
                 $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                         ->where('activity_type', 'Reference CAPA No.')
                         ->exists();
@@ -5974,7 +6166,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Opened";
+            $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
            if (is_null($lastOosRecod->reference_capa_no_iia) || $lastOosRecod->reference_capa_no_iia === '') {
                 $history->action_name = "New";
@@ -5984,7 +6176,7 @@ class OOSService
             $history->save();
         }
 
-        if ($lastOosRecod->OOS_review_similar !=  $request->OOS_review_similar || ! empty($request->OOS_review_similar_comment)) {
+        if ($lastOosRecod->OOS_review_similar !=  $request->OOS_review_similar || !empty($request->OOS_review_similar_comment)) {
             $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                     ->where('activity_type', 'OOS Review For Similar Nature II A')
                     ->exists();
@@ -5999,7 +6191,7 @@ class OOSService
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastOosRecod->status;
         $history->stage = $lastOosRecod->stage;
-        $history->change_to =   "Opened";
+        $history->change_to =   "Not Applicable";
         $history->change_from = $lastOosRecod->status;
        if (is_null($lastOosRecod->OOS_review_similar) || $lastOosRecod->OOS_review_similar === '') {
             $history->action_name = "New";
@@ -6009,7 +6201,7 @@ class OOSService
         $history->save();
     }
 
-    if ($lastOosRecod->impact_assessment_IIA !=  $request->impact_assessment_IIA || ! empty($request->impact_assessment_IIA_comment)) {
+    if ($lastOosRecod->impact_assessment_IIA !=  $request->impact_assessment_IIA || !empty($request->impact_assessment_IIA_comment)) {
         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                 ->where('activity_type', 'Impact Assessment.')
                 ->exists();
@@ -6024,7 +6216,7 @@ class OOSService
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastOosRecod->status;
     $history->stage = $lastOosRecod->stage;
-    $history->change_to =   "Opened";
+    $history->change_to =   "Not Applicable";
     $history->change_from = $lastOosRecod->status;
    if (is_null($lastOosRecod->impact_assessment_IIA) || $lastOosRecod->impact_assessment_IIA === '') {
         $history->action_name = "New";
@@ -6034,7 +6226,7 @@ class OOSService
     $history->save();
 }
 
-if ($lastOosRecod->Summary_Of_Inv_IIB !=  $request->Summary_Of_Inv_IIB || ! empty($request->Summary_Of_Inv_IIB_comment)) {
+if ($lastOosRecod->Summary_Of_Inv_IIB !=  $request->Summary_Of_Inv_IIB || !empty($request->Summary_Of_Inv_IIB_comment)) {
     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
             ->where('activity_type', 'Summary Of Investigation')
             ->exists();
@@ -6049,7 +6241,7 @@ $history->user_name = Auth::user()->name;
 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 $history->origin_state = $lastOosRecod->status;
 $history->stage = $lastOosRecod->stage;
-$history->change_to =   "Opened";
+$history->change_to =   "Not Applicable";
 $history->change_from = $lastOosRecod->status;
 if (is_null($lastOosRecod->Summary_Of_Inv_IIB) || $lastOosRecod->Summary_Of_Inv_IIB === '') {
     $history->action_name = "New";
@@ -6059,14 +6251,14 @@ if (is_null($lastOosRecod->Summary_Of_Inv_IIB) || $lastOosRecod->Summary_Of_Inv_
 $history->save();
 }
 
-if ($lastOosRecod->capa_required_IIB !=  $request->capa_required_IIB || ! empty($request->capa_required_IIB_comment)) {
+if ($lastOosRecod->capa_required_IIB !=  $request->capa_required_IIB || !empty($request->capa_required_IIB_comment)) {
     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-            ->where('activity_type', 'CAPA Required IIB')
+            ->where('activity_type', 'CAPA Required')
             ->exists();
 $history = new OosAuditTrial();
 $history->oos_id = $lastOosRecod->id;
 $history->previous = $lastOosRecod->capa_required_IIB;
-$history->activity_type = 'CAPA Required IIB';
+$history->activity_type = 'CAPA Required';
 $history->current = $request->capa_required_IIB;
 $history->comment = "Not Applicable";
 $history->user_id = Auth::user()->id;
@@ -6074,7 +6266,7 @@ $history->user_name = Auth::user()->name;
 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 $history->origin_state = $lastOosRecod->status;
 $history->stage = $lastOosRecod->stage;
-$history->change_to =   "Opened";
+$history->change_to =   "Not Applicable";
 $history->change_from = $lastOosRecod->status;
 if (is_null($lastOosRecod->capa_required_IIB) || $lastOosRecod->capa_required_IIB === '') {
     $history->action_name = "New";
@@ -6084,7 +6276,7 @@ if (is_null($lastOosRecod->capa_required_IIB) || $lastOosRecod->capa_required_II
 $history->save();
 }
 
-if ($lastOosRecod->reference_capa_IIB !=  $request->reference_capa_IIB || ! empty($request->reference_capa_IIB_comment)) {
+if ($lastOosRecod->reference_capa_IIB !=  $request->reference_capa_IIB || !empty($request->reference_capa_IIB_comment)) {
     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
             ->where('activity_type', 'Reference CAPA No. IIB')
             ->exists();
@@ -6099,7 +6291,7 @@ $history->user_name = Auth::user()->name;
 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 $history->origin_state = $lastOosRecod->status;
 $history->stage = $lastOosRecod->stage;
-$history->change_to =   "Opened";
+$history->change_to =   "Not Applicable";
 $history->change_from = $lastOosRecod->status;
 if (is_null($lastOosRecod->reference_capa_IIB) || $lastOosRecod->reference_capa_IIB === '') {
     $history->action_name = "New";
@@ -6110,7 +6302,7 @@ $history->save();
 }
 
 
-if ($lastOosRecod->resampling_req_IIB !=  $request->resampling_req_IIB || ! empty($request->resampling_req_IIB_comment)) {
+if ($lastOosRecod->resampling_req_IIB !=  $request->resampling_req_IIB || !empty($request->resampling_req_IIB_comment)) {
     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
             ->where('activity_type', 'Resampling required IIB Inv.')
             ->exists();
@@ -6125,7 +6317,7 @@ $history->user_name = Auth::user()->name;
 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 $history->origin_state = $lastOosRecod->status;
 $history->stage = $lastOosRecod->stage;
-$history->change_to =   "Opened";
+$history->change_to =   "Not Applicable";
 $history->change_from = $lastOosRecod->status;
 if (is_null($lastOosRecod->resampling_req_IIB) || $lastOosRecod->resampling_req_IIB === '') {
     $history->action_name = "New";
@@ -6135,7 +6327,7 @@ if (is_null($lastOosRecod->resampling_req_IIB) || $lastOosRecod->resampling_req_
 $history->save();
 }
 
-if ($lastOosRecod->Repeat_testing_IIB !=  $request->Repeat_testing_IIB || ! empty($request->Repeat_testing_IIB_comment)) {
+if ($lastOosRecod->Repeat_testing_IIB !=  $request->Repeat_testing_IIB || !empty($request->Repeat_testing_IIB_comment)) {
     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
             ->where('activity_type', 'Repeat testing required IIB Inv.')
             ->exists();
@@ -6150,7 +6342,7 @@ $history->user_name = Auth::user()->name;
 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 $history->origin_state = $lastOosRecod->status;
 $history->stage = $lastOosRecod->stage;
-$history->change_to =   "Opened";
+$history->change_to =   "Not Applicable";
 $history->change_from = $lastOosRecod->status;
 if (is_null($lastOosRecod->Repeat_testing_IIB) || $lastOosRecod->Repeat_testing_IIB === '') {
     $history->action_name = "New";
@@ -6161,7 +6353,7 @@ $history->save();
 }
 
 
-if ($lastOosRecod->result_of_rep_test_IIB !=  $request->result_of_rep_test_IIB || ! empty($request->result_of_rep_test_IIB_comment)) {
+if ($lastOosRecod->result_of_rep_test_IIB !=  $request->result_of_rep_test_IIB || !empty($request->result_of_rep_test_IIB_comment)) {
     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
             ->where('activity_type', 'Results Of Repeat testing required IIB Inv.')
             ->exists();
@@ -6176,7 +6368,7 @@ $history->user_name = Auth::user()->name;
 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 $history->origin_state = $lastOosRecod->status;
 $history->stage = $lastOosRecod->stage;
-$history->change_to =   "Opened";
+$history->change_to =   "Not Applicable";
 $history->change_from = $lastOosRecod->status;
 if (is_null($lastOosRecod->result_of_rep_test_IIB) || $lastOosRecod->result_of_rep_test_IIB === '') {
     $history->action_name = "New";
@@ -6188,7 +6380,7 @@ $history->save();
 
             // ======= Additional Testing Proposal ============
             // if ($lastOosRecod->review_comment_atp != $request->review_comment_atp){
-                if ($lastOosRecod->review_comment_atp !=  $request->review_comment_atp || ! empty($request->review_comment_atp_comment)) {
+                if ($lastOosRecod->review_comment_atp !=  $request->review_comment_atp || !empty($request->review_comment_atp_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Review Comment Atp.')
                             ->exists();
@@ -6203,7 +6395,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->review_comment_atp) || $lastOosRecod->review_comment_atp === '') {
                     $history->action_name = "New";
@@ -6213,7 +6405,7 @@ $history->save();
                 $history->save();
             }
             // if ($lastOosRecod->additional_test_proposal_atp != $request->additional_test_proposal_atp){
-                if ($lastOosRecod->additional_test_proposal_atp !=  $request->additional_test_proposal_atp || ! empty($request->additional_test_proposal_atp_comment)) {
+                if ($lastOosRecod->additional_test_proposal_atp !=  $request->additional_test_proposal_atp || !empty($request->additional_test_proposal_atp_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Additional Test Proposal Atp')
                             ->exists();
@@ -6228,7 +6420,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->additional_test_proposal_atp) || $lastOosRecod->additional_test_proposal_atp === '') {
                     $history->action_name = "New";
@@ -6249,7 +6441,7 @@ $history->save();
             //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             //     $history->origin_state = $lastOosRecod->status;
             //     $history->stage = $lastOosRecod->stage;
-            //     $history->change_to =   "Opened";
+            //     $history->change_to =   "Not Applicable";
             //     $history->change_from = $lastOosRecod->status;
             //    if (is_null($lastOosRecod->additional_test_reference_atp) || $lastOosRecod->additional_test_reference_atp === '') {
             //         $history->action_name = "New";
@@ -6258,7 +6450,7 @@ $history->save();
             //     }
             //     $history->save();
             // }
-            if ($lastOosRecod->any_other_actions_required_atp !=  $request->any_other_actions_required_atp || ! empty($request->any_other_actions_required_atp_comment)) {
+            if ($lastOosRecod->any_other_actions_required_atp !=  $request->any_other_actions_required_atp || !empty($request->any_other_actions_required_atp_comment)) {
                 $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                         ->where('activity_type', 'Any Other Actions Required')
                         ->exists();                
@@ -6273,7 +6465,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->any_other_actions_required_atp) || $lastOosRecod->any_other_actions_required_atp === '') {
                     $history->action_name = "New";
@@ -6284,7 +6476,7 @@ $history->save();
             }
             // =============== OOS Conclusion  =====================
             // if ($lastOosRecod->conclusion_comments_oosc != $request->conclusion_comments_oosc){
-                if ($lastOosRecod->conclusion_comments_oosc !=  $request->conclusion_comments_oosc || ! empty($request->conclusion_comments_oosc_comment)) {
+                if ($lastOosRecod->conclusion_comments_oosc !=  $request->conclusion_comments_oosc || !empty($request->conclusion_comments_oosc_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Conclusion Comments.')
                             ->exists(); 
@@ -6299,7 +6491,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->conclusion_comments_oosc) || $lastOosRecod->conclusion_comments_oosc === '') {
                     $history->action_name = "New";
@@ -6309,7 +6501,7 @@ $history->save();
                 $history->save();
             }
             // if ($lastOosRecod->specification_limit_oosc != $request->specification_limit_oosc){
-                if ($lastOosRecod->specification_limit_oosc !=  $request->specification_limit_oosc || ! empty($request->specification_limit_oosc_comment)) {
+                if ($lastOosRecod->specification_limit_oosc !=  $request->specification_limit_oosc || !empty($request->specification_limit_oosc_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Specification Limit.')
                             ->exists(); 
@@ -6324,7 +6516,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->specification_limit_oosc) || $lastOosRecod->specification_limit_oosc === '') {
                     $history->action_name = "New";
@@ -6334,7 +6526,7 @@ $history->save();
                 $history->save();
             }
             // if ($lastOosRecod->results_to_be_reported_oosc != $request->results_to_be_reported_oosc){
-                if ($lastOosRecod->results_to_be_reported_oosc !=  $request->results_to_be_reported_oosc || ! empty($request->results_to_be_reported_oosc_comment)) {
+                if ($lastOosRecod->results_to_be_reported_oosc !=  $request->results_to_be_reported_oosc || !empty($request->results_to_be_reported_oosc_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Results to be Reported.')
                             ->exists(); 
@@ -6349,7 +6541,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->results_to_be_reported_oosc) || $lastOosRecod->results_to_be_reported_oosc === '') {
                     $history->action_name = "New";
@@ -6359,7 +6551,7 @@ $history->save();
                 $history->save();
             }
             // if ($lastOosRecod->final_reportable_results_oosc != $request->final_reportable_results_oosc){
-                if ($lastOosRecod->final_reportable_results_oosc !=  $request->final_reportable_results_oosc || ! empty($request->final_reportable_results_oosc_comment)) {
+                if ($lastOosRecod->final_reportable_results_oosc !=  $request->final_reportable_results_oosc || !empty($request->final_reportable_results_oosc_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Final Reportable Results.')
                             ->exists(); 
@@ -6374,7 +6566,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->final_reportable_results_oosc) || $lastOosRecod->final_reportable_results_oosc === '') {
                     $history->action_name = "New";
@@ -6384,7 +6576,7 @@ $history->save();
                 $history->save();
             } 
             // if ($lastOosRecod->justifi_for_averaging_results_oosc != $request->justifi_for_averaging_results_oosc){
-                if ($lastOosRecod->justifi_for_averaging_results_oosc !=  $request->justifi_for_averaging_results_oosc || ! empty($request->justifi_for_averaging_results_oosc_comment)) {
+                if ($lastOosRecod->justifi_for_averaging_results_oosc !=  $request->justifi_for_averaging_results_oosc || !empty($request->justifi_for_averaging_results_oosc_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'ustifi. for Averaging Results.')
                             ->exists(); 
@@ -6399,7 +6591,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->justifi_for_averaging_results_oosc) || $lastOosRecod->justifi_for_averaging_results_oosc === '') {
                     $history->action_name = "New";
@@ -6409,7 +6601,7 @@ $history->save();
                 $history->save();
             } 
             // if ($lastOosRecod->oos_stands_oosc != $request->oos_stands_oosc){
-                if ($lastOosRecod->oos_stands_oosc !=  $request->oos_stands_oosc || ! empty($request->oos_stands_oosc_comment)) {
+                if ($lastOosRecod->oos_stands_oosc !=  $request->oos_stands_oosc || !empty($request->oos_stands_oosc_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'OOS Stands.')
                             ->exists(); 
@@ -6424,7 +6616,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->oos_stands_oosc) || $lastOosRecod->oos_stands_oosc === '') {
                     $history->action_name = "New";
@@ -6434,7 +6626,7 @@ $history->save();
                 $history->save();
             }
             // if ($lastOosRecod->capa_req_oosc != $request->capa_req_oosc){
-                if ($lastOosRecod->capa_req_oosc !=  $request->capa_req_oosc || ! empty($request->capa_req_oosc_comment)) {
+                if ($lastOosRecod->capa_req_oosc !=  $request->capa_req_oosc || !empty($request->capa_req_oosc_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'CAPA Req.')
                             ->exists(); 
@@ -6449,7 +6641,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->capa_req_oosc) || $lastOosRecod->capa_req_oosc === '') {
                     $history->action_name = "New";
@@ -6470,7 +6662,7 @@ $history->save();
             //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             //     $history->origin_state = $lastOosRecod->status;
             //     $history->stage = $lastOosRecod->stage;
-            //     $history->change_to =   "Opened";
+            //     $history->change_to =   "Not Applicable";
             //     $history->change_from = $lastOosRecod->status;
             //    if (is_null($lastOosRecod->capa_ref_no_oosc) || $lastOosRecod->capa_ref_no_oosc === '') {
             //         $history->action_name = "New";
@@ -6480,7 +6672,7 @@ $history->save();
             //     $history->save();
             // }
             // if ($lastOosRecod->Field_alert_QA_initial_approval != $request->Field_alert_QA_initial_approval){
-                if ($lastOosRecod->Field_alert_QA_initial_approval !=  $request->Field_alert_QA_initial_approval || ! empty($request->Field_alert_QA_initial_approval_comment)) {
+                if ($lastOosRecod->Field_alert_QA_initial_approval !=  $request->Field_alert_QA_initial_approval || !empty($request->Field_alert_QA_initial_approval_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'FAR (Field alert)')
                             ->exists(); 
@@ -6495,7 +6687,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->Field_alert_QA_initial_approval) || $lastOosRecod->Field_alert_QA_initial_approval === '') {
                     $history->action_name = "New";
@@ -6505,7 +6697,7 @@ $history->save();
                 $history->save();
             }
             // if ($lastOosRecod->phase_iib_inv_required_plir != $request->phase_iib_inv_required_plir){
-                if ($lastOosRecod->phase_iib_inv_required_plir !=  $request->phase_iib_inv_required_plir || ! empty($request->phase_iib_inv_required_plir_comment)) {
+                if ($lastOosRecod->phase_iib_inv_required_plir !=  $request->phase_iib_inv_required_plir || !empty($request->phase_iib_inv_required_plir_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Phase IIB Inv. Required?')
                             ->exists(); 
@@ -6520,7 +6712,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->phase_iib_inv_required_plir) || $lastOosRecod->phase_iib_inv_required_plir === '') {
                     $history->action_name = "New";
@@ -6531,7 +6723,7 @@ $history->save();
             }
 
             // if ($lastOosRecod->hod_remark4 != $request->hod_remark4){
-                if ($lastOosRecod->hod_remark4 !=  $request->hod_remark4 || ! empty($request->hod_remark4_comment)) {
+                if ($lastOosRecod->hod_remark4 !=  $request->hod_remark4 || !empty($request->hod_remark4_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Phase II A HOD Primary Remark')
                             ->exists(); 
@@ -6546,7 +6738,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->hod_remark4) || $lastOosRecod->hod_remark4 === '') {
                     $history->action_name = "New";
@@ -6557,7 +6749,7 @@ $history->save();
             }
 
             // if ($lastOosRecod->QA_Head_remark4 != $request->QA_Head_remark4){
-                if ($lastOosRecod->QA_Head_remark4 !=  $request->QA_Head_remark4 || ! empty($request->QA_Head_remark4_comment)) {
+                if ($lastOosRecod->QA_Head_remark4 !=  $request->QA_Head_remark4 || !empty($request->QA_Head_remark4_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Phase II A CQA/QA Remark')
                             ->exists(); 
@@ -6572,7 +6764,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->QA_Head_remark4) || $lastOosRecod->QA_Head_remark4 === '') {
                     $history->action_name = "New";
@@ -6583,14 +6775,14 @@ $history->save();
             }
 
             // if ($lastOosRecod->QA_Head_primary_remark4 != $request->QA_Head_primary_remark4){
-                if ($lastOosRecod->QA_Head_primary_remark4 !=  $request->QA_Head_primary_remark4 || ! empty($request->QA_Head_primary_remark4_comment)) {
+                if ($lastOosRecod->QA_Head_primary_remark4 !=  $request->QA_Head_primary_remark4 || !empty($request->QA_Head_primary_remark4_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                            ->where('activity_type', 'P-II A QAH/CQAH Remark')
+                            ->where('activity_type', 'Phase II A QAH/CQAH Remark')
                             ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->QA_Head_primary_remark4;
-                $history->activity_type = 'P-II A QAH/CQAH Remark';
+                $history->activity_type = 'Phase II A QAH/CQAH Remark';
                 $history->current = $request->QA_Head_primary_remark4;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
@@ -6598,7 +6790,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->QA_Head_primary_remark4) || $lastOosRecod->QA_Head_primary_remark4 === '') {
                     $history->action_name = "New";
@@ -6609,7 +6801,7 @@ $history->save();
             }
 
             // if ($lastOosRecod->Laboratory_Investigation_Hypothesis != $request->Laboratory_Investigation_Hypothesis){
-                if ($lastOosRecod->Laboratory_Investigation_Hypothesis !=  $request->Laboratory_Investigation_Hypothesis || ! empty($request->Laboratory_Investigation_Hypothesis_comment)) {
+                if ($lastOosRecod->Laboratory_Investigation_Hypothesis !=  $request->Laboratory_Investigation_Hypothesis || !empty($request->Laboratory_Investigation_Hypothesis_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Laboratory Investigation Hypothesis details')
                             ->exists(); 
@@ -6624,7 +6816,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->Laboratory_Investigation_Hypothesis) || $lastOosRecod->Laboratory_Investigation_Hypothesis === '') {
                     $history->action_name = "New";
@@ -6635,7 +6827,7 @@ $history->save();
             }
 
             // if ($lastOosRecod->Outcome_of_Laboratory != $request->Outcome_of_Laboratory){
-                if ($lastOosRecod->Outcome_of_Laboratory !=  $request->Outcome_of_Laboratory || ! empty($request->Outcome_of_Laboratory_comment)) {
+                if ($lastOosRecod->Outcome_of_Laboratory !=  $request->Outcome_of_Laboratory || !empty($request->Outcome_of_Laboratory_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Outcome of Laboratory Investigation')
                             ->exists(); 
@@ -6650,7 +6842,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->Outcome_of_Laboratory) || $lastOosRecod->Outcome_of_Laboratory === '') {
                     $history->action_name = "New";
@@ -6661,7 +6853,7 @@ $history->save();
             }
 
             // if ($lastOosRecod->Evaluation_IIB != $request->Evaluation_IIB){
-                if ($lastOosRecod->Evaluation_IIB !=  $request->Evaluation_IIB || ! empty($request->Evaluation_IIB_comment)) {
+                if ($lastOosRecod->Evaluation_IIB !=  $request->Evaluation_IIB || !empty($request->Evaluation_IIB_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Evaluation')
                             ->exists(); 
@@ -6676,7 +6868,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->Evaluation_IIB) || $lastOosRecod->Evaluation_IIB === '') {
                     $history->action_name = "New";
@@ -6687,7 +6879,7 @@ $history->save();
             }
 
             // if ($lastOosRecod->Assignable_Cause111 != $request->Assignable_Cause111){
-                if ($lastOosRecod->Assignable_Cause111 !=  $request->Assignable_Cause111 || ! empty($request->Assignable_Cause111_comment)) {
+                if ($lastOosRecod->Assignable_Cause111 !=  $request->Assignable_Cause111 || !empty($request->Assignable_Cause111_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Assignable Cause')
                             ->exists(); 
@@ -6702,7 +6894,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->Assignable_Cause111) || $lastOosRecod->Assignable_Cause111 === '') {
                     $history->action_name = "New";
@@ -6713,14 +6905,14 @@ $history->save();
             }
 
             // if ($lastOosRecod->hod_remark5 != $request->hod_remark5){
-                if ($lastOosRecod->hod_remark5 !=  $request->hod_remark5 || ! empty($request->hod_remark5_comment)) {
+                if ($lastOosRecod->hod_remark5 !=  $request->hod_remark5 || !empty($request->hod_remark5_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                            ->where('activity_type', 'Phase II B HOD Primary Remark')
+                            ->where('activity_type', 'Phase II B HOD Remark')
                             ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->hod_remark5;
-                $history->activity_type = 'Phase II B HOD Primary Remark';
+                $history->activity_type = 'Phase II B HOD Remark';
                 $history->current = $request->hod_remark5;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
@@ -6728,7 +6920,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->hod_remark5) || $lastOosRecod->hod_remark5 === '') {
                     $history->action_name = "New";
@@ -6740,7 +6932,7 @@ $history->save();
 
 
             // if ($lastOosRecod->QA_Head_remark5 != $request->QA_Head_remark5){
-                if ($lastOosRecod->QA_Head_remark5 !=  $request->QA_Head_remark5 || ! empty($request->QA_Head_remark5_comment)) {
+                if ($lastOosRecod->QA_Head_remark5 !=  $request->QA_Head_remark5 || !empty($request->QA_Head_remark5_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Phase II B CQA/QA Remark')
                             ->exists(); 
@@ -6755,7 +6947,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->QA_Head_remark5) || $lastOosRecod->QA_Head_remark5 === '') {
                     $history->action_name = "New";
@@ -6766,7 +6958,7 @@ $history->save();
             }
 
             // if ($lastOosRecod->If_assignable_cause != $request->If_assignable_cause){
-                if ($lastOosRecod->If_assignable_cause !=  $request->If_assignable_cause || ! empty($request->If_assignable_cause_comment)) {
+                if ($lastOosRecod->If_assignable_cause !=  $request->If_assignable_cause || !empty($request->If_assignable_cause_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'If assignable cause identified perform re-testing')
                             ->exists(); 
@@ -6781,7 +6973,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->If_assignable_cause) || $lastOosRecod->If_assignable_cause === '') {
                     $history->action_name = "New";
@@ -6792,7 +6984,7 @@ $history->save();
             }
 
             // if ($lastOosRecod->If_assignable_error != $request->If_assignable_error){
-                if ($lastOosRecod->If_assignable_error !=  $request->If_assignable_error || ! empty($request->If_assignable_error_comment)) {
+                if ($lastOosRecod->If_assignable_error !=  $request->If_assignable_error || !empty($request->If_assignable_error_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'If assignable error is not identified proceed as per Phase III investigation')
                             ->exists(); 
@@ -6807,7 +6999,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->If_assignable_error) || $lastOosRecod->If_assignable_error === '') {
                     $history->action_name = "New";
@@ -6828,7 +7020,7 @@ $history->save();
             //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             //     $history->origin_state = $lastOosRecod->status;
             //     $history->stage = $lastOosRecod->stage;
-            //     $history->change_to =   "Opened";
+            //     $history->change_to =   "Not Applicable";
             //     $history->change_from = $lastOosRecod->status;
             //    if (is_null($lastOosRecod->reference_record) || $lastOosRecod->reference_record === '') {
             //         $history->action_name = "New";
@@ -6838,7 +7030,7 @@ $history->save();
             //     $history->save();
             // }
             // if ($lastOosRecod->justify_if_capa_not_required_oosc != $request->justify_if_capa_not_required_oosc){
-                if ($lastOosRecod->justify_if_capa_not_required_oosc !=  $request->justify_if_capa_not_required_oosc || ! empty($request->justify_if_capa_not_required_oosc_comment)) {
+                if ($lastOosRecod->justify_if_capa_not_required_oosc !=  $request->justify_if_capa_not_required_oosc || !empty($request->justify_if_capa_not_required_oosc_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Justify if CAPA not required.')
                             ->exists(); 
@@ -6853,7 +7045,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                 if (is_null($lastOosRecod->justify_if_capa_not_required_oosc) || $lastOosRecod->justify_if_capa_not_required_oosc === '') {
                     $history->action_name = "New";
@@ -6863,7 +7055,7 @@ $history->save();
                 $history->save();
             } 
             // if ($lastOosRecod->action_plan_req_oosc != $request->action_plan_req_oosc){
-                if ($lastOosRecod->action_plan_req_oosc !=  $request->action_plan_req_oosc || ! empty($request->action_plan_req_oosc_comment)) {
+                if ($lastOosRecod->action_plan_req_oosc !=  $request->action_plan_req_oosc || !empty($request->action_plan_req_oosc_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Action Item Req.')
                             ->exists(); 
@@ -6878,7 +7070,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->action_plan_req_oosc) || $lastOosRecod->action_plan_req_oosc === '') {
                     $history->action_name = "New";
@@ -6888,7 +7080,7 @@ $history->save();
                 $history->save();
             }
             // if ($lastOosRecod->justification_for_delay_oosc != $request->justification_for_delay_oosc){
-                if ($lastOosRecod->justification_for_delay_oosc !=  $request->justification_for_delay_oosc || ! empty($request->justification_for_delay_oosc_comment)) {
+                if ($lastOosRecod->justification_for_delay_oosc !=  $request->justification_for_delay_oosc || !empty($request->justification_for_delay_oosc_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Justification for Delay.')
                             ->exists(); 
@@ -6903,7 +7095,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->justification_for_delay_oosc) || $lastOosRecod->justification_for_delay_oosc === '') {
                     $history->action_name = "New";
@@ -6914,7 +7106,7 @@ $history->save();
             }
             // ========= OOS Conclusion Review ==============
             // if ($lastOosRecod->conclusion_review_comments_ocr != $request->conclusion_review_comments_ocr){
-                if ($lastOosRecod->conclusion_review_comments_ocr !=  $request->conclusion_review_comments_ocr || ! empty($request->conclusion_review_comments_ocr_comment)) {
+                if ($lastOosRecod->conclusion_review_comments_ocr !=  $request->conclusion_review_comments_ocr || !empty($request->conclusion_review_comments_ocr_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Conclusion Review Comments.')
                             ->exists(); 
@@ -6929,7 +7121,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->conclusion_review_comments_ocr) || $lastOosRecod->conclusion_review_comments_ocr === '') {
                     $history->action_name = "New";
@@ -6939,7 +7131,7 @@ $history->save();
                 $history->save();
             }
             // if ($lastOosRecod->action_taken_on_affec_batch_ocr != $request->action_taken_on_affec_batch_ocr){
-                if ($lastOosRecod->action_taken_on_affec_batch_ocr !=  $request->action_taken_on_affec_batch_ocr || ! empty($request->action_taken_on_affec_batch_ocr_comment)) {
+                if ($lastOosRecod->action_taken_on_affec_batch_ocr !=  $request->action_taken_on_affec_batch_ocr || !empty($request->action_taken_on_affec_batch_ocr_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Action Taken on Affec.batch.')
                             ->exists(); 
@@ -6954,7 +7146,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->action_taken_on_affec_batch_ocr) || $lastOosRecod->action_taken_on_affec_batch_ocr === '') {
                     $history->action_name = "New";
@@ -6964,7 +7156,7 @@ $history->save();
                 $history->save();
             }
             // if ($lastOosRecod->capa_req_ocr != $request->capa_req_ocr){
-                if ($lastOosRecod->capa_req_ocr !=  $request->capa_req_ocr || ! empty($request->capa_req_ocr_comment)) {
+                if ($lastOosRecod->capa_req_ocr !=  $request->capa_req_ocr || !empty($request->capa_req_ocr_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'CAPA Req.')
                             ->exists(); 
@@ -6979,7 +7171,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->capa_req_ocr) || $lastOosRecod->capa_req_ocr === '') {
                     $history->action_name = "New";
@@ -6989,7 +7181,7 @@ $history->save();
                 $history->save();
             }
             // if ($lastOosRecod->justify_if_no_risk_assessment_ocr != $request->justify_if_no_risk_assessment_ocr){
-                if ($lastOosRecod->justify_if_no_risk_assessment_ocr !=  $request->justify_if_no_risk_assessment_ocr || ! empty($request->justify_if_no_risk_assessment_ocr_comment)) {
+                if ($lastOosRecod->justify_if_no_risk_assessment_ocr !=  $request->justify_if_no_risk_assessment_ocr || !empty($request->justify_if_no_risk_assessment_ocr_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Justify if No Risk Assessment')
                             ->exists(); 
@@ -7004,7 +7196,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->justify_if_no_risk_assessment_ocr) || $lastOosRecod->justify_if_no_risk_assessment_ocr === '') {
                     $history->action_name = "New";
@@ -7013,8 +7205,33 @@ $history->save();
                 }
                 $history->save();
             }
+
+            if ($lastOosRecod->action_on_affected_batch !=  $request->action_on_affected_batch || !empty($request->action_on_affected_batch_comment)) {
+                $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                        ->where('activity_type', 'Action On affected batches')
+                        ->exists(); 
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = $lastOosRecod->action_on_affected_batch;
+            $history->activity_type = 'Action On affected batches';
+            $history->current = $request->action_on_affected_batch;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+           if (is_null($lastOosRecod->action_on_affected_batch) || $lastOosRecod->action_on_affected_batch === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
             // if ($lastOosRecod->cq_approver != $request->cq_approver){
-                if ($lastOosRecod->cq_approver !=  $request->cq_approver || ! empty($request->cq_approver_comment)) {
+                if ($lastOosRecod->cq_approver !=  $request->cq_approver || !empty($request->cq_approver_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'CQ Approver')
                             ->exists(); 
@@ -7029,7 +7246,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->cq_approver) || $lastOosRecod->cq_approver === '') {
                     $history->action_name = "New";
@@ -7040,7 +7257,7 @@ $history->save();
             }
             // =========== CQ Review Comments ==========
             // if ($lastOosRecod->cq_review_comments_ocqr != $request->cq_review_comments_ocqr){
-                if ($lastOosRecod->cq_review_comments_ocqr !=  $request->cq_review_comments_ocqr || ! empty($request->cq_review_comments_ocqr_comment)) {
+                if ($lastOosRecod->cq_review_comments_ocqr !=  $request->cq_review_comments_ocqr || !empty($request->cq_review_comments_ocqr_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'CQ Review comments')
                             ->exists(); 
@@ -7055,7 +7272,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = "Initiator";
                if (is_null($lastOosRecod->cq_review_comments_ocqr) || $lastOosRecod->cq_review_comments_ocqr === '') {
                     $history->action_name = "New";
@@ -7066,7 +7283,7 @@ $history->save();
             }
             //==========  Batch Disposition =============
             // if ($lastOosRecod->oos_category_bd != $request->oos_category_bd){
-                if ($lastOosRecod->oos_category_bd !=  $request->oos_category_bd || ! empty($request->oos_category_bd_comment)) {
+                if ($lastOosRecod->oos_category_bd !=  $request->oos_category_bd || !empty($request->oos_category_bd_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'OOS Category')
                             ->exists(); 
@@ -7081,7 +7298,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->oos_category_bd) || $lastOosRecod->oos_category_bd === '') {
                     $history->action_name = "New";
@@ -7091,7 +7308,7 @@ $history->save();
                 $history->save();
             }
             // if ($lastOosRecod->others_bd != $request->others_bd){
-                if ($lastOosRecod->others_bd !=  $request->others_bd || ! empty($request->others_bd_comment)) {
+                if ($lastOosRecod->others_bd !=  $request->others_bd || !empty($request->others_bd_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Other')
                             ->exists(); 
@@ -7106,7 +7323,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->others_bd) || $lastOosRecod->others_bd === '') {
                     $history->action_name = "New";
@@ -7117,7 +7334,7 @@ $history->save();
                 
             }
             // if ($lastOosRecod->material_batch_release_bd != $request->material_batch_release_bd){
-                if ($lastOosRecod->material_batch_release_bd !=  $request->material_batch_release_bd || ! empty($request->material_batch_release_bd_comment)) {
+                if ($lastOosRecod->material_batch_release_bd !=  $request->material_batch_release_bd || !empty($request->material_batch_release_bd_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Material batch release bd')
                             ->exists(); 
@@ -7132,7 +7349,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->material_batch_release_bd) || $lastOosRecod->material_batch_release_bd === '') {
                     $history->action_name = "New";
@@ -7142,7 +7359,7 @@ $history->save();
                 $history->save();
             }
             // if ($lastOosRecod->other_action_bd != $request->other_action_bd){
-                if ($lastOosRecod->other_action_bd !=  $request->other_action_bd || ! empty($request->other_action_bd_comment)) {
+                if ($lastOosRecod->other_action_bd !=  $request->other_action_bd || !empty($request->other_action_bd_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Other Action')
                             ->exists(); 
@@ -7157,7 +7374,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->other_action_bd) || $lastOosRecod->other_action_bd === '') {
                     $history->action_name = "New";
@@ -7167,7 +7384,7 @@ $history->save();
                 $history->save();
             }
             // if ($lastOosRecod->other_parameters_results_bd != $request->other_parameters_results_bd){
-                if ($lastOosRecod->other_parameters_results_bd !=  $request->other_parameters_results_bd || ! empty($request->other_parameters_results_bd_comment)) {
+                if ($lastOosRecod->other_parameters_results_bd !=  $request->other_parameters_results_bd || !empty($request->other_parameters_results_bd_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Other Parameters Results')
                             ->exists(); 
@@ -7182,7 +7399,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->other_parameters_results_bd) || $lastOosRecod->other_parameters_results_bd === '') {
                     $history->action_name = "New";
@@ -7192,7 +7409,7 @@ $history->save();
                 $history->save();
             }
             // if ($lastOosRecod->trend_of_previous_batches_bd != $request->trend_of_previous_batches_bd){
-                if ($lastOosRecod->trend_of_previous_batches_bd !=  $request->trend_of_previous_batches_bd || ! empty($request->trend_of_previous_batches_bd_comment)) {
+                if ($lastOosRecod->trend_of_previous_batches_bd !=  $request->trend_of_previous_batches_bd || !empty($request->trend_of_previous_batches_bd_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Trend of Previous Batches')
                             ->exists(); 
@@ -7207,7 +7424,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->trend_of_previous_batches_bd) || $lastOosRecod->trend_of_previous_batches_bd === '') {
                     $history->action_name = "New";
@@ -7217,7 +7434,7 @@ $history->save();
                 $history->save();
             }
             // if ($lastOosRecod->stability_data_bd != $request->stability_data_bd){
-                if ($lastOosRecod->stability_data_bd !=  $request->stability_data_bd || ! empty($request->stability_data_bd_comment)) {
+                if ($lastOosRecod->stability_data_bd !=  $request->stability_data_bd || !empty($request->stability_data_bd_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Stability Data')
                             ->exists(); 
@@ -7232,7 +7449,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->stability_data_bd) || $lastOosRecod->stability_data_bd === '') {
                     $history->action_name = "New";
@@ -7242,7 +7459,7 @@ $history->save();
                 $history->save();
             }
             // if ($lastOosRecod->process_validation_data_bd != $request->process_validation_data_bd){
-                if ($lastOosRecod->process_validation_data_bd !=  $request->process_validation_data_bd || ! empty($request->process_validation_data_bd_comment)) {
+                if ($lastOosRecod->process_validation_data_bd !=  $request->process_validation_data_bd || !empty($request->process_validation_data_bd_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Process Validation Data')
                             ->exists(); 
@@ -7257,7 +7474,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->process_validation_data_bd) || $lastOosRecod->process_validation_data_bd === '') {
                     $history->action_name = "New";
@@ -7267,7 +7484,7 @@ $history->save();
                 $history->save();
             }
             // if ($lastOosRecod->method_validation_bd != $request->method_validation_bd){
-                if ($lastOosRecod->method_validation_bd !=  $request->method_validation_bd || ! empty($request->method_validation_bd_comment)) {
+                if ($lastOosRecod->method_validation_bd !=  $request->method_validation_bd || !empty($request->method_validation_bd_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Method Validation')
                             ->exists(); 
@@ -7282,7 +7499,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->method_validation_bd) || $lastOosRecod->method_validation_bd === '') {
                     $history->action_name = "New";
@@ -7292,7 +7509,7 @@ $history->save();
                 $history->save();
             }
             // if ($lastOosRecod->any_market_complaints_bd != $request->any_market_complaints_bd){
-                if ($lastOosRecod->any_market_complaints_bd !=  $request->any_market_complaints_bd || ! empty($request->any_market_complaints_bd_comment)) {
+                if ($lastOosRecod->any_market_complaints_bd !=  $request->any_market_complaints_bd || !empty($request->any_market_complaints_bd_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Any Market Complaints')
                             ->exists(); 
@@ -7307,7 +7524,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->any_market_complaints_bd) || $lastOosRecod->any_market_complaints_bd === '') {
                     $history->action_name = "New";
@@ -7318,7 +7535,7 @@ $history->save();
             }
             
             // if ($lastOosRecod->statistical_evaluation_bd != $request->statistical_evaluation_bd){
-                if ($lastOosRecod->statistical_evaluation_bd !=  $request->statistical_evaluation_bd || ! empty($request->statistical_evaluation_bd_comment)) {
+                if ($lastOosRecod->statistical_evaluation_bd !=  $request->statistical_evaluation_bd || !empty($request->statistical_evaluation_bd_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Statistical Evaluation Bd')
                             ->exists(); 
@@ -7333,7 +7550,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->statistical_evaluation_bd) || $lastOosRecod->statistical_evaluation_bd === '') {
                     $history->action_name = "New";
@@ -7344,7 +7561,7 @@ $history->save();
             }
             
             // if ($lastOosRecod->risk_analysis_disposition_bd != $request->risk_analysis_disposition_bd){
-                if ($lastOosRecod->risk_analysis_disposition_bd !=  $request->risk_analysis_disposition_bd || ! empty($request->risk_analysis_disposition_bd_comment)) {
+                if ($lastOosRecod->risk_analysis_disposition_bd !=  $request->risk_analysis_disposition_bd || !empty($request->risk_analysis_disposition_bd_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Risk Analysis for Disposition')
                             ->exists(); 
@@ -7359,7 +7576,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->risk_analysis_disposition_bd) || $lastOosRecod->risk_analysis_disposition_bd === '') {
                     $history->action_name = "New";
@@ -7370,7 +7587,7 @@ $history->save();
             }
             
             // if ($lastOosRecod->conclusion_bd != $request->conclusion_bd){
-                if ($lastOosRecod->conclusion_bd !=  $request->conclusion_bd || ! empty($request->conclusion_bd_comment)) {
+                if ($lastOosRecod->conclusion_bd !=  $request->conclusion_bd || !empty($request->conclusion_bd_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Conclusion bd')
                             ->exists(); 
@@ -7385,7 +7602,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->conclusion_bd) || $lastOosRecod->conclusion_bd === '') {
                     $history->action_name = "New";
@@ -7395,7 +7612,7 @@ $history->save();
                 $history->save();
             }
             // if ($lastOosRecod->justify_for_delay_in_activity_bd != $request->justify_for_delay_in_activity_bd){
-                if ($lastOosRecod->justify_for_delay_in_activity_bd !=  $request->justify_for_delay_in_activity_bd || ! empty($request->justify_for_delay_in_activity_bd_comment)) {
+                if ($lastOosRecod->justify_for_delay_in_activity_bd !=  $request->justify_for_delay_in_activity_bd || !empty($request->justify_for_delay_in_activity_bd_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Justify for Delay in Activity')
                             ->exists(); 
@@ -7415,7 +7632,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                 $history->save();
             }
@@ -7432,7 +7649,7 @@ $history->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->reopen_approval_comments_uaa) || $lastOosRecod->reopen_approval_comments_uaa === '') {
                     $history->action_name = "New";

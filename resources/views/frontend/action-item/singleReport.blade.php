@@ -551,49 +551,74 @@
                 <div class="block-head">
                     Activity Log
                 </div>
+
+                    <div class="block-head">
+                        Submit
+                    </div>
+
                 <table>
                     <tr>
-                        <th class="w-10">Submitted By</th>
+                        <th class="w-10">Submit By</th>
                         <td class="w-20">{{ $data->submitted_by }}</td>
-                        <th class="w-10">Submitted On</th>
+                        <th class="w-10">Submit On</th>
                         <td class="w-20">{{ $data->submitted_on }}</td>
-                        <th class="w-10">Comment</th>
+                        <th class="w-10">Submit Comment</th>
                         <td class="w-30">{{ $data->submitted_comment }}</td>
                     </tr>
 
+                    </table>
+                    <div class="block-head">
+                        Cancel
+                    </div>
+                    <table>
+
                     <tr>
-                        <th class="w-10">Cancelled By</th>
+                        <th class="w-10">Cancel By</th>
                         <td class="w-20">{{ $data->cancelled_by }}</td>
-                        <th class="w-10">Cancelled On</th>
+                        <th class="w-10">Cancel On</th>
                         <td class="w-20">{{ $data->cancelled_on }}</td>
-                        <th class="w-10">Comment</th>
+                        <th class="w-10">Cancel Comment</th>
                         <td class="w-30">{{ $data->cancelled_comment }}</td>
                     </tr>
+
+                    </table>
+                    <div class="block-head">
+                        Acknowledge
+                    </div>
+                    <table>
 
                     <tr>
                         <th class="w-10">Acknowledge By</th>
                         <td class="w-20">{{ $data->acknowledgement_by }}</td>
                         <th class="w-10">Acknowledge On</th>
                         <td class="w-20">{{ $data->acknowledgement_on }}</td>
-                        <th class="w-10">Comment</th>
+                        <th class="w-10">Acknowledge Comment</th>
                         <td class="w-30">{{ $data->acknowledgement_comment }}</td>
                     </tr>
-
+                    </table>
+                    <div class="block-head">
+                        Complete
+                    </div>
+                    <table>
                     <tr>
-                        <th class="w-10">Work Completion By</th>
+                        <th class="w-10">Complete By</th>
                         <td class="w-20">{{ $data->work_completion_by }}</td>
-                        <th class="w-10">Work Completion On</th>
+                        <th class="w-10">Complete On</th>
                         <td class="w-20">{{ $data->work_completion_on }}</td>
-                        <th class="w-10">Comment</th>
+                        <th class="w-10">Complete Comment</th>
                         <td class="w-30">{{ $data->work_completion_comment }}</td>
                     </tr>
-
+                    </table>
+                    <div class="block-head">
+                    Verification Complete
+                    </div>
+                    <table>
                     <tr>
-                        <th class="w-10">QA/CQA Verification By</th>
+                        <th class="w-10">Verification Complete By</th>
                         <td class="w-20">{{ $data->qa_varification_by }}</td>
-                        <th class="w-10">QA/CQA Verification On</th>
+                        <th class="w-10">Verification Complete On</th>
                         <td class="w-20">{{ $data->qa_varification_on }}</td>
-                        <th class="w-10">Comment</th>
+                        <th class="w-10">Verification Complete Comment</th>
                         <td class="w-30">{{ $data->qa_varification_comment }}</td>
                     </tr>
                 </table>
