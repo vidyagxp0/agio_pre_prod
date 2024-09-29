@@ -9219,20 +9219,20 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
                     $deviation->stage = "5";
                     $deviation->status = "QA/CQA Final Assessment";
-                    $deviation->QA_Initial_Review_Complete_By = Auth::user()->name;
-                    $deviation->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                    $deviation->QA_Initial_Review_Comments = $request->comment;
+                    $deviation->cft_review_not_req_by = Auth::user()->name;
+                    $deviation->cft_review_not_req_on = Carbon::now()->format('d-M-Y');
+                    $deviation->cft_review_not_req_comment = $request->comment;
 
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
                     $history->activity_type = 'CFT Review Not Required By, CFT Review Not Required On';
-                    if(is_null($lastDocument->QA_Initial_Review_Complete_By) || $lastDocument->QA_Initial_Review_Complete_On == ''){
+                    if(is_null($lastDocument->cft_review_not_req_by) || $lastDocument->cft_review_not_req_on == ''){
                         $history->previous = "";
                     }else{
-                        $history->previous = $lastDocument->QA_Initial_Review_Complete_By. ' ,' . $lastDocument->QA_Initial_Review_Complete_On;
+                        $history->previous = $lastDocument->cft_review_not_req_by. ' ,' . $lastDocument->cft_review_not_req_on;
                     }
                     $history->action='CFT Review Not Required';
-                    $history->current = $deviation->QA_Initial_Review_Complete_By. ',' . $deviation->QA_Initial_Review_Complete_On;
+                    $history->current = $deviation->cft_review_not_req_by. ',' . $deviation->cft_review_not_req_on;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -9241,7 +9241,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     $history->change_to =   "QA/CQA Final Assessment";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
-                    if(is_null($lastDocument->QA_Initial_Review_Complete_By) || $lastDocument->QA_Initial_Review_Complete_On == '')
+                    if(is_null($lastDocument->cft_review_not_req_by) || $lastDocument->cft_review_not_req_on == '')
                     {
                         $history->action_name = 'New';
                     } else {

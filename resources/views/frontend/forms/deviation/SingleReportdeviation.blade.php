@@ -684,14 +684,14 @@
                                 @foreach (unserialize($grid_data2->product_name) as $key => $dataDemo)
                                     <tr>
                                         <td>
-                                        {{ $key + 1 }}</td>
-                                    <td>{{ isset(unserialize($grid_data2->product_name)[$key]) ? unserialize($grid_data2->product_name)[$key] : '' }}
-                                    </td>
-                                    <td>
-                                        {{ isset(unserialize($grid_data2->product_stage)[$key]) ? unserialize($grid_data2->product_stage)[$key] : '' }}
-                                    </td>
-                                    <td>{{ isset(unserialize($grid_data2->batch_no)[$key]) ? unserialize($grid_data2->batch_no)[$key] : '' }}
-                                    </td>
+                                            {{ $key + 1 }}</td>
+                                        <td>{{ isset(unserialize($grid_data2->product_name)[$key]) ? unserialize($grid_data2->product_name)[$key] : '' }}
+                                        </td>
+                                        <td>
+                                            {{ isset(unserialize($grid_data2->product_stage)[$key]) ? unserialize($grid_data2->product_stage)[$key] : '' }}
+                                        </td>
+                                        <td>{{ isset(unserialize($grid_data2->batch_no)[$key]) ? unserialize($grid_data2->batch_no)[$key] : '' }}
+                                        </td>
 
                                     </tr>
                                 @endforeach
@@ -831,7 +831,7 @@
                         </td>
 
                     </tr>
-                   </table>
+                </table>
                 <div class="inner-block">
                     <label class="Summer"
                         style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
@@ -4671,6 +4671,17 @@
                     <tr>
                         <th class="w-20">QA/CQA Initial Review Comment</th>
                         <td class="w-30">{{ $data->QA_Initial_Review_Comments }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">CFT Review Not Required By</th>
+                        <td class="w-30">{{ $data->cft_review_not_req_by}}</td>
+                        <th class="w-20">CFT Review Not Required On</th>
+                        <td class="w-30">{{ $data->cft_review_not_req_on }}</td>
+
+                    </tr>
+                    <tr>
+                        <th class="w-20">CFT Review Not Required Comment</th>
+                        <td class="w-30">{{ $data->cft_review_not_req_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">CFT Review Complete By</th>

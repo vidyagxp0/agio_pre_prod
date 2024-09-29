@@ -14046,7 +14046,7 @@
                 <div id="CCForm6" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            <div class="sub-head">Submission</div>
+                            <div class="sub-head">Submit</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="submit by">Submit By :-</label>
@@ -14066,7 +14066,7 @@
                                 </div>
                             </div>
 
-                            <div class="sub-head">HOD Review Completed</div>
+                            <div class="sub-head">HOD Review Complete</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="HOD Review Complete By">HOD Review Complete By :-</label>
@@ -14106,7 +14106,7 @@
                             </div>
 
 
-                            <div class="sub-head">QA/CQA Initial Review Completed</div>
+                            <div class="sub-head">QA/CQA Initial Review Complete</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="QA/CQA Initial Review Complete By">QA/CQA Initial Review Complete By
@@ -14125,6 +14125,25 @@
                                 <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
                                     <label for="QA/CQA Initial Review Comments">QA/CQA Initial Review Complete Comment:-</label>
                                     <div class="">{{ $data->QA_Initial_Review_Comments }}</div>
+                                </div>
+                            </div>
+                             <div class="sub-head">CFT Review Not Required</div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="CFT Review Complete By">CFT Review Not Required By :-</label>
+                                    <div class="static">{{ $data->cft_review_not_req_by }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="CFT Review Not Required On">CFT Review Not Required On :-</label>
+                                    <div class="static">{{ $data->cft_review_not_req_on }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                    <label for="CFT Review Comments">CFT Review Not Required Comment :-</label>
+                                    <div class="">{{ $data->cft_review_not_req_comment }}</div>
                                 </div>
                             </div>
 
@@ -14148,7 +14167,7 @@
                                 </div>
                             </div>
 
-                            <div class="sub-head"> QA/CQA Final Review Completed</div>
+                            <div class="sub-head"> QA/CQA Final Review Complete</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="QA/CQA Final Review Complete By"> QA/CQA Final Review Complete By
@@ -14196,7 +14215,7 @@
                                 </div>
                             </div>
 
-                            <div class="sub-head">Initiator Update</div>
+                            <div class="sub-head">Initiator Update Complete</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="CFT Review Complete By">Initiator Update Complete By :-</label>
@@ -14237,22 +14256,22 @@
                                 </div>
                             </div>
 
-                            <div class="sub-head">Implementation verification Complete</div>
+                            <div class="sub-head">Implementation Verification Complete</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Approved By">Implementation verification Complete By :-</label>
+                                    <label for="Approved By">Implementation Verification Complete By :-</label>
                                     <div class="static">{{ $data->QA_final_approved_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Approved On">Implementation verification Complete On :-</label>
+                                    <label for="Approved On">Implementation Verification Complete On :-</label>
                                     <div class="static">{{ $data->QA_final_approved_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                    <label for="Approved Comments">Implementation verification Complete Comment
+                                    <label for="Approved Comments">Implementation Verification Complete Comment
                                         :-</label>
                                     <div class="">{{ $data->QA_final_approved_comment }}</div>
                                 </div>
