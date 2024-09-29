@@ -76,10 +76,8 @@
                     <label for="Date Due"> Due Date </label>
                     <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                     <div class="calenderauditee">
-                        <input  type="text" name="due_date" id="due_date" readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->due_date) }}"/>
-                        <input  type="date" name="due_date"
-                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                            oninput="handleDateInput(this, 'due_date')" {{ $data->stage == 1 ? '' : '' }} />
+                        <input  type="text" name="due_date" id="due_date" readonly  value="{{ Helpers::getdateFormat($data->due_date) }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MMM-YYYY"/>
+                        <input  type="date" name="due_date" value="{{ $data->due_date }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')" {{ $data->stage == 1 ? '' : 'readonly' }} />
                     </div>
                     
                 </div>
@@ -305,7 +303,7 @@
                     <div><small class="text-primary"></small></div>
                     <div class="calenderauditee">
                         <input type="text" id="deviation_occured_on_gi" readonly value="{{ Helpers::getdateFormat($data->deviation_occured_on_gi ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY"/>
-                        <input type="date" name="deviation_occured_on_gi" value="{{ $data->deviation_occured_on_gi }}" class="hide-input" oninput="handleDateInput(this, 'deviation_occured_on_gi')" {{ $data->stage == 1 ? '' : 'disabled' }} />
+                        <input type="date" name="deviation_occured_on_gi" value="{{ $data->deviation_occured_on_gi }}" class="hide-input" oninput="handleDateInput(this, 'deviation_occured_on_gi')" {{ $data->stage == 1 ? '' : 'readonly' }} />
                     </div>
                 </div>
             </div>
@@ -314,8 +312,8 @@
                     <label for="Deviation Occurred On"> OOS Observed On </label>
                     <div><small class="text-primary"></small></div>
                     <div class="calenderauditee">
-                        <input type="text" id="oos_observed_on" disabled value="{{ Helpers::getdateFormat($data['oos_observed_on'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" />
-                        <input type="date" name="oos_observed_on" value="{{ $data->oos_observed_on }}" class="hide-input" oninput="handleDateInput(this, 'oos_observed_on')" {{ $data->stage == 1 ? '' : 'disabled' }} />
+                        <input type="text" id="oos_observed_on" readonly value="{{ Helpers::getdateFormat($data['oos_observed_on'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" />
+                        <input type="date" name="oos_observed_on" value="{{ $data->oos_observed_on }}" class="hide-input" oninput="handleDateInput(this, 'oos_observed_on')" {{ $data->stage == 1 ? '' : 'readonly' }} />
                     </div>
                 </div>
             </div>
@@ -345,7 +343,7 @@
                     <div><small class="text-primary"></small></div>
                     <div class="calenderauditee">
                         <input type="text" id="oos_reported_date" readonly  value="{{ Helpers::getdateFormat($data['oos_reported_date'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" />
-                        <input type="date" name="oos_reported_date" class="hide-input" oninput="handleDateInput(this, 'oos_reported_date')" {{ $data->stage == 1 ? '' : 'readonly' }}/>
+                        <input type="date" name="oos_reported_date" value="{{ $data->oos_reported_date }}" class="hide-input" oninput="handleDateInput(this, 'oos_reported_date')" {{ $data->stage == 1 ? '' : 'readonly' }}/>
                     </div>
                 </div>
             </div>

@@ -211,6 +211,20 @@
                 </div>
                 <table>
                     <tr>
+                        <th class="w-20">Record Number</th>
+                        <td class="w-30">
+                            @if ($data->record)
+                                {{ Helpers::divisionNameForQMS($data->division_id) }}/MC/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
+                        {{ $data->created_at }} added by {{ $data->originator }}
+                        <th class="w-20">Site/Location Code</th>
+                        <td class="w-30"> {{ Helpers::getDivisionName(session()->get('division')) }}</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Initiator</th>
                         <td class="w-80">{{ $data->originator }}</td>
                         <th class="w-20">Date Initiation</th>
@@ -239,7 +253,7 @@
                 </table>
 
 
-                <table>
+                {{-- <table>
                     <tr>
                         <th class="w-20">Assign To</th>
                         <td class="w-80">
@@ -250,36 +264,29 @@
                             @endif
                         </td>
                     </tr>
-                </table>
+                </table> --}}
 
                 <table>
                     <tr>
                         <th class="w-20">Due Date</th>
-                        <td class="w-20">{{ Helpers::getdateFormat($data->due_date_gi) ?? 'Not Applicable' }}</td>
-                    </tr>
-
-                    <tr>
+                        <td class="w-80">{{ Helpers::getdateFormat($data->due_date_gi) ?? 'Not Applicable' }}</td>
                         <th class="w-20">Repeat Nature</th>
                         <td class="w-80">{!! $data->repeat_nature_gi ?? 'Not Applicable' !!}</td>
                     </tr>
                     <tr>
-                        <th class="w-80">Short Description</th>
+                        <th class="w-20">Short Description</th>
                         <td class="w-80">{{ $data->description_gi ?? 'Not Applicable' }}</td>
                     </tr>
-                </table>
-                <table>
 
                     <tr>
-                        <th class="w-80">Is Repeat</th>
-                        <td class="w-20">{{ $data->is_repeat_gi ?? 'Not Applicable' }}</td>
+
+                        <th class="w-20">Is Repeat</th>
+                        <td class="w-80">{{ $data->is_repeat_gi ?? 'Not Applicable' }}</td>
 
                         <th class="w-20">Complaint</th>
                         <td class="w-80">{{ $data->complainant_gi ?? 'Not Applicable' }}</td>
 
                     </tr>
-                </table>
-
-                <table>
                     <tr>
                         <th class="w-20">Complaint Reported On</th>
                         <td class="w-80">
@@ -288,7 +295,10 @@
                         <td class="w-80">{{ $data->categorization_of_complaint_gi ?? 'Not Applicable' }}</td>
 
                     </tr>
+
+
                 </table>
+
 
 
                 <table>
@@ -327,7 +337,7 @@
                         <td class="w-80">{!! $data->additional_inform ?? 'Not Applicable' !!}</td>
                     </tr>
                 </table>
-                 <table>
+                <table>
                     <tr>
                         <th class="w-20">Type of Market Complaints</th>
                         <td class="w-80">{!! $data->probable_root_causes_complaint_hodsr ?? 'Not Applicable' !!}</td>
@@ -335,7 +345,7 @@
                 </table>
                 <table>
                     <tr>
-                        <th class="w-20">In Case of Invalide Complain Then</th>
+                        <th class="w-20">Comments</th>
                         <td class="w-80">{!! $data->in_case_Invalide_com ?? 'Not Applicable' !!}</td>
                     </tr>
                 </table>
@@ -402,11 +412,13 @@
                                         {{ isset($detail['info_batch_no']) ? $detail['info_batch_no'] : '' }}</td>
 
                                     <td class="w-20">
-                                        {{ isset($detail['info_mfg_date']) ? $detail['info_mfg_date'] : '' }}</td>
+                                        {{ isset($detail['info_mfg_date']) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('j M Y') : '' }}
+                                    </td>
 
                                     <td class="w-20">
-                                        {{ isset($detail['info_expiry_date']) ? $detail['info_expiry_date'] : '' }}
+                                        {{ isset($detail['info_expiry_date']) ? \Carbon\Carbon::parse($detail['info_expiry_date'])->format('j M Y') : '' }}
                                     </td>
+
 
                                     {{-- <td class="w-15">{{ $data->detail && unserialize($data->detail->info_product_name)[$key] ?  unserialize($data->detail->info_product_name)[$key]: "Not Applicable"}}</td>
                                        <td class="w-15">{{ $data->detail && unserialize($data->detail->info_batch_no)[$key] ?  unserialize($data->detail->info_batch_no)[$key]: "Not Applicable"}}</td>
@@ -442,7 +454,7 @@
                         <th class="w-20">Pack Size</th>
                         <th class="10">Dispatch Quantity</th>
                         <th class="w-5">Remarks</th>
-                        <th class="w-5">Action</th>
+                        {{-- <th class="w-5">Action</th> --}}
                     </tr>
 
                     <tbody>
@@ -461,7 +473,117 @@
                                     </td>
                                     <td class="w-20">
                                         {{ isset($detail['info_remarks']) ? $detail['info_remarks'] : '' }} </td>
-                                    <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td>
+                                    {{-- <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td> --}}
+
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td>1</td>
+
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                {{-- <td>Not Applicable</td> --}}
+
+                            </tr>
+                        @endif
+                    </tbody>
+                </table>
+
+            </div>
+
+
+            <div class="border-table">
+                <div class="block-head">
+                    Traceability
+                </div>
+
+                <table>
+                    <tr class="table_bg">
+                        <th>Row #</th>
+                        <th class="w-10">Product Name</th>
+                        <th class="w-20">Batch Nu.</th>
+                        <th class="10">Manufacturing Location</th>
+                        <th class="w-5">Remarks</th>
+                        {{-- <th class="w-5">Action</th> --}}
+                    </tr>
+
+                    <tbody>
+                        @php $productsdetails = 1; @endphp
+                        @if (!empty($gitracebilty) && is_array($gitracebilty->data))
+
+                            @foreach ($gitracebilty->data as $index => $detail)
+                                <tr>
+                                    <td>{{ $productsdetails++ }}</td>
+                                    <td class="w-20">
+                                        {{ isset($detail['product_name_tr']) ? $detail['product_name_tr'] : '' }} </td>
+                                    <td class="w-20">
+                                        {{ isset($detail['batch_no_tr']) ? $detail['batch_no_tr'] : '' }} </td>
+                                    <td class="w-20">
+                                        {{ isset($detail['manufacturing_location_tr']) ? $detail['manufacturing_location_tr'] : '' }}
+                                    </td>
+                                    <td class="w-20">
+                                        {{ isset($detail['remarks_tr']) ? $detail['remarks_tr'] : '' }} </td>
+                                    {{-- <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td> --}}
+
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td>1</td>
+
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                {{-- <td>Not Applicable</td> --}}
+
+                            </tr>
+                        @endif
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="border-table">
+                <div class="block-head">
+                    Report Review (Final Review shall be done after QA Verification)
+                </div>
+
+                <table>
+                    <tr class="table_bg">
+                        <th>Row #</th>
+                        <th class="w-10">Name</th>
+                        <th class="w-10">Designation</th>
+                        <th class="w-20">Department</th>
+                        <th class="w-20">Sign</th>
+                        <th class="w-5">Date</th>
+                        {{-- <th class="w-5">Action</th> --}}
+                    </tr>
+
+                    <tbody>
+                        @php $productsdetails = 1; @endphp
+                        @if (!empty($hodteammembers) && is_array($hodteammembers->data))
+
+                            @foreach ($hodteammembers->data as $index => $detail)
+                                <tr>
+                                    <td>{{ $productsdetails++ }}</td>
+                                    <td class="w-20"> {{ isset($detail['names_tm']) ? $detail['names_tm'] : '' }}
+                                    </td>
+                                    <td class="w-20">
+                                        {{ isset($detail['designation']) ? $detail['designation'] : '' }}
+                                    </td>
+                                    <td class="w-20">
+                                        {{ isset($detail['department_tm']) ? $detail['department_tm'] : '' }} </td>
+                                    <td class="w-20"> {{ isset($detail['sign_tm']) ? $detail['sign_tm'] : '' }}
+                                    </td>
+                                    <td class="w-20">
+                                        {{ isset($detail['date_tm']) ? \Carbon\Carbon::parse($detail['date_tm'])->format('j M Y') : '' }}
+                                    </td>
+
+                                    {{-- <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td> --}}
 
                                 </tr>
                             @endforeach
@@ -485,43 +607,44 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    Traceability
+                    Report Approval by Head QA/CQA (Final Approvalshall be done after QA Verification)
                 </div>
 
                 <table>
                     <tr class="table_bg">
                         <th>Row #</th>
-                        <th class="w-10">Product Name</th>
-                        <th class="w-20">Batch Nu.</th>
-                        <th class="10">Manufacturing Location</th>
-                        <th class="w-5">Remarks</th>
-                        <th class="w-5">Action</th>
+                        <th class="w-10">Name</th>
+                        <th class="w-10">Designation</th>
+                        <th class="w-20">Department</th>
+                        <th class="w-20">Sign</th>
+                        <th class="w-5">Date</th>
+                        {{-- <th class="w-5">Action</th> --}}
                     </tr>
 
                     <tbody>
                         @php $productsdetails = 1; @endphp
-                        @if (!empty($gitracebilty) && is_array($gitracebilty->data))
+                        @if (!empty($hodreportapproval) && is_array($hodreportapproval->data))
 
-                            @foreach ($gitracebilty->data as $index => $detail)
+                            @foreach ($hodreportapproval->data as $index => $detail)
                                 <tr>
                                     <td>{{ $productsdetails++ }}</td>
-                                    <td class="w-20">
-                                        {{ isset($detail['product_name_tr']) ? $detail['product_name_tr'] : '' }} </td>
-                                    <td class="w-20">
-                                        {{ isset($detail['batch_no_tr']) ? $detail['batch_no_tr'] : '' }} </td>
-                                    <td class="w-20">
-                                        {{ isset($detail['manufacturing_location_tr']) ? $detail['manufacturing_location_tr'] : '' }}
+                                    <td class="w-20"> {{ isset($detail['names_rrv']) ? $detail['names_rrv'] : '' }}
                                     </td>
                                     <td class="w-20">
-                                        {{ isset($detail['remarks_tr']) ? $detail['remarks_tr'] : '' }} </td>
-                                    <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td>
+                                        {{ isset($detail['designation']) ? $detail['designation'] : '' }} </td>
+                                    <td class="w-20">
+                                        {{ isset($detail['department_rrv']) ? $detail['department_rrv'] : '' }} </td>
+                                    <td class="w-20"> {{ isset($detail['sign_rrv']) ? $detail['sign_rrv'] : '' }}
+                                    </td>
+                                    <td class="w-20"> {{ isset($detail['date_rrv']) ? $detail['date_rrv'] : '' }}
+                                    </td>
+                                    {{-- <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td> --}}
 
                                 </tr>
                             @endforeach
                         @else
                             <tr>
                                 <td>1</td>
-
                                 <td>Not Applicable</td>
                                 <td>Not Applicable</td>
                                 <td>Not Applicable</td>
@@ -625,6 +748,7 @@
                         Product Material Details Part 1
                     </div>
 
+
                     <table>
                         <tr class="table_bg">
                             <th class="w-10">Row #</th>
@@ -652,12 +776,13 @@
                                         </td>
 
                                         <td class="w-20">
-                                            {{ isset($detail['mfg_date_pmd_ca']) ? $detail['mfg_date_pmd_ca'] : '' }}
+                                            {{ isset($detail['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($detail['mfg_date_pmd_ca'])->format('j M Y') : '' }}
                                         </td>
 
                                         <td class="w-20">
-                                            {{ isset($detail['expiry_date_pmd_ca']) ? $detail['expiry_date_pmd_ca'] : '' }}
+                                            {{ isset($detail['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($detail['expiry_date_pmd_ca'])->format('j M Y') : '' }}
                                         </td>
+
 
                                         {{-- <td class="w-15">{{ $data->detail && unserialize($data->detail->info_product_name)[$key] ?  unserialize($data->detail->info_product_name)[$key]: "Not Applicable"}}</td>
                                        <td class="w-15">{{ $data->detail && unserialize($data->detail->info_batch_no)[$key] ?  unserialize($data->detail->info_batch_no)[$key]: "Not Applicable"}}</td>
@@ -693,7 +818,7 @@
                             <th class="w-20">Pack Profile</th>
                             <th class="10">Released Quantity</th>
                             <th class="w-5">Remarks</th>
-                            <th class="w-5">Action</th>
+                            {{-- <th class="w-5">Action</th> --}}
                         </tr>
 
                         <tbody>
@@ -714,8 +839,8 @@
                                         </td>
                                         <td class="w-20">
                                             {{ isset($detail['remarks_ca']) ? $detail['remarks_ca'] : '' }} </td>
-                                        <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }}
-                                        </td>
+                                        {{-- <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }}
+                                        </td> --}}
 
                                     </tr>
                                 @endforeach
@@ -727,7 +852,7 @@
                                     <td>Not Applicable</td>
                                     <td>Not Applicable</td>
                                     <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
+                                    {{-- <td>Not Applicable</td> --}}
 
                                 </tr>
                             @endif
@@ -749,10 +874,11 @@
                     </tr>
                 </table>
 
-                <table>
+                <div class="border-table">
+
                     <div class="border-table">
                         <div class="block-head">
-                            QA/CQA Attachment
+                            QA/CQA Attechment
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -775,9 +901,12 @@
                             @endif
                         </table>
                     </div>
-                </table>
+                    </table>
+                </div>
             </div>
-
+            @php
+                $investingTeamIndex = 1;
+            @endphp
             <div class="block">
                 <div class="block-head">
                     Investigation
@@ -790,42 +919,43 @@
 
                     <table>
                         <tr class="table_bg">
-                            <th>Row #</th>
+                            <th class="w-3">Row #</th>
                             <th class="w-10">Name</th>
                             <th class="w-20">Department</th>
                             <th class="w-5">Remarks</th>
-                            <th class="w-5">Action</th>
+                            {{-- <th class="w-5">Action</th> --}}
                         </tr>
 
                         <tbody>
-                            @php $productsdetails = 1; @endphp
+                            @php $investingTeamIndex = 1; @endphp
                             @if (!empty($giinvesting) && is_array($giinvesting->data))
 
-                                @foreach ($giinvesting->data as $index => $detail)
+                                @foreach ($giinvesting->data as $index => $inves)
                                     <tr>
-                                        <td>{{ $productsdetails++ }}</td>
+                                        <td>{{ $investingTeamIndex++ }}</td>
                                         <td class="w-20">
-                                            {{ isset($detail['name_inv_tem']) ? $detail['name_inv_tem'] : '' }} </td>
+                                            {{ isset($inves['name_inv_tem']) ? $inves['name_inv_tem'] : '' }} </td>
                                         <td class="w-20">
-                                            {{ isset($detail['department_inv_tem']) ? $detail['department_inv_tem'] : '' }}
+                                            {{ isset($inves['department_inv_tem']) ? $inves['department_inv_tem'] : '' }}
                                         </td>
                                         <td class="w-20">
-                                            {{ isset($detail['remarks_inv_tem']) ? $detail['remarks_inv_tem'] : '' }}
+                                            {{ isset($inves['remarks_inv_tem']) ? $inves['remarks_inv_tem'] : '' }}
                                         </td>
-                                        <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }}
-                                        </td>
+                                        {{-- <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }}
+                                        </td> --}}
 
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
+
                                     <td>1</td>
 
                                     <td>Not Applicable</td>
                                     <td>Not Applicable</td>
                                     <td>Not Applicable</td>
                                     <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
+                                    {{-- <td>Not Applicable</td> --}}
 
                                 </tr>
                             @endif
@@ -833,6 +963,7 @@
                     </table>
 
                 </div>
+
                 <table>
                     <tr>
                         <th class="w-20">Review Of Batch Manufacturing Record (BMR)</th>
@@ -883,7 +1014,7 @@
                         <th class="w-20">The Probable Root Causes or Root Cause</th>
                         <td class="w-80">{!! $data->the_probable_root ?? 'Not Applicable' !!}</td>
                     </tr>
-                        <tr>
+                    <tr>
                         <th class="w-20">Impact Assessment</th>
                         <td class="w-80">{!! $data->impact_assessment_hodsr ?? 'Not Applicable' !!}</td>
                     </tr>
@@ -914,7 +1045,7 @@
                         <th class="w-20">Facts/Controls</th>
                         <th class="w-20">Probable Cause</th>
                         <th class="w-5">Remarks</th>
-                        <th class="w-5">Action</th>
+                        {{-- <th class="w-5">Action</th> --}}
                     </tr>
 
                     <tbody>
@@ -935,7 +1066,7 @@
                                     </td>
                                     <td class="w-20">
                                         {{ isset($detail['remarks_bssd']) ? $detail['remarks_bssd'] : '' }} </td>
-                                    <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td>
+                                    {{-- <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td> --}}
 
                                 </tr>
                             @endforeach
@@ -947,7 +1078,7 @@
                                 <td>Not Applicable</td>
                                 <td>Not Applicable</td>
                                 <td>Not Applicable</td>
-                                <td>Not Applicable</td>
+                                {{-- <td>Not Applicable</td> --}}
 
                             </tr>
                         @endif
@@ -957,107 +1088,6 @@
             </div>
 
 
-            <div class="border-table">
-                <div class="block-head">
-                    Team Members
-                </div>
-
-                <table>
-                    <tr class="table_bg">
-                        <th>Row #</th>
-                        <th class="w-10">Name</th>
-                        <th class="w-20">Department</th>
-                        <th class="w-20">Sign</th>
-                        <th class="w-5">Date</th>
-                        <th class="w-5">Action</th>
-                    </tr>
-
-                    <tbody>
-                        @php $productsdetails = 1; @endphp
-                        @if (!empty($hodteammembers) && is_array($hodteammembers->data))
-
-                            @foreach ($hodteammembers->data as $index => $detail)
-                                <tr>
-                                    <td>{{ $productsdetails++ }}</td>
-                                    <td class="w-20"> {{ isset($detail['names_tm']) ? $detail['names_tm'] : '' }}
-                                    </td>
-                                    <td class="w-20">
-                                        {{ isset($detail['department_tm']) ? $detail['department_tm'] : '' }} </td>
-                                    <td class="w-20"> {{ isset($detail['sign_tm']) ? $detail['sign_tm'] : '' }}
-                                    </td>
-                                    <td class="w-20"> {{ isset($detail['date_tm']) ? $detail['date_tm'] : '' }}
-                                    </td>
-                                    <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td>
-
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td>1</td>
-
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
-
-            </div>
-
-
-            <div class="border-table">
-                <div class="block-head">
-                    Report Approval
-                </div>
-
-                <table>
-                    <tr class="table_bg">
-                        <th>Row #</th>
-                        <th class="w-10">Name</th>
-                        <th class="w-20">Department</th>
-                        <th class="w-20">Sign</th>
-                        <th class="w-5">Date</th>
-                        <th class="w-5">Action</th>
-                    </tr>
-
-                    <tbody>
-                        @php $productsdetails = 1; @endphp
-                        @if (!empty($hodreportapproval) && is_array($hodreportapproval->data))
-
-                            @foreach ($hodreportapproval->data as $index => $detail)
-                                <tr>
-                                    <td>{{ $productsdetails++ }}</td>
-                                    <td class="w-20"> {{ isset($detail['names_rrv']) ? $detail['names_rrv'] : '' }}
-                                    </td>
-                                    <td class="w-20">
-                                        {{ isset($detail['department_rrv']) ? $detail['department_rrv'] : '' }} </td>
-                                    <td class="w-20"> {{ isset($detail['sign_rrv']) ? $detail['sign_rrv'] : '' }}
-                                    </td>
-                                    <td class="w-20"> {{ isset($detail['date_rrv']) ? $detail['date_rrv'] : '' }}
-                                    </td>
-                                    <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td>
-
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td>1</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
-
-            </div>
 
 
             <div class="block">
@@ -2354,7 +2384,7 @@
                     </tr>
                 </table>
 
-                <table>
+                {{-- <table>
                     <div class="border-table">
                         <div class="block-head">
                             QA/CQA Verification Attachment
@@ -2380,7 +2410,36 @@
                             @endif
                         </table>
                     </div>
-                </table>
+                </table> --}}
+                <div class="border-table">
+
+                    <div class="border-table">
+                        <div class="block-head">
+                            QA/CQA Verification Attechment
+                        </div>
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                            @if ($data->qa_cqa_attachments)
+                                @foreach (json_decode($data->qa_cqa_attachments) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><b>{{ $file }}</b></a></td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-60">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+                    </table>
+                </div>
             </div>
 
             <div class="block">
@@ -2396,18 +2455,19 @@
                     </tr>
                 </table>
 
-                <table>
+                <div class="border-table">
+
                     <div class="border-table">
                         <div class="block-head">
-                            QA/CQA Approval Attachment
+                            QA/CQA Head Approval Attechment
                         </div>
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
                                 <th class="w-60">Batch No</th>
                             </tr>
-                            @if ($data1->qa_cqa_head_attach)
-                                @foreach (json_decode($data1->qa_cqa_head_attach) as $key => $file)
+                            @if ($data->qa_cqa_head_attach)
+                                @foreach (json_decode($data->qa_cqa_head_attach) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
                                         <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
@@ -2422,7 +2482,9 @@
                             @endif
                         </table>
                     </div>
-                </table>
+                    </table>
+                </div>
+
             </div>
 
 
@@ -2438,7 +2500,7 @@
                         <td class="w-80">{!! $data->closure_comment_c ?? 'Not Applicable' !!}</td>
                         <!-- Add more rows for the remaining fields in the same format -->
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Closure Attachment</th>
                         <td class="w-80">
                             @if ($data->initial_attachment_c)
@@ -2448,9 +2510,9 @@
                                 Not Attached
                             @endif
                         </td>
-                    </tr>
+                    </tr> --}}
                 </table>
-
+                {{--
                 <table>
                     <div class="border-table">
                         <div class="block-head">
@@ -2477,7 +2539,36 @@
                             @endif
                         </table>
                     </div>
-                </table>
+                </table> --}}
+                <div class="border-table">
+
+                    <div class="border-table">
+                        <div class="block-head">
+                            Closure Attechment
+                        </div>
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                            @if ($data->initial_attachment_c)
+                                @foreach (json_decode($data->initial_attachment_c) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><b>{{ $file }}</b></a></td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-60">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+                    </table>
+                </div>
             </div>
 
             <div class="block">
@@ -2492,10 +2583,18 @@
                         <td class="w-80">{{ $data->submitted_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Complete Review By :</th>
+                        <th class="w-20">Comment</th>
+                        <td class="w-80">{{ $data->submitted_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">QA/CQA Head Review By :</th>
                         <td class="w-80">{{ $data->complete_review_by }}</td>
-                        <th class="w-20">Complete Review On :</th>
+                        <th class="w-20">QA/CQA Head Review On :</th>
                         <td class="w-80">{{ $data->complete_review_on }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Comment</th>
+                        <td class="w-80">{{ $data->complete_review_Comments }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Send To CFT Review By</th>
@@ -2504,16 +2603,28 @@
                         <td class="w-80">{{ $data->cft_complate_on }}</td>
                     </tr>
                     <tr>
+                        <th class="w-20">Comment</th>
+                        <td class="w-80">{{ $data->send_cft_comment }}</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">CFT Review Completed By</th>
                         <td class="w-80">{{ $data->cft_complate_by }}</td>
                         <th class="w-20">CFT Review Completed On</th>
                         <td class="w-80">{{ $data->cft_complate_on }}</td>
                     </tr>
                     <tr>
+                        <th class="w-20">Comment</th>
+                        <td class="w-80">{{ $data->cft_complate_comm }}</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">QA CQA Verify Complete By :</th>
                         <td class="w-80">{{ $data->qa_cqa_verif_comp_by }}</td>
                         <th class="w-20">QA CQA Verify Complete On :</th>
                         <td class="w-80">{{ $data->qa_cqa_verif_comp_on }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Comment</th>
+                        <td class="w-80">{{ $data->QA_cqa_verif_Comments }}</td>
                     </tr>
                     {{-- <tr>
                         <th class="w-20">QA Head Approval Completed By</th>
@@ -2527,25 +2638,41 @@
                         <th class="w-20">Approve Complete On</th>
                         <td class="w-80">{{ $data->approve_plan_on }}</td>
                     </tr>
+                    <tr>
+                        <th class="w-20">Comment</th>
+                        <td class="w-80">{{ $data->approve_plan_comment }}</td>
+                    </tr>
 
                     <tr>
                         <th class="w-20">Send Letter By</th>
                         <td class="w-80">{{ $data->send_letter_by }}</td>
                         <th class="w-20">Send Letter On</th>
-                        <td class="w-80">{{ $data->send_letter_by }}</td>
+                        <td class="w-80">{{ $data->send_letter_on }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Comment</th>
+                        <td class="w-80">{{ $data->send_letter_comment }}</td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Closure Done By</th>
                         <td class="w-80">{{ $data->closed_done_by }}</td>
                         <th class="w-20">Closure Done On</th>
                         <td class="w-80">{{ $data->closed_done_on }}</td>
                     </tr>
+                     <tr>
+                         <th class="w-20">Comment</th>
+                        <td class="w-80">{{ $data->submitted_comment }}</td>
+                    </tr> --}}
                     <tr>
                         <th class="w-20">Cancelled By</th>
                         <td class="w-80">{{ $data->cancelled_by }}</td>
                         <th class="w-20">Cancelled On</th>
                         <td class="w-80">{{ $data->cancelled_on }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Comment</th>
+                        <td class="w-80">{{ $data->cancelled_comment }}</td>
                     </tr>
                 </table>
             </div>
