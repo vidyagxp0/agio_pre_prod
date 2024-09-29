@@ -712,23 +712,22 @@
                                     <div class="content-table">
                                         <!-- <div class="border-table"> -->
                                             <div class="block-head">
-                                                Checklist - Tablet Dispensing & Granulation
-                                            </div>
+                                                Checklist - Production (Tablet Dispensing & Tablet Granulation)                                            </div>
                                             <div>
                                                 @php
                                                     $checklists = [
                                                         [
-                                                            'title' => 'Checklist for Tablet Dispensing',
+                                                            'title' => 'STAGE 1 : DISPENSING',
                                                             'questions' => $questions_packing,
                                                             'prefix' => 1
                                                         ],
                                                         [
-                                                            'title' => 'Checklist for INJECTION MANUFACTURING / FILTERATION / FILLING /VISUAL INSPECTION',
+                                                            'title' => 'Stage -02 Granulation',
                                                             'questions' => $questions_documentation,
                                                             'prefix' => 2
                                                         ],
                                                         [
-                                                            'title' => 'Checklist for Documentation Table',
+                                                            'title' => 'Stage -03 Documentation',
                                                             'questions' => $questions_documentation_table,
                                                             'prefix' => 3
                                                         ]
@@ -826,12 +825,12 @@
                                                                     @php
                                                                         $checklists = [
                                                                             [
-                                                                                'title' => 'Checklist for Packing',
+                                                                                'title' => 'STAGE 1 : PACKING',
                                                                                 'questions' => $questions_packing,
                                                                                 'prefix' => 1
                                                                             ],
                                                                             [
-                                                                                'title' => 'Checklist for Documentation',
+                                                                                'title' => 'STAGE 2: DOCUMENTATION',
                                                                                 'questions' => $questions_documentation,
                                                                                 'prefix' => 2
                                                                             ],
@@ -947,18 +946,17 @@
                                             <div class="content-table">
                                                 <!-- <div class="border-table"> -->
                                                     <div class="block-head">
-                                                        Checklist -Tablet Compression
-                                                    </div>
+                                                        Checklist - Production (Tablet Compression)                                                    </div>
                                                     <div>
                                                         @php
                                                             $checklists = [
                                                                 [
-                                                                    'title' => 'Checklist for Tablet Compression',
+                                                                    'title' => 'STAGE 1: COMPRESSION ',
                                                                     'questions' => $questions,
                                                                     'prefix' => 1
                                                                 ],
                                                                 [
-                                                                    'title' => 'Checklist for Documentation',
+                                                                    'title' => 'STAGE 2: DOCUMENTATION',
                                                                     'questions' => $questions_documentation,
                                                                     'prefix' => 2
                                                                 ],
@@ -1082,12 +1080,12 @@
                                             @php
                                                 $checklists = [
                                                     [
-                                                        'title' => 'Checklist for Tablet Coating',
+                                                        'title' => 'STAGE 1 :  COATING',
                                                         'questions' => $questions,
                                                         'prefix' => 1
                                                     ],
                                                     [
-                                                        'title' => 'Checklist for Documentation',
+                                                        'title' => 'STAGE 2: DOCUMENTATION',
                                                         'questions' => $questions_documentation,
                                                         'prefix' => 2
                                                     ],
@@ -1190,36 +1188,42 @@
                                                     'Do you have any standard procedure for the removal of scrap?',
                                                     'Is this plant free from infestation by rodents, birds, insects, and vermin?',
                                                     'Do you have written procedures for the safe use of suitable rodenticides, insecticides, fungicides, and fumigating agents? Check the corresponding records.',
-                                                
-                                                ];
-                                                $documentationQuestions =[
                                                     'Do records have doer & checker signatures? Check the timings, date, and yield, etc. in the batch production record.',
                                                     'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In-process analytical reports.',
                                                     'Is the batch record online up to the current stage of the process?',
                                                     'Is the process carried out as per the written instructions described in the batch record?',
                                                     'Is there any area cleaning record available for all individual areas?',
-                                                    'Current version  of SOPs available in respective areas?'];
+                                                    'Current version  of SOPs available in respective areas?',
+                                                
+                                                ];
+                                                // $documentationQuestions =[
+                                                //     'Do records have doer & checker signatures? Check the timings, date, and yield, etc. in the batch production record.',
+                                                //     'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In-process analytical reports.',
+                                                //     'Is the batch record online up to the current stage of the process?',
+                                                //     'Is the process carried out as per the written instructions described in the batch record?',
+                                                //     'Is there any area cleaning record available for all individual areas?',
+                                                //     'Current version  of SOPs available in respective areas?'];
                                             @endphp
                                     @if(!empty($data->checklist4))
                                     <div class="inner-block">
                                         <div class="content-table">
                                             <!-- <div class="border-table"> -->
                                                 <div class="block-head">
-                                                    Checklist -Capsule
+                                                    Checklist - Production (Capsule)
                                                 </div>
                                                 <div>
                                                     @php
                                                         $checklists = [
                                                             [
-                                                                'title' => 'Checklist for Capsule',
+                                                                'title' => 'STAGE 1: CAPSULE',
                                                                 'questions' => $CapsulePackingQuestions,
                                                                 'prefix' => 1
                                                             ],
-                                                            [
-                                                                'title' => 'Checklist for Documentation',
-                                                                'questions' => $documentationQuestions,
-                                                                'prefix' => 2
-                                                            ],
+                                                            // [
+                                                            //     'title' => 'STAGE 2: DOCUMENTATION',
+                                                            //     'questions' => $documentationQuestions,
+                                                            //     'prefix' => 2
+                                                            // ],
 
                                                         ];
                                                     @endphp
@@ -1341,12 +1345,12 @@
                                                     @php
                                                         $checklists = [
                                                             [
-                                                                'title' => 'Checklist for Liquid/Ointment Packing',
+                                                                'title' => 'STAGE 1 : LIQUIDE/OINTMENT PACKING',
                                                                 'questions' => $liquidOintmentPacking,
                                                                 'prefix' => 1
                                                             ],
                                                             [
-                                                                'title' => 'Checklist for Documentation',
+                                                                'title' => 'STAGE 2: DOCUMENTATION',
                                                                 'questions' => $liquidOintmentQuestions,
                                                                 'prefix' => 2
                                                             ],
@@ -1363,7 +1367,7 @@
                                                                 <tr>
                                                                     <th style="width: 5%;">Sr. No.</th>
                                                                     <th style="width: 40%;">Question</th>
-                                                                    <th style="width: 20%;">Response</th>
+                                                                    <th style="width: 20%;">Response</th>checklist6
                                                                     <th>Remarks</th>
                                                                 </tr>
                                                             </thead>
@@ -1462,9 +1466,6 @@
                                     'Check for the status labeling in the area and material randomly.',
                                     "Check the in-process equipment's cleaning status & records.",
                                     'Are any unplanned process changes (process excursions) documented in the batch record?',
-                                ];
-
-                                $documentationQuestions = [
                                     'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
                                     'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.',
                                     'Is the batch record on line up to the current stage of a process?',
@@ -1472,27 +1473,24 @@
                                     'Is there any area cleaning record available for all individual areas?',
                                     "Current version of SOP's is available in respective areas?",
                                 ];
+
+                               
                             @endphp
                              @if(!empty($data->checklist6))
                              <div class="inner-block">
                                 <div class="content-table">
                                     <!-- <div class="border-table"> -->
                                         <div class="block-head">
-                                            Checklist - Liquid/Ointment Packing                                </div>
+                                            Checklist - Production(Liquid/Ointment Dispensing & Manufacturing)                                                       </div>
                                         <div>
                                             @php
                                                 $checklists = [
                                                     [
-                                                        'title' => 'Checklist for Liquid/Ointment Packing',
+                                                        'title' => 'STAGE 1: DISPENSING',
                                                         'questions' => $dispensingAndManufacturingQuestions,
                                                         'prefix' => 1
                                                     ],
-                                                    [
-                                                        'title' => 'Checklist for Documentation',
-                                                        'questions' => $documentationQuestions,
-                                                        'prefix' => 2
-                                                    ],
-        
+                                                   
                                                 ];
                                             @endphp
         
@@ -1588,14 +1586,7 @@
                                     'Is a log maintained for changes to documents and facility?',
                                 ];
 
-                                $documentationQuestions = [
-                                    'Does QA have authority to review and approve or reject?',
-                                    'Is there an adequate system, described in an SOP, for controlling changes within the production process, including review and approval of changes to processes, documents, and equipment?',
-                                    'Based on the audit findings and recommendations, are steps taken to correct any areas of noncompliance? Are corrective actions documented? Is their effectiveness verified in subsequent audits?',
-                                    'If any contractors (e.g., laboratories, packagers) are used, are they periodically audited and is their performance monitored?',
-                                    'Audit programs - Is there an internal quality audit program that covers all areas of the operation to verify that SOPs and other procedures and policies are being followed, and to determine effectiveness of the quality systems?',
-                                    'Is there an SOP for investigation of manufacturing deviations and batch failures to determine the cause and institute corrective actions to prevent the situation from recurring?',
-                                ];
+                                
                             @endphp
                                  @if(!empty($data->checklist7))
                                  <div class="inner-block">
@@ -1612,11 +1603,11 @@
                                                             'questions' => $qualityAssuranceQuestions,
                                                             'prefix' => 1
                                                         ],
-                                                        [
-                                                            'title' => 'Checklist for Documentation',
-                                                            'questions' => $documentationQuestions,
-                                                            'prefix' => 2
-                                                        ],
+                                                        // [
+                                                        //     'title' => 'STAGE 2: DOCUMENTATION',
+                                                        //     'questions' => $documentationQuestions,
+                                                        //     'prefix' => 2
+                                                        // ],
             
                                                     ];
                                                 @endphp
@@ -2511,9 +2502,21 @@
                                                                 ];
 
                                                                 $questions_packing_manufacturing = [
-                                                                    'Status label of area & equipment available?',
-                                                                    'Have you any proper storage area for primary and secondary packing material?',
-                                                                ];
+                                                                        'Status label of area & equipment available?',
+                                                                        'Have you any proper storage area for primary and secondary packing material?',
+                                                                        'Do you have proper segregation system for keeping product/batch separately?',
+                                                                        'Where you keep the rejected strips / blisters / containers / cartons? ',
+                                                                        'Is there a written procedure for clearing the packaging area after one packaging operation, and cleaning before the next operation, especially if the area is used for packaging different materials?',
+                                                                        'Have you any standard procedure for removal of scrap?',
+                                                                    ];
+                                                                    $questions_documentation = [
+                                                                            'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch packing record.',
+                                                                            'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.',
+                                                                            'Is the batch record is on line up to the current stage of a process?',
+                                                                            'In process carried out as per the written instruction describe in batch record?',
+                                                                            'Is there any area cleaning record available for all individual areas?',
+                                                                            "Current version of SOP's is available in respective areas?",
+                                                                        ];
                                                             @endphp
                                                             {{-- <div class="inner-block">
                                                                 <div class="content-table">
@@ -2526,7 +2529,7 @@
                                                                         @php
                                                                             $checklists = [
                                                                                 [
-                                                                                    'title' => 'Checklist for Powder Manufacturing & Filling',
+                                                                                    'title' => 'STAGE 1 : POWEDER MFG & FILLING',
                                                                                     'questions' => $questions_powder_manufacturing_filling,
                                                                                     'prefix' => 1
                                                                                 ],
@@ -2599,13 +2602,18 @@
                                                                         @php
                                                                             $checklists = [
                                                                                 [
-                                                                                    'title' => 'Checklist for Powder Manufacturing & Filling',
+                                                                                    'title' => 'STAGE 1 : POWEDER MFG & FILLING',
                                                                                     'questions' => $questions_powder_manufacturing_filling,
                                                                                     'prefix' => 1
                                                                                 ],
                                                                                 [
-                                                                                        'title' => 'Checklist for Packing',
+                                                                                        'title' => 'STAGE 2: PACKING',
                                                                                         'questions' => $questions_packing_manufacturing,
+                                                                                        'prefix' => 2
+                                                                                ],
+                                                                                [
+                                                                                        'title' => 'STAGE 3: DOCUMENTATION ',
+                                                                                        'questions' => $powder_questions_packing_manufacturing,
                                                                                         'prefix' => 2
                                                                                 ],
                                     

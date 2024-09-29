@@ -213,7 +213,7 @@
                 <table>
 
                 <tr>
-                    <th>Record No.</th>
+                    <th>Record Number</th>
                     <td>{{ Helpers::divisionNameForQMS($data->division_id) }}/AP/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}</td>
                     <th>Site/Location Code</th>
                     <td>{{ Helpers::divisionNameForQMS($data->division_id) }}</td>
@@ -222,10 +222,6 @@
                     <tr> {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
-                        <th class="w-20">Date Initiation</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
-                    </tr>
-                    <tr>
                         <th class="w-20">Initiator Department</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
@@ -234,7 +230,10 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Department code</th>
+                    </tr>
+                    <tr>
+
+                         <th class="w-20">Department Code</th>
                         <td class="w-30">
                             @if ($data->initiator_group_code)
                                 {{ $data->initiator_group_code }}
@@ -242,8 +241,21 @@
                                 Not Applicable
                             @endif
                         </td>
+                        <th class="w-20">Date of Initiation</th>
+                        <td class="w-30">
+                            @if ($data->intiation_date)
+                                {{  Helpers::getdateFormat($data->intiation_date) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
+                       
                     </tr>
                     <tr>
+                        
+
+
                          <th class="w-20">Assigned To</th>
                         <td class="w-30">
                             @if ($data->assign_to)
@@ -261,7 +273,10 @@
                                 Not Applicable
                             @endif
                         </td>
+                      
                     </tr>
+
+                    
                 </table>
                 <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px;">Short Description
@@ -277,7 +292,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Type</th>
-                        <td class="">
+                        <td class="w-30">
                             @if ($data->type)
                                 {{ $data->type }}
                             @else
@@ -285,7 +300,7 @@
                             @endif
                         </td>
                         <th class="w-20">Type(Others)</th>
-                        <td class="">
+                        <td class="w-30">
                             @if ($data->through_req)
                                 {{ $data->through_req }}
                             @else
@@ -307,7 +322,7 @@
                 </div> -->
                 <table>
                     <tr>
-                        <th class="w-20">Yearly Planner</th>
+                        <th class="w-20">Initiated Through</th>
                         <td class="w-30">
                             @if ($data->year)
                                 {{ $data->year }}
@@ -315,7 +330,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Yearly Planner(Others)</th>
+                        <th class="w-20">Initiated Through(Others)</th>
                         <td class="w-30">
                             @if ($data->yearly_other)
                                 {{ $data->yearly_other }}
@@ -324,8 +339,18 @@
                             @endif
                         </td>
                     </tr>
-                    </table>
-                    <div class="inner-block">
+                    <tr>
+                        <th class="w-20">Comments</th>
+                        <td class="w-30">
+                            @if ($data->comments)
+                                {{ $data->yearly_other }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+                    {{-- <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px;">Comments
                     </label>
                     <div style="font-size: 0.8rem">
@@ -335,7 +360,7 @@
                             Not Applicable
                         @endif
                     </div>
-                </div>
+                </div> --}}
                 <div class="border-table">
                     <div class="block-head">
                         Attached Files
@@ -364,7 +389,7 @@
                     </table>
 
                 </div>
-                    <table>
+                <table>
                     <tr>
                     <th class="w-20">Related URl </th>
                         <td class="w-30">
@@ -390,7 +415,7 @@
             </div>
         </div>
     </div>
-    </div>
+{{-- </div> --}}
 
 
     <div class="inner-block">
@@ -400,13 +425,22 @@
                         Self Inspection Circular
                 </div>
                         <table>
-                            <tr>
+                            {{-- <tr>
                                 <th>Comments</th>
                                 <td>@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
-                            </tr>
+                            </tr> --}}
+
+                            <th class="w-20">Comments</th>
+                            <td class="w-30">
+                                @if ($data->comment)
+                                    {{ $data->comment }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
                         </table>
-            </div>
-            <div class="border-table">
+          
+                      <div class="border-table">
                             <div class="block-head">
                                 Attached Files
                             </div>
@@ -416,8 +450,8 @@
                                     <th class="w-20">S.N.</th>
                                     <th class="w-60">Batch No</th>
                                 </tr>
-                                @if ($data->attachments)
-                                    @foreach (json_decode($data->attachments) as $key => $file)
+                                @if ($data->Attached_File)
+                                    @foreach (json_decode($data->Attached_File) as $key => $file)
                                         <tr>
                                             <td class="w-20">{{ $key + 1 }}</td>
                                             <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
@@ -434,7 +468,8 @@
                             </table>
 
                         </div>
-
+                    </div>
+{{-- 
             <div class="block">
                 <div class="block-head">
                     HOD/Designee Review
@@ -474,7 +509,7 @@
 
                             </table>
 
-                        </div>
+                        </div> --}}
 
             <div class="block">
                 <div class="block-head">
@@ -482,8 +517,14 @@
                         </div>
                         <table>
                             <tr>
-                                <th>CQA/QA Approval Comments</th>
-                                <td>@if($data->cqa_qa_comment){{ $data->cqa_qa_comment }}@else Not Applicable @endif</td>
+                                <th class="w-20">CQA/QA Approval Comments</th>
+                                <td class="w-30">
+                                    @if ($data->cqa_qa_comment)
+                                        {{ $data->cqa_qa_comment }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
                             </tr>
                         </table>
             </div>
@@ -673,6 +714,7 @@
                     </table>
                 </div>
             </div>
+
             <div class="block">
                 <div class="block-head">
                     Self Inspection Circular

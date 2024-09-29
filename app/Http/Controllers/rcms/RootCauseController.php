@@ -449,7 +449,7 @@ class RootCauseController extends Controller
             $history->root_id = $root->id;
             $history->activity_type = 'Initiator Department';
             $history->previous = "Null";
-            $history->current = $root->initiator_Group;
+            $history->current = Helpers::getFullDepartmentName($root->initiator_Group);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -619,7 +619,7 @@ class RootCauseController extends Controller
             $history->root_id = $root->id;
             $history->activity_type = 'Responsible Department';
             $history->previous = "Null";
-            $history->current =   $root->department;
+            $history->current =  Helpers::getFullDepartmentName( $root->department);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -664,6 +664,39 @@ class RootCauseController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+        if (!empty($request->investigation_attachment)) {
+            $history = new RootAuditTrial();
+            $history->root_id = $root->id;
+            $history->activity_type = ' Attachment';
+            $history->previous = "Null";
+            $history->current =  $root->investigation_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $root->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty($request->root_cause_Others)) {
+            $history = new RootAuditTrial();
+            $history->root_id = $root->id;
+            $history->activity_type = ' Others';
+            $history->previous = "Null";
+            $history->current =  $root->root_cause_Others;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $root->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
 
         if (!empty($request->root_cause_initial_attachment)) {
             $history = new RootAuditTrial();
@@ -1828,8 +1861,8 @@ class RootCauseController extends Controller
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Initiator Department';
-            $history->previous = $lastDocument->initiator_Group;
-            $history->current = $root->initiator_Group;
+            $history->previous = Helpers::getFullDepartmentName ($lastDocument->initiator_Group);
+            $history->current = Helpers::getFullDepartmentName($root->initiator_Group);
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1850,7 +1883,7 @@ class RootCauseController extends Controller
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Initiator Department Code';
-            $history->previous = $lastDocument->initiator_group_code;
+            $history->previous =  $lastDocument->initiator_group_code;
             $history->current = $root->initiator_group_code;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
@@ -2048,8 +2081,8 @@ class RootCauseController extends Controller
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Responsible Department';
-            $history->previous = $lastDocument->department;
-            $history->current = $root->department;
+            $history->previous = Helpers::getFullDepartmentName($lastDocument->department);
+            $history->current =Helpers::getFullDepartmentName( $root->department);
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2110,6 +2143,27 @@ class RootCauseController extends Controller
             }
             $history->save();
         }
+        if ($lastDocument->root_cause_Others != $root->root_cause_Others || !empty($request->comment)) {
+
+            $history = new RootAuditTrial();
+            $history->root_id = $id;
+            $history->activity_type = 'Comments';
+            $history->previous = $lastDocument->root_cause_Others;
+            $history->current = $root->root_cause_Others;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->root_cause_Others) || $lastDocument->root_cause_Others === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
 
         if ($lastDocument->root_cause_initial_attachment != $root->root_cause_initial_attachment || !empty($request->comment)) {
 
@@ -2126,6 +2180,27 @@ class RootCauseController extends Controller
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->root_cause_initial_attachment) || $lastDocument->root_cause_initial_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastDocument->investigation_attachment != $root->investigation_attachment || !empty($request->comment)) {
+
+            $history = new RootAuditTrial();
+            $history->root_id = $id;
+            $history->activity_type = 'Initial Attachment';
+            $history->previous = $lastDocument->investigation_attachment;
+            $history->current = $root->investigation_attachment;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->investigation_attachment) || $lastDocument->investigation_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4350,7 +4425,10 @@ class RootCauseController extends Controller
 
         if ($request->revision == "Action-Item") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id'));
+            $record = $record_number;
+            $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+            $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+            return view('frontend.action-item.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id','record'));
         }
     }
 

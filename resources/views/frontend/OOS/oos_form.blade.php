@@ -1700,7 +1700,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Initiator Group">Repeat testing required </label>
                                 <select name="repeat_testing_pia">
-                                    <option value="NA">Select</option>
+                                    <option value="">Select</option>
                                     <option value="YES">YES</option>
                                     <option value="NO">NO</option>
                                 </select>
@@ -10905,9 +10905,9 @@ $users = DB::table('users')
                         <label for="Reference Recores">Material/Batch Release</label>
                         <select name="material_batch_release_bd">
                             <option value="">Enter Your Selection Here</option>
-                            <option value="release">To Be Released</option>
-                            <option value="reject">To Be Rejected</option>
-                            <option value="other">Other Action (Specify)</option>
+                            <option value="To Be Released">To Be Released</option>
+                            <option value="To Be Rejected">To Be Rejected</option>
+                            <option value="Other">Other Action (Specify)</option>
                         </select>
                         </div>
                     </div>

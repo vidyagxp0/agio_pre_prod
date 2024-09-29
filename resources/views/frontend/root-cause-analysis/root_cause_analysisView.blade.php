@@ -1069,7 +1069,7 @@
                                                 </option>
                                                 <option value="Rootcauseothers"                                            
 
-                                                    @if (in_array('Rootcauseothers', $selectedMethodologies)) selected @endif>Is/Is Not Analysis
+                                                    @if (in_array('Rootcauseothers', $selectedMethodologies)) selected @endif>Others
                                                 </option>
                                             </select>
                                         </div>
@@ -1079,7 +1079,7 @@
                                             <label for="root_cause_Others">Others</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it does not require completion</small></div>
-                                            <textarea class="summernote" name="root_cause_Others" id="summernote-1">{{ $data->root_cause_Others}} </textarea>
+                                            <textarea class="summernote" name="root_cause_Others" id="summernote">{{ $data->root_cause_Others}} </textarea>
                                         </div>
                                     </div>
                                     
@@ -2809,87 +2809,169 @@
                 }
             }
 
+            // function addRootCauseAnalysisRiskAssessment1(tableId) {
+            //     var table = document.getElementById(tableId);
+            //     var currentRowCount = table.rows.length;
+            //     var newRow = table.insertRow(currentRowCount);
+            //     newRow.setAttribute("id", "row" + currentRowCount);
+            //     var cell1 = newRow.insertCell(0);
+            //     cell1.innerHTML = currentRowCount;
+
+            //     var cell2 = newRow.insertCell(1);
+            //     cell2.innerHTML = "<input name='risk_factor[]' type='text'>";
+
+            //     var cell3 = newRow.insertCell(2);
+            //     cell3.innerHTML = "<input name='risk_element[]' type='text'>";
+
+            //     var cell4 = newRow.insertCell(3);
+            //     cell4.innerHTML = "<input name='problem_cause[]' type='text'>";
+
+            //     // var cell5 = newRow.insertCell(4);
+            //     // cell5.innerHTML = "<input name='existing_risk_control[]' type='text'>";
+
+            //     var cell5 = newRow.insertCell(4);
+            //     cell5.innerHTML =
+            //         "<select onchange='calculateInitialResult(this)' class='fieldR' name='initial_severity[]'><option value=''>-- Select --</option><option value='1'>1-Insignificant</option><option value='2'>2-Minor</option><option value='3'>3-Major</option><option value='4'>4-Critical</option><option value='5'>5-Catastrophic</option></select>";
+            //         //  "<input name='initial_severity[]' type='text'>";
+
+            //     var cell6 = newRow.insertCell(5);
+            //     cell6.innerHTML =
+            //         "<select onchange='calculateInitialResult(this)' class='fieldP' name='initial_probability[]'><option value=''>-- Select --</option><option value='1'>1-Very rare</option><option value='2'>2-Unlikely</option><option value='3'>3-Possibly</option><option value='4'>4-Likely</option><option value='5'>5-Almost certain (every time)</option></select>";
+
+            //     var cell7 = newRow.insertCell(6);
+            //     cell7.innerHTML =
+            //         "<select onchange='calculateInitialResult(this)' class='fieldN' name='initial_detectability[]'><option value=''>-- Select --</option><option value='1'>1-Always detected</option><option value='2'>2-Likely to detect</option><option value='3'>3-Possible to detect</option><option value='4'>4-Unlikely to detect</option><option value='5'>5-Not detectable</option></select>";
+
+            //     var cell8 = newRow.insertCell(7);
+            //     cell8.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn' readonly>";
+
+            //     // var cell10 = newRow.insertCell(9);
+            //     // cell10.innerHTML =
+            //     //     "<select name='risk_acceptance[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
+
+            //     var cell9 = newRow.insertCell(8);
+            //     cell9.innerHTML = "<input name='risk_control_measure[]' type='text'>";
+
+            //     var cell10 = newRow.insertCell(9);
+            //     cell10.innerHTML =
+            //         "<select onchange='calculateResidualResult(this)' class='residual-fieldR' name='residual_severity[]'><option value=''>-- Select --</option><option value='1'>1-Insignificant</option><option value='2'>2-Minor</option><option value='3'>3-Major</option><option value='4'>4-Critical</option><option value='5'>5-Catastrophic</option></select>";
+
+            //     var cell11 = newRow.insertCell(10);
+            //     cell11.innerHTML =
+            //         "<select onchange='calculateResidualResult(this)' class='residual-fieldP' name='residual_probability[]'><option value=''>-- Select --</option><option value='1'>1-Very rare</option><option value='2'>2-Unlikely</option><option value='3'>3-Possibly</option><option value='4'>4-Likely</option><option value='5'>5-Almost certain (every time)</option></select>";
+
+            //     var cell12 = newRow.insertCell(11);
+            //     cell12.innerHTML =
+            //         "<select onchange='calculateResidualResult(this)' class='residual-fieldN' name='residual_detectability[]'><option value=''>-- Select --</option><option value='1'>1-Always detected</option><option value='2'>2-Likely to detect</option><option value='3'>3-Possible to detect</option><option value='4'>4-Unlikely to detect</option><option value='5'>5-Not detectable</option></select>";
+
+            //     var cell13 = newRow.insertCell(12);
+            //     cell13.innerHTML = "<input name='residual_rpn[]' type='text' class='residual-rpn' readonly>";
+            //     var cell14 = newRow.insertCell(13);
+            //     cell14.innerHTML =
+            //         "<select name='risk_acceptance[]' class='risk-acceptance' readonly>" +
+            //         "<option value=''>-- Select --</option>" +
+            //         "<option value='Low'>Low</option>" +
+            //         "<option value='Medium'>Medium</option>" +
+            //         "<option value='High'>High</option>" +
+            //         "</select>";
+
+            //         var cell15 = newRow.insertCell(14);
+            //         cell15.innerHTML =
+            //             "<select name='risk_acceptance2[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
+
+            //         var cell16 = newRow.insertCell(15);
+            //         cell16.innerHTML = "<input name='mitigation_proposal[]' type='text'>";
+
+            //         var cell17 = newRow.insertCell(16);
+            //         cell17.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
+
+            //     for (var i = 1; i < currentRowCount; i++) {
+            //         var row = table.rows[i];
+            //         row.cells[0].innerHTML = i;
+            //     }
+            // }
             function addRootCauseAnalysisRiskAssessment1(tableId) {
-                var table = document.getElementById(tableId);
-                var currentRowCount = table.rows.length;
-                var newRow = table.insertRow(currentRowCount);
-                newRow.setAttribute("id", "row" + currentRowCount);
-                var cell1 = newRow.insertCell(0);
-                cell1.innerHTML = currentRowCount;
+            var table = document.getElementById(tableId);
+            var currentRowCount = table.children[1].rows.length;
+            var newRow = table.children[1].insertRow(currentRowCount);
+            newRow.setAttribute("id", "row" + currentRowCount);
+            var cell1 = newRow.insertCell(0);
+            cell1.innerHTML = currentRowCount + 1;
 
-                var cell2 = newRow.insertCell(1);
-                cell2.innerHTML = "<input name='risk_factor[]' type='text'>";
+            var cell2 = newRow.insertCell(1);
+            cell2.innerHTML = "<input name='risk_factor[]' type='text'>";
 
-                var cell3 = newRow.insertCell(2);
-                cell3.innerHTML = "<input name='risk_element[]' type='text'>";
+            var cell3 = newRow.insertCell(2);
+            cell3.innerHTML = "<input name='risk_element[]' type='text'>";
 
-                var cell4 = newRow.insertCell(3);
-                cell4.innerHTML = "<input name='problem_cause[]' type='text'>";
+            var cell4 = newRow.insertCell(3);
+            cell4.innerHTML = "<input name='problem_cause[]' type='text'>";
 
-                // var cell5 = newRow.insertCell(4);
-                // cell5.innerHTML = "<input name='existing_risk_control[]' type='text'>";
+            // var cell5 = newRow.insertCell(4);
+            // cell5.innerHTML = "<input name='existing_risk_control[]' type='text'>";
 
-                var cell5 = newRow.insertCell(4);
-                cell5.innerHTML =
-                    "<select onchange='calculateInitialResult(this)' class='fieldR' name='initial_severity[]'><option value=''>-- Select --</option><option value='1'>1-Insignificant</option><option value='2'>2-Minor</option><option value='3'>3-Major</option><option value='4'>4-Critical</option><option value='5'>5-Catastrophic</option></select>";
-                    //  "<input name='initial_severity[]' type='text'>";
+            var cell5 = newRow.insertCell(4);
+            cell5.innerHTML =
+                "<select onchange='calculateInitialResult(this)' class='fieldR' name='initial_severity[]'><option value=''>-- Select --</option><option value='1'>1-Insignificant</option><option value='2'>2-Minor</option><option value='3'>3-Major</option><option value='4'>4-Critical</option><option value='5'>5-Catastrophic</option></select>";
+                // "<input name='initial_severity[]' type='text'>";
 
-                var cell6 = newRow.insertCell(5);
-                cell6.innerHTML =
-                    "<select onchange='calculateInitialResult(this)' class='fieldP' name='initial_probability[]'><option value=''>-- Select --</option><option value='1'>1-Very rare</option><option value='2'>2-Unlikely</option><option value='3'>3-Possibly</option><option value='4'>4-Likely</option><option value='5'>5-Almost certain (every time)</option></select>";
 
-                var cell7 = newRow.insertCell(6);
-                cell7.innerHTML =
-                    "<select onchange='calculateInitialResult(this)' class='fieldN' name='initial_detectability[]'><option value=''>-- Select --</option><option value='1'>1-Always detected</option><option value='2'>2-Likely to detect</option><option value='3'>3-Possible to detect</option><option value='4'>4-Unlikely to detect</option><option value='5'>5-Not detectable</option></select>";
+            var cell6 = newRow.insertCell(5);
+            cell6.innerHTML =
+                "<select onchange='calculateInitialResult(this)' class='fieldP' name='initial_probability[]'><option value=''>-- Select --</option><option value='1'>1-Very rare</option><option value='2'>2-Unlikely</option><option value='3'>3-Possibly</option><option value='4'>4-Likely</option><option value='5'>5-Almost certain (every time)</option></select>";
 
-                var cell8 = newRow.insertCell(7);
-                cell8.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn' readonly>";
+            var cell7 = newRow.insertCell(6);
+            cell7.innerHTML =
+                "<select onchange='calculateInitialResult(this)' class='fieldN' name='initial_detectability[]'><option value=''>-- Select --</option><option value='1'>1-Always detected</option><option value='2'>2-Likely to detect</option><option value='3'>3-Possible to detect</option><option value='4'>4-Unlikely to detect</option><option value='5'>5-Not detectable</option></select>";
 
-                // var cell10 = newRow.insertCell(9);
-                // cell10.innerHTML =
-                //     "<select name='risk_acceptance[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
+            var cell8 = newRow.insertCell(7);
+            cell8.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn' readonly>";
 
-                var cell9 = newRow.insertCell(8);
-                cell9.innerHTML = "<input name='risk_control_measure[]' type='text'>";
+            // var cell10 = newRow.insertCell(9);
+            // cell10.innerHTML =
+            //     "<select name='risk_acceptance[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
 
-                var cell10 = newRow.insertCell(9);
-                cell10.innerHTML =
-                    "<select onchange='calculateResidualResult(this)' class='residual-fieldR' name='residual_severity[]'><option value=''>-- Select --</option><option value='1'>1-Insignificant</option><option value='2'>2-Minor</option><option value='3'>3-Major</option><option value='4'>4-Critical</option><option value='5'>5-Catastrophic</option></select>";
+            var cell19 = newRow.insertCell(8);
+            cell19.innerHTML = "<input name='risk_control_measure[]' type='text'>";
 
-                var cell11 = newRow.insertCell(10);
-                cell11.innerHTML =
-                    "<select onchange='calculateResidualResult(this)' class='residual-fieldP' name='residual_probability[]'><option value=''>-- Select --</option><option value='1'>1-Very rare</option><option value='2'>2-Unlikely</option><option value='3'>3-Possibly</option><option value='4'>4-Likely</option><option value='5'>5-Almost certain (every time)</option></select>";
+            var cell10 = newRow.insertCell(9);
+            cell10.innerHTML =
+                "<select onchange='calculateResidualResult(this)' class='residual-fieldR' name='residual_severity[]'><option value=''>-- Select --</option><option value='1'>1-Insignificant</option><option value='2'>2-Minor</option><option value='3'>3-Major</option><option value='4'>4-Critical</option><option value='5'>5-Catastrophic</option></select>";
 
-                var cell12 = newRow.insertCell(11);
-                cell12.innerHTML =
-                    "<select onchange='calculateResidualResult(this)' class='residual-fieldN' name='residual_detectability[]'><option value=''>-- Select --</option><option value='1'>1-Always detected</option><option value='2'>2-Likely to detect</option><option value='3'>3-Possible to detect</option><option value='4'>4-Unlikely to detect</option><option value='5'>5-Not detectable</option></select>";
+            var cell11 = newRow.insertCell(10);
+            cell11.innerHTML =
+                "<select onchange='calculateResidualResult(this)' class='residual-fieldP' name='residual_probability[]'><option value=''>-- Select --</option><option value='1'>1-Very rare</option><option value='2'>2-Unlikely</option><option value='3'>3-Possibly</option><option value='4'>4-Likely</option><option value='5'>5-Almost certain (every time)</option></select>";
 
-                var cell13 = newRow.insertCell(12);
-                cell13.innerHTML = "<input name='residual_rpn[]' type='text' class='residual-rpn' readonly>";
-                var cell14 = newRow.insertCell(13);
-                cell14.innerHTML =
-                    "<select name='risk_acceptance[]' class='risk-acceptance' readonly>" +
-                    "<option value=''>-- Select --</option>" +
-                    "<option value='Low'>Low</option>" +
-                    "<option value='Medium'>Medium</option>" +
-                    "<option value='High'>High</option>" +
-                    "</select>";
+            var cell12 = newRow.insertCell(11);
+            cell12.innerHTML =
+                "<select onchange='calculateResidualResult(this)' class='residual-fieldN' name='residual_detectability[]'><option value=''>-- Select --</option><option value='1'>1-Always detected</option><option value='2'>2-Likely to detect</option><option value='3'>3-Possible to detect</option><option value='4'>4-Unlikely to detect</option><option value='5'>5-Not detectable</option></select>";
 
-                    var cell15 = newRow.insertCell(14);
-                    cell15.innerHTML =
-                        "<select name='risk_acceptance2[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
+            var cell13 = newRow.insertCell(12);
+            cell13.innerHTML = "<input name='residual_rpn[]' type='text' class='residual-rpn' readonly>";
+            var cell14 = newRow.insertCell(13);
+            cell14.innerHTML =
+                "<select name='risk_acceptance[]' class='risk-acceptance' readonly>" +
+                "<option value=''>-- Select --</option>" +
+                "<option value='Low'>Low</option>" +
+                "<option value='Medium'>Medium</option>" +
+                "<option value='High'>High</option>" +
+                "</select>";
 
-                    var cell16 = newRow.insertCell(15);
-                    cell16.innerHTML = "<input name='mitigation_proposal[]' type='text'>";
+            var cell15 = newRow.insertCell(14);
+            cell15.innerHTML =
+                "<select name='risk_acceptance2[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
 
-                    var cell17 = newRow.insertCell(16);
-                    cell17.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
+            var cell16 = newRow.insertCell(15);
+            cell16.innerHTML = "<input name='mitigation_proposal[]' type='text'>";
 
-                for (var i = 1; i < currentRowCount; i++) {
-                    var row = table.rows[i];
-                    row.cells[0].innerHTML = i;
-                }
+            var cell17 = newRow.insertCell(16);
+            cell17.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
+
+            for (var i = 0; i < currentRowCount-1; i++) {
+                var row = table.children[1].rows[i];
+                row.cells[0].innerHTML = i+1;
             }
+        }
 
             function addInference(tableId) {
                 var table = document.getElementById(tableId);
@@ -3162,18 +3244,28 @@
             });
         </script>
     @endsection
- <script>
-          $('#summernote').summernote({
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear', 'italic']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
+    <script>
+        $('#summernote').summernote({
+          toolbar: [
+              ['style', ['style']],
+              ['font', ['bold', 'underline', 'clear', 'italic']],
+              ['color', ['color']],
+              ['para', ['ul', 'ol', 'paragraph']],
+              ['table', ['table']],
+              ['insert', ['link', 'picture', 'video']],
+              ['view', ['fullscreen', 'codeview', 'help']]
+          ]
+      });
 
-        
-        </script>
+      $('.summernote').summernote({
+          toolbar: [
+              ['style', ['style']],
+              ['font', ['bold', 'underline', 'clear', 'italic']],
+              ['color', ['color']],
+              ['para', ['ul', 'ol', 'paragraph']],
+              ['table', ['table']],
+              ['insert', ['link', 'picture', 'video']],
+              ['view', ['fullscreen', 'codeview', 'help']]
+          ]
+      });
+      </script>
