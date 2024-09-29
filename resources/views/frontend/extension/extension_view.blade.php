@@ -401,7 +401,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Assigned To">HOD Review </label>
+                                        <label for="Assigned To">HOD Review</label>
                                         <select id="choices-multiple-remove" class="choices-multiple-reviewe"
                                             name="reviewers" placeholder="Select Reviewers"
                                             {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}>
@@ -453,7 +453,7 @@
                                 </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="related_records">Parent Record Number</label>
+                                        <label for="related_records">Parent Records Number</label>
 
                                         <!-- Virtual Select Dropdown -->
                                         <div id="related_records" class="virtual-select">
@@ -523,7 +523,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Assigned To">QA approval </label>
+                                        <label for="Assigned To">QA Approval </label>
                                         <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
                                             name="approvers" placeholder="Select Approvers"
                                             {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}>
@@ -901,7 +901,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Activated On">Comment</label>
+                                    <label for="Activated On">Submit Comment</label>
                                     <div class="static">{{ $extensionNew->submit_comment }}</div>
                                 </div>
                             </div>
@@ -919,7 +919,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">Cancel Comment</label>
                                     <div class="static">{{ $extensionNew->reject_comment }}</div>
                                 </div>
                             </div>
@@ -938,7 +938,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">More Information Required Comment</label>
                                     <div class="static">{{ $extensionNew->more_info_review_comment }}</div>
                                 </div>
                             </div>
@@ -958,7 +958,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">Review Comment</label>
                                     <div class="static">{{ $extensionNew->submit_comment_review }}</div>
                                 </div>
                             </div>
@@ -978,7 +978,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">Reject Comment</label>
                                     <div class="static">{{ $extensionNew->submit_commen_inapproved }}</div>
                                 </div>
                             </div>
@@ -997,7 +997,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">More Information Required Comment</label>
                                     <div class="static">{{ $extensionNew->more_info_inapproved_comment }}</div>
                                 </div>
                             </div>
@@ -1016,7 +1016,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">Send for CQA Comment</label>
                                     <div class="static">{{ $extensionNew->send_cqa_comment }}</div>
                                 </div>
                             </div>
@@ -1035,7 +1035,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">Approved Comment</label>
                                     <div class="static">{{ $extensionNew->submit_comment_approved }}</div>
                                 </div>
                             </div>
@@ -1054,7 +1054,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">CQA Approval Complete Comment</label>
                                     <div class="static">{{ $extensionNew->cqa_approval_comment }}</div>
                                 </div>
                             </div>

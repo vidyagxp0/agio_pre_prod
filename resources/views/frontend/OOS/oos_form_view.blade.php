@@ -8538,14 +8538,14 @@
             <div id="CCForm36" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase II A HOD Primary
+                        Phase II A HOD Review
                     </div>
                     <div class="row">
                          <!-- Others Field -->
                          
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase II A HOD Primary Remark<span class="text-danger">*</span></label>
+                                <label for="Initiator Group">Phase II A HOD Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
@@ -8563,7 +8563,7 @@
             
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Audit Attachments">Phase II A HOD Primary Attachment</label>
+                                <label for="Audit Attachments">Phase II A HOD Attachment</label>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
                                 </small>

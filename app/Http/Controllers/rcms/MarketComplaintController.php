@@ -724,6 +724,106 @@ class MarketComplaintController extends Controller
 
         // ----------------------------------autid show  fileds ----------------------------------------------------------
 
+        $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Record Number';
+            $history->previous = "Null";
+            $history->current = Helpers::getDivisionName(session()->get('division')) . "/MC/" . Helpers::year($marketComplaint->created_at) . "/" . str_pad($marketComplaint->record, 4, '0', STR_PAD_LEFT);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $marketComplaint->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+
+
+            if (!empty ($request->division_id)){
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Site/Location Code';
+            $history->previous = "Null";
+            $history->current =Helpers::getDivisionName($marketComplaint->division_id);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $marketComplaint->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+
+           }
+           if (!empty ($request->initiator)){
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Initiator';
+            $history->previous = "Null";
+            $history->current = Auth::user()->name;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $marketComplaint->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+
+           }
+
+            if (!empty ($request->intiation_date)){
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Date of Initiation';
+            $history->previous = "Null";
+            $history->current =  Helpers::getdateFormat($marketComplaint->intiation_date);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $marketComplaint->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+            }
+                           if (!empty ($request->due_date_gi)){
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Due Date';
+            $history->previous = "Null";
+            $history->current =Helpers::getdateFormat ($marketComplaint->due_date_gi);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $marketComplaint->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+               }
+
+        //        if (!empty($marketComplaint->review_of_stability_study_gi)) {
+        //     $history = new MarketComplaintAuditTrial();
+        //     $history->market_id = $marketComplaint->id;
+        //     $history->activity_type = 'Department Code ';
+        //     $history->previous = "Null";
+        //     $history->current = $marketComplaint->review_of_stability_study_gi;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $marketComplaint->status;
+        //     $history->change_to = "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = "Create";
+        //     $history->save();
+        // }
 
         if (!empty($marketComplaint->review_of_stability_study_gi)) {
             $history = new MarketComplaintAuditTrial();
@@ -858,22 +958,22 @@ class MarketComplaintController extends Controller
         }
 
 
-        if (!empty($marketComplaint->record)) {
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Record Number';
-            $history->previous = "Null";
-            $history->current = Helpers::getDivisionName($marketComplaint->division_id) . '/MC/' . Helpers::year($marketComplaint->created) . '/' . str_pad($marketComplaint->record, 4, '0', STR_PAD_LEFT);
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $marketComplaint->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = "Create";
-            $history->save();
-        }
+        // if (!empty($marketComplaint->record)) {
+        //     $history = new MarketComplaintAuditTrial();
+        //     $history->market_id = $marketComplaint->id;
+        //     $history->activity_type = 'Record Number';
+        //     $history->previous = "Null";
+        //     $history->current = Helpers::getDivisionName($marketComplaint->division_id) . '/MC/' . Helpers::year($marketComplaint->created) . '/' . str_pad($marketComplaint->record, 4, '0', STR_PAD_LEFT);
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $marketComplaint->status;
+        //     $history->change_to = "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = "Create";
+        //     $history->save();
+        // }
 
         if (!empty($marketComplaint->description_gi)) {
             $history = new MarketComplaintAuditTrial();
@@ -2627,48 +2727,48 @@ class MarketComplaintController extends Controller
 
 
 
-    if (!empty($request->qa_cqa_attachments) || !empty($request->deleted_qa_cqa_attachments)) {
-    $existingFiles = json_decode($marketComplaint->qa_cqa_attachments, true) ?? [];
+//     if (!empty($request->qa_cqa_attachments) || !empty($request->deleted_qa_cqa_attachments)) {
+//     $existingFiles = json_decode($marketComplaint->qa_cqa_attachments, true) ?? [];
 
-    // Handle deleted files
-    if (!empty($request->deleted_qa_cqa_attachments)) {
-        $filesToDelete = explode(',', $request->deleted_qa_cqa_attachments);
-        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-            return !in_array($file, $filesToDelete);
-        });
-    }
+//     // Handle deleted files
+//     if (!empty($request->deleted_qa_cqa_attachments)) {
+//         $filesToDelete = explode(',', $request->deleted_qa_cqa_attachments);
+//         $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+//             return !in_array($file, $filesToDelete);
+//         });
+//     }
 
-    // Handle new files
-    $newFiles = [];
-    if ($request->hasFile('qa_cqa_attachments')) {
-        foreach ($request->file('qa_cqa_attachments') as $file) {
-            $name = $request->name . 'qa_cqa_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('upload/'), $name);
-            $newFiles[] = $name;
-        }
-    }
+//     // Handle new files
+//     $newFiles = [];
+//     if ($request->hasFile('qa_cqa_attachments')) {
+//         foreach ($request->file('qa_cqa_attachments') as $file) {
+//             $name = $request->name . 'qa_cqa_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+//             $file->move(public_path('upload/'), $name);
+//             $newFiles[] = $name;
+//         }
+//     }
 
-    // Merge existing and new files
-    $allFiles = array_merge($existingFiles, $newFiles);
-    $marketComplaint->qa_cqa_attachments = json_encode($allFiles);
-}
-    // Handle deleted files
-    if (!empty($request->deleted_qa_cqa_he_attach)) {
-        $filesToDelete = explode(',', $request->deleted_qa_cqa_he_attach);
-        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-            return !in_array($file, $filesToDelete);
-        });
-    }
+//     // Merge existing and new files
+//     $allFiles = array_merge($existingFiles, $newFiles);
+//     $marketComplaint->qa_cqa_attachments = json_encode($allFiles);
+// }
+//     // Handle deleted files
+//     if (!empty($request->deleted_qa_cqa_he_attach)) {
+//         $filesToDelete = explode(',', $request->deleted_qa_cqa_he_attach);
+//         $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+//             return !in_array($file, $filesToDelete);
+//         });
+//     }
 
-    // Handle new files
-    $newFiles = [];
-    if ($request->hasFile('qa_cqa_he_attach')) {
-        foreach ($request->file('qa_cqa_he_attach') as $file) {
-            $name = $request->name . 'qa_cqa_he_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('upload/'), $name);
-            $newFiles[] = $name;
-        }
-    }
+//     // Handle new files
+//     $newFiles = [];
+//     if ($request->hasFile('qa_cqa_he_attach')) {
+//         foreach ($request->file('qa_cqa_he_attach') as $file) {
+//             $name = $request->name . 'qa_cqa_he_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+//             $file->move(public_path('upload/'), $name);
+//             $newFiles[] = $name;
+//         }
+//     }
        if (!empty($request->qa_cqa_head_attach) || !empty($request->deleted_qa_cqa_head_attach)) {
        $existingFiles = json_decode($marketComplaint->qa_cqa_head_attach, true) ?? [];
 
@@ -2693,6 +2793,57 @@ class MarketComplaintController extends Controller
     // Merge existing and new files
     $allFiles = array_merge($existingFiles, $newFiles);
     $marketComplaint->qa_cqa_head_attach = json_encode($allFiles);
+}
+
+  if (!empty($request->qa_cqa_he_attach) || !empty($request->deleted_qa_cqa_he_attach)) {
+       $existingFiles = json_decode($marketComplaint->qa_cqa_he_attach, true) ?? [];
+
+    // Handle deleted files
+    if (!empty($request->deleted_qa_cqa_he_attach)) {
+        $filesToDelete = explode(',', $request->deleted_qa_cqa_he_attach);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('qa_cqa_he_attach')) {
+        foreach ($request->file('qa_cqa_he_attach') as $file) {
+            $name = $request->name . 'qa_cqa_he_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
+        }
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $marketComplaint->qa_cqa_he_attach = json_encode($allFiles);
+}
+  if (!empty($request->qa_cqa_attachments) || !empty($request->deleted_qa_cqa_attachments)) {
+       $existingFiles = json_decode($marketComplaint->qa_cqa_attachments, true) ?? [];
+
+    // Handle deleted files
+    if (!empty($request->deleted_qa_cqa_attachments)) {
+        $filesToDelete = explode(',', $request->deleted_qa_cqa_attachments);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('qa_cqa_attachments')) {
+        foreach ($request->file('qa_cqa_attachments') as $file) {
+            $name = $request->name . 'qa_cqa_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
+        }
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $marketComplaint->qa_cqa_attachments = json_encode($allFiles);
 }
 
 
@@ -3365,7 +3516,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->qa_head_comment != $marketComplaint->qa_head_comment) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'QA/CQA Head Comment';
+            $history->activity_type = 'QA/CQA Head Approval Comment';
             $history->previous = $lastmarketComplaint->qa_head_comment;
             $history->current = $marketComplaint->qa_head_comment;
             $history->comment = $request->qa_head_comment_comment;
@@ -8448,6 +8599,9 @@ class MarketComplaintController extends Controller
         $brain = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'brain_stroming_details'])->first();
         $hodteammembers = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Team_Members'])->first();
         $hodreportapproval = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Report_Approval'])->first();
+         $proposal_to_accomplish_investigation = MarketComplaintGrids::where('mc_id', $id)->where('identifer', 'Proposal_to_accomplish_investigation')->first();
+        $proposalData = $proposal_to_accomplish_investigation ? json_decode($proposal_to_accomplish_investigation->data, true) : [];
+
 
 
 
@@ -8460,7 +8614,7 @@ class MarketComplaintController extends Controller
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.market_complaint.singleReport', compact('data', 'data1', 'prductgigrid', 'gitracebilty','marketrproducts','giinvesting','brain','hodteammembers','hodreportapproval'))
+            $pdf = PDF::loadview('frontend.market_complaint.singleReport', compact('data','proposalData','proposal_to_accomplish_investigation', 'data1', 'prductgigrid', 'gitracebilty','marketrproducts','giinvesting','brain','hodteammembers','hodreportapproval'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -8511,7 +8665,7 @@ class MarketComplaintController extends Controller
         $doc = MarketComplaint::find($id);
         if (!empty($doc)) {
             $doc->originator = User::where('id', $doc->initiator_id)->value('name');
-            $data = MarketComplaintAuditTrial::where('market_id', $id)->get();
+            $data = MarketComplaintAuditTrial::where('market_id', $id)->paginate(1000);
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.market_complaint.auditReport', compact('data', 'doc'))
@@ -8782,14 +8936,14 @@ class MarketComplaintController extends Controller
 
 
             // foreach ($list as $u) {
-            //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
+            //     if ($u->q_m_s_divisions_id == $marketComplaint->division_id) {
             //         $email = Helpers::getInitiatorEmail($u->user_id);
             //         if ($email !== null) {
 
             //             try {
             //                 Mail::send(
             //                     'mail.view-mail',
-            //                     ['data' => $deviation],
+            //                     ['data' => $marketComplaint],
             //                     function ($message) use ($email) {
             //                         $message->to($email)
             //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -8803,7 +8957,7 @@ class MarketComplaintController extends Controller
             // }
             $history->save();
             $marketstat->update();
-            // $history = new DeviationHistory();
+            // $history = new marketComplaintHistory();
             $history->type = "market Complaint";
             $history->doc_id = $id;
             $history->user_id = Auth::user()->id;

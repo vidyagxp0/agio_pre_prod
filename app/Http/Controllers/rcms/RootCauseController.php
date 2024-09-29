@@ -280,6 +280,9 @@ class RootCauseController extends Controller
         $root->requirement = $request->requirement;
         $root->immediate_action = $request->immediate_action;
         $root->investigation_team = implode(',', $request->investigation_team);
+        $investigation_teamIdsArray = explode(',', $root->investigation_team);
+        $investigation_teamNames = User::whereIn('id', $investigation_teamIdsArray)->pluck('name')->toArray();
+        $investigation_teamNamesString = implode(', ', $investigation_teamNames);
         $root->investigation_tool = $request->investigation_tool;
         $root->root_cause = $request->root_cause;
 
@@ -619,7 +622,7 @@ class RootCauseController extends Controller
             $history->root_id = $root->id;
             $history->activity_type = 'Responsible Department';
             $history->previous = "Null";
-            $history->current =  Helpers::getFullDepartmentName( $root->department);
+            $history->current =   $root->department;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -667,7 +670,7 @@ class RootCauseController extends Controller
         if (!empty($request->investigation_attachment)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
-            $history->activity_type = ' Attachment';
+            $history->activity_type = 'Attachment';
             $history->previous = "Null";
             $history->current =  $root->investigation_attachment;
             $history->comment = "Not Applicable";
@@ -683,7 +686,7 @@ class RootCauseController extends Controller
         if (!empty($request->root_cause_Others)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
-            $history->activity_type = ' Others';
+            $history->activity_type = 'Others';
             $history->previous = "Null";
             $history->current =  $root->root_cause_Others;
             $history->comment = "Not Applicable";
@@ -805,7 +808,7 @@ class RootCauseController extends Controller
             $history->root_id = $root->id;
             $history->activity_type = 'Investigation Team';
             $history->previous = "Null";
-            $history->current =  $root->investigation_team;
+            $history->current =  $root->investigation_teamNamesString;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1049,7 +1052,7 @@ class RootCauseController extends Controller
         if (!empty($request->qa_final_comments)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
-            $history->activity_type = 'QA/CQA Final Review Comments';
+            $history->activity_type = 'QA Final Review Comments';
             $history->previous = "Null";
             $history->current =  $root->qa_final_comments;
             $history->comment = "Not Applicable";
@@ -1066,7 +1069,7 @@ class RootCauseController extends Controller
         if (!empty($request->qa_final_attachments)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
-            $history->activity_type = 'QA/CQA Final Review Attachment';
+            $history->activity_type = 'QA Final Review Attachment';
             $history->previous = "Null";
             $history->current =  $root->qa_final_attachments;
             $history->comment = "Not Applicable";
@@ -1559,6 +1562,10 @@ class RootCauseController extends Controller
         }
         $lastDocument =  RootCauseAnalysis::find($id);
         $root =  RootCauseAnalysis::find($id);
+        $getId = $lastDocument->investigation_team;
+        $lastinvestigation_teamIdsArray = explode(',', $getId);
+        $lastinvestigation_teamNames = User::whereIn('id', $lastinvestigation_teamIdsArray)->pluck('name')->toArray();
+        $lastinvestigation_teamName = implode(', ', $lastinvestigation_teamNames);
         $root->initiator_Group = $request->initiator_Group;
         $root->initiated_through = $request->initiated_through;
         $root->initiated_if_other = ($request->initiated_if_other);
@@ -1653,6 +1660,9 @@ class RootCauseController extends Controller
         $root->requirement = $request->requirement;
         $root->immediate_action = $request->immediate_action;
         $root->investigation_team = implode(',', $request->investigation_team);
+        $investigation_teamIdsArray = explode(',', $root->investigation_team);
+        $investigation_teamNames = User::whereIn('id', $investigation_teamIdsArray)->pluck('name')->toArray();
+        $investigation_teamNamesString = implode(', ', $investigation_teamNames);
         $root->investigation_tool = $request->investigation_tool;
         $root->root_cause = $request->root_cause;
 
@@ -2075,14 +2085,13 @@ class RootCauseController extends Controller
             }
             $history->save();
         }
-
         if ($lastDocument->department != $root->department || !empty($request->comment)) {
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Responsible Department';
-            $history->previous = Helpers::getFullDepartmentName($lastDocument->department);
-            $history->current =Helpers::getFullDepartmentName( $root->department);
+            $history->previous = $lastDocument->department;
+            $history->current = $root->department;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2147,7 +2156,7 @@ class RootCauseController extends Controller
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'Comments';
+            $history->activity_type = 'Others';
             $history->previous = $lastDocument->root_cause_Others;
             $history->current = $root->root_cause_Others;
             $history->comment = $request->comment;
@@ -2345,8 +2354,8 @@ class RootCauseController extends Controller
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Investigation Team';
-            $history->previous = $lastDocument->investigation_team;
-            $history->current = $root->investigation_team;
+            $history->previous = $lastinvestigation_teamName;
+            $history->current = $investigation_teamNamesString;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2698,7 +2707,7 @@ class RootCauseController extends Controller
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'QA/CQA Final Review Comments';
+            $history->activity_type = 'QA Final Review Comments';
             $history->previous = $lastDocument->qa_final_comments;
             $history->current = $root->qa_final_comments;
             $history->comment = $request->comment;
@@ -2720,7 +2729,7 @@ class RootCauseController extends Controller
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'QA/CQA Final Review Attachment';
+            $history->activity_type = 'QA Final Review Attachment';
             $history->previous = $lastDocument->qa_final_attachments;
             $history->current = $root->qa_final_attachments;
             $history->comment = $request->comment;
@@ -4358,9 +4367,16 @@ class RootCauseController extends Controller
         $data = RootCauseAnalysis::find($id);
         if (!empty($data)) {
             $data->originator_id = User::where('id', $data->initiator_id)->value('name');
+            $investigation_teamIdsArray = explode(',', $data->investigation_team);
+            $investigation_teamNames = User::whereIn('id', $investigation_teamIdsArray)->pluck('name')->toArray();
+            $investigation_teamNamesString = implode(', ', $investigation_teamNames);
+            $selectedMethodologies = explode(',', $data->root_cause_methodology);
+
+
+
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.root-cause-analysis.singleReport', compact('data'))
+            $pdf = PDF::loadview('frontend.root-cause-analysis.singleReport', compact('data','investigation_teamNamesString','selectedMethodologies'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

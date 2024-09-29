@@ -298,7 +298,7 @@ if(!empty($request->attach_files2)){
         $history->Observation_id = $data->id;
         $history->activity_type = 'Record Number';
         $history->previous = "Null";
-        $history->current = Helpers::getDivisionName(session()->get('division')) . "/Observation/" . Helpers::year($data->created_at) . "/" . str_pad($request->record_number, 4, '0', STR_PAD_LEFT);
+        $history->current = $request->record_number;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -1402,7 +1402,7 @@ if(!empty($request->attach_files2)){
                 // $history->stage = '';
                 // $history->stage = '2';
 
-                $history->activity_type = 'Report Issue By, Report Issue On';
+                $history->activity_type = 'Report Issued By, Report Issued On';
                 if (is_null($lastDocument->report_issued_by) || $lastDocument->report_issued_on === '') {
                     $history->previous = "";
                 } else {
@@ -1789,12 +1789,14 @@ if(!empty($request->attach_files2)){
 
 
     public function ObservationAuditTrailPdf($id){
+      
         $doc = Observation::find($id);
+        $audit = AuditTrialObservation::where('observation_id', $id)->paginate(500);
         $doc->originator = User::where('id', $doc->initiator_id)->value('name');
         $data = AuditTrialObservation::where('observation_id', $doc->id)->orderByDesc('id')->get();
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
-        $pdf = PDF::loadview('frontend.observation.Obs_audittrail_PDF', compact('data', 'doc'))
+        $pdf = PDF::loadview('frontend.observation.Obs_audittrail_PDF', compact('data', 'audit', 'doc'))
             ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,

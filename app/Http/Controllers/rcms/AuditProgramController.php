@@ -156,6 +156,74 @@ class AuditProgramController extends Controller
 
 
 
+        if (!empty($data->record)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Record Number';
+            $history->previous = "Null";
+            $history->current = Helpers::getDivisionName(session()->get('division')) . "/AP/" . Helpers::year($data->created_at) . "/" . str_pad($data->record, 4, '0', STR_PAD_LEFT);;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+
+
+        if (!empty($data->division_code)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Site/Location Code';
+            $history->previous = "Null";
+            $history->current = $data->division_code;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+
+
+        if (!empty($data->initiator_id)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Initiator';
+            $history->previous = "Null";
+            $history->current = Helpers::getInitiatorName($data->initiator_id);
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+
+
+        if (!empty($data->intiation_date)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Date of Initiation';
+            $history->previous = "Null";
+            $history->current = Helpers::getdateFormat($data->intiation_date);
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+
+
 
         if (!empty($data->short_description)) {
             $history = new AuditProgramAuditTrial();
@@ -271,7 +339,7 @@ class AuditProgramController extends Controller
         if (!empty($data->year)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'Year';
+            $history->activity_type = 'Initiated Through';
             $history->previous = "Null";
             $history->current = $data->year;
             $history->comment ="Not Applicable";
@@ -967,11 +1035,11 @@ class AuditProgramController extends Controller
         }
       if($lastDocument->year !=$data->year || !empty($request->year_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
-                            ->where('activity_type', 'Year')
+                            ->where('activity_type', 'Initiated Through')
                             ->exists();
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'Year';
+            $history->activity_type = 'Initiated Through';
             $history->previous =  $lastDocument->year;
             $history->current = $data->year;
             $history->comment = $request->year_comment;
@@ -1062,11 +1130,11 @@ class AuditProgramController extends Controller
         }
         if($lastDocument->year !=$data->year || !empty($request->comments_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
-                            ->where('activity_type', 'Yearly Planner')
+                            ->where('activity_type', 'Initiated Through')
                             ->exists();
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'Yearly Planner';
+            $history->activity_type = 'Initiated Through';
             $history->previous =  $lastDocument->year;
             $history->current = $data->year;
             $history->comment = $request->comments_comment;
@@ -1101,11 +1169,11 @@ class AuditProgramController extends Controller
         
         if($lastDocument->yearly_other !=$data->yearly_other || !empty($request->comments_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
-                            ->where('activity_type', 'Yearly Planner(Others)')
+                            ->where('activity_type', 'Initiated Through(Others)')
                             ->exists();
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'Yearly Planner(Others)';
+            $history->activity_type = 'Initiated Through(Others)';
             $history->previous =  $lastDocument->yearly_other;
             $history->current = $data->yearly_other;
             $history->comment = $request->comments_comment;
@@ -1617,7 +1685,7 @@ class AuditProgramController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Submit';
                 $history->change_to= "Pending Approval";
-                $history->change_from= "Opened";
+                $history->change_from= $lastDocument->status;
                 $history->action_name ='Not Applicable';
                 if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
                     $history->action_name = 'New';
@@ -1704,7 +1772,7 @@ class AuditProgramController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Audit Completed';
                 $history->change_to= "Closed - Done";
-                $history->change_from= "Pending Audit";
+                $history->change_from= $lastDocument->status;
                 $history->action_name ='Not Applicable';
                 if (is_null($lastDocument->Audit_Completed_By) || $lastDocument->Audit_Completed_By === '') {
                     $history->action_name = 'New';
@@ -1752,7 +1820,7 @@ class AuditProgramController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Rejected';
                 $history->change_to= "Opened";
-                $history->change_from= "Pending Approval";
+                $history->change_from= $lastDocument->status;
                 $history->action_name ='Not Applicable';
                 if (is_null($lastDocument->rejected_by) || $lastDocument->rejected_by === '') {
                     $history->action_name = 'New';
@@ -1818,7 +1886,7 @@ class AuditProgramController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Cancel';
                 $history->change_to= "Closed-Cancel ";
-                $history->change_from= "Opened";
+                $history->change_from= $lastDocument->status;
                 $history->action_name ='Not Applicable';
                 if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
                     $history->action_name = 'New';
@@ -1853,7 +1921,7 @@ class AuditProgramController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Cancel';
                 $history->change_to= "Closed-Cancel ";
-                $history->change_from= "Pending Approval";
+                $history->change_from= $lastDocument->status;
                 $history->action_name ='Not Applicable';
                 if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
                     $history->action_name = 'New';
@@ -1888,7 +1956,7 @@ class AuditProgramController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Cancel';
                 $history->change_to= "Closed-Cancel ";
-                $history->change_from= "Pending Audit";
+                $history->change_from= $lastDocument->status;
                 $history->action_name ='Not Applicable';
                 if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
                     $history->action_name = 'New';
