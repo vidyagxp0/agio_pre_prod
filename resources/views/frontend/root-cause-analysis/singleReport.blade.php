@@ -222,7 +222,7 @@
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
 
-                        <th class="w-20">Date OF Initiation</th>
+                        <th class="w-20">Date of Initiation</th>
                         <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
 
                     </tr>
@@ -510,11 +510,13 @@
                             @endif
                         </td>
                     
-                   
+                         {{-- @php
+                             dd($data->investigation_teamNamesString);
+                         @endphp --}}
                         <th class="w-20">Investigation Team</th>
                         <td class="w-80">
                             @if ($data->investigation_team)
-                                {{ Helpers::getInitiatorName($data->investigation_team) }}
+                                {{($investigation_teamNamesString) }}
                             @else
                                 Not Applicable
                             @endif
@@ -522,6 +524,15 @@
                     </tr>
 
                     <tr>
+                        <th class="w-20">Root Cause Methodology</th>
+                        <td class="w-80">
+                            @if ($data->root_cause_methodology)
+                                {{ is_array($selectedMethodologies) ? implode(', ', $selectedMethodologies) : $selectedMethodologies }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
                         <th class="w-20">Others</th>
                         <td class="w-80">
                             @if ($data->root_cause_Others)
@@ -617,7 +628,8 @@
             </div>
             <div class="inner-block">
                 <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
-                    QA Review Comments</label>
+                    Initial QA/CQA Review Comments
+                </label>
                 <span style="font-size: 0.8rem; margin-left: 60px;">
                     @if ($data->cft_comments_new)
                         {{ $data->cft_comments_new }}
@@ -628,7 +640,7 @@
             </div>
             <div class="border-table">
                 <div class="block-head">
-                    QA Review Attachment
+                    Initial QA/CQA Review Attachment
                 </div>
                 <table>
 
@@ -783,11 +795,11 @@
         
  <div class="block">
     <div class="block-head">
-        QA Final Review
+        QA/CQA Final Review
     </div>
     <div class="inner-block">
         <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
-            QA Final Review Comments
+            QA/CQA Final Review Comments
 
 </label>
         <span style="font-size: 0.8rem; margin-left: 60px;">
@@ -800,7 +812,7 @@
     </div>
     <div class="border-table">
         <div class="block-head">
-            QA Final Review Attachment
+            QA/CQA Final Review Attachment
 
         </div>
         <table>
