@@ -429,7 +429,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                             
                                                </td>
                                                <td>
-                                            <button type="button" class="view-report-btn"onclick="window.location.href='{{ url('rcms/job_report/' . $job_training->id) }}'" >
+                                            <button type="button" class="view-report-btn"onclick="window.location.href='{{ url('rcms/job_training_report/' . $job_training->id) }}'" >
                                                 View Report
                                             </button>
                                         </div>
@@ -484,7 +484,10 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                     @endphp
                     {{ $prefixAbbreviation . $induction->employee_id }}
                 </td>
-                <td>{{ $induction->name_employee }}</td>
+                <td>
+                    {{ \App\Models\Employee::find($induction->name_employee)?->employee_name ?? 'Employee not found' }}
+                </td>
+
                 <td>{{ Helpers::getFullDepartmentName($induction->department ) }}</td>
                 <!-- <td>{{ $induction->location }}</td> -->
                 <td>{{ $induction->qualification }}</td>

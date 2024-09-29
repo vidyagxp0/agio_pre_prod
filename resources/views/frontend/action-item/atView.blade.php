@@ -311,13 +311,13 @@
                                                 <div class="calenderauditee">
                                                     <input type="text" name="due_date"
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                        {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}
                                                         id="due_date" readonly
                                                         placeholder="DD-MMM-YYYY"
                                                         value="{{ Helpers::getdateFormat($data->due_date) }}" />
                                                     <input type="date" class="hide-input" 
                                                       min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                      {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}
                                                         value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                         oninput="handleDateInput(this, 'due_date')" />
                                                 </div>
@@ -539,10 +539,9 @@
 
 
                                 <div class="col-lg-12">
-                                    @if ($data->stage == 1)
                                         <div class="group-input">
                                             <label for="Responsible Department">Responsible Department</label>
-                                            <select {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                            <select {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}
                                                 name="departments">
                                                 <option value="">-- Select --</option>
                                                 <option value=" Corporate Quality Assurance" @if ($data->departments == ' Corporate Quality Assurance') selected @endif>
@@ -600,68 +599,6 @@
                                             </select>
 
                                         </div>
-                                    @else
-                                        <div class="group-input">
-                                            <label for="Responsible Department">Responsible Department</label>
-                                            <select disabled {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                name="departments">
-                                                <option value="">-- Select --</option>
-                                                <option value="Corporate Quality Assurance" @if ($data->departments == 'Corporate Quality Assurance') selected @endif>
-                                                    Corporate Quality Assurance</option>
-                                                <option value="Quality Assurance" @if ($data->departments == 'Quality Assurance') selected @endif>
-                                                    Quality Assurance</option>
-                                                <option value="Quality Control" @if ($data->departments == 'Quality Control') selected @endif>
-                                                    Quality Control</option>
-                                                <option value="Quality Control (Microbiology department)" @if ($data->departments == 'Quality Control (Microbiology department)') selected @endif>
-                                                    Quality Control (Microbiology department)
-                                                </option>
-                                                <option value="Production General" @if ($data->departments == 'Production General') selected @endif>
-                                                    Production General</option>
-                                                <option value="Production Liquid Orals" @if ($data->departments == 'Production Liquid Orals') selected @endif>
-                                                    Production Liquid Orals</option>
-                                                <option value="Production Tablet and Powder" @if ($data->departments == 'Production Tablet and Powder') selected @endif>
-                                                    Production Tablet and Powder</option>
-                                                <option value="Production External (Ointment, Gels, Creams and Liquid)" @if ($data->departments == 'Production External (Ointment, Gels, Creams and Liquid)') selected @endif>
-                                                    Production External (Ointment, Gels, Creams and Liquid)</option>
-                                                <option value="Production Capsules" @if ($data->departments == 'Production Capsules') selected @endif>
-                                                    Production Capsules</option>
-                                                <option value="Production Injectable" @if ($data->departments == 'Production Injectable') selected @endif>
-                                                    Production Injectable</option>
-                                                <option value="Engineering" @if ($data->departments == 'Engineering') selected @endif>
-                                                    Engineering</option>
-                                                <option value="Human Resource" @if ($data->departments == 'Human Resource') selected @endif>
-                                                    Human Resource</option>
-                                                <option value="Store" @if ($data->departments == 'Store') selected @endif>
-                                                    Store</option>
-                                                <option value="Electronic Data Processing" @if ($data->departments == 'Electronic Data Processing') selected @endif>
-                                                    Electronic Data Processing
-                                                </option>
-                                                <option value="Formulation Development" @if ($data->departments == 'Formulation Development') selected @endif>
-                                                    Formulation Development
-                                                </option>
-                                                <option value="Analytical research and Development Laboratory" @if ($data->departments == 'Analytical research and Development Laboratory') selected @endif>
-                                                    Analytical research and Development Laboratory
-                                                </option>
-                                                <option value="Packaging Development" @if ($data->departments == 'Packaging Development') selected @endif>
-                                                    Packaging Development
-                                                </option>
-
-                                                <option value="Purchase Department" @if ($data->departments == 'Purchase Department') selected @endif>
-                                                    Purchase Department
-                                                </option>
-                                                <option value="Document Cell" @if ($data->departments == 'Document Cell') selected @endif>
-                                                    Document Cell
-                                                </option>
-                                                <option value="Regulatory Affairs" @if ($data->departments == 'Regulatory Affairs') selected @endif>
-                                                    Regulatory Affairs
-                                                </option>
-                                                <option value="Pharmacovigilance" @if ($data->departments == 'Pharmacovigilance') selected @endif>
-                                                    Pharmacovigilance
-                                                </option>
-                                            </select>
-                                            </select>
-                                        </div>
-                                    @endif
                                     @error('departments')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -804,7 +741,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}>Save</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                         Exit </a> </button>
@@ -1135,7 +1072,7 @@
 
 
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="saveButton"{{ $data->stage <= 1 || $data->stage >= 3 ? "disabled" : "" }}>Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
@@ -1324,7 +1261,7 @@
 
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="saveButton"{{ $data->stage <= 3 || $data->stage >= 5 ? "disabled" : "" }}>Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
@@ -1336,46 +1273,52 @@
                 <div id="CCForm5" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="sub-head">
-                            Electronic Signatures
+                            Submit
                         </div>
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="submitted by">Submitted By</label>
+                                    <label for="submitted by">Submit By</label>
                                     <div class="static">{{ $data->submitted_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="submitted on">Submitted On</label>
+                                    <label for="submitted on">Submit On</label>
                                     <div class="Date">{{ $data->submitted_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="submitted on">Submitted Comment</label>
+                                    <label for="submitted on">Submit Comment</label>
                                     <div class="static">{{ $data->submitted_comment }}</div>
                                 </div>
                             </div>
-
+                            <div class="col-12">
+                                            <div class="sub-head">Cancel</div>
+                                        </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="cancelled by">Cancelled By</label>
+                                    <label for="cancelled by">Cancel By</label>
                                     <div class="static">{{ $data->cancelled_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="cancelled on">Cancelled On</label>
+                                    <label for="cancelled on">Cancel On</label>
                                     <div class="Date">{{ $data->cancelled_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="submitted on">Cancelled Comment</label>
+                                    <label for="submitted on">Cancel Comment</label>
                                     <div class="static">{{ $data->cancelled_comment }}</div>
                                 </div>
                             </div>
+
+                            <div class="col-12">
+                                            <div class="sub-head">Acknowledge</div>
+                                        </div>
 
                             <div class="col-lg-3">
                                 <div class="group-input">
@@ -1396,40 +1339,46 @@
                                 </div>
                             </div>
 
+                            <div class="col-12">
+                                            <div class="sub-head">Complete</div>
+                                        </div>
+
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="cancelled by">Work Completion By</label>
+                                    <label for="cancelled by">Complete By</label>
                                     <div class="static">{{ $data->work_completion_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="cancelled on">Work Completion On</label>
+                                    <label for="cancelled on">Complete On</label>
                                     <div class="Date">{{ $data->work_completion_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="submitted on">Work Completion Comment</label>
+                                    <label for="submitted on">Complete Comment</label>
                                     <div class="static">{{ $data->work_completion_comment }}</div>
                                 </div>
                             </div>
-
+                            <div class="col-12">
+                                            <div class="sub-head">Verification Complete</div>
+                                        </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="cancelled by">QA/CQA Verification By</label>
+                                    <label for="cancelled by">Verification Complete By</label>
                                     <div class="static">{{ $data->qa_varification_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="cancelled on">QA/CQA Verification On</label>
+                                    <label for="cancelled on">Verification Complete On</label>
                                     <div class="Date">{{ $data->qa_varification_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="submitted on">QA/CQA Verification Comment</label>
+                                    <label for="submitted on">Verification Complete Comment</label>
                                     <div class="static">{{ $data->qa_varification_comment }}</div>
                                 </div>
                             </div>
@@ -1474,7 +1423,7 @@
                         </div>
                         <div class="button-block">
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="submit" class="saveButton">Save</button>
+                            <!-- <button type="submit" class="saveButton" {{ $data->stage <= 4 || $data->stage == 5 ? "disabled" : "" }}>Save</button> -->
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>
