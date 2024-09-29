@@ -2582,23 +2582,23 @@
                         <td class="w-30">{{ $data->audit_details_summary_by }}</td>
                         <th class="w-20">Audit Details Summary On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_details_summary_on) }}</td>
-                        <th class="w-20">Comments</th>
+                        <th class="w-20">Audit Details Summary Comment</th>
                         <td class="w-30">{{ $data->audit_details_summary_on_comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Cancelled By</th>
+                        <th class="w-20">Cancel By</th>
                         <td class="w-30">{{ $data->cancelled_by}}</td>
-                        <th class="w-20">Cancelled On</th>
+                        <th class="w-20">Cancel On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
-                        <th class="w-20">Comments</th>
+                        <th class="w-20">Cancel Comment</th>
                         <td class="w-30">{{ $data->cancelled_on_comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Summary and Response completed by</th>
+                        <th class="w-20">Summary and Response Complete by</th>
                         <td class="w-30">{{ $data->summary_and_response_com_by }}</td>
-                        <th class="w-20">Summary and Response completed On</th>
+                        <th class="w-20">Summary and Response Complete On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->summary_and_response_com_on) }}</td>
-                        <th class="w-20">Comments</th>
+                        <th class="w-20">Summary and Response Complete Comment</th>
                         <td class="w-30">{{ $data->summary_and_response_com_on_comment }}</td>
                     </tr>
                     <tr>
@@ -2606,7 +2606,7 @@
                         <td class="w-30">{{ $data->cft_review_not_req_by }}</td>
                         <th class="w-20">CFT Review Not Required On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->cft_review_not_req_on) }}</td>
-                        <th class="w-20">Comments</th>
+                        <th class="w-20">CFT Review Not Required Comment</th>
                         <td class="w-30">{{ $data->cft_review_not_req_on_comment }}</td>
                     </tr>
                     <tr>
@@ -2614,7 +2614,7 @@
                         <td class="w-30">{{ $data->cft_review_complete_by }}</td>
                         <th class="w-20">CFT Review Complete On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->cft_review_complete_on) }}</td>
-                        <th class="w-20">Comments</th>
+                        <th class="w-20">CFT Review Complete Comment</th>
                         <td class="w-30">{{ $data->cft_review_complete_comment }}</td>
                     </tr>
                     <tr>
@@ -2623,7 +2623,7 @@
                         <td class="w-30">{{ $data->approval_complete_by }}</td>
                         <th class="w-20">Approval Complete On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->approval_complete_on) }}</td>
-                        <th class="w-20">Comments</th>
+                        <th class="w-20">Approval Complete Comment</th>
                         <td class="w-30">{{ $data->approval_complete_on_comment }}</td>
                     </tr>
                     <tr>
@@ -2631,7 +2631,7 @@
                         <td class="w-30">{{ $data->send_to_opened_by }}</td>
                         <th class="w-20">Send to Opened On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->send_to_opened_on) }}</td>
-                        <th class="w-20">Comments</th>
+                        <th class="w-20">Send to Opened Comment</th>
                         <td class="w-30">{{ $data->send_to_opened_comment }}</td>
                     </tr>
      

@@ -2143,7 +2143,7 @@
                                         @if ($data->stage == 2 || $data->stage == 3)
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet"> Production Tablet/Capsule Powdert Required ?  <span
+                                                    <label for="Production Tablet"> Production Tablet/Capsule Powder Required ?  <span
                                                             class="text-danger">*</span></label>
                                                     <select name="Production_Table_Review" id="Production_Table_Review"
                                                         @if ($data->stage == 3) disabled @endif>
@@ -9250,7 +9250,7 @@
                                
 
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        Audit Details Summary
+                                    Audit Details Summary
                                     </div>
                                     
 
@@ -9273,30 +9273,30 @@
                                         
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Comments">Comments</label>
+                                                <label for="Comments">Audit Details Summary Comment</label>
                                                 <div class="static">{{ $data->audit_details_summary_on_comment }}</div>
                                             </div>
                                         </div>
                                             
-                                        <div class="col-12 sub-head" style="font-size: 16px">
+                                        <!-- <div class="col-12 sub-head" style="font-size: 16px">
                                             Cancel
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Cancelled By">Cancelled By</label>
+                                                <label for="Cancelled By">Cancel By</label>
                                                 <div class="static">{{ $data->cancelled_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Cancelled On">Cancelled On</label>
+                                                <label for="Cancelled On">Cancel On</label>
                                                 <div class="static">{{ $data->cancelled_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Comments">Comments</label>
+                                                <label for="Comments"> Cancel Comment</label>
                                                 <div class="static">{{ $data->cancelled_on_comment }}</div>
                                             </div>
                                         </div>
@@ -9327,7 +9327,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Comments">Comments</label>
+                                                <label for="Comments">Summary and Response Complete Comment</label>
                                                 <div class="static">{{ $data->summary_and_response_com_on_comment }}
                                                 </div>
                                             </div>
@@ -9337,9 +9337,9 @@
 
 
 
-                                        <div class="col-12 sub-head" style="font-size: 16px">
-                                            CFT Review Not Required
-                                        </div>
+                                        <!-- <div class="col-12 sub-head" style="font-size: 16px">
+                                        CFT Review Not Required
+                                        </div> -->
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
@@ -9357,7 +9357,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Comments">Comments</label>
+                                                <label for="Comments">CFT Review Not Required Comment</label>
                                                 <div class="static">{{ $data->cft_review_not_req_on_comment }}</div>
                                             </div>
                                         </div>
@@ -9366,7 +9366,7 @@
 
                                     
                                         <div class="col-12 sub-head" style="font-size: 16px">
-                                            CFT Review Complete
+                                        CFT Review Complete
                                         </div>
 
 
@@ -9388,13 +9388,13 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="group-input">
-                                                    <label for="Comments">Comments</label>
+                                                    <label for="Comments">CFT Review Complete Comment</label>
                                                     <div class="static">{{ $data->cft_review_complete_comment }}</div>
                                                 </div>
                                             </div>
 
                                         <div class="col-12 sub-head" style="font-size: 16px">
-                                            Approval Complete
+                                        Approval Complete
                                         </div>
 
                                     
@@ -9412,13 +9412,11 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Comments">Comments</label>
+                                                <label for="Comments">Approval Complete Comment</label>
                                                 <div class="static">{{ $data->approval_complete_on_comment }}</div>
                                             </div>
                                         </div>
-                                            <div class="col-12 sub-head" style="font-size: 16px">
-                                                Send to Opened
-                                            </div>
+                                           
 
                                             <div class="col-lg-4">
                                                 <div class="group-input">
@@ -9434,7 +9432,7 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="group-input">
-                                                    <label for="Comments">Comments</label>
+                                                    <label for="Comments">Send to Opened Comment</label>
                                                     <div class="static">{{ $data->send_to_opened_comment }}</div>
                                                 </div>
                                             </div>

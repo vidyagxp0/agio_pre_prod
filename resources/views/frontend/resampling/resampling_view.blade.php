@@ -1314,19 +1314,19 @@
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="submitted by">Submitted By</label>
+                                            <label for="submitted by">Submit By</label>
                                             <div class="static">{{ $data->acknowledgement_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="submitted on">Submitted On</label>
+                                            <label for="submitted on">Submit On</label>
                                             <div class="Date">{{ $data->acknowledgement_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="submitted on">Submitted Comment</label>
+                                            <label for="submitted on">Submit Comment</label>
                                             <div class="static">{{ $data->acknowledgement_comment }}</div>
                                         </div>
                                     </div>
@@ -1364,7 +1364,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="submitted on"> Acknowledge Complete Comment</label>
+                                            <label for="submitted on"> Acknowledge Completete Comment</label>
                                             <div class="static">{{ $data->qa_varification_comment }}</div>
                                         </div>
                                     </div>
@@ -1388,37 +1388,37 @@
                                     </div> --}}
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="completed by"> Verification Completed By</label>
+                                            <label for="completed by">Verification Complete By</label>
                                             <div class="static">{{ $data->completed_by }}</div> 
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="completed on">Verification Completed On</label>
+                                            <label for="completed on">Verification Complete On</label>
                                             <div class="Date">{{ $data->completed_on }}</div> 
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="submitted on">Verification Comment</label>
+                                            <label for="submitted on">Verification Complete Comment</label>
                                             <div class="static">{{ $data->completed_comment }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="cancelled by">Cancelled By</label>
+                                            <label for="cancelled by">Cancel By</label>
                                             <div class="static">{{ $data->cancelled_by }}</div> 
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="cancelled on">Cancelled On</label>
+                                            <label for="cancelled on">Cancel On</label>
                                             <div class="Date">{{ $data->cancelled_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="submitted on">Cancelled Comment</label>
+                                            <label for="submitted on">Cancel Comment</label>
                                             <div class="static">{{ $data->cancelled_comment }}</div>
                                         </div>
                                     </div>

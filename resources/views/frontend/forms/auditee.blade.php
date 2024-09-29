@@ -3521,30 +3521,30 @@ $(document).ready(function() {
                                 </div>
                                 <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments">Comments</label>
+                                            <label for="Comments">Audit Details Summary Comment</label>
                                             <div class="static"></div>
                                         </div>
                                 </div>
 
-                                <div class="col-12 sub-head"  style="font-size: 16px">
+                                <!-- <div class="col-12 sub-head"  style="font-size: 16px">
                                 Cancel
-                                     </div>
+                                     </div> -->
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Cancelled By">Cancelled By</label>
+                                        <label for="Cancelled By">Cancel By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Cancelled On">Cancelled On</label>
+                                        <label for="Cancelled On">Cancel On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments">Comments</label>
+                                            <label for="Comments">Cancel Comment</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
@@ -3568,15 +3568,15 @@ $(document).ready(function() {
 
                                 <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments">Comments</label>
+                                            <label for="Comments">Summary and Response Complete Comment</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
 
 
-                                <div class="col-12 sub-head"  style="font-size: 16px">
-                                        CFT Review Not Required
-                                     </div>
+                                <!-- <div class="col-12 sub-head"  style="font-size: 16px">
+                                CFT Review Not Required
+                                     </div> -->
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -3593,7 +3593,7 @@ $(document).ready(function() {
 
                                 <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments">Comments</label>
+                                            <label for="Comments">CFT Review Not Required Comment</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
@@ -3619,7 +3619,7 @@ $(document).ready(function() {
 
                                 <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments">Comments</label>
+                                            <label for="Comments">CFT Review Complete Comment</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
@@ -3640,22 +3640,22 @@ $(document).ready(function() {
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="CFT Review Not Required On">Approval Complete On</label>
+                                        <label for="CFT Review Not Required On">Approval CompleteOn</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments">Comments</label>
+                                            <label for="Comments">Approval Complete Comment</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
 
                                     
-                                    <div class="col-12 sub-head"  style="font-size: 16px">
+                                    <!-- <div class="col-12 sub-head"  style="font-size: 16px">
                                     Send to Opened
-                                     </div>
+                                     </div> -->
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -3672,7 +3672,7 @@ $(document).ready(function() {
 
                                 <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments">Comments</label>
+                                            <label for="Comments">Send to Opened Comment</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
