@@ -618,7 +618,7 @@
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Investigation & CAPA</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Pending Initiator Update</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm15')">HOD Final Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Final Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Implementation Verification</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QAH/Designee Approval</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Extension</button> --}}
 
@@ -1847,7 +1847,7 @@
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="QAInitialRemark">QA Initial Remarks</label>
+                                        <label for="QAInitialRemark">QA/CQA Initial Remarks</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="tiny" name="QAInitialRemark" id="summernote-7"></textarea>
@@ -5689,7 +5689,7 @@
                                 </div> --}}
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="QA Feedbacks">QA Evaluation</label>
+                                        <label for="QA Feedbacks">QA/CQA Implementation Verification</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="tiny" name="QA_Feedbacks" id="summernote-14">
@@ -5698,7 +5698,7 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="QA attachments">Initiator Additional Attachments</label>
+                                        <label for="QA attachments">QA/CQA Implementation Verification Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -5770,7 +5770,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Remarks">Closure Comments</label>
+                                        <label class="mt-4" for="Remarks">QAH/Designee Closure Comments</label>
                                         <textarea class="tiny" name="Closure_Comments" id="summernote-15"></textarea>
                                     </div>
                                 </div>
@@ -5782,7 +5782,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="closure attachment">Closure Attachments </label>
+                                        <label for="closure attachment">QAH/Designee Closure Attachments </label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small>
                                         </div>
@@ -5826,7 +5826,7 @@
 
                     <!-- Effectiveness Check-->
 
-                 
+
 
 
 
@@ -5835,7 +5835,7 @@
                 <div id="CCForm6" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            <div class="sub-head">Submission</div>
+                            <div class="sub-head">Submit</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="submit by">Submit By :-</label>
@@ -5850,7 +5850,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="submit comment">Submit Comments :-</label>
+                                    <label for="submit comment">Submit Comment :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -5869,13 +5869,13 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input ">
-                                    <label for="Approved Comments">Request For Cancellation Comments :-</label>
+                                    <label for="Approved Comments">Request For Cancellation Comment :-</label>
                                     <div class=""></div>
                                 </div>
                             </div>
 
 
-                            <div class="sub-head">HOD Review Completed</div>
+                            <div class="sub-head">HOD Review Complete</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="HOD Review Complete By">HOD Review Complete By :-</label>
@@ -5890,13 +5890,13 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="HOD Review Comments">HOD Review Comments :-</label>
+                                    <label for="HOD Review Comment">HOD Review Comment :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
 
 
-                            <div class="sub-head">QA/CQA Initial Review Completed</div>
+                            <div class="sub-head">QA/CQA Initial Review Complete</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="QA/CQA Initial Review Complete By">QA/CQA Initial Review Complete By
@@ -5913,7 +5913,27 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="QA/CQA Initial Review Comments">QA/CQA Initial Review Comments:-</label>
+                                    <label for="QA/CQA Initial Review Comment">QA/CQA Initial Review Complete Comment:-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                             <div class="sub-head">CFT Review Not Required </div>
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="CFT Review Complete By">CFT Review Not Required By :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="CFT Review Complete On">CFT Review Not Required On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="CFT Review Comment">CFT Review Not Required Comment :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -5933,11 +5953,11 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="CFT Review Comments">CFT Review Comments :-</label>
+                                    <label for="CFT Review Comment">CFT Review Complete Comment :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="sub-head">Initiator Update</div>
+                            <div class="sub-head">Initiator Update Complete</div>
 
                             <div class="col-lg-3">
                                 <div class="group-input">
@@ -5953,7 +5973,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="CFT Review Comments">Initiator Update Comments :-</label>
+                                    <label for="CFT Review Comment">Initiator Update Complete Comment :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -5975,7 +5995,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="QA/CQA Final Review Comments"> QA/CQA Final Review Comments :-</label>
+                                    <label for="QA/CQA Final Review Comment"> QA/CQA Final Review Complete Comment :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -5995,26 +6015,26 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Approved Comments">Approved Comments :-</label>
+                                    <label for="Approved Comment">Approved Comment :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="sub-head">Implementation verification Complete</div>
+                            <div class="sub-head">Implementation Verification Complete</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Approved By">Implementation verification Complete By :-</label>
+                                    <label for="Approved By">Implementation Verification Complete By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Approved On">Implementation verification Complete On :-</label>
+                                    <label for="Approved On">Implementation Verification Complete On :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                    <label for="Approved Comments">Implementation verification Complete Comments
+                                    <label for="Approved Comment">Implementation Verification Complete Comment
                                         :-</label>
                                     <div class=""></div>
                                 </div>
@@ -6034,7 +6054,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input ">
-                                    <label for="Approved Comments">Closure Approved Comments :-</label>
+                                    <label for="Approved Comment">Closure Approved Comment :-</label>
                                     <div class=""></div>
                                 </div>
                             </div>
@@ -6053,7 +6073,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                    <label for="Approved Comments">Cancel Comments :-</label>
+                                    <label for="Approved Comment">Cancel Comment :-</label>
                                     <div class=""></div>
                                 </div>
                             </div>

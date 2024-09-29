@@ -1078,7 +1078,7 @@
                         style="display: none">CAPA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Pending Initiator Update</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm15')">HOD Final Review</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Final Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Implementation Verification</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QAH/Designee Approval</button>
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Extension</button> --}}
 
@@ -2956,7 +2956,7 @@
 
                                     <div class="col-md-12">
                                         <div class="group-input">
-                                            <label for="QAInitialRemark">QA Initial Remarks <span
+                                            <label for="QAInitialRemark">QA/CQA Initial Remarks <span
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
@@ -10942,7 +10942,7 @@
                     <div class="sub-head">
                         Root Cause
                     </div>
-                    <div class="col-lg-12">
+                    {{-- <div class="col-lg-12">
                         <div class="group-input" id="documentsRowname">
                             <label for="audit-agenda-grid">
                                 Root Cause
@@ -11860,14 +11860,112 @@
                             }
 
                         });
-                    </script>
+                    </script> --}}
                     <div class="col-md-12 mb-3">
                         <div class="group-input">
-                            <label for="Detail Of Root Cause">Detail Of Root Cause</label>
+                            <label for="Detail Of Root Cause">Investigation Summary</label>
 
                             <textarea class="" name="Detail_Of_Root_Cause" id="summernote-18">{{ $data->Detail_Of_Root_Cause }}</textarea>
                         </div>
                     </div>
+                    <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Investigation_attachment">Investigation
+                                                Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Investigation_attachment">
+                                                @if ($data->Investigation_attachment)
+                                                    @foreach(json_decode($data->Investigation_attachment) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                            <input type="hidden" name="existing_Investigation_attachment[]" value="{{ $file }}">
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Investigation_attachment[]"
+                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                    oninput="addMultipleFiles(this, 'Investigation_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Hidden field to keep track of files to be deleted -->
+                                <input type="hidden" id="deleted_Investigation_attachment" name="deleted_Investigation_attachment" value="">
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const removeButtons = document.querySelectorAll('.remove-file');
+
+                                        removeButtons.forEach(button => {
+                                            button.addEventListener('click', function() {
+                                                const fileName = this.getAttribute('data-file-name');
+                                                const fileContainer = this.closest('.file-container');
+
+                                                // Hide the file container
+                                                if (fileContainer) {
+                                                    fileContainer.style.display = 'none';
+                                                    // Remove hidden input associated with this file
+                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                    if (hiddenInput) {
+                                                        hiddenInput.remove();
+                                                    }
+
+                                                    // Add the file name to the deleted files list
+                                                    const deletedFilesInput = document.getElementById('deleted_Investigation_attachment');
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    deletedFiles.push(fileName);
+                                                    deletedFilesInput.value = deletedFiles.join(',');
+                                                }
+                                            });
+                                        });
+                                    });
+
+                                    function addMultipleFiles(input, id) {
+                                        const fileListContainer = document.getElementById(id);
+                                        const files = input.files;
+
+                                        for (let i = 0; i < files.length; i++) {
+                                            const file = files[i];
+                                            const fileName = file.name;
+                                            const fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container', 'text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                            const fileText = document.createElement('b');
+                                            fileText.textContent = fileName;
+
+                                            const viewLink = document.createElement('a');
+                                            viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                            viewLink.target = '_blank';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+
+                                            const removeLink = document.createElement('a');
+                                            removeLink.classList.add('remove-file');
+                                            removeLink.dataset.fileName = fileName;
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.addEventListener('click', function() {
+                                                fileContainer.style.display = 'none';
+                                            });
+
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(viewLink);
+                                            fileContainer.appendChild(removeLink);
+
+                                            fileListContainer.appendChild(fileContainer);
+                                        }
+                                    }
+                                </script>
 
                     <div class="button-block">
                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
@@ -13395,7 +13493,7 @@
         </div>
     @else
         <div class="group-input">
-            <label for="Inv Attachments">HOD Attachments</label>
+            <label for="Inv Attachments">HOD Final Review Attachments</label>
             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
             <div class="file-attachment-field">
                 <div class="file-attachment-list" id="hod_final_attachment">
@@ -13545,7 +13643,7 @@
                             <div class="col-md-12">
                                 @if ($data->stage == 9)
                                     <div class="group-input">
-                                        <label for="QA Evaluation ">QA Evaluation </label>
+                                        <label for="QA Evaluation ">QA/CQA Implementation Verification  </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not
                                                 require completion</small></div>
@@ -13554,7 +13652,7 @@
                                     </div>
                                 @else
                                     <div class="group-input">
-                                        <label for="QA Feedbacks">QA Evaluation</label>
+                                        <label for="QA Feedbacks">QA/CQA Implementation Verification</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not
                                                 require completion</small></div>
@@ -13569,7 +13667,7 @@
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="QA attachments">QA Attachments</label>
+                                    <label for="QA attachments">QA/CQA Implementation Verification Attachments</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small>
                                     </div>
@@ -13681,7 +13779,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="group-input">
-                                    <label for="Closure Comments">Closure Comments
+                                    <label for="Closure Comments">QAH/Designee Closure Comments
 
                                         </span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
@@ -13740,7 +13838,7 @@
                             </div> --}}
        <div class="col-12">
                                     <div class="group-input">
-                                        <label for="closure_attachment">Closure Attachments</label>
+                                        <label for="closure_attachment">QAH/Designee Closure Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="closure_attachment">
@@ -13948,7 +14046,7 @@
                 <div id="CCForm6" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            <div class="sub-head">Submission</div>
+                            <div class="sub-head">Submit</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="submit by">Submit By :-</label>
@@ -13963,12 +14061,12 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
-                                    <label for="submit comment">Submit Comments :-</label>
+                                    <label for="submit comment">Submit Comment :-</label>
                                     <div class="">{{ $data->submit_comment }}</div>
                                 </div>
                             </div>
 
-                            <div class="sub-head">HOD Review Completed</div>
+                            <div class="sub-head">HOD Review Complete</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="HOD Review Complete By">HOD Review Complete By :-</label>
@@ -13983,7 +14081,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input" style=" ">
-                                    <label for="HOD Review Comments">HOD Review Comments :-</label>
+                                    <label for="HOD Review Comments">HOD Review Complete Comment :-</label>
                                     <div class="">{{ $data->HOD_Review_Comments }}</div>
                                 </div>
                             </div>
@@ -14002,13 +14100,13 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                    <label for="Approved Comments">Request For Cancellation Comments :-</label>
+                                    <label for="Approved Comments">Request For Cancellation Comment :-</label>
                                     <div class="">{{ $data->pending_Cancel_comment }}</div>
                                 </div>
                             </div>
 
 
-                            <div class="sub-head">QA/CQA Initial Review Completed</div>
+                            <div class="sub-head">QA/CQA Initial Review Complete</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="QA/CQA Initial Review Complete By">QA/CQA Initial Review Complete By
@@ -14025,8 +14123,27 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
-                                    <label for="QA/CQA Initial Review Comments">QA/CQA Initial Review Comments:-</label>
+                                    <label for="QA/CQA Initial Review Comments">QA/CQA Initial Review Complete Comment:-</label>
                                     <div class="">{{ $data->QA_Initial_Review_Comments }}</div>
+                                </div>
+                            </div>
+                             <div class="sub-head">CFT Review Not Required</div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="CFT Review Complete By">CFT Review Not Required By :-</label>
+                                    <div class="static">{{ $data->cft_review_not_req_by }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="CFT Review Not Required On">CFT Review Not Required On :-</label>
+                                    <div class="static">{{ $data->cft_review_not_req_on }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                    <label for="CFT Review Comments">CFT Review Not Required Comment :-</label>
+                                    <div class="">{{ $data->cft_review_not_req_comment }}</div>
                                 </div>
                             </div>
 
@@ -14045,12 +14162,12 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                    <label for="CFT Review Comments">CFT Review Comments :-</label>
+                                    <label for="CFT Review Comments">CFT Review Complete Comment :-</label>
                                     <div class="">{{ $data->CFT_Review_Comments }}</div>
                                 </div>
                             </div>
 
-                            <div class="sub-head"> QA/CQA Final Review Completed</div>
+                            <div class="sub-head"> QA/CQA Final Review Complete</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="QA/CQA Final Review Complete By"> QA/CQA Final Review Complete By
@@ -14067,7 +14184,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                    <label for="QA/CQA Final Review Comments"> QA/CQA Final Review Comments :-</label>
+                                    <label for="QA/CQA Final Review Comments"> QA/CQA Final Review Complete Comment :-</label>
                                     <div class="">{{ $data->QA_Final_Review_Comments }}</div>
                                 </div>
                             </div>
@@ -14091,14 +14208,14 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                    <label for="QA/CQA Final Review Comments">QA/CQA Head/Manager Designee Approval
-                                        Comments
+                                    <label for="QA/CQA Final Review Comments">QA/CQA Head/Manager Designee Approval Complete
+                                        Comment
                                         :-</label>
                                     <div class="">{{ $data->QA_head_approved_comment }}</div>
                                 </div>
                             </div>
 
-                            <div class="sub-head">Initiator Update</div>
+                            <div class="sub-head">Initiator Update Complete</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="CFT Review Complete By">Initiator Update Complete By :-</label>
@@ -14113,7 +14230,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="CFT Review Comments">Initiator Update Comments :-</label>
+                                    <label for="CFT Review Comments">Initiator Update Complete Comment :-</label>
                                     <div class="">{{ $data->pending_initiator_approved_comment }}</div>
                                 </div>
                             </div>
@@ -14134,27 +14251,27 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                    <label for="Approved Comments">HOD Final Approved Comments :-</label>
+                                    <label for="Approved Comments">HOD Final Approved Comment :-</label>
                                     <div class="">{{ $data->Hod_final_comment }}</div>
                                 </div>
                             </div>
 
-                            <div class="sub-head">Implementation verification Complete</div>
+                            <div class="sub-head">Implementation Verification Complete</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Approved By">Implementation verification Complete By :-</label>
+                                    <label for="Approved By">Implementation Verification Complete By :-</label>
                                     <div class="static">{{ $data->QA_final_approved_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Approved On">Implementation verification Complete On :-</label>
+                                    <label for="Approved On">Implementation Verification Complete On :-</label>
                                     <div class="static">{{ $data->QA_final_approved_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                    <label for="Approved Comments">Implementation verification Complete Comments
+                                    <label for="Approved Comments">Implementation Verification Complete Comment
                                         :-</label>
                                     <div class="">{{ $data->QA_final_approved_comment }}</div>
                                 </div>
@@ -14175,7 +14292,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                    <label for="Approved Comments">Closure Approved Comments :-</label>
+                                    <label for="Approved Comments">Closure Approved Comment :-</label>
                                     <div class="">{{ $data->Close_comment }}</div>
                                 </div>
                             </div>
@@ -14194,7 +14311,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                    <label for="Approved Comments">Cancel Comments :-</label>
+                                    <label for="Approved Comments">Cancel Comment :-</label>
                                     <div class="">{{ $data->cancelled_comment }}</div>
                                 </div>
                             </div>

@@ -30,11 +30,11 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Head review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Head Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Meetings & Summary</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">CFT</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">CFT HOD Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA verification</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA Verification</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity log</button>
             </div>
@@ -106,17 +106,28 @@
 
                                 </div> --}}
                                 <div class="row">
-                                   <div class="col-lg-6">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="initiator_group"><b>Initiator department</b></label>
-                                            <select name="initiator_Group" id="initiator_group">
+                                            <label for="initiator_group"><b>Initiator Department<span
+                                                        class="text-danger">*</span></b></label>
+                                            <select name="initiator_Group" id="initiator_group" required>
                                                 <option value="">Select Initiation Department</option>
                                                 @foreach (Helpers::getDepartments() as $key => $value)
-                                                    <option value="{{ $key }}">{{ $value }}</option>
+                                                    <option value="{{ $key }}"
+                                                        {{ old('initiator_Group') == $key ? 'selected' : '' }}>
+                                                        {{ $value }}</option>
                                                 @endforeach
                                             </select>
+
+                                            {{-- Display error message if validation fails --}}
+                                            @error('initiator_Group')
+                                                <div class="text-danger">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                     </div>
+
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -304,43 +315,42 @@
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
 
+                            <div class="group-input">
+                                <label for="Operations">
+                                    QA Head Review comment
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#management-review-operations-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+                                <textarea name="Operations"></textarea>
+                            </div>
+                            <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Operations">
-                                        QA review comment
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#management-review-operations-instruction-modal"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
-                                            (Launch Instruction)
-                                        </span>
-                                    </label>
-                                    <textarea name="Operations"></textarea>
+                                    <label for="assign_to">Invite Person Notify</label>
+                                    <select id="assign_to" name="assign_to[]" class="form-control" multiple>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->name }}">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                 <div class="col-lg-12">
-                                    <div class="group-input" >
-                                        <label for="assign_to">Invite Person Notify</label>
-                                        <select id="assign_to" name="assign_to[]" class="form-control" multiple
-                                       >
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->name }}">{{ $user->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Inv Attachments">QA Head review Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="file_attchment_if_any"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="file_attchment_if_any[]"
-                                                    oninput="addMultipleFiles(this, 'file_attchment_if_any')" multiple>
-                                            </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Inv Attachments">QA Head review Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attchment_if_any"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="file_attchment_if_any[]"
+                                                oninput="addMultipleFiles(this, 'file_attchment_if_any')" multiple>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
 
 
@@ -3407,10 +3417,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                                                                                                                                            class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                                                                                            data-bs-target="#launch_extension">
-                                                                                                                                                                                                                            Launch Extension
-                                                                                                                                                                                                                        </a> -->
+                                                                                                                                                                                                                                    class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                                                                                                                                    data-bs-target="#launch_extension">
+                                                                                                                                                                                                                                    Launch Extension
+                                                                                                                                                                                                                                </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -5572,10 +5582,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                                                                                                                                            class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                                                                                            data-bs-target="#launch_extension">
-                                                                                                                                                                                                                            Launch Extension
-                                                                                                                                                                                                                        </a> -->
+                                                                                                                                                                                                                                    class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                                                                                                                                    data-bs-target="#launch_extension">
+                                                                                                                                                                                                                                    Launch Extension
+                                                                                                                                                                                                                                </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -5589,7 +5599,7 @@
 
                             <div class="group-input">
                                 <label for="additional_suport_required">
-                                    QA verification Comment
+                                    QA Verification Comment
                                     <span class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#management-review-additional_suport_required-instruction-modal"
                                         style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
@@ -5784,10 +5794,10 @@
                                 <label for="summary_recommendation">Summary & Recommendation</label>
                                 <textarea name="summary_recommendation"></textarea>
                             </div> --}}
-                            {{-- <div class="group-input">
-                                <label for="conclusion">Conclusion</label>
+                            <div class="group-input">
+                                <label for="conclusion">QA Head Comment</label>
                                 <textarea name="conclusion_new"></textarea>
-                            </div> --}}
+                            </div>
                             <div class="group-input">
                                 <label for="closure-attachments">Closure Attachments</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
@@ -5828,20 +5838,20 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Completed By">Submited By</label>
+                                        <label for="Completed By">Submit By</label>
                                         <div class="static">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Completed By">Submited On</label>
+                                        <label for="Completed By">Submit On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Completed By">Comment</label>
+                                        <label for="Completed By">Submit Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -5878,7 +5888,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Completed By">Comment</label>
+                                        <label for="Completed By">QA Head Review Complete Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -5897,7 +5907,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Completed By">Comment</label>
+                                        <label for="Completed By">Meeting and Summary Complete Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -5916,7 +5926,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Completed By">Comment</label>
+                                        <label for="Completed By">CFT Action Complete Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -5935,7 +5945,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Completed By">Comment</label>
+                                        <label for="Completed By">CFT HOD Review Complete Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -5954,7 +5964,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Completed By">Comment</label>
+                                        <label for="Completed By">QA Verification Complete Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -5973,7 +5983,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Completed By">Comment</label>
+                                        <label for="Completed By">Approved Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>

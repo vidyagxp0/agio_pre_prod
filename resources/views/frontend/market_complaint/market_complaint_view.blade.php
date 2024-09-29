@@ -280,7 +280,9 @@
                             href="{{ route('marketcomplaint.MarketComplaintAuditReport', $data->id) }}"><button
                                 class="button_theme1"> Audit Trail
                             </button> </a>
-                        @if ($data->stage == 1 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if (
+                            $data->stage == 1 && (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 66) || Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
+
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
                                     Submit
@@ -289,7 +291,9 @@
                                     data-bs-target="#cancel-modal">
                                     Cancel
                                 </button></a>
-                        @elseif($data->stage == 2 && (in_array(14, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif(
+                            $data->stage == 2 &&
+                                 (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 65) || Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#rejection-modal">
                                     More Information Required
@@ -302,7 +306,8 @@
                                     data-bs-target="#cancel-modal">
                                     Cancel
                                 </button></a>
-                        @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif(
+                            $data->stage == 3 && (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 66) || Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#rejection-modal">
                                     More Information Required
@@ -316,8 +321,8 @@
                                 Child
                             </button>
                         @elseif(
-                            $data->stage == 4 &&
-                                (in_array(5, $userRoleIds) || in_array(18, $userRoleIds) || in_array(Auth::user()->name, $valuesArray)))
+                            ($data->stage == 4 && Helpers::check_roles($data->division_id, 'Market Complaint', 5)) ||
+                                in_array(Auth::user()->id, $valuesArray))
                             <!-- @if (!$cftCompleteUser)
     -->
                             <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal"
@@ -333,7 +338,8 @@
 
                             <!--
     @endif -->
-                        @elseif($data->stage == 5 && (in_array(1, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif(
+                            $data->stage == 5 && (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 66) || Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
                                     QA Verification complete
@@ -342,7 +348,8 @@
                                     data-bs-target="#rejection-modal">
                                     More Information Required
                                 </button></a>
-                        @elseif($data->stage == 6 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif(
+                            $data->stage == 6 && (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 65) || Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
                                     Approval Complete
@@ -351,7 +358,8 @@
                                     data-bs-target="#rejection-modal">
                                     More Information Required
                                 </button></a>
-                        @elseif($data->stage == 7 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif(
+                            $data->stage == 7 && (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 66) || Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
                                     Send Letter
@@ -359,7 +367,7 @@
                             {{-- <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="">
                                 Reopen
                             </button></a> --}}
-                        @elseif($data->stage == 8 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 8 && (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 66) || Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             {{-- <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Send Letter
                             </button></a> --}}
@@ -3618,8 +3626,8 @@
                                             <label for="Production Tablet assessment">Impact Assessment (By Production
                                                 Tablet)
                                                 <!-- <span
-                                                                                                                                                                                                                    id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                    class="text-danger">*</span> -->
+                                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                        class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -3631,8 +3639,8 @@
                                         <div class="group-input">
                                             <label for="Production Tablet feedback">Production Tablet Feedback
                                                 <!-- <span
-                                                                                                                                                                                                                    id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                    class="text-danger">*</span> -->
+                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                        class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -3646,8 +3654,8 @@
                                             <label for="Production Tablet assessment">Impact Assessment (By Production
                                                 Tablet)
                                                 <!-- <span
-                                                                                                                                                                                     id="asteriskInvi12" style="display: none"
-                                                                                                                                                                    class="text-danger">*</span> -->
+                                                                                                                                                                                         id="asteriskInvi12" style="display: none"
+                                                                                                                                                                        class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -3659,8 +3667,8 @@
                                         <div class="group-input">
                                             <label for="Production Tablet feedback">Production Tablet Feedback
                                                 <!-- <span
-                                                                                                                                                                                                                    id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                    class="text-danger">*</span> -->
+                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                        class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -3974,8 +3982,8 @@
                                             <label for="Production Injection assessment">Impact Assessment (By
                                                 Production Injection)
                                                 <!-- <span
-                                                                                                                                                                                                                    id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                    class="text-danger">*</span> -->
+                                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                        class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -3987,8 +3995,8 @@
                                         <div class="group-input">
                                             <label for="Production Injection feedback">Production Injection Feedback
                                                 <!-- <span
-                                                                                                                                                                                                                    id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                    class="text-danger">*</span> -->
+                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                        class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -4002,8 +4010,8 @@
                                             <label for="Production Injection assessment">Impact Assessment (By
                                                 Production Injection)
                                                 <!-- <span
-                                                                                                                                                                                                                    id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                    class="text-danger">*</span> -->
+                                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                        class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -4015,8 +4023,8 @@
                                         <div class="group-input">
                                             <label for="Production Injection feedback">Production Injection Feedback
                                                 <!-- <span
-                                                                                                                                                                                                                    id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                    class="text-danger">*</span> -->
+                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                        class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -9545,9 +9553,9 @@
                                 </a> --}}
                         @endif
                         <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                            data-bs-target="#effectivenss_extension">
-                                                                                                                                                            Launch Effectiveness Check
-                                                                                                                                                        </a> -->
+                                                                                                                                                                data-bs-target="#effectivenss_extension">
+                                                                                                                                                                Launch Effectiveness Check
+                                                                                                                                                            </a> -->
                     </div>
                 </div>
             </div>
@@ -9783,7 +9791,7 @@
                         </div> --}}
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="qa_cqa_attachments">QA/CQA Verify Attachment</label>
+                                <label for="qa_cqa_attachments">QA/CQA Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                         documents</small></div>
                                 <div class="file-attachment-field">
@@ -10306,6 +10314,7 @@
                             Activity Log
                         </div>
 
+
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Initiator Group">Submit By : </label>
@@ -10317,34 +10326,34 @@
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">Submit On : </label>
-                                <div class="Date">{{ $data->submitted_on }}</div>
+                                <div class="static">{{ $data->submitted_on }}</div>
 
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Comment">Comment</label>
+                                <label for="Comment">Submit Comment</label>
                                 <div class="static">{{ $data->submitted_comment }}</div>
                             </div>
                         </div>
 
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">QA/CQA Head Review By: </label>
+                                <label for="Initiator Group">Complete Review By: </label>
                                 <div class="static">{{ $data->complete_review_by }}</div>
 
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">QA/CQA Head Review On : </label>
-                                <div class="date">{{ $data->complete_review_on }}</div>
+                                <label for="Initiator Group">Complete Review On : </label>
+                                <div class="static">{{ $data->complete_review_on }}</div>
 
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Comment">Comment</label>
+                                <label for="Comment">Complete Review Comment</label>
                                 <div class="static">{{ $data->complete_review_Comments }}</div>
                             </div>
                         </div>
@@ -10358,13 +10367,13 @@
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Initiator Group">Cancel On : </label>
-                                <div class="date">{{ $data->cancelled_on }}</div>
+                                <div class="static">{{ $data->cancelled_on }}</div>
 
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Comment">Comment</label>
+                                <label for="Comment">Cancel Comment</label>
                                 <div class="static">{{ $data->cancelled_comment }}</div>
                             </div>
                         </div>
@@ -10382,12 +10391,12 @@
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">Send CFT On :</label>
-                                <div class="date">{{ $data->send_cft_on }}</div>
+                                <div class="static">{{ $data->send_cft_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Comment">Comment</label>
+                                <label for="Comment">Send CFT Comment</label>
                                 <div class="static">{{ $data->send_cft_comment }}</div>
                             </div>
                         </div>
@@ -10397,7 +10406,7 @@
 
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">CFT Review Completed By :</label>
+                                <label for="Initiator Group">CFT Review Complete By :</label>
                                 <div class="static">{{ $data->cft_complate_by }}</div>
 
                             </div>
@@ -10405,13 +10414,13 @@
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">CFT Review Completed On :</label>
-                                <div class="date">{{ $data->cft_complate_on }}</div>
+                                <label for="OOC Logged On">CFT Review Complete On :</label>
+                                <div class="static">{{ $data->cft_complate_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Comment">Comment</label>
+                                <label for="Comment">CFT Review Complete Comment</label>
                                 <div class="static">{{ $data->cft_complate_comm }}</div>
                             </div>
                         </div>
@@ -10419,21 +10428,21 @@
 
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">QA CQA Verify Complete By :</label>
+                                <label for="Initiator Group">QA/CQA Verification Complete By :</label>
                                 <div class="static">{{ $data->qa_cqa_verif_comp_by }}</div>
                             </div>
                         </div>
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">QA CQA Verify Complete On :</label>
+                                <label for="OOC Logged On">QA/CQA Verification Complete On :</label>
 
-                                <div class="date">{{ $data->qa_cqa_verif_comp_on }}</div>
+                                <div class="static">{{ $data->qa_cqa_verif_comp_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Comment">Comment</label>
+                                <label for="Comment">QA/CQA Verification Complete Comment</label>
                                 <div class="static">{{ $data->QA_cqa_verif_Comments }}</div>
                             </div>
                         </div>
@@ -10449,12 +10458,12 @@
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">Reject On : </label>
 
-                                <div class="date">{{ $data->reject_on }}</div>
+                                <div class="static">{{ $data->reject_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Comment">Comment</label>
+                                <label for="Comment">Reject Comment</label>
                                 <div class="static">{{ $data->reject_comment }}</div>
                             </div>
                         </div>
@@ -10462,7 +10471,7 @@
 
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">Approve Plan By : </label>
+                                <label for="Initiator Group">Approval Complete By : </label>
                                 <div class="static">{{ $data->approve_plan_by }}</div>
 
                             </div>
@@ -10470,13 +10479,13 @@
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Approve Plan On : </label>
-                                <div class="date">{{ $data->approve_plan_on }}</div>
+                                <label for="OOC Logged On">Approval Complete On : </label>
+                                <div class="static">{{ $data->approve_plan_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Comment">Comment</label>
+                                <label for="Comment">Approval Complete Comment</label>
                                 <div class="static">{{ $data->approve_plan_comment }}</div>
                             </div>
                         </div>
@@ -10492,12 +10501,12 @@
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">Send Letter On : </label>
-                                <div class="date">{{ $data->send_letter_on }}</div>
+                                <div class="static">{{ $data->send_letter_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Comment">Comment</label>
+                                <label for="Comment">Send Letter Comment</label>
                                 <div class="static">{{ $data->send_letter_comment }}</div>
                             </div>
                         </div>
@@ -10743,9 +10752,9 @@ document.getElementById('initiator_group').addEventListener('change', function()
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                    <button>Close</button>
-                                                </div> -->
+                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                        <button>Close</button>
+                                                    </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -10790,9 +10799,9 @@ document.getElementById('initiator_group').addEventListener('change', function()
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                    <button>Close</button>
-                                                </div> -->
+                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                        <button>Close</button>
+                                                    </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -10837,9 +10846,9 @@ document.getElementById('initiator_group').addEventListener('change', function()
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                    <button>Close</button>
-                                                </div> -->
+                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                        <button>Close</button>
+                                                    </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -10889,9 +10898,9 @@ document.getElementById('initiator_group').addEventListener('change', function()
 
                         <!-- Modal footer -->
                         <!-- <div class="modal-footer">
-                                                    <button type="button" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit">Continue</button>
-                                                </div> -->
+                                                        <button type="button" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit">Continue</button>
+                                                    </div> -->
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
