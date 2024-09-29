@@ -1352,7 +1352,7 @@ class ActionItemController extends Controller
                 $history->origin_state = $lastopenState->status;
                 $history->action_name = 'Not Applicable';
                 $history->stage = '3';
-                $history->activity_type = 'Acknowledge Complete By,  Acknowledge Complete On';
+                $history->activity_type = 'Acknowledge By,  Acknowledge On';
                 if (is_null($lastopenState->acknowledgement_by) || $lastopenState->acknowledgement_by === '') {
                     $history->previous = "";
                 } else {
@@ -1446,7 +1446,7 @@ class ActionItemController extends Controller
                 $history->stage = "5";
                 $history->action_name = 'Not Applicable';
                 $history->stage = '2';
-                $history->activity_type = 'Varification Completed by, Varification Completed On';
+                $history->activity_type = 'Varification Complete by, Varification Complete On';
                 if (is_null($lastopenState->completed_by) || $lastopenState->completed_by === '') {
                     $history->previous = "";
                 } else {
@@ -1503,7 +1503,7 @@ class ActionItemController extends Controller
 
 public function actionStageCancel(Request $request, $id)
 {
-    if (strtolower($request->username) == strtolower(Auth::user()->email && Hash::check($request->password, Auth::user()->password))) {
+    if (strtolower($request->username) == strtolower(Auth::user()->email) && Hash::check($request->password, Auth::user()->password)) {
         $changeControl = ActionItem::find($id);
         $lastopenState = ActionItem::find($id);
         $openState = ActionItem::find($id);
@@ -1515,10 +1515,15 @@ public function actionStageCancel(Request $request, $id)
             $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
             $changeControl->cancelled_comment =$request->comment;
             $history = new ActionItemHistory;
-            $history->action = "Cancel";
+            $history->action = "Cancel";    
             $history->cc_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->current = $changeControl->cancelled_by;
+            $history->activity_type = 'Cancel By, Cancel On';
+            if (is_null($lastopenState->cancelled_by) || $lastopenState->cancelled_by === '') {
+                $history->previous = "";
+            } else {
+                $history->previous = $lastopenState->cancelled_by . ' , ' . $lastopenState->cancelled_on;
+            }
+            $history->current = $changeControl->cancelled_by . ' , ' . $changeControl->cancelled_on;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1527,6 +1532,11 @@ public function actionStageCancel(Request $request, $id)
             $history->change_to = "Cancelled";
             $history->change_from = $lastopenState->status;
             $history->stage = "Cancelled";
+            if (is_null($lastopenState->cancelled_by) || $lastopenState->cancelled_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
             $changeControl->update();
             // $history = new CCStageHistory();

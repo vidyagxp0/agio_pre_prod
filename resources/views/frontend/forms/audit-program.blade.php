@@ -1140,96 +1140,118 @@ DATA FIELDS
             <div id="CCForm3" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
-                        <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Submitted_By..">Submitted By</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Submitted_On">Submitted On</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Submitted_By..">Submitted Comment</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Approved_By">Approved By</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Approved_On">Approved On</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Approved_On">Approved Comment</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Audit_Completed_By">Audit Completed By</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Audit_Completed_On">Audit Completed On</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Audit_Completed_On">Audit Completed Comment</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Rejected_By">Rejected By</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Rejected_On">Rejected On</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Rejected_On">Rejected Comment</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Cancelled_By">Cancelled By</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Cancelled_On">Cancelled On</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Cancelled_On">Cancelled Comment</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
+                    <div class="col-12">
+                                            <div class="sub-head">Submit</div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Submitted_By..">Submit By</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Submit_On">Submit On</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Submit_On">Submit Comment</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="sub-head">Approve</div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Approve_By">Approve By</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Approve_On">Approve On</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Submitted_On">Approve Comment</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="sub-head">More Info Required</div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Rejected_By">More Info Required By</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Rejected_On">More Info Required On</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Submitted_On">More Info Required Comment</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="sub-head">Audit Completed</div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit_Completed_By">Audit Completed By</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit_Completed_On">Audit Completed On</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Submitted_On">Audit Completed Comment</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="sub-head">Cancel</div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Cancelled_By">Cancel By</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Cancelled_On">Cancel On</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Submitted_On">Cancel Comment</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                     </div>
                     <div class="button-block">
                         {{-- <button type="submit" class="saveButton">Save</button> --}}

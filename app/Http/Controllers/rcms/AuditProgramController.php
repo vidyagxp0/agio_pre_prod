@@ -1685,7 +1685,7 @@ class AuditProgramController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Submit';
                 $history->change_to= "Pending Approval";
-                $history->change_from= "Opened";
+                $history->change_from= $lastDocument->status;
                 $history->action_name ='Not Applicable';
                 if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
                     $history->action_name = 'New';
@@ -1772,7 +1772,7 @@ class AuditProgramController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Audit Completed';
                 $history->change_to= "Closed - Done";
-                $history->change_from= "Pending Audit";
+                $history->change_from= $lastDocument->status;
                 $history->action_name ='Not Applicable';
                 if (is_null($lastDocument->Audit_Completed_By) || $lastDocument->Audit_Completed_By === '') {
                     $history->action_name = 'New';
@@ -1820,7 +1820,7 @@ class AuditProgramController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Rejected';
                 $history->change_to= "Opened";
-                $history->change_from= "Pending Approval";
+                $history->change_from= $lastDocument->status;
                 $history->action_name ='Not Applicable';
                 if (is_null($lastDocument->rejected_by) || $lastDocument->rejected_by === '') {
                     $history->action_name = 'New';
@@ -1886,7 +1886,7 @@ class AuditProgramController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Cancel';
                 $history->change_to= "Closed-Cancel ";
-                $history->change_from= "Opened";
+                $history->change_from= $lastDocument->status;
                 $history->action_name ='Not Applicable';
                 if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
                     $history->action_name = 'New';
@@ -1921,7 +1921,7 @@ class AuditProgramController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Cancel';
                 $history->change_to= "Closed-Cancel ";
-                $history->change_from= "Pending Approval";
+                $history->change_from= $lastDocument->status;
                 $history->action_name ='Not Applicable';
                 if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
                     $history->action_name = 'New';
@@ -1956,7 +1956,7 @@ class AuditProgramController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Cancel';
                 $history->change_to= "Closed-Cancel ";
-                $history->change_from= "Pending Audit";
+                $history->change_from= $lastDocument->status;
                 $history->action_name ='Not Applicable';
                 if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
                     $history->action_name = 'New';

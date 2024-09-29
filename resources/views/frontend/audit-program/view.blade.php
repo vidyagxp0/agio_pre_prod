@@ -2001,60 +2001,76 @@
                             <div id="CCForm3" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
+                                    <div class="col-12">
+                                            <div class="sub-head">Submit</div>
+                                        </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted_By..">Submitted By</label>
+                                                <label for="Submitted_By..">Submit By</label>
                                                 <div class="static">{{ $data->submitted_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted_On">Submitted On</label>
+                                                <label for="Submit_On">Submit On</label>
                                                 <div class="static">{{ $data->submitted_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted_On">Submitted Comment</label>
+                                                <label for="Submit_On">Submit Comment</label>
                                                 <div class="static">{{ $data->Submitted_comment }}</div>
                                             </div>
                                         </div>
+                                        <div class="col-12">
+                                            <div class="sub-head">Approve</div>
+                                        </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Approved_By">Approved By</label>
+                                                <label for="Approved_By">Approve By</label>
                                                 <div class="static">{{ $data->approved_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Approved_On">Approved On</label>
+                                                <label for="Approved_On">Approve On</label>
                                                 <div class="static">{{ $data->approved_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted_On">Approved Comment</label>
+                                                <label for="Submitted_On">Approve Comment</label>
                                                 <div class="static">{{ $data->approved_comment }}</div>
                                             </div>
                                         </div>
+
+                                        <div class="col-12">
+                                            <div class="sub-head">More Info Required</div>
+                                        </div>
+
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Rejected_By">More Information Required By</label>
+                                                <label for="Rejected_By">More Info Required By</label>
                                                 <div class="static">{{ $data->rejected_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Rejected_On">More Information Required On</label>
+                                                <label for="Rejected_On">More Info Required On</label>
                                                 <div class="static">{{ $data->rejected_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted_On">More Information Required Comment</label>
+                                                <label for="Submitted_On">More Info Required Comment</label>
                                                 <div class="static">{{ $data->reject_comment }}</div>
                                             </div>
                                         </div>
+
+                                        <div class="col-12">
+                                            <div class="sub-head">Audit Completed</div>
+                                        </div>
+
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Audit_Completed_By">Audit Completed By</label>
@@ -2073,21 +2089,26 @@
                                                 <div class="static">{{ $data->Audit_Completed_comment }}</div>
                                             </div>
                                         </div>
+
+                                        <div class="col-12">
+                                            <div class="sub-head">Cancel</div>
+                                        </div>
+
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Cancelled_By">Cancelled By</label>
+                                                <label for="Cancelled_By">Cancel By</label>
                                                 <div class="static">{{ $data->cancelled_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Cancelled_On">Cancelled On</label>
+                                                <label for="Cancelled_On">Cancel On</label>
                                                 <div class="static">{{ $data->cancelled_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted_On">Cancelled Comment</label>
+                                                <label for="Submitted_On">Cancel Comment</label>
                                                 <div class="static">{{ $data->Cancelled_comment }}</div>
                                             </div>
                                         </div>

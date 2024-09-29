@@ -526,31 +526,61 @@
                 <div class="block-head">
                     Signatures
                 </div>
+                
+                <div class="block-head">
+                    Submit
+                </div>
                 <table>
                     <tr>
-                        <th class="w-20">Submitted By</th>
+                        <th class="w-20">Submit By</th>
                         <td class="w-30">{{ $data->submitted_by }}</td>
                         <th class="w-20">
-                            Submitted On</th>
+                            Submit On</th>
                         <td class="w-30">{{ $data->submitted_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">
-                            Submitted Comment</th>
+                            Submit Comment</th>
                         <td class="w-30">{{ $data->Submitted_comment }}</td>
                     </tr>
+                    </table>
+                    <div class="block-head">
+                        Approve
+                    </div>
+                    <table>
                     <tr>
-                        <th class="w-20">Approved By</th>
+                        <th class="w-20">Approve By</th>
                         <td class="w-30">{{ $data->approved_by }}</td>
-                        <th class="w-20">Approved On</th>
+                        <th class="w-20">Approve On</th>
                         <td class="w-30">{{ $data->approved_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">
-                            Approved Comment</th>
+                            Approve Comment</th>
                         <td class="w-30">{{ $data->approved_comment }}</td>
                     </tr>
+                    </table>
 
+                    <div class="block-head">
+                        More Info Required 
+                    </div>
+                    <table>
+                    <tr>
+                        <th class="w-20">More Info Required By</th>
+                        <td class="w-30">{{ $data->rejected_by }}</td>
+                        <th class="w-20">More Info Required On</th>
+                        <td class="w-30">{{ $data->rejected_on }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">
+                            More Info Required Comment</th>
+                        <td class="w-30">{{ $data->reject_comment }}</td>
+                    </tr>
+                    </table>
+                    <div class="block-head">
+                        Audit Completed
+                    </div>
+                    <table>
 
                     <tr>
                         <th class="w-20">Audit Completed By</th>
@@ -564,28 +594,21 @@
                             Audit Completed Comment</th>
                         <td class="w-30">{{ $data->Audit_Completed_comment }}</td>
                     </tr>
-
+                    </table>
+                    
+                    <div class="block-head">
+                        Cancel
+                    </div>
+                    <table>
                     <tr>
-                        <th class="w-20">More Information Required By</th>
-                        <td class="w-30">{{ $data->rejected_by }}</td>
-                        <th class="w-20">More Information Required On</th>
-                        <td class="w-30">{{ $data->rejected_on }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">
-                            More Information Required Comment</th>
-                        <td class="w-30">{{ $data->reject_comment }}</td>
-                    </tr>
-
-                    <tr>
-                        <th class="w-20">Cancelled By</th>
+                        <th class="w-20">Cancel By</th>
                         <td class="w-30">{{ $data->cancelled_by }}</td>
-                        <th class="w-20">Cancelled On</th>
+                        <th class="w-20">Cancel On</th>
                         <td class="w-30">{{ $data->cancelled_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">
-                            Cancelled Comment</th>
+                            Cancel Comment</th>
                         <td class="w-30">{{ $data->Cancelled_comment }}</td>
                     </tr>
                 </table>

@@ -1273,46 +1273,52 @@
                 <div id="CCForm5" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="sub-head">
-                            Electronic Signatures
+                            Submit
                         </div>
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="submitted by">Submitted By</label>
+                                    <label for="submitted by">Submit By</label>
                                     <div class="static">{{ $data->submitted_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="submitted on">Submitted On</label>
+                                    <label for="submitted on">Submit On</label>
                                     <div class="Date">{{ $data->submitted_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="submitted on">Submitted Comment</label>
+                                    <label for="submitted on">Submit Comment</label>
                                     <div class="static">{{ $data->submitted_comment }}</div>
                                 </div>
                             </div>
-
+                            <div class="col-12">
+                                            <div class="sub-head">Cancel</div>
+                                        </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="cancelled by">Cancelled By</label>
+                                    <label for="cancelled by">Cancel By</label>
                                     <div class="static">{{ $data->cancelled_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="cancelled on">Cancelled On</label>
+                                    <label for="cancelled on">Cancel On</label>
                                     <div class="Date">{{ $data->cancelled_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="submitted on">Cancelled Comment</label>
+                                    <label for="submitted on">Cancel Comment</label>
                                     <div class="static">{{ $data->cancelled_comment }}</div>
                                 </div>
                             </div>
+
+                            <div class="col-12">
+                                            <div class="sub-head">Acknowledge</div>
+                                        </div>
 
                             <div class="col-lg-3">
                                 <div class="group-input">
@@ -1333,40 +1339,46 @@
                                 </div>
                             </div>
 
+                            <div class="col-12">
+                                            <div class="sub-head">Complete</div>
+                                        </div>
+
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="cancelled by">Work Completion By</label>
+                                    <label for="cancelled by">Complete By</label>
                                     <div class="static">{{ $data->work_completion_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="cancelled on">Work Completion On</label>
+                                    <label for="cancelled on">Complete On</label>
                                     <div class="Date">{{ $data->work_completion_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="submitted on">Work Completion Comment</label>
+                                    <label for="submitted on">Complete Comment</label>
                                     <div class="static">{{ $data->work_completion_comment }}</div>
                                 </div>
                             </div>
-
+                            <div class="col-12">
+                                            <div class="sub-head">Verification Complete</div>
+                                        </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="cancelled by">QA/CQA Verification By</label>
+                                    <label for="cancelled by">Verification Complete By</label>
                                     <div class="static">{{ $data->qa_varification_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="cancelled on">QA/CQA Verification On</label>
+                                    <label for="cancelled on">Verification Complete On</label>
                                     <div class="Date">{{ $data->qa_varification_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="submitted on">QA/CQA Verification Comment</label>
+                                    <label for="submitted on">Verification Complete Comment</label>
                                     <div class="static">{{ $data->qa_varification_comment }}</div>
                                 </div>
                             </div>

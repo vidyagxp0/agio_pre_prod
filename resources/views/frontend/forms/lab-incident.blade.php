@@ -1175,74 +1175,58 @@
                     <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-12 sub-head" style="font-size: 16px">
-                                    Submitted
+                            <div class="col-12 sub-head" style="font-size: 16px">
+                                    Submit 
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted By">Submitted By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted On">Submitted On</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Comment">Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 sub-head" style="font-size: 16px">
-                                    QA Head/HOD Initial Review 
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Verification Complete">QA Head/HOD Initial Review Complete By</label>
+                                        <label for="Submit By">Submit By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Incident Review Completed On">QA Head/HOD Initial Review Complete On</label>
+                                        <label for="Submit On">Submit On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
 
+
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">Comment</label>
+                                        <label for="Comment">Submit Comment</label>
+                                        <div class="static" ></div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 sub-head"  style="font-size: 16px">
+                                QC Head/HOD Initial Review Complete 
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">QC Head/HOD Initial Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Verification Complete">More Info Required By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <label for="Incident Review Completed On">QC Head/HOD Initial Review Complete On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
                                 {{-- @foreach($detail as $d) --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">Comment</label>
+                                        <label for="Comment">QC Head/HOD Initial Review Complete Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-12 sub-head" style="font-size: 16px">
-                                    QA Initial Review
+                          
+                                {{-- @endforeach --}}
+                                <div class="col-12 sub-head"  style="font-size: 16px">
+                                    QA Initial Review Complete
                                 </div>
-                                
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Investigation Completed By">QA Initial Review Complete By</label>
@@ -1257,34 +1241,15 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Verification Complete">More Info Required By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Incident Review Completed On">More Info Required On</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                {{-- @foreach($detail as $d) --}}
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Comment">Comment</label>
+                                        <label for="Comment">QA Initial Review Complete Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
-                                <div class="col-12 sub-head" style="font-size: 16px">
-                                    Pending Initiator Update
+
+                                <div class="col-12 sub-head"  style="font-size: 16px">
+                                Pending Initiator Update Complete
                                 </div>
-                                
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Assignable Cause Identification Completed">Pending Initiator Update Complete By</label>
@@ -1297,36 +1262,18 @@
                                         <div class="Date"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Comment">Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
 
+                                {{-- <div class="col-lg-6"> --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Verification Complete">More Info Required By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Incident Review Completed On">More Info Required On</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                {{-- @foreach($detail as $d) --}}
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Comment">Comment</label>
+                                        <label for="Comment">Pending Initiator Update Complete Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
 
-                               <div class="col-12 sub-head" style="font-size: 16px">
-                                    QC Head/HOD Secondary Review
+                                <div class="col-12 sub-head"  style="font-size: 16px">
+                                    QC Head/HOD Secondary Review Complete
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -1340,36 +1287,16 @@
                                         <div class="Date"></div>
                                     </div>
                                 </div>
-
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">Comment</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Verification Complete">More Info Required By</label>
+                                        <label for="Comment">QC Head/HOD Secondary Review Complete Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Incident Review Completed On">More Info Required On</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                {{-- @foreach($detail as $d) --}}
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Comment">Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                               
-                                <div class="col-12 sub-head" style="font-size: 16px">
-                                    QA Secondary Review
+
+
+                                <div class="col-12 sub-head"  style="font-size: 16px">
+                                    QA Secondary Review Complete
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -1385,34 +1312,13 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">Comment</label>
+                                        <label for="Comment">QA Secondry Review Complete Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                              
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Verification Complete">More Info Required By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Incident Review Completed On">More Info Required On</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                {{-- @foreach($detail as $d) --}}
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Comment">Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                
-                                
-                                <div class="col-12 sub-head" style="font-size: 16px">
-                                    QAH Approval
+
+                                <div class="col-12 sub-head"  style="font-size: 16px">
+                                    Approved
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -1421,42 +1327,21 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="group-input" >
+                                    <div class="group-input">
                                         <label for="Solution Validation Completed On">Approved On</label>
                                         <div class="Date"></div>
                                     </div>
-                                </div>                                
+                                </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">Comment</label>
+                                        <label for="Comment">Approved Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Verification Complete">More Info Required By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Incident Review Completed On">More Info Required On</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                {{-- @foreach($detail as $d) --}}
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Comment">Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 sub-head" style="font-size: 16px">
+                                <div class="col-12 sub-head"  style="font-size: 16px">
                                     Cancel
                                 </div>
-
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancel By</label>
@@ -1471,15 +1356,16 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">Comment</label>
+                                        <label for="Comment">Cancel Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
+                                </div>
                   
                                 <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <!-- <button type="submit" class="saveButton">Save</button> -->
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="submit">Submit</button>
+                                <!-- <button type="submit">Submit</button> -->
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" href="#"> Exit </a></button>
 
                                  <!-- Incident Details content -->
