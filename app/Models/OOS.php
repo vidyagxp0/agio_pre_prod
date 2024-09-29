@@ -50,6 +50,7 @@ class OOS extends Model
           'details_of_trend',
           'root_cause_identified_pia',
           'is_repeat_assingable_pia',
+          'repeat_testing_pia',
           'result_of_repeat',
           'impact_assesment_pia',
           'resampling_required_ib',

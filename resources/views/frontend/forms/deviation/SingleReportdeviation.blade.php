@@ -3263,47 +3263,47 @@
                                 </table>
                             </div>
                             {{-- <div class="col-12" id="HideInference" style="display:none;"> --}}
-                 <div class="border-table">
-    <div class="col-12 mb-4" id="fmea-section-part3">
-        <div class="group-input">
-            <div class="block-head">Inference</div>
-            <div class="table-responsive">
-                <table class="table table-bordered" id="risk-acceptance">
-                     <thead>
-                <tr class="table_bg">
-                    <th style="width: 5%;">Row #</th>
-                    <th style="width: 30%;">Type</th>
-                    <th>Remarks</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (!empty($data->inference_type) && !empty($data->inference_remarks))
-                    @php
-                        $inference_types = unserialize($data->inference_type);
-                        $inference_remarks = unserialize($data->inference_remarks);
-                    @endphp
+                            <div class="border-table">
+                                <div class="col-12 mb-4" id="fmea-section-part3">
+                                    <div class="group-input">
+                                        <div class="block-head">Inference</div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="risk-acceptance">
+                                                <thead>
+                                                    <tr class="table_bg">
+                                                        <th style="width: 5%;">Row #</th>
+                                                        <th style="width: 30%;">Type</th>
+                                                        <th>Remarks</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (!empty($data->inference_type) && !empty($data->inference_remarks))
+                                                        @php
+                                                            $inference_types = unserialize($data->inference_type);
+                                                            $inference_remarks = unserialize($data->inference_remarks);
+                                                        @endphp
 
-                    @foreach ($inference_types as $key => $inference_type)
-                        <tr>
-                            <td>{{ $key + 1 }}</td>
-                            <td>
-                                {{ $inference_type == 'Measurement' ? 'Measurement' : '' }}
-                                {{ $inference_type == 'Materials' ? 'Materials' : '' }}
-                                {{ $inference_type == 'Methods' ? 'Methods' : '' }}
-                                {{ $inference_type == 'Environment' ? 'Environment' : '' }}
-                                {{ $inference_type == 'Manpower' ? 'Manpower' : '' }}
-                                {{ $inference_type == 'Machine' ? 'Machine' : '' }}
-                            </td>
-                            <td>{{ $inference_remarks[$key] ?? '' }}</td>
-                        </tr>
-                    @endforeach
-                @endif
-            </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
+                                                        @foreach ($inference_types as $key => $inference_type)
+                                                            <tr>
+                                                                <td>{{ $key + 1 }}</td>
+                                                                <td>
+                                                                    {{ $inference_type == 'Measurement' ? 'Measurement' : '' }}
+                                                                    {{ $inference_type == 'Materials' ? 'Materials' : '' }}
+                                                                    {{ $inference_type == 'Methods' ? 'Methods' : '' }}
+                                                                    {{ $inference_type == 'Environment' ? 'Environment' : '' }}
+                                                                    {{ $inference_type == 'Manpower' ? 'Manpower' : '' }}
+                                                                    {{ $inference_type == 'Machine' ? 'Machine' : '' }}
+                                                                </td>
+                                                                <td>{{ $inference_remarks[$key] ?? '' }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
 
@@ -3741,116 +3741,131 @@
                                 </tr>
                             </table> --}}
 
-                            <div class="border-table">
-                                <div class="col-12 mb-4" id="fmea-section-part1">
-                                    <div class="group-input">
-                                        <div class='block-head'>Failure Mode and Effect Analysis - Part 1: Initial Risk
-                                            Assessment</div>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="risk-assessment-initial">
-                                                <thead>
-                                                    <tr class="table_bg">
-                                                        <th>Row #</th>
-                                                        <th>Activity</th>
-                                                        <th>Possible Risk/Failure (Identified Risk)</th>
-                                                        <th>Consequences of Risk/Potential Causes</th>
-                                                        <th>Severity (S)</th>
-                                                        <th>Probability (P)</th>
-                                                        <th>Detection (D)</th>
-                                                        <th>Initial RPN</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
-                                                        <tr>
-                                                            <td>{{ $key + 1 }}</td>
-                                                            <td>{{ $riskFactor }}</td>
-                                                            <td>{{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}
-                                                            </td>
-                                                            <td>{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}
-                                                            </td>
-                                                            <td>{{ unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null }}
-                                                            </td>
-                                                            <td>{{ unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null }}
-                                                            </td>
-                                                            <td>{{ unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null }}
-                                                            </td>
-                                                            <td>{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                            <div class="border-table  tbl-bottum">
+                                <div class="block-head">
+                                    Failure Mode and Effect Analysis
                                 </div>
+                                <table>
+
+                                    <tr class="table_bg">
+                                        <th class="w-10">Row #</th>
+                                        <th class="w-30">Risk Factor</th>
+                                        <th class="w-30">Risk element</th>
+                                        <th class="w-30">Probable cause of risk element</th>
+                                        <th class="w-30">Existing Risk Controls</th>
+                                    </tr>
+                                    {{-- @if ($data->root_cause_initial_attachment)
+                                @foreach (json_decode($data->root_cause_initial_attachment) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                                @else --}}
+                                    @if (!empty($data->risk_factor))
+                                        @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
+                                            <tr>
+                                                <td class="w-10">{{ $key + 1 }}</td>
+                                                <td class="w-30">{{ $riskFactor }}</td>
+                                                <td class="w-30">
+                                                    {{ unserialize($data->risk_element)[$key] ?? null }}</td>
+                                                <td class="w-30">
+                                                    {{ unserialize($data->problem_cause)[$key] ?? null }}</td>
+                                                <td class="w-30">
+                                                    {{ unserialize($data->existing_risk_control)[$key] ?? null }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                    @endif
+
+                                </table>
+
                             </div>
-                            <div class="border-table">
-                                <div class="col-12 mb-4" id="fmea-section-part2">
-                                    <div class="group-input">
-                                        <div class="block-head">Failure Mode and Effect Analysis - Part 2: Risk
-                                            Mitigation and Control Measures</div>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="risk-mitigation">
-                                                <thead>
-                                                    <tr class="table_bg">
-                                                        <th>Control Measures recommended/ Risk mitigation proposed</th>
-                                                        <th>Severity (S)</th>
-                                                        <th>Probability (P)</th>
-                                                        <th>Detection (D)</th>
-                                                        <th>Risk Level (RPN)</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach (unserialize($riskEffectAnalysis->risk_control_measure) as $key => $controlMeasure)
-                                                        <tr>
-                                                            <td>{{ $controlMeasure }}</td>
-                                                            <td>{{ unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null }}
-                                                            </td>
-                                                            <td>{{ unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null }}
-                                                            </td>
-                                                            <td>{{ unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null }}
-                                                            </td>
-                                                            <td>{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="border-table  tbl-bottum">
+                                <table>
+                                    <tr class="table_bg">
+                                        <th class="w-10">Row #</th>
+                                        <th class="w-30">Initial Severity</th>
+                                        <th class="w-30">Initial Probability</th>
+                                        <th class="w-30">Initial Detectability</th>
+                                        <th class="w-30">Initial RPN</th>
+                                    </tr>
+                                    @if (!empty($data->risk_factor))
+                                        @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
+                                            <tr>
+                                                <td class="w-10">{{ $key + 1 }}</td>
+                                                <td class="w-30">{{ unserialize($data->initial_severity)[$key] }}
+                                                </td>
+                                                <td class="w-30">
+                                                    {{ unserialize($data->initial_detectability)[$key] }}</td>
+                                                <td class="w-30">
+                                                    {{ unserialize($data->initial_probability)[$key] }}</td>
+                                                <td class="w-30">{{ unserialize($data->initial_rpn)[$key] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                    @endif
+                                </table>
                             </div>
-                            <div class="border-table">
-                                <div class="col-12 mb-4" id="fmea-section-part3">
-                                    <div class="group-input">
-                                        <div class="block-head">Failure Mode and Effect Analysis - Part 3: Residual
-                                            Risk and Risk Acceptance</div>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="risk-acceptance">
-                                                <thead>
-                                                    <tr class="table_bg">
-                                                        <th>Category of Risk Level (Low, Medium, High)</th>
-                                                        <th>Risk Acceptance (Y/N)</th>
-                                                        <th>Traceability Document</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach (unserialize($riskEffectAnalysis->risk_acceptance) as $key => $acceptance)
-                                                        <tr>
-                                                            <td>{{ unserialize($riskEffectAnalysis->category_risk_level)[$key] ?? '' }}
-                                                            </td>
-                                                            <td>{{ $acceptance }}</td>
-                                                            <td>{{ unserialize($riskEffectAnalysis->traceability_document)[$key] ?? null }}
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="border-table  tbl-bottum">
+                                <table>
+                                    <tr class="table_bg">
+                                        <th class="w-10">Row #</th>
+                                        <th class="w-30">Risk Acceptance (Y/N)</th>
+                                        <th class="w-30">Proposed Additional Risk control measure (Mandatory for Risk
+                                            elements
+                                            having RPN>4)</th>
+                                        <th class="w-30">Residual Severity</th>
+                                        <th class="w-30">Residual Probability</th>
+                                    </tr>
+                                    @if (!empty($data->risk_factor))
+                                        @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
+                                            <tr>
+                                                <td class="w-10">{{ $key + 1 }}</td>
+                                                <td class="w-30">{{ unserialize($data->risk_acceptance)[$key] }}
+                                                </td>
+                                                <td class="w-30">
+                                                    {{ unserialize($data->risk_control_measure)[$key] }}</td>
+                                                <td class="w-30">{{ unserialize($data->residual_severity)[$key] }}
+                                                </td>
+                                                <td class="w-30">
+                                                    {{ unserialize($data->residual_probability)[$key] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                    @endif
+                                </table>
                             </div>
+                            <div class="border-table  tbl-bottum">
+                                <table>
+                                    <tr class="table_bg">
+                                        <th class="w-10">Row #</th>
+                                        <th class="w-30">Residual Detectability</th>
+                                        <th class="w-30">Residual RPN</th>
+                                        <th class="w-30">Risk Acceptance (Y/N)</th>
+                                        <th class="w-30">Mitigation proposal (Mention either CAPA reference number,
+                                            IQ, OQ or PQ)
+                                        </th>
+                                    </tr>
+                                    @if (!empty($data->risk_factor))
+                                        @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
+                                            <tr>
+                                                <td class="w-10">{{ $key + 1 }}</td>
+                                                <td class="w-30">
+                                                    {{ unserialize($data->residual_detectability)[$key] }}</td>
+                                                <td class="w-30">{{ unserialize($data->residual_rpn)[$key] }}</td>
+                                                <td class="w-30">{{ unserialize($data->risk_acceptance2)[$key] }}
+                                                </td>
+                                                <td class="w-30">
+                                                    {{ unserialize($data->mitigation_proposal)[$key] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                    @endif
+                                </table>
+                            </div>
+
 
                             {{--
                             <div class="border-table">
@@ -4438,11 +4453,11 @@
                             QAH/Designee Approval
                         </div>
 
-                         <div class="inner-block">
+                        <div class="inner-block">
                             <label class="Summer"
                                 style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
 
-                             Post Categorization Of Deviation </label>
+                                Post Categorization Of Deviation </label>
                             <span style="font-size: 0.8rem; margin-left: 60px;">
                                 @if ($data->Post_Categorization)
                                     {{ $data->Post_Categorization }}
@@ -4452,11 +4467,11 @@
                             </span>
                         </div>
 
-                         <div class="inner-block">
+                        <div class="inner-block">
                             <label class="Summer"
                                 style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
 
-                             Justification for Revised Category </label>
+                                Justification for Revised Category </label>
                             <span style="font-size: 0.8rem; margin-left: 60px;">
                                 @if ($data->Investigation_Of_Review)
                                     {{ $data->Investigation_Of_Review }}
