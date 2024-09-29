@@ -799,7 +799,7 @@
 
 
                 <div class="inner-block">
-                    <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline; width:5%">QA
+                    <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline; width:5%">QA/CQA
                         Initial
                         Remarks </label>
                     <span style="font-size: 0.8rem; margin-left: 60px;">
@@ -3165,7 +3165,7 @@
                             <div class="inner-block">
                                 <label class="Summer"
                                     style="font-weight: bold; font-size: 13px; display: inline; width:5%">QA
-                                    Detail Of Root Cause </label>
+                                    Investigation Summary </label>
                                 <span style="font-size: 0.8rem; margin-left: 60px;">
                                     @if ($data->Detail_Of_Root_Cause)
                                         {{ $data->Detail_Of_Root_Cause }}
@@ -3216,7 +3216,7 @@
                                 </table>
                             </div>
 
-                            <div class="border-table" style="margin-bottom: 15px;">
+                            {{-- <div class="border-table" style="margin-bottom: 15px;">
                                 <div class="block-head" style="margin-bottom:5px; font-weight:bold;">
                                     Root Cause
                                 </div>
@@ -3261,7 +3261,7 @@
 
                                     </tbody>
                                 </table>
-                            </div>
+                            </div> --}}
                             {{-- <div class="col-12" id="HideInference" style="display:none;"> --}}
                             <div class="border-table">
                                 <div class="col-12 mb-4" id="fmea-section-part3">
@@ -4405,12 +4405,13 @@
 
                     <div class="block">
                         <div class="block-head">
-                            QA Final Review
+                            QA/CQA Implementation Verification
+
                         </div>
                         <table>
 
                             <tr>
-                                <th class="w-20">QA Enaluation</th>
+                                <th class="w-20">QA/CQA Implementation Verification</th>
                                 <td class="w-30">
                                     @if ($data->QA_Feedbacks)
                                         {{ strip_tags($data->QA_Feedbacks) }}
@@ -4423,7 +4424,7 @@
                     </div>
                     <div class="border-table">
                         <div class="block-head">
-                            QA Attachments
+                            QA/CQA Implementation Verification Attachments
                         </div>
                         <table>
 
@@ -4483,7 +4484,7 @@
                         <div class="inner-block">
                             <label class="Summer"
                                 style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
-                                Closure Comments </label>
+                                QAH/Designee Closure Comments </label>
                             <span style="font-size: 0.8rem; margin-left: 60px;">
                                 @if ($data->Closure_Comments)
                                     {{ $data->Closure_Comments }}
@@ -4509,7 +4510,7 @@
                     </div>
                     <div class="border-table">
                         <div class="block-head">
-                            Closure Attachments
+                            QAH/Designee Closure Attachments
                         </div>
                         <table>
 
@@ -4551,7 +4552,7 @@
 
                     </tr>
                     <tr>
-                        <th class="w-20">Submit Comments</th>
+                        <th class="w-20">Submit Comment</th>
                         <td class="w-30">{{ $data->submit_comment }}</td>
                     </tr>
                     <tr>
@@ -4562,7 +4563,7 @@
 
                     </tr>
                     <tr>
-                        <th class="w-20">HOD Review Comments</th>
+                        <th class="w-20">HOD Review Comment</th>
                         <td class="w-30">{{ $data->HOD_Review_Comments }}</td>
                     </tr>
                     <tr>
@@ -4573,7 +4574,7 @@
 
                     </tr>
                     <tr>
-                        <th class="w-20">Request For Cancellation Comments</th>
+                        <th class="w-20">Request For Cancellation Comment</th>
                         <td class="w-30">{{ $data->pending_Cancel_comment }}</td>
                     </tr>
                     <tr>
@@ -4584,7 +4585,7 @@
 
                     </tr>
                     <tr>
-                        <th class="w-20">QA/CQA Initial Review Comments</th>
+                        <th class="w-20">QA/CQA Initial Review Comment</th>
                         <td class="w-30">{{ $data->QA_Initial_Review_Comments }}</td>
                     </tr>
                     <tr>
@@ -4595,7 +4596,7 @@
 
                     </tr>
                     <tr>
-                        <th class="w-20">CFT Review Comments</th>
+                        <th class="w-20">CFT Review Comment</th>
                         <td class="w-30">{{ $data->CFT_Review_Comments }}</td>
                     </tr>
                     <tr>
@@ -4606,7 +4607,7 @@
 
                     </tr>
                     <tr>
-                        <th class="w-20">QA/CQA Final Review Comments</th>
+                        <th class="w-20">QA/CQA Final Review Comment</th>
                         <td class="w-30">{{ $data->QA_Final_Review_Comments }}</td>
                     </tr>
                     {{-- <tr>
@@ -4628,7 +4629,7 @@
 
                     </tr>
                     <tr>
-                        <th class="w-20">QA/CQA Head/Manager Designee Approva Comments</th>
+                        <th class="w-20">QA/CQA Head/Manager Designee Approva Comment</th>
                         <td class="w-30">{{ $data->QA_head_approved_comment }}</td>
                     </tr>
                     <tr>
@@ -4639,7 +4640,7 @@
 
                     </tr>
                     <tr>
-                        <th class="w-20">Initiator Update Comments</th>
+                        <th class="w-20">Initiator Update Comment</th>
                         <td class="w-30">{{ $data->pending_initiator_approved_comment }}</td>
                     </tr>
                     <tr>
@@ -4650,7 +4651,7 @@
 
                     </tr>
                     <tr>
-                        <th class="w-20">Implementation verification Complete Comments</th>
+                        <th class="w-20">Implementation verification Complete Comment</th>
                         <td class="w-30">{{ $data->Hod_final_comment }}</td>
                     </tr>
                     <tr>
@@ -4661,7 +4662,7 @@
 
                     </tr>
                     <tr>
-                        <th class="w-20">Closure Approved Comments</th>
+                        <th class="w-20">Closure Approved Comment</th>
                         <td class="w-30">{{ $data->Close_comment }}</td>
                     </tr>
                     <tr>
@@ -4672,7 +4673,7 @@
 
                     </tr>
                     <tr>
-                        <th class="w-20">Cancel Comments</th>
+                        <th class="w-20">Cancel Comment</th>
                         <td class="w-30">{{ $data->cancelled_comment }}</td>
                     </tr>
 
