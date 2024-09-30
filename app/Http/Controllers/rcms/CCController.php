@@ -1000,7 +1000,7 @@ class CCController extends Controller
         if (!empty($openState->division_id)) {
             $history = new RcmDocHistory();
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Division Code';
+            $history->activity_type = 'Site/Location Code';
             $history->previous = "Null";
             $history->current = Helpers::getDivisionName($openState->division_id);
             $history->comment = "NA";
@@ -1250,7 +1250,7 @@ class CCController extends Controller
         if(!empty($review->qa_head)){    
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'QA Attachments';
+            $history->activity_type = 'QA/CQA Initial Attachments';
             $history->previous = "NULL";
             $history->current = $review->qa_head;
             $history->comment = "Not Applicable";
@@ -1421,7 +1421,7 @@ class CCController extends Controller
         if(!empty($Cft->Human_Resource_attachment)){    
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Human Resource Attachments';
+            $history->activity_type = 'Human Resource Attachment';
             $history->previous = "NULL";
             $history->current = $Cft->Human_Resource_attachment;
             $history->comment = "Not Applicable";
@@ -4224,11 +4224,11 @@ class CCController extends Controller
         
         if ($areQaHeadAttachSame != true) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'QA/CQA Attachments')
+                ->where('activity_type', 'QA/CQA Initial Attachments')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA/CQA Attachments';
+            $history->activity_type = 'QA/CQA Initial Attachments';
             $history->previous = $lastDocCft->qa_head;
             $history->current = $Cft->qa_head;
             $history->comment = "";
@@ -4716,11 +4716,11 @@ class CCController extends Controller
         
         if ($areQaHeadAttachSame != true) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'QA/CQA Attachments')
+                ->where('activity_type', 'QA/CQA Initial Attachments')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA/CQA Attachments';
+            $history->activity_type = 'QA/CQA Initial Attachments';
             $history->previous = $lastDocument->qa_head;
             $history->current = $openState->qa_head;
             $history->comment = "";
@@ -4966,8 +4966,8 @@ class CCController extends Controller
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Related Records';
-            $history->previous = $lastDocument->risk_assessment_related_record;
-            $history->current = $openState->risk_assessment_related_record;
+            $history->previous =  str_replace(',', ', ', $lastDocument->risk_assessment_related_record); 
+            $history->current =  str_replace(',', ', ',  $openState->risk_assessment_related_record);
             $history->comment = "";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
