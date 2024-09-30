@@ -124,6 +124,54 @@
                             // dd($cftCompleteUser);
                         @endphp
 
+                             @php
+                            $userRoles = DB::table('user_roles')
+                                ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])
+                                ->get();
+                            $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                            $cftRolesAssignUsers = collect($userRoleIds); //->contains(fn ($roleId) => $roleId >= 22 && $roleId <= 33);
+                            $hodcftUsers = DB::table('hodmanagement_cfts')
+                                ->where(['ManagementReview_id' => $data->id])
+                                ->first();
+
+                            // Define the column names
+                            $columns2 = [
+                                'hod_Production_Table_Person',
+                                'hod_Production_Injection_Person',
+                                'hod_ResearchDevelopment_person',
+                                'hod_Store_person',
+                                'hod_Quality_Control_Person',
+                                'hod_QualityAssurance_person',
+                                'hod_RegulatoryAffair_person',
+                                'hod_ProductionLiquid_person',
+                                'hod_Microbiology_person',
+                                'hod_Engineering_person',
+                                'hod_ContractGiver_person',
+                                'hod_Environment_Health_Safety_person',
+                                'hod_Human_Resource_person',
+                                'hod_CorporateQualityAssurance_person',
+                            ];
+
+                            // Initialize an array to store the values
+                            $valuesArray = [];
+
+                            // Iterate over the columns and retrieve the values
+                            foreach ($columns2 as $column) {
+                                $value = $hodcftUsers->$column;
+                                // Check if the value is not null and not equal to 0
+                                if ($value !== null && $value != 0) {
+                                    $valuesArray[] = $value;
+                                }
+                            }
+                            $hodcftCompleteUser = DB::table('hodmanagement_cft__responses')
+                                ->whereIn('status', ['In-progress', 'Completed'])
+                                ->where('ManagementReview_id', $data->id)
+                                ->where('cft_user_id', Auth::user()->id)
+                                ->whereNull('deleted_at')
+                                ->first();
+                            // dd($cftCompleteUser);
+                        @endphp
+
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
                         <button class="button_theme1"> <a class="text-white"
@@ -161,16 +209,26 @@
                         @elseif(
                             ($data->stage == 4 && Helpers::check_roles($data->division_id, 'Management Review', 5)) ||
                                 in_array(Auth::user()->id, $valuesArray))
+                                 <!-- @if (!$cftCompleteUser)
+    -->
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CFT Action Complete
                             </button>
-                        @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                             <!--
+    @endif -->
+                        @elseif(
+                        ($data->stage == 5 && Helpers::check_roles($data->division_id, 'Management Review', 5)) ||
+                                in_array(Auth::user()->id, $valuesArray))
+                                 <!-- @if (!$hodcftCompleteUser)
+    -->
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CFT HOD Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
+                             <!--
+    @endif -->
                         @elseif($data->stage == 6 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Verification Complete
@@ -1044,12 +1102,12 @@
                                 $assignedUsers = explode(',', $data->assign_to ?? '');
 
                             @endphp
-                          <div class="col-lg-12">
-                              <div class="group-input">
+                        <div class="col-lg-12">
+                            <div class="group-input">
                                 <label for="assign_to">Invite Person Notify <span class="text-danger">*</span></label>
-                                @if ($data->stage == 0 || $data->stage == 2)
+
                                     <!-- Disabled select for stages 0 or 2 -->
-                                    <select id="assign_to" name="assign_to[]" multiple disabled>
+                                    <select id="assign_to" name="assign_to[]" multiple >
                                         <option value="">Select a value</option>
                                         @foreach ($users as $user)
                                             <option value="{{ $user->name }}" {{ in_array($user->name, explode(',', $data->assign_to ?? '')) ? 'selected' : '' }}>
@@ -1057,30 +1115,14 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                @else
-                                    <!-- Editable select for other stages -->
-                                    <select id="assign_to" name="assign_to[]" multiple required>
-                                        <option value="">Select a value</option>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->name }}" {{ in_array($user->name, explode(',', $data->assign_to ?? '')) ? 'selected' : '' }}>
-                                                {{ $user->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                @endif
+
                                 @error('assign_to')
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror
 
-                                @if ($data->stage == 2)
-                                    <!-- Show Spam only for stage 2 -->
-                                    <div class="alert alert-warning mt-2">
-                                        <strong>Spam</strong>
-                                    </div>
-                                @endif
                             </div>
 
-                            </div>
+                        </div>
 
 
                             {{-- <div class="col-12">
@@ -1389,7 +1431,7 @@
                 <!-- Disabled state for stage 0 or 8 -->
                 <input type="text" id="external_supplier_performance" readonly placeholder="DD-MMM-YYYY" required
                     value="{{ Helpers::getdateFormat($data->external_supplier_performance) }}" />
-                <input type="date" id="external_supplier_performance_checkdate" disabled
+                <input type="date" id="external_supplier_performance_checkdate"
                     name="external_supplier_performance"
                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->external_supplier_performance }}"
                     class="hide-input" oninput="handleDateInput(this, 'external_supplier_performance'); checkStartDate(this)" />
@@ -1414,7 +1456,7 @@
                 <!-- Disabled state for stage 0 or 8 -->
                 <input type="text" id="customer_satisfaction_level" readonly placeholder="DD-MMM-YYYY" required
                     value="{{ Helpers::getdateFormat($data->customer_satisfaction_level) }}" />
-                <input type="date" id="customer_satisfaction_level_checkdate" disabled
+                <input type="date" id="customer_satisfaction_level_checkdate"
                     name="customer_satisfaction_level"
                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->customer_satisfaction_level }}"
                     class="hide-input" oninput="handleDateInput(this, 'customer_satisfaction_level')" />
@@ -8993,7 +9035,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 51,
+                                            'q_m_s_roles_id' => 68,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9124,7 +9166,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 51,
+                                            'q_m_s_roles_id' => 68,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9248,7 +9290,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 53,
+                                            'q_m_s_roles_id' => 70,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9381,7 +9423,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 53,
+                                            'q_m_s_roles_id' => 70,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9522,7 +9564,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 55,
+                                            'q_m_s_roles_id' => 72,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9654,7 +9696,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 55,
+                                            'q_m_s_roles_id' => 72,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9790,7 +9832,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 31,
+                                            'q_m_s_roles_id' => 77,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9935,7 +9977,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 31,
+                                            'q_m_s_roles_id' => 77,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10092,7 +10134,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 58,
+                                            'q_m_s_roles_id' => 74,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10235,7 +10277,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 58,
+                                            'q_m_s_roles_id' => 74,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10375,7 +10417,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 54,
+                                            'q_m_s_roles_id' => 71,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10503,7 +10545,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 54,
+                                            'q_m_s_roles_id' => 71,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10633,7 +10675,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 25,
+                                            'q_m_s_roles_id' => 78,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10767,7 +10809,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 25,
+                                            'q_m_s_roles_id' => 78,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10892,7 +10934,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 57,
+                                            'q_m_s_roles_id' => 81,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -11028,7 +11070,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 57,
+                                            'q_m_s_roles_id' => 81,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -11157,7 +11199,7 @@
 
                             @php
                                 $userRoles = DB::table('user_roles')
-                                    ->where(['q_m_s_roles_id' => 26, 'q_m_s_divisions_id' => $data->division_id])
+                                    ->where(['q_m_s_roles_id' => 79, 'q_m_s_divisions_id' => $data->division_id])
                                     ->get();
                                 $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                 //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -11296,7 +11338,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 52,
+                                            'q_m_s_roles_id' => 69,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -11433,7 +11475,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 52,
+                                            'q_m_s_roles_id' => 69,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -11565,7 +11607,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 24,
+                                            'q_m_s_roles_id' => 80,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -11701,7 +11743,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 24,
+                                            'q_m_s_roles_id' => 80,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -11827,7 +11869,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 56,
+                                            'q_m_s_roles_id' => 73,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -11961,7 +12003,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 56,
+                                            'q_m_s_roles_id' => 73,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -12088,7 +12130,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 59,
+                                            'q_m_s_roles_id' => 75,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -12224,7 +12266,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 59,
+                                            'q_m_s_roles_id' => 75,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -12368,7 +12410,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 60,
+                                            'q_m_s_roles_id' => 76,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -12467,7 +12509,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 60,
+                                            'q_m_s_roles_id' => 76,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
