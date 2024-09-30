@@ -31,7 +31,7 @@
                     <a href="{{ url('TMS/show') }}">Manage Training Plan</a>
                     <a href="{{ url('induction_training') }}">Induction Training</a>
                     <a href="{{ url('job_training') }}">On The Job Training</a>
-
+                    <a href="{{ url('job_description') }}">Job Description</a>
                 </div>
             </div>
         </div>
