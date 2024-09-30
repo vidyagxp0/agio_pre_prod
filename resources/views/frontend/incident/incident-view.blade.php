@@ -746,7 +746,7 @@
                                     </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         HOD Initial Review Complete
-                                                                    </button>
+                                    </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                         Cancel
                                     </button>
@@ -771,13 +771,15 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                          QAH/Designee Approval Complete
                                     </button>
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                                        Child
+                                    </button>
                                 @elseif(
                                     $data->stage == 5 && Helpers::check_roles($data->division_id, 'Incident', 3))
                                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                             Pending Initiator Update Complete
                                             </button>
-                                        <button class="button_theme1" data-bs-toggle="modal"
-                                            data-bs-target="#more-info-required-modal">
+                                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                             More Info Required
                                         </button>
                                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
@@ -790,7 +792,8 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                         More Info Required
                                     </button>
-                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+
+                                   <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                         Child
                                     </button>
                                 @elseif($data->stage == 7 && Helpers::check_roles($data->division_id, 'Incident', 7))
@@ -872,9 +875,9 @@
                                         <div class="">QA Final Review</div>
                                     @endif
                                     @if ($data->stage >= 8)
-                                        <div class="active">QAH Approval</div>
+                                        <div class="active">QAH Closure Approval</div>
                                     @else
-                                        <div class="">QAH Approval</div>
+                                        <div class="">QAH Closure Approval</div>
                                     @endif
                                     {{-- @if ($data->stage >= 8)
                                         <div class="active">QA Final Approval</div>
@@ -3641,7 +3644,7 @@
                                                 <br>
                                                 <div class="main-group">
                                                     <div>
-                                                     <label>Based upon the assessment of the corrective actions planned, whether unplanned deviation is required::</label>
+                                                     <label>Based upon the assessment of the corrective actions planned, whether unplanned deviation is required:</label>
                                                     </div>
                                                    <div class="checkbox-group">
                                                     <input type="checkbox" name="corrective_actions" value="yes" onclick="selectOne(this)" {{ $data->corrective_actions == 'yes' ? 'checked' : '' }}> Yes
@@ -6417,7 +6420,7 @@
                                     <label for="CAPA_Closure_Comments">CAPA Closure Comments</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                             completion</small></div>
-                                    <textarea class="" name="CAPA_Closure_Comments" id="CAPA_Closure_Comments" value="">{{ $data->CAPA_Closure_Comments }}</textarea>
+                                    <textarea class="" name="CAPA_Closure_Comments" id="CAPA_Closure_Comments">{{ $data->CAPA_Closure_Comments }}</textarea>
                                 </div>
 
                                 <div class="col-lg-12">
@@ -7363,7 +7366,7 @@
             <div id="CCForm16" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
-                        <div class="sub-head">Submission</div>
+                        <div class="sub-head">Submit</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="submit by">Submit By :-</label>
@@ -7383,7 +7386,7 @@
                             </div>
                         </div>
 
-                        <div class="sub-head">HOD Initial Review Completed</div>
+                        <div class="sub-head">HOD Initial Review Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="HOD Review Complete By">HOD Initial Review Complete By :-</label>
@@ -7446,7 +7449,7 @@
                         </div>--}}
 
 
-                        <div class="sub-head">QA Initial Review Completed</div>
+                        <div class="sub-head">QA Initial Review Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="QA Initial Review Complete By">QA Initial Review Complete By :-</label>
@@ -7550,7 +7553,7 @@
                         </div> --}}
 
 
-                        <div class="sub-head"> HOD Final Review Complete</div>
+                        <div class="sub-head">HOD Final Review Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="QA Final Review Complete By"> HOD Final Review Complete By:-</label>
@@ -7572,7 +7575,7 @@
                         {{--@php
                         dd($data->QA_Final_Review_Complete_By);
                         @endphp--}}
-                        <div class="sub-head"> QA Final Review Complete</div>
+                        <div class="sub-head">QA Final Review Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="QA Final Review Complete By"> QA Final Review Complete By:-</label>
@@ -8875,7 +8878,7 @@
 
                                 @endif
 
-                                    @if ($data->stage == 4)
+                                    @if ($data->stage == 5)
 
                                         <label for="major">
                                             <input type="radio" name="child_type" id="major" value="rca">

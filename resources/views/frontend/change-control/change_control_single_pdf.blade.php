@@ -219,7 +219,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Division Code</th>
+                        <th class="w-20">Site/Location Code</th>
                         <td class="w-30">@if($data->division_id){{  Helpers::getDivisionName($data->division_id) }} @else Not Applicable @endif</td>
                     </tr>
 
@@ -732,7 +732,7 @@ Not Applicable
                     
                     <div class="border-table">
                         <div class="block-head">
-                        QA/CQA Attachments
+                        QA/CQA Initial Attachments
                         </div>
                         <table>
 
@@ -3684,7 +3684,7 @@ Not Applicable
                 </table>
                 <div class="border-table">
                     <div class="block-head">
-                        Training Attachments
+                    Implementation Verification Attachments
                     </div>
                     <table>
 
