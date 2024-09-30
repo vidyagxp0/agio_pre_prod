@@ -359,6 +359,7 @@ Route::get('/employees/{id}', [JobDescriptionController::class, 'getEmployeeData
 Route::get('job_description',[JobDescriptionController::class ,'index'])->name('job_description');
 Route::get('job_description/show/{id}',[JobDescriptionController::class ,'edit'])->name('job_description_view');
 Route::post('job_descriptioncreate', [JobDescriptionController::class, 'store'])->name('job_descriptioncreate');
+Route::put('job_descriptionupdate/{id}', [JobDescriptionController::class, 'update'])->name('job_descriptionupdate');
 
 
 

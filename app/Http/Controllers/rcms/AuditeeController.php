@@ -6572,36 +6572,12 @@ $AuditorShow->save();
                 return back();
             }
             if ($changeControl->stage == 2) {
-                // if ($changeControl->form_progress !== 'cft')
-                // {
-                //     Session::flash('swal', [
-                //         'type' => 'warning',
-                //         'title' => 'Mandatory Fields!',
-                //         'message' => 'Summary and Response/CFT Tab is yet to be filled'
-                //     ]);
-
-                //     return redirect()->back();
-
-                // }
-                //  else {
-                //     Session::flash('swal', [
-                //         'type' => 'success',
-                //         'title' => 'Success',
-                //         'message' => 'Sent for CFT Review state'
-                //     ]);
-                // }
-                // $changeControl->stage = "3";
-                // $changeControl->status = "CFT Review";
-
-
-
-
-                if ($changeControl->form_progress !== 'cft')
+               if ($changeControl->form_progress !== 'cft')
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
-                        'message' => 'QA/CQA initial review / CFT Mandatory Tab is yet to be filled!'
+                        'message' => 'Summary and Response/CFT Tab is yet to be filled'
                     ]);
 
                     return redirect()->back();
@@ -6613,7 +6589,7 @@ $AuditorShow->save();
                     ]);
                 }
 
-                $changeControl->stage = "4";
+                $changeControl->stage = "3";
                 $changeControl->status = "CFT Review";
 
 
@@ -6699,23 +6675,23 @@ $AuditorShow->save();
             if ($changeControl->stage == 3) {
 
                 // // CFT review state update form_progress
-                // if ($changeControl->form_progress !== 'cft')
-                // {
-                //     Session::flash('swal', [
-                //         'type' => 'warning',
-                //         'title' => 'Mandatory Fields!',
-                //         'message' => 'CFT Tab is yet to be filled'
-                //     ]);
+                if ($changeControl->form_progress !== 'cft')
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'CFT Tab is yet to be filled'
+                    ]);
 
-                //     return redirect()->back();
-                // }
-                //  else {
-                //     Session::flash('swal', [
-                //         'type' => 'success',
-                //         'title' => 'Success',
-                //         'message' => 'Sent for QA/CQA Head Approval state'
-                //     ]);
-                // }
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for QA/CQA Head Approval state'
+                    ]);
+                }
 
 
                 $IsCFTRequired = ExternalAuditCFTResponse::where(['is_required' => 1, 'external_audit_id' => $id])->latest()->first();

@@ -608,13 +608,13 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA/CQA Initial assesmnent</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT</button>
-                <button class="cctablinks " id="Investigation_button" style="display: none"
+                {{-- <button class="cctablinks " id="Investigation_button" style="display: none"
                     onclick="openCity(event, 'CCForm9')">Investigation</button>
                 <button id="QRM_button" class="cctablinks" style="display: none"
                     onclick="openCity(event, 'CCForm11')">QRM</button>
 
                 <button id="CAPA_button" class="cctablinks" style="display: none"
-                    onclick="openCity(event, 'CCForm10')">CAPA</button>
+                    onclick="openCity(event, 'CCForm10')">CAPA</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Investigation & CAPA</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Pending Initiator Update</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm15')">HOD Final Review</button>
@@ -4263,7 +4263,7 @@
 
 
                     <!-- investigation -->
-                    <div id="CCForm9" class="inner-block cctabcontent">
+                    {{-- <div id="CCForm9" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
 
@@ -4349,22 +4349,20 @@
                                                             name="investigationTeam[0][responsibility]"></td>
                                                     <td><input type="text" class="Document_Remarks"
                                                             name="investigationTeam[0][remarks]"></td>
-                                                    <!-- <td><input type="text" class="Action" name="Action[]"></td> -->
+
                                                     <td><button type="text" class="removeRowBtn">Remove</button></td>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-                                    {{-- @error('Product_Batch')
-                                        <div class="text-danger">{{ $message  }}</div>
-                                    @enderror --}}
+
                                 </div>
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="audit type">Investigation Approach </label>
                                         <select multiple name="investigation_approach[]" id="investigation_approach">
-                                            {{-- <option value="">Enter Your Selection Here</option> --}}
+
                                             <option value="Why-Why Chart">Why-Why Chart</option>
                                             <option value="Failure Mode and Efect Analysis">Failure Mode and Efect
                                                 Analysis</option>
@@ -4532,10 +4530,9 @@
                                             var selectedCategory = $(this).val();
                                             var subCategorySelect = $('#Root_Cause_Sub_Category_Select');
 
-                                            // Clear existing options
+
                                             subCategorySelect.empty();
 
-                                            // Populate options based on selected category
                                             if (selectedCategory === 'M-Machine(Equipment)') {
                                                 subCategorySelect.append(
                                                     '<option value="Infrequent_Audits">Infrequent Audits</option>');
@@ -4614,7 +4611,7 @@
                                                 <tbody>
                                                     <tr>
                                                         <td style="background: rgb(222 220 220 / 58%)">
-                                                            {{-- <input disabled type="text"  value=""> --}}
+
                                                             1
                                                         </td>
                                                         <th style="background: ">Attention</th>
@@ -4926,10 +4923,7 @@
                             <div class="button-block">
                                 <button type="submit" class="saveButton"
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;">Save</button>
-                                {{-- <a href="/rcms/qms-dashboard"
-                                    style=" justify-content: center; width: 4rem; margin-left: 1px;">
-                                    <button type="button" class="backButton">Back</button>
-                                </a> --}}
+
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton"
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;"
@@ -4937,22 +4931,14 @@
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
-                                <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                                    class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                    data-bs-target="#launch_extension">
-                                                                                                                    Launch Extension
-                                                                                                                </a> -->
-                                {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                        data-bs-target="#effectivenss_extension">
-                                        Launch Effectiveness Check
-                                    </a> --}}
+
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
 
                     {{-- -------------QRM----------------- --}}
-                    <div id="CCForm11" class="inner-block cctabcontent">
+                    {{-- <div id="CCForm11" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-12 sub-head"></div>
@@ -5119,66 +5105,42 @@
                             </div>
                             <script>
                                 function calculateRiskAnalysis(selectElement) {
-                                    // Get the row containing the changed select element
+
                                     let row = selectElement.closest('tr');
 
-                                    // Get values from select elements within the row
+
                                     let R = parseFloat(document.getElementById('analysisR').value) || 0;
                                     let P = parseFloat(document.getElementById('analysisP').value) || 0;
                                     let N = parseFloat(document.getElementById('analysisN').value) || 0;
 
-                                    // Perform the calculation
+
                                     let result = R * P * N;
 
-                                    // Update the result field within the row
+
                                     document.getElementById('analysisRPN').value = result;
                                 }
                             </script>
                             <div class="button-block">
                                 <button type="submit" class="saveButton"
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;">Save</button>
-                                {{-- <a href="/rcms/qms-dashboard"
-                                    style=" justify-content: center; width: 4rem; margin-left: 1px;">
-                                    <button type="button"
-                                        style=" justify-content: center; width: 4rem; margin-left: 1px;"
-                                        class="backButton">Back</button>
-                                </a> --}}
+
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
-                                <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                                    class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                    data-bs-target="#launch_extension">
-                                                                                                                    Launch Extension
-                                                                                                                </a> -->
-                                {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                        data-bs-target="#effectivenss_extension">
-                                        Launch Effectiveness Check
-                                    </a> --}}
+
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
 
-                    <!-- capa -->
-                    <div id="CCForm10" class="inner-block cctabcontent">
+
+                    {{-- <div id="CCForm10" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4"  for="Investigation Summary">Investigation Summary</label>
-                                        <textarea class="" name="Investigation_Summary" id="Investigation_Summary" cols="30" ></textarea>
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="CAPA_Number"><b>CAPA No</b></label>
-                                        <input disabled type="text" name="capa_number">
-                                    </div>
-                                </div> --}}
+
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
@@ -5280,12 +5242,7 @@
                                     </textarea>
                                     </div>
                                 </div>
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4"  for="Impact assessment">Impact Assessment</label>
-                                        <textarea class="" name="Impact_assessment" id="Impact_assessment" cols="30" ></textarea>
-                                    </div>
-                                </div> --}}
+
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Root_Cause">Root Cause</label>
@@ -5295,12 +5252,7 @@
                                     </textarea>
                                     </div>
                                 </div>
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4"  for="Root cause">Root Cause</label>
-                                        <textarea class="" name="Root_cause" id="Root_cause" cols="30" ></textarea>
-                                    </div>
-                                </div> --}}
+
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Immediate_Action_Take">Immediate Action Taken (If Applicable)</label>
@@ -5397,10 +5349,7 @@
                                     <button type="submit"
                                         style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                         class="saveButton">Save</button>
-                                    {{-- <a href="/rcms/qms-dashboard"
-                                        style=" justify-content: center; width: 4rem; margin-left: 1px;">
-                                        <button type="button" class="backButton">Back</button>
-                                    </a> --}}
+
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button"
                                         style=" justify-content: center; width: 4rem; margin-left: 1px;"
@@ -5409,155 +5358,14 @@
                                         style=" justify-content: center; width: 4rem; margin-left: 1px;"> <a
                                             href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                             Exit </a> </button>
-                                    <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                                        class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                        data-bs-target="#launch_extension">
-                                                                                                                        Launch Extension
-                                                                                                                    </a> -->
-                                    {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                            data-bs-target="#effectivenss_extension">
-                                            Launch Effectiveness Check
-                                        </a> --}}
+
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
 
-                    <!-- investigation and capa -->
-                    {{-- <div id="CCForm3" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-
-                                <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Investigation Summary">Investigation Summary</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <textarea class="" name="Investigation_Summary" id="summernote-8">
-                                    </textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Impact Assessment">Impact Assessment</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <textarea class="" name="Impact_assessment" id="summernote-9">
-                                    </textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Root Cause">Root Cause</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <textarea class="" name="Root_cause" id="summernote-10">
-                                    </textarea>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-6">
-                                    <div class="group-input">
-                                        <label for="CAPA Rquired">CAPA Required ?</label>
-                                      <select name="CAPA_Rquired" id="CAPA_Rquired">
-                                        <option value="0"> -- Select --</option>
-                                        <option value="yes">Yes</option>
-                                        <option value="no"> No</option>
-                                      </select>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="group-input">
-                                        <label for="capa type">CAPA Type?</label>
-                                      <select name="capa_type" id="capa_type">
-                                        <option value="0"> -- Select --</option>
-                                        <option value="Corrective_Action">Corrective Action</option>
-                                        <option value="Preventive_Action">Preventive Action</option>
-                                        <option value="Corrective&Preventive">Corrective & Preventive Action both</option>
-                                      </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="CAPA Description">CAPA Description</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <textarea class="" name="CAPA_Description" id="summernote-11">
-                                    </textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Post Categorization Of Deviation">Post Categorization Of Deviation</label>
-                                       <div><small class="text-primary">Please Refer Intial deviation category before updating.</small></div>
-                                        {{-- <textarea class="" name="Post_Categorization" id="summernote-12"> --}}
-                    {{-- <select name="Post_Categorization" id="Post_Categorization">
-                                                <option value=""> -- Select --</option>
-                                                <option value="major">Major</option>
-                                                <option value="minor">Minor</option>
-                                                <option value="critical">Critical</option>
-                                              </select>
-                                    </textarea>
-                                    </div>
-                                </div> --}}
-
-                    {{-- <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Investigation Of Revised Categorization">Justification for Revised Category</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <textarea class="" name="Investigation_Of_Review" id="summernote-13">
-                                    </textarea>
-                                    </div>
-                                </div> --}}
-
-
-                    {{-- <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Investigatiom Attachment">Investigation Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Investigation_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Investigation_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Investigation_attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="capa_Attachments">CAPA Attachment </label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small>
-                                            </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Capa_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Capa_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Capa_attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div> --}}
-
-                    {{-- <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                              <a href="/rcms/qms-dashboard">
-                                        <button type="button" class="backButton">Back</button>
-                                    </a>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                        Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>  --}}
-                    <div id="CCForm14" class="inner-block cctabcontent">
+                                      <div id="CCForm14" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
 

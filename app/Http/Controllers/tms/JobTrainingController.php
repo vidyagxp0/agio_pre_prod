@@ -549,49 +549,6 @@ public function trainingQuestions($id){
 
                 if ($jobTraining->stage == 1) {
                     $jobTraining->stage = "2";
-                    $jobTraining->status = "In Accept";
-                    $history = new JobTrainingAudit();
-                    $history->job_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->current = $jobTraining->qualified_by;
-                    $history->comment = $request->comment;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->change_to = "In Accept";
-                    $history->change_from = $lastjobTraining->status;
-                    $history->action = 'Submit';
-                    $history->stage = 'Submited';
-                    $history->save();
-
-                    $jobTraining->update();
-                    return back();
-                }
-
-                if ($jobTraining->stage == 2) {
-                    $jobTraining->stage = "3";
-                    $jobTraining->status = "QA Review";
-
-                    $history = new JobTrainingAudit();
-                    $history->job_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->current = $jobTraining->qualified_by;
-                    $history->comment = $request->comment;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->change_to = "QA Review";
-                    $history->change_from = $lastjobTraining->status;
-                    $history->action = 'Accept Complete';
-                    $history->stage = 'Submited';
-                    $history->save();
-
-                    $jobTraining->update();
-                    return back();
-                }
-
-                if ($jobTraining->stage == 3) {
-                    $jobTraining->stage = "4";
                     $jobTraining->status = "QA/CQA Head Approval";
                     $history = new JobTrainingAudit();
                     $history->job_id = $id;
@@ -603,7 +560,50 @@ public function trainingQuestions($id){
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->change_to = "QA/CQA Head Approval";
                     $history->change_from = $lastjobTraining->status;
-                    $history->action = 'Review Complete';
+                    $history->action = 'Submit';
+                    $history->stage = 'Submited';
+                    $history->save();
+
+                    $jobTraining->update();
+                    return back();
+                }
+
+                if ($jobTraining->stage == 2) {
+                    $jobTraining->stage = "3";
+                    $jobTraining->status = "Employee Answers";
+
+                    $history = new JobTrainingAudit();
+                    $history->job_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $jobTraining->qualified_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->change_to = "Employee Answers";
+                    $history->change_from = $lastjobTraining->status;
+                    $history->action = 'Approval Complete';
+                    $history->stage = 'Submited';
+                    $history->save();
+
+                    $jobTraining->update();
+                    return back();
+                }
+
+                if ($jobTraining->stage == 3) {
+                    $jobTraining->stage = "4";
+                    $jobTraining->status = "Evaluation";
+                    $history = new JobTrainingAudit();
+                    $history->job_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $jobTraining->qualified_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->change_to = "Evaluation";
+                    $history->change_from = $lastjobTraining->status;
+                    $history->action = 'Answer Submit';
                     $history->stage = 'Submited';
                     $history->save();
 
@@ -634,48 +634,6 @@ public function trainingQuestions($id){
 
                 if ($jobTraining->stage == 4) {
                     $jobTraining->stage = "5";
-                    $jobTraining->status = "Employee Answers";
-                    $history = new JobTrainingAudit();
-                    $history->job_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->current = $jobTraining->qualified_by;
-                    $history->comment = $request->comment;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->change_to = "Employee Answers";
-                    $history->change_from = $lastjobTraining->status;
-                    $history->action = 'Approval Complete';
-                    $history->stage = 'Submited';
-                    $history->save();
-
-                    $jobTraining->update();
-                    return back();
-                }
-
-                if ($jobTraining->stage == 5) {
-                    $jobTraining->stage = "6";
-                    $jobTraining->status = "Evaluation";
-                    $history = new JobTrainingAudit();
-                    $history->job_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->current = $jobTraining->qualified_by;
-                    $history->comment = $request->comment;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->change_to = "Evaluation";
-                    $history->change_from = $lastjobTraining->status;
-                    $history->action = 'Answer Submit';
-                    $history->stage = 'Submited';
-                    $history->save();
-
-                    $jobTraining->update();
-                    return back();
-                }
-
-                if ($jobTraining->stage == 6) {
-                    $jobTraining->stage = "7";
                     $jobTraining->status = "QA/CQA Head Final Review";
                     $history = new JobTrainingAudit();
                     $history->job_id = $id;
@@ -695,8 +653,8 @@ public function trainingQuestions($id){
                     return back();
                 }
 
-                if ($jobTraining->stage == 7) {
-                    $jobTraining->stage = "8";
+                if ($jobTraining->stage == 5) {
+                    $jobTraining->stage = "6";
                     $jobTraining->status = "Verification and Approval";
                     $history = new JobTrainingAudit();
                     $history->job_id = $id;
@@ -716,8 +674,50 @@ public function trainingQuestions($id){
                     return back();
                 }
 
-                if ($jobTraining->stage == 8) {
-                    $jobTraining->stage = "9";
+                // if ($jobTraining->stage == 6) {
+                //     $jobTraining->stage = "7";
+                //     $jobTraining->status = "QA/CQA Head Final Review";
+                //     $history = new JobTrainingAudit();
+                //     $history->job_id = $id;
+                //     $history->activity_type = 'Activity Log';
+                //     $history->current = $jobTraining->qualified_by;
+                //     $history->comment = $request->comment;
+                //     $history->user_id = Auth::user()->id;
+                //     $history->user_name = Auth::user()->name;
+                //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //     $history->change_to = "QA/CQA Head Final Review";
+                //     $history->change_from = $lastjobTraining->status;
+                //     $history->action = 'Evaluation Complete';
+                //     $history->stage = 'Submited';
+                //     $history->save();
+
+                //     $jobTraining->update();
+                //     return back();
+                // }
+
+                // if ($jobTraining->stage == 7) {
+                //     $jobTraining->stage = "8";
+                //     $jobTraining->status = "Verification and Approval";
+                //     $history = new JobTrainingAudit();
+                //     $history->job_id = $id;
+                //     $history->activity_type = 'Activity Log';
+                //     $history->current = $jobTraining->qualified_by;
+                //     $history->comment = $request->comment;
+                //     $history->user_id = Auth::user()->id;
+                //     $history->user_name = Auth::user()->name;
+                //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //     $history->change_to = "Verification and Approval";
+                //     $history->change_from = $lastjobTraining->status;
+                //     $history->action = 'QA/CQA Head Review Complete';
+                //     $history->stage = 'Submited';
+                //     $history->save();
+
+                //     $jobTraining->update();
+                //     return back();
+                // }
+
+                if ($jobTraining->stage == 6) {
+                    $jobTraining->stage = "7";
                     $jobTraining->status = "Closed-Done";
 
                     $history = new JobTrainingAudit();
