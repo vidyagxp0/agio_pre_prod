@@ -644,7 +644,7 @@
              </table>
            </div>
            <div class="block">
-            <div class="block-head">HOD Attachment</div>
+            <div class="block-head">HOD Primary Attachment</div>
               <div class="border-table">
                 <table>
                     <tr class="table_bg">
@@ -707,16 +707,16 @@
             {{-- <!-- CQA/QA Head --> ~Aditya Rajput --}}
 
             <div class="block">
-                <div class="block-head">CQA/QA Head Primary</div>
+                <div class="block-head">CQA/QA Head Primary Review</div>
                 <table> 
                    <tr>
-                        <th class="w-20">CQA/QA Head Primary Remark</th>
+                        <th class="w-20">CQA/QA Head Remark</th>
                         <td class="w-80">{{ $data->QA_Head_primary_remark1 ? $data->QA_Head_primary_remark1 : 'Not Applicable' }}</td>
                   </tr>
                  </table>
             </div>
             <div class="block">
-                <div class="block-head">CCQA/QA Head Primary Attachment</div>
+                <div class="block-head">CQA/QA Head Attachment</div>
                       <div class="border-table">
                         <table>
                             <tr class="table_bg">
@@ -741,7 +741,7 @@
             </div>
            <!-- Preliminary Lab. Investigation TapII -->
             <div class="block">
-                <div class="block-head"> Preliminary Lab. Investigation TapII </div>
+                <div class="block-head">Phase IA Investigation</div>
                 <table>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-10">Workbench evaluation</th>
@@ -1005,16 +1005,16 @@
               {{-- <!-- Phase IA HOD Primary --> ~Aditya Rajput --}}
 
               <div class="block">
-                <div class="block-head">Phase IA HOD Primary</div>
+                <div class="block-head">Phase IA HOD Review</div>
                 <table> 
                    <tr>
-                        <th class="w-20">Phase IA HOD Primary Remark</th>
+                        <th class="w-20">Phase IA HOD Remark</th>
                         <td class="w-30">{{ $data->hod_remark2 ? $data->hod_remark2 : 'Not Applicable' }}</td>
                   </tr>
                  </table>
                </div>
                <div class="block">
-                <div class="block-head">Phase IA HOD Primary Attachment</div>
+                <div class="block-head">Phase IA HOD Attachment</div>
                       <div class="border-table">
                         <table>
                             <tr class="table_bg">
@@ -1041,7 +1041,7 @@
                 {{-- <!-- Phase IA CQA/QA --> ~Aditya Rajput --}}
 
               <div class="block">
-                <div class="block-head">Phase IA CQA/QA</div>
+                <div class="block-head">Phase IA CQA/QA Review</div>
                 <table> 
                    <tr>
                         <th class="w-20">Phase IA CQA/QA Remark</th>
@@ -1077,17 +1077,17 @@
                  {{-- <!-- Phase IA CQA/QA --> ~Aditya Rajput --}}
 
               <div class="block">
-                <div class="block-head">Phase IA CQAH/QAH</div>
+                <div class="block-head">Phase IA CQAH/QAH Review</div>
                 <table> 
                    <tr>
-                        <th class="w-20">P-IA CQAH/QAH Primary Remark</th>
+                        <th class="w-20">P-IA CQAH/QAH Remark</th>
                         <td class="w-80">@if($data->QA_Head_primary_remark2){{ $data->QA_Head_primary_remark2 }}@else Not Applicable @endif</td>
 
                   </tr>
                  </table>
               </div>
               <div class="block">
-                <div class="block-head">P-IA CQAH/QAH Primary Attachment</div>
+                <div class="block-head">P-IA CQAH/QAH Attachment</div>
                 <div class="border-table">
                   <table>
                       <tr class="table_bg">
@@ -1203,16 +1203,16 @@
                {{-- <!-- Phase IB HOD Primary --> ~Aditya Rajput --}}
 
                <div class="block">
-                <div class="block-head">Phase IB HOD Primary</div>
+                <div class="block-head">Phase IB HOD Review</div>
                 <table> 
                    <tr>
-                        <th class="w-20">Phase IB HOD Primary Remark</th>
+                        <th class="w-20">Phase IB HOD Remark</th>
                         <td class="w-80">{{ $data->hod_remark3 ? $data->hod_remark3 : 'Not Applicable' }}</td>
                   </tr>
                  </table>
               </div>
               <div class="block">
-                <div class="block-head">Phase IB HOD Primary Attachment</div>
+                <div class="block-head">Phase IB HOD Attachment</div>
                       <div class="border-table">
                         <table>
                             <tr class="table_bg">
@@ -1239,16 +1239,16 @@
                {{-- <!-- Phase IB CQA/QA  --> ~Aditya Rajput --}}
 
                <div class="block">
-                <div class="block-head">Phase IB CQA/QA </div>
+                <div class="block-head">Phase IB CQA/QA Review</div>
                 <table> 
                    <tr>
-                        <th class="w-20">Phase IB CQA/QA  Remark</th>
+                        <th class="w-20">Phase IB CQA/QA Remark</th>
                         <td class="w-80">{{ $data->QA_Head_remark3 ? $data->QA_Head_remark3 : 'Not Applicable' }}</td>
                   </tr>
                  </table>
               </div>
               <div class="block">
-                <div class="block-head">Phase IB CQA/QA  Attachment</div>
+                <div class="block-head">Phase IB CQA/QA Attachment</div>
                 <div class="border-table">
                   <table>
                       <tr class="table_bg">
@@ -1275,7 +1275,7 @@
                {{-- <!-- P-IB CQAH/QAH --> ~Aditya Rajput --}}
 
                <div class="block">
-                <div class="block-head">P-IB CQAH/QAH</div>
+                <div class="block-head">Phase IB CQAH/QAH Review</div>
                 <table> 
                     <tr>
                         <th class="w-20">Escalation required</th>
@@ -1296,7 +1296,7 @@
                  </table>
               </div>
               <div class="block">
-                <div class="block-head">P-IB CQAH/QAH Attachment</div>
+                <div class="block-head">Phase IB CQAH/QAH Attachment</div>
                 <div class="border-table">
                   <table>
                       <tr class="table_bg">
@@ -1323,7 +1323,7 @@
             @include('frontend.OOS.comps.allchecklistSingleReport')
 
             <div class="block">
-                <div class="block-head"> Phase II Investigation </div>
+                <div class="block-head"> Phase II A Investigation </div>
                 <table>
                     <tr>
                         <th class="w-20">Checklist Outcome</th>
@@ -1460,55 +1460,20 @@
                       </div>
                 </table>
             </div>
-             {{-- <!-- Phase IB HOD Primary --> ~Aditya Rajput --}}
-
-             <div class="block">
-                <div class="block-head">Phase IB HOD Primary</div>
-                <table> 
-                   <tr>
-                        <th class="w-20">Phase IB HOD Primary Remark</th>
-                        <td class="w-80">{{ $data->hod_remark3 ? $data->hod_remark3 : 'Not Applicable' }}</td>
-                  </tr>
-                 </table>
-              </div>
-              <div class="block">
-                <div class="block-head">Phase IB HOD Primary Attachment</div>
-                <div class="border-table">
-                  <table>
-                      <tr class="table_bg">
-                          <th class="w-20">S.N.</th>
-                          <th class="w-80">File </th>
-                      </tr>
-                      @if ($data->hod_attachment3)
-                      @foreach ($data->hod_attachment3 as $key => $file)
-                           <tr>
-                              <td>{{ $key + 1 }}</td>
-                              <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                          </tr>
-                      @endforeach
-                      @else
-                          <tr>
-                              <td class="w-20">1</td>
-                              <td class="w-20">Not Applicable</td>
-                          </tr>
-                      @endif
-                  </table>
-                </div>
-              </div>
 
                {{-- <!-- Phase II A HOD Primary --> ~Aditya Rajput --}}
 
                <div class="block">
-                <div class="block-head">Phase II A HOD Primary</div>
+                <div class="block-head">Phase II A HOD Review</div>
                 <table> 
                    <tr>
-                        <th class="w-20">Phase II A HOD Primary Remark</th>
+                        <th class="w-20">Phase II A HOD Remark</th>
                         <td class="w-80">{{ $data->hod_remark4 ? $data->hod_remark4 : 'Not Applicable' }}</td>
                   </tr>
                  </table>
               </div>
               <div class="block">
-                <div class="block-head">Phase II A HOD Primary Attachment</div>
+                <div class="block-head">Phase II A HOD Attachment</div>
                 <div class="border-table">
                   <table>
                       <tr class="table_bg">
@@ -1536,7 +1501,7 @@
                {{-- <!-- Phase II A CQA/QA --> ~Aditya Rajput --}}
 
                <div class="block">
-                <div class="block-head">Phase II A CQA/QA</div>
+                <div class="block-head">Phase II A CQA/QA Review</div>
                 <table> 
                    <tr>
                         <th class="w-20">Phase II A CQA/QA Remark</th>
@@ -1572,7 +1537,7 @@
                {{-- <!-- P-II A QAH/CQAH --> ~Aditya Rajput --}}
 
                <div class="block">
-                <div class="block-head">P-II A QAH/CQAH</div>
+                <div class="block-head">P-II A QAH/CQAH Review</div>
                 <table> 
                    <tr>
                         <th class="w-20">P-II A QAH/CQAH Remark</th>
@@ -1608,7 +1573,7 @@
                 {{-- <!-- Phase IIB Investigation --> ~Aditya Rajput --}}
 
                 <div class="block">
-                    <div class="block-head">Phase IIB Investigation</div>
+                    <div class="block-head">Phase II B Investigation</div>
                     <table> 
                         
                         <tr>
@@ -1664,16 +1629,16 @@
                {{-- <!-- Phase II B HOD Primary --> ~Aditya Rajput --}}
 
                 <div class="block">
-                    <div class="block-head">Phase II B HOD Primary</div>
+                    <div class="block-head">Phase II B HOD Review</div>
                     <table> 
                     <tr>
-                            <th class="w-20">Phase II B HOD Primary Remark</th>
+                            <th class="w-20">Phase II B HOD Remark</th>
                             <td class="w-80">{{ $data->hod_remark5 ? $data->hod_remark5 : 'Not Applicable' }}</td>
                     </tr>
                     </table>
                 </div>
                 <div class="block">
-                    <div class="block-head">Phase II B HOD Primary Attachment</div>
+                    <div class="block-head">Phase II B HOD Attachment</div>
                         <div class="border-table">
                             <table>
                                 <tr class="table_bg">
@@ -1700,7 +1665,7 @@
                     {{-- <!-- Phase II B CQA/QA --> ~Aditya Rajput --}}
 
                     <div class="block">
-                        <div class="block-head">Phase II B CQA/QA</div>
+                        <div class="block-head">Phase II B CQA/QA Review</div>
                         <table> 
                         <tr>
                                 <th class="w-20">Phase II B CQA/QA Remark</th>
@@ -1736,7 +1701,7 @@
                  {{-- <!-- P-II A QAH/CQAH --> ~Aditya Rajput --}}
 
                             <div class="block">
-                                <div class="block-head">P-II A QAH/CQAH</div>
+                                <div class="block-head">P-II A QAH/CQAH Review</div>
                                 <table> 
                                 <tr>
                                         <th class="w-20">P-II A QAH/CQAH Remark</th>
@@ -1770,7 +1735,7 @@
                             </div>
 
                             <div class="block">
-                                <div class="block-head">Phase IIB QAH/CQAH</div>
+                                <div class="block-head">Phase II B QAH/CQAH Review</div>
                                 <table>
                                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                                         <th class="w-20">Approval Comment</th>

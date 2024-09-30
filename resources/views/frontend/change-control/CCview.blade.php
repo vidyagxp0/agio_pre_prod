@@ -212,14 +212,21 @@
 
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/audit-trial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Change Control', 3))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                           
+                        @if ($data->stage == 1 && (Helpers::check_roles($data->division_id, 'Change Control', 3)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
+                      
+                     
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
                             {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>  --}}
-                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Change Control', 4))
+
+                             
+                        @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Change Control', 4)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
+                         
+                   
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
@@ -229,7 +236,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 3 &&  Helpers::check_roles($data->division_id, 'Change Control', 7))
+                        @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
+                  
+                      
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
@@ -260,7 +269,9 @@
                                         More Information Required
                                     </button>
                                 @endif
-                            @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Change Control', 7))
+                             @elseif($data->stage == 5 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
+                  
+                      
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 RA Approval Required
                             </button>
@@ -279,12 +290,12 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qa-head-approval">
                                 QA/CQA Final Review Complete
                             </button>
-                        @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Change Control', 18))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                     @elseif($data->stage == 6 && (Helpers::check_roles($data->division_id, 'Change Control', 50)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
+                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 RA Approval Complete
                             </button>
-                        @elseif($data->stage == 7 && Helpers::check_roles($data->division_id, 'Change Control', 39))
-                            
+                     @elseif($data->stage == 7 && (Helpers::check_roles($data->division_id, 'Change Control', 39)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
+                          
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
@@ -295,7 +306,8 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-reject">
                                 Rejected
                             </button>
-                        @elseif ($data->stage == 9 && Helpers::check_roles($data->division_id, 'Change Control', 3))
+
+                    @elseif($data->stage == 9 && (Helpers::check_roles($data->division_id, 'Change Control', 3)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
                                 Initiator Updated Completed
                             </button>
@@ -306,7 +318,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-stage_8">
                                 Child
                             </button>
-                        @elseif ($data->stage == 10 && Helpers::check_roles($data->division_id, 'Change Control', 4))
+                     @elseif($data->stage == 10 && (Helpers::check_roles($data->division_id, 'Change Control', 4)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
+                         
+                
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
                                 HOD Final Review Complete
                             </button>
@@ -317,24 +331,25 @@
                            
 
                            
-
-                        @elseif ($data->stage == 11 && Helpers::check_roles($data->division_id, 'Change Control', 7))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
+                @elseif($data->stage == 11 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
                                 Send For Final QA/CQA Head Approval
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>    
 
-                            @elseif ($data->stage == 12 && Helpers::check_roles($data->division_id, 'Change Control', 39))
+                @elseif($data->stage == 12 && (Helpers::check_roles($data->division_id, 'Change Control', 39)|| Helpers::check_roles($data->division_id, 'Change Control', 42)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
                                 Closure Approved
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button> 
-                            
-                            @elseif ($data->stage == 13 && Helpers::check_roles($data->division_id, 'Change Control', 39))
+            
+               @elseif($data->stage == 13 && (Helpers::check_roles($data->division_id, 'Change Control', 39)|| Helpers::check_roles($data->division_id, 'Change Control', 42)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
+              
+                           
                            
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child_effective_ness">
                                 Child
@@ -831,7 +846,7 @@
                                              <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="change_related_to">Change Related To
-                                                    <span class="text-danger">*</span> </label>
+                                                    @if($data->stage == 1) <span class="text-danger">*</span>@endif</label>
                                                     <select name="severity" id="change_related_to"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option value="process" {{ old('severity', $data->severity ?? '') == 'process' ? 'selected' : '' }}>Process</option>
@@ -1702,7 +1717,7 @@
 
                                     <div class="col-12">
                                     <div class="group-input">
-                                        <label for="qa_head">QA/CQA Attachments</label>
+                                        <label for="qa_head">QA/CQA Initial Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="qa_head">
@@ -8072,7 +8087,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-12 Other1_reviews">
+                                    <div class="col-lg-12">
 
                                     <div class="group-input">
                                         <label for="Department1">Other's 1 Department 
@@ -9918,7 +9933,7 @@
                 <div class="inner-block-content">
                    
                     <div class="row">
-                        <div class="sub-head">Submission</div>
+                        <div class="sub-head">Submit</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="submit by">Submit By :-</label>
