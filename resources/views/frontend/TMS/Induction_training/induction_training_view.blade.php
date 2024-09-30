@@ -38,7 +38,7 @@ $users = DB::table('users')->get();
         border-radius: 20px 0px 0px 20px;
     }
 
-    #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(9) {
+    #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(8) {
         border-radius: 0px 20px 20px 0px;
 
     }
@@ -214,26 +214,11 @@ $users = DB::table('users')->get();
                     <button class="cctablinks" id="questionariesTab" style="display: none;" onclick="openCity(event, 'CCForm2')">Questionaries</button>
                 @endif --}}
 
-                <!-- @php
-                    $lowerDesignations = ['Trainee', 'Officer', 'Sr. Officer', 'Executive', 'Sr.executive'];
-                @endphp
 
-                @if(in_array($inductionTraining->designation, $lowerDesignations) || $inductionTraining->questionaries_required == 'Yes')
-                    <button class="cctablinks" id="questionariesTab" onclick="openCity(event, 'CCForm2')">Questionaries</button>
-                @else
-                    <button class="cctablinks" id="questionariesTab" style="display: none;" onclick="openCity(event, 'CCForm2')">Questionaries</button>
-                @endif -->
-
-                @php
-                    $lowerDesignations = ['Trainee', 'Officer', 'Sr. Officer', 'Executive', 'Sr. Executive'];
-                    $higherDesignations = ['Asst. manager', 'Manager', 'Sr. manager', 'Deputy GM', 'AGM and GM', 'Head quality', 'VP quality', 'Plant head'];
-                @endphp
-
-                <button class="cctablinks" id="questionariesTab" style="{{ in_array($inductionTraining->designation, $lowerDesignations) || $inductionTraining->questionaries_required == 'Yes' ? '' : 'display: none;' }}" onclick="openCity(event, 'CCForm2')">Questionaries</button>
+                <!-- <button class="cctablinks" id="questionariesTab" style="display: none;" onclick="openCity(event, 'CCForm2')">Questionaries</button> -->
 
 
-
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Final Remarks</button>
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Final Remarks</button> -->
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Evaluation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">HR Head Approval</button>
@@ -288,7 +273,7 @@ $users = DB::table('users')->get();
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="RLS Record Number">Employee ID </label>
+                                    <label for="RLS Record Number">Employee Code </label>
                                     <input disabled type="text" name="employee_id_display" value="{{ $inductionTraining->employee_id }}">
                                     <input type="hidden" name="employee_id" value="{{ $inductionTraining->employee_id }}">
                                 </div>
@@ -311,13 +296,13 @@ $users = DB::table('users')->get();
                                         </select>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Division Code">Location </label>
                                     <input disabled type="text" name="location_display" maxlength="255" value="{{ $inductionTraining->location }}">
                                     <input type="hidden" name="location" value="{{ $inductionTraining->location }}">
                                 </div>
-                            </div>
+                            </div> --}}
 
                             {{-- <div class="col-lg-6">
                                 <div class="group-input">
@@ -328,75 +313,88 @@ $users = DB::table('users')->get();
                             </div> --}}
 
                             <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Job Title">Designation<span class="text-danger">*</span></label>
-                                    <select name="designation" id="job_title" required onchange="checkDesignation()" readonly>
-                                        <option value="">----Select---</option>
-                                        <option value="Trainee" {{ $inductionTraining->designation == 'Trainee' ? 'selected' : '' }}>Trainee</option>
-                                        <option value="Officer" {{ $inductionTraining->designation == 'Officer' ? 'selected' : '' }}>Officer</option>
-                                        <option value="Sr. Officer" {{ $inductionTraining->designation == 'Sr. Officer' ? 'selected' : '' }}>Sr. Officer</option>
-                                        <option value="Executive" {{ $inductionTraining->designation == 'Executive' ? 'selected' : '' }}>Executive</option>
-                                        <option value="Sr. Executive" {{ $inductionTraining->designation == 'Sr. Executive' ? 'selected' : '' }}>Sr. Executive</option>
-                                        <option value="Asst. manager" {{ $inductionTraining->designation == 'Asst. manager' ? 'selected' : '' }}>Asst. Manager</option>
-                                        <option value="Manager" {{ $inductionTraining->designation == 'Manager' ? 'selected' : '' }}>Manager</option>
-                                        <option value="Sr. manager" {{ $inductionTraining->designation == 'Sr. manager' ? 'selected' : '' }}>Sr. Manager</option>
-                                        <option value="Deputy GM" {{ $inductionTraining->designation == 'Deputy GM' ? 'selected' : '' }}>Deputy GM</option>
-                                        <option value="AGM and GM" {{ $inductionTraining->designation == 'AGM and GM' ? 'selected' : '' }}>AGM and GM</option>
-                                        <option value="Head quality" {{ $inductionTraining->designation == 'Head quality' ? 'selected' : '' }}>Head quality</option>
-                                        <option value="VP quality" {{ $inductionTraining->designation == 'VP quality' ? 'selected' : '' }}>VP quality</option>
-                                        <option value="Plant head" {{ $inductionTraining->designation == 'Plant head' ? 'selected' : '' }}>Plant head</option>
-                                    </select>
-                                </div>
-                            </div>
+    <div class="group-input">
+        <label for="Job Title">Designation<span class="text-danger">*</span></label>
+        <select name="designation" id="job_title" required onchange="checkDesignation()">
+            <option value="">----Select---</option>
+            <option value="Trainee" {{ $inductionTraining->designation == 'Trainee' ? 'selected' : '' }}>Trainee</option>
+            <option value="Officer" {{ $inductionTraining->designation == 'Officer' ? 'selected' : '' }}>Officer</option>
+            <option value="Sr. Officer" {{ $inductionTraining->designation == 'Sr. Officer' ? 'selected' : '' }}>Sr. Officer</option>
+            <option value="Executive" {{ $inductionTraining->designation == 'Executive' ? 'selected' : '' }}>Executive</option>
+            <option value="Sr. Executive" {{ $inductionTraining->designation == 'Sr. Executive' ? 'selected' : '' }}>Sr. Executive</option>
+            <option value="Asst. manager" {{ $inductionTraining->designation == 'Asst. manager' ? 'selected' : '' }}>Asst. Manager</option>
+            <option value="Manager" {{ $inductionTraining->designation == 'Manager' ? 'selected' : '' }}>Manager</option>
+            <option value="Sr. manager" {{ $inductionTraining->designation == 'Sr. manager' ? 'selected' : '' }}>Sr. Manager</option>
+            <option value="Deputy GM" {{ $inductionTraining->designation == 'Deputy GM' ? 'selected' : '' }}>Deputy GM</option>
+            <option value="AGM and GM" {{ $inductionTraining->designation == 'AGM and GM' ? 'selected' : '' }}>AGM and GM</option>
+            <option value="Head quality" {{ $inductionTraining->designation == 'Head quality' ? 'selected' : '' }}>Head quality</option>
+            <option value="VP quality" {{ $inductionTraining->designation == 'VP quality' ? 'selected' : '' }}>VP quality</option>
+            <option value="Plant head" {{ $inductionTraining->designation == 'Plant head' ? 'selected' : '' }}>Plant head</option>
+        </select>
+    </div>
+</div>
 
-                            @if(in_array($inductionTraining->designation, $higherDesignations))
-                                <div class="col-lg-6" id="yesNoField" style="display: none;">
-                                    <div class="group-input">
-                                        <label for="questionariesRequired">Is Questionaries Required?<span class="text-danger">*</span></label>
-                                        <select name="questionaries_required" id="questionaries_required" onchange="checkYesNo()">
-                                            <option value="">Select</option>
-                                            <option value="Yes" {{ $inductionTraining->questionaries_required == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                            <option value="No" {{ $inductionTraining->questionaries_required == 'No' ? 'selected' : '' }}>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            @endif
+<!-- The "Is Questionaries Required?" input field -->
+<div class="col-lg-6" id="yesNoField" style="display: none;">
+    <div class="group-input">
+        <label for="questionariesRequired">Evaluation Required Required?<span class="text-danger">*</span></label>
+        <select name="questionaries_required" id="questionaries_required" onchange="checkYesNo()">
+            <option value="">Select</option>
+            <option value="Yes" {{ $inductionTraining->questionaries_required == 'Yes' ? 'selected' : '' }}>Yes</option>
+            <option value="No" {{ $inductionTraining->questionaries_required == 'No' ? 'selected' : '' }}>No</option>
+        </select>
+    </div>
+</div>
 
-                            <script>
-                                function checkDesignation() {
-                                    const jobTitle = document.getElementById('job_title').value;
-                                    const yesNoField = document.getElementById('yesNoField');
-                                    const questionariesTab = document.getElementById('questionariesTab');
-                                    const questionariesRequired = document.getElementById('questionaries_required').value;
+<script>
+    // Arrays to identify lower and higher designations
+    const lowerDesignations = ['Trainee', 'Officer', 'Sr. Officer', 'Executive', 'Sr. Executive'];
+    const higherDesignations = ['Asst. manager', 'Manager', 'Sr. manager', 'Deputy GM', 'AGM and GM', 'Head quality', 'VP quality', 'Plant head'];
 
-                                    // Show Yes/No field for higher designations
-                                    if (higherDesignations.includes(jobTitle)) {
-                                        yesNoField.style.display = "block";
-                                        checkYesNo(); // Check if the Questionaries tab should be visible
-                                    } else {
-                                        yesNoField.style.display = "none";
-                                        questionariesTab.style.display = "none"; // Hide the Questionaries tab for lower designations
-                                    }
-                                }
+    // Function to check the selected designation and control the visibility of the Yes/No field and Questionaries tab
+    function checkDesignation() {
+        const selectedDesignation = document.getElementById('job_title').value;
+        const yesNoField = document.getElementById('yesNoField');
+        const questionariesTab = document.getElementById('questionariesTab');
 
-                                function checkYesNo() {
-                                    const questionariesRequired = document.getElementById('questionaries_required').value;
-                                    const questionariesTab = document.getElementById('questionariesTab');
+        if (lowerDesignations.includes(selectedDesignation)) {
+            // For lower designations, always show the Questionaries tab
+            questionariesTab.style.display = 'inline';
+            yesNoField.style.display = 'none';  // No need to show the Yes/No field
+        } else if (higherDesignations.includes(selectedDesignation)) {
+            // For higher designations, show the Yes/No field to ask if Questionaries is required
+            yesNoField.style.display = 'block';
+            // Hide the Questionaries tab initially until user selects "Yes"
+            questionariesTab.style.display = 'none';
+        } else {
+            // If no valid designation is selected, hide both fields
+            yesNoField.style.display = 'none';
+            questionariesTab.style.display = 'none';
+        }
+    }
 
-                                    // Show or hide the Questionaries tab based on Yes/No selection
-                                    if (questionariesRequired === "Yes") {
-                                        questionariesTab.style.display = "block"; // Show the Questionaries tab
-                                    } else {
-                                        questionariesTab.style.display = "none"; // Hide the Questionaries tab
-                                    }
-                                }
+    function checkYesNo() {
+        const questionariesRequired = document.getElementById('questionaries_required').value;
+        const questionariesTab = document.getElementById('questionariesTab');
 
-                                // Ensure correct visibility on page load
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    checkDesignation(); // Check designation on load
-                                    checkYesNo(); // Check Yes/No field on load
-                                });
-                            </script>
+        if (questionariesRequired === 'Yes') {
+            questionariesTab.style.display = 'inline';
+        } else {
+            questionariesTab.style.display = 'none';
+        }
+    }
+
+    // Initial check on page load (to handle pre-selected values)
+    document.addEventListener("DOMContentLoaded", function() {
+        checkDesignation();
+        // If higher designation and "Yes" is already selected, show the Questionaries tab
+        if (document.getElementById('questionaries_required').value === 'Yes') {
+            document.getElementById('questionariesTab').style.display = 'inline';
+        }
+    });
+</script>
+
+ 
                             
                             <div class="col-6">
                                 <div class="group-input">
@@ -425,6 +423,22 @@ $users = DB::table('users')->get();
                             </div>
 
                             <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="start_date">Start Date</label>
+                                        <input id="start_date" type="date" name="start_date"
+                                            value="{{$inductionTraining->start_date}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="end_date">End Date</label>
+                                        <input id="end_date" type="date" name="end_date"
+                                            value="{{$inductionTraining->end_date}}">
+                                    </div>
+                                </div>
+
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="hod">Evaluation Required</label>
                                     <select name="evaluation_required" id="" >
@@ -438,7 +452,7 @@ $users = DB::table('users')->get();
                                         </option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-12">
                                 <div class="group-input">
@@ -453,8 +467,7 @@ $users = DB::table('users')->get();
                                                     {{-- <th>Trainee Sign/Date </th>--}}
                                                         <th>Attachment</th>
                                                     <th>Remark</th>
-
-
+                                                    <th>View SOP</th>
 
                                                 </tr>
                                             </thead>
@@ -464,14 +477,14 @@ $users = DB::table('users')->get();
                                                     <td style="background: #DCD8D8">Introduction of Agio Plant</td>
 
                                                     <td>
-                                                        <!-- <textarea name="document_number_1" value="">{{ $inductionTraining->{"document_number_1"} }}</textarea> -->
-                                                        <select name="document_number_1" id="sopdocument" onchange="fetchQuestion(this.value)">
+                                                        <select name="document_number_1" id="sopdocument" onchange="fetchSopLink(this)">
                                                             <option value="">---Select Document Number---</option>
-
                                                             @foreach ($data as $dat)
                                                                 <option
-                                                                    value="{{ $dat->id }}"
-                                                                    {{ $savedSop == $dat->id ? 'selected' : '' }}>
+                                                                    value="{{ $dat->id }}" 
+                                                                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}"
+                                                                    data-sop-id="{{ $dat->id }}"
+                                                                    {{ $inductionTraining->document_number_1 == $dat->id ? 'selected' : '' }}>
                                                                     {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
                                                                 </option>
                                                             @endforeach
@@ -494,24 +507,44 @@ $users = DB::table('users')->get();
                                                     <input type="file" id="myfile" name="attachment_1" value="{{ $inductionTraining->attachment_1 }}">
                                                     <a href="{{ asset('upload/' . $inductionTraining->attachment_1) }}" target="_blank">{{ $inductionTraining->attachment_1 }}</a>
                 
-                                                    <!-- <input type="file" name="attachment_1" id="file-input" /> -->
-
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_1">{{ $inductionTraining->{"remark_1"} }}</textarea>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ $inductionTraining->document_number_1 ? '/documents/viewpdf/' . $inductionTraining->document_number_1 : '#' }}" 
+                                                        id="view_sop_link" 
+                                                        target="_blank" 
+                                                        style="display: {{ $inductionTraining->document_number_1 ? 'inline' : 'none' }};">
+                                                        View SOP
+                                                        </a>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>2</td>
                                                     <td style="background: #DCD8D8">Personnel Hygiene</td>
-                                                    <td>
-                                                        <!-- <textarea name="document_number_2" value="">{{ $inductionTraining->{"document_number_2"} }}</textarea> -->
+                                                    <!-- <td>
                                                         <select name="document_number_2" id="sopdocument2" onchange="fetchQuestion(this.value)">
                                                             <option value="">---Select Document Number---</option>
                                                             @foreach ($data as $dat)
                                                             <option value="{{ $dat->id }}">
                                                                 {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
                                                             </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td> -->
+
+                                                    <td>
+                                                        <select name="document_number_2" id="sopdocument2" onchange="fetchSopLink2(this)">
+                                                            <option value="">---Select Document Number---</option>
+                                                            @foreach ($data as $dat)
+                                                                <option
+                                                                    value="{{ $dat->id }}" 
+                                                                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}"
+                                                                    data-sop-id="{{ $dat->id }}"
+                                                                    {{ $inductionTraining->document_number_2 == $dat->id ? 'selected' : '' }}>
+                                                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </td>
@@ -529,10 +562,17 @@ $users = DB::table('users')->get();
                                                         <label for="Attached CV"></label>
                                                         <input type="file" id="myfile" name="attachment_2" value="{{ $inductionTraining->attachment_2 }}">
                                                         <a href="{{ asset('upload/' . $inductionTraining->attachment_2) }}" target="_blank">{{ $inductionTraining->attachment_2 }}</a>
-                                                        <!-- <input type="file" name="attachment_2" id="file-input" /> -->
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_2">{{ $inductionTraining->{"remark_2"} }}</textarea>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ $inductionTraining->document_number_2 ? '/documents/viewpdf/' . $inductionTraining->document_number_2 : '#' }}" 
+                                                        id="view_sop_link2" 
+                                                        target="_blank" 
+                                                        style="display: {{ $inductionTraining->document_number_2 ? 'inline' : 'none' }};">
+                                                        View SOP
+                                                        </a>
                                                     </td>
 
                                                 </tr>
@@ -540,13 +580,16 @@ $users = DB::table('users')->get();
                                                     <td>3</td>
                                                     <td style="background: #DCD8D8">Entry Exit Procedure in Factory premises</td>
                                                     <td>
-                                                        <!-- <textarea name="document_number_3" value="">{{ $inductionTraining->{"document_number_3"} }}</textarea> -->
-                                                        <select name="document_number_3" id="sopdocument3" onchange="fetchQuestion(this.value)">
+                                                        <select name="document_number_3" id="sopdocument3" onchange="fetchSopLink3(this)">
                                                             <option value="">---Select Document Number---</option>
                                                             @foreach ($data as $dat)
-                                                            <option value="{{ $dat->id }}">
-                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
-                                                            </option>
+                                                                <option
+                                                                    value="{{ $dat->id }}" 
+                                                                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}"
+                                                                    data-sop-id="{{ $dat->id }}"
+                                                                    {{ $inductionTraining->document_number_3 == $dat->id ? 'selected' : '' }}>
+                                                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </td>
@@ -568,19 +611,29 @@ $users = DB::table('users')->get();
                                                     <td>
                                                         <textarea name="remark_3">{{ $inductionTraining->{"remark_3"} }}</textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="{{ $inductionTraining->document_number_3 ? '/documents/viewpdf/' . $inductionTraining->document_number_3 : '#' }}" 
+                                                        id="view_sop_link3" 
+                                                        target="_blank" 
+                                                        style="display: {{ $inductionTraining->document_number_3 ? 'inline' : 'none' }};">
+                                                        View SOP
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>4</td>
                                                     <td style="background: #DCD8D8">Good Documentation Practices</td>
                                                     <td>
-                                                        <!-- <textarea name="document_number_4" value="">{{ $inductionTraining->{"document_number_4"} }}</textarea> -->
-                                                        <select name="document_number_4" id="sopdocument4" onchange="fetchQuestion(this.value)">
+                                                        <select name="document_number_4" id="sopdocument4" onchange="fetchSopLink4(this)">
                                                             <option value="">---Select Document Number---</option>
                                                             @foreach ($data as $dat)
-                                                            <option value="{{ $dat->id }}">
-                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
-                                                            </option>
+                                                                <option
+                                                                    value="{{ $dat->id }}" 
+                                                                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}"
+                                                                    data-sop-id="{{ $dat->id }}"
+                                                                    {{ $inductionTraining->document_number_4 == $dat->id ? 'selected' : '' }}>
+                                                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </td>
@@ -602,19 +655,30 @@ $users = DB::table('users')->get();
                                                     <td>
                                                         <textarea name="remark_4">{{ $inductionTraining->{"remark_4"} }}</textarea>
                                                     </td>
+                                                    <td>
+                                                        <a href="{{ $inductionTraining->document_number_4 ? '/documents/viewpdf/' . $inductionTraining->document_number_4 : '#' }}" 
+                                                        id="view_sop_link4" 
+                                                        target="_blank" 
+                                                        style="display: {{ $inductionTraining->document_number_4 ? 'inline' : 'none' }};">
+                                                        View SOP
+                                                        </a>
+                                                    </td>
 
                                                 </tr>
                                                 <tr>
                                                     <td>5</td>
                                                     <td style="background: #DCD8D8">Data Integrity</td>
                                                     <td>
-                                                        <!-- <textarea name="document_number_5" value="">{{ $inductionTraining->{"document_number_5"} }}</textarea> -->
-                                                        <select name="document_number_5" id="sopdocument5" onchange="fetchQuestion(this.value)">
+                                                        <select name="document_number_5" id="sopdocument5" onchange="fetchSopLink5(this)">
                                                             <option value="">---Select Document Number---</option>
                                                             @foreach ($data as $dat)
-                                                            <option value="{{ $dat->id }}">
-                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
-                                                            </option>
+                                                                <option
+                                                                    value="{{ $dat->id }}" 
+                                                                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}"
+                                                                    data-sop-id="{{ $dat->id }}"
+                                                                    {{ $inductionTraining->document_number_5 == $dat->id ? 'selected' : '' }}>
+                                                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </td>
@@ -636,7 +700,14 @@ $users = DB::table('users')->get();
                                                     <td>
                                                         <textarea name="remark_5">{{ $inductionTraining->{"remark_5"} }}</textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="{{ $inductionTraining->document_number_5 ? '/documents/viewpdf/' . $inductionTraining->document_number_5 : '#' }}" 
+                                                        id="view_sop_link5" 
+                                                        target="_blank" 
+                                                        style="display: {{ $inductionTraining->document_number_5 ? 'inline' : 'none' }};">
+                                                        View SOP
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>6</td>
@@ -648,13 +719,16 @@ $users = DB::table('users')->get();
                                                     <td>6 . a</td>
                                                     <td style="background: #DCD8D8"> GMP</td>
                                                     <td>
-                                                        <!-- <textarea name="document_number_6" value="">{{ $inductionTraining->{"document_number_6"} }}</textarea> -->
-                                                        <select name="document_number_6" id="sopdocument6" onchange="fetchQuestion(this.value)">
+                                                        <select name="document_number_6" id="sopdocument6" onchange="fetchSopLink6(this)">
                                                             <option value="">---Select Document Number---</option>
                                                             @foreach ($data as $dat)
-                                                            <option value="{{ $dat->id }}">
-                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
-                                                            </option>
+                                                                <option
+                                                                    value="{{ $dat->id }}" 
+                                                                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}"
+                                                                    data-sop-id="{{ $dat->id }}"
+                                                                    {{ $inductionTraining->document_number_6 == $dat->id ? 'selected' : '' }}>
+                                                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </td>
@@ -676,19 +750,29 @@ $users = DB::table('users')->get();
                                                     <td>
                                                         <textarea name="remark_6">{{ $inductionTraining->{"remark_6"} }}</textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="{{ $inductionTraining->document_number_6 ? '/documents/viewpdf/' . $inductionTraining->document_number_6 : '#' }}" 
+                                                        id="view_sop_link6" 
+                                                        target="_blank" 
+                                                        style="display: {{ $inductionTraining->document_number_6 ? 'inline' : 'none' }};">
+                                                        View SOP
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>6 . b</td>
                                                     <td style="background: #DCD8D8"> Documentation</td>
                                                     <td>
-                                                        <!-- <textarea name="document_number_7" value="">{{ $inductionTraining->{"document_number_7"} }}</textarea> -->
-                                                        <select name="document_number_7" id="sopdocument7" onchange="fetchQuestion(this.value)">
+                                                        <select name="document_number_7" id="sopdocument7" onchange="fetchSopLink7(this)">
                                                             <option value="">---Select Document Number---</option>
                                                             @foreach ($data as $dat)
-                                                            <option value="{{ $dat->id }}">
-                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
-                                                            </option>
+                                                                <option
+                                                                    value="{{ $dat->id }}" 
+                                                                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}"
+                                                                    data-sop-id="{{ $dat->id }}"
+                                                                    {{ $inductionTraining->document_number_7 == $dat->id ? 'selected' : '' }}>
+                                                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </td>
@@ -710,19 +794,29 @@ $users = DB::table('users')->get();
                                                     <td>
                                                         <textarea name="remark_7">{{ $inductionTraining->{"remark_7"} }}</textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="{{ $inductionTraining->document_number_7 ? '/documents/viewpdf/' . $inductionTraining->document_number_7 : '#' }}" 
+                                                        id="view_sop_link7" 
+                                                        target="_blank" 
+                                                        style="display: {{ $inductionTraining->document_number_7 ? 'inline' : 'none' }};">
+                                                        View SOP
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>6 . c</td>
                                                     <td style="background: #DCD8D8"> Process Control</td>
                                                     <td>
-                                                        <!-- <textarea name="document_number_8" value="">{{ $inductionTraining->{"document_number_8"} }}</textarea> -->
-                                                        <select name="document_number_8" id="sopdocument8" onchange="fetchQuestion(this.value)">
+                                                        <select name="document_number_8" id="sopdocument8" onchange="fetchSopLink8(this)">
                                                             <option value="">---Select Document Number---</option>
                                                             @foreach ($data as $dat)
-                                                            <option value="{{ $dat->id }}">
-                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
-                                                            </option>
+                                                                <option
+                                                                    value="{{ $dat->id }}" 
+                                                                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}"
+                                                                    data-sop-id="{{ $dat->id }}"
+                                                                    {{ $inductionTraining->document_number_8 == $dat->id ? 'selected' : '' }}>
+                                                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </td>
@@ -744,19 +838,29 @@ $users = DB::table('users')->get();
                                                     <td>
                                                         <textarea name="remark_8">{{ $inductionTraining->{"remark_8"} }}</textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="{{ $inductionTraining->document_number_8 ? '/documents/viewpdf/' . $inductionTraining->document_number_8 : '#' }}" 
+                                                        id="view_sop_link8" 
+                                                        target="_blank" 
+                                                        style="display: {{ $inductionTraining->document_number_8 ? 'inline' : 'none' }};">
+                                                        View SOP
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>6 . d</td>
                                                     <td style="background: #DCD8D8"> Cross Contamination</td>
                                                     <td>
-                                                        <!-- <textarea name="document_number_9" value="">{{ $inductionTraining->{"document_number_9"} }}</textarea> -->
-                                                        <select name="document_number_9" id="sopdocument9" onchange="fetchQuestion(this.value)">
+                                                        <select name="document_number_9" id="sopdocument9" onchange="fetchSopLink9(this)">
                                                             <option value="">---Select Document Number---</option>
                                                             @foreach ($data as $dat)
-                                                            <option value="{{ $dat->id }}">
-                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
-                                                            </option>
+                                                                <option
+                                                                    value="{{ $dat->id }}" 
+                                                                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}"
+                                                                    data-sop-id="{{ $dat->id }}"
+                                                                    {{ $inductionTraining->document_number_9 == $dat->id ? 'selected' : '' }}>
+                                                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </td>
@@ -778,19 +882,29 @@ $users = DB::table('users')->get();
                                                     <td>
                                                         <textarea name="remark_9">{{ $inductionTraining->{"remark_9"} }}</textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="{{ $inductionTraining->document_number_9 ? '/documents/viewpdf/' . $inductionTraining->document_number_9 : '#' }}" 
+                                                        id="view_sop_link9" 
+                                                        target="_blank" 
+                                                        style="display: {{ $inductionTraining->document_number_9 ? 'inline' : 'none' }};">
+                                                        View SOP
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>6 . e</td>
                                                     <td style="background: #DCD8D8"> Sanitization and Hygiene</td>
                                                     <td>
-                                                        <!-- <textarea name="document_number_10" value="">{{ $inductionTraining->{"document_number_10"} }}</textarea> -->
-                                                        <select name="document_number_10" id="sopdocument10" onchange="fetchQuestion(this.value)">
+                                                        <select name="document_number_10" id="sopdocument10" onchange="fetchSopLink10(this)">
                                                             <option value="">---Select Document Number---</option>
                                                             @foreach ($data as $dat)
-                                                            <option value="{{ $dat->id }}">
-                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
-                                                            </option>
+                                                                <option
+                                                                    value="{{ $dat->id }}" 
+                                                                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}"
+                                                                    data-sop-id="{{ $dat->id }}"
+                                                                    {{ $inductionTraining->document_number_10 == $dat->id ? 'selected' : '' }}>
+                                                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </td>
@@ -812,19 +926,29 @@ $users = DB::table('users')->get();
                                                     <td>
                                                         <textarea name="remark_10">{{ $inductionTraining->{"remark_10"} }}</textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="{{ $inductionTraining->document_number_10 ? '/documents/viewpdf/' . $inductionTraining->document_number_10 : '#' }}" 
+                                                        id="view_sop_link10" 
+                                                        target="_blank" 
+                                                        style="display: {{ $inductionTraining->document_number_10 ? 'inline' : 'none' }};">
+                                                        View SOP
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>6 . f</td>
                                                     <td style="background: #DCD8D8"> Warehousing</td>
                                                     <td>
-                                                        <!-- <textarea name="document_number_11" value="">{{ $inductionTraining->{"document_number_11"} }}</textarea> -->
-                                                        <select name="document_number_11" id="sopdocument11" onchange="fetchQuestion(this.value)">
+                                                        <select name="document_number_11" id="sopdocument11" onchange="fetchSopLink11(this)">
                                                             <option value="">---Select Document Number---</option>
                                                             @foreach ($data as $dat)
-                                                            <option value="{{ $dat->id }}">
-                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
-                                                            </option>
+                                                                <option
+                                                                    value="{{ $dat->id }}" 
+                                                                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}"
+                                                                    data-sop-id="{{ $dat->id }}"
+                                                                    {{ $inductionTraining->document_number_11 == $dat->id ? 'selected' : '' }}>
+                                                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </td>
@@ -846,19 +970,29 @@ $users = DB::table('users')->get();
                                                     <td>
                                                         <textarea name="remark_11">{{ $inductionTraining->{"remark_11"} }}</textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="{{ $inductionTraining->document_number_11 ? '/documents/viewpdf/' . $inductionTraining->document_number_11 : '#' }}" 
+                                                        id="view_sop_link11" 
+                                                        target="_blank" 
+                                                        style="display: {{ $inductionTraining->document_number_11 ? 'inline' : 'none' }};">
+                                                        View SOP
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>6 . g</td>
                                                     <td style="background: #DCD8D8"> Complaint and Recall</td>
                                                     <td>
-                                                        <!-- <textarea name="document_number_12" value="">{{ $inductionTraining->{"document_number_12"} }}</textarea> -->
-                                                        <select name="document_number_12" id="sopdocument12" onchange="fetchQuestion(this.value)">
+                                                        <select name="document_number_12" id="sopdocument12" onchange="fetchSopLink12(this)">
                                                             <option value="">---Select Document Number---</option>
                                                             @foreach ($data as $dat)
-                                                            <option value="{{ $dat->id }}">
-                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
-                                                            </option>
+                                                                <option
+                                                                    value="{{ $dat->id }}" 
+                                                                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}"
+                                                                    data-sop-id="{{ $dat->id }}"
+                                                                    {{ $inductionTraining->document_number_12 == $dat->id ? 'selected' : '' }}>
+                                                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </td>
@@ -880,17 +1014,28 @@ $users = DB::table('users')->get();
                                                     <td>
                                                         <textarea name="remark_12">{{ $inductionTraining->{"remark_12"} }}</textarea>
                                                     </td>
+                                                    <td>
+                                                        <a href="{{ $inductionTraining->document_number_12 ? '/documents/viewpdf/' . $inductionTraining->document_number_12 : '#' }}" 
+                                                        id="view_sop_link12" 
+                                                        target="_blank" 
+                                                        style="display: {{ $inductionTraining->document_number_12 ? 'inline' : 'none' }};">
+                                                        View SOP
+                                                        </a>
+                                                    </td>
                                                 <tr>
                                                     <td>6 . h</td>
                                                     <td style="background: #DCD8D8"> Utilities</td>
                                                     <td>
-                                                        <!-- <textarea name="document_number_13" value="">{{ $inductionTraining->{"document_number_13"} }}</textarea> -->
-                                                        <select name="document_number_13" id="sopdocument13" onchange="fetchQuestion(this.value)">
+                                                        <select name="document_number_13" id="sopdocument13" onchange="fetchSopLink13(this)">
                                                             <option value="">---Select Document Number---</option>
                                                             @foreach ($data as $dat)
-                                                            <option value="{{ $dat->id }}">
-                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
-                                                            </option>
+                                                                <option
+                                                                    value="{{ $dat->id }}" 
+                                                                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}"
+                                                                    data-sop-id="{{ $dat->id }}"
+                                                                    {{ $inductionTraining->document_number_13 == $dat->id ? 'selected' : '' }}>
+                                                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </td>
@@ -912,19 +1057,29 @@ $users = DB::table('users')->get();
                                                     <td>
                                                         <textarea name="remark_13">{{ $inductionTraining->{"remark_13"} }}</textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="{{ $inductionTraining->document_number_13 ? '/documents/viewpdf/' . $inductionTraining->document_number_13 : '#' }}" 
+                                                        id="view_sop_link13" 
+                                                        target="_blank" 
+                                                        style="display: {{ $inductionTraining->document_number_13 ? 'inline' : 'none' }};">
+                                                        View SOP
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>6 . i</td>
                                                     <td style="background: #DCD8D8"> Water</td>
                                                     <td>
-                                                        <!-- <textarea name="document_number_14" value="">{{ $inductionTraining->{"document_number_14"} }}</textarea> -->
-                                                        <select name="document_number_14" id="sopdocument14" onchange="fetchQuestion(this.value)">
+                                                        <select name="document_number_14" id="sopdocument14" onchange="fetchSopLink14(this)">
                                                             <option value="">---Select Document Number---</option>
                                                             @foreach ($data as $dat)
-                                                            <option value="{{ $dat->id }}">
-                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
-                                                            </option>
+                                                                <option
+                                                                    value="{{ $dat->id }}" 
+                                                                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}"
+                                                                    data-sop-id="{{ $dat->id }}"
+                                                                    {{ $inductionTraining->document_number_14 == $dat->id ? 'selected' : '' }}>
+                                                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </td>
@@ -946,19 +1101,29 @@ $users = DB::table('users')->get();
                                                     <td>
                                                         <textarea name="remark_14">{{ $inductionTraining->{"remark_14"} }}</textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="{{ $inductionTraining->document_number_14 ? '/documents/viewpdf/' . $inductionTraining->document_number_14 : '#' }}" 
+                                                        id="view_sop_link14" 
+                                                        target="_blank" 
+                                                        style="display: {{ $inductionTraining->document_number_14 ? 'inline' : 'none' }};">
+                                                        View SOP
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>6 . j</td>
                                                     <td style="background: #DCD8D8"> Safety Module</td>
                                                     <td>
-                                                        <!-- <textarea name="document_number_15" value="">{{ $inductionTraining->{"document_number_15"} }}</textarea> -->
-                                                        <select name="document_number_15" id="sopdocument15" onchange="fetchQuestion(this.value)">
+                                                        <select name="document_number_15" id="sopdocument15" onchange="fetchSopLink15(this)">
                                                             <option value="">---Select Document Number---</option>
                                                             @foreach ($data as $dat)
-                                                            <option value="{{ $dat->id }}">
-                                                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
-                                                            </option>
+                                                                <option
+                                                                    value="{{ $dat->id }}" 
+                                                                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}"
+                                                                    data-sop-id="{{ $dat->id }}"
+                                                                    {{ $inductionTraining->document_number_15 == $dat->id ? 'selected' : '' }}>
+                                                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </td>
@@ -980,7 +1145,14 @@ $users = DB::table('users')->get();
                                                     <td>
                                                         <textarea name="remark_15">{{ $inductionTraining->{"remark_15"} }}</textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="{{ $inductionTraining->document_number_15 ? '/documents/viewpdf/' . $inductionTraining->document_number_15 : '#' }}" 
+                                                        id="view_sop_link15" 
+                                                        target="_blank" 
+                                                        style="display: {{ $inductionTraining->document_number_15 ? 'inline' : 'none' }};">
+                                                        View SOP
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                                 </tr>
                                             </tbody>
@@ -988,6 +1160,305 @@ $users = DB::table('users')->get();
                                     </div>
                                 </div>
                             </div>
+<script>
+    function fetchSopLink(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var sopId = selectedOption.getAttribute('data-sop-id');
+        
+        var sopLink = document.getElementById('view_sop_link');
+        
+        if (sopId) {
+            sopLink.href = `/documents/viewpdf/${sopId}`;
+            sopLink.style.display = 'inline';
+        } else {
+            sopLink.style.display = 'none';
+        }
+    }
+    window.onload = function() {
+        var sopSelect = document.getElementById('sopdocument');
+        fetchSopLink(sopSelect);
+    };
+</script>
+
+<script>
+    function fetchSopLink2(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var sopId = selectedOption.getAttribute('data-sop-id');
+        
+        var sopLink = document.getElementById('view_sop_link2');
+        
+        if (sopId) {
+            sopLink.href = `/documents/viewpdf/${sopId}`;
+            sopLink.style.display = 'inline';
+        } else {
+            sopLink.style.display = 'none';
+        }
+    }
+    window.onload = function() {
+        var sopSelect = document.getElementById('sopdocument2');
+        fetchSopLink(sopSelect);
+    };
+</script>
+
+<script>
+    function fetchSopLink3(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var sopId = selectedOption.getAttribute('data-sop-id');
+        
+        var sopLink = document.getElementById('view_sop_link3');
+        
+        if (sopId) {
+            sopLink.href = `/documents/viewpdf/${sopId}`;
+            sopLink.style.display = 'inline';
+        } else {
+            sopLink.style.display = 'none';
+        }
+    }
+    window.onload = function() {
+        var sopSelect = document.getElementById('sopdocument3');
+        fetchSopLink(sopSelect);
+    };
+</script>
+
+<script>
+    function fetchSopLink4(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var sopId = selectedOption.getAttribute('data-sop-id');
+        
+        var sopLink = document.getElementById('view_sop_link4');
+        
+        if (sopId) {
+            sopLink.href = `/documents/viewpdf/${sopId}`;
+            sopLink.style.display = 'inline';
+        } else {
+            sopLink.style.display = 'none';
+        }
+    }
+    window.onload = function() {
+        var sopSelect = document.getElementById('sopdocument4');
+        fetchSopLink(sopSelect);
+    };
+</script>
+
+<script>
+    function fetchSopLink5(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var sopId = selectedOption.getAttribute('data-sop-id');
+        
+        var sopLink = document.getElementById('view_sop_link5');
+        
+        if (sopId) {
+            sopLink.href = `/documents/viewpdf/${sopId}`;
+            sopLink.style.display = 'inline';
+        } else {
+            sopLink.style.display = 'none';
+        }
+    }
+    window.onload = function() {
+        var sopSelect = document.getElementById('sopdocument5');
+        fetchSopLink(sopSelect);
+    };
+</script>
+
+<script>
+    function fetchSopLink6(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var sopId = selectedOption.getAttribute('data-sop-id');
+        
+        var sopLink = document.getElementById('view_sop_link6');
+        
+        if (sopId) {
+            sopLink.href = `/documents/viewpdf/${sopId}`;
+            sopLink.style.display = 'inline';
+        } else {
+            sopLink.style.display = 'none';
+        }
+    }
+    window.onload = function() {
+        var sopSelect = document.getElementById('sopdocument6');
+        fetchSopLink(sopSelect);
+    };
+</script>
+
+<script>
+    function fetchSopLink7(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var sopId = selectedOption.getAttribute('data-sop-id');
+        
+        var sopLink = document.getElementById('view_sop_link7');
+        
+        if (sopId) {
+            sopLink.href = `/documents/viewpdf/${sopId}`;
+            sopLink.style.display = 'inline';
+        } else {
+            sopLink.style.display = 'none';
+        }
+    }
+    window.onload = function() {
+        var sopSelect = document.getElementById('sopdocument7');
+        fetchSopLink(sopSelect);
+    };
+</script>
+
+<script>
+    function fetchSopLink8(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var sopId = selectedOption.getAttribute('data-sop-id');
+        
+        var sopLink = document.getElementById('view_sop_link8');
+        
+        if (sopId) {
+            sopLink.href = `/documents/viewpdf/${sopId}`;
+            sopLink.style.display = 'inline';
+        } else {
+            sopLink.style.display = 'none';
+        }
+    }
+    window.onload = function() {
+        var sopSelect = document.getElementById('sopdocument8');
+        fetchSopLink(sopSelect);
+    };
+</script>
+
+<script>
+    function fetchSopLink9(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var sopId = selectedOption.getAttribute('data-sop-id');
+        
+        var sopLink = document.getElementById('view_sop_link9');
+        
+        if (sopId) {
+            sopLink.href = `/documents/viewpdf/${sopId}`;
+            sopLink.style.display = 'inline';
+        } else {
+            sopLink.style.display = 'none';
+        }
+    }
+    window.onload = function() {
+        var sopSelect = document.getElementById('sopdocument9');
+        fetchSopLink(sopSelect);
+    };
+</script>
+
+<script>
+    function fetchSopLink10(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var sopId = selectedOption.getAttribute('data-sop-id');
+        
+        var sopLink = document.getElementById('view_sop_link10');
+        
+        if (sopId) {
+            sopLink.href = `/documents/viewpdf/${sopId}`;
+            sopLink.style.display = 'inline';
+        } else {
+            sopLink.style.display = 'none';
+        }
+    }
+    window.onload = function() {
+        var sopSelect = document.getElementById('sopdocument10');
+        fetchSopLink(sopSelect);
+    };
+</script>
+
+<script>
+    function fetchSopLink11(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var sopId = selectedOption.getAttribute('data-sop-id');
+        
+        var sopLink = document.getElementById('view_sop_link11');
+        
+        if (sopId) {
+            sopLink.href = `/documents/viewpdf/${sopId}`;
+            sopLink.style.display = 'inline';
+        } else {
+            sopLink.style.display = 'none';
+        }
+    }
+    window.onload = function() {
+        var sopSelect = document.getElementById('sopdocument11');
+        fetchSopLink(sopSelect);
+    };
+</script>
+
+<script>
+    function fetchSopLink12(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var sopId = selectedOption.getAttribute('data-sop-id');
+        
+        var sopLink = document.getElementById('view_sop_link12');
+        
+        if (sopId) {
+            sopLink.href = `/documents/viewpdf/${sopId}`;
+            sopLink.style.display = 'inline';
+        } else {
+            sopLink.style.display = 'none';
+        }
+    }
+    window.onload = function() {
+        var sopSelect = document.getElementById('sopdocument12');
+        fetchSopLink(sopSelect);
+    };
+</script>
+
+<script>
+    function fetchSopLink13(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var sopId = selectedOption.getAttribute('data-sop-id');
+        
+        var sopLink = document.getElementById('view_sop_link13');
+        
+        if (sopId) {
+            sopLink.href = `/documents/viewpdf/${sopId}`;
+            sopLink.style.display = 'inline';
+        } else {
+            sopLink.style.display = 'none';
+        }
+    }
+    window.onload = function() {
+        var sopSelect = document.getElementById('sopdocument13');
+        fetchSopLink(sopSelect);
+    };
+</script>
+
+<script>
+    function fetchSopLink14(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var sopId = selectedOption.getAttribute('data-sop-id');
+        
+        var sopLink = document.getElementById('view_sop_link14');
+        
+        if (sopId) {
+            sopLink.href = `/documents/viewpdf/${sopId}`;
+            sopLink.style.display = 'inline';
+        } else {
+            sopLink.style.display = 'none';
+        }
+    }
+    window.onload = function() {
+        var sopSelect = document.getElementById('sopdocument14');
+        fetchSopLink(sopSelect);
+    };
+</script>
+
+<script>
+    function fetchSopLink15(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var sopId = selectedOption.getAttribute('data-sop-id');
+        
+        var sopLink = document.getElementById('view_sop_link15');
+        
+        if (sopId) {
+            sopLink.href = `/documents/viewpdf/${sopId}`;
+            sopLink.style.display = 'inline';
+        } else {
+            sopLink.style.display = 'none';
+        }
+    }
+    window.onload = function() {
+        var sopSelect = document.getElementById('sopdocument15');
+        fetchSopLink(sopSelect);
+    };
+</script>
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="severity-level">HR Department</label>

@@ -1005,7 +1005,7 @@
 
                                             <div class="col-12">
                                     <div class="group-input">
-                                        <label for="in_attachment">Initial attachment</label>
+                                        <label for="in_attachment">Initial Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="in_attachment">
@@ -1118,7 +1118,7 @@
                                             Risk Assessment
                                         </div>
 
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="risk_assessment_related_record">Related Records</label>
                                                 <select  multiple id="risk_assessment_related_record" name="risk_assessment_related_record[]" placeholder="Select Reference Records" 
@@ -1131,7 +1131,42 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> -->
+
+
+                                        <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Related Records">Related Records</label>
+                                        <select {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} multiple
+                                            id="risk_assessment_related_record" name="risk_assessment_related_record[]"
+                                            placeholder="Select Reference Records">
+
+                                            @if (!empty($preRiskAssessment))
+                                                @foreach ($preRiskAssessment as $new)
+                                                    @php
+                                                        $recordValue =
+                                                            Helpers::getDivisionName($new->division_id) .
+                                                            '/Risk-Assessment/' .
+                                                            date('Y') .
+                                                            '/' .
+                                                            Helpers::recordFormat($new->record);
+                                                        $selected = in_array(
+                                                            $recordValue,
+                                                            explode(',', $data->risk_assessment_related_record),
+                                                        )
+                                                            ? 'selected'
+                                                            : '';
+                                                    @endphp
+                                                    <option value="{{ $recordValue }}" {{ $selected }}>
+                                                        {{ $recordValue }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+
+                                </div>
+
 
                                         
                                             <div class="col-12">
@@ -1601,7 +1636,7 @@
 
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="qa_comments">QA Initial Review Comments @if($data->stage == 3) <span class="text-danger">*</span>@endif</label>
+                                                    <label for="qa_comments">QA/CQA Initial Review Comments @if($data->stage == 3) <span class="text-danger">*</span>@endif</label>
                                                     <textarea name="qa_review_comments" {{ $data->stage == 3  ? 'required' : '' }} {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $review->qa_comments }}</textarea>
                                                 </div> 
                                             </div>
@@ -1667,7 +1702,7 @@
 
                                     <div class="col-12">
                                     <div class="group-input">
-                                        <label for="qa_head">QA Attachments</label>
+                                        <label for="qa_head">QA/CQA Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="qa_head">
@@ -3916,7 +3951,7 @@
                                         @if ($data->stage == 3 || $data->stage == 4)
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Research Development"> Research Development Required ? <span
+                                                    <label for="Research Development"> Research & Development Required ? <span
                                                             class="text-danger">*</span></label>
                                                     <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review" required>
                                                         <option value="">-- Select --</option>
@@ -3942,7 +3977,7 @@
                                             @endphp
                                             <div class="col-lg-6 researchDevelopment">
                                                 <div class="group-input">
-                                                    <label for="Research Development notification">Research Development Person <span id="asteriskPT"
+                                                    <label for="Research Development notification">Research & Development Person <span id="asteriskPT"
                                                             style="display: {{ $data1->ResearchDevelopment_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
@@ -3958,7 +3993,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 researchDevelopment">
                                         <div class="group-input">
-                                            <label for="Research Development assessment">Impact Assessment (By Research
+                                            <label for="Research Development assessment">Impact Assessment (By Research & 
                                                 Development) <span id="asteriskPT1"
                                                     style="display: {{ $data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -3972,7 +4007,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 researchDevelopment">
                                         <div class="group-input">
-                                            <label for="Research Development feedback">Research Development Feedback <span
+                                            <label for="Research Development feedback">Research & Development Feedback <span
                                                     id="asteriskPT2"
                                                     style="display: {{ $data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -3987,7 +4022,7 @@
 
                                             <div class="col-12 researchDevelopment">
                                                 <div class="group-input">
-                                                    <label for="Research Development attachment">Research Development Attachments</label>
+                                                    <label for="Research Development attachment">Research & Development Attachments</label>
                                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                                             documents</small></div>
                                                     <div class="file-attachment-field">
@@ -4018,7 +4053,7 @@
                                             </div>
                                             <div class="col-md-6 mb-3 researchDevelopment">
                                                 <div class="group-input">
-                                                    <label for="Research Development Completed By">Research Development Completed
+                                                    <label for="Research Development Completed By">Research & Development Completed
                                                         By</label>
                                                     <input readonly type="text" value="{{ $data1->ResearchDevelopment_by }}"
                                                         name="ResearchDevelopment_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
@@ -4029,7 +4064,7 @@
                                             </div>
                                             <div class="col-lg-6 researchDevelopment">
     <div class="group-input">
-        <label for="ResearchDevelopment_on">Research Development Completed On</label>
+        <label for="ResearchDevelopment_on">Research & Development Completed On</label>
         
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
@@ -4089,7 +4124,7 @@
                                         @else
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Research Development">Research Development Required ?</label>
+                                                    <label for="Research Development">Research & Development Required ?</label>
                                                     <select name="ResearchDevelopment_Review" disabled id="ResearchDevelopment_Review">
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->ResearchDevelopment_Review == 'yes') selected @endif value='yes'>
@@ -4114,7 +4149,7 @@
                                             @endphp
                                             <div class="col-lg-6 researchDevelopment">
                                                 <div class="group-input">
-                                                    <label for="Research Development notification">Research Development Person <span id="asteriskInvi11"
+                                                    <label for="Research Development notification">Research & Development Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
                                                     <select name="ResearchDevelopment_person" disabled id="ResearchDevelopment_person">
                                                         <option value="">-- Select --</option>
@@ -4128,7 +4163,7 @@
                                             @if ($data->stage == 4)
                                                 <div class="col-md-12 mb-3 researchDevelopment">
                                                     <div class="group-input">
-                                                        <label for="Research Development assessment">Impact Assessment (By Research Development)</label>
+                                                        <label for="Research Development assessment">Impact Assessment (By Research & Development)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
@@ -4136,7 +4171,7 @@
                                                 </div>
                                                 <div class="col-md-12 mb-3 researchDevelopment">
                                                     <div class="group-input">
-                                                        <label for="Research Development feedback">Research Development Feedback</label>
+                                                        <label for="Research Development feedback">Research & Development Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="ResearchDevelopment_feedback" id="summernote-18">{{ $data1->ResearchDevelopment_feedback }}</textarea>
@@ -4145,7 +4180,7 @@
                                             @else
                                                 <div class="col-md-12 mb-3 researchDevelopment">
                                                     <div class="group-input">
-                                                        <label for="Research Development assessment">Impact Assessment (By Research Development)</label>
+                                                        <label for="Research Development assessment">Impact Assessment (By Research & Development)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
                                                         <textarea disabled class="tiny" name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
@@ -4153,7 +4188,7 @@
                                                 </div>
                                                 <div class="col-md-12 mb-3 researchDevelopment">
                                                     <div class="group-input">
-                                                        <label for="Research Development feedback">Research Development Feedback</label>
+                                                        <label for="Research Development feedback">Research & Development Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
                                                         <textarea disabled class="tiny" name="ResearchDevelopment_feedback" id="summernote-18">{{ $data1->ResearchDevelopment_feedback }}</textarea>
@@ -4162,7 +4197,7 @@
                                             @endif
                                             <div class="col-12 researchDevelopment">
                                                 <div class="group-input">
-                                                    <label for="Research Development attachment">Research Development Attachments</label>
+                                                    <label for="Research Development attachment">Research & Development Attachments</label>
                                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                                             documents</small></div>
                                                     <div class="file-attachment-field">
@@ -4192,7 +4227,7 @@
                                             </div>
                                             <div class="col-md-6 mb-3 researchDevelopment">
                                                 <div class="group-input">
-                                                    <label for="Research Development Completed By">Research Development Completed
+                                                    <label for="Research Development Completed By">Research & Development Completed
                                                         By</label>
                                                     <input readonly type="text" value="{{ $data1->ResearchDevelopment_by }}"
                                                         name="ResearchDevelopment_by" id="StorResearchDevelopment_by">
@@ -4202,7 +4237,7 @@
                                             </div>
                                             <div class="col-lg-6 researchDevelopment">
     <div class="group-input">
-        <label for="ResearchDevelopment_on">Research Development Completed On</label>
+        <label for="ResearchDevelopment_on">Research & Development Completed On</label>
         
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
@@ -4662,7 +4697,7 @@
                                             </div>
                                             <div class="col-12 Human_Resource">
                                                 <div class="group-input">
-                                                    <label for="Human Resource attachment">Human Resource Attachments</label>
+                                                    <label for="Human Resource attachment">Human Resource Attachment</label>
                                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                                             documents</small></div>
                                                     <div class="file-attachment-field">
@@ -4837,7 +4872,7 @@
                                             @endif
                                             <div class="col-12 Human_Resource">
                                                 <div class="group-input">
-                                                    <label for="Human Resource attachment">Human Resource Attachments</label>
+                                                    <label for="Human Resource attachment">Human Resource Attachment</label>
                                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                                             documents</small></div>
                                                     <div class="file-attachment-field">
@@ -4998,7 +5033,7 @@
                                             </div>
                                             <div class="col-12 Microbiology">
                                                 <div class="group-input">
-                                                    <label for="Microbiology attachment">Microbiology Attachments</label>
+                                                    <label for="Microbiology attachment">Microbiology Attachment</label>
                                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                                             documents</small></div>
                                                     <div class="file-attachment-field">
@@ -5173,7 +5208,7 @@
                                             @endif
                                             <div class="col-12 Microbiology">
                                                 <div class="group-input">
-                                                    <label for="Microbiology attachment">Microbiology Attachments</label>
+                                                    <label for="Microbiology attachment">Microbiology Attachment</label>
                                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                                             documents</small></div>
                                                     <div class="file-attachment-field">
@@ -5945,7 +5980,7 @@
                                         @if ($data->stage == 3 || $data->stage == 4)
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Safety"> Safety Required ? <span
+                                                    <label for="Safety"> Safety Review Required ? <span
                                                             class="text-danger">*</span></label>
                                                     <select name="Environment_Health_review" id="Environment_Health_review" required>
                                                         <option value="">-- Select --</option>
@@ -6041,7 +6076,7 @@
                                             </div>
                                             <div class="col-md-6 mb-3 safety">
                                                 <div class="group-input">
-                                                    <label for="Safety Completed By">Safety Completed
+                                                    <label for="Safety Completed By">Safety Review Completed
                                                         By</label>
                                                     <input readonly type="text" value="{{ $data1->Environment_Health_Safety_by }}"
                                                         name="Environment_Health_Safety_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
@@ -6052,7 +6087,7 @@
                                             </div>
                                             <div class="col-lg-6 safety">
     <div class="group-input">
-        <label for="Environment_Health_Safety_on">Safety Completed On</label>
+        <label for="Environment_Health_Safety_on">Safety Review Completed On</label>
         
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
@@ -6112,7 +6147,7 @@
                                         @else
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Safety">Safety Required ?</label>
+                                                    <label for="Safety">Safety Review Required ?</label>
                                                     <select name="Environment_Health_review" disabled id="Environment_Health_review">
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->Environment_Health_review == 'yes') selected @endif value='yes'>
@@ -6215,7 +6250,7 @@
                                             </div>
                                             <div class="col-md-6 mb-3 safety">
                                                 <div class="group-input">
-                                                    <label for="Safety Completed By">Safety Completed
+                                                    <label for="Safety Completed By">Safety Review Completed
                                                         By</label>
                                                     <input readonly type="text" value="{{ $data1->Environment_Health_Safety_by }}"
                                                         name="Environment_Health_Safety_by" id="Environment_Health_Safety_by">
@@ -6225,7 +6260,7 @@
                                             </div>
                                             <div class="col-lg-6 safety">
     <div class="group-input">
-        <label for="Environment_Health_Safety_on">Safety Completed On</label>
+        <label for="Environment_Health_Safety_on">Safety Review Completed On</label>
         
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
@@ -7101,7 +7136,7 @@
                                     <div class="col-6 other1_reviews new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Others 1 Completed On">Others 1
-                                                Completed On</label>
+                                                Review Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="Other1_on" readonly
                                                     placeholder="DD-MMM-YYYY"
@@ -7291,7 +7326,7 @@
                                     </div>
                                     <div class="col-6 Other2_reviews new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Others 2 Completed On">Others 2
+                                            <label for="Others 2 Completed On">Others 2 Review
                                                 Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="Other2_on" readonly
@@ -7493,7 +7528,7 @@
                                     </div> --}}
                                     <div class="col-6  new-date-data-field Other3_reviews">
                                         <div class="group-input input-date">
-                                            <label for="Others 3 Completed On">Others 3
+                                            <label for="Others 3 Completed On">Others 3 Review
                                                 Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="Other3_on" readonly
@@ -7769,7 +7804,7 @@
                                     </div>
                                     <div class="col-6  new-date-data-field Other3_reviews">
                                         <div class="group-input input-date">
-                                            <label for="Others 4 Completed On">Others 4
+                                            <label for="Others 4 Completed On">Others 4 Review
                                                 Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="Other4_on" readonly
@@ -7971,7 +8006,7 @@
                                     </div> --}}
                                     <div class="col-6  new-date-data-field Other5_reviews">
                                         <div class="group-input input-date">
-                                            <label for="Others 5 Completed On">Others 5
+                                            <label for="Others 5 Completed On">Others 5 Review
                                                 Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="Other5_on" readonly
@@ -8037,7 +8072,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-12 Other3_reviews">
+                                    <div class="col-lg-12 Other1_reviews">
 
                                     <div class="group-input">
                                         <label for="Department1">Other's 1 Department 
@@ -8117,7 +8152,7 @@
                                     </div>
                                     <div class="col-6 other1_reviews new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Others 1 Completed On">Others 1
+                                            <label for="Others 1 Completed On">Others 1 Review
                                                 Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="Other1_on" readonly
@@ -8183,7 +8218,7 @@
                                     </div>
 
 
-                                    <div class="col-lg-12 Other3_reviews">
+                                    <div class="col-lg-12 Other2_reviews">
 
                                         <div class="group-input">
                                             <label for="Department2">Other's 2 Department 
@@ -8270,7 +8305,7 @@
                                     </div> --}}
                                     <div class="col-6 Other2_reviews new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Others 2 Completed On">Others 2
+                                            <label for="Others 2 Completed On">Others 2 Review
                                                 Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="Other2_on" readonly
@@ -8414,7 +8449,7 @@
                                     </div>
                                     <div class="col-6  new-date-data-field Other3_reviews">
                                         <div class="group-input input-date">
-                                            <label for="Others 3 Completed On">Others 3
+                                            <label for="Others 3 Completed On">Others 3 Review
                                                 Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="Other3_on" readonly
@@ -8565,7 +8600,7 @@
                                     </div> --}}
                                     <div class="col-6  new-date-data-field Other3_reviews">
                                         <div class="group-input input-date">
-                                            <label for="Others 4 Completed On">Others 4
+                                            <label for="Others 4 Completed On">Others 4 Review
                                                 Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="Other4_on" readonly
@@ -9693,7 +9728,7 @@
                                         
                                         
                                 <div class="group-input">
-                                    <label for="qa-closure-comments">QA Closure Comments @if($data->stage == 12) <span class="text-danger">*</span>@endif</label>
+                                    <label for="qa-closure-comments">QA/CQA Closure Comments @if($data->stage == 12) <span class="text-danger">*</span>@endif</label>
                                     <textarea name="qa_closure_comments" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $closure->qa_closure_comments }}</textarea>
                                 </div>
 
@@ -9898,7 +9933,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
-                                <label for="submit comment">Submit Comments :-</label>
+                                <label for="submit comment">Submit Comment :-</label>
                                 <div class="">{{ $data->submit_comment }}</div>
                             </div>
                         </div>
@@ -9918,7 +9953,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style=" ">
-                                <label for="HOD Review Comments">HOD Assessment Complete Comments :-</label>
+                                <label for="HOD Review Comments">HOD Assessment Complete Comment :-</label>
                                 <div class="">{{ $data->hod_review_comment }}</div>
                             </div>
                         </div>
@@ -9938,7 +9973,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style=" ">
-                                <label for="HOD Review Comments">Initiator Comments :-</label>
+                                <label for="HOD Review Comments">Initiator Comment :-</label>
                                 <div class="">{{ $data->hod_to_initiator_comment }}</div>
                             </div>
                         </div>  --}}
@@ -9959,7 +9994,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
-                                <label for="QA Initial Review Comments">QA/CQA Initial Review Comments:-</label>
+                                <label for="QA Initial Review Comments">QA/CQA Initial Review Comment:-</label>
                                 <div class="">{{ $data->QA_initial_review_comment }}</div>
                             </div>
                         </div>
@@ -9984,22 +10019,22 @@
                             </div>
                         </div>  --}}
 
-                        <div class="sub-head">CFT Review Complete</div>
+                        <div class="sub-head">CFT Assessment Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="CFT Review Complete By">CFT Review Complete By :-</label>
+                                <label for="CFT Review Complete By">CFT Assessment Complete By :-</label>
                                 <div class="static">{{ $data->pending_RA_review_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="CFT Review Complete On">CFT Review Complete On :-</label>
+                                <label for="CFT Review Complete On">CFT Assessment Complete On :-</label>
                                 <div class="static">{{ $data->pending_RA_review_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="CFT Review Comments">CFT Review Comments :-</label>
+                                <label for="CFT Review Comments">CFT Assessment Complete Comment :-</label>
                                 <div class="">{{ $data->pending_RA_review_comment }}</div>
                             </div>
                         </div>
@@ -10040,7 +10075,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="CFT Review Comments">RA Approval Required Comments :-</label>
+                                <label for="CFT Review Comments">RA Approval Required Comment :-</label>
                                 <div class="">{{ $data->RA_review_required_comment }}</div>
                             </div>
                         </div>
@@ -10063,7 +10098,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="CFT Review Comments"> RA Approval Comments :-</label>
+                                <label for="CFT Review Comments"> RA Approval Comment :-</label>
                                 <div class="">{{ $data->RA_review_completed_comment }}</div>
                             </div>
                         </div>
@@ -10085,7 +10120,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="QA Final Review Comments"> QA/CQA Final Review Comments :-</label>
+                                <label for="QA Final Review Comments"> QA/CQA Final Review Comment :-</label>
                                 <div class="">{{ $data->QA_final_review_comment }}</div>
                             </div>
                         </div>
@@ -10107,7 +10142,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="QA Final Review Comments"> Approved Comments :-</label>
+                                <label for="QA Final Review Comments"> Approved Comment :-</label>
                                 <div class="">{{ $data->approved_comment }}</div>
                             </div>
                         </div>
@@ -10139,7 +10174,7 @@
                     
                     <div class="col-lg-6">
                         <div class="group-input" style="width:1620px; height:100px; padding:5px;">
-                            <label for="QA Final Review Comments">Initiator Updated Completed Comments :-</label>
+                            <label for="QA Final Review Comments">Initiator Updated Completed Comment :-</label>
                             <div class="">
                                 {{ isset($commnetData->initiator_update_complete_comment) ? $commnetData->initiator_update_complete_comment : '' }}
                             </div>
@@ -10164,7 +10199,7 @@
                    </div>
                    <div class="col-lg-6">
                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                           <label for="QA Final Review Comments"> HOD Final Review Complete Comments :-</label>
+                           <label for="QA Final Review Comments"> HOD Final Review Complete Comment :-</label>
                            <div class="">{{ $data->closure_approved_comment }}</div>
                        </div>
                    </div>
@@ -10186,7 +10221,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="QA Final Review Comments">Send For Final QA/CQA Head Approval Comments :-</label>
+                                <label for="QA Final Review Comments">Send For Final QA/CQA Head Approval Comment :-</label>
                                 <div class="">{{ isset($commnetData->send_for_final_qa_head_approval_comment) ? $commnetData->send_for_final_qa_head_approval_comment :'' }}</div>
                             </div>
                         </div>
@@ -10211,7 +10246,7 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                            <label for="QA Final Review Comments">Closure Approved Comments :-</label>
+                            <label for="QA Final Review Comments">Closure Approved Comment :-</label>
                             <div class="">{{ isset($commnetData->closure_approved_comment) ?$commnetData->closure_approved_comment :'' }}</div>
                         </div>
                     </div>

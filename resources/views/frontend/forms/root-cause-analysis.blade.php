@@ -552,7 +552,7 @@
                                                 id="risk-assessment-risk-management">
                                                 <thead>
                                                     <tr>
-                                                        <th colspan="1"style="text-align:center;">Row </th>
+                                                        <th colspan="1"style="text-align:center;"> </th>
                                                         <th colspan="2"style="text-align:center;">Risk Identification</th>
                                                         <th colspan="1"style="text-align:center;">Risk Analysis</th>
                                                         <th colspan="4"style="text-align:center;">Risk Evaluation</th>
@@ -560,8 +560,9 @@
                                                         <th colspan="6"style="text-align:center;">Risk Evaluation</th>
                                                         <th colspan="2"style="text-align:center;"></th>
                                                     </tr>
+                                                   
                                                     <tr>
-                                                        <th> </th>
+                                                        <th>Row </th>
                                                         <th>Activity</th>
                                                         <th>Possible Risk/Failure (Identified Risk) </th>
                                                         <th>Consequences of Risk/Potential Causes</th>
@@ -949,9 +950,11 @@
                                         <label for="root_cause_Others">Others</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="root_cause_Others" id="summernote-1"></textarea>
+                                        <textarea class="summernote" name="root_cause_Others" ></textarea>
                                     </div>
                                 </div>
+
+                                
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Inv Attachments"> Attachment</label>
@@ -1849,11 +1852,11 @@
 
         function addRootCauseAnalysisRiskAssessment(tableId) {
             var table = document.getElementById(tableId);
-            var currentRowCount = table.rows.length;
-            var newRow = table.insertRow(currentRowCount);
+            var currentRowCount = table.children[1].rows.length;
+            var newRow = table.children[1].insertRow(currentRowCount);
             newRow.setAttribute("id", "row" + currentRowCount);
             var cell1 = newRow.insertCell(0);
-            cell1.innerHTML = currentRowCount;
+            cell1.innerHTML = currentRowCount + 1;
 
             var cell2 = newRow.insertCell(1);
             cell2.innerHTML = "<input name='risk_factor[]' type='text'>";
@@ -1924,9 +1927,9 @@
             var cell17 = newRow.insertCell(16);
             cell17.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
 
-            for (var i = 1; i < currentRowCount; i++) {
-                var row = table.rows[i];
-                row.cells[0].innerHTML = i;
+            for (var i = 0; i < currentRowCount-1; i++) {
+                var row = table.children[1].rows[i];
+                row.cells[0].innerHTML = i+1;
             }
         }
     </script>

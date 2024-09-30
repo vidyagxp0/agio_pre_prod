@@ -555,6 +555,8 @@
 
                     </table>
             </div>
+            
+            <br>
 
             <div class="block">
                 <div class="block-head">
@@ -601,6 +603,8 @@
                     </table>
             </div>
 
+            <br>
+
             <div class="block">
                 <div class="block-head">
                 QA Secondary Review
@@ -615,7 +619,7 @@
 
             <div class="border-table">
                     <div class="block-head">
-                    QC Head/HOD Secondary Review Attachments
+                    QA Secondary Review Attachments
                     </div>
                     <table>
 
@@ -689,41 +693,34 @@
                     Activity Log
                 </div>
                 <div class="block-head">
-                    Submitted
+                    Submit
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Submitted By</th>
+                        <th class="w-20">Submit By</th>
                         <td class="w-30">{{ $data->submitted_by }}</td>
-                        <th class="w-20">Submitted On</th>
+                        <th class="w-20">Submit On</th>
                         <td class="w-30">{{ $data->submitted_on }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">Submit Comment</th>
                         <td class="w-30">{{ $data->comment }}</td>
                     </tr>
                     </table>
                     <div class="block-head">
-                    QA Head/HOD Initial Review
+                    QC Head/HOD Initial Review Complete
                 </div>
                 <table>
                     <tr>
                         <th class="w-20">QC Head/HOD Initial Review Complete By</th>
-                        <td class="w-30">{{ $data->verification_complete_completed_by }}</td>
+                        <td class="w-30">{{ $data->review_completed_by }}</td>
                         <th class="w-20">QC Head/HOD Initial Review Complete On</th>
-                        <td class="w-30">{{ $data->verification_completed_on }}</td>
-                        <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->verification_complete_comment }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">More Info Required By</th>
-                        <td class="w-30">{{ $data->more_info_req_1_by }}</td>
-                        <th class="w-20">More Info Required On</th>
-                        <td class="w-30">{{ $data->more_info_req_1_on }}</td>
-                        <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->more_info_req_1_comment }}</td>
+                        <td class="w-30">{{ $data->review_completed_on }}</td>
+                        <th class="w-20">QC Head/HOD Initial Review Complete Comment</th>
+                        <td class="w-30">{{ $data->comment }}</td>
                     </tr>
                     </table>
+
                     <div class="block-head">
-                    QA Initial Review
+                    QA Initial Review Complete
                 </div>
                 <table>
                     <tr>
@@ -731,20 +728,13 @@
                         <td class="w-30">{{ $data->preliminary_completed_by }}</td>
                         <th class="w-20">QA Initial Review Complete On</th>
                         <td class="w-30">{{ $data->preliminary_completed_on }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">QA Initial Review Complete Comment</th>
                         <td class="w-30">{{ $data->preliminary_completed_comment }}</td>
                     </tr>
-                    <tr>
-                        <th class="w-20">More Info Required By</th>
-                        <td class="w-30">{{ $data->more_info_req_2_by }}</td>
-                        <th class="w-20">More Info Required On</th>
-                        <td class="w-30">{{ $data->more_info_req_2_on }}</td>
-                        <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->more_info_req_2_comment }}</td>
-                    </tr>
                     </table>
+
                     <div class="block-head">
-                    Pending Initiator Update
+                    Pending Initiator Update Complete
                 </div>
                 <table>
                     <tr>
@@ -752,20 +742,13 @@
                         <td class="w-30">{{ $data->all_activities_completed_by }}</td>
                         <th class="w-20">Pending Initiator Update Complete On</th>
                         <td class="w-30">{{ $data->all_activities_completed_on }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">Pending Initiator Update Complete Comment</th>
                         <td class="w-30">{{ $data->all_activities_completed_comment }}</td>
                     </tr>
-                    <tr>
-                        <th class="w-20">More Info Required By</th>
-                        <td class="w-30">{{ $data->more_info_req_3_by }}</td>
-                        <th class="w-20">More Info Required On</th>
-                        <td class="w-30">{{ $data->more_info_req_3_on }}</td>
-                        <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->more_info_req_3_comment }}</td>
-                    </tr>
                     </table>
+
                     <div class="block-head">
-                    QC Head/HOD Secondary Review
+                    QC Head/HOD Secondary Review Complete
                 </div>
                 <table>
                     <tr>
@@ -773,41 +756,27 @@
                         <td class="w-30">{{ $data->review_completed_by }}</td>
                         <th class="w-20">QC Head/HOD Secondary Review Complete On</th>
                         <td class="w-30">{{ $data->review_completed_on }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">QC Head/HOD Secondary Review Complete Comment</th>
                         <td class="w-30">{{ $data->solution_validation_comment }}</td>
                     </tr>
-                    <tr>
-                        <th class="w-20">More Info Required By</th>
-                        <td class="w-30">{{ $data->more_info_req_4_by }}</td>
-                        <th class="w-20">More Info Required On</th>
-                        <td class="w-30">{{ $data->more_info_req_4_on }}</td>
-                        <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->more_info_req_4_comment }}</td>
-                    </tr>
                     </table>
+
                     <div class="block-head">
-                    QA Secondary Review
+                    QA Secondary Review Complete
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">QA Secondry Review Complete By</th>
+                        <th class="w-20">QA Secondary Review Complete By</th>
                         <td class="w-30">{{ $data->extended_inv_complete_by }}</td>
-                        <th class="w-20">QA Secondry Review Complete On</th>
+                        <th class="w-20">QA Secondary Review Complete On</th>
                         <td class="w-30">{{ $data->extended_inv_complete_on }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">QA Secondary Review Complete Comment</th>
                         <td class="w-30">{{ $data->extended_inv_comment }}</td>
                     </tr>
-                    <tr>
-                        <th class="w-20">More Info Required By</th>
-                        <td class="w-30">{{ $data->more_info_req_5_by }}</td>
-                        <th class="w-20">More Info Required On</th>
-                        <td class="w-30">{{ $data->more_info_req_5_on }}</td>
-                        <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->more_info_req_5_comment }}</td>
-                    </tr>
                     </table>
+
                     <div class="block-head">
-                    QAH Approval
+                    Approved
                 </div>
                 <table>
                     <tr>
@@ -815,18 +784,11 @@
                         <td class="w-30">{{ $data->no_assignable_cause_by }}</td>
                         <th class="w-20">Approved On</th>
                         <td class="w-30">{{ $data->no_assignable_cause_on }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">Approved Comment</th>
                         <td class="w-30">{{ $data->no_assignable_cause_comment }}</td>
                     </tr>
-                    <tr>
-                        <th class="w-20">More Info Required By</th>
-                        <td class="w-30">{{ $data->more_info_req_6_by }}</td>
-                        <th class="w-20">More Info Required On</th>
-                        <td class="w-30">{{ $data->more_info_req_6_on }}</td>
-                        <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->more_info_req_6_comment }}</td>
-                    </tr>
                     </table>
+
                     <div class="block-head">
                     Cancel
                 </div>
@@ -836,10 +798,10 @@
                         <td class="w-30">{{ $data->cancelled_by }}</td>
                         <th class="w-20">Cancel On</th>
                         <td class="w-30">{{ $data->cancelled_on }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">Cancel Comment</th>
                         <td class="w-30">{{ $data->cancell_comment }}</td>
                     </tr>
-                </table>
+                    </table>
             </div>
 
 

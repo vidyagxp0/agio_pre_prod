@@ -226,9 +226,26 @@ class ActionItemController extends Controller
             if (!empty($openState->division_id)) {
                 $history = new ActionItemHistory();
                 $history->cc_id = $openState->id;
-                $history->activity_type = 'Division Code';
+                $history->activity_type = 'Site/Location Code';
                 $history->previous = "Null";
                 $history->current = Helpers::getDivisionName($openState->division_id);
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $openState->status;
+                $history->change_to =   "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = 'Create';
+                $history->save();
+            }
+
+            if (!empty($openState->initiator_id)) {
+                $history = new ActionItemHistory();
+                $history->cc_id = $openState->id;
+                $history->activity_type = 'Initiator';
+                $history->previous = "Null";
+                $history->current = Helpers::getInitiatorName($openState->initiator_id);
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -595,7 +612,9 @@ class ActionItemController extends Controller
         $openState->title = $request->title;
         //$openState->hod_preson = json_encode($request->hod_preson);
         // $openState->hod_preson =  implode(',', $request->hod_preson);
-        $openState->hod_preson = is_array($request->hod_preson) ? implode(',', $request->hod_preson) : $request->hod_preson;
+        if($openState->stage == 1){
+            $openState->hod_preson = is_array($request->hod_preson) ? implode(',', $request->hod_preson) : $request->hod_preson;
+        }
 
         // $openState->hod_preson = $request->hod_preson;
         $openState->dept = $request->dept;
@@ -606,8 +625,13 @@ class ActionItemController extends Controller
         $openState->comments = $request->comments;
         $openState->qa_comments = $request->qa_comments;
         $openState->due_date_extension= $request->due_date_extension;
-        $openState->assign_to = $request->assign_to;
-        $openState->departments = $request->departments;
+        if($openState->stage == 1){
+            $openState->assign_to = $request->assign_to;
+            // dd($request->assign_to);
+            }
+        if($openState->stage == 1){
+            $openState->departments = $request->departments;
+            }
         $request->validate([
             'due_date' => 'nullable|date', // Ensure 'due_date' is allowed to be a date
             // Other fields...
@@ -1328,7 +1352,7 @@ class ActionItemController extends Controller
                 $history->origin_state = $lastopenState->status;
                 $history->action_name = 'Not Applicable';
                 $history->stage = '3';
-                $history->activity_type = 'Acknowledge Complete By,  Acknowledge Complete On';
+                $history->activity_type = 'Acknowledge By,  Acknowledge On';
                 if (is_null($lastopenState->acknowledgement_by) || $lastopenState->acknowledgement_by === '') {
                     $history->previous = "";
                 } else {
@@ -1422,7 +1446,7 @@ class ActionItemController extends Controller
                 $history->stage = "5";
                 $history->action_name = 'Not Applicable';
                 $history->stage = '2';
-                $history->activity_type = 'Varification Completed by, Varification Completed On';
+                $history->activity_type = 'Varification Complete by, Varification Complete On';
                 if (is_null($lastopenState->completed_by) || $lastopenState->completed_by === '') {
                     $history->previous = "";
                 } else {
@@ -1479,7 +1503,7 @@ class ActionItemController extends Controller
 
 public function actionStageCancel(Request $request, $id)
 {
-    if (strtolower($request->username) == strtolower(Auth::user()->email && Hash::check($request->password, Auth::user()->password))) {
+    if (strtolower($request->username) == strtolower(Auth::user()->email) && Hash::check($request->password, Auth::user()->password)) {
         $changeControl = ActionItem::find($id);
         $lastopenState = ActionItem::find($id);
         $openState = ActionItem::find($id);
@@ -1491,10 +1515,15 @@ public function actionStageCancel(Request $request, $id)
             $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
             $changeControl->cancelled_comment =$request->comment;
             $history = new ActionItemHistory;
-            $history->action = "Cancel";
+            $history->action = "Cancel";    
             $history->cc_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->current = $changeControl->cancelled_by;
+            $history->activity_type = 'Cancel By, Cancel On';
+            if (is_null($lastopenState->cancelled_by) || $lastopenState->cancelled_by === '') {
+                $history->previous = "";
+            } else {
+                $history->previous = $lastopenState->cancelled_by . ' , ' . $lastopenState->cancelled_on;
+            }
+            $history->current = $changeControl->cancelled_by . ' , ' . $changeControl->cancelled_on;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1503,6 +1532,11 @@ public function actionStageCancel(Request $request, $id)
             $history->change_to = "Cancelled";
             $history->change_from = $lastopenState->status;
             $history->stage = "Cancelled";
+            if (is_null($lastopenState->cancelled_by) || $lastopenState->cancelled_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
             $changeControl->update();
             // $history = new CCStageHistory();

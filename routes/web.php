@@ -26,7 +26,7 @@ use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\ExtensionNewController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ResamplingController;
-use App\Http\Controllers\InductionTrainingcontroller;
+use App\Http\Controllers\InductionTrainingController;
 use App\Http\Controllers\OOSMicroController;
 use App\Http\Controllers\rcms\AuditeeController;
 use App\Http\Controllers\rcms\NonConformaceController;
@@ -40,7 +40,7 @@ use App\Http\Controllers\rcms\OOCController;
 use App\Http\Controllers\rcms\OOSController;
 use App\Http\Controllers\rcms\RcmsDashboardController;
 use App\Http\Controllers\tms\EmployeeController;
-// use App\Http\Controllers\tms\JobTrainingController;
+use App\Http\Controllers\JobDescriptionController;
 
 use App\Http\Controllers\tms\QuestionBankController;
 use App\Http\Controllers\tms\QuestionController;
@@ -283,6 +283,7 @@ Route::post('mC/cftnotrequired/{id}', [MarketComplaintController::class, 'MarkCo
 
 
 
+Route::get('/observation/{id}',[ObservationController::class,'audit_trail_filter_observation'])->name('observation_filter');
 
 
 
@@ -352,6 +353,17 @@ Route::view('audit-pdf', 'frontend.documents.audit-pdf');
 
 Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer_qualification')->name('trainer_qualification');
 
+
+//---------------- Job Description--------------------------
+Route::get('/employees/{id}', [JobDescriptionController::class, 'getEmployeeData']);
+Route::get('job_description',[JobDescriptionController::class ,'index'])->name('job_description');
+Route::get('job_description/show/{id}',[JobDescriptionController::class ,'edit'])->name('job_description_view');
+Route::post('job_descriptioncreate', [JobDescriptionController::class, 'store'])->name('job_descriptioncreate');
+Route::put('job_descriptionupdate/{id}', [JobDescriptionController::class, 'update'])->name('job_descriptionupdate');
+
+
+
+
 // ====================induction training =================
 
 // // Route::view('induction_training', 'frontend.TMS.Induction_training.induction_training')->name('induction_training');
@@ -362,6 +374,9 @@ Route::post('tms/jobTraining/cancelstage/{id}',[JobTrainingController::class ,'c
 Route::get('/get-sop-description/{id}', [JobTrainingController::class, 'getSopDescription']);
 
 Route::get('/fetch-questions/{documentId}', [JobTrainingController::class, 'fetchQuestions']);
+
+Route::get('trainingQuestions/{id}/', [JobTrainingController::class, 'trainingQuestions']);
+
 
 Route::post('job_trainingcreate', [JobTrainingController::class, 'store'])->name('job_trainingcreate');
 // Route::post('check_answer_otj/{id}', [JobTrainingController::class, 'checkAnswerOtj'])->name('check_answer_otj');
@@ -596,6 +611,9 @@ Route::get('/getEmployeeDetails/{id}', [TrainerController::class, 'getEmployeeDe
 
 Route::get('/fetch-questionss/{documentId}', [TrainerController::class, 'fetchQuestionss']);
 // Route::get('/training-questions/{id}', [TrainerController::class, 'trainingQuestion']);
+Route::post('/save-answers', [TrainerController::class, 'saveAnswers']);
+Route::get('/get-questions/{documentId}', [TrainerController::class, 'getQuestions']);
+
 
 
 

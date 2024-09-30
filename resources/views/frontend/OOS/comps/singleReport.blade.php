@@ -933,7 +933,7 @@
                     </table>
              </div>         --}}
             </div>
-            <div class="block">
+            {{-- <div class="block">
                 <h2>OOS Review for Similar Nature</h2>
                 <div class="block-head"> Info. On Product/ Material</div>
                 <div class="border-table">
@@ -1001,7 +1001,7 @@
                         @endif
                     </table>
                 </div>
-            </div>
+            </div> --}}
               {{-- <!-- Phase IA HOD Primary --> ~Aditya Rajput --}}
 
               <div class="block">
@@ -1128,8 +1128,8 @@
                     <td class="w-80">{{ $data->Probable_cause_iden ? $data->Probable_cause_iden : 'Not Applicable' }}</td>
                   </tr>
                   <tr>
-                    <th class="w-20">Proposal for Phase IB hypothesis</th>
-                    <td class="w-80">{{ $data->proposal_for_hypothesis_IB ? $data->proposal_for_hypothesis_IB : 'Not Applicable' }}</td>
+                    {{-- <th class="w-20">Proposal for Phase IB hypothesis</th>
+                    <td class="w-80">{{ $data->proposal_for_hypothesis_IB ? $data->proposal_for_hypothesis_IB : 'Not Applicable' }}</td> --}}
                     <th class="w-20">Others</th>
                     <td class="w-80">{{ $data->proposal_for_hypothesis_others ? $data->proposal_for_hypothesis_others : 'Not Applicable' }}</td>
                   </tr>
@@ -1977,7 +1977,7 @@
                                                 <td class="w-80">{{ $data->justification_for_delay_oosc ? $data->justification_for_delay_oosc : 'Not Applicable' }}</td>
                                             </tr>
                                             </table>
-                                            <div class="block">
+                                            {{-- <div class="block">
                                                 <div class="block-head"> Summary of OOS Test Results </div>
                                                 <div class="border-table">
                                                 <table>
@@ -2011,7 +2011,7 @@
                                                         @endif
                                                     </table>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="block-head"> Attachments if Any </div>
                                             <div class="border-table">
                                                 <table>
@@ -2062,7 +2062,7 @@
                                                 <td class="w-80">{{ $data->cq_approver ? $data->cq_approver : 'Not Applicable' }}</td>
                                             </tr>
                                             </table>
-                                            <div class="block">
+                                            {{-- <div class="block">
                                                 <div class="block-head"> Summary of OOS Test Results </div>
                                                 <div class="border-table">
                                                 <table>
@@ -2093,7 +2093,7 @@
                                                         @endif
                                                     </table>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="block-head">Conclusion Attachment </div>
                                             <div class="border-table">
                                                 <table>

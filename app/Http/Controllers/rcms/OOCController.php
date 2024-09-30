@@ -727,7 +727,7 @@ class OOCController extends Controller
         if(!empty($data->HOD_Remarks)) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
-            $history->activity_type = 'HOD Primary Remarks';
+            $history->activity_type = 'HOD Primary Review Remarks';
             $history->previous = "Null";
             $history->current = $data->HOD_Remarks;
             $history->comment = "Not Applicable";
@@ -746,7 +746,7 @@ class OOCController extends Controller
         if(!empty($data->attachments_hod_ooc)) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
-            $history->activity_type = 'HOD Primary Attachments';
+            $history->activity_type = 'HOD Primary Review Attachments';
             $history->previous = "Null";
             $history->current = json_encode($data->attachments_hod_ooc);
             $history->comment = "Null";
@@ -763,7 +763,7 @@ class OOCController extends Controller
         if(!empty($data->qaheadremarks)) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
-            $history->activity_type = 'QA Head Primary Remarks';
+            $history->activity_type = 'QA Head Primary Review Remarks';
             $history->previous = "Null";
             $history->current = $data->qaheadremarks;
             $history->comment = "Not Applicable";
@@ -780,7 +780,7 @@ class OOCController extends Controller
         if (!empty($data->initial_attachment_capa_ooc)) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
-            $history->activity_type = 'QA Head Primary Attachment';
+            $history->activity_type = 'QA Head Primary Review Attachment';
             $history->previous = "Null";
             $history->current = $data->initial_attachment_capa_ooc;
             $history->comment = "Null";
@@ -866,7 +866,7 @@ class OOCController extends Controller
         if (!empty($data->rootcausenewfield)) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
-            $history->activity_type = 'Comments';
+            $history->activity_type = 'Phase IA Investigation Comment';
             $history->previous = "Null";
             $history->current = $data->rootcausenewfield;
             $history->comment = "Not Applicable";
@@ -1494,7 +1494,7 @@ class OOCController extends Controller
         if (!empty($data->initial_attachment_reanalysisi_ooc)) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
-            $history->activity_type = 'Attachment';
+            $history->activity_type = 'Phase IB Attachment';
             $history->previous = "Null";
             $history->current = $data->initial_attachment_reanalysisi_ooc;
             $history->comment = "Not Applicable";
@@ -2754,7 +2754,7 @@ if ($lastDocumentOoc->Immediate_Action_ooc != $ooc->Immediate_Action_ooc) {
 if ($lastDocumentOoc->HOD_Remarks != $ooc->HOD_Remarks) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'HOD Primary Remarks';
+    $history->activity_type = 'HOD Primary Review Remarks';
     $history->previous = $lastDocumentOoc->HOD_Remarks;
     $history->current = $ooc->HOD_Remarks;
     $history->comment = 'Updated HOD Remarks';
@@ -2776,7 +2776,7 @@ if ($lastDocumentOoc->HOD_Remarks != $ooc->HOD_Remarks) {
 if ($lastDocumentOoc->attachments_hod_ooc != $ooc->attachments_hod_ooc) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'HOD Primary Attachments';
+    $history->activity_type = 'HOD Primary Review Attachments';
     $history->previous = json_encode($lastDocumentOoc->attachments_hod_ooc);
     $history->current = json_encode($ooc->attachments_hod_ooc);
     $history->comment = 'Updated HOD Attachment';
@@ -2797,7 +2797,7 @@ if ($lastDocumentOoc->attachments_hod_ooc != $ooc->attachments_hod_ooc) {
 if ($lastDocumentOoc->qaheadremarks != $ooc->qaheadremarks) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'QA Head Primary Remarks';
+    $history->activity_type = 'QA Head Primary Review Remarks';
     $history->previous = $lastDocumentOoc->qaheadremarks;
     $history->current = $ooc->qaheadremarks;
     $history->comment = $request->qaheadremarks_comment;
@@ -2814,7 +2814,7 @@ if ($lastDocumentOoc->qaheadremarks != $ooc->qaheadremarks) {
 if ($lastDocumentOoc->initial_attachment_capa_ooc != $ooc->initial_attachment_capa_ooc) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'QA Head Primary Attachment';
+    $history->activity_type = 'QA Head Primary Review Attachment';
     $history->previous = $lastDocumentOoc->initial_attachment_capa_ooc;
     $history->current = $ooc->initial_attachment_capa_ooc;
     $history->comment = $request->initial_attachment_capa_ooc_comment;
@@ -2922,7 +2922,7 @@ if ($lastDocumentOoc->is_repeat_assingable_ooc != $ooc->is_repeat_assingable_ooc
 if ($lastDocumentOoc->rootcausenewfield != $ooc->rootcausenewfield) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'Comments';
+    $history->activity_type = 'Phase IA Investigation Comment';
     $history->previous = $lastDocumentOoc->rootcausenewfield;
     $history->current = $ooc->rootcausenewfield;
     $history->comment = $request->rootcausenewfield_comment;
@@ -3713,7 +3713,7 @@ if ($lastDocumentOoc->phase_ib_investigation_summary != $ooc->phase_ib_investiga
 if ($lastDocumentOoc->initial_attachment_reanalysisi_ooc != $ooc->initial_attachment_reanalysisi_ooc) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'Attachment';
+    $history->activity_type = 'Phase IB Attachment';
     $history->previous = $lastDocumentOoc->initial_attachment_reanalysisi_ooc;
     $history->current = $ooc->initial_attachment_reanalysisi_ooc;
     $history->comment = $request->initial_attachment_reanalysisi_ooc_comment;
@@ -4244,6 +4244,25 @@ $oocevaluation->save();
         $lastDocumentOOC = OutOfCalibration::find($id);
 
         if ($oocchange->stage == 1) {
+
+            if (!$oocchange->description_ooc) {
+                // Flash message for warning (field not filled)
+                Session::flash('swal', [
+                    'title' => 'Mandatory Fields Required!',
+                    'message' => 'Short Description is yet to be filled!',
+                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                ]);
+        
+                return redirect()->back();
+            } else {
+                // Flash message for success (when the form is filled correctly)
+                Session::flash('swal', [
+                    'title' => 'Success!',
+                    'message' => 'Sent for HOD Primary Review',
+                    'type' => 'success',
+                ]);
+            }
+            
            $oocchange->stage = "2";
             $oocchange->submitted_by = Auth::user()->name;
             $oocchange->submitted_on = Carbon::now()->format('d-M-Y');
@@ -4289,7 +4308,7 @@ $oocevaluation->save();
                 // Flash message for warning (field not filled)
                 Session::flash('swal', [
                     'title' => 'Mandatory Fields Required!',
-                    'message' => 'HOD Remarks is yet to be filled!',
+                    'message' => 'HOD Primary Remarks is yet to be filled!',
                     'type' => 'warning',  // Type can be success, error, warning, info, etc.
                 ]);
         
@@ -4345,7 +4364,7 @@ $oocevaluation->save();
                 // Flash message for warning (field not filled)
                 Session::flash('swal', [
                     'title' => 'Mandatory Fields Required!',
-                    'message' => 'QA Head Remarks is yet to be filled!',
+                    'message' => 'QA Head Primary Remarks is yet to be filled!',
                     'type' => 'warning',  // Type can be success, error, warning, info, etc.
                 ]);
         
@@ -4632,11 +4651,11 @@ $oocevaluation->save();
 
         if ($oocchange->stage == 10) {
 
-            if (!$oocchange->is_repeat_proposed_stage_ooc) {
+            if (!$oocchange->is_repeat_stageii_ooc && !$oocchange->is_repeat_proposed_stage_ooc) {
                 // Flash message for warning (field not filled)
                 Session::flash('swal', [
                     'title' => 'Mandatory Fields Required! Phase IB Investigation',
-                    'message' => 'Proposed By is yet to be filled!',
+                    'message' => 'Rectification by Service Engineer required and Proposed By is yet to be filled!',
                     'type' => 'warning',  // Type can be success, error, warning, info, etc.
                 ]);
         
@@ -4649,6 +4668,24 @@ $oocevaluation->save();
                     'type' => 'success',
                 ]);
             }
+
+            // if (!$oocchange->is_repeat_proposed_stage_ooc) {
+            //     // Flash message for warning (field not filled)
+            //     Session::flash('swal', [
+            //         'title' => 'Mandatory Fields Required! Phase IB Investigation',
+            //         'message' => 'Proposed By is yet to be filled!',
+            //         'type' => 'warning',  // Type can be success, error, warning, info, etc.
+            //     ]);
+        
+            //     return redirect()->back();
+            // } else {
+            //     // Flash message for success (when the form is filled correctly)
+            //     Session::flash('swal', [
+            //         'title' => 'Success!',
+            //         'message' => 'Sent for Phase IB HOD Primary Review',
+            //         'type' => 'success',
+            //     ]);
+            // }
             $oocchange->stage = "11";
             $oocchange->correction_ooc_completed_by = Auth::user()->name;
             $oocchange->correction_ooc_completed_on = Carbon::now()->format('d-M-Y');
@@ -4690,7 +4727,7 @@ $oocevaluation->save();
                 // Flash message for warning (field not filled)
                 Session::flash('swal', [
                     'title' => 'Mandatory Fields Required! Phase IB HOD Primary Review',
-                    'message' => 'Phase IB HOD Remarks is yet to be filled!',
+                    'message' => 'Phase IB HOD Primary Remarks is yet to be filled!',
                     'type' => 'warning',  // Type can be success, error, warning, info, etc.
                 ]);
         
@@ -5327,6 +5364,7 @@ return redirect()->back();
                $parent_type = "Out of Calibration";
                $currentDate = Carbon::now();
                $formattedDate = $currentDate->addDays(30);
+               $relatedRecords = Helpers::getAllRelatedRecords();
                $due_date= $formattedDate->format('d-M-Y');
                $old_record = Capa::select('id', 'division_id', 'record')->get();
                $record_number = ((RecordNumber::first()->value('counter')) + 1);
@@ -5337,6 +5375,7 @@ return redirect()->back();
                $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
                $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
                $parent_initiator_id = $id;
+               
 
 
                $formattedDate = $currentDate->addDays(30);
@@ -5368,7 +5407,7 @@ return redirect()->back();
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 $record_number = $record_number;
                 $old_records = $old_record;
-                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
+                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords'));
                 }
                if ($request->revision == "Extension") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -5383,7 +5422,7 @@ return redirect()->back();
         $cc = OutOfCalibration::find($id);
                $cft = [];
                $parent_id = $id;
-               $parent_type = "Out of Calibration";
+               $parent_type = "OOC";
                $currentDate = Carbon::now();
                $formattedDate = $currentDate->addDays(30);
                $due_date= $formattedDate->format('d-M-Y');

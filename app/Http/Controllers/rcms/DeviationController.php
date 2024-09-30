@@ -539,6 +539,64 @@ class DeviationController extends Controller
         }
         $data5->save();
 
+         $data8 = new DeviationGrid();
+
+
+        $data8->deviation_grid_id = $deviation->id;
+        $data8->type = "effect_analysis";
+        // if (!empty($request->risk_factor)) {
+        //     $data8->risk_factor = serialize($request->risk_factor);
+        // }
+        // if (!empty($request->risk_element)) {
+        //     $data8->risk_element = serialize($request->risk_element);
+        // }
+        // if (!empty($request->problem_cause)) {
+        //     $data8->problem_cause = serialize($request->problem_cause);
+        // }
+        // if (!empty($request->existing_risk_control)) {
+        //     $data8->existing_risk_control = serialize($request->existing_risk_control);
+        // }
+        // if (!empty($request->initial_severity)) {
+        //     $data8->initial_severity = serialize($request->initial_severity);
+        // }
+        // if (!empty($request->initial_detectability)) {
+        //     $data8->initial_detectability = serialize($request->initial_detectability);
+        // }
+        // if (!empty($request->initial_probability)) {
+        //     $data8->initial_probability = serialize($request->initial_probability);
+        // }
+        // if (!empty($request->initial_rpn)) {
+        //     $data8->initial_rpn = serialize($request->initial_rpn);
+        // }
+        // if (!empty($request->risk_acceptance)) {
+        //     $data8->risk_acceptance = serialize($request->risk_acceptance);
+        // }
+        // if (!empty($request->risk_control_measure)) {
+        //     $data8->risk_control_measure = serialize($request->risk_control_measure);
+        // }
+        // if (!empty($request->residual_severity)) {
+        //     $data8->residual_severity = serialize($request->residual_severity);
+        // }
+        // if (!empty($request->residual_probability)) {
+        //     $data8->residual_probability = serialize($request->residual_probability);
+        // }
+        // if (!empty($request->residual_detectability)) {
+        //     $data8->residual_detectability = serialize($request->residual_detectability);
+        // }
+        // if (!empty($request->residual_rpn)) {
+        //     $data8->residual_rpn = serialize($request->residual_rpn);
+        // }
+
+        // if (!empty($request->risk_acceptance2)) {
+        //     $data8->risk_acceptance2 = serialize($request->risk_acceptance2);
+        // }
+        // if (!empty($request->mitigation_proposal)) {
+        //     $data8->mitigation_proposal = serialize($request->mitigation_proposal);
+        // }
+
+        // $data8->save();
+
+
 
 
         $Cft = new DeviationCft();
@@ -1255,6 +1313,22 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+         if (!empty ($request->discb_deviat)){
+            $history = new DeviationAuditTrail();
+            $history->deviation_id = $deviation->id;
+            $history->activity_type = 'Description of Deviation';
+            $history->previous = "Null";
+            $history->current = $deviation->discb_deviat;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $deviation->status;
+            $history->action_name = 'Create';
+            $history->save();
+        }
         if (!empty ($request->Hod_person_to)){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
@@ -1436,6 +1510,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $data1 = DeviationCft::where('deviation_id', $id)->latest()->first();
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
+        $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->latest()->first();
         $grid_data = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Deviation")->first();
         $grid_data1 = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Document")->first();
         $grid_data2 = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Product")->first();
@@ -1465,7 +1540,8 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $investigationExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "Investigation"])->first();
         $deviationExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "Deviation"])->first();
 
-        return view('frontend.forms.deviation.deviation_view', compact('data','userData', 'grid_data_qrms','grid_data_matrix_qrms', 'capaExtension','qrmExtension','investigationExtension','deviationExtension', 'old_record', 'pre', 'data1', 'divisionName','grid_data','grid_data1', 'deviationNewGrid','grid_data2','investigationTeamData','rootCauseData', 'why_data', 'fishbone_data'));
+        // return $riskEffectAnalysis;
+        return view('frontend.forms.deviation.deviation_view', compact('riskEffectAnalysis','data','userData', 'grid_data_qrms','grid_data_matrix_qrms', 'capaExtension','qrmExtension','investigationExtension','deviationExtension', 'old_record', 'pre', 'data1', 'divisionName','grid_data','grid_data1', 'deviationNewGrid','grid_data2','investigationTeamData','rootCauseData', 'why_data', 'fishbone_data'));
     }
 
 
@@ -1664,19 +1740,44 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                 $deviation->Preventive_action_Taken = $request->Preventive_action_Taken ? $request->Preventive_action_Taken : $deviation->Preventive_action_Taken;
                 $deviation->CAPA_Closure_Comments = $request->CAPA_Closure_Comments ? $request->CAPA_Closure_Comments : $deviation->CAPA_Closure_Comments;
 
-                 if (!empty ($request->CAPA_Closure_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('CAPA_Closure_attachment')) {
+                //  if (!empty ($request->CAPA_Closure_attachment)) {
+                //     $files = [];
+                //     if ($request->hasfile('CAPA_Closure_attachment')) {
 
-                        foreach ($request->file('CAPA_Closure_attachment') as $file) {
-                            $name = 'capa_closure_attachment-' . time() . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $deviation->CAPA_Closure_attachment = json_encode($files);
+                //         foreach ($request->file('CAPA_Closure_attachment') as $file) {
+                //             $name = 'capa_closure_attachment-' . time() . '.' . $file->getClientOriginalExtension();
+                //             $file->move('upload/', $name);
+                //             $files[] = $name;
+                //         }
+                //     }
+                //     $deviation->CAPA_Closure_attachment = json_encode($files);
 
-                }
+                // }
+                   if (!empty($request->CAPA_Closure_attachment) || !empty($request->deleted_CAPA_Closure_attachment)) {
+       $existingFiles = json_decode($deviation->CAPA_Closure_attachment, true) ?? [];
+
+    // Handle deleted files
+    if (!empty($request->deleted_CAPA_Closure_attachment)) {
+        $filesToDelete = explode(',', $request->deleted_CAPA_Closure_attachment);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('CAPA_Closure_attachment')) {
+        foreach ($request->file('CAPA_Closure_attachment') as $file) {
+            $name = $request->name . 'CAPA_Closure_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
+        }
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $deviation->CAPA_Closure_attachment = json_encode($allFiles);
+}
                 $deviation->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1793,6 +1894,34 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $deviation->detection = $request->detection ? $request->detection: $deviation->detection;
         // $deviation->rpn = $request->rpn ? $request->rpn: $deviation->rpn;
         $deviation->rpn = $request->rpn;
+
+         $data8 = DeviationGrid::where('deviation_grid_id', $deviation->id)->where('type', 'effect_analysis')->first();
+
+         $data8 = new DeviationGrid();
+
+
+        $data8->deviation_grid_id = $deviation->id;
+        $data8->type = "effect_analysis";
+        // Serialize and update the data, ensuring that we always update the fields
+        $data8->risk_factor = serialize($request->risk_factor ?? []);
+        $data8->risk_element = serialize($request->risk_element ?? []);
+        $data8->problem_cause = serialize($request->problem_cause ?? []);
+        $data8->existing_risk_control = serialize($request->existing_risk_control ?? []);
+        $data8->initial_severity = serialize($request->initial_severity ?? []);
+        $data8->initial_detectability = serialize($request->initial_detectability ?? []);
+        $data8->initial_probability = serialize($request->initial_probability ?? []);
+        $data8->initial_rpn = serialize($request->initial_rpn ?? []);
+        $data8->risk_control_measure = serialize($request->risk_control_measure ?? []);
+        $data8->residual_severity = serialize($request->residual_severity ?? []);
+        $data8->residual_probability = serialize($request->residual_probability ?? []);
+        $data8->residual_detectability = serialize($request->residual_detectability ?? []);
+        $data8->residual_rpn = serialize($request->residual_rpn ?? []);
+        $data8->risk_acceptance = serialize($request->risk_acceptance ?? []);
+        $data8->risk_acceptance2 = serialize($request->risk_acceptance2 ?? []);
+        $data8->mitigation_proposal = serialize($request->mitigation_proposal ?? []);
+
+        $data8->save();
+
 
 
 
@@ -2328,26 +2457,77 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                 }
 
 
-            if (!empty ($request->Initial_attachment)) {
-                $files = [];
+            // if (!empty ($request->Initial_attachment)) {
+            //     $files = [];
 
-                if ($deviation->Initial_attachment) {
-                    $files = is_array(json_decode($deviation->Initial_attachment)) ? $deviation->Initial_attachment : [];
-                }
+            //     if ($deviation->Initial_attachment) {
+            //         $files = is_array(json_decode($deviation->Initial_attachment)) ? $deviation->Initial_attachment : [];
+            //     }
 
-                if ($request->hasfile('Initial_attachment')) {
-                    foreach ($request->file('Initial_attachment') as $file) {
-                        $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
+            //     if ($request->hasfile('Initial_attachment')) {
+            //         foreach ($request->file('Initial_attachment') as $file) {
+            //             $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //             $file->move('upload/', $name);
+            //             $files[] = $name;
+            //         }
+            //     }
 
 
-                $deviation->Initial_attachment = json_encode($files);
-            }
+            //     $deviation->Initial_attachment = json_encode($files);
+            // }
         }
 
+
+//         if (!empty($request->Initial_attachment) || !empty($request->deleted_Initial_attachment)) {
+//     $existingFiles = json_decode($deviation->Initial_attachment, true) ?? [];
+
+//     // Handle deleted files
+//     if (!empty($request->deleted_Initial_attachment)) {
+//         $filesToDelete = explode(',', $request->deleted_Initial_attachment);
+//         $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+//             return !in_array($file, $filesToDelete);
+//         });
+//     }
+
+//     // Handle new files
+//     $newFiles = [];
+//     if ($request->hasFile('Initial_attachment')) {
+//         foreach ($request->file('Initial_attachment') as $file) {
+//             $name = $request->name . 'Initial_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+//             $file->move(public_path('upload/'), $name);
+//             $newFiles[] = $name;
+//         }
+//     }
+
+//     // Merge existing and new files
+//     $allFiles = array_merge($existingFiles, $newFiles);
+//     $deviation->Initial_attachment = json_encode($allFiles);
+// }
+               if (!empty($request->Initial_attachment) || !empty($request->deleted_Initial_attachment)) {
+       $existingFiles = json_decode($deviation->Initial_attachment, true) ?? [];
+
+    // Handle deleted files
+    if (!empty($request->deleted_Initial_attachment)) {
+        $filesToDelete = explode(',', $request->deleted_Initial_attachment);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('Initial_attachment')) {
+        foreach ($request->file('Initial_attachment') as $file) {
+            $name = $request->name . 'Initial_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
+        }
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $deviation->Initial_attachment = json_encode($allFiles);
+}
 
 
         if (!empty ($request->Audit_file)) {
@@ -2392,61 +2572,91 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
             }
             $deviation->pending_attachment = json_encode($files);
         }
-           if (!empty ($request->hod_final_attachment)) {
+            if (!empty($request->hod_final_attachment) || !empty($request->deleted_hod_final_attachment)) {
+       $existingFiles = json_decode($deviation->hod_final_attachment, true) ?? [];
 
-            $files = [];
+    // Handle deleted files
+    if (!empty($request->deleted_hod_final_attachment)) {
+        $filesToDelete = explode(',', $request->deleted_hod_final_attachment);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
 
-            if ($deviation->hod_final_attachment) {
-                $existingFiles = json_decode($deviation->hod_final_attachment, true); // Convert to associative array
-                if (is_array($existingFiles)) {
-                    $files = $existingFiles;
-                }
-                // $files = is_array(json_decode($deviation->hod_final_attachment)) ? $deviation->hod_final_attachment : [];
-            }
-
-            if ($request->hasfile('hod_final_attachment')) {
-                foreach ($request->file('hod_final_attachment') as $file) {
-                    $name = $request->name . 'hod_final_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $deviation->hod_final_attachment = json_encode($files);
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('hod_final_attachment')) {
+        foreach ($request->file('hod_final_attachment') as $file) {
+            $name = $request->name . 'hod_final_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
         }
-            if (!empty($request->initial_file) || $request->removed_files) {
-            $files = [];
+    }
 
-            // Decode existing files if they exist
-            if ($deviation->initial_file) {
-                $existingFiles = json_decode($deviation->initial_file, true); // Convert to associative array
-                if (is_array($existingFiles)) {
-                    $files = $existingFiles;
-                }
-            }
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $deviation->hod_final_attachment = json_encode($allFiles);
+}
+        // if (!empty($request->initial_file) || $request->removed_files) {
+        //     $files = [];
 
-            // Remove files that were marked for deletion
-            if ($request->removed_files) {
-                $removedFiles = explode(',', $request->removed_files);
-                foreach ($removedFiles as $removedFile) {
-                    if (($key = array_search($removedFile, $files)) !== false) {
-                        unset($files[$key]);
-                        @unlink(public_path('upload/' . $removedFile)); // Delete the file from the server
-                    }
-                }
-            }
+        //     // Decode existing files if they exist
+        //     if ($deviation->initial_file) {
+        //         $existingFiles = json_decode($deviation->initial_file, true); // Convert to associative array
+        //         if (is_array($existingFiles)) {
+        //             $files = $existingFiles;
+        //         }
+        //     }
 
-            // Process and add new files
-            if ($request->hasfile('initial_file')) {
-                foreach ($request->file('initial_file') as $file) {
-                    $name = $request->name . 'initial_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
+        //     // Remove files that were marked for deletion
+        //     if ($request->removed_files) {
+        //         $removedFiles = explode(',', $request->removed_files);
+        //         foreach ($removedFiles as $removedFile) {
+        //             if (($key = array_search($removedFile, $files)) !== false) {
+        //                 unset($files[$key]);
+        //                 @unlink(public_path('upload/' . $removedFile)); // Delete the file from the server
+        //             }
+        //         }
+        //     }
 
-            // Re-index the array to remove gaps in keys and encode it
-            $deviation->initial_file = json_encode(array_values($files));
+        //     // Process and add new files
+        //     if ($request->hasfile('initial_file')) {
+        //         foreach ($request->file('initial_file') as $file) {
+        //             $name = $request->name . 'initial_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+        //     // Re-index the array to remove gaps in keys and encode it
+        //     $deviation->initial_file = json_encode(array_values($files));
+        // }
+
+        if (!empty($request->initial_file) || !empty($request->deleted_initial_file)) {
+    $existingFiles = json_decode($deviation->initial_file, true) ?? [];
+
+    // Handle deleted files
+    if (!empty($request->deleted_initial_file)) {
+        $filesToDelete = explode(',', $request->deleted_initial_file);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('initial_file')) {
+        foreach ($request->file('initial_file') as $file) {
+            $name = $request->name . 'initial_file' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
         }
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $deviation->initial_file = json_encode($allFiles);
+}
 
 
         if (!empty ($request->QA_attachment)) {
@@ -2471,6 +2681,32 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
             $deviation->QA_attachment = json_encode($files);
         }
+
+
+        if (!empty ($request->closure_attachment)) {
+            $files = [];
+
+            if ($deviation->closure_attachment) {
+                $existingFiles = json_decode($deviation->closure_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+                // $files = is_array(json_decode($deviation->closure_attachment)) ? $deviation->closure_attachment : [];
+            }
+
+            if ($request->hasfile('closure_attachment')) {
+                foreach ($request->file('closure_attachment') as $file) {
+                    $name = $request->name . 'closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $deviation->closure_attachment = json_encode($files);
+        }
+
+
 
         if (!empty ($request->Investigation_attachment)) {
 
@@ -2519,49 +2755,54 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
             $deviation->Capa_attachment = json_encode($files);
         }
-        if (!empty ($request->QA_attachments)) {
+          if (!empty($request->QA_attachments) || !empty($request->deleted_QA_attachments)) {
+       $existingFiles = json_decode($deviation->QA_attachments, true) ?? [];
 
-            $files = [];
+    // Handle deleted files
+    if (!empty($request->deleted_QA_attachments)) {
+        $filesToDelete = explode(',', $request->deleted_QA_attachments);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
 
-            if ($deviation->QA_attachments) {
-                $files = is_array(json_decode($deviation->QA_attachments)) ? $deviation->QA_attachments : [];
-            }
-
-            if ($request->hasfile('QA_attachments')) {
-                foreach ($request->file('QA_attachments') as $file) {
-                    $name = $request->name . 'QA_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-
-
-            $deviation->QA_attachments = json_encode($files);
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('QA_attachments')) {
+        foreach ($request->file('QA_attachments') as $file) {
+            $name = $request->name . 'QA_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
         }
+    }
 
-        if (!empty ($request->closure_attachment)) {
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $deviation->QA_attachments = json_encode($allFiles);
+}
+        // if (!empty ($request->closure_attachment)) {
 
-            $files = [];
+        //     $files = [];
 
-            if ($deviation->closure_attachment) {
-                $existingFiles = json_decode($deviation->closure_attachment, true); // Convert to associative array
-                if (is_array($existingFiles)) {
-                    $files = $existingFiles;
-                }
-                // $files = is_array(json_decode($deviation->closure_attachment)) ? $deviation->closure_attachment : [];
-            }
+        //     if ($deviation->closure_attachment) {
+        //         $existingFiles = json_decode($deviation->closure_attachment, true); // Convert to associative array
+        //         if (is_array($existingFiles)) {
+        //             $files = $existingFiles;
+        //         }
+        //         // $files = is_array(json_decode($deviation->closure_attachment)) ? $deviation->closure_attachment : [];
+        //     }
 
-            if ($request->hasfile('closure_attachment')) {
-                foreach ($request->file('closure_attachment') as $file) {
-                    $name = $request->name . 'closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
+        //     if ($request->hasfile('closure_attachment')) {
+        //         foreach ($request->file('closure_attachment') as $file) {
+        //             $name = $request->name . 'closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
 
 
-            $deviation->closure_attachment = json_encode($files);
-        }
+        //     $deviation->closure_attachment = json_encode($files);
+        // }
         if($deviation->stage > 0){
 
 
@@ -2633,14 +2874,14 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
 
           if (!empty($request->inference_type)) {
-          
+
                 $deviation->inference_type = serialize($request->inference_type);
         }
         if (!empty($request->inference_remarks)) {
             $deviation->inference_remarks = serialize($request->inference_remarks);
         }
 
-        
+
         $deviation->update();
         // grid
          $data3=DeviationGrid::where('deviation_grid_id', $deviation->id)->where('type', "Deviation")->first();
@@ -2684,9 +2925,9 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                 $data5->batch_no = serialize($request->batch_no);
             }
             $data5->update();
-           
 
-            
+
+
 
 
              if ($lastDeviation->due_date != $deviation->due_date || !empty ($request->comment)) {
@@ -3059,6 +3300,25 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
             $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
+        if ($lastDeviation->discb_deviat != $deviation->discb_deviat || !empty ($request->comment)) {
+            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                            ->where('activity_type', 'Description of Deviation')
+                            ->exists();
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'Description of Deviation';
+             $history->previous = $lastDeviation->discb_deviat;
+            $history->current = $deviation->discb_deviat;
+            $history->comment = $deviation->submit_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
+            $history->save();
+        }
 
         if ($lastDeviation->Immediate_Action != $deviation->Immediate_Action || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
@@ -3358,11 +3618,11 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
         if ($lastDeviation->QAInitialRemark != $deviation->QAInitialRemark || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'QA Initial Remark')
+                            ->where('activity_type', 'QA/CQA Initial Remark')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'QA Initial Remark';
+            $history->activity_type = 'QA/CQA Initial Remark';
              $history->previous = $lastDeviation->QAInitialRemark;
             $history->current = $deviation->QAInitialRemark;
             $history->comment = $deviation->submit_comment;
@@ -3534,6 +3794,44 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
             $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
+         if ($lastDeviation->Detail_Of_Root_Cause != $deviation->Detail_Of_Root_Cause || !empty ($request->comment)) {
+            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                            ->where('activity_type', 'Investigation Summary')
+                            ->exists();
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'Investigation Summary';
+             $history->previous = $lastDeviation->Detail_Of_Root_Cause;
+            $history->current = $deviation->Detail_Of_Root_Cause;
+            $history->comment = $deviation->submit_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+         if ($lastDeviation->Investigation_attachment != $deviation->Investigation_attachment || !empty ($request->comment)) {
+            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                            ->where('activity_type', 'Investigation Attachment')
+                            ->exists();
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'Investigation Attachment';
+             $history->previous = $lastDeviation->Investigation_attachment;
+            $history->current = $deviation->Investigation_attachment;
+            $history->comment = $deviation->submit_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
+            $history->save();
+        }
 
         if ($lastDeviation->Post_Categorization != $deviation->Post_Categorization || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
@@ -3577,11 +3875,11 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
         if ($lastDeviation->QA_Feedbacks != $deviation->QA_Feedbacks || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'QA Evaluation')
+                            ->where('activity_type', 'QA/CQA Implementation Verification')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'QA Evaluation';
+            $history->activity_type = 'QA/CQA Implementation Verification';
              $history->previous = $lastDeviation->QA_Feedbacks;
             $history->current = $deviation->QA_Feedbacks;
             $history->comment = $deviation->submit_comment;
@@ -3597,11 +3895,11 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
         if ($lastDeviation->Closure_Comments != $deviation->Closure_Comments || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'Closure Comments')
+                            ->where('activity_type', 'QAH/Designee Closure Comments')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Closure Comments';
+            $history->activity_type = 'QAH/Designee Closure Comments';
              $history->previous = $lastDeviation->Closure_Comments;
             $history->current = $deviation->Closure_Comments;
             $history->comment = $deviation->submit_comment;
@@ -3616,11 +3914,11 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         }
          if ($lastDeviation->closure_attachment != $deviation->closure_attachment || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'Closure Attachments')
+                            ->where('activity_type', 'QAH/Designee Closure Attachments')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Closure Attachments';
+            $history->activity_type = 'QAH/Designee Closure Attachments';
              $history->previous = $lastDeviation->closure_attachment;
             $history->current = $deviation->closure_attachment;
             $history->comment = $deviation->submit_comment;
@@ -7374,7 +7672,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                     $history->deviation_id = $id;
                     // $history->activity_type = 'Activity Log';
                     // $history->previous = "";
-                    $history->activity_type = 'Submitted By, Submitted On';
+                    $history->activity_type = 'Submit By, Submit On';
                     if(is_null($lastDocument->submit_by) || $lastDocument->submit_on == ''){
                         $history->previous = "";
                     }else{
@@ -7558,7 +7856,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                     $deviation->QA_Initial_Review_Comments = $request->comment;
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
-                     $history->activity_type = 'QA/CQA Initial Review Completed By, QA/CQA Initial Review Completed On';
+                     $history->activity_type = 'QA/CQA Initial Review Complete By, QA/CQA Initial Review Complete On';
                     if(is_null($lastDocument->QA_Initial_Review_Complete_By) || $lastDocument->QA_Initial_Review_Complete_On == ''){
                         $history->previous = "";
                     }else{
@@ -7573,7 +7871,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                     $history->change_from = $lastDocument->status;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->stage = 'Completed';
+                    $history->stage = 'Complete';
                     if(is_null($lastDocument->QA_Initial_Review_Complete_By) || $lastDocument->QA_Initial_Review_Complete_On == '')
                     {
                         $history->action_name = 'New';
@@ -8383,7 +8681,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
                         $history = new DeviationAuditTrail();
                         $history->deviation_id = $id;
-                        $history->activity_type = 'CFT Review Completed By, CFT Review Completed On';
+                        $history->activity_type = 'CFT Review Complete By, CFT Review Complete On';
                     if(is_null($lastDocument->CFT_Review_Complete_By) || $lastDocument->CFT_Review_Complete_On == ''){
                         $history->previous = "";
                     }else{
@@ -8461,7 +8759,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
-                    $history->activity_type = 'QA/CQA Final Assessment Complete By, QA/CQA Final Assessment Completed On';
+                    $history->activity_type = 'QA/CQA Final Assessment Complete By, QA/CQA Final Assessment Complete On';
                     if(is_null($lastDocument->QA_Final_Review_Complete_By) || $lastDocument->QA_Final_Review_Complete_On == ''){
                         $history->previous = "";
                     }else{
@@ -8524,7 +8822,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
-                    $history->activity_type = 'Approved By, Approvedd On';
+                    $history->activity_type = 'Approved By, Approved On';
                     if(is_null($lastDocument->QA_head_approved_by) || $lastDocument->QA_head_approved_on == ''){
                         $history->previous = "";
                     }else{
@@ -8539,7 +8837,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "Pending Initiator Update";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'Completed';
+                    $history->stage = 'Complete';
                     if(is_null($lastDocument->QA_head_approved_by) || $lastDocument->QA_head_approved_on == '')
                     {
                         $history->action_name = 'New';
@@ -8625,7 +8923,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
-                    $history->activity_type = 'Initiator Updated Complete By, Initiator Updated Completed On';
+                    $history->activity_type = 'Initiator Updated Complete By, Initiator Updated Complete On';
                     if(is_null($lastDocument->pending_initiator_approved_by) || $lastDocument->pending_initiator_approved_on == ''){
                         $history->previous = "";
                     }else{
@@ -8705,7 +9003,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
-                    $history->activity_type = 'HOD Final Review Complete By, HOD Final Review Completed On';
+                    $history->activity_type = 'HOD Final Review Complete By, HOD Final Review Complete On';
                     if(is_null($lastDocument->Hod_final_by) || $lastDocument->Hod_final_on == ''){
                         $history->previous = "";
                     }else{
@@ -8720,7 +9018,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "Implementation verification by QA/CQA";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'Completed';
+                    $history->stage = 'Complete';
                     if(is_null($lastDocument->Hod_final_by) || $lastDocument->Hod_final_on == '')
                     {
                         $history->action_name = 'New';
@@ -8786,7 +9084,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
-                    $history->activity_type = 'Implementation verification Completed By, Implementation verification Completed On';
+                    $history->activity_type = 'Implementation verification Complete By, Implementation verification Complete On';
                     if(is_null($lastDocument->QA_final_approved_by) || $lastDocument->QA_final_approved_on == ''){
                         $history->previous = "";
                     }else{
@@ -8801,7 +9099,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "Head QA/CQA / Designee Closure Approval";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'Completed';
+                    $history->stage = 'Complete';
                     if(is_null($lastDocument->QA_final_approved_by) || $lastDocument->QA_final_approved_on == '')
                     {
                         $history->action_name = 'New';
@@ -8863,7 +9161,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "Closed-Done";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'Completed';
+                    $history->stage = 'Complete';
                     if(is_null($lastDocument->Close_by) || $lastDocument->Close_on == '')
                     {
                         $history->action_name = 'New';
@@ -8921,20 +9219,20 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
                     $deviation->stage = "5";
                     $deviation->status = "QA/CQA Final Assessment";
-                    $deviation->QA_Initial_Review_Complete_By = Auth::user()->name;
-                    $deviation->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                    $deviation->QA_Initial_Review_Comments = $request->comment;
+                    $deviation->cft_review_not_req_by = Auth::user()->name;
+                    $deviation->cft_review_not_req_on = Carbon::now()->format('d-M-Y');
+                    $deviation->cft_review_not_req_comment = $request->comment;
 
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
                     $history->activity_type = 'CFT Review Not Required By, CFT Review Not Required On';
-                    if(is_null($lastDocument->QA_Initial_Review_Complete_By) || $lastDocument->QA_Initial_Review_Complete_On == ''){
+                    if(is_null($lastDocument->cft_review_not_req_by) || $lastDocument->cft_review_not_req_on == ''){
                         $history->previous = "";
                     }else{
-                        $history->previous = $lastDocument->QA_Initial_Review_Complete_By. ' ,' . $lastDocument->QA_Initial_Review_Complete_On;
+                        $history->previous = $lastDocument->cft_review_not_req_by. ' ,' . $lastDocument->cft_review_not_req_on;
                     }
                     $history->action='CFT Review Not Required';
-                    $history->current = $deviation->QA_Initial_Review_Complete_By. ',' . $deviation->QA_Initial_Review_Complete_On;
+                    $history->current = $deviation->cft_review_not_req_by. ',' . $deviation->cft_review_not_req_on;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -8943,7 +9241,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     $history->change_to =   "QA/CQA Final Assessment";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
-                    if(is_null($lastDocument->QA_Initial_Review_Complete_By) || $lastDocument->QA_Initial_Review_Complete_On == '')
+                    if(is_null($lastDocument->cft_review_not_req_by) || $lastDocument->cft_review_not_req_on == '')
                     {
                         $history->action_name = 'New';
                     } else {
@@ -9290,6 +9588,7 @@ public function audit_trail_filter(Request $request, $id)
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $grid_data = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Deviation")->first();
             $grid_data1 = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Document")->first();
+            $grid_data2 = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Product")->first();
 
             $investigationTeam = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'TeamInvestigation'])->first();
             $investigation_data = json_decode($investigationTeam->data, true);
@@ -9299,6 +9598,8 @@ public function audit_trail_filter(Request $request, $id)
 
             $whyData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'why'])->first();
             $why_data = json_decode($whyData->data, true);
+        $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->first();
+
 
             $capaExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "Capa"])->first();
             $qrmExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "QRM"])->first();
@@ -9316,7 +9617,7 @@ public function audit_trail_filter(Request $request, $id)
             // }
 
 
-            $pdf = PDF::loadview('frontend.forms.deviation.SingleReportdeviation', compact('data','grid_data_qrms','grid_data_matrix_qrms','capaExtension','qrmExtension','investigationExtension','root_cause_data','why_data','investigation_data','grid_data','grid_data1', 'data1'))
+            $pdf = PDF::loadview('frontend.forms.deviation.SingleReportdeviation', compact('data','grid_data2','riskEffectAnalysis','grid_data_qrms','grid_data_matrix_qrms','capaExtension','qrmExtension','investigationExtension','root_cause_data','why_data','investigation_data','grid_data','grid_data1', 'data1'))
                 ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,

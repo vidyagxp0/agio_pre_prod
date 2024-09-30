@@ -2199,78 +2199,79 @@
                     <div id="CCForm10" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+                                
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted by">Submitted By</label>
+                                        <label for="Submitted by">Submit By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted on">Submitted On</label>
+                                        <label for="Submit on">Submit On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
+                                        <label for="Submit on"> Submit Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Reviewed by">HOD Initial Review Completed By</label>
+                                        <label for="Reviewed by">HOD Initial Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Approved on">HOD Initial Review Completed On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Reviewed by">Review Completed By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Approved on">Review Completed On</label>
+                                        <label for="Approved on">HOD Initial Review Complete On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
+                                        <label for="Submitted on"> HOD Initial Review Complete Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Reviewed by">Approval Completed By</label>
+                                        <label for="Reviewed by">Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Approved on">Approval Completed On</label>
+                                        <label for="Approved on">Review Complete On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
+                                        <label for="Submitted on"> Review Complete Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Reviewed by">Approval Complete By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Approved on">Approval Complete On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on"> Approval Complete Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -2290,41 +2291,41 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
+                                        <label for="Submitted on">Correction Completed Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="HOD Review Complete By">HOD Review Complete By</label>
+                                        <label for="HOD Review Complete By">HOD Review Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="HOD Review Complete By on">HOD Review Complete By On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
+                                        <label for="HOD Review Complete By on">HOD Review Completed On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="QA Head Aproval Completed by">QA Head Aproval Completed
+                                        <label for="Submitted on">HOD Review Completed Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="QA Head Aproval Completed by">QA/CQA Head Approval Completed
                                             By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="QA Head Aproval Completed on">QA Head Aproval Completed
+                                        <label for="QA Head Aproval Completed on">QA/CQA Head Approval Completed
                                             On</label>
                                         <div class="static"></div>
                                     </div>
@@ -2332,7 +2333,7 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
+                                        <label for="Submitted on">QA/CQA Head Approval Completed Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -2341,13 +2342,13 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Sent to Opened State BY">Sent to Opened State By</label>
+                                        <label for="Sent to Opened State BY">Sent To Opened State By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="QA Head Aproval Completed on">Sent to Opened State
+                                        <label for="QA Head Aproval Completed on">Sent To Opened State
                                             On</label>
                                         <div class="static"></div>
                                     </div>
@@ -2355,7 +2356,7 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
+                                        <label for="Submitted on">Sent To Opened State Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -2368,14 +2369,14 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Cancel On">Cancel On</label>
+                                        <label for="Cancel On"> Cancel On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
+                                        <label for="Submitted on">Cancel Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>

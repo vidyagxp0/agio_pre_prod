@@ -685,47 +685,47 @@
                                 </div>
                                 <div class="row">
 
-                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="root-cause-methodology">Root Cause Methodology</label>
-                                        <select name="root_cause_methodology[]" multiple data-search="false" data-silent-initial-value-set="true" id="root-cause-methodology">
-                                            <option value="Why-Why Chart">Why-Why Chart</option>
-                                            <option value="Failure Mode and Effect Analysis">Failure Mode and Effect Analysis</option>
-                                            <option value="Other_Detail">Other</option>
-                                            {{-- <option value="Fishbone or Ishikawa Diagram">Fishbone or Ishikawa Diagram</option> --}}
-                                            {{-- <option value="Is/Is Not Analysis">Is/Is Not Analysis</option> --}}
-                                        </select>
+
+                                    <div class="col-6">
+                                        <div class="group-input">
+                                            <label for="root-cause-methodology">Root Cause Methodology</label>
+                                            <select name="root_cause_methodology[]" multiple data-search="false" data-silent-initial-value-set="true" id="root-cause-methodology">
+                                                <option value="Why-Why Chart">Why-Why Chart</option>
+                                                <option value="Failure Mode and Effect Analysis">Failure Mode and Effect Analysis</option>
+                                                <option value="Other_Detail">Other</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
+                                    <div class="col-6">
+                                    <div id="rootCause" class="group-input" style="display: none;">
+                                        <label for="otherFieldsUser">Other (Root Cause Methodology)</label>
+                                        <input type="text" name="other_root_cause_methodology" class="form-control"/>
+                                    </div>
+                                    </div>
 
-                                <div id="rootCause" class="group-input" style="display: none;">
-                                    <label for="otherFieldsUser">Other(Root Cause Methodology)</label>
-                                    <input type="text" name="root_cause_methodology" class="form-control"/>
-                                </div>
+                                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-
-                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-                                <script>
-                                    $(document).ready(function() {
-                                        // Initially hide the field
-                                        $('#rootCause').hide();
-
-                                        $('select[name=root_cause_methodology]').change(function() {
-                                            const selectedVal = $(this).val();
-                                            if (selectedVal === 'other_detail') {
-                                                $('#rootCause').show();
-                                            } else {
-                                                $('#rootCause').hide();
+                                    <script>
+                                        $(document).ready(function() {
+                                            // Function to check the current value of the select and toggle the input field
+                                            function toggleOtherField() {
+                                                const selectedVals = $('#root-cause-methodology').val();
+                                                if (selectedVals && selectedVals.includes('Other_Detail')) {
+                                                    $('#rootCause').show();
+                                                } else {
+                                                    $('#rootCause').hide();
+                                                }
                                             }
-                                        });
 
-                                        // Optionally, check the current value when the page loads in case of form errors
-                                        if ($('select[name=root_cause_methodology]').val() === 'other_detail') {
-                                            $('#rootCause').show();
-                                        }
-                                    });
-                                </script>
+                                            // Bind the change event to the select field
+                                            $('#root-cause-methodology').change(function() {
+                                                toggleOtherField();
+                                            });
+
+                                            // Check the current value when the page loads
+                                            toggleOtherField();
+                                        });
+                                    </script>
 
 
                                      <div class="col-12 mb-4 "id="fmea-section" style="display:none;">

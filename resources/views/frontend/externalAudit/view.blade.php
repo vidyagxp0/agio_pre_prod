@@ -293,8 +293,13 @@
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('ShowexternalAuditTrial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(7, $userRoleIds) || in_array(66, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+
+                      
+                        
+                        @if ($data->stage == 1 && (Helpers::check_roles($data->division_id, 'External Audit', 7) || Helpers::check_roles($data->division_id, 'External Audit', 66) || Helpers::check_roles($data->division_id, 'External Audit', 18)))
+
+
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Audit Details Summary
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
@@ -303,7 +308,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && (in_array(7, $userRoleIds) || in_array(66, $userRoleIds)))
+                        @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'External Audit', 7) || Helpers::check_roles($data->division_id, 'External Audit', 66) || Helpers::check_roles($data->division_id, 'External Audit', 18)))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                             More Info Required
                         </button>
@@ -317,7 +322,13 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal1">
                                 CFT Review Not Required
                             </button>
-                        @elseif($data->stage == 3 && (in_array(5, $userRoleIds)) || in_array(Auth::user()->id, $valuesArray))
+                       
+                            @elseif(
+                                ($data->stage == 3 && (Helpers::check_roles($data->division_id, 'External Audit', 5) || Helpers::check_roles($data->division_id, 'External Audit', 18))) ||
+                                in_array(Auth::user()->id, $valuesArray)
+                            )
+
+                       
                             <!-- @if (!$cftCompleteUser) -->
 
                              <button class="button_theme1" data-bs-toggle="modal"
@@ -340,7 +351,8 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 4 && (in_array(66, $userRoleIds) || in_array(43, $userRoleIds)))
+                            @elseif($data->stage == 4 && (Helpers::check_roles($data->division_id, 'External Audit', 66)|| Helpers::check_roles($data->division_id, 'External Audit', 43)|| Helpers::check_roles($data->division_id, 'External Audit', 18)))
+                       
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             Approval Complete
                             </button>
@@ -348,8 +360,8 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Send to Opened
                             </button>
-
-                        @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(11, $userRoleIds) ))
+                          
+                            @elseif($data->stage == 5 && (Helpers::check_roles($data->division_id, 'External Audit', 66) || Helpers::check_roles($data->division_id, 'External Audit', 43) || Helpers::check_roles($data->division_id, 'External Audit', 18)))
 
                         <button class="button_theme1"> <a class="text-white" href="{{ url('auditee') }}">
                             Reopen
@@ -525,7 +537,7 @@
                                                     <input type="date" id="due_date" name="due_date"
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         class="hide-input" value="{{ $data->due_date }}"
-                                                        oninput="handleDateInput(this, 'due_date_display')" />
+                                                        oninput="handleDateInput(this, 'due_date_display')" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} />
                                                 </div>
                                             </div>
                                         </div>
@@ -669,7 +681,7 @@
                                                         value="recall">Recall</option>
                                                     <option @if ($data->initiated_through == 'return') selected @endif
                                                         value="return">Return</option>
-                                                    <!-- <option @if ($data->initiated_through == 'deviation') selected @endif
+                                                    <!-- <option @if ($data->initiated_through == 'External Audit') selected @endif
                                                             value="deviation">Deviation</option> -->
                                                     <option @if ($data->initiated_through == 'complaint') selected @endif
                                                         value="complaint">Complaint</option>
@@ -851,9 +863,9 @@
                                                                 </tr>
                                                             @endforeach
                                                         @else
-                                                            <tr>
+                                                            <!-- <tr>
                                                                 <td colspan="6">No auditors available.</td>
-                                                            </tr>
+                                                            </tr> -->
                                                         @endif
                                                     </tbody>
                                                 </table>
@@ -913,7 +925,7 @@
 
 
 
-                                                           <div class="col-lg-6 new-date-data-field">
+                            <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="Audit Schedule Start Date">Start Date of Audit</label>
                                 {{-- <div class="calenderauditee">
@@ -1012,40 +1024,103 @@
 
 
 
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Inv Attachments">GI Attachments</label>
-                                                <div><small class="text-primary">Please Attach all relevant or supporting
-                                                        documents</small></div>
-                                                <div class="file-attachment-field">
-                                                    <div disabled class="file-attachment-list" id="inv_attachment">
-                                                        @if ($data->inv_attachment)
-                                                            @foreach (json_decode($data->inv_attachment) as $file)
-                                                                <h6 type="button" class="file-container text-dark"
-                                                                    style="background-color: rgb(243, 242, 240);">
-                                                                    <b>{{ $file }}</b>
-                                                                    <a href="{{ asset('upload/' . $file) }}"
-                                                                        target="_blank"><i class="fa fa-eye text-primary"
-                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
-                                                                            class="fa-solid fa-circle-xmark"
-                                                                            style="color:red; font-size:20px;"></i></a>
-                                                                </h6>
-                                                            @endforeach
-                                                        @endif
-                                                    </div>
-                                                    <div class="add-btn">
-                                                        <div>Add</div>
-                                                        <input
-                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                            type="file" id="myfile" name="inv_attachment[]"
-                                                            oninput="addMultipleFiles(this, 'inv_attachment')" multiple>
-                                                    </div>
-                                                </div>
+<div class="col-12">
+                                    <div class="group-input">
+                                        <label for="inv_attachment">GI Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="inv_attachment">
+                                                @if ($data->inv_attachment)
+                                                    @foreach(json_decode($data->inv_attachment) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                            <input type="hidden" name="existing_inv_attachment[]" value="{{ $file }}">
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="inv_attachment[]" 
+                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                    oninput="addMultipleFiles(this, 'inv_attachment')" multiple>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                
+                                <!-- Hidden field to keep track of files to be deleted -->
+                                <input type="hidden" id="deleted_inv_attachment" name="deleted_inv_attachment" value="">
+                                
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const removeButtons = document.querySelectorAll('.remove-file');
+                                
+                                        removeButtons.forEach(button => {
+                                            button.addEventListener('click', function() {
+                                                const fileName = this.getAttribute('data-file-name');
+                                                const fileContainer = this.closest('.file-container');
+                                
+                                                // Hide the file container
+                                                if (fileContainer) {
+                                                    fileContainer.style.display = 'none';
+                                                    // Remove hidden input associated with this file
+                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                    if (hiddenInput) {
+                                                        hiddenInput.remove();
+                                                    }
+                                
+                                                    // Add the file name to the deleted files list
+                                                    const deletedFilesInput = document.getElementById('deleted_inv_attachment');
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    deletedFiles.push(fileName);
+                                                    deletedFilesInput.value = deletedFiles.join(',');
+                                                }
+                                            });
+                                        });
+                                    });
+                                
+                                    function addMultipleFiles(input, id) {
+                                        const fileListContainer = document.getElementById(id);
+                                        const files = input.files;
+                                
+                                        for (let i = 0; i < files.length; i++) {
+                                            const file = files[i];
+                                            const fileName = file.name;
+                                            const fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container', 'text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+                                
+                                            const fileText = document.createElement('b');
+                                            fileText.textContent = fileName;
+                                
+                                            const viewLink = document.createElement('a');
+                                            viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                            viewLink.target = '_blank';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                
+                                            const removeLink = document.createElement('a');
+                                            removeLink.classList.add('remove-file');
+                                            removeLink.dataset.fileName = fileName;
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.addEventListener('click', function() {
+                                                fileContainer.style.display = 'none';
+                                            });
+                                
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(viewLink);
+                                            fileContainer.appendChild(removeLink);
+                                
+                                            fileListContainer.appendChild(fileContainer);
+                                        }
+                                    }
+                                </script>                                    </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
@@ -1895,7 +1970,7 @@
                                     <div class="group-input">
                                         <label for="reviewer_person_value">CFT review selection</label>
                                         <select id="reviewer_person_value" name="reviewer_person_value[]" multiple
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                             <option value="">Select a value</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->name }}" {{-- Pass the user's name instead of id --}}
@@ -1909,42 +1984,106 @@
                                         @enderror
                                     </div>
                                     </div>
-                                        <div class="col-12">
+                                    <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Audit Attachments">Summary And Response Attachments</label>
-                                                <div><small class="text-primary">Please Attach all relevant or supporting
-                                                        documents</small></div>
-                                                {{-- <input type="file" id="myfile" name="myfile"
-                                                    value="{{ $data->myfile }}"
-                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}> --}}
+                                                <label for="myfile">Summary And Response Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="audit_attachment">
+                                                    <!-- Update the ID of the file attachment list container -->
+                                                    <div class="file-attachment-list" id="myfile-list">
                                                         @if ($data->myfile)
-                                                            @foreach (json_decode($data->myfile) as $file)
-                                                                <h6 type="button" class="file-container text-dark"
-                                                                    style="background-color: rgb(243, 242, 240);">
+                                                            @foreach(json_decode($data->myfile) as $file)
+                                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                                     <b>{{ $file }}</b>
-                                                                    <a href="{{ asset('upload/' . $file) }}"
-                                                                        target="_blank"><i class="fa fa-eye text-primary"
-                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
-                                                                            class="fa-solid fa-circle-xmark"
-                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                    </a>
+                                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                                        <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                                    </a>
+                                                                    <input type="hidden" name="existing_myfile[]" value="{{ $file }}">
                                                                 </h6>
                                                             @endforeach
                                                         @endif
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input
+                                                        <!-- Keep the ID of the input file as 'myfile' -->
+                                                        <input type="file" id="myfile" name="myfile[]" 
                                                             {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                            type="file" id="myfile" name="myfile[]"
-                                                            oninput="addMultipleFiles(this, 'audit_attachment')" multiple>
+                                                            oninput="addMultipleFiles(this, 'myfile-list')" multiple>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <!-- Hidden field to keep track of files to be deleted -->
+                                        <input type="hidden" id="deleted_myfile" name="deleted_myfile" value="">
+
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                const removeButtons = document.querySelectorAll('.remove-file');
+
+                                                removeButtons.forEach(button => {
+                                                    button.addEventListener('click', function() {
+                                                        const fileName = this.getAttribute('data-file-name');
+                                                        const fileContainer = this.closest('.file-container');
+
+                                                        // Hide the file container
+                                                        if (fileContainer) {
+                                                            fileContainer.style.display = 'none';
+                                                            // Remove hidden input associated with this file
+                                                            const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                            if (hiddenInput) {
+                                                                hiddenInput.remove();
+                                                            }
+
+                                                            // Add the file name to the deleted files list
+                                                            const deletedFilesInput = document.getElementById('deleted_myfile');
+                                                            let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                            deletedFiles.push(fileName);
+                                                            deletedFilesInput.value = deletedFiles.join(',');
+                                                        }
+                                                    });
+                                                });
+                                            });
+
+                                            function addMultipleFiles(input, id) {
+                                                const fileListContainer = document.getElementById(id);
+                                                const files = input.files;
+
+                                                for (let i = 0; i < files.length; i++) {
+                                                    const file = files[i];
+                                                    const fileName = file.name;
+                                                    const fileContainer = document.createElement('h6');
+                                                    fileContainer.classList.add('file-container', 'text-dark');
+                                                    fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                                    const fileText = document.createElement('b');
+                                                    fileText.textContent = fileName;
+
+                                                    const viewLink = document.createElement('a');
+                                                    viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                                    viewLink.target = '_blank';
+                                                    viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+
+                                                    const removeLink = document.createElement('a');
+                                                    removeLink.classList.add('remove-file');
+                                                    removeLink.dataset.fileName = fileName;
+                                                    removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                                    removeLink.addEventListener('click', function() {
+                                                        fileContainer.style.display = 'none';
+                                                    });
+
+                                                    fileContainer.appendChild(fileText);
+                                                    fileContainer.appendChild(viewLink);
+                                                    fileContainer.appendChild(removeLink);
+
+                                                    fileListContainer.appendChild(fileContainer);
+                                                }
+                                            }
+                                        </script>
+
                                         <!-- <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Audit Comments">Audit Comments</label>
@@ -1962,7 +2101,7 @@
                                     <div class="button-block">
                                        
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
-                                               >Save</button>
+                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}   >Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
@@ -2004,7 +2143,7 @@
                                         @if ($data->stage == 2 || $data->stage == 3)
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet"> Production Tablet/Capsule Powdert Required ?  <span
+                                                    <label for="Production Tablet"> Production Tablet/Capsule Powder Required ?  <span
                                                             class="text-danger">*</span></label>
                                                     <select name="Production_Table_Review" id="Production_Table_Review"
                                                         @if ($data->stage == 3) disabled @endif>
@@ -2066,7 +2205,7 @@
                                                                 (isset($data1->Production_Table_Person) && Auth::user()->name != $data1->Production_Table_Person)) readonly @endif name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 productionTable">
+                                            <!-- <div class="col-md-12 mb-3 productionTable">
                                                 <div class="group-input">
                                                     <label for="Production Tablet feedback">Production Tablet/Capsule Powder Feedback
                                                         <span id="asteriskPT2"
@@ -2080,7 +2219,7 @@
                                                             (isset($data1->Production_Table_Person) && Auth::user()->name != $data1->Production_Table_Person)) readonly @endif
                                                         name="Production_Table_Feedback" id="summernote-18" @if ($data1->Production_Table_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Production_Table_Feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12 productionTable">
                                                 <div class="group-input">
                                                     <label for="Production Tablet attachment">Production Tablet/Capsule Powder Attachments</label>
@@ -2265,12 +2404,10 @@
                                                         <textarea class="tiny" name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 productionTable">
+                                                <!-- <div class="col-md-12 mb-3 productionTable">
                                                     <div class="group-input">
                                                         <label for="Production Tablet feedback">Production Tablet FeedbackProduction Tablet/Capsule Powder Feedback
-                                                            <!-- <span
-                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                     
                                                         </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
                                                                 field if
@@ -2278,7 +2415,7 @@
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="Production_Table_Feedback" id="summernote-18">{{ $data1->Production_Table_Feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @else
                                                 <div class="col-md-12 mb-3 productionTable">
                                                     <div class="group-input">
@@ -2294,12 +2431,10 @@
                                                         <textarea disabled class="tiny" name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 productionTable">
+                                                <!-- <div class="col-md-12 mb-3 productionTable">
                                                     <div class="group-input">
                                                         <label for="Production Tablet feedback">Production Tablet Feedback
-                                                            <!-- <span
-                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                          
                                                         </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
                                                                 field if
@@ -2307,7 +2442,7 @@
                                                                 does not require completion</small></div>
                                                         <textarea disabled class="tiny" name="Production_Table_Feedback" id="summernote-18">{{ $data1->Production_Table_Feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @endif
                                             <div class="col-12 productionTable">
                                                 <div class="group-input">
@@ -2461,7 +2596,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 productionInjection">
                                                 <div class="group-input">
-                                                    <label for="Production Injection assessment">Impact Assessment (By
+                                                    <label for="Production Injection assessment">Review Comment (By
                                                         Production
                                                         Injection) <span id="asteriskPT1"
                                                             style="display: {{ $data1->Production_Injection_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
@@ -2475,7 +2610,7 @@
                                                                 (isset($data1->Production_Injection_Person) && Auth::user()->name != $data1->Production_Injection_Person)) readonly @endif name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 productionInjection">
+                                            <!-- <div class="col-md-12 mb-3 productionInjection">
                                                 <div class="group-input">
                                                     <label for="Production Injection feedback">Production Table Injection Feedback <span id="asteriskPT2"
                                                             style="display: {{ $data1->Production_Injection_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
@@ -2488,7 +2623,7 @@
                                                             (isset($data1->Production_Injection_Person) && Auth::user()->name != $data1->Production_Injection_Person)) readonly @endif
                                                         name="Production_Injection_Feedback" id="summernote-18" @if ($data1->Production_Injection_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Production_Injection_Feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12 productionInjection">
                                                 <div class="group-input">
                                                     <label for="Production Injection attachment">Production Injection
@@ -2648,7 +2783,7 @@
                                             @if ($data->stage == 3)
                                                 <div class="col-md-12 mb-3 productionInjection">
                                                     <div class="group-input">
-                                                        <label for="Production Injection assessment">Impact Assessment (By
+                                                        <label for="Production Injection assessment">Review Comment (By
                                                             Production Injection)
                                                             <!-- <span
                                                                                                                                                                                                                         id="asteriskInvi12" style="display: none"
@@ -2661,13 +2796,11 @@
                                                         <textarea class="tiny" name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 productionInjection">
+                                                <!-- <div class="col-md-12 mb-3 productionInjection">
                                                     <div class="group-input">
                                                         <label for="Production Injection feedback">Production Injection
                                                             Feedback
-                                                            <!-- <span
-                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                           
                                                         </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
                                                                 field if
@@ -2675,7 +2808,7 @@
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="Production_Injection_Feedback" id="summernote-18">{{ $data1->Production_Injection_Feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @else
                                                 <div class="col-md-12 mb-3 productionInjection">
                                                     <div class="group-input">
@@ -2692,13 +2825,11 @@
                                                         <textarea disabled class="tiny" name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 productionInjection">
+                                                <!-- <div class="col-md-12 mb-3 productionInjection">
                                                     <div class="group-input">
                                                         <label for="Production Injection feedback">Production Injection
                                                             Feedback
-                                                            <!-- <span
-                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                           
                                                         </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
                                                                 field if
@@ -2706,7 +2837,7 @@
                                                                 does not require completion</small></div>
                                                         <textarea disabled class="tiny" name="Production_Injection_Feedback" id="summernote-18">{{ $data1->Production_Injection_Feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @endif
                                             <div class="col-12 productionInjection">
                                                 <div class="group-input">
@@ -2864,7 +2995,7 @@
 
                                             <div class="col-md-12 mb-3 researchDevelopment">
                                                 <div class="group-input">
-                                                    <label for="Research Development assessment">Impact Assessment (By
+                                                    <label for="Research Development assessment">Review Comment (By
                                                         Research
                                                         Development) <span id="asteriskPT1"
                                                             style="display: {{ $data1->ResearchDevelopment_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
@@ -2878,7 +3009,7 @@
                                                                 (isset($data1->ResearchDevelopment_person) && Auth::user()->name != $data1->ResearchDevelopment_person)) readonly @endif name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 researchDevelopment">
+                                            <!-- <div class="col-md-12 mb-3 researchDevelopment">
                                                 <div class="group-input">
                                                     <label for="Research Development feedback">Research Development
                                                         Feedback <span id="asteriskPT2"
@@ -2892,7 +3023,7 @@
                                                             (isset($data1->ResearchDevelopment_person) && Auth::user()->name != $data1->ResearchDevelopment_person)) readonly @endif
                                                         name="ResearchDevelopment_feedback" id="summernote-18" @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->ResearchDevelopment_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                             <div class="col-12 researchDevelopment">
                                                 <div class="group-input">
@@ -3050,7 +3181,7 @@
                                             @if ($data->stage == 3)
                                                 <div class="col-md-12 mb-3 researchDevelopment">
                                                     <div class="group-input">
-                                                        <label for="Research Development assessment">Impact Assessment (By
+                                                        <label for="Research Development assessment">Review Comment (By
                                                             Research
                                                             Development)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
@@ -3060,7 +3191,7 @@
                                                         <textarea class="tiny" name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 researchDevelopment">
+                                                <!-- <div class="col-md-12 mb-3 researchDevelopment">
                                                     <div class="group-input">
                                                         <label for="Research Development feedback">Research Development
                                                             Feedback</label>
@@ -3070,11 +3201,11 @@
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="ResearchDevelopment_feedback" id="summernote-18">{{ $data1->ResearchDevelopment_feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @else
                                                 <div class="col-md-12 mb-3 researchDevelopment">
                                                     <div class="group-input">
-                                                        <label for="Research Development assessment">Impact Assessment (By
+                                                        <label for="Research Development assessment">Review Comment (By
                                                             Research
                                                             Development)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
@@ -3084,7 +3215,7 @@
                                                         <textarea disabled class="tiny" name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 researchDevelopment">
+                                                <!-- <div class="col-md-12 mb-3 researchDevelopment">
                                                     <div class="group-input">
                                                         <label for="Research Development feedback">Research Development
                                                             Feedback</label>
@@ -3094,7 +3225,7 @@
                                                                 does not require completion</small></div>
                                                         <textarea disabled class="tiny" name="ResearchDevelopment_feedback" id="summernote-18">{{ $data1->ResearchDevelopment_feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @endif
                                             <div class="col-12 researchDevelopment">
                                                 <div class="group-input">
@@ -3249,7 +3380,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 Human_Resource">
                                                 <div class="group-input">
-                                                    <label for="Human Resource assessment">Impact Assessment (By Human
+                                                    <label for="Human Resource assessment">Review Comment (By Human
                                                         Resource)
                                                         <span id="asteriskPT1"
                                                             style="display: {{ $data1->Human_Resource_review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
@@ -3261,7 +3392,7 @@
                                                         @if ($data->stage == 2 || (isset($data1->Human_Resource_person) && Auth::user()->name != $data1->Human_Resource_person)) readonly @endif name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 Human_Resource">
+                                            <!-- <div class="col-md-12 mb-3 Human_Resource">
                                                 <div class="group-input">
                                                     <label for="Human Resource feedback">Human Resource Feedback <span
                                                             id="asteriskPT2"
@@ -3273,7 +3404,7 @@
                                                     <textarea class="summernote Human_Resource_feedback" @if ($data->stage == 2 || (isset($data1->Human_Resource_person) && Auth::user()->name != $data1->Human_Resource_person)) readonly @endif
                                                         name="Human_Resource_feedback" id="summernote-18" @if ($data1->Human_Resource_review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Human_Resource_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12 Human_Resource">
                                                 <div class="group-input">
                                                     <label for="Human Resource attachment">Human Resource
@@ -3428,7 +3559,7 @@
                                             @if ($data->stage == 3)
                                                 <div class="col-md-12 mb-3 Human_Resource">
                                                     <div class="group-input">
-                                                        <label for="Human Resource assessment">Impact Assessment (By Human
+                                                        <label for="Human Resource assessment">Review Comment (By Human
                                                             Resource)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
                                                                 field if
@@ -3437,7 +3568,7 @@
                                                         <textarea class="tiny" name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 Human_Resource">
+                                                <!-- <div class="col-md-12 mb-3 Human_Resource">
                                                     <div class="group-input">
                                                         <label for="Human Resource feedback">Human Resource
                                                             Feedback</label>
@@ -3447,11 +3578,11 @@
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="Human_Resource_feedback" id="summernote-18">{{ $data1->Human_Resource_feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @else
                                                 <div class="col-md-12 mb-3 Human_Resource">
                                                     <div class="group-input">
-                                                        <label for="Human Resource assessment">Impact Assessment (By Human
+                                                        <label for="Human Resource assessment">Review Comment (By Human
                                                             Resource)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
                                                                 field if
@@ -3460,7 +3591,7 @@
                                                         <textarea disabled class="tiny" name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 Human_Resource">
+                                                <!-- <div class="col-md-12 mb-3 Human_Resource">
                                                     <div class="group-input">
                                                         <label for="Human Resource feedback">Human Resource
                                                             Feedback</label>
@@ -3470,7 +3601,7 @@
                                                                 does not require completion</small></div>
                                                         <textarea disabled class="tiny" name="Human_Resource_feedback" id="summernote-18">{{ $data1->Human_Resource_feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @endif
                                             <div class="col-12 Human_Resource">
                                                 <div class="group-input">
@@ -3629,7 +3760,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 CQA">
                                                 <div class="group-input">
-                                                    <label for="Corporate Quality Assurance assessment">Impact Assessment
+                                                    <label for="Corporate Quality Assurance assessment">Review Comment
                                                         (By
                                                         Corporate Quality
                                                         Assurance) <span id="asteriskPT1"
@@ -3646,7 +3777,7 @@
                                                         name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 CQA">
+                                            <!-- <div class="col-md-12 mb-3 CQA">
                                                 <div class="group-input">
                                                     <label for="Corporate Quality Assurance feedback">Corporate Quality
                                                         Assurance
@@ -3663,7 +3794,7 @@
                                                         name="CorporateQualityAssurance_feedback" id="summernote-18"
                                                         @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12 CQA">
                                                 <div class="group-input">
                                                     <label for="Corporate Quality Assurance attachment">Corporate Quality
@@ -3847,7 +3978,7 @@
                                                         <textarea class="tiny" name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 CQA">
+                                                <!-- <div class="col-md-12 mb-3 CQA">
                                                     <div class="group-input">
                                                         <label for="Corporate Quality Assurance feedback">Corporate
                                                             Quality
@@ -3859,7 +3990,7 @@
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="CorporateQualityAssurance_feedback" id="summernote-18">{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @else
                                                 <div class="col-md-12 mb-3 CQA">
                                                     <div class="group-input">
@@ -3874,7 +4005,7 @@
                                                         <textarea disabled class="tiny" name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 CQA">
+                                                <!-- <div class="col-md-12 mb-3 CQA">
                                                     <div class="group-input">
                                                         <label for="Corporate Quality Assurance feedback">Corporate
                                                             Quality
@@ -3886,7 +4017,7 @@
                                                                 does not require completion</small></div>
                                                         <textarea disabled class="tiny" name="CorporateQualityAssurance_feedback" id="summernote-18">{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @endif
                                             <div class="col-12 CQA">
                                                 <div class="group-input">
@@ -4045,7 +4176,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 store">
                                                 <div class="group-input">
-                                                    <label for="Store assessment">Impact Assessment (By Store) <span
+                                                    <label for="Store assessment">Review Comment (By Store) <span
                                                             id="asteriskPT1"
                                                             style="display: {{ $data1->Store_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
@@ -4056,7 +4187,7 @@
                                                         @if ($data->stage == 2 || (isset($data1->Store_person) && Auth::user()->name != $data1->Store_person)) readonly @endif name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 store">
+                                            <!-- <div class="col-md-12 mb-3 store">
                                                 <div class="group-input">
                                                     <label for="store feedback">store Feedback <span id="asteriskPT2"
                                                             style="display: {{ $data1->Store_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
@@ -4067,7 +4198,7 @@
                                                     <textarea class="summernote Store_feedback" @if ($data->stage == 2 || (isset($data1->Store_person) && Auth::user()->name != $data1->Store_person)) readonly @endif
                                                         name="Store_feedback" id="summernote-18" @if ($data1->Store_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Store_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12 store">
                                                 <div class="group-input">
                                                     <label for="Store attachment">Store Attachments</label>
@@ -4226,7 +4357,7 @@
                                             @if ($data->stage == 3)
                                                 <div class="col-md-12 mb-3 store">
                                                     <div class="group-input">
-                                                        <label for="Store assessment">Impact Assessment (By Store)</label>
+                                                        <label for="Store assessment">Review Comment (By Store)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
                                                                 field if
                                                                 it
@@ -4234,7 +4365,7 @@
                                                         <textarea class="tiny" name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 store">
+                                                <!-- <div class="col-md-12 mb-3 store">
                                                     <div class="group-input">
                                                         <label for="Store feedback">Store Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
@@ -4243,11 +4374,11 @@
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="Store_feedback" id="summernote-18">{{ $data1->Store_feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @else
                                                 <div class="col-md-12 mb-3 store">
                                                     <div class="group-input">
-                                                        <label for="Store assessment">Impact Assessment (By Store)</label>
+                                                        <label for="Store assessment">Review Comment (By Store)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
                                                                 field if
                                                                 it
@@ -4255,7 +4386,7 @@
                                                         <textarea disabled class="tiny" name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 store">
+                                                <!-- <div class="col-md-12 mb-3 store">
                                                     <div class="group-input">
                                                         <label for="Store feedback">Store Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
@@ -4264,7 +4395,7 @@
                                                                 does not require completion</small></div>
                                                         <textarea disabled class="tiny" name="Store_feedback" id="summernote-18">{{ $data1->Store_feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @endif
                                             <div class="col-12 store">
                                                 <div class="group-input">
@@ -4421,7 +4552,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 Engineering">
                                                 <div class="group-input">
-                                                    <label for="Engineering assessment">Impact Assessment (By Engineering)
+                                                    <label for="Engineering assessment">Review Comment (By Engineering)
                                                         <span id="asteriskPT1"
                                                             style="display: {{ $data1->Engineering_review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
@@ -4432,7 +4563,7 @@
                                                         @if ($data->stage == 2 || (isset($data1->Engineering_person) && Auth::user()->name != $data1->Engineering_person)) readonly @endif name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 Engineering">
+                                            <!-- <div class="col-md-12 mb-3 Engineering">
                                                 <div class="group-input">
                                                     <label for="Engineering feedback">Engineering Feedback <span
                                                             id="asteriskPT2"
@@ -4444,7 +4575,7 @@
                                                     <textarea class="summernote Engineering_feedback" @if ($data->stage == 2 || (isset($data1->Engineering_person) && Auth::user()->name != $data1->Engineering_person)) readonly @endif
                                                         name="Engineering_feedback" id="summernote-18" @if ($data1->Engineering_review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Engineering_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12 Engineering">
                                                 <div class="group-input">
                                                     <label for="Engineering attachment">Engineering Attachments</label>
@@ -4604,7 +4735,7 @@
                                             @if ($data->stage == 3)
                                                 <div class="col-md-12 mb-3 Engineering">
                                                     <div class="group-input">
-                                                        <label for="Engineering assessment">Impact Assessment (By
+                                                        <label for="Engineering assessment">Review Comment (By
                                                             Engineering)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
                                                                 field if
@@ -4613,7 +4744,7 @@
                                                         <textarea class="tiny" name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 Engineering">
+                                                <!-- <div class="col-md-12 mb-3 Engineering">
                                                     <div class="group-input">
                                                         <label for="Engineering feedback">Engineering Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
@@ -4622,11 +4753,11 @@
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="Engineering_feedback" id="summernote-18">{{ $data1->Engineering_feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @else
                                                 <div class="col-md-12 mb-3 Engineering">
                                                     <div class="group-input">
-                                                        <label for="Engineering assessment">Impact Assessment (By
+                                                        <label for="Engineering assessment">Review Comment (By
                                                             Engineering)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
                                                                 field if
@@ -4635,7 +4766,7 @@
                                                         <textarea disabled class="tiny" name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 Engineering">
+                                                <!-- <div class="col-md-12 mb-3 Engineering">
                                                     <div class="group-input">
                                                         <label for="Engineering feedback">Engineering Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
@@ -4644,7 +4775,7 @@
                                                                 does not require completion</small></div>
                                                         <textarea disabled class="tiny" name="Engineering_feedback" id="summernote-18">{{ $data1->Engineering_feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @endif
                                             <div class="col-12 Engineering">
                                                 <div class="group-input">
@@ -4794,7 +4925,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 RegulatoryAffair">
                                                 <div class="group-input">
-                                                    <label for="Regulatory Affair assessment">Impact Assessment (By
+                                                    <label for="Regulatory Affair assessment">Review Comment (By
                                                         Regulatory
                                                         Affair) <span id="asteriskPT1"
                                                             style="display: {{ $data1->RegulatoryAffair_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
@@ -4808,7 +4939,7 @@
                                                                 (isset($data1->RegulatoryAffair_person) && Auth::user()->name != $data1->RegulatoryAffair_person)) readonly @endif name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 RegulatoryAffair">
+                                            <!-- <div class="col-md-12 mb-3 RegulatoryAffair">
                                                 <div class="group-input">
                                                     <label for="Regulatory Affair feedback">Regulatory Affair Feedback
                                                         <span id="asteriskPT2"
@@ -4822,7 +4953,7 @@
                                                             (isset($data1->RegulatoryAffair_person) && Auth::user()->name != $data1->RegulatoryAffair_person)) readonly @endif
                                                         name="RegulatoryAffair_feedback" id="summernote-18" @if ($data1->RegulatoryAffair_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->RegulatoryAffair_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12 RegulatoryAffair">
                                                 <div class="group-input">
                                                     <label for="Regulatory Affair attachment">Regulatory Affair
@@ -4986,7 +5117,7 @@
                                             @if ($data->stage == 3)
                                                 <div class="col-md-12 mb-3 RegulatoryAffair">
                                                     <div class="group-input">
-                                                        <label for="Regulatory Affair assessment">Impact Assessment (By
+                                                        <label for="Regulatory Affair assessment">Review Comment (By
                                                             Regulatory
                                                             Affair)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
@@ -4996,7 +5127,7 @@
                                                         <textarea class="tiny" name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 RegulatoryAffair">
+                                                <!-- <div class="col-md-12 mb-3 RegulatoryAffair">
                                                     <div class="group-input">
                                                         <label for="Regulatory Affair feedback">Regulatory Affair
                                                             Feedback</label>
@@ -5006,11 +5137,11 @@
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="RegulatoryAffair_feedback" id="summernote-18">{{ $data1->RegulatoryAffair_feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @else
                                                 <div class="col-md-12 mb-3 RegulatoryAffair">
                                                     <div class="group-input">
-                                                        <label for="Regulatory Affair assessment">Impact Assessment (By
+                                                        <label for="Regulatory Affair assessment">Review Comment (By
                                                             Regulatory
                                                             Affair)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
@@ -5020,7 +5151,7 @@
                                                         <textarea disabled class="tiny" name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 RegulatoryAffair">
+                                                <!-- <div class="col-md-12 mb-3 RegulatoryAffair">
                                                     <div class="group-input">
                                                         <label for="Regulatory Affair feedback">Regulatory Affair
                                                             Feedback</label>
@@ -5030,7 +5161,7 @@
                                                                 does not require completion</small></div>
                                                         <textarea disabled class="tiny" name="RegulatoryAffair_feedback" id="summernote-18">{{ $data1->RegulatoryAffair_feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @endif
                                             <div class="col-12 RegulatoryAffair">
                                                 <div class="group-input">
@@ -5186,7 +5317,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 quality_assurance">
                                             <div class="group-input">
-                                                <label for="Impact Assessment3">Impact Assessment (By Quality Assurance)
+                                                <label for="Impact Assessment3">Review Comment (By Quality Assurance)
                                                     <span id="asteriskQQA1"
                                                         style="display: {{ $data1->Quality_Assurance_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                                         class="text-danger">*</span></label>
@@ -5197,7 +5328,7 @@
                                                     name="QualityAssurance_assessment" @if ($data->stage == 2 || Auth::user()->name != $data1->QualityAssurance_person) readonly @endif id="summernote-23">{{ $data1->QualityAssurance_assessment }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mb-3 quality_assurance">
+                                        <!-- <div class="col-md-12 mb-3 quality_assurance">
                                             <div class="group-input">
                                                 <label for="Quality Assurance Feedback">Quality Assurance Feedback <span
                                                         id="asteriskQQA2"
@@ -5209,7 +5340,7 @@
                                                 <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 3) required @endif class="summernote QualityAssurance_feedback"
                                                     name="QualityAssurance_feedback" @if ($data->stage == 2 || Auth::user()->name != $data1->QualityAssurance_person) readonly @endif id="summernote-24">{{ $data1->QualityAssurance_feedback }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <script>
                                             document.addEventListener('DOMContentLoaded', function() {
@@ -5383,7 +5514,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 productionLiquid">
                                                 <div class="group-input">
-                                                    <label for="Production Liquid assessment">Impact Assessment (By Production Liquid/ointment) <span id="asteriskPT1"
+                                                    <label for="Production Liquid assessment">Review Comment (By Production Liquid/ointment) <span id="asteriskPT1"
                                                             style="display: {{ $data1->ProductionLiquid_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field
@@ -5395,7 +5526,7 @@
                                                                 (isset($data1->ProductionLiquid_person) && Auth::user()->name != $data1->ProductionLiquid_person)) readonly @endif name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 productionLiquid">
+                                            <!-- <div class="col-md-12 mb-3 productionLiquid">
                                                 <div class="group-input">
                                                     <label for="Production Liquid feedback">Production Liquid/ointment Feedback
                                                         <span id="asteriskPT2"
@@ -5409,7 +5540,7 @@
                                                             (isset($data1->ProductionLiquid_person) && Auth::user()->name != $data1->ProductionLiquid_person)) readonly @endif
                                                         name="ProductionLiquid_feedback" id="summernote-18" @if ($data1->ProductionLiquid_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->ProductionLiquid_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12 productionLiquid">
                                                 <div class="group-input">
                                                     <label for="Production Liquid attachment">Production Liquid/ointment Attachments</label>
@@ -5569,7 +5700,7 @@
                                             @if ($data->stage == 3)
                                                 <div class="col-md-12 mb-3 productionLiquid">
                                                     <div class="group-input">
-                                                        <label for="Production Liquid assessment">Impact Assessment (By
+                                                        <label for="Production Liquid assessment">Review Comment (By
                                                             Production
                                                             Liquid)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
@@ -5579,7 +5710,7 @@
                                                         <textarea class="tiny" name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 productionLiquid">
+                                                <!-- <div class="col-md-12 mb-3 productionLiquid">
                                                     <div class="group-input">
                                                         <label for="Production Liquid feedback">Production Liquid
                                                             Feedback</label>
@@ -5589,11 +5720,11 @@
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="ProductionLiquid_feedback" id="summernote-18">{{ $data1->ProductionLiquid_feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @else
                                                 <div class="col-md-12 mb-3 productionLiquid">
                                                     <div class="group-input">
-                                                        <label for="Production Liquid assessment">Impact Assessment (By
+                                                        <label for="Production Liquid assessment">Review Comment (By
                                                             Production
                                                             Liquid)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
@@ -5603,7 +5734,7 @@
                                                         <textarea disabled class="tiny" name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 productionLiquid">
+                                                <!-- <div class="col-md-12 mb-3 productionLiquid">
                                                     <div class="group-input">
                                                         <label for="Production Liquid feedback">Production Liquid
                                                             Feedback</label>
@@ -5613,7 +5744,7 @@
                                                                 does not require completion</small></div>
                                                         <textarea disabled class="tiny" name="ProductionLiquid_feedback" id="summernote-18">{{ $data1->ProductionLiquid_feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @endif
                                             <div class="col-12 productionLiquid">
                                                 <div class="group-input">
@@ -5767,7 +5898,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 qualityControl">
                                                 <div class="group-input">
-                                                    <label for="Quality Control assessment">Impact Assessment (By Quality
+                                                    <label for="Quality Control assessment">Review Comment (By Quality
                                                         Control)
                                                         <span id="asteriskPT1"
                                                             style="display: {{ $data1->Quality_review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
@@ -5781,7 +5912,7 @@
                                                                 (isset($data1->Quality_Control_Person) && Auth::user()->name != $data1->Quality_Control_Person)) readonly @endif name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 qualityControl">
+                                            <!-- <div class="col-md-12 mb-3 qualityControl">
                                                 <div class="group-input">
                                                     <label for="Quality Control feedback">Quality Control Feedback <span
                                                             id="asteriskPT2"
@@ -5795,7 +5926,7 @@
                                                             (isset($data1->Quality_Control_Person) && Auth::user()->name != $data1->Quality_Control_Person)) readonly @endif
                                                         name="Quality_Control_feedback" id="summernote-18" @if ($data1->Quality_review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Quality_Control_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12 qualityControl">
                                                 <div class="group-input">
                                                     <label for="Quality Control attachment">Quality Control
@@ -5958,7 +6089,7 @@
                                             @if ($data->stage == 3)
                                                 <div class="col-md-12 mb-3 qualityControl">
                                                     <div class="group-input">
-                                                        <label for="Quality Control assessment">Impact Assessment (By
+                                                        <label for="Quality Control assessment">Review Comment (By
                                                             Quality
                                                             Control)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
@@ -5968,7 +6099,7 @@
                                                         <textarea class="tiny" name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 qualityControl">
+                                                <!-- <div class="col-md-12 mb-3 qualityControl">
                                                     <div class="group-input">
                                                         <label for="Quality Control feedback">Quality Control
                                                             Feedback</label>
@@ -5978,11 +6109,11 @@
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="Quality_Control_feedback" id="summernote-18">{{ $data1->Quality_Control_feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @else
                                                 <div class="col-md-12 mb-3 qualityControl">
                                                     <div class="group-input">
-                                                        <label for="Quality Control assessment">Impact Assessment (By
+                                                        <label for="Quality Control assessment">Review Comment (By
                                                             Quality
                                                             Control)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
@@ -5992,7 +6123,7 @@
                                                         <textarea disabled class="tiny" name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 qualityControl">
+                                                <!-- <div class="col-md-12 mb-3 qualityControl">
                                                     <div class="group-input">
                                                         <label for="Quality Control feedback">Quality Control
                                                             Feedback</label>
@@ -6002,7 +6133,7 @@
                                                                 does not require completion</small></div>
                                                         <textarea disabled class="tiny" name="Quality_Control_feedback" id="summernote-18">{{ $data1->Quality_Control_feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @endif
                                             <div class="col-12 qualityControl">
                                                 <div class="group-input">
@@ -6152,7 +6283,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 Microbiology">
                                                 <div class="group-input">
-                                                    <label for="Microbiology assessment">Impact Assessment (By
+                                                    <label for="Microbiology assessment">Review Comment (By
                                                         Microbiology) <span id="asteriskPT1"
                                                             style="display: {{ $data1->Microbiology_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
@@ -6163,7 +6294,7 @@
                                                         @if ($data->stage == 2 || (isset($data1->Microbiology_person) && Auth::user()->name != $data1->Microbiology_person)) readonly @endif name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 Microbiology">
+                                            <!-- <div class="col-md-12 mb-3 Microbiology">
                                                 <div class="group-input">
                                                     <label for="Microbiology feedback">Microbiology Feedback <span
                                                             id="asteriskPT2"
@@ -6175,7 +6306,7 @@
                                                     <textarea class="summernote Microbiology_feedback" @if ($data->stage == 2 || (isset($data1->Microbiology_person) && Auth::user()->name != $data1->Microbiology_person)) readonly @endif
                                                         name="Microbiology_feedback" id="summernote-18" @if ($data1->Microbiology_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Microbiology_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12 Microbiology">
                                                 <div class="group-input">
                                                     <label for="Microbiology attachment">Microbiology Attachments</label>
@@ -6337,7 +6468,7 @@
                                             @if ($data->stage == 3)
                                                 <div class="col-md-12 mb-3 Microbiology">
                                                     <div class="group-input">
-                                                        <label for="Microbiology assessment">Impact Assessment (By
+                                                        <label for="Microbiology assessment">Review Comment (By
                                                             Microbiology)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
                                                                 field if
@@ -6346,7 +6477,7 @@
                                                         <textarea class="tiny" name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 Microbiology">
+                                                <!-- <div class="col-md-12 mb-3 Microbiology">
                                                     <div class="group-input">
                                                         <label for="Microbiology feedback">Microbiology Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
@@ -6355,11 +6486,11 @@
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="Microbiology_feedback" id="summernote-18">{{ $data1->Microbiology_feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @else
                                                 <div class="col-md-12 mb-3 Microbiology">
                                                     <div class="group-input">
-                                                        <label for="Microbiology assessment">Impact Assessment (By
+                                                        <label for="Microbiology assessment">Review Comment (By
                                                             Microbiology)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
                                                                 field if
@@ -6368,7 +6499,7 @@
                                                         <textarea disabled class="tiny" name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 Microbiology">
+                                                <!-- <div class="col-md-12 mb-3 Microbiology">
                                                     <div class="group-input">
                                                         <label for="Microbiology feedback">Microbiology Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
@@ -6377,7 +6508,7 @@
                                                                 does not require completion</small></div>
                                                         <textarea disabled class="tiny" name="Microbiology_feedback" id="summernote-18">{{ $data1->Microbiology_feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @endif
                                             <div class="col-12 Microbiology">
                                                 <div class="group-input">
@@ -6530,7 +6661,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 safety">
                                                 <div class="group-input">
-                                                    <label for="Safety assessment">Impact Assessment (By Safety) <span
+                                                    <label for="Safety assessment">Review Comment (By Safety) <span
                                                             id="asteriskPT1"
                                                             style="display: {{ $data1->Environment_Health_review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
@@ -6544,7 +6675,7 @@
                                                                     Auth::user()->name != $data1->Environment_Health_Safety_person)) readonly @endif name="Health_Safety_assessment" id="summernote-17">{{ $data1->Health_Safety_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 safety">
+                                            <!-- <div class="col-md-12 mb-3 safety">
                                                 <div class="group-input">
                                                     <label for="Safety feedback">Safety Feedback <span id="asteriskPT2"
                                                             style="display: {{ $data1->Environment_Health_review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
@@ -6558,7 +6689,7 @@
                                                                 Auth::user()->name != $data1->Environment_Health_Safety_person)) readonly @endif
                                                         name="Health_Safety_feedback" id="summernote-18" @if ($data1->Environment_Health_review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Health_Safety_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12 safety">
                                                 <div class="group-input">
                                                     <label for="Safety attachment">Safety Attachments</label>
@@ -6721,7 +6852,7 @@
                                             @if ($data->stage == 3)
                                                 <div class="col-md-12 mb-3 safety">
                                                     <div class="group-input">
-                                                        <label for="Safety assessment">Impact Assessment (By
+                                                        <label for="Safety assessment">Review Comment (By
                                                             Safety)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
                                                                 field if
@@ -6730,7 +6861,7 @@
                                                         <textarea class="tiny" name="Health_Safety_assessment" id="summernote-17">{{ $data1->Health_Safety_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 safety">
+                                                <!-- <div class="col-md-12 mb-3 safety">
                                                     <div class="group-input">
                                                         <label for="Safety feedback">Safety Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
@@ -6739,11 +6870,11 @@
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="Health_Safety_feedback" id="summernote-18">{{ $data1->Health_Safety_feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @else
                                                 <div class="col-md-12 mb-3 safety">
                                                     <div class="group-input">
-                                                        <label for="Safety assessment">Impact Assessment (By
+                                                        <label for="Safety assessment">Review Comment (By
                                                             Safety)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
                                                                 field if
@@ -6752,7 +6883,7 @@
                                                         <textarea disabled class="tiny" name="Health_Safety_assessment" id="summernote-17">{{ $data1->Health_Safety_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mb-3 safety">
+                                                <!-- <div class="col-md-12 mb-3 safety">
                                                     <div class="group-input">
                                                         <label for="Safety feedback">Safety Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
@@ -6761,7 +6892,7 @@
                                                                 does not require completion</small></div>
                                                         <textarea disabled class="tiny" name="Health_Safety_feedback" id="summernote-18">{{ $data1->Health_Safety_feedback }}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             @endif
                                             <div class="col-12 safety">
                                                 <div class="group-input">
@@ -6839,7 +6970,7 @@
 
 
                                         <!-- HTML Section -->
-                                        <div class="sub-head">
+                                        <!-- <div class="sub-head">
                                             Contract Giver
                                         </div>
 
@@ -6852,7 +6983,7 @@
                                         @if ($data1->ContractGiver_Review !== 'yes')
                                             <script>
                                                 $(document).ready(function() {
-                                                    // Initially hide or show based on the current value of the select
+                                               
                                                     if ($('[name="ContractGiver_Review"]').val() === 'yes') {
                                                         $('.ContractGiver').show();
                                                         $('.ContractGiver span').show();
@@ -6861,7 +6992,7 @@
                                                         $('.ContractGiver span').hide();
                                                     }
 
-                                                    // Handle changes to the select field
+                                                   
                                                     $('[name="ContractGiver_Review"]').change(function() {
                                                         if ($(this).val() === 'yes') {
                                                             $('.ContractGiver').show();
@@ -6933,18 +7064,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-12 mb-3 ContractGiver">
-                                                <div class="group-input">
-                                                    <label for="Contract Giver feedback">Impact Assessment (By Contract Giver)<span
-                                                            id="asteriskPT2" class="text-danger"
-                                                            style="display: {{ $data1->ContractGiver_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"></span></label>
-                                                    <div><small class="text-primary">Please insert "NA" in the data field
-                                                            if it
-                                                            does not require completion</small></div>
-                                                    <textarea class="summernote ContractGiver_feedback" @if ($data->stage == 2 || (isset($data1->ContractGiver_person) && Auth::user()->name != $data1->ContractGiver_person)) readonly @endif
-                                                        name="ContractGiver_feedback" id="summernote-18" @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->ContractGiver_feedback }}</textarea>
-                                                </div>
-                                            </div>
+                                           
 
                                             <div class="col-12 ContractGiver">
                                                 <div class="group-input">
@@ -6996,14 +7116,7 @@
                                                 </div>
                                             </div>
 
-                                            {{-- <div class="col-lg-6 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver Completed On">Contract Giver Completed On</label>
-                                            <input type="date" id="ContractGiver_on" name="ContractGiver_on"
-                                                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                value="{{ $data1->ContractGiver_on }}">
-                                        </div>
-                                    </div> --}}
+                                          
                                             <div class="col-6 ContractGiver new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <label for="Contract Giver Completed On">Contract Giver
@@ -7162,7 +7275,7 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                        @endif
+                                        @endif -->
 
 
                                         @if ($data->stage == 2 || $data->stage == 3)
@@ -7236,99 +7349,27 @@
 
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12 other1_reviews ">
+                                            <div class="col-lg-12 Other1_reviews">
 
-                                                <div class="group-input">
-                                                    <label for="Department1"> Other's 1 Department <span
-                                                            id="asteriskod1"
-                                                            style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}"
-                                                            class="text-danger">*</span></label>
-                                                    <select name="Other1_Department_person"
-                                                        @if ($data->stage == 3) disabled @endif
-                                                        id="Other1_Department_person">
-                                                        <option value="">-- Select --</option>
-                                                        <option value="CQA"
-                                                            @if ($data1->Other1_Department_person == 'CQA') selected @endif>Corporate
-                                                            Quality Assurance</option>
-                                                        <option value="QA"
-                                                            @if ($data1->Other1_Department_person == 'QA') selected @endif>Quality
-                                                            Assurance</option>
-                                                        <option value="QC"
-                                                            @if ($data1->Other1_Department_person == 'QC') selected @endif>Quality
-                                                            Control</option>
-                                                        <option value="QM"
-                                                            @if ($data1->Other1_Department_person == 'QM') selected @endif>Quality
-                                                            Control (Microbiology department)
-                                                        </option>
-                                                        <option value="PG"
-                                                            @if ($data1->Other1_Department_person == 'PG') selected @endif>Production
-                                                            General</option>
-                                                        <option value="PL"
-                                                            @if ($data1->Other1_Department_person == 'PL') selected @endif>Production
-                                                            Liquid Orals</option>
-                                                        <option value="PT"
-                                                            @if ($data1->Other1_Department_person == 'PT') selected @endif>Production
-                                                            Tablet and Powder</option>
-                                                        <option value="PE"
-                                                            @if ($data1->Other1_Department_person == 'PE') selected @endif>Production
-                                                            External (Ointment, Gels, Creams and
-                                                            Liquid)</option>
-                                                        <option value="PC"
-                                                            @if ($data1->Other1_Department_person == 'PC') selected @endif>Production
-                                                            Capsules</option>
-                                                        <option value="PI"
-                                                            @if ($data1->Other1_Department_person == 'PI') selected @endif>Production
-                                                            Injectable</option>
-                                                        <option value="EN"
-                                                            @if ($data1->Other1_Department_person == 'EN') selected @endif>
-                                                            Engineering
-                                                        </option>
-                                                        <option value="HR"
-                                                            @if ($data1->Other1_Department_person == 'HR') selected @endif>Human
-                                                            Resource</option>
-                                                        <option value="ST"
-                                                            @if ($data1->Other1_Department_person == 'ST') selected @endif>Store
-                                                        </option>
-                                                        <option value="IT"
-                                                            @if ($data1->Other1_Department_person == 'IT') selected @endif>Electronic
-                                                            Data Processing
-                                                        </option>
-                                                        <option value="FD"
-                                                            @if ($data1->Other1_Department_person == 'FD') selected @endif>
-                                                            Formulation
-                                                            Development
-                                                        </option>
-                                                        <option value="AL"
-                                                            @if ($data1->Other1_Department_person == 'AL') selected @endif>Analytical
-                                                            research and Development
-                                                            Laboratory
-                                                        </option>
-                                                        <option value="PD"
-                                                            @if ($data1->Other1_Department_person == 'PD') selected @endif>Packaging
-                                                            Development
-                                                        </option>
-                                                        <option value="PU"
-                                                            @if ($data1->Other1_Department_person == 'PU') selected @endif>Purchase
-                                                            Department
-                                                        </option>
-                                                        <option value="DC"
-                                                            @if ($data1->Other1_Department_person == 'DC') selected @endif>Document
-                                                            Cell
-                                                        </option>
-                                                        <option value="RA"
-                                                            @if ($data1->Other1_Department_person == 'RA') selected @endif>Regulatory
-                                                            Affairs
-                                                        </option>
-                                                        <option value="PV"
-                                                            @if ($data1->Other1_Department_person == 'PV') selected @endif>
-                                                            Pharmacovigilance
-                                                        </option>
+                                        <div class="group-input">
+                                            <label for="Department1">Other's 1 Department 
+                                                <span id="asteriskod5"
+                                                    style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span>
+                                            </label>
+                                            <select name="Other1_Department_person"
+                                                @if ($data->stage == 4) disabled @endif
+                                                id="Other1_Department_person">
+                                                <option value="">-- Select --</option>
+                                                @foreach (Helpers::getDepartments() as $key => $name)
+                                                    <option value="{{ $key }}" @if ($data1->Other1_Department_person == $key) selected @endif>
+                                                        {{ $name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        </div>
 
-
-                                                    </select>
-
-                                                </div>
-                                            </div>
                                             <div class="col-md-12 mb-3 other1_reviews ">
                                                 <div class="group-input">
                                                     <label for="Impact Assessment12">Review comment (By Other's 1)
@@ -7337,14 +7378,14 @@
                                                         @if ($data->stage == 2 || Auth::user()->name != $data1->Other1_person) readonly @endif id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 other1_reviews ">
+                                            <!-- <div class="col-md-12 mb-3 other1_reviews ">
                                                 <div class="group-input">
                                                     <label for="Feedback1"> Other's 1 Feedback
                                                     </label>
                                                     <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 3) required @endif class="tiny" name="Other1_feedback"
                                                         @if ($data->stage == 2 || Auth::user()->name != $data1->Other1_person) readonly @endif id="summernote-42">{{ $data1->Other1_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
                                                     var selectField = document.getElementById('Other1_review');
@@ -7517,97 +7558,25 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 Other2_reviews">
-                                                <div class="group-input">
-                                                    <label for="Department2"> Other's 2 Department <span
-                                                            id="asteriskod2"
-                                                            style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}"
-                                                            class="text-danger">*</span></label>
-                                                    <select name="Other2_Department_person"
-                                                        @if ($data->stage == 3) disabled @endif
-                                                        id="Other2_Department_person">
-                                                        <option value="">-- Select --</option>
-                                                        <option value="CQA"
-                                                            @if ($data1->Other2_Department_person == 'CQA') selected @endif>Corporate
-                                                            Quality Assurance</option>
-                                                        <option value="QA"
-                                                            @if ($data1->Other2_Department_person == 'QA') selected @endif>Quality
-                                                            Assurance</option>
-                                                        <option value="QC"
-                                                            @if ($data1->Other2_Department_person == 'QC') selected @endif>Quality
-                                                            Control</option>
-                                                        <option value="QM"
-                                                            @if ($data1->Other2_Department_person == 'QM') selected @endif>Quality
-                                                            Control (Microbiology department)
-                                                        </option>
-                                                        <option value="PG"
-                                                            @if ($data1->Other2_Department_person == 'PG') selected @endif>Production
-                                                            General</option>
-                                                        <option value="PL"
-                                                            @if ($data1->Other2_Department_person == 'PL') selected @endif>Production
-                                                            Liquid Orals</option>
-                                                        <option value="PT"
-                                                            @if ($data1->Other2_Department_person == 'PT') selected @endif>Production
-                                                            Tablet and Powder</option>
-                                                        <option value="PE"
-                                                            @if ($data1->Other2_Department_person == 'PE') selected @endif>Production
-                                                            External (Ointment, Gels, Creams and
-                                                            Liquid)</option>
-                                                        <option value="PC"
-                                                            @if ($data1->Other2_Department_person == 'PC') selected @endif>Production
-                                                            Capsules</option>
-                                                        <option value="PI"
-                                                            @if ($data1->Other2_Department_person == 'PI') selected @endif>Production
-                                                            Injectable</option>
-                                                        <option value="EN"
-                                                            @if ($data1->Other2_Department_person == 'EN') selected @endif>
-                                                            Engineering
-                                                        </option>
-                                                        <option value="HR"
-                                                            @if ($data1->Other2_Department_person == 'HR') selected @endif>Human
-                                                            Resource</option>
-                                                        <option value="ST"
-                                                            @if ($data1->Other2_Department_person == 'ST') selected @endif>Store
-                                                        </option>
-                                                        <option value="IT"
-                                                            @if ($data1->Other2_Department_person == 'IT') selected @endif>Electronic
-                                                            Data Processing
-                                                        </option>
-                                                        <option value="FD"
-                                                            @if ($data1->Other2_Department_person == 'FD') selected @endif>
-                                                            Formulation
-                                                            Development
-                                                        </option>
-                                                        <option value="AL"
-                                                            @if ($data1->Other2_Department_person == 'AL') selected @endif>Analytical
-                                                            research and Development
-                                                            Laboratory
-                                                        </option>
-                                                        <option value="PD"
-                                                            @if ($data1->Other2_Department_person == 'PD') selected @endif>Packaging
-                                                            Development
-                                                        </option>
-                                                        <option value="PU"
-                                                            @if ($data1->Other2_Department_person == 'PU') selected @endif>Purchase
-                                                            Department
-                                                        </option>
-                                                        <option value="DC"
-                                                            @if ($data1->Other2_Department_person == 'DC') selected @endif>Document
-                                                            Cell
-                                                        </option>
-                                                        <option value="RA"
-                                                            @if ($data1->Other2_Department_person == 'RA') selected @endif>Regulatory
-                                                            Affairs
-                                                        </option>
-                                                        <option value="PV"
-                                                            @if ($data1->Other2_Department_person == 'PV') selected @endif>
-                                                            Pharmacovigilance
-                                                        </option>
 
-
-                                                    </select>
-
-                                                </div>
-                                            </div>
+                                    <div class="group-input">
+                                        <label for="Department2">Other's 2 Department 
+                                            <span id="asteriskod5"
+                                                style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                                class="text-danger">*</span>
+                                        </label>
+                                        <select name="Other2_Department_person"
+                                            @if ($data->stage == 4) disabled @endif
+                                            id="Other2_Department_person">
+                                            <option value="">-- Select --</option>
+                                            @foreach (Helpers::getDepartments() as $key => $name)
+                                                <option value="{{ $key }}" @if ($data1->Other2_Department_person == $key) selected @endif>
+                                                    {{ $name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    </div>
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
                                                     var selectField = document.getElementById('Other2_review');
@@ -7638,20 +7607,20 @@
                                             </script>
                                             <div class="col-md-12 mb-3 Other2_reviews">
                                                 <div class="group-input">
-                                                    <label for="Impact Assessment13">Impact Assessment (By Other's 2)
+                                                    <label for="Impact Assessment13">Review Comment (By Other's 2)
                                                     </label>
                                                     <textarea @if ($data->stage == 2 || Auth::user()->name != $data1->Other2_person) readonly @endif class="tiny" name="Other2_Assessment"
                                                         @if ($data1->Other2_review == 'yes' && $data->stage == 3) required @endif id="summernote-43">{{ $data1->Other2_Assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 Other2_reviews">
+                                            <!-- <div class="col-md-12 mb-3 Other2_reviews">
                                                 <div class="group-input">
                                                     <label for="Feedback2"> Other's 2 Feedback
                                                     </label>
                                                     <textarea @if ($data->stage == 2 || Auth::user()->name != $data1->Other2_person) readonly @endif class="tiny" name="Other2_feedback"
                                                         @if ($data1->Other2_review == 'yes' && $data->stage == 3) required @endif id="summernote-44">{{ $data1->Other2_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12 Other2_reviews">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 2 Attachments</label>
@@ -7791,94 +7760,24 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 Other3_reviews">
-                                                <div class="group-input">
-                                                    <label for="Department3">Other's 3 Department <span id="asteriskod3"
-                                                            style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}"
-                                                            class="text-danger">*</span></label>
-                                                    <select name="Other3_Department_person"
-                                                        @if ($data->stage == 3) disabled @endif
-                                                        id="Other3_Department_person">
-                                                        <option value="">-- Select --</option>
-                                                        <option value="CQA"
-                                                            @if ($data1->Other3_Department_person == 'CQA') selected @endif>Corporate
-                                                            Quality Assurance</option>
-                                                        <option value="QA"
-                                                            @if ($data1->Other3_Department_person == 'QA') selected @endif>Quality
-                                                            Assurance</option>
-                                                        <option value="QC"
-                                                            @if ($data1->Other3_Department_person == 'QC') selected @endif>Quality
-                                                            Control</option>
-                                                        <option value="QM"
-                                                            @if ($data1->Other3_Department_person == 'QM') selected @endif>Quality
-                                                            Control (Microbiology department)
-                                                        </option>
-                                                        <option value="PG"
-                                                            @if ($data1->Other3_Department_person == 'PG') selected @endif>Production
-                                                            General</option>
-                                                        <option value="PL"
-                                                            @if ($data1->Other3_Department_person == 'PL') selected @endif>Production
-                                                            Liquid Orals</option>
-                                                        <option value="PT"
-                                                            @if ($data1->Other3_Department_person == 'PT') selected @endif>Production
-                                                            Tablet and Powder</option>
-                                                        <option value="PE"
-                                                            @if ($data1->Other3_Department_person == 'PE') selected @endif>Production
-                                                            External (Ointment, Gels, Creams and
-                                                            Liquid)</option>
-                                                        <option value="PC"
-                                                            @if ($data1->Other3_Department_person == 'PC') selected @endif>Production
-                                                            Capsules</option>
-                                                        <option value="PI"
-                                                            @if ($data1->Other3_Department_person == 'PI') selected @endif>Production
-                                                            Injectable</option>
-                                                        <option value="EN"
-                                                            @if ($data1->Other3_Department_person == 'EN') selected @endif>
-                                                            Engineering
-                                                        </option>
-                                                        <option value="HR"
-                                                            @if ($data1->Other3_Department_person == 'HR') selected @endif>Human
-                                                            Resource</option>
-                                                        <option value="ST"
-                                                            @if ($data1->Other3_Department_person == 'ST') selected @endif>Store
-                                                        </option>
-                                                        <option value="IT"
-                                                            @if ($data1->Other3_Department_person == 'IT') selected @endif>Electronic
-                                                            Data Processing
-                                                        </option>
-                                                        <option value="FD"
-                                                            @if ($data1->Other3_Department_person == 'FD') selected @endif>
-                                                            Formulation
-                                                            Development
-                                                        </option>
-                                                        <option value="AL"
-                                                            @if ($data1->Other3_Department_person == 'AL') selected @endif>Analytical
-                                                            research and Development
-                                                            Laboratory
-                                                        </option>
-                                                        <option value="PD"
-                                                            @if ($data1->Other3_Department_person == 'PD') selected @endif>Packaging
-                                                            Development
-                                                        </option>
-                                                        <option value="PU"
-                                                            @if ($data1->Other3_Department_person == 'PU') selected @endif>Purchase
-                                                            Department
-                                                        </option>
-                                                        <option value="DC"
-                                                            @if ($data1->Other3_Department_person == 'DC') selected @endif>Document
-                                                            Cell
-                                                        </option>
-                                                        <option value="RA"
-                                                            @if ($data1->Other3_Department_person == 'RA') selected @endif>Regulatory
-                                                            Affairs
-                                                        </option>
-                                                        <option value="PV"
-                                                            @if ($data1->Other3_Department_person == 'PV') selected @endif>
-                                                            Pharmacovigilance
-                                                        </option>
-
-                                                    </select>
-
-                                                </div>
+                                               
+                                    <div class="group-input">
+                                        <label for="Department3">Other's 3 Department 
+                                            <span id="asteriskod5"
+                                                style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                                class="text-danger">*</span>
+                                        </label>
+                                        <select name="Other3_Department_person"
+                                            @if ($data->stage == 4) disabled @endif
+                                            id="Other3_Department_person">
+                                            <option value="">-- Select --</option>
+                                            @foreach (Helpers::getDepartments() as $key => $name)
+                                                <option value="{{ $key }}" @if ($data1->Other3_Department_person == $key) selected @endif>
+                                                    {{ $name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                             </div>
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
@@ -7910,20 +7809,20 @@
                                             </script>
                                             <div class="col-md-12 mb-3 Other3_reviews">
                                                 <div class="group-input">
-                                                    <label for="Impact Assessment14">Impact Assessment (By Other's 3)
+                                                    <label for="Impact Assessment14">Review Comment(By Other's 3)
                                                     </label>
                                                     <textarea @if ($data->stage == 2 || Auth::user()->name != $data1->Other3_person) readonly @endif class="tiny" name="Other3_Assessment"
                                                         @if ($data1->Other3_review == 'yes' && $data->stage == 3) required @endif id="summernote-45">{{ $data1->Other3_Assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 Other3_reviews">
+                                            <!-- <div class="col-md-12 mb-3 Other3_reviews">
                                                 <div class="group-input">
                                                     <label for="feedback3"> Other's 3 Feedback
                                                     </label>
                                                     <textarea @if ($data->stage == 2 || Auth::user()->name != $data1->Other3_person) readonly @endif class="tiny" name="Other3_feedback"
                                                         @if ($data1->Other3_review == 'yes' && $data->stage == 3) required @endif id="summernote-46">{{ $data1->Other3_Assessment }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12 Other3_reviews">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 3 Attachments</label>
@@ -8066,95 +7965,23 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 Other4_reviews">
-                                                <div class="group-input">
-                                                    <label for="Department4"> Other's 4 Department <span
-                                                            id="asteriskod4"
-                                                            style="display: {{ $data1->Other4_review == 'yes' ? 'inline' : 'none' }}"
-                                                            class="text-danger">*</span></label>
-                                                    <select name="Other4_Department_person"
-                                                        @if ($data->stage == 3) disabled @endif
-                                                        id="Other4_Department_person">
-                                                        <option value="">-- Select --</option>
-                                                        <option value="CQA"
-                                                            @if ($data1->Other4_Department_person == 'CQA') selected @endif>Corporate
-                                                            Quality Assurance</option>
-                                                        <option value="QA"
-                                                            @if ($data1->Other4_Department_person == 'QA') selected @endif>Quality
-                                                            Assurance</option>
-                                                        <option value="QC"
-                                                            @if ($data1->Other4_Department_person == 'QC') selected @endif>Quality
-                                                            Control</option>
-                                                        <option value="QM"
-                                                            @if ($data1->Other4_Department_person == 'QM') selected @endif>Quality
-                                                            Control (Microbiology department)
-                                                        </option>
-                                                        <option value="PG"
-                                                            @if ($data1->Other4_Department_person == 'PG') selected @endif>Production
-                                                            General</option>
-                                                        <option value="PL"
-                                                            @if ($data1->Other4_Department_person == 'PL') selected @endif>Production
-                                                            Liquid Orals</option>
-                                                        <option value="PT"
-                                                            @if ($data1->Other4_Department_person == 'PT') selected @endif>Production
-                                                            Tablet and Powder</option>
-                                                        <option value="PE"
-                                                            @if ($data1->Other4_Department_person == 'PE') selected @endif>Production
-                                                            External (Ointment, Gels, Creams and
-                                                            Liquid)</option>
-                                                        <option value="PC"
-                                                            @if ($data1->Other4_Department_person == 'PC') selected @endif>Production
-                                                            Capsules</option>
-                                                        <option value="PI"
-                                                            @if ($data1->Other4_Department_person == 'PI') selected @endif>Production
-                                                            Injectable</option>
-                                                        <option value="EN"
-                                                            @if ($data1->Other4_Department_person == 'EN') selected @endif>
-                                                            Engineering
-                                                        </option>
-                                                        <option value="HR"
-                                                            @if ($data1->Other4_Department_person == 'HR') selected @endif>Human
-                                                            Resource</option>
-                                                        <option value="ST"
-                                                            @if ($data1->Other4_Department_person == 'ST') selected @endif>Store
-                                                        </option>
-                                                        <option value="IT"
-                                                            @if ($data1->Other4_Department_person == 'IT') selected @endif>Electronic
-                                                            Data Processing
-                                                        </option>
-                                                        <option value="FD"
-                                                            @if ($data1->Other4_Department_person == 'FD') selected @endif>
-                                                            Formulation
-                                                            Development
-                                                        </option>
-                                                        <option value="AL"
-                                                            @if ($data1->Other4_Department_person == 'AL') selected @endif>Analytical
-                                                            research and Development
-                                                            Laboratory
-                                                        </option>
-                                                        <option value="PD"
-                                                            @if ($data1->Other4_Department_person == 'PD') selected @endif>Packaging
-                                                            Development
-                                                        </option>
-                                                        <option value="PU"
-                                                            @if ($data1->Other4_Department_person == 'PU') selected @endif>Purchase
-                                                            Department
-                                                        </option>
-                                                        <option value="DC"
-                                                            @if ($data1->Other4_Department_person == 'DC') selected @endif>Document
-                                                            Cell
-                                                        </option>
-                                                        <option value="RA"
-                                                            @if ($data1->Other4_Department_person == 'RA') selected @endif>Regulatory
-                                                            Affairs
-                                                        </option>
-                                                        <option value="PV"
-                                                            @if ($data1->Other4_Department_person == 'PV') selected @endif>
-                                                            Pharmacovigilance
-                                                        </option>
-
-                                                    </select>
-
-                                                </div>
+                                            <div class="group-input">
+                                  <label for="Department4">Other's 4 Department 
+                                        <span id="asteriskod5"
+                                            style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                            class="text-danger">*</span>
+                                    </label>
+                                    <select name="Other4_Department_person"
+                                        @if ($data->stage == 4) disabled @endif
+                                        id="Other4_Department_person">
+                                        <option value="">-- Select --</option>
+                                        @foreach (Helpers::getDepartments() as $key => $name)
+                                            <option value="{{ $key }}" @if ($data1->Other4_Department_person == $key) selected @endif>
+                                                {{ $name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                             </div>
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
@@ -8186,20 +8013,20 @@
                                             </script>
                                             <div class="col-md-12 mb-3 Other4_reviews">
                                                 <div class="group-input">
-                                                    <label for="Impact Assessment15">Impact Assessment (By Other's 4)
+                                                    <label for="Impact Assessment15">Review Comment (By Other's 4)
                                                     </label>
                                                     <textarea @if ($data->stage == 2 || Auth::user()->name != $data1->Other4_person) readonly @endif class="tiny" name="Other4_Assessment"
                                                         @if ($data1->Other4_review == 'yes' && $data->stage == 3) required @endif id="summernote-47">{{ $data1->Other4_Assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 Other4_reviews">
+                                            <!-- <div class="col-md-12 mb-3 Other4_reviews">
                                                 <div class="group-input">
                                                     <label for="feedback4"> Other's 4 Feedback
                                                     </label>
                                                     <textarea @if ($data->stage == 2 || Auth::user()->name != $data1->Other4_person) readonly @endif class="tiny" name="Other4_feedback"
                                                         @if ($data1->Other4_review == 'yes' && $data->stage == 3) required @endif id="summernote-48">{{ $data1->Other4_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12 Other4_reviews">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 4 Attachments</label>
@@ -8340,95 +8167,23 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 Other5_reviews">
-                                                <div class="group-input">
-                                                    <label for="Department5"> Other's 5 Department <span
-                                                            id="asteriskod5"
-                                                            style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
-                                                            class="text-danger">*</span></label>
-                                                    <select name="Other5_Department_person"
-                                                        @if ($data->stage == 3) disabled @endif
-                                                        id="Other5_Department_person">
-                                                        <option value="">-- Select --</option>
-                                                        <option value="CQA"
-                                                            @if ($data1->Other5_Department_person == 'CQA') selected @endif>Corporate
-                                                            Quality Assurance</option>
-                                                        <option value="QA"
-                                                            @if ($data1->Other5_Department_person == 'QA') selected @endif>Quality
-                                                            Assurance</option>
-                                                        <option value="QC"
-                                                            @if ($data1->Other5_Department_person == 'QC') selected @endif>Quality
-                                                            Control</option>
-                                                        <option value="QM"
-                                                            @if ($data1->Other5_Department_person == 'QM') selected @endif>Quality
-                                                            Control (Microbiology department)
-                                                        </option>
-                                                        <option value="PG"
-                                                            @if ($data1->Other5_Department_person == 'PG') selected @endif>Production
-                                                            General</option>
-                                                        <option value="PL"
-                                                            @if ($data1->Other5_Department_person == 'PL') selected @endif>Production
-                                                            Liquid Orals</option>
-                                                        <option value="PT"
-                                                            @if ($data1->Other5_Department_person == 'PT') selected @endif>Production
-                                                            Tablet and Powder</option>
-                                                        <option value="PE"
-                                                            @if ($data1->Other5_Department_person == 'PE') selected @endif>Production
-                                                            External (Ointment, Gels, Creams and
-                                                            Liquid)</option>
-                                                        <option value="PC"
-                                                            @if ($data1->Other5_Department_person == 'PC') selected @endif>Production
-                                                            Capsules</option>
-                                                        <option value="PI"
-                                                            @if ($data1->Other5_Department_person == 'PI') selected @endif>Production
-                                                            Injectable</option>
-                                                        <option value="EN"
-                                                            @if ($data1->Other5_Department_person == 'EN') selected @endif>
-                                                            Engineering
-                                                        </option>
-                                                        <option value="HR"
-                                                            @if ($data1->Other5_Department_person == 'HR') selected @endif>Human
-                                                            Resource</option>
-                                                        <option value="ST"
-                                                            @if ($data1->Other5_Department_person == 'ST') selected @endif>Store
-                                                        </option>
-                                                        <option value="IT"
-                                                            @if ($data1->Other5_Department_person == 'IT') selected @endif>Electronic
-                                                            Data Processing
-                                                        </option>
-                                                        <option value="FD"
-                                                            @if ($data1->Other5_Department_person == 'FD') selected @endif>
-                                                            Formulation
-                                                            Development
-                                                        </option>
-                                                        <option value="AL"
-                                                            @if ($data1->Other5_Department_person == 'AL') selected @endif>Analytical
-                                                            research and Development
-                                                            Laboratory
-                                                        </option>
-                                                        <option value="PD"
-                                                            @if ($data1->Other5_Department_person == 'PD') selected @endif>Packaging
-                                                            Development
-                                                        </option>
-                                                        <option value="PU"
-                                                            @if ($data1->Other5_Department_person == 'PU') selected @endif>Purchase
-                                                            Department
-                                                        </option>
-                                                        <option value="DC"
-                                                            @if ($data1->Other5_Department_person == 'DC') selected @endif>Document
-                                                            Cell
-                                                        </option>
-                                                        <option value="RA"
-                                                            @if ($data1->Other5_Department_person == 'RA') selected @endif>Regulatory
-                                                            Affairs
-                                                        </option>
-                                                        <option value="PV"
-                                                            @if ($data1->Other5_Department_person == 'PV') selected @endif>
-                                                            Pharmacovigilance
-                                                        </option>
-
-                                                    </select>
-
-                                                </div>
+                                            <div class="group-input">
+                                  <label for="Department5">Other's 5 Department
+                                        <span id="asteriskod5"
+                                            style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                            class="text-danger">*</span>
+                                    </label>
+                                    <select name="Other5_Department_person"
+                                        @if ($data->stage == 4) disabled @endif
+                                        id="Other5_Department_person">
+                                        <option value="">-- Select --</option>
+                                        @foreach (Helpers::getDepartments() as $key => $name)
+                                            <option value="{{ $key }}" @if ($data1->Other5_Department_person == $key) selected @endif>
+                                                {{ $name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                             </div>
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
@@ -8460,20 +8215,20 @@
                                             </script>
                                             <div class="col-md-12 mb-3 Other5_reviews">
                                                 <div class="group-input">
-                                                    <label for="Impact Assessment16">Impact Assessment (By Other's 5)
+                                                    <label for="Impact Assessment16">Review Comment (By Other's 5)
                                                     </label>
                                                     <textarea @if ($data->stage == 2 || Auth::user()->name != $data1->Other5_person) readonly @endif class="tiny"
                                                         name="Other5_Assessment"@if ($data1->Other5_review == 'yes' && $data->stage == 3) required @endif id="summernote-49">{{ $data1->Other5_Assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 Other5_reviews">
+                                            <!-- <div class="col-md-12 mb-3 Other5_reviews">
                                                 <div class="group-input">
                                                     <label for="productionfeedback"> Other's 5 Feedback
                                                     </label>
                                                     <textarea @if ($data->stage == 2 || Auth::user()->name != $data1->Other5_person) readonly @endif class="tiny"
                                                         name="Other5_feedback"@if ($data1->Other5_review == 'yes' && $data->stage == 3) required @endif id="summernote-50">{{ $data1->Other5_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                             <div class="col-12 Other5_reviews">
                                                 <div class="group-input">
@@ -8599,95 +8354,27 @@
 
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="Department1"> Other's 1 Department</label>
-                                                    <select name="Other1_Department_person"
-                                                        @if ($data->stage == 3) disabled @endif
-                                                        id="Other1_Department_person">
-                                                        <option value="">-- Select --</option>
-                                                        <option value="CQA"
-                                                            @if ($data1->Other1_Department_person == 'CQA') selected @endif>Corporate
-                                                            Quality Assurance</option>
-                                                        <option value="QA"
-                                                            @if ($data1->Other1_Department_person == 'QA') selected @endif>Quality
-                                                            Assurance</option>
-                                                        <option value="QC"
-                                                            @if ($data1->Other1_Department_person == 'QC') selected @endif>Quality
-                                                            Control</option>
-                                                        <option value="QM"
-                                                            @if ($data1->Other1_Department_person == 'QM') selected @endif>Quality
-                                                            Control (Microbiology department)
-                                                        </option>
-                                                        <option value="PG"
-                                                            @if ($data1->Other1_Department_person == 'PG') selected @endif>Production
-                                                            General</option>
-                                                        <option value="PL"
-                                                            @if ($data1->Other1_Department_person == 'PL') selected @endif>Production
-                                                            Liquid Orals</option>
-                                                        <option value="PT"
-                                                            @if ($data1->Other1_Department_person == 'PT') selected @endif>Production
-                                                            Tablet and Powder</option>
-                                                        <option value="PE"
-                                                            @if ($data1->Other1_Department_person == 'PE') selected @endif>Production
-                                                            External (Ointment, Gels, Creams and
-                                                            Liquid)</option>
-                                                        <option value="PC"
-                                                            @if ($data1->Other1_Department_person == 'PC') selected @endif>Production
-                                                            Capsules</option>
-                                                        <option value="PI"
-                                                            @if ($data1->Other1_Department_person == 'PI') selected @endif>Production
-                                                            Injectable</option>
-                                                        <option value="EN"
-                                                            @if ($data1->Other1_Department_person == 'EN') selected @endif>
-                                                            Engineering
-                                                        </option>
-                                                        <option value="HR"
-                                                            @if ($data1->Other1_Department_person == 'HR') selected @endif>Human
-                                                            Resource</option>
-                                                        <option value="ST"
-                                                            @if ($data1->Other1_Department_person == 'ST') selected @endif>Store
-                                                        </option>
-                                                        <option value="IT"
-                                                            @if ($data1->Other1_Department_person == 'IT') selected @endif>Electronic
-                                                            Data Processing
-                                                        </option>
-                                                        <option value="FD"
-                                                            @if ($data1->Other1_Department_person == 'FD') selected @endif>
-                                                            Formulation
-                                                            Development
-                                                        </option>
-                                                        <option value="AL"
-                                                            @if ($data1->Other1_Department_person == 'AL') selected @endif>Analytical
-                                                            research and Development
-                                                            Laboratory
-                                                        </option>
-                                                        <option value="PD"
-                                                            @if ($data1->Other1_Department_person == 'PD') selected @endif>Packaging
-                                                            Development
-                                                        </option>
-                                                        <option value="PU"
-                                                            @if ($data1->Other1_Department_person == 'PU') selected @endif>Purchase
-                                                            Department
-                                                        </option>
-                                                        <option value="DC"
-                                                            @if ($data1->Other1_Department_person == 'DC') selected @endif>Document
-                                                            Cell
-                                                        </option>
-                                                        <option value="RA"
-                                                            @if ($data1->Other1_Department_person == 'RA') selected @endif>Regulatory
-                                                            Affairs
-                                                        </option>
-                                                        <option value="PV"
-                                                            @if ($data1->Other1_Department_person == 'PV') selected @endif>
-                                                            Pharmacovigilance
-                                                        </option>
+                                            <div class="col-lg-12 Other1_reviews">
 
+                                    <div class="group-input">
+                                        <label for="Department1">Other's 1 Department 
+                                            <span id="asteriskod5"
+                                                style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                                class="text-danger">*</span>
+                                        </label>
+                                        <select name="Other1_Department_person"
+                                            @if ($data->stage == 4) disabled @endif
+                                            id="Other1_Department_person">
+                                            <option value="">-- Select --</option>
+                                            @foreach (Helpers::getDepartments() as $key => $name)
+                                                <option value="{{ $key }}" @if ($data1->Other1_Department_person == $key) selected @endif>
+                                                    {{ $name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    </div>
 
-                                                    </select>
-
-                                                </div>
-                                            </div>
                                             <div class="col-md-12 mb-3">
                                                 <div class="group-input">
                                                     <label for="Impact Assessment12">Impact Assessment (By Other's
@@ -8696,13 +8383,13 @@
                                                         name="Other1_assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3">
+                                            <!-- <div class="col-md-12 mb-3">
                                                 <div class="group-input">
                                                     <label for="Feedback1"> Other's 1 Feedback</label>
                                                     <textarea disabled class="tiny"
                                                         name="Other1_feedback"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-42">{{ $data1->Other1_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 1 Attachments</label>
@@ -8821,58 +8508,23 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="Department2"> Other's 2 Department</label>
-                                                    <select disabled
-                                                        name="Other2_Department_person"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                        id="Other2_Department_person">
-                                                        <option value="0">-- Select --</option>
-                                                        <option @if ($data1->Other2_Department_person == 'Production') selected @endif
-                                                            value="Production">
-                                                            Production</option>
-                                                        <option @if ($data1->Other2_Department_person == 'Warehouse') selected @endif
-                                                            value="Warehouse"> Warehouse
-                                                        </option>
-                                                        <option @if ($data1->Other2_Department_person == 'Quality_Control') selected @endif
-                                                            value="Quality_Control">
-                                                            Quality Control
-                                                        </option>
-                                                        <option @if ($data1->Other2_Department_person == 'Quality_Assurance') selected @endif
-                                                            value="Quality_Assurance">
-                                                            Quality
-                                                            Assurance</option>
-                                                        <option @if ($data1->Other2_Department_person == 'Engineering') selected @endif
-                                                            value="Engineering">
-                                                            Engineering</option>
-                                                        <option @if ($data1->Other2_Department_person == 'Analytical_Development_Laboratory') selected @endif
-                                                            value="Analytical_Development_Laboratory">Analytical
-                                                            Development
-                                                            Laboratory</option>
-                                                        <option @if ($data1->Other2_Department_person == 'Process_Development_Lab') selected @endif
-                                                            value="Process_Development_Lab">Process
-                                                            Development Laboratory / Kilo Lab
-                                                        </option>
-                                                        <option @if ($data1->Other2_Department_person == 'Technology transfer/Design') selected @endif
-                                                            value="Technology transfer/Design">
-                                                            Technology Transfer/Design</option>
-                                                        <option @if ($data1->Other2_Department_person == 'Environment, Health & Safety') selected @endif
-                                                            value="Environment, Health & Safety">
-                                                            Environment, Health & Safety</option>
-                                                        <option @if ($data1->Other2_Department_person == 'Human Resource & Administration') selected @endif
-                                                            value="Human Resource & Administration">
-                                                            Human Resource & Administration
-                                                        </option>
-                                                        <option @if ($data1->Other2_Department_person == 'Information Technology') selected @endif
-                                                            value="Information Technology">
-                                                            Information Technology</option>
-                                                        <option @if ($data1->Other2_Department_person == 'Project management') selected @endif
-                                                            value="Project management">
-                                                            Project
-                                                            management</option>
-
-                                                    </select>
-
-                                                </div>
+                                            <div class="group-input">
+                                            <label for="Department2">Other's 2 Department 
+                                                <span id="asteriskod5"
+                                                    style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span>
+                                            </label>
+                                            <select name="Other2_Department_person"
+                                                @if ($data->stage == 4) disabled @endif
+                                                id="Other2_Department_person">
+                                                <option value="">-- Select --</option>
+                                                @foreach (Helpers::getDepartments() as $key => $name)
+                                                    <option value="{{ $key }}" @if ($data1->Other2_Department_person == $key) selected @endif>
+                                                        {{ $name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                             </div>
 
                                             <div class="col-md-12 mb-3">
@@ -8883,13 +8535,13 @@
                                                         name="Other2_Assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-43">{{ $data1->Other2_Assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3">
+                                            <!-- <div class="col-md-12 mb-3">
                                                 <div class="group-input">
                                                     <label for="Feedback2"> Other's 2 Feedback</label>
                                                     <textarea disabled class="tiny"
                                                         name="Other2_feedback"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-44">{{ $data1->Other2_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 2 Attachments</label>
@@ -9017,73 +8669,40 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="Department3">Other's 3 Department</label>
-                                                    <select disabled
-                                                        name="Other3_Department_person"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                        id="Other3_Department_person">
-                                                        <option value="">-- Select --</option>
-                                                        <option @if ($data1->Other3_Department_person == 'Production') selected @endif
-                                                            value="Production">
-                                                            Production</option>
-                                                        <option @if ($data1->Other3_Department_person == 'Warehouse') selected @endif
-                                                            value="Warehouse"> Warehouse
-                                                        </option>
-                                                        <option @if ($data1->Other3_Department_person == 'Quality_Control') selected @endif
-                                                            value="Quality_Control">
-                                                            Quality Control
-                                                        </option>
-                                                        <option @if ($data1->Other3_Department_person == 'Quality_Assurance') selected @endif
-                                                            value="Quality_Assurance">
-                                                            Quality
-                                                            Assurance</option>
-                                                        <option @if ($data1->Other3_Department_person == 'Engineering') selected @endif
-                                                            value="Engineering">
-                                                            Engineering</option>
-                                                        <option @if ($data1->Other3_Department_person == 'Analytical_Development_Laboratory') selected @endif
-                                                            value="Analytical_Development_Laboratory">Analytical
-                                                            Development
-                                                            Laboratory</option>
-                                                        <option @if ($data1->Other3_Department_person == 'Process_Development_Lab') selected @endif
-                                                            value="Process_Development_Lab">Process
-                                                            Development Laboratory / Kilo Lab
-                                                        </option>
-                                                        <option @if ($data1->Other3_Department_person == 'Technology transfer/Design') selected @endif
-                                                            value="Technology transfer/Design">
-                                                            Technology Transfer/Design</option>
-                                                        <option @if ($data1->Other3_Department_person == 'Environment, Health & Safety') selected @endif
-                                                            value="Environment, Health & Safety">
-                                                            Environment, Health & Safety</option>
-                                                        <option @if ($data1->Other3_Department_person == 'Human Resource & Administration') selected @endif
-                                                            value="Human Resource & Administration">
-                                                            Human Resource & Administration
-                                                        </option>
-                                                        <option @if ($data1->Other3_Department_person == 'Information Technology') selected @endif
-                                                            value="Information Technology">
-                                                            Information Technology</option>
-                                                        <option @if ($data1->Other3_Department_person == 'Project management') selected @endif
-                                                            value="Project management">
-                                                            Project
-                                                            management</option>
-                                                    </select>
-
-                                                </div>
+                                               
+                                    <div class="group-input">
+                                        <label for="Department3">Other's 3 Department 
+                                            <span id="asteriskod5"
+                                                style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                                class="text-danger">*</span>
+                                        </label>
+                                        <select name="Other3_Department_person"
+                                            @if ($data->stage == 4) disabled @endif
+                                            id="Other3_Department_person">
+                                            <option value="">-- Select --</option>
+                                            @foreach (Helpers::getDepartments() as $key => $name)
+                                                <option value="{{ $key }}" @if ($data1->Other3_Department_person == $key) selected @endif>
+                                                    {{ $name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                             </div>
                                             <div class="col-md-12 mb-3">
                                                 <div class="group-input">
-                                                    <label for="Impact Assessment14">Impact Assessment (By Other's
+                                                    <label for="Impact Assessment14">Review Comment (By Other's
                                                         3)</label>
                                                     <textarea disabled class="tiny"
                                                         name="Other3_Assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-45">{{ $data1->Other3_Assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3">
+                                            <!-- <div class="col-md-12 mb-3">
                                                 <div class="group-input">
                                                     <label for="feedback3"> Other's 3 Feedback</label>
                                                     <textarea disabled class="tiny"
                                                         name="Other3_feedback"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-46">{{ $data1->Other3_Assessment }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 3 Attachments</label>
@@ -9200,73 +8819,39 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="Department4"> Other's 4 Department</label>
-                                                    <select disabled
-                                                        name="Other4_Department_person"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                        id="Other4_Department_person">
-                                                        <option value="">-- Select --</option>
-                                                        <option @if ($data1->Other4_Department_person == 'Production') selected @endif
-                                                            value="Production">
-                                                            Production</option>
-                                                        <option @if ($data1->Other4_Department_person == 'Warehouse') selected @endif
-                                                            value="Warehouse"> Warehouse
-                                                        </option>
-                                                        <option @if ($data1->Other4_Department_person == 'Quality_Control') selected @endif
-                                                            value="Quality_Control">
-                                                            Quality Control
-                                                        </option>
-                                                        <option @if ($data1->Other4_Department_person == 'Quality_Assurance') selected @endif
-                                                            value="Quality_Assurance">
-                                                            Quality
-                                                            Assurance</option>
-                                                        <option @if ($data1->Other4_Department_person == 'Engineering') selected @endif
-                                                            value="Engineering">
-                                                            Engineering</option>
-                                                        <option @if ($data1->Other4_Department_person == 'Analytical_Development_Laboratory') selected @endif
-                                                            value="Analytical_Development_Laboratory">Analytical
-                                                            Development
-                                                            Laboratory</option>
-                                                        <option @if ($data1->Other4_Department_person == 'Process_Development_Lab') selected @endif
-                                                            value="Process_Development_Lab">Process
-                                                            Development Laboratory / Kilo Lab
-                                                        </option>
-                                                        <option @if ($data1->Other4_Department_person == 'Technology transfer/Design') selected @endif
-                                                            value="Technology transfer/Design">
-                                                            Technology Transfer/Design</option>
-                                                        <option @if ($data1->Other4_Department_person == 'Environment, Health & Safety') selected @endif
-                                                            value="Environment, Health & Safety">
-                                                            Environment, Health & Safety</option>
-                                                        <option @if ($data1->Other4_Department_person == 'Human Resource & Administration') selected @endif
-                                                            value="Human Resource & Administration">
-                                                            Human Resource & Administration
-                                                        </option>
-                                                        <option @if ($data1->Other4_Department_person == 'Information Technology') selected @endif
-                                                            value="Information Technology">
-                                                            Information Technology</option>
-                                                        <option @if ($data1->Other4_Department_person == 'Project management') selected @endif
-                                                            value="Project management">
-                                                            Project
-                                                            management</option>
-                                                    </select>
-
-                                                </div>
+                                            <div class="group-input">
+                                  <label for="Department4">Other's 4 Department 
+                                        <span id="asteriskod5"
+                                            style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                            class="text-danger">*</span>
+                                    </label>
+                                    <select name="Other4_Department_person"
+                                        @if ($data->stage == 4) disabled @endif
+                                        id="Other4_Department_person">
+                                        <option value="">-- Select --</option>
+                                        @foreach (Helpers::getDepartments() as $key => $name)
+                                            <option value="{{ $key }}" @if ($data1->Other4_Department_person == $key) selected @endif>
+                                                {{ $name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                             </div>
                                             <div class="col-md-12 mb-3">
                                                 <div class="group-input">
-                                                    <label for="Impact Assessment15">Impact Assessment (By Other's
+                                                    <label for="Impact Assessment15">Review Comment (By Other's
                                                         4)</label>
                                                     <textarea disabled class="tiny"
                                                         name="Other4_Assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-47">{{ $data1->Other4_Assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3">
+                                            <!-- <div class="col-md-12 mb-3">
                                                 <div class="group-input">
                                                     <label for="feedback4"> Other's 4 Feedback</label>
                                                     <textarea disabled class="tiny"
                                                         name="Other4_feedback"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-48">{{ $data1->Other4_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 4 Attachments</label>
@@ -9394,73 +8979,39 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="Department5"> Other's 5 Department</label>
-                                                    <select disabled
-                                                        name="Other5_Department_person"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                        id="Other5_Department_person">
-                                                        <option value="">-- Select --</option>
-                                                        <option @if ($data1->Other5_Department_person == 'Production') selected @endif
-                                                            value="Production">
-                                                            Production</option>
-                                                        <option @if ($data1->Other5_Department_person == 'Warehouse') selected @endif
-                                                            value="Warehouse"> Warehouse
-                                                        </option>
-                                                        <option @if ($data1->Other5_Department_person == 'Quality_Control') selected @endif
-                                                            value="Quality_Control">
-                                                            Quality Control
-                                                        </option>
-                                                        <option @if ($data1->Other5_Department_person == 'Quality_Assurance') selected @endif
-                                                            value="Quality_Assurance">
-                                                            Quality
-                                                            Assurance</option>
-                                                        <option @if ($data1->Other5_Department_person == 'Engineering') selected @endif
-                                                            value="Engineering">
-                                                            Engineering</option>
-                                                        <option @if ($data1->Other5_Department_person == 'Analytical_Development_Laboratory') selected @endif
-                                                            value="Analytical_Development_Laboratory">Analytical
-                                                            Development
-                                                            Laboratory</option>
-                                                        <option @if ($data1->Other5_Department_person == 'Process_Development_Lab') selected @endif
-                                                            value="Process_Development_Lab">Process
-                                                            Development Laboratory / Kilo Lab
-                                                        </option>
-                                                        <option @if ($data1->Other5_Department_person == 'Technology transfer/Design') selected @endif
-                                                            value="Technology transfer/Design">
-                                                            Technology Transfer/Design</option>
-                                                        <option @if ($data1->Other5_Department_person == 'Environment, Health & Safety') selected @endif
-                                                            value="Environment, Health & Safety">
-                                                            Environment, Health & Safety</option>
-                                                        <option @if ($data1->Other5_Department_person == 'Human Resource & Administration') selected @endif
-                                                            value="Human Resource & Administration">
-                                                            Human Resource & Administration
-                                                        </option>
-                                                        <option @if ($data1->Other5_Department_person == 'Information Technology') selected @endif
-                                                            value="Information Technology">
-                                                            Information Technology</option>
-                                                        <option @if ($data1->Other5_Department_person == 'Project management') selected @endif
-                                                            value="Project management">
-                                                            Project
-                                                            management</option>
-                                                    </select>
-
-                                                </div>
+                                            <div class="group-input">
+                                  <label for="Department5">Other's 5 Department
+                                        <span id="asteriskod5"
+                                            style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                            class="text-danger">*</span>
+                                    </label>
+                                    <select name="Other5_Department_person"
+                                        @if ($data->stage == 4) disabled @endif
+                                        id="Other5_Department_person">
+                                        <option value="">-- Select --</option>
+                                        @foreach (Helpers::getDepartments() as $key => $name)
+                                            <option value="{{ $key }}" @if ($data1->Other5_Department_person == $key) selected @endif>
+                                                {{ $name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                             </div>
                                             <div class="col-md-12 mb-3">
                                                 <div class="group-input">
-                                                    <label for="Impact Assessment16">Impact Assessment (By Other's
+                                                    <label for="Impact Assessment16">Review Comment (By Other's
                                                         5)</label>
                                                     <textarea disabled class="tiny"
                                                         name="Other5_Assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-49">{{ $data1->Other5_Assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3">
+                                            <!-- <div class="col-md-12 mb-3">
                                                 <div class="group-input">
                                                     <label for="productionfeedback"> Other's 5 Feedback</label>
                                                     <textarea disabled class="tiny"
                                                         name="Other5_feedback"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-50">{{ $data1->Other5_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                             <div class="col-12">
                                                 <div class="group-input">
@@ -9522,7 +9073,7 @@
                                     </div>
                                     <div class="button-block">
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
-                                            type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 12 ? 'disabled' : '' }}
+                                            type="submit"{{ $data->stage == 0 || $data->stage == 5  ? 'disabled' : '' }}
                                             id="ChangesaveButton" class="saveButton saveAuditFormBtn d-flex"
                                             style="align-items: center;">
                                             <div class="spinner-border spinner-border-sm auditFormSpinner"
@@ -9534,7 +9085,7 @@
                                         <button type="button" class="backButton"
                                             onclick="previousStep()">Back</button>
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
-                                            type="button"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                            type="button"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                             id="ChangeNextButton" class="nextButton"
                                             onclick="nextStep()">Next</button>
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
@@ -9581,40 +9132,103 @@
                                     </div>
 
 
-                                    <div class="col-lg-12">
-                                        <div class="group-input">
-                                            <label for="Report Attachments">QA/CQA Head Approval Attachments</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting
-                                                    documents</small></div>
-                                            {{-- <input type="file" id="myfile" name="report_file"
-                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}> --}}
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="qa_cqa_attach">
-                                                    @if ($data->qa_cqa_attach)
-                                                        @foreach (json_decode($data->qa_cqa_attach) as $file)
-                                                            <h6 type="button" class="file-container text-dark"
-                                                                style="background-color: rgb(243, 242, 240);">
-                                                                <b>{{ $file }}</b>
-                                                                <a href="{{ asset('upload/' . $file) }}"
-                                                                    target="_blank"><i class="fa fa-eye text-primary"
-                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file"
-                                                                    data-file-name="{{ $file }}"><i
-                                                                        class="fa-solid fa-circle-xmark"
-                                                                        style="color:red; font-size:20px;"></i></a>
-                                                            </h6>
-                                                        @endforeach
-                                                    @endif
-                                                </div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                        type="file" id="myfile" name="qa_cqa_attach[]"
-                                                        oninput="addMultipleFiles(this, 'qa_cqa_attach')" multiple>
-                                                </div>
+                                    <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="qa_cqa_attach">QA/CQA Head Approval Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="qa_cqa_attach">
+                                                @if ($data->qa_cqa_attach)
+                                                    @foreach(json_decode($data->qa_cqa_attach) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                            <input type="hidden" name="existing_qa_cqa_attach[]" value="{{ $file }}">
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="qa_cqa_attach[]" 
+                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                    oninput="addMultipleFiles(this, 'qa_cqa_attach')" multiple>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                
+                                <!-- Hidden field to keep track of files to be deleted -->
+                                <input type="hidden" id="deleted_qa_cqa_attach" name="deleted_qa_cqa_attach" value="">
+                                
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const removeButtons = document.querySelectorAll('.remove-file');
+                                
+                                        removeButtons.forEach(button => {
+                                            button.addEventListener('click', function() {
+                                                const fileName = this.getAttribute('data-file-name');
+                                                const fileContainer = this.closest('.file-container');
+                                
+                                                // Hide the file container
+                                                if (fileContainer) {
+                                                    fileContainer.style.display = 'none';
+                                                    // Remove hidden input associated with this file
+                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                    if (hiddenInput) {
+                                                        hiddenInput.remove();
+                                                    }
+                                
+                                                    // Add the file name to the deleted files list
+                                                    const deletedFilesInput = document.getElementById('deleted_qa_cqa_attach');
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    deletedFiles.push(fileName);
+                                                    deletedFilesInput.value = deletedFiles.join(',');
+                                                }
+                                            });
+                                        });
+                                    });
+                                
+                                    function addMultipleFiles(input, id) {
+                                        const fileListContainer = document.getElementById(id);
+                                        const files = input.files;
+                                
+                                        for (let i = 0; i < files.length; i++) {
+                                            const file = files[i];
+                                            const fileName = file.name;
+                                            const fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container', 'text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+                                
+                                            const fileText = document.createElement('b');
+                                            fileText.textContent = fileName;
+                                
+                                            const viewLink = document.createElement('a');
+                                            viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                            viewLink.target = '_blank';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                
+                                            const removeLink = document.createElement('a');
+                                            removeLink.classList.add('remove-file');
+                                            removeLink.dataset.fileName = fileName;
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.addEventListener('click', function() {
+                                                fileContainer.style.display = 'none';
+                                            });
+                                
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(viewLink);
+                                            fileContainer.appendChild(removeLink);
+                                
+                                            fileListContainer.appendChild(fileContainer);
+                                        }
+                                    }
+                                </script>
 
                                 </div>
                                 <div class="button-block">
@@ -9633,61 +9247,68 @@
                         <!-- Activity Log content -->
                         <div id="CCForm6" class="inner-block cctabcontent">
                             <div class="inner-block-content">
-                                <div class="row">
+                               
+
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        Audit Details Summary
+                                    Audit Details Summary
                                     </div>
-                                    <div>
+                                    
+
+                                    <div class="row">
+
+
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Audit Details Summary On">Audit Details Summary By</label>
                                                 <div class="static">{{ $data->audit_details_summary_by }}</div>
                                             </div>
                                         </div>
+
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Audit Details Summary On">Audit Details Summary On</label>
                                                 <div class="static">{{ $data->audit_details_summary_on }}</div>
                                             </div>
                                         </div>
+                                        
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Comments">Comments</label>
+                                                <label for="Comments">Audit Details Summary Comment</label>
                                                 <div class="static">{{ $data->audit_details_summary_on_comment }}</div>
                                             </div>
                                         </div>
-
-                                        <div class="col-12 sub-head" style="font-size: 16px">
+                                            
+                                        <!-- <div class="col-12 sub-head" style="font-size: 16px">
                                             Cancel
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Cancelled By">Cancelled By</label>
+                                                <label for="Cancelled By">Cancel By</label>
                                                 <div class="static">{{ $data->cancelled_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Cancelled On">Cancelled On</label>
+                                                <label for="Cancelled On">Cancel On</label>
                                                 <div class="static">{{ $data->cancelled_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Comments">Comments</label>
+                                                <label for="Comments"> Cancel Comment</label>
                                                 <div class="static">{{ $data->cancelled_on_comment }}</div>
                                             </div>
                                         </div>
-                                    </div>
+                                    
 
 
 
 
-                                    <div class="col-12 sub-head" style="font-size: 16px">
-                                        Summary and Response Complete
-                                    </div>
-                                    <div>
+                                        <div class="col-12 sub-head" style="font-size: 16px">
+                                            Summary and Response Complete
+                                        </div>
+                                    
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Summary and Response Complete On">Summary and Response
@@ -9706,7 +9327,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Comments">Comments</label>
+                                                <label for="Comments">Summary and Response Complete Comment</label>
                                                 <div class="static">{{ $data->summary_and_response_com_on_comment }}
                                                 </div>
                                             </div>
@@ -9716,9 +9337,9 @@
 
 
 
-                                        <div class="col-12 sub-head" style="font-size: 16px">
-                                            CFT Review Not Required
-                                        </div>
+                                        <!-- <div class="col-12 sub-head" style="font-size: 16px">
+                                        CFT Review Not Required
+                                        </div> -->
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
@@ -9736,40 +9357,21 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Comments">Comments</label>
+                                                <label for="Comments">CFT Review Not Required Comment</label>
                                                 <div class="static">{{ $data->cft_review_not_req_on_comment }}</div>
                                             </div>
                                         </div>
 
 
 
-                                        {{-- <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Preparation Completed On">More Information Required By</label>
-                                                <div class="static">{{ $data->more_info_req_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Preparation Completed On">More Information Required On</label>
-                                                <div class="static">{{ $data->more_info_req_on }}</div>
-                                            </div>
-                                        </div>
-                                         <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->more_info_req_on_comment }}</div>
-                                        </div>
-                                    </div> --}}
-
-
+                                    
                                         <div class="col-12 sub-head" style="font-size: 16px">
-                                            CFT Review Complete
+                                        CFT Review Complete
                                         </div>
 
 
 
-                                        <div>
+                                       
                                             <div class="col-lg-4">
                                                 <div class="group-input">
                                                     <label for="Audit Preparation Completed On">CFT Review Complete
@@ -9786,67 +9388,16 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="group-input">
-                                                    <label for="Comments">Comments</label>
+                                                    <label for="Comments">CFT Review Complete Comment</label>
                                                     <div class="static">{{ $data->cft_review_complete_comment }}</div>
                                                 </div>
                                             </div>
 
-
-
-
-                                            {{-- <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Preparation Completed On">More Information Required By </label>
-                                                <div class="static">{{ $data->more_info_req_crc_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Preparation Completed On">More Information Required On</label>
-                                                <div class="static">{{ $data->more_info_req_crc_on }}</div>
-                                            </div>
-                                        </div>
-                                         <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->more_info_req_crc_on_comment }}</div>
-                                        </div>
-                                    </div> --}}
-                                        </div>
-
-
-
-
-
-
-
-
-                                        {{-- <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Mgr.more Info Reqd By">Pending Response(Issue Report)
-                                                    By</label>
-                                                <div class="static">{{ $data->audit_mgr_more_info_reqd_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Mgr.more Info Reqd On">Pending Response(Issue Report)
-                                                    On</label>
-                                                <div class="static">{{ $data->audit_mgr_more_info_reqd_on }}</div>
-                                            </div>
-                                        </div>
-                                         <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->audit_mgr_more_info_reqd_on_comment }}</div>
-                                        </div> --}}
-                                    </div>
-
-                                    <div class="col-12 sub-head" style="font-size: 16px">
+                                        <div class="col-12 sub-head" style="font-size: 16px">
                                         Approval Complete
-                                    </div>
+                                        </div>
 
-                                    <div>
+                                    
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Audit Observation Submitted By">Approval Complete By</label>
@@ -9861,13 +9412,11 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Comments">Comments</label>
+                                                <label for="Comments">Approval Complete Comment</label>
                                                 <div class="static">{{ $data->approval_complete_on_comment }}</div>
                                             </div>
-
-                                            <div class="col-12 sub-head" style="font-size: 16px">
-                                                Send to Opened
-                                            </div>
+                                        </div>
+                                           
 
                                             <div class="col-lg-4">
                                                 <div class="group-input">
@@ -9883,100 +9432,14 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="group-input">
-                                                    <label for="Comments">Comments</label>
+                                                    <label for="Comments">Send to Opened Comment</label>
                                                     <div class="static">{{ $data->send_to_opened_comment }}</div>
                                                 </div>
                                             </div>
                                         </div>
 
 
-                                        {{-- <div class="col-12 sub-head"  style="font-size: 16px">
-                                          CAPA Execution in Progress
-                                       </div>
-
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Lead More Info Reqd By">All CAPA Close
-                                                    By</label>
-                                                <div class="static">{{ $data->audit_lead_more_info_reqd_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Lead More Info Reqd On">All CAPA Close
-                                                    On</label>
-                                                <div class="static">{{ $data->audit_lead_more_info_reqd_on }}</div>
-                                            </div>
-                                        </div>
-                                         <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->audit_lead_more_info_reqd_on_comment }}</div>
-                                        </div> --}}
-
-
-                                        {{--
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Response Completed By">Audit Response Completed
-                                                    By</label>
-                                                <div class="static">{{ $data->audit_response_completed_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Response Completed On">Audit Response Completed
-                                                    On</label>
-                                                <div class="static">{{ $data->audit_response_completed_on }}</div>
-                                            </div>
-                                        </div>
-                                         <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->comment }}</div>
-                                        </div>
-                                    </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Response Feedback Verified By">Response Feedback Verified
-                                                    By</label>
-                                                <div class="static">{{ $data->response_feedback_verified_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Response Feedback Verified On">Response Feedback Verified
-                                                    On</label>
-                                                <div class="static">{{ $data->response_feedback_verified_on }}</div>
-                                            </div>
-                                        </div>
-                                         <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->comment }}</div>
-                                        </div>
-                                    </div>  --}}
-                                        {{--  <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Response Feedback Verified By"> Rejected By
-                                                    </label>
-                                                <div class="static">{{ $data->rejected_by}}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Response Feedback Verified On"> Rejected On
-                                                    </label>
-                                                <div class="static">{{ $data->rejected_on }}</div>
-                                            </div>
-                                        </div>
-                                         <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->comment }}</div>
-                                        </div>
-                                    </div>  --}}
-
+                                      
 
                                         <div class="button-block">
                                             @if ($data->stage != 0)
@@ -9993,7 +9456,7 @@
                                     </div>
                                 </div>
 
-                            </div>
+                        </div>
                     </form>
 
                 </div>
