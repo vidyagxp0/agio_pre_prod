@@ -94,7 +94,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input"> 
                                         <label for="RLS Record Number"><b>Parent Record Number</b></label>
-                                        <input readonly type="text" name="parent_record_number"
+                                        <input disabled type="text" name="parent_record_number"
                                             value="{{ $expectedParenRecord ?? 'Not Applicable' }}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
@@ -299,7 +299,7 @@
                                     <div class="group-input">
                                         <label for="HOD Persons">HOD Persons</label>
                                         <select   name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
-                                            data-silent-initial-value-set="true" id="hod" >
+                                            data-silent-initial-value-set="true">
                                             <option value="">select person</option>
                                             @foreach ($users as $value)
                                                 
@@ -465,7 +465,7 @@
                                 <div class="sub-head">Action Approval</div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="qa_comments">QA Review Comments</label>
+                                        <label for="qa_comments">QA/CQA Review Comments</label>
                                         <textarea name="qa_comments"></textarea>
                                     </div>
                                 </div>
@@ -483,7 +483,7 @@
                                 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="file_attach">Action Approval Attachments</label>
+                                        <label for="file_attach">Action Approval Attachment</label>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="final_attach"></div>
                                             <div class="add-btn">
@@ -508,9 +508,9 @@
 
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                        <div class="sub-head">
+                        <!-- <div class="sub-head">
                             Submit
-                        </div>
+                        </div> -->
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="group-input">
@@ -530,9 +530,9 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <!-- <div class="col-12">
                                             <div class="sub-head">Cancel</div>
-                                        </div>
+                                        </div> -->
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled by">Cancel By</label>
@@ -552,32 +552,32 @@
                                 </div>
                             </div>
 
-                            <div class="col-12">
-                                            <div class="sub-head">Acknowledge</div>
-                                        </div>
+                            <!-- <div class="col-12">
+                                            <div class="sub-head">Acknowledge Complete</div>
+                                        </div> -->
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="cancelled by">Acknowledge By</label>
+                                    <label for="cancelled by">Acknowledge Complete By</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="cancelled on">Acknowledge On</label>
+                                    <label for="cancelled on">Acknowledge Complete On</label>
                                     <div class="Date"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="submitted on">Acknowledge Comment</label>
+                                    <label for="submitted on">Acknowledge Complete Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
 
-                            <div class="col-12">
+                            <!-- <div class="col-12">
                                             <div class="sub-head">Complete</div>
-                                        </div>
+                                        </div> -->
 
                             <div class="col-lg-3">
                                 <div class="group-input">
@@ -597,9 +597,9 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <!-- <div class="col-12">
                                             <div class="sub-head">Verification Complete</div>
-                                        </div>
+                                        </div> -->
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled by">Verification Complete By</label>

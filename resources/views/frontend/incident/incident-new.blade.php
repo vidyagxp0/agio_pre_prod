@@ -2536,7 +2536,7 @@ dd($pre);
                 <div id="CCForm6" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            <div class="sub-head">Submission</div>
+                            <div class="sub-head">Submit</div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submit by">Submit By :-</label>

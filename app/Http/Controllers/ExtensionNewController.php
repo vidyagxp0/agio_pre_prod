@@ -322,7 +322,7 @@ class ExtensionNewController extends Controller
         if (!empty($request->approvers)) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'QA approval';
+            $history->activity_type = 'QA Approval';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($extensionNew->approvers);
             $history->comment = "Not Applicable";
@@ -339,7 +339,7 @@ class ExtensionNewController extends Controller
         if (!empty($extensionNew->related_records)) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'Parent Record Number';
+            $history->activity_type = 'Parent Records Number';
             $history->previous = "Null";
             $history->current = str_replace(',', ', ', $extensionNew->related_records);
             $history->comment = "Not Applicable";
@@ -780,7 +780,7 @@ class ExtensionNewController extends Controller
         if ($lastDocument->approvers != $extensionNew->approvers) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'QA approval';
+            $history->activity_type = 'QA Approval';
             $history->previous = Helpers::getInitiatorName($lastDocument->approvers);
             $history->current = Helpers::getInitiatorName($extensionNew->approvers);
             $history->comment = $request->approvers_comment;
