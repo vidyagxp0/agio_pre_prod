@@ -330,7 +330,7 @@
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('ShowInternalAuditTrial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Internal Audit', 7))
+                        @if ($data->stage == 1 && (Helpers::check_roles($data->division_id, 'Internal Audit', 7)|| Helpers::check_roles($data->division_id, 'Root Cause Analysis', 66)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Schedule Audit
                             </button>
@@ -3102,7 +3102,7 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Audit Schedule On">Comment</label>
+                                            <label for="Audit Schedule On"> Schedule Audit Comment</label>
                                             <div class="static">{{ $data->sheduled_audit_comment }}</div>
                                         </div>
                                     </div>
@@ -3122,7 +3122,7 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Audit Schedule On">Comment</label>
+                                            <label for="Audit Schedule On"> Cancelled Comment</label>
                                             <div class="static">{{ $data->cancel_1_comment }}</div>
                                         </div>
                                     </div>
@@ -3144,7 +3144,7 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Audit Schedule On">Comment</label>
+                                            <label for="Audit Schedule On"> Acknowledement Comment</label>
                                             <div class="static">{{ $data->acknowledge_commnet }}</div>
                                         </div>
                                     </div>
@@ -3208,7 +3208,7 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Audit Schedule On">Comment</label>
+                                            <label for="Audit Schedule On"> Issue Report Comment</label>
                                             <div class="static">{{ $data->issue_report_comment }}</div>
                                         </div>
                                     </div>
@@ -3235,7 +3235,7 @@
                                                     </div>
                                                 </div> -->
 
-                                    <div class="col-lg-4">
+                                    {{-- <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Cancelled By">Cancelled By</label>
                                             <div class="static">{{ $data->cancelled_by }}</div>
@@ -3253,7 +3253,7 @@
                                             <label for="Audit Schedule On">Comment</label>
                                             <div class="static">{{ $data->cancel_3_comment }}</div>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
@@ -3272,7 +3272,7 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Audit Schedule On">Comment</label>
+                                            <label for="Audit Schedule On"> CAPA Plan Proposed Comment</label>
                                             <div class="static">{{ $data->capa_plan_comment }}</div>
                                         </div>
                                     </div>
@@ -3294,7 +3294,7 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Audit Schedule On">Comment</label>
+                                            <label for="Audit Schedule On"> No CAPAs Required Comment</label>
                                             <div class="static">{{ $data->no_capa_plan_required_comment }}</div>
                                         </div>
                                     </div>
@@ -3316,7 +3316,7 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Audit Schedule On">Comment</label>
+                                            <label for="Audit Schedule On"> Response Reviewed Comment</label>
                                             <div class="static">{{ $data->response_reviewd_comment }}</div>
                                         </div>
                                     </div>
@@ -5378,8 +5378,7 @@
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea class="summernote"  name="Description_Deviation"
-                                            id="summernote-1">{{ $data->Description_Deviation }} </textarea>
+                                        <textarea   name="Description_Deviation">{{ $data->Description_Deviation }} </textarea>
                                     </div>
                                 </div>
 
@@ -7408,7 +7407,7 @@
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea class="summernote" name="tablet_compress_response_final_comment" id="summernote-1">
+                                        <textarea  name="tablet_compress_response_final_comment" >
                                 @if ($checklist1 && $checklist1->tablet_compress_response_final_comment)
                                       {{ $checklist1->tablet_compress_response_final_comment }}
                                  @endif 
@@ -9404,10 +9403,10 @@
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
                                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                            <textarea class="summernote" name="tablet_coating_remark_comment" id="summernote-1">
-                        @if ($checklist2 && $checklist2->tablet_coating_remark_comment)
-{{ $checklist2->tablet_coating_remark_comment }}
-@endif </textarea>
+                                            <textarea  name="tablet_coating_remark_comment" >
+                                                                @if ($checklist2 && $checklist2->tablet_coating_remark_comment)
+                                                            {{ $checklist2->tablet_coating_remark_comment }}
+                                                            @endif </textarea>
                                         </div>
                                     </div>
 
@@ -9616,7 +9615,7 @@
                                     <div class="col-md-12 mb-4">
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
-                                            <textarea class="summernote" name="tablet_capsule_packing_comment" id="summernote-1">
+                                            <textarea  name="tablet_capsule_packing_comment" >
                         @if ($checklist3 && $checklist3->{"tablet_capsule_packing_comment"})
                                {{ $checklist3->{"tablet_capsule_packing_comment"} }}
 @endif
@@ -11522,12 +11521,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="sub-head">
+                                    {{-- <div class="sub-head">
                                         STAGE 2: DOCUMENTATION
                                     </div>
 
                                     <div class="col-12">
-                                        {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
                                         <div class="group-input">
                                             <div class="why-why-chart">
                                                 <table class="table table-bordered">
@@ -11758,13 +11756,13 @@
                                                 </table>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div class="col-md-12 mb-4">
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                        <textarea  name="Description_Deviation[]" >
                     </textarea>
                                     </div>
                                 </div>
@@ -11882,14 +11880,14 @@
                                     "Current version of SOP's is available in respective areas?",
                                 ];
 
-                                $documentationQuestions = [
-                                    'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
-                                    'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.',
-                                    'Is the batch record on line up to the current stage of a process?',
-                                    'In process carried out as per the written instruction describe in batch record?',
-                                    'Is there any area cleaning record available for all individual areas?',
-                                    "Current version of SOP's is available in respective areas?",
-                                ];
+                                // $documentationQuestions = [
+                                //     'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
+                                //     'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.',
+                                //     'Is the batch record on line up to the current stage of a process?',
+                                //     'In process carried out as per the written instruction describe in batch record?',
+                                //     'Is there any area cleaning record available for all individual areas?',
+                                //     "Current version of SOP's is available in respective areas?",
+                                // ];
                             @endphp
 
                             <div class="inner-block-content">
@@ -11962,7 +11960,7 @@
                                     {{-- <div class="sub-head">
                                         STAGE 2: DOCUMENTATION
                                     </div> --}}
-
+{{-- 
                                     <div class="col-12">
                                         <div class="group-input">
                                             <div class="why-why-chart">
@@ -12022,13 +12020,13 @@
                                                 </table>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
 
                                 <div class="col-md-12 mb-4">
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
-                                        <textarea class="summernote" name="dispensing_and_manufacturing_comment" id="summernote-1">
+                                        <textarea  name="dispensing_and_manufacturing_comment" >
 @if ($checklist6 && $checklist6->{"dispensing_and_manufacturing_comment"})
 {{ $checklist6->{"dispensing_and_manufacturing_comment"} }}
 @endif
@@ -12280,7 +12278,7 @@
                                 <div class="col-md-12 mb-4">
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
-                                        <textarea class="summernote" name="Description_oinments_comment" id="summernote-1">
+                                        <textarea  name="Description_oinments_comment" >
 @if ($checklist5 && $checklist5->{"Description_oinments_comment"})
 {{ $checklist5->{"Description_oinments_comment"} }}
 @endif
@@ -12377,14 +12375,14 @@
                                     'Is a log maintained for changes to documents and facility?',
                                 ];
 
-                                $documentationQuestions = [
-                                    'Does QA have authority to review and approve or reject?',
-                                    'Is there an adequate system, described in an SOP, for controlling changes within the production process, including review and approval of changes to processes, documents, and equipment?',
-                                    'Based on the audit findings and recommendations, are steps taken to correct any areas of noncompliance? Are corrective actions documented? Is their effectiveness verified in subsequent audits?',
-                                    'If any contractors (e.g., laboratories, packagers) are used, are they periodically audited and is their performance monitored?',
-                                    'Audit programs - Is there an internal quality audit program that covers all areas of the operation to verify that SOPs and other procedures and policies are being followed, and to determine effectiveness of the quality systems?',
-                                    'Is there an SOP for investigation of manufacturing deviations and batch failures to determine the cause and institute corrective actions to prevent the situation from recurring?',
-                                ];
+                                // $documentationQuestions = [
+                                //     'Does QA have authority to review and approve or reject?',
+                                //     'Is there an adequate system, described in an SOP, for controlling changes within the production process, including review and approval of changes to processes, documents, and equipment?',
+                                //     'Based on the audit findings and recommendations, are steps taken to correct any areas of noncompliance? Are corrective actions documented? Is their effectiveness verified in subsequent audits?',
+                                //     'If any contractors (e.g., laboratories, packagers) are used, are they periodically audited and is their performance monitored?',
+                                //     'Audit programs - Is there an internal quality audit program that covers all areas of the operation to verify that SOPs and other procedures and policies are being followed, and to determine effectiveness of the quality systems?',
+                                //     'Is there an SOP for investigation of manufacturing deviations and batch failures to determine the cause and institute corrective actions to prevent the situation from recurring?',
+                                // ];
                             @endphp
 
                             <div class="inner-block-content">
@@ -12453,7 +12451,7 @@
 
                                     {{-- <div class="sub-head">STAGE 2: DOCUMENTATION</div> --}}
 
-                                    <div class="col-12">
+                                    {{-- <div class="col-12">
                                         <div class="group-input">
                                             <div class="why-why-chart">
                                                 <table class="table table-bordered">
@@ -12511,16 +12509,16 @@
                                                 </table>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
 
                                 <div class="col-md-12 mb-4">
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
-                                        <textarea class="summernote" name="ointment_packing_comment" id="summernote-1">   @if ($checklist7 && $checklist7->{"ointment_packing_comment"})
-{{ $checklist7->{"ointment_packing_comment"} }}
-@endif
-</textarea>
+                                        <textarea  name="ointment_packing_comment" >   @if ($checklist7 && $checklist7->{"ointment_packing_comment"})
+                                            {{ $checklist7->{"ointment_packing_comment"} }}
+                                            @endif
+                                            </textarea>
                                     </div>
                                 </div>
 
@@ -12824,7 +12822,7 @@
                                 <div class="col-md-12 mb-4">
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
-                                        <textarea class="summernote" name="engineering_response_comment" id="summernote-1">
+                                        <textarea  name="engineering_response_comment" >
 @if ($checklist9 && $checklist9->engineering_response_comment)
 {{ $checklist9->engineering_response_comment }}
 @endif
@@ -13072,7 +13070,7 @@
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea class="summernote" name="quality_control_response_comment" id="summernote-1">
+                                        <textarea  name="quality_control_response_comment" >
                     </textarea>
                                     </div>
                                 </div>
@@ -13223,7 +13221,7 @@
                                     <div class="col-md-12 mb-4">
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
-                                            <textarea class="summernote" name="checklist_stores_response_comment" id="summernote-1"></textarea>
+                                            <textarea  name="checklist_stores_response_comment" ></textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -13377,7 +13375,7 @@
                                     <div class="col-md-12 mb-4">
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
-                                            <textarea class="summernote" name="checklist_hr_response_comment" id="summernote-1"></textarea>
+                                            <textarea  name="checklist_hr_response_comment" ></textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -13698,7 +13696,7 @@
                                     <div class="col-md-12 mb-4">
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
-                                            <textarea class="summernote" name="remark_documentation_name_comment" id="summernote-1">
+                                            <textarea  name="remark_documentation_name_comment" >
 @if ($checklist13 && $checklist13->{"remark_documentation_name_comment"})
 {{ $checklist13->{"remark_documentation_name_comment"} }}
 @endif
@@ -13819,7 +13817,7 @@
                             <div class="inner-block-content">
                                 <div class="row">
                                     <div class="sub-head">
-                                        Checklist for Injection Packing
+                                        STAGE 1 : INJECTION PACKING
                                     </div>
 
                                     <div class="col-12">
@@ -13952,7 +13950,7 @@
                                     <div class="col-md-12 mb-4">
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
-                                            <textarea class="summernote" name="response_injection_packing_comment" id="summernote-1">
+                                            <textarea  name="response_injection_packing_comment" >
 @if ($checklist14 && $checklist14->{"response_injection_packing_comment"})
 {{ $checklist14->{"response_injection_packing_comment"} }}
 @endif
@@ -14274,7 +14272,7 @@
                                     <div class="col-md-12 mb-4">
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
-                                            <textarea class="summernote" name="remark_powder_manufacturing_filling_comment" id="summernote-1">
+                                            <textarea  name="remark_powder_manufacturing_filling_comment" >
 @if ($checklist15 && $checklist15->{"remark_powder_manufacturing_filling_comment"})
 {{ $checklist15->{"remark_powder_manufacturing_filling_comment"} }}
 @endif
@@ -14452,7 +14450,7 @@
                                     <div class="col-md-12 mb-4">
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
-                                            <textarea class="summernote" name="remark_analytical_research_comment" id="summernote-1">
+                                            <textarea  name="remark_analytical_research_comment" >
 @if ($checklist16 && $checklist16->{"remark_analytical_research_comment"})
 {{ $checklist16->{"remark_analytical_research_comment"} }}
 @endif
@@ -14624,7 +14622,7 @@
                                     <div class="col-md-12 mb-4">
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
-                                            <textarea class="summernote" name="remark_formulation_research_development_comment" id="summernote-1">
+                                            <textarea  name="remark_formulation_research_development_comment" >
 @if ($checklist17 && $checklist17->{"remark_formulation_research_development_comment"})
 {{ $checklist17->{"remark_formulation_research_development_comment"} }}
 @endif

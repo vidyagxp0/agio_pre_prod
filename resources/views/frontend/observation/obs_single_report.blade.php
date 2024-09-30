@@ -488,22 +488,20 @@
                         @foreach (unserialize($griddata->action) as $key => $temps)
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
-                                <td>{{ unserialize($griddata->action)[$key] ? unserialize($griddata->action)[$key] : '' }}
-                                </td>
+                                <td>{{ unserialize($griddata->action)[$key] ? unserialize($griddata->action)[$key] : '' }}</td>
+                                <td>
                                 @foreach ($users as $value)
                                     @if ($griddata && unserialize($griddata->responsible)[$key] == $value->id)
                                         {{-- {{ unserialize($griddata->responsible)[$key] == $value->id ? 'selected' : '' }} --}}
-                                        <td>
+                                        <!-- <td> -->
                                             {{ $value->name }}
-                                        </td>
-                                        @else
-                                            Not Applicable
+                                        <!-- </td> -->
                                     @endif
             
                                 @endforeach
-                                <td>{{ Helpers::getdateFormat(unserialize($griddata->deadline)[$key]) }}</td>
-                                <td>{{ unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : '' }}
                                 </td>
+                                <td>{{ Helpers::getdateFormat(unserialize($griddata->deadline)[$key]) }}</td>
+                                <td>{{ unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : '' }}</td>
                             </tr>
                         @endforeach
                     </table>
@@ -716,11 +714,11 @@
                 </tr>
             </table>
             <div class="block-head">
-                Cancelled
+                Cancel
              </div>
             <table>
                 <tr>
-                    <th class="w-20">Cancelled By</th>
+                    <th class="w-20">Cancel By</th>
                     <td class="w-80">
                         @if ($data->cancel_by)
                             {{ $data->cancel_by }}
@@ -728,7 +726,7 @@
                             Not Applicable
                         @endif
                     </td>
-                    <th class="w-20">Cancelled On</th>
+                    <th class="w-20">Cancel On</th>
                     <td class="w-80">
                         @if ($data->cancel_on)
                             {{ $data->cancel_on }}
@@ -737,7 +735,7 @@
                         @endif
                     </td>
                
-                    <th class="w-20">Cancelled Comment</th>
+                    <th class="w-20">Cancel Comment</th>
                     <td class="w-80">
                         @if ($data->cancel_comment)
                             {{ $data->cancel_comment }}
@@ -851,11 +849,11 @@
 
        </table>
        <div class="block-head">
-        No CAPA's Plan Proposed
+        No CAPAs Plan Proposed
      </div>
        <table>
         <tr>
-            <th class="w-20">No CAPA's Plan Proposed By</th>
+            <th class="w-20">No CAPAs Plan Proposed By</th>
             <td class="w-80">
                 @if ($data->qa_approval_without_capa_by)
                     {{ $data->qa_approval_without_capa_by }}
@@ -864,7 +862,7 @@
                 @endif
             </td>
 
-            <th class="w-20">No CAPA's Plan Proposed On</th>
+            <th class="w-20">No CAPAs Plan Proposed On</th>
             <td class="w-80">
                 @if ($data->qa_approval_without_capa_on)
                     {{ $data->qa_approval_without_capa_on }}
@@ -873,7 +871,7 @@
                 @endif
             </td>
       
-            <th class="w-20">No CAPA's Plan Proposed Comment</th>
+            <th class="w-20">No CAPAs Plan Proposed Comment</th>
             <td class="w-80">
                 @if ($data->qa_approval_without_capa_comment)
                     {{ $data->qa_approval_without_capa_comment }}

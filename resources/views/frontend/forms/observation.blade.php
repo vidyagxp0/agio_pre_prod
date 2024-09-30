@@ -713,180 +713,156 @@
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Report Issued By">Report Issued By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Report Issued On">Report Issued On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Cancel By">Cancel By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Cancel On">Cancel On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Complete By">Complete By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Complete On">Complete On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More Info Required By">More Info Required By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More Info Required On">More Info Required On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Reject CAPA Plan By">Reject CAPA Plan By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Reject CAPA plan On">Reject CAPA plan On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="QA Approval Without CAPA By">QA Approval Without CAPA
-                                            By</label>
-                                            <div class="static"></div>
+                            <div class="col-12">
+                                            <div class="sub-head">Report Issued</div>
                                         </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="QA Approval Without CAPA On">QA Approval Without CAPA
-                                            On</label>
-                                            <div class="static"></div>
+
+                                        
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Cancel By">Report Issued By</label>
+                                                <div class="static"></div>
+                                            </div>
                                         </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="QA Approval On">QA Approval By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="QA Approval By">QA Approval On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="All CAPA closed By">All CAPA closed By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="All CAPA Closed On">All CAPA Closed On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Cancel By">Report Issued On</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Cancel By">Report Issued Comment</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
 
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
+                                        <div class="col-12">
+                                            <div class="sub-head">Cancel</div>
+                                        </div>
 
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Final_Approval_On">Final Approval By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Final_Approval_On">Final Approval On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Cancel By">Cancel By</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Cancel On">Cancel On</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
 
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Submitted on">Cancel Comment</label>
+                                                <div class="Date"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="sub-head">More Info Required</div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="More Info Required By">More Info Required By</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="More Info Required On">More Info Required On</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Submitted on">More Info Required Comment</label>
+                                                <div class="Date"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="sub-head">CAPA Plan Proposed</div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Reject CAPA Plan By">CAPA Plan Proposed By</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="CAPA Plan Proposed On">CAPA Plan Proposed On</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Submitted on">CAPA Plan Proposed Comment</label>
+                                                <div class="Date"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="sub-head">No CAPAs Plan Proposed</div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="QA Approval Without CAPA By">No CAPAs Plan Proposed
+                                                    By</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="No CAPA's Plan Proposed On">No CAPAs Plan Proposed
+                                                    On</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Submitted on">No CAPAs Plan Proposed Comment</label>
+                                                <div class="Date"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="sub-head">Response Reviewed</div>
+                                        </div>
+
+                             
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="QA Approval On">Response Reviewed By</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Response Reviewed By">Response Reviewed On</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Submitted on">Response Reviewed Comment</label>
+                                                <div class="Date"></div>
+                                            </div>
+                                        </div>
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <!-- <button type="submit" class="saveButton">Save</button> -->
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="submit">Submit</button>
+                                <!-- <button type="submit">Submit</button> -->
                                 <button type="button"> <a class="text-white"
                                         href="{{ url('rcms/qms-dashboard') }}"> Exit </a>
                                 </button>

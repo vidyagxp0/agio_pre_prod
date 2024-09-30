@@ -72,7 +72,7 @@
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
              @elseif($data->stage == 12 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Done-modal1">P-IB Assignable Cause Found</button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Done-modal1">Phase IB Assignable Cause Found</button>
              {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-I B Assignable Cause Not Found</button> --}}
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
 
@@ -92,8 +92,8 @@
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
              @elseif($data->stage == 16 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Done-modal2">P-II A Assignable Cause Found</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-II A Assignable Cause Not Found</button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Done-modal2">Phase II A Assignable Cause Found</button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II A Assignable Cause Not Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
 
              @elseif($data->stage == 25 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -112,12 +112,12 @@
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
              @elseif($data->stage == 20 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-II B Assignable Cause Found</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-II B Assignable Cause Not Found</button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Assignable Cause Found</button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Assignable Cause Not Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
              @elseif($data->stage == 21 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
              {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button> --}}
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-III Investigation Applicable/Not Applicable</button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">PIhase II Investigation Applicable/Not Applicable</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis-Action-item">Child</button>
              @elseif($data->stage == 22 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 
@@ -186,8 +186,8 @@
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
              @elseif($data->stage == 12 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Done-modal1">P-IB Assignable Cause Found</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-I B Assignable Cause Not Found</button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Done-modal1">Phse IB Assignable Cause Found</button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IB Assignable Cause Not Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
 
              @elseif($data->stage == 24 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -206,8 +206,8 @@
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
              @elseif($data->stage == 16 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Done-modal2">P-II A Assignable Cause Found</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-II A Assignable Cause Not Found</button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Done-modal2">Phase II A Assignable Cause Found</button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II A Assignable Cause Not Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
 
              @elseif($data->stage == 25 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -226,12 +226,12 @@
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
              @elseif($data->stage == 20 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-II B Assignable Cause Found</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-II B Assignable Cause Not Found</button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Assignable Cause Found</button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Assignable Cause Not Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
              @elseif($data->stage == 21 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
              {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button> --}}
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-III Investigation Applicable/Not Applicable</button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase III Investigation Applicable/Not Applicable</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis-Action-item">Child</button>
              @elseif($data->stage == 22 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 
@@ -790,9 +790,9 @@
                 @endif
 
                 @if ($data->stage >= 5)
-                    <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase-IA Investigation </div>
+                    <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase IA Investigation </div>
                 @else
-                    <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase-IA Investigation</div>
+                    <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase IA Investigation</div>
                 @endif
 
                 @if ($data->stage >= 6)
@@ -807,14 +807,14 @@
                 <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA CQA/QA Review</div>
                 @endif
                 @if ($data->stage >= 8)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">P-IA CQAH/QAH Review</div>
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA CQAH/QAH Review</div>
                 @else
-                <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">P-IA CQAH/QAH Review</div>
+                <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA CQAH/QAH Review</div>
                 @endif
                 @if ($data->stage >= 9)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase-IB Investigation</div>
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase IB Investigation</div>
                 @else
-                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase-IB Investigation</div>
+                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase IB Investigation</div>
                 @endif
                 @if ($data->stage >= 10)
                 <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IB HOD Primary Review</div>
@@ -827,9 +827,9 @@
                 <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IB CQA/QA Review </div>
                 @endif
                 @if ($data->stage >= 12)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> P-IB CQAH/QAH Review</div>
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Phase IB CQAH/QAH Review</div>
                 @else
-                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">P-IB CQAH/QAH Review</div>
+                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IB CQAH/QAH Review</div>
                 @endif
                 @if ($data->stage >= 21)
                 <div class="bg-danger d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Closed - Done</div>
@@ -868,9 +868,9 @@
                     @endif
 
                     @if ($data->stage >= 5)
-                        <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase-IA Investigation </div>
+                        <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase IA Investigation </div>
                     @else
-                        <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase-IA Investigation</div>
+                        <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase IA Investigation</div>
                     @endif
 
                     @if ($data->stage >= 6)
@@ -885,14 +885,14 @@
                     <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA CQA/QA Review</div>
                     @endif
                     @if ($data->stage >= 8)
-                    <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">P-IA CQAH/QAH Review</div>
+                    <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA CQAH/QAH Review</div>
                     @else
-                    <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">P-IA CQAH/QAH Review</div>
+                    <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA CQAH/QAH Review</div>
                     @endif
                     @if ($data->stage >= 9)
-                    <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase-IB Investigation</div>
+                    <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase IB Investigation</div>
                     @else
-                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase-IB Investigation</div>
+                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase IB Investigation</div>
                     @endif
                     @if ($data->stage >= 10)
                     <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IB HOD Primary Review</div>
@@ -905,14 +905,14 @@
                     <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IB CQA/QA Review </div>
                     @endif
                     @if ($data->stage >= 12)
-                    <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> P-IB CQAH/QAH Review</div>
+                    <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Phase IB CQAH/QAH Review</div>
                     @else
-                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">P-IB CQAH/QAH Review</div>
+                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IB CQAH/QAH Review</div>
                     @endif
                     @if ($data->stage >= 13)
-                    <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase-II A Investigation </div>
+                    <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase II A Investigation </div>
                     @else
-                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase-II A Investigation</div>
+                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase II A Investigation</div>
                     @endif
 
                     {{-- @if ($data->stage >= 13)
@@ -934,14 +934,14 @@
                     @endif
 
                     @if ($data->stage >= 16)
-                    <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">P-II A QAH/CQAH Review</div>
+                    <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II A QAH/CQAH Review</div>
                     @else
-                        <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">P-II A QAH/CQAH Review</div>
+                        <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II A QAH/CQAH Review</div>
                     @endif
                     @if ($data->stage >= 17)
-                    <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase-II B Investigation</div>
+                    <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase II B Investigation</div>
                     @else
-                        <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase-II B Investigation</div>
+                        <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase II B Investigation</div>
                     @endif
                     @if ($data->stage >= 18)
                     <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II B HOD Primary Review</div>
@@ -954,9 +954,9 @@
                         <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II B CQA/QA Review</div>
                     @endif
                     @if ($data->stage >= 20)
-                    <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">P-II B QAH/CQAH Review</div>
+                    <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II B QAH/CQAH Review</div>
                     @else
-                        <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">P-II B QAH/CQAH Review</div>
+                        <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II B QAH/CQAH Review</div>
                     @endif
                     @if ($data->stage >= 21)
                     <div class="bg-danger d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Closed - Done</div>

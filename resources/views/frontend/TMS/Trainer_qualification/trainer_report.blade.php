@@ -159,7 +159,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                TrainerQualification Report
+                Trainer Qualification Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -171,10 +171,30 @@
         </table>
         <table>
             <tr>
-                
+                <td class="w-70" style="height:1rem;">
+                @if($data->employee_id){{ $data->employee_id }}@else Not Applicable @endif
+                </td>
+        
+                <td class="w-70" style="height:1rem">
+                @if($data->employee_name){{ $data->employee_name }}@else Not Applicable @endif
+
+                </td>
             </tr>
         </table>
     </header>
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+               
+            </tr>
+        </table>
+    </footer>
 
     <div class="inner-block">
         <div class="content-table">
@@ -186,64 +206,56 @@
                     <tr>
                         <th class="w-20">Trainer Name</th>
                         <td class="w-30">@if($data->trainer_name){{ $data->trainer_name }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
+
                         <th class="w-20">Name of Employee</th>
                         <td class="w-30">@if($data->employee_name){{ $data->employee_name }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Employee ID</th>
                         <td class="w-30">@if($data->employee_id){{ $data->employee_id }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
+            
                         <th class="w-20">Department</th>
                         <td class="w-30">@if($data->department){{ $data->department }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Designation</th>
                         <td class="w-30">@if($data->designation){{ $data->designation }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
+                
                         <th class="w-20">Experience (if any)</th>
                         <td class="w-30">@if($data->experience_if_any){{ $data->experience_if_any }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">HOD</th>
                         <td class="w-30">@if($data->hod){{ $data->hod }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
+                 
                         <th class="w-20">Qualification</th>
                         <td class="w-30">@if($data->qualification){{ $data->qualification }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Training Date<</th>
                         <td class="w-30">@if($data->training_date){{ $data->training_date }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
+               
                         <th class="w-20">Topic of Training</th>
                         <td class="w-30">@if($data->topic){{ $data->topic }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Type of Training</th>
                         <td class="w-30">@if($data->type){{ $data->type }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
+                    
                         <th class="w-20">Evaluation Required<</th>
                         <td class="w-30">@if($data->evaluation){{ $data->evaluation }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Site Division/Project</th>
                         <td class="w-30">@if($data->site_code){{ $data->site_code }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
+                 
                         <th class="w-20">Initiator</th>
                         <td class="w-30">@if($data->initiator){{ $data->initiator }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Date of Initiation</th>
                         <td class="w-30">@if($data->date_of_initiation){{ $data->date_of_initiation }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
+                
                         <th class="w-20"> Assigned To</th>
                         <td class="w-30">@if($data->assigned_to){{ $data->assigned_to }}@else Not Applicable @endif</td>
                     </tr>
@@ -389,8 +401,7 @@
                   <tr>
                         <th class="w-20">Qualification Status</th>
                         <td class="w-30">@if($data->trainer){{ $data->trainer }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
+                 
                         <th class="w-20">Qualification Comments</th>
                         <td class="w-30">@if($data->qualification_comments){{ $data->qualification_comments }}@else Not Applicable @endif</td>
                     </tr>

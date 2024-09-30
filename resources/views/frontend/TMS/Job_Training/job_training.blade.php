@@ -41,8 +41,6 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
 </div>
 
 
-
-
 {{-- ======================================
                     DATA FIELDS
     ======================================= --}}
@@ -54,7 +52,10 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Job Description</button>
-
+            <button class="cctablinks " onclick="openCity(event, 'CCForm3')">QA Review</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm4')">QA/CQA Approval</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm5')">Evaluation</button>
+   
         </div>
 
         <form action="{{ route('job_trainingcreate') }}" method="post" enctype="multipart/form-data">
@@ -72,7 +73,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             <!-- Employee Name -->
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="select-employee-name">Emp Name </label>
+                                    <label for="select-employee-name">Employee Name </label>
                                     <select id="select-employee-name" name="selected_employee_id" required>
                                         <option value="">Select an employee</option>
                                         @foreach ($employees as $employee)
@@ -113,14 +114,14 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             <!-- Employee Code -->
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="employee_id">Emp Code </label>
+                                    <label for="employee_id">Employee Code </label>
                                     <input id="employee_id" name="empcode" value="" type="text" readonly>
                                     @error('empcode')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
                             </div>
-                  <!-- <div class="col-lg-6">
+                  {{-- <div class="col-lg-6">
                         <div class="group-input">
                             <label for="type_of_training">SOP Document</label>      
                             <select name="sopdocument">
@@ -132,8 +133,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                 @endforeach
                             </select>
                         </div>
-                    </div> -->
-                    <div class="col-lg-6">
+                    </div> --}}
+                    {{-- <div class="col-lg-6">
                         <div class="group-input">
                             <label for="type_of_training">SOP Document</label>  
                     <select name="sopdocument" id="sopdocument" onchange="fetchShortDescription(this.value)">
@@ -145,11 +146,11 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                         @endforeach
                     </select>
                     </div>
-                    </div>
+                    </div> --}}
 
                             
                             <!-- Type of Training -->
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="type_of_training">Type of Training</label>
                                     <select name="type_of_training" id="type_of_training" >
@@ -158,7 +159,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                         <option value="classroom">Classroom</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
                             
                             <!-- Start Date -->
                             <div class="col-lg-6">
@@ -172,7 +173,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="end_date">End Date</label>
-                                    <input id="end_date" type="date" name="enddate_1" >
+                                    <input id="end_date" type="date" name="end_date" >
                                 </div>
                             </div>
                             
@@ -185,20 +186,13 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             </div>
                             
                             <!-- Location -->
-                            <div class="col-lg-6">
+                            <!-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="location">Location</label>
                                     <input id="location" type="text" name="location" >
                                 </div>
-                            </div>
-                            
-                            <!-- HOD -->
-                            <!-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="hod">HOD</label>
-                                    <input id="hod" type="text" name="hod" readonly>
-                                </div>
                             </div> -->
+                            
 
                             <div class="col-md-6">
                                 <div class="group-input">
@@ -286,11 +280,11 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                 // Populate the fields with data
                                                 document.getElementById('name').value = data.employee_name; // Employee Name (for saving)
                                                 document.getElementById('employee_id').value = data.full_employee_id; // Employee Code
-                                                document.getElementById('type_of_training').value = data.type_of_training || ''; // Type of Training
+                                                // document.getElementById('type_of_training').value = data.type_of_training || ''; // Type of Training
                                                 document.getElementById('start_date').value = data.start_date || ''; // Start Date
                                                 document.getElementById('end_date').value = data.end_date || ''; // End Date
                                                 document.getElementById('department').value = data.department || 'N/A'; // Department
-                                                document.getElementById('location').value = data.site_name || 'N/A'; // Location
+                                                //document.getElementById('location').value = data.site_name || 'N/A'; // Location
                                                 // document.getElementById('hod').value = data.hod || 'N/A'; // HOD
                                             })
                                             .catch(error => {
@@ -298,22 +292,22 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                 // Clear fields if error
                                                 document.getElementById('name').value = '';
                                                 document.getElementById('employee_id').value = '';
-                                                document.getElementById('type_of_training').value = '';
+                                                // document.getElementById('type_of_training').value = '';
                                                 document.getElementById('start_date').value = '';
                                                 document.getElementById('end_date').value = '';
                                                 document.getElementById('department').value = '';
-                                                document.getElementById('location').value = '';
+                                                //document.getElementById('location').value = '';
                                                 // document.getElementById('hod').value = '';
                                             });
                                     } else {
                                         // Clear fields if no employee selected
                                         document.getElementById('name').value = '';
                                         document.getElementById('employee_id').value = '';
-                                        document.getElementById('type_of_training').value = '';
+                                        // document.getElementById('type_of_training').value = '';
                                         document.getElementById('start_date').value = '';
                                         document.getElementById('end_date').value = '';
                                         document.getElementById('department').value = '';
-                                        document.getElementById('location').value = '';
+                                        //document.getElementById('location').value = '';
                                         // document.getElementById('hod').value = '';
                                     }
                                 });
@@ -327,12 +321,13 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
     <thead>
         <tr>
             <th style="width: 5%;">Sr.No.</th>
-            <th style="width: 30%;">Subject</th>
+            <th style="width: 30%;">Document Title</th>
             <th>Type of Training</th>
-            <th>Reference Document No.</th>
+            <th>SOP No.</th>
             <th>Trainer</th>
             <th>Date of Training</th>
             <th>Date of Completion</th>
+            <th>SOP Preview</th>
         </tr>
     </thead>
     <tbody>
@@ -341,95 +336,204 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
         $usersDetails = DB::table('users')->select('id', 'name')->get();
         @endphp
         
-        <!-- Row 1 -->
         <tr>
-            <td>1</td>
-            <td><input type="text" id="subject_1" name="subject_1" placeholder="Subject"></td>
-            <td><input type="text" name="type_of_training_1"></td>
-            <td><input type="text" name="reference_document_no_1"></td>
-            <td>
-                <select name="trainer_1" id="trainer_1">
-                    <option value="">-- Select --</option>
-                    @foreach ($usersDetails as $u)
-                    <option value="{{ $u->id }}">{{ $u->name }}</option>
-                    @endforeach
-                </select>
-            </td>
-            <td><input type="date" name="startdate_1" id="startdate_1" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-            <td><input type="date" name="enddate_1" id="enddate_1" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-        </tr>
+        <td>1</td>
+        <td>
+        <select name="subject_1" id="sopdocument" onchange="fetchDocumentDetails(this)">
+            <option value="">---Select Document Name---</option>
+            @foreach ($data as $dat)
+            <option value="{{ $dat->document_name }}"
+                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                    data-sop-link="{{ $dat->id }}" 
+                    data-id="{{ $dat->id }}">
+                {{ $dat->document_name }}
+            </option>
+            @endforeach
+        </select>
+    </td>
+
+    <td><input type="text" name="type_of_training_1"></td>
+
+    <td><input type="text" name="reference_document_no_1" id="document_number" readonly></td>
+
+    <td>
+        <select name="trainer_1" id="trainer_1">
+            <option value="">-- Select --</option>
+            @foreach ($usersDetails as $u)
+            <option value="{{ $u->id }}">{{ $u->name }}</option>
+            @endforeach
+        </select>
+    </td>
+
+    <td><input type="date" name="startdate_1" id="startdate_1" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+
+    <td><input type="date" name="enddate_1" id="enddate_1" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+
+    <td>
+        <a href="" id="view_sop" target="_blank" style="display:none;">View SOP</a>
+    </td>
+</tr>
+<input type="hidden" id="selected_document_id" name="selected_document_id">
 
         <!-- Row 2 -->
         <tr>
             <td>2</td>
-            <td><input type="text" name="subject_2"></td>
-            <td><input type="text" name="type_of_training_2"></td>
-            <td><input type="text" name="reference_document_no_2"></td>
             <td>
-                <select name="trainer_2" id="trainer_2">
-                    <option value="">-- Select --</option>
-                    @foreach ($usersDetails as $u)
-                    <option value="{{ $u->id }}">{{ $u->name }}</option>
-                    @endforeach
-                </select>
-            </td>
-            <td><input type="date" name="startdate_2" id="startdate_2" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-            <td><input type="date" name="enddate_2" id="enddate_2" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-        </tr>
+        <select name="subject_2" id="sopdocument" onchange="fetchDocumentDetails2(this)">
+            <option value="">---Select Document Name---</option>
+            @foreach ($data as $dat)
+            <option value="{{ $dat->document_name }}"
+                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                    data-sop-link="{{ $dat->id }}" 
+                    data-id="{{ $dat->id }}">
+                {{ $dat->document_name }}
+            </option>
+            @endforeach
+        </select>
+    </td>
+
+    <td><input type="text" name="type_of_training_2"></td>
+
+    <td><input type="text" name="reference_document_no_2" id="document_number2" readonly></td>
+
+    <td>
+        <select name="trainer_2" id="trainer_2">
+            <option value="">-- Select --</option>
+            @foreach ($usersDetails as $u)
+            <option value="{{ $u->id }}">{{ $u->name }}</option>
+            @endforeach
+        </select>
+    </td>
+
+    <td><input type="date" name="startdate_2" id="startdate_2" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+
+    <td><input type="date" name="enddate_2" id="enddate_2" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+
+    <td>
+        <a href="" id="view_sop2" target="_blank" style="display:none;">View SOP</a>
+    </td>
+</tr>
+<input type="hidden" id="selected_document_id2" name="selected_document_id">
 
         <!-- Row 3 -->
         <tr>
             <td>3</td>
-            <td><input type="text" name="subject_3"></td>
-            <td><input type="text" name="type_of_training_3"></td>
-            <td><input type="text" name="reference_document_no_3"></td>
-            <td>
-                <select name="trainer_3" id="trainer_3">
-                    <option value="">-- Select --</option>
-                    @foreach ($usersDetails as $u)
-                    <option value="{{ $u->id }}">{{ $u->name }}</option>
-                    @endforeach
-                </select>
-            </td>
-            <td><input type="date" name="startdate_3" id="startdate_3" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-            <td><input type="date" name="enddate_3" id="enddate_3" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-        </tr>
+        <td>
+        <select name="subject_3" id="sopdocument" onchange="fetchDocumentDetails3(this)">
+            <option value="">---Select Document Name---</option>
+            @foreach ($data as $dat)
+            <option value="{{ $dat->document_name }}"
+                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                    data-sop-link="{{ $dat->id }}" 
+                    data-id="{{ $dat->id }}">
+                {{ $dat->document_name }}
+            </option>
+            @endforeach
+        </select>
+    </td>
+
+    <td><input type="text" name="type_of_training_3"></td>
+
+    <td><input type="text" name="reference_document_no_3" id="document_number3" readonly></td>
+
+    <td>
+        <select name="trainer_3" id="trainer_3">
+            <option value="">-- Select --</option>
+            @foreach ($usersDetails as $u)
+            <option value="{{ $u->id }}">{{ $u->name }}</option>
+            @endforeach
+        </select>
+    </td>
+
+    <td><input type="date" name="startdate_3" id="startdate_3" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+
+    <td><input type="date" name="enddate_3" id="enddate_3" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+
+    <td>
+        <a href="" id="view_sop3" target="_blank" style="display:none;">View SOP</a>
+    </td>
+</tr>
+<input type="hidden" id="selected_document_id3" name="selected_document_id">
 
         <!-- Row 4 -->
         <tr>
             <td>4</td>
-            <td><input type="text" name="subject_4"></td>
-            <td><input type="text" name="type_of_training_4"></td>
-            <td><input type="text" name="reference_document_no_4"></td>
             <td>
-                <select name="trainer_4" id="trainer_4">
-                    <option value="">-- Select --</option>
-                    @foreach ($usersDetails as $u)
-                    <option value="{{ $u->id }}">{{ $u->name }}</option>
-                    @endforeach
-                </select>
-            </td>
-            <td><input type="date" name="startdate_4" id="startdate_4" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-            <td><input type="date" name="enddate_4" id="enddate_4" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-        </tr>
+        <select name="subject_4" id="sopdocument" onchange="fetchDocumentDetails4(this)">
+            <option value="">---Select Document Name---</option>
+            @foreach ($data as $dat)
+            <option value="{{ $dat->document_name }}"
+                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                    data-sop-link="{{ $dat->id }}" 
+                    data-id="{{ $dat->id }}">
+                {{ $dat->document_name }}
+            </option>
+            @endforeach
+        </select>
+    </td>
+
+    <td><input type="text" name="type_of_training_4"></td>
+
+    <td><input type="text" name="reference_document_no_4" id="document_number4" readonly></td>
+
+    <td>
+        <select name="trainer_4" id="trainer_4">
+            <option value="">-- Select --</option>
+            @foreach ($usersDetails as $u)
+            <option value="{{ $u->id }}">{{ $u->name }}</option>
+            @endforeach
+        </select>
+    </td>
+
+    <td><input type="date" name="startdate_4" id="startdate_4" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+
+    <td><input type="date" name="enddate_4" id="enddate_4" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+
+    <td>
+        <a href="" id="view_sop4" target="_blank" style="display:none;">View SOP</a>
+    </td>
+</tr>
+<input type="hidden" id="selected_document_id4" name="selected_document_id">
 
         <!-- Row 5 -->
         <tr>
             <td>5</td>
-            <td><input type="text" name="subject_5"></td>
-            <td><input type="text" name="type_of_training_5"></td>
-            <td><input type="text" name="reference_document_no_5"></td>
             <td>
-                <select name="trainer_5" id="trainer_5">
-                    <option value="">-- Select --</option>
-                    @foreach ($usersDetails as $u)
-                    <option value="{{ $u->id }}">{{ $u->name }}</option>
-                    @endforeach
-                </select>
-            </td>
-            <td><input type="date" name="startdate_5" id="startdate_5" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-            <td><input type="date" name="enddate_5" id="enddate_5" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-        </tr>
+        <select name="subject_5" id="sopdocument" onchange="fetchDocumentDetails5(this)">
+            <option value="">---Select Document Name---</option>
+            @foreach ($data as $dat)
+            <option value="{{ $dat->document_name }}"
+                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                    data-sop-link="{{ $dat->id }}" 
+                    data-id="{{ $dat->id }}">
+                {{ $dat->document_name }}
+            </option>
+            @endforeach
+        </select>
+    </td>
+
+    <td><input type="text" name="type_of_training_5"></td>
+
+    <td><input type="text" name="reference_document_no_5" id="document_number5" readonly></td>
+
+    <td>
+        <select name="trainer_5" id="trainer_5">
+            <option value="">-- Select --</option>
+            @foreach ($usersDetails as $u)
+            <option value="{{ $u->id }}">{{ $u->name }}</option>
+            @endforeach
+        </select>
+    </td>
+
+    <td><input type="date" name="startdate_5" id="startdate_5" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+
+    <td><input type="date" name="enddate_5" id="enddate_5" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+
+    <td>
+        <a href="" id="view_sop5" target="_blank" style="display:none;">View SOP</a>
+    </td>
+</tr>
+<input type="hidden" id="selected_document_id5" name="selected_document_id">
     </tbody>
 </table>
 
@@ -447,23 +551,152 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
     </div>
 </div>
 </div>
-                <script>
-                    function fetchShortDescription(documentId) {
-                        if (documentId) {
-                            fetch(`/get-sop-description/${documentId}`)
-                                .then(response => response.json())
-                                .then(data => {
-                                    // Fill the subject field with the short description
-                                    document.getElementById('subject').value = data.short_description;
-                                })
-                                .catch(error => {
-                                    console.error('Error fetching short description:', error);
-                                });
-                        } else {
-                            document.getElementById('subject').value = ''; // Clear the field if no document is selected
-                        }
-                    }
-                </script>
+<script>
+    function fetchDocumentDetails(selectElement) {
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+    var documentId = selectedOption.getAttribute('data-id');
+
+    document.getElementById('document_number').value = documentId;
+
+    document.getElementById('selected_document_id').value = documentId;
+
+    var sopAnchor = document.getElementById('view_sop');
+    if (documentId) {
+        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+        sopAnchor.style.display = 'inline';
+    } else {
+        sopAnchor.style.display = 'none';
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    var selectedDocumentId = document.getElementById('selected_document_id').value;
+    var sopAnchor = document.getElementById('view_sop');
+    
+    if (selectedDocumentId) {
+        sopAnchor.href = `/documents/viewpdf/${selectedDocumentId}`;
+        sopAnchor.style.display = 'inline';
+    }
+});
+</script>
+
+<script>
+    function fetchDocumentDetails2(selectElement) {
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+    var documentId = selectedOption.getAttribute('data-id');
+
+    document.getElementById('document_number2').value = documentId;
+
+    document.getElementById('selected_document_id2').value = documentId;
+
+    var sopAnchor = document.getElementById('view_sop2');
+    if (documentId) {
+        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+        sopAnchor.style.display = 'inline';
+    } else {
+        sopAnchor.style.display = 'none';
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    var selectedDocumentId = document.getElementById('selected_document_id2').value;
+    var sopAnchor = document.getElementById('view_sop2');
+    
+    if (selectedDocumentId) {
+        sopAnchor.href = `/documents/viewpdf/${selectedDocumentId}`;
+        sopAnchor.style.display = 'inline';
+    }
+});
+</script>
+<script>
+     function fetchDocumentDetails3(selectElement) {
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+    var documentId = selectedOption.getAttribute('data-id');
+
+    document.getElementById('document_number3').value = documentId;
+
+    document.getElementById('selected_document_id3').value = documentId;
+
+    var sopAnchor = document.getElementById('view_sop3');
+    if (documentId) {
+        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+        sopAnchor.style.display = 'inline';
+    } else {
+        sopAnchor.style.display = 'none';
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    var selectedDocumentId = document.getElementById('selected_document_id3').value;
+    var sopAnchor = document.getElementById('view_sop3');
+    
+    if (selectedDocumentId) {
+        sopAnchor.href = `/documents/viewpdf/${selectedDocumentId}`;
+        sopAnchor.style.display = 'inline';
+    }
+});
+</script>
+<script>
+    function fetchDocumentDetails4(selectElement) {
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+    var documentId = selectedOption.getAttribute('data-id');
+
+    document.getElementById('document_number4').value = documentId;
+
+    document.getElementById('selected_document_id4').value = documentId;
+
+    var sopAnchor = document.getElementById('view_sop4');
+    if (documentId) {
+        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+        sopAnchor.style.display = 'inline';
+    } else {
+        sopAnchor.style.display = 'none';
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    var selectedDocumentId = document.getElementById('selected_document_id4').value;
+    var sopAnchor = document.getElementById('view_sop4');
+    
+    if (selectedDocumentId) {
+        sopAnchor.href = `/documents/viewpdf/${selectedDocumentId}`;
+        sopAnchor.style.display = 'inline';
+    }
+});
+</script>
+<script>
+    function fetchDocumentDetails5(selectElement) {
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+    var documentId = selectedOption.getAttribute('data-id');
+
+    document.getElementById('document_number5').value = documentId;
+
+    document.getElementById('selected_document_id5').value = documentId;
+
+    var sopAnchor = document.getElementById('view_sop5');
+    if (documentId) {
+        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+        sopAnchor.style.display = 'inline';
+    } else {
+        sopAnchor.style.display = 'none';
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    var selectedDocumentId = document.getElementById('selected_document_id5').value;
+    var sopAnchor = document.getElementById('view_sop5');
+    
+    if (selectedDocumentId) {
+        sopAnchor.href = `/documents/viewpdf/${selectedDocumentId}`;
+        sopAnchor.style.display = 'inline';
+    }
+});
+</script>
 
 
                 <div id="CCForm2" class="inner-block cctabcontent">
@@ -500,7 +733,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="employee_id">Employee ID </label>
+                                    <label for="employee_id">Employee Code </label>
                                     <input type="text" name="employee_id" id="employee_ids" readonly>
                                 </div>
                             </div>
@@ -612,7 +845,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="jd_type">Job Description Type</label>
-                                    <select id="jd_type" name="jd_type" required>
+                                    <select id="jd_type" name="jd_type">
                                         <option value="">Select JD Type...</option>
                                         <option value="new">New</option>
                                         <option value="old">Old</option>
@@ -651,7 +884,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="For Revision">Delegate</label>
-                                    <select id="select-state" placeholder="Select..." name="delegate" required>
+                                    <select id="select-state" placeholder="Select..." name="delegate" >
                                         <option value="">Select an delegate</option>
                                         @foreach ($delegate as $delegates)
                                         <option value="{{ $delegates->id }}" {{ old('delegates') == $delegates->id ? 'selected' : '' }}>
@@ -666,6 +899,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                         <div class="col-12 sub-head">
                             Job Responsibilities
                         </div>
+
                         <div class="group-input">
                             <label for="audit-agenda-grid">
                                 Job Responsibilities
@@ -696,21 +930,102 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                         
 
     </div>
+
+                
+
     <div class="button-block">
         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-        {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
+        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
         <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                 Exit </a> </button>
 
     </div>
-</div>
-</div>
 
-</div>
-</form>
 
-</div>
-</div>
+
+    <div id="CCForm3" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Activated On">Remark</label>
+                                    <textarea name="qa_cqa_comment" maxlength="255"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="External Attachment">Attachment</label>
+                                    <input type="file" id="myfile" name="qa_cqa_attachment" value="">
+                                    <a href="" target="_blank"></a>
+                                </div>
+                            </div>
+    
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>                                    
+                                <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            </div>
+                        </div>
+                    </div>
+    </div>
+    <div id="CCForm4" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Activated On">Remark</label>
+                                    <textarea name="qa_cqa_comment" maxlength="255"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="External Attachment">Attachment</label>
+                                    <input type="file" id="myfile" name="qa_cqa_attachment" value="">
+                                    <a href="" target="_blank"></a>
+                                </div>
+                            </div>
+    
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>                                    
+                                <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            </div>
+                        </div>
+                    </div>
+    </div>
+    <div id="CCForm5" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Activated On">Remark</label>
+                                    <textarea name="qa_cqa_comment" maxlength="255"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="External Attachment">Attachment</label>
+                                    <input type="file" id="myfile" name="qa_cqa_attachment" value="">
+                                    <a href="" target="_blank"></a>
+                                </div>
+                            </div>
+    
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>                                    
+                                <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            </div>
+                        </div>
+                    </div>
+    </div>
+
+
+    </form>
+    </div>
+    </div>
 
 <style>
     #step-form>div {

@@ -4673,12 +4673,12 @@
                             <table>
 
                                 <tr>
-                                    <th class="w-20">Submited By</th>
+                                    <th class="w-20">Submit By</th>
                                     <td class="w-30">{{ $managementReview->Submited_by }}</td>
-                                    <th class="w-20">Submited On</th>
+                                    <th class="w-20">Submit On</th>
                                     <td class="w-30">{{ Helpers::getdateFormat($managementReview->Submited_on) }}
                                     </td>
-                                    <th class="w-20">Comment</th>
+                                    <th class="w-20">Submit Comment</th>
                                     <td class="w-30">{{ $managementReview->Submited_Comment }}</td>
 
 
@@ -4699,7 +4699,7 @@
                                     <td class="w-30">{{ $managementReview->qaHeadReviewComplete_By }}</td>
                                     <th class="w-20">QA Head Review Complete On</th>
                                     <td class="w-30">{{ $managementReview->qaHeadReviewComplete_On }}</td>
-                                    <th class="w-20">Comment</th>
+                                    <th class="w-20">QA Head Review Complete Comment</th>
                                     <td class="w-30">{{ $managementReview->qaHeadReviewComplete_Comment }}</td>
 
 
@@ -4710,7 +4710,7 @@
                                     <td class="w-30">{{ $managementReview->meeting_summary_by }}</td>
                                     <th class="w-20">Meeting and Summary Complete On</th>
                                     <td class="w-30">{{ $managementReview->meeting_summary_on }}</td>
-                                    <th class="w-20">Comment</th>
+                                    <th class="w-20">Meeting and Summary Complete Comment</th>
                                     <td class="w-30">{{ $managementReview->meeting_summary_comment }}</td>
 
 
@@ -4721,7 +4721,7 @@
                                     <td class="w-30">{{ $managementReview->ALLAICompleteby_by }}</td>
                                     <th class="w-20">CFT Action Complete On</th>
                                     <td class="w-30">{{ $managementReview->ALLAICompleteby_on }}</td>
-                                    <th class="w-20">Comment</th>
+                                    <th class="w-20">CFT Action Complete Comment</th>
                                     <td class="w-30">{{ $managementReview->ALLAICompleteby_comment }}</td>
 
 
@@ -4733,7 +4733,7 @@
                                     <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_by }}</td>
                                     <th class="w-20">CFT HOD Review Complete On</th>
                                     <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_on }}</td>
-                                    <th class="w-20">Comment</th>
+                                    <th class="w-20">CFT HOD Review Complete Comment</th>
                                     <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_comment }}</td>
 
 
@@ -4745,7 +4745,7 @@
                                     <td class="w-30">{{ $managementReview->QAVerificationComplete_by }}</td>
                                     <th class="w-20">QA Verification Complete On</th>
                                     <td class="w-30">{{ $managementReview->QAVerificationComplete_On }}</td>
-                                    <th class="w-20">Comment</th>
+                                    <th class="w-20">QA Verification Complete Comment</th>
                                     <td class="w-30">{{ $managementReview->QAVerificationComplete_Comment }}</td>
 
 
@@ -4757,7 +4757,7 @@
                                     <td class="w-30">{{ $managementReview->Approved_by }}</td>
                                     <th class="w-20">Approved On</th>
                                     <td class="w-30">{{ $managementReview->Approved_on }}</td>
-                                    <th class="w-20">Comment</th>
+                                    <th class="w-20">Approved Comment</th>
                                     <td class="w-30">{{ $managementReview->Approved_comment }}</td>
 
 

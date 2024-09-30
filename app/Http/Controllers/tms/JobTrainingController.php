@@ -119,7 +119,42 @@ public function fetchQuestions($id)
     return response()->json([]); // Return empty array if no questions found
 }
 
-    
+public function trainingQuestions($id){
+
+    $document = Document::find($id);
+    $document_training = DocumentTraining::where('document_id',$id)->first();
+    $training = Training::find($document_training->training_plan);
+    if($training->training_plan_type == "Read & Understand with Questions"){
+        $quize = Quize::find($training->quize);
+        $data = explode(',',$quize->question);
+        // dd($document_training);
+        $array = [];
+
+        for($i = 0; $i<count($data); $i++){
+            $question = Question::find($data[$i]);
+            $question->id = $i+1;
+            $json_option = unserialize($question->options);
+            $options = [];
+            foreach($json_option as $key => $value){
+                $options[chr(97 + $key)] = $value;
+            }
+            $question->options = array($options);
+            $ans = unserialize($question->answers);
+            $question->answers = implode("", $ans);
+            $question->score = 0;
+            $question->status = "";
+
+            array_push($array,$question);
+        }
+         $data_array = implode(',',$array);
+
+        return view('frontend.TMS.Job_Training.quize',compact('document','data_array','quize'));
+   }
+   else{
+    toastr()->error('Training not specified');
+    return back();
+   }
+}
 
 
     public function getEmployeeDetail($id)
@@ -158,6 +193,8 @@ public function fetchQuestions($id)
         $jobTraining->empcode = $request->input('empcode');
         $jobTraining->type_of_training = $request->input('type_of_training');
         $jobTraining->start_date = $request->input('start_date');
+        $jobTraining->end_date = $request->input('end_date');
+
         $jobTraining->sopdocument = $request->input('sopdocument');
 
         $jobTraining->name_employee = $request->input('name_employee');
@@ -177,6 +214,7 @@ public function fetchQuestions($id)
         $jobTraining->remark = $request->input('remark'); 
         $jobTraining->evaluation_required = $request->input('evaluation_required');
         $jobTraining->delegate = $request->input('delegate');
+        $jobTraining->selected_document_id = $request->input('selected_document_id');
 
 
       $jobTraining_id = $jobTraining->id;
@@ -321,6 +359,7 @@ public function fetchQuestions($id)
         $jobTraining->empcode = $request->input('empcode');
         $jobTraining->type_of_training = $request->input('type_of_training');
         $jobTraining->start_date = $request->input('start_date');
+        $jobTraining->end_date = $request->input('end_date');
         $jobTraining->sopdocument = $request->input('sopdocument');
 
 
@@ -347,6 +386,8 @@ public function fetchQuestions($id)
         $jobTraining->qa_cqa_comment = $request->input('qa_cqa_comment');
         $jobTraining->qa_cqa_head_comment = $request->input('qa_cqa_head_comment');
         $jobTraining->final_review_comment = $request->input('final_review_comment');
+        $jobTraining->selected_document_id = $request->input('selected_document_id');
+
 
         // $employeeJobGrid = EmployeeGrid::where(['employee_id' => $employee_id, 'identifier' => 'jobResponsibilites'])->firstOrNew();
         // $employeeJobGrid->employee_id = $employee_id;
@@ -404,7 +445,7 @@ public function fetchQuestions($id)
             $jobTraining->{"reference_document_no_$i"} = $request->input("reference_document_no_$i");
             $jobTraining->{"trainee_name_$i"} = $request->input("trainee_name_$i");
             $jobTraining->{"trainer_$i"} = $request->input("trainer_$i");
-
+            
             $jobTraining->{"startdate_$i"} = $request->input("startdate_$i");
             $jobTraining->{"enddate_$i"} = $request->input("enddate_$i");
         }
@@ -775,7 +816,7 @@ public function fetchQuestions($id)
             $data->originator_id = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.TMS.JOb_Training.job_report', compact('data'))
+            $pdf = PDF::loadview('frontend.TMS.Job_Training.job_report', compact('data'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

@@ -950,9 +950,11 @@
                                         <label for="root_cause_Others">Others</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="root_cause_Others" id="summernote-1"></textarea>
+                                        <textarea class="summernote" name="root_cause_Others" ></textarea>
                                     </div>
                                 </div>
+
+                                
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Inv Attachments"> Attachment</label>
