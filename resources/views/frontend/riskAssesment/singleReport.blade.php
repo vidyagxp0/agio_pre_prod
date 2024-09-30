@@ -223,11 +223,11 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
 
                     </tr>
-                   
-                       
+
+
                         {{-- <th class="w-20">Assigned To</th> --}}
                         {{-- <td class="w-30">@if ($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td> --}}
-                  
+
 
                     <tr>
                         <th class="w-20">Initiator Department</th>
@@ -251,7 +251,7 @@
                         <th class="w-20">Due Date</th>
                         <td class="w-80"> @if ($data->due_date) {{ \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') }} @else Not Applicable @endif</td>
                     </tr> --}}
-                  
+
 
                     <tr>
                         {{-- <th class="w-20">Department(s)</th> --}}
@@ -616,10 +616,10 @@
                 </table>
 
                 <div class="block-head"> Failure Mode And Effect Analysis </div>
-                
+
                 <table>
 
-                 
+
                     <thead>
                         <tr class="table_bg">
                             <th class="w-20">Row #</th>
@@ -770,7 +770,7 @@
                         @endfor
                     </tbody>
                 </table>
-           
+
 
 
             {{-- <div class="block-head">
@@ -1974,7 +1974,7 @@
 
                             <tr>
                                 <th class="w-20">Other's 1 Department</th>
-                                <td class="w-80">@if($data1->Other1_Department_person){{ strip_tags($data1->Other1_Department_person)  }}@else Not Applicable @endif</td> 
+                                <td class="w-80">@if($data1->Other1_Department_person){{ strip_tags($data1->Other1_Department_person)  }}@else Not Applicable @endif</td>
                             </tr>
 
                             <tr>
@@ -2034,7 +2034,7 @@
 
                             <tr>
                                 <th class="w-20">Other's 2 Department</th>
-                                <td class="w-80">@if($data1->Other2_Department_person){{ strip_tags($data1->Other2_Department_person)  }}@else Not Applicable @endif</td> 
+                                <td class="w-80">@if($data1->Other2_Department_person){{ strip_tags($data1->Other2_Department_person)  }}@else Not Applicable @endif</td>
                             </tr>
 
                             <tr>
@@ -2094,7 +2094,7 @@
 
                             <tr>
                                 <th class="w-20">Other's 3 Department</th>
-                                <td class="w-80">@if($data1->Other3_Department_person){{ strip_tags($data1->Other3_Department_person)  }}@else Not Applicable @endif</td> 
+                                <td class="w-80">@if($data1->Other3_Department_person){{ strip_tags($data1->Other3_Department_person)  }}@else Not Applicable @endif</td>
                             </tr>
 
                             <tr>
@@ -2154,7 +2154,7 @@
 
                             <tr>
                                 <th class="w-20">Other's 4 Department</th>
-                                <td class="w-80">@if($data1->Other4_Department_person){{ strip_tags($data1->Other4_Department_person)  }}@else Not Applicable @endif</td> 
+                                <td class="w-80">@if($data1->Other4_Department_person){{ strip_tags($data1->Other4_Department_person)  }}@else Not Applicable @endif</td>
                             </tr>
 
                             <tr>
@@ -2214,7 +2214,7 @@
 
                             <tr>
                                 <th class="w-20">Other's 5 Department</th>
-                                <td class="w-80">@if($data1->Other5_Department_person){{ strip_tags($data1->Other5_Department_person)  }}@else Not Applicable @endif</td> 
+                                <td class="w-80">@if($data1->Other5_Department_person){{ strip_tags($data1->Other5_Department_person)  }}@else Not Applicable @endif</td>
                             </tr>
 
                             <tr>
@@ -2404,7 +2404,7 @@
                     {{-- <div class="block-head">
                         Submit
                     </div>
-                        <table>   
+                        <table>
                             <tr>
                                 <th class="w-20">Submit By</th>
                                 <td class="w-30">{{ $data->submit_by }}</td>
@@ -2489,12 +2489,12 @@
                             CFT Review Complete
                         </div>
                         <table>
-        
+
                             <tr>
                                 <th class="w-20">CFT Review Complete By</th>
                                 <td class="w-30">{{ $data->CFT_Review_Complete_By }}</td>
                                 <th class="w-20">
-                                    CFT Review Completed On</th>
+                                    CFT Review Complete On</th>
                                 <td class="w-30">{{ $data->CFT_Review_Complete_On }}</td>
                             </tr>
                             <tr>
@@ -2507,7 +2507,7 @@
                             QA/CQA Review Complete
                         </div>
                         <table>
-        
+
                             <tr>
                                 <th class="w-20">QA/CQA Review Complete By</th>
                                 <td class="w-30">{{ $data->QA_Initial_Review_Complete_By }}</td>
@@ -2538,7 +2538,7 @@
                         </table>
 
                         <div class="block-head">
-                            Cancel 
+                            Cancel
                         </div>
                         <table>
                             <tr>
@@ -2553,12 +2553,12 @@
                                 <td class="w-30">{{ $data->comment }}</td>
                             </tr>
                         </table>
-        
+
 
                 </div>
 
 
-                
+
 
             <footer>
                 <table>

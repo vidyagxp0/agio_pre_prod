@@ -62,6 +62,7 @@ class RiskManagementController extends Controller
         $data->form_type = "risk-assesment";
         $data->division_id = $request->division_id;
         $data->division_code = $request->division_code;
+        $data->form_progress = isset($form_progress) ? $form_progress : null;
         //$data->record_number = $request->record_number;
         $data->record = ((RecordNumber::first()->value('counter')) + 1);
         $data->initiator_id = Auth::user()->id;
@@ -2708,11 +2709,11 @@ class RiskManagementController extends Controller
     }
     public function riskUpdate(Request $request, $id)
     {
+        $form_progress = null;
 
         $lastDocument =  RiskManagement::find($id);
         $data =  RiskManagement::find($id);
         $lastCft = RiskManagmentCft::where('risk_id', $data->id)->first();
-        $form_progress = null;
         if (!$request->short_description) {
             toastr()->info("Short Description is required");
             return redirect()->back()->withInput();
@@ -2921,7 +2922,7 @@ class RiskManagementController extends Controller
         }
         $data->fill($request->except('qa_cqa_head_attach'));
         // return $data;
-        $data->update();
+
         // -----------grid=------
         //  $data1 = new RiskAssesmentGrid();
         //  $data1->risk_id = $data->id;
@@ -3476,9 +3477,12 @@ class RiskManagementController extends Controller
             }
         }
 
+
+
+
         $data->form_progress = isset($form_progress) ? $form_progress : null;
 
-
+        $data->update();
 
         $data1 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'effect_analysis')->first();
 
@@ -8679,31 +8683,14 @@ class RiskManagementController extends Controller
                     return back();
                 }
                 if ($riskAssement->stage == 2) {
+                        //  dd($riskAssement->form_progress !== 'cft');
 
-                    //  if ($riskAssement->form_progress !== 'cft')
-                    // {
-                    //     Session::flash('swal', [
-                    //         'type' => 'warning',
-                    //         'title' => 'Mandatory Fields!',
-                    //         'message' => 'HOD/Designee Review Comment / CFT Mandatory Tab is yet to be filled!'
-                    //     ]);
-
-                    //     return redirect()->back();
-                    // } else {
-                    //     Session::flash('swal', [
-                    //         'type' => 'success',
-                    //         'title' => 'Success',
-                    //         'message' => 'Sent for CFT review state'
-                    //     ]);
-                    // }
-
-                    // Check HOD remark value
-                    if (!$riskAssement->hod_des_rev_comm) {
-
+                      if ($riskAssement->form_progress !== 'cft')
+                    {
                         Session::flash('swal', [
-                            'title' => 'Mandatory Fields Required!',
-                            'message' => 'HOD/Designee Review Comment!/CFT Mandatory Tab is yet to be filled!',
                             'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'HOD/Designee Review Comment!/CFT Mandatory Tab is yet to be filled!'
                         ]);
 
                         return redirect()->back();
@@ -8711,9 +8698,27 @@ class RiskManagementController extends Controller
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for CFT Review state'
+                            'message' => 'Sent for CFT review state'
                         ]);
                     }
+
+                    // Check HOD remark value
+                    // if (!$riskAssement->hod_des_rev_comm) {
+
+                    //     Session::flash('swal', [
+                    //         'title' => 'Mandatory Fields Required!',
+                    //         'message' => 'HOD/Designee Review Comment!/CFT Mandatory Tab is yet to be filled!',
+                    //         'type' => 'warning',
+                    //     ]);
+
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for CFT Review state'
+                    //     ]);
+                    // }
 
                     $riskAssement->stage = "3";
                     $riskAssement->status = "CFT Review";
@@ -8779,22 +8784,22 @@ class RiskManagementController extends Controller
                 if ($riskAssement->stage == 3) {
 
                     // CFT review state update form_progress
-                    // if ($riskAssement->form_progress !== 'cft')
-                    // {
-                    //     Session::flash('swal', [
-                    //         'type' => 'warning',
-                    //         'title' => 'Mandatory Fields!',
-                    //         'message' => 'CFT Tab is yet to be filled'
-                    //     ]);
+                    if ($riskAssement->form_progress !== 'cft')
+                    {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'CFT Tab is yet to be filled'
+                        ]);
 
-                    //     return redirect()->back();
-                    // } else {
-                    //     Session::flash('swal', [
-                    //         'type' => 'success',
-                    //         'title' => 'Success',
-                    //         'message' => 'Sent for Investigation and CAPA review state'
-                    //     ]);
-                    // }
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for In QA/CQA Review!'
+                        ]);
+                    }
 
 
                     $IsCFTRequired = RiskAssesmentCftResponce::withoutTrashed()->where(['is_required' => 1, 'risk_id' => $id])->latest()->first();
@@ -8810,75 +8815,75 @@ class RiskManagementController extends Controller
                     foreach ($columns as $index => $column) {
                         $value = $cftUsers->$column;
                        if ($index == 0 && $cftUsers->$column == Auth::user()->name) {
-    $updateCFT->Quality_Control_by = Auth::user()->name;
-    $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
+                            $updateCFT->Quality_Control_by = Auth::user()->name;
+                            $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
 
-    $history = new RiskAuditTrail();
-    $history->risk_id = $id;
-    $history->activity_type = 'Quality Control Completed By, Quality Control Completed On';
+                            $history = new RiskAuditTrail();
+                            $history->risk_id = $id;
+                            $history->activity_type = 'Quality Control Completed By, Quality Control Completed On';
 
-    if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
-        $history->previous = "";
-    } else {
-        $history->previous = $lastDocument->Quality_Control_by . ' , ' . $lastDocument->Quality_Control_on;
-    }
+                            if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
+                                $history->previous = "";
+                            } else {
+                                $history->previous = $lastDocument->Quality_Control_by . ' , ' . $lastDocument->Quality_Control_on;
+                            }
 
-    $history->action = 'CFT Review Complete';
+                            $history->action = 'CFT Review Complete';
 
-    // Make sure you're using the updated $updateCFT object here
-    $history->current = $updateCFT->Quality_Control_by . ', ' . $updateCFT->Quality_Control_on;
+                            // Make sure you're using the updated $updateCFT object here
+                            $history->current = $updateCFT->Quality_Control_by . ', ' . $updateCFT->Quality_Control_on;
 
-    $history->comment = $request->comment;
-    $history->user_id = Auth::user()->name;
-    $history->user_name = Auth::user()->name;
-    $history->change_to = "Not Applicable";
-    $history->change_from = $lastDocument->status;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $lastDocument->status;
-    $history->stage = 'CFT Review';
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'CFT Review';
 
-    if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
-        $history->action_name = 'New';
-    } else {
-        $history->action_name = 'Update';
-    }
+                            if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
+                                $history->action_name = 'New';
+                            } else {
+                                $history->action_name = 'Update';
+                            }
 
-    $history->save();
-    }
+                            $history->save();
+                            }
 
-                     if ($index == 1 && $cftUsers->$column == Auth::user()->name) {
-    $updateCFT->QualityAssurance_by = Auth::user()->name;
-    $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d'); // Corrected line
+                                            if ($index == 1 && $cftUsers->$column == Auth::user()->name) {
+                            $updateCFT->QualityAssurance_by = Auth::user()->name;
+                            $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d'); // Corrected line
 
-    $history = new RiskAuditTrail();
-    $history->risk_id = $id;
-    $history->activity_type = 'Quality Assurance Completed By, Quality Assurance Completed On';
+                            $history = new RiskAuditTrail();
+                            $history->risk_id = $id;
+                            $history->activity_type = 'Quality Assurance Completed By, Quality Assurance Completed On';
 
-    if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
-        $history->previous = "";
-    } else {
-        $history->previous = $lastDocument->QualityAssurance_by . ' ,' .Helpers::getdateFormat ($lastDocument->QualityAssurance_on);
-    }
+                            if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
+                                $history->previous = "";
+                            } else {
+                                $history->previous = $lastDocument->QualityAssurance_by . ' ,' .Helpers::getdateFormat ($lastDocument->QualityAssurance_on);
+                            }
 
-    $history->action = 'CFT Review Complete';
-    $history->current = $updateCFT->QualityAssurance_by . ',' .Helpers::getdateFormat ($updateCFT->QualityAssurance_on);
-    $history->comment = $request->comment;
-    $history->user_id = Auth::user()->id; // Use `id` instead of `name` for `user_id`
-    $history->user_name = Auth::user()->name;
-    $history->change_to = "Not Applicable";
-    $history->change_from = $lastDocument->status;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $lastDocument->status;
-    $history->stage = 'CFT Review';
+                            $history->action = 'CFT Review Complete';
+                            $history->current = $updateCFT->QualityAssurance_by . ',' .Helpers::getdateFormat ($updateCFT->QualityAssurance_on);
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id; // Use `id` instead of `name` for `user_id`
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'CFT Review';
 
-    if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
-        $history->action_name = 'New';
-    } else {
-        $history->action_name = 'Update';
-    }
+                            if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
+                                $history->action_name = 'New';
+                            } else {
+                                $history->action_name = 'Update';
+                            }
 
-    $history->save();
-    }
+                            $history->save();
+                            }
 
                         if($index == 2 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Engineering_by = Auth::user()->name;

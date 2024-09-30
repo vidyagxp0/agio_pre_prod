@@ -572,7 +572,7 @@
                                     </div> --}}
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="CAPA Attachments">Risk Assesment Attachment</label>
+                                            <label for="CAPA Attachments">Initial Attachment</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
                                             {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
@@ -600,7 +600,7 @@
                         <div id="CCForm2" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="sub-head">
-                                    Risk Assesment
+                                    Risk Assessment
                                 </div>
                                 <div class="row">
 
@@ -618,7 +618,8 @@
                                     <div class="col-6">
                                     <div id="rootCause" class="group-input" style="display: none;">
                                         <label for="otherFieldsUser">Other (Root Cause Methodology)</label>
-                                        <input type="text" name="other_root_cause_methodology" class="form-control"/>
+                                        {{-- <input type="text" id="summernote" name="other_root_cause_methodology" class="form-control"/> --}}
+                                        <textarea name="other_root_cause_methodology" id="summernote" ></textarea>
                                     </div>
                                     </div>
 

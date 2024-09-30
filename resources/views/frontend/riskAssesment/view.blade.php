@@ -281,7 +281,7 @@
                             </button> --}}
                             <!--
                         @endif -->
-                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Risk Assessment', 7)||Helpers::check_roles($data->division_id, 'Risk Assessment', 66))
+                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Risk Assessment', 7)|| Helpers::check_roles($data->division_id, 'Risk Assessment', 66))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Request More Info
                             </button>
@@ -887,7 +887,7 @@
                                                     <div class="col-6">
                                                         <div id="rootCause" class="group-input" style="display: none;">
                                                             <label for="otherFieldsUser">Other (Root Cause Methodology)</label>
-                                                            <input type="text" name="other_root_cause_methodology" class="form-control" value="{{ $data->other_root_cause_methodology ?? '' }}"/>
+                                                            <input type="text" name="other_root_cause_methodology" id="summernote" class="form-control" value="{{ $data->other_root_cause_methodology ?? '' }}"/>
                                                         </div>
                                                     </div>
 
