@@ -348,7 +348,7 @@
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         Characters remaining
                                         <input id="docname" type="text" name="short_description"
-                                            {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}
+                                        {{ $extensionNew->stage == 1 ? '' : 'readonly' }}
                                             value="{{ $extensionNew->short_description }}" maxlength="255" required>
                                     </div>
                                     {{-- @error('short_description')
@@ -386,7 +386,7 @@
                                         <label for="Extension Number">
                                             Extension Number<span class="text-danger"></span>
                                         </label>
-                                        <select name="Extension" disabled
+                                        <select name="Extension"
                                             {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}
                                             id="Extension">
                                             <option value="">Select Extension Number</option>
@@ -547,11 +547,11 @@
                                         <div class="calenderauditee">
 
                                             <input type="text" id="current_due_date"
-                                                {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}
+                                                {{ $extensionNew->stage == 1 ? '' : 'readonly' }}
                                                 value="{{ Helpers::getdateFormat($extensionNew->current_due_date) }}"
                                                 readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="current_due_date"
-                                                {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}
+                                                {{ $extensionNew->stage == 1 ? '' : 'readonly' }}
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 value="{{ $extensionNew->current_due_date }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'current_due_date')" />
@@ -563,11 +563,11 @@
                                         <label for="Actual Start Date">Proposed Due Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="proposed_due_date"
-                                                {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}
+                                                {{ $extensionNew->stage == 1 ? '' : 'readonly' }}
                                                 value="{{ Helpers::getdateFormat($extensionNew->proposed_due_date) }}"
                                                 readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="proposed_due_date"
-                                                {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}
+                                                {{ $extensionNew->stage == 1 ? '' : 'readonly' }}
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 value="{{ $extensionNew->proposed_due_date }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'proposed_due_date')" />
@@ -600,7 +600,7 @@
                                     <div class="group-input">
                                         <label for="Short Description"> Description</label>
                                         <textarea id="docname" type="text" name="description" value=""
-                                            {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}>{{ $extensionNew->description }}</textarea>
+                                        {{ $extensionNew->stage == 1 ? '' : 'readonly' }}>{{ $extensionNew->description }}</textarea>
                                     </div>
                                     {{-- @error('short_description')
                                     <div class="text-danger">{{ $message }}</div>
@@ -611,7 +611,7 @@
                                         <label for="Short Description"> Justification / Reason </label>
 
                                         <textarea id="docname" type="text" name="justification_reason" value=""
-                                            {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}>{{ $extensionNew->justification_reason }}</textarea>
+                                        {{ $extensionNew->stage == 1 ? '' : 'readonly' }}>{{ $extensionNew->justification_reason }}</textarea>
                                     </div>
                                     {{-- @error('short_description')
                                     <div class="text-danger">{{ $message }}</div>
@@ -643,7 +643,7 @@
                                                                                                         <div class="add-btn">
                                                                                                             <div>Add</div>
                                                                                                             <input type="file" id="Extension_Attachments"
-                                                                                                                name="file_attachment_extension[]" {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}
+                                                                                                                name="file_attachment_extension[]" {{ $extensionNew->stage == 1 ? '' : 'disabled' }}
                                                                                                                 oninput="addMultipleFiles(this, 'file_attachment_extension')" multiple>
                                                                                                         </div>
                                                                                                     </div>
@@ -685,7 +685,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input
-                                                    {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}
+                                                    {{ $extensionNew->stage == 1 ? '' : 'disabled' }}
                                                     type="file" id="myfile" name="file_attachment_extension[]"
                                                     oninput="addMultipleFiles(this, 'file_attachment_extension')" multiple>
                                             </div>
@@ -714,7 +714,7 @@
                                 <div class="group-input">
                                     <label for="Assigned To">HOD Remarks</label>
                                     <textarea name="reviewer_remarks" id="reviewer_remarks" cols="30"
-                                        {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}>{{ $extensionNew->reviewer_remarks }}</textarea>
+                                    {{ $extensionNew->stage == 2 ? '' : 'readonly' }}>{{ $extensionNew->reviewer_remarks }}</textarea>
                                 </div>
                             </div>
                             {{-- <div class="col-12">
@@ -799,7 +799,7 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input
-                                                {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}
+                                                {{ $extensionNew->stage == 2 ? '' : 'disabled' }}
                                                 value="{{ $extensionNew->file_attachment_reviewer }}" type="file"
                                                 id="myfile" name="file_attachment_reviewer[]"
                                                 oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple>
@@ -826,7 +826,7 @@
                                 <div class="group-input">
                                     <label for="Assigned To">QA/CQA Approval Comments</label>
                                     <textarea name="approver_remarks" id="approver_remarks" cols="30"
-                                        {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}>{{ $extensionNew->approver_remarks }}</textarea>
+                                    {{ in_array($extensionNew->stage, [3, 4]) ? '' : 'readonly' }}>{{ $extensionNew->approver_remarks }}</textarea>
                                 </div>
                             </div>
 
@@ -839,7 +839,7 @@
                             @endif
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Inv Attachments">QA/CQA Approval Attachment</label>
+                                    <label for="Inv Attachments">QA/CQA Approval Attachments</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -865,8 +865,7 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="HOD_Attachments" name="file_attachment_approver[]"
-                                                {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}
-                                                oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple>
+                                                oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple {{ in_array($extensionNew->stage, [3, 4]) ? '' : 'disabled' }}>
                                         </div>
                                     </div>
                                 </div>
