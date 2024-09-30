@@ -222,7 +222,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Results">Acknowledge Comment</label>
-                                        <textarea type="text" id="acknowledge_comment" name="acknowledge_comment"></textarea>
+                                        <textarea type="text" id="acknowledge_comment" name="acknowledge_comment" disabled></textarea>
                                     </div>
                                 </div>
 
@@ -235,7 +235,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="acknowledge_Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'acknowledge_Attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'acknowledge_Attachment')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -263,7 +263,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Results">Effectiveness Results</label>
-                                        <textarea type="text" name="Effectiveness_Results"></textarea>
+                                        <textarea type="text" name="Effectiveness_Results" disabled></textarea>
                                     </div>
                                 </div>
 
@@ -284,7 +284,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="Effectiveness_check_Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Effectiveness_check_Attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'Effectiveness_check_Attachment')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -295,7 +295,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Summary">Effectiveness Summary</label>
-                                        <textarea type="text" name="effect_summary"></textarea>
+                                        <textarea type="text" name="effect_summary" disabled></textarea>
                                     </div>
                                 </div>
                                 {{-- <div class="col-12 sub-head">
@@ -348,7 +348,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Comments"><b>HOD Review Comments</b></label>
-                                        <textarea name="Comments"></textarea>
+                                        <textarea name="Comments" disabled></textarea>
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
@@ -367,7 +367,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple disabled>
                                             </div>
                                         </div>
 
@@ -416,7 +416,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Results">QA/CQA Review Comment</label>
-                                        <textarea type="text" name="qa_cqa_review_comment"></textarea>
+                                        <textarea type="text" name="qa_cqa_review_comment" disabled></textarea>
                                     </div>
                                 </div>
 
@@ -429,7 +429,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="qa_cqa_review_Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'qa_cqa_review_Attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'qa_cqa_review_Attachment')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -456,7 +456,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Results">QA/CQA Approval Comment</label>
-                                        <textarea type="text" name="qa_cqa_approval_comment"></textarea>
+                                        <textarea type="text" name="qa_cqa_approval_comment" disabled></textarea>
                                     </div>
                                 </div>
 
@@ -469,7 +469,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="qa_cqa_approval_Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'qa_cqa_approval_Attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'qa_cqa_approval_Attachment')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
