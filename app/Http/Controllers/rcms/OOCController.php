@@ -727,7 +727,7 @@ class OOCController extends Controller
         if(!empty($data->HOD_Remarks)) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
-            $history->activity_type = 'HOD Primary Remarks';
+            $history->activity_type = 'HOD Primary Review Remarks';
             $history->previous = "Null";
             $history->current = $data->HOD_Remarks;
             $history->comment = "Not Applicable";
@@ -746,7 +746,7 @@ class OOCController extends Controller
         if(!empty($data->attachments_hod_ooc)) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
-            $history->activity_type = 'HOD Primary Attachments';
+            $history->activity_type = 'HOD Primary Review Attachments';
             $history->previous = "Null";
             $history->current = json_encode($data->attachments_hod_ooc);
             $history->comment = "Null";
@@ -763,7 +763,7 @@ class OOCController extends Controller
         if(!empty($data->qaheadremarks)) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
-            $history->activity_type = 'QA Head Primary Remarks';
+            $history->activity_type = 'QA Head Primary Review Remarks';
             $history->previous = "Null";
             $history->current = $data->qaheadremarks;
             $history->comment = "Not Applicable";
@@ -780,7 +780,7 @@ class OOCController extends Controller
         if (!empty($data->initial_attachment_capa_ooc)) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
-            $history->activity_type = 'QA Head Primary Attachment';
+            $history->activity_type = 'QA Head Primary Review Attachment';
             $history->previous = "Null";
             $history->current = $data->initial_attachment_capa_ooc;
             $history->comment = "Null";
@@ -866,7 +866,7 @@ class OOCController extends Controller
         if (!empty($data->rootcausenewfield)) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
-            $history->activity_type = 'Comments';
+            $history->activity_type = 'Phase IA Investigation Comment';
             $history->previous = "Null";
             $history->current = $data->rootcausenewfield;
             $history->comment = "Not Applicable";
@@ -1494,7 +1494,7 @@ class OOCController extends Controller
         if (!empty($data->initial_attachment_reanalysisi_ooc)) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
-            $history->activity_type = 'Attachment';
+            $history->activity_type = 'Phase IB Attachment';
             $history->previous = "Null";
             $history->current = $data->initial_attachment_reanalysisi_ooc;
             $history->comment = "Not Applicable";
@@ -2754,7 +2754,7 @@ if ($lastDocumentOoc->Immediate_Action_ooc != $ooc->Immediate_Action_ooc) {
 if ($lastDocumentOoc->HOD_Remarks != $ooc->HOD_Remarks) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'HOD Primary Remarks';
+    $history->activity_type = 'HOD Primary Review Remarks';
     $history->previous = $lastDocumentOoc->HOD_Remarks;
     $history->current = $ooc->HOD_Remarks;
     $history->comment = 'Updated HOD Remarks';
@@ -2776,7 +2776,7 @@ if ($lastDocumentOoc->HOD_Remarks != $ooc->HOD_Remarks) {
 if ($lastDocumentOoc->attachments_hod_ooc != $ooc->attachments_hod_ooc) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'HOD Primary Attachments';
+    $history->activity_type = 'HOD Primary Review Attachments';
     $history->previous = json_encode($lastDocumentOoc->attachments_hod_ooc);
     $history->current = json_encode($ooc->attachments_hod_ooc);
     $history->comment = 'Updated HOD Attachment';
@@ -2797,7 +2797,7 @@ if ($lastDocumentOoc->attachments_hod_ooc != $ooc->attachments_hod_ooc) {
 if ($lastDocumentOoc->qaheadremarks != $ooc->qaheadremarks) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'QA Head Primary Remarks';
+    $history->activity_type = 'QA Head Primary Review Remarks';
     $history->previous = $lastDocumentOoc->qaheadremarks;
     $history->current = $ooc->qaheadremarks;
     $history->comment = $request->qaheadremarks_comment;
@@ -2814,7 +2814,7 @@ if ($lastDocumentOoc->qaheadremarks != $ooc->qaheadremarks) {
 if ($lastDocumentOoc->initial_attachment_capa_ooc != $ooc->initial_attachment_capa_ooc) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'QA Head Primary Attachment';
+    $history->activity_type = 'QA Head Primary Review Attachment';
     $history->previous = $lastDocumentOoc->initial_attachment_capa_ooc;
     $history->current = $ooc->initial_attachment_capa_ooc;
     $history->comment = $request->initial_attachment_capa_ooc_comment;
@@ -2922,7 +2922,7 @@ if ($lastDocumentOoc->is_repeat_assingable_ooc != $ooc->is_repeat_assingable_ooc
 if ($lastDocumentOoc->rootcausenewfield != $ooc->rootcausenewfield) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'Comments';
+    $history->activity_type = 'Phase IA Investigation Comment';
     $history->previous = $lastDocumentOoc->rootcausenewfield;
     $history->current = $ooc->rootcausenewfield;
     $history->comment = $request->rootcausenewfield_comment;
@@ -3713,7 +3713,7 @@ if ($lastDocumentOoc->phase_ib_investigation_summary != $ooc->phase_ib_investiga
 if ($lastDocumentOoc->initial_attachment_reanalysisi_ooc != $ooc->initial_attachment_reanalysisi_ooc) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'Attachment';
+    $history->activity_type = 'Phase IB Attachment';
     $history->previous = $lastDocumentOoc->initial_attachment_reanalysisi_ooc;
     $history->current = $ooc->initial_attachment_reanalysisi_ooc;
     $history->comment = $request->initial_attachment_reanalysisi_ooc_comment;
