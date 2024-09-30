@@ -1411,33 +1411,29 @@ if (marks >= percentageRequired) {
                                         <i class="fas fa-print"></i>Print
                                     </button>
                                 </div>
-                
+
+
+
+
+
                                 <div class="certificate-container">
-                                <div class="certificate-title">TRAINING CERTIFICATE</div>
-
-                                <div class="certificate-description"><br><br>
-                                    This is to certify that Mr./Ms./Mrs. <strong>{{$inductionTraining->name_employee}}</strong>.
-                                    has undergone Induction training including the requirement of cGMP and has shown a good attitude and thorough understanding in the subject.
-                                </div>
-
-                                <div class="certificate-description">
-                                    Therefore, we certify that Mr./Ms./Mrs. <strong>{{$inductionTraining->name_employee}}</strong>.
-                                    is capable of performing his/her assigned duties in the <strong>{{$inductionTraining->department}}</strong> Department independently.
-                                </div>
-
-                                                    <div class="date-container">
-                                        <div class="signature-block">
-                                            <strong>Sign/Date:</strong>_________
-                                            <div>HR Head</div>
-                                        </div>
-
-                                        <div>
-                                            <strong>Sign/Date:</strong>_________
-                                            <div class="signature">Head QA/CQA<div></div></div>
-                                        </div>
+                                <h1 class="certificate-title">TRAINER CERTIFICATE</h1>
+                                <h2 class="certificate-subtitle">Certificate of Trainer</h2>
+                                <p class="certificate-content">
+                                    This is to certify that Mr. / Ms. / Mrs. <strong>{{$inductionTraining->name_employee}}</strong> has appropriate Qualification / skill / thorough knowledge/ and experience in the <strong>{{$inductionTraining->department}}</strong> section/Department for more than <strong>_________________</strong> years, and hence is declared as the trainer of <strong>_________________</strong> Department.
+                                </p>
+                                <div class="signature-section">
+                                    <div class="signature">
+                                        <div class="signature-line"></div>
+                                        Sign / Date: _______________ <br>Head of Department 
                                     </div>
+                                    <div class="signature">
+                                        <div class="signature-line"></div>
+                                        Sign / Date: _______________ <br>  Head QA/CQA
                                     </div>
                                 </div>
+                            </div>
+                
                                 <div style="margin-top: 40px;" class="button-block">
                                 <button type="submit" class=" btn btn saveButton">Save</button>
                                 <button type="button" id="ChangeNextButton" class=" btn btn nextButton">Next</button>
@@ -1447,26 +1443,37 @@ if (marks >= percentageRequired) {
                     </div>
                 @endif
                 <style>
+
            .certificate-container {
-            width: 685px;
-            height: 500px;
-            border: 4px solid #3d6186;
+            width: 800px;
+            height: 425px;
+            border: 4px solid #0c0d0d;
             padding: 18px;
             background-color: white;
             position: relative;
             margin: auto;
             box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+
+        
+        }
+        .certificate-container h1, .certificate-container h2, .certificate-container p {
+            text-align: center;
         }
         .certificate-title {
-            font-size: 30px;
+            /* font-size: 30px;
             font-weight: bold;
             color: #677078;
             display: flex;
-            justify-content: center;
+            justify-content: center; */
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
         .certificate-subtitle {
-            font-size: 18px;
-            color: #555;
+            /* font-size: 18px;
+            color: #555; */
+            font-size: 24px;
+            margin-bottom: 40px;
         }
         .certificate-description {
             margin-top: 30px;
@@ -1474,21 +1481,31 @@ if (marks >= percentageRequired) {
             color: #333;
         }
        
-          .date-container {
+        .certificate-content {
+            /* font-size: 18px; */
+            line-height: 1.5;
+            margin: 0 20px;
+            text-align: left;
+        }
+        .signature-section {
             display: flex;
             justify-content: space-between;
-            margin-top: 60px;
-            font-size: 18px;
+            margin-top: 50px;
+            margin-left: 50px;
+            margin-right: 50px;
         }
-        .signature-container {
-            position: absolute;
-            bottom: 40px;
-            right: 50px;
+        .signature {
             text-align: center;
-            font-size: 18px;
-            color: #333;
+            font-size: 16px;
         }
-       
+
+        .signature-line {
+            margin-top: 40px;
+            /* border-top: 1px solid #000; */
+            width: 200px;
+            height: 0;
+        }
+          
         @media print {
             .button-block {
                 display: none !important; 
@@ -1557,6 +1574,8 @@ if (marks >= percentageRequired) {
 }
 
             </style>
+
+
                 <script>
                         function printCertificate() {
                         var buttons = document.querySelector(".button-block");

@@ -91,7 +91,7 @@
 
                 <div class="modal-header">
                     <h4 class="modal-title">Question Bank</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
                 </div>
                 <form action="{{ route('question-bank.store') }}" method="post">
                     @csrf
@@ -111,11 +111,13 @@
                             <label for="desc">Description</label>
                             <textarea name="description"></textarea>
                         </div>
+                        
                     </div>
 
+
                     <div class="modal-footer">
-                        <button type="button" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit">Save</button>
+                        <button type="button"  class="btn btn-outline"data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-outline">Save</button>
                     </div>
                 </form>
 

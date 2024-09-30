@@ -792,4 +792,414 @@ public function fetchQuestions($id)
             return $pdf->stream('example.pdf' . $id . '.pdf');
         }
     }
+
+    public function viewrendersop($id){
+
+        return view('frontend.TMS.on_the_job_training_detail', compact('id'));
+    }
+
+    public function viewPdf($id)
+    {
+
+        $depaArr = ['ACC' => 'Accounting', 'ACC3' => 'Accounting',];
+        $data = Document::find($id);
+        //$data->department = Department::find($data->department_id);
+        $department = Department::find(Auth::user()->departmentid);
+        $document = Document::find($id);
+
+        if ($department) {
+            $data['department_name'] = $department->name;
+        } else {
+            $data['department_name'] = '';
+        }
+        $data->department = $department;
+
+        $data['originator'] = User::where('id', $data->originator_id)->value('name');
+        $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
+        $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
+        $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
+
+        $data['document_division'] = Division::where('id', $data->division_id)->value('name');
+        $data['year'] = Carbon::parse($data->created_at)->format('Y');
+        $data['document_content'] = DocumentContent::where('document_id', $id)->first();
+
+        // pdf related work
+        $pdf = App::make('dompdf.wrapper');
+        $time = Carbon::now();
+
+        // return view('frontend.documents.pdfpage', compact('data', 'time', 'document'))->render();
+        // $pdf = PDF::loadview('frontend.documents.new-pdf', compact('data', 'time', 'document'))
+        $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document'))
+            ->setOptions([
+                'defaultFont' => 'sans-serif',
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+        $pdf->setPaper('A4');
+        $pdf->render();
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $canvas->set_default_view('FitB');
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+
+        $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+
+        $canvas->page_text(
+            $width / 4,
+            $height / 2,
+            Helpers::getDocStatusByStage($data->stage),
+            null,
+            25,
+            [0, 0, 0],
+            2,
+            6,
+            -20
+        );
+
+        if ($data->documents) {
+
+            $pdfArray = explode(',', $data->documents);
+            foreach ($pdfArray as $pdfFile) {
+                $existingPdfPath = public_path('upload/PDF/' . $pdfFile);
+                $permissions = 0644; // Example permission value, change it according to your needs
+                if (file_exists($existingPdfPath)) {
+                    // Create a new Dompdf instance
+                    $options = new Options();
+                    $options->set('chroot', public_path());
+                    $options->set('isPhpEnabled', true);
+                    $options->set('isRemoteEnabled', true);
+                    $options->set('isHtml5ParserEnabled', true);
+                    $options->set('allowedFileExtensions', ['pdf']); // Allow PDF file extension
+
+                    $dompdf = new Dompdf($options);
+
+                    chmod($existingPdfPath, $permissions);
+
+                    // Load the existing PDF file
+                    $dompdf->loadHtmlFile($existingPdfPath);
+
+                    // Render the PDF
+                    $dompdf->render();
+
+                    // Output the PDF to the browser
+                    $dompdf->stream();
+                }
+            }
+        }
+
+        return $pdf->stream('SOP' . $id . '.pdf');
+    }
+
+    public function questionshow($sopids, $onthejobid){
+        $onthejobid = JobTraining::find($onthejobid);
+        $onthejobid->attempt_count = $onthejobid->attempt_count == 0 ? 0 : $onthejobid->attempt_count - 1;
+        $onthejobid->save();
+        $sopidsArray = explode(',', $sopids);
+
+        $sopidsArray = array_map('trim', $sopidsArray);
+        $questions = Question::where('document_id', $sopidsArray)
+            ->get();
+        return view('frontend.TMS.Job_Training.on_the_job_question_Answer', compact('questions', 'onthejobid'));
+
+    }
+
+    // public function checkAnswerOTJ(Request $request)
+    // {
+    //     $questions = Question::all(); // Retrieve all questions related to the quiz
+    //     $correctCount = 0;
+    //     $totalQuestions = count($questions);
+    
+    //     // Loop through each question and validate the user's response
+    //     foreach ($questions as $question) {
+    //         $userAnswer = $request->input('question_' . $question->id); // Get user answer for the specific question
+    //         $correctAnswers = unserialize($question->answers); // Retrieve correct answers from the database
+    //         $questionType = $question->type;
+    
+    //         // Check if the user's answer is correct based on the question type
+    //         if ($questionType === 'Single Selection Questions') {
+    //             if ($userAnswer == $correctAnswers[0]) {
+    //                 $correctCount++;
+    //             }
+    //         } elseif ($questionType === 'Multi Selection Questions') {
+    //             if (is_array($userAnswer) && count(array_diff($correctAnswers, $userAnswer)) === 0 && count(array_diff($userAnswer, $correctAnswers)) === 0) {
+    //                 $correctCount++;
+    //             }
+    //         }
+    //     }
+    
+    //     // Calculate the percentage score
+    //     $score = ($correctCount / $totalQuestions) * 100;
+    
+    //     // Determine pass or fail based on the 80% criteria
+    //     $result = $score >= 80 ? 'Pass' : 'Fail';
+    
+    //     return view('frontend.TMS.Job_Training.job_quiz_result', [
+    //         'totalQuestions' => $totalQuestions,
+    //         'correctCount' => $correctCount,
+    //         'score' => $score,
+    //         'result' => $result
+    //     ]);
+        
+    // }
+    
+    
+    // public function checkAnswerOTJ(Request $request)
+    // {
+    //     // Retrieve a random subset of 10 questions from the database (adjust this as needed)
+    //     $questions = Question::inRandomOrder()->take(10)->get();
+    //     $correctCount = 0;
+    //     $totalQuestions = count($questions);
+    
+    //     // Loop through each question and validate the user's response
+    //     foreach ($questions as $question) {
+    //         $userAnswer = $request->input('question_' . $question->id); // Get user answer for the specific question
+    //         $correctAnswers = unserialize($question->answers); // Retrieve correct answers from the database
+    //         $questionType = $question->type;
+    
+    //         // Check if the user's answer is correct based on the question type
+    //         if ($questionType === 'Single Selection Questions') {
+    //             if ($userAnswer == $correctAnswers[0]) {
+    //                 $correctCount++;
+    //             }
+    //         } elseif ($questionType === 'Multi Selection Questions') {
+    //             if (is_array($userAnswer) && count(array_diff($correctAnswers, $userAnswer)) === 0 && count(array_diff($userAnswer, $correctAnswers)) === 0) {
+    //                 $correctCount++;
+    //             }
+    //         }
+    //     }
+    
+    //     // Calculate the percentage score
+    //     $score = ($correctCount / $totalQuestions) * 100;
+    
+    //     // Determine pass or fail based on the 80% criteria
+    //     $result = $score >= 80 ? 'Pass' : 'Fail';
+    
+    //     // Return the correct view with result data
+    //     return view('frontend.TMS.Job_Training.job_quiz_result', [
+    //         'totalQuestions' => $totalQuestions,
+    //         'correctCount' => $correctCount,
+    //         'score' => $score,
+    //         'result' => $result
+    //     ]);
+    // }
+    
+
+
+
+
+
+
+
+
+
+
+
+//     public function checkAnswerOTJ(Request $request)
+// {
+//     // Retrieve a combination of 'Single Selection' and 'Multi Selection' questions, then shuffle and select 10
+//     $allQuestions = Question::inRandomOrder()->get(); // Get all questions randomly
+
+//     // Filter only 'Single Selection' and 'Multi Selection' questions
+//     $filteredQuestions = $allQuestions->filter(function ($question) {
+//         return in_array($question->type, ['Single Selection Questions', 'Multi Selection Questions']);
+//     });
+
+//     // Take only 10 questions from the filtered collection
+//     $questions = $filteredQuestions->take(10); 
+
+//     $correctCount = 0;
+//     $totalQuestions = count($questions);
+
+//     // Loop through each question and validate the user's response
+//     foreach ($questions as $question) {
+//         $userAnswer = $request->input('question_' . $question->id); // Get user answer for the specific question
+//         $correctAnswers = unserialize($question->answers); // Retrieve correct answers from the database
+//         $questionType = $question->type;
+
+//         // Check if the user's answer is correct based on the question type
+//         if ($questionType === 'Single Selection Questions') {
+//             if ($userAnswer == $correctAnswers[0]) {
+//                 $correctCount++;
+//             }
+//         } elseif ($questionType === 'Multi Selection Questions') {
+//             if (is_array($userAnswer) && count(array_diff($correctAnswers, $userAnswer)) === 0 && count(array_diff($userAnswer, $correctAnswers)) === 0) {
+//                 $correctCount++;
+//             }
+//         }
+//     }
+
+//     // Calculate the percentage score
+//     $score = ($correctCount / $totalQuestions) * 100;
+
+//     // Determine pass or fail based on the 80% criteria
+//     $result = $score >= 80 ? 'Pass' : 'Fail';
+
+//     // Return the correct view with result data
+//     return view('frontend.TMS.Job_Training.job_quiz_result', [
+//         'totalQuestions' => $totalQuestions,
+//         'correctCount' => $correctCount,
+//         'score' => $score,
+//         'result' => $result
+//     ]);
+// }
+
+
+
+
+// public function checkAnswerOTJ(Request $request)
+// {
+  
+//     $allQuestions = Question::inRandomOrder()->get(); 
+//     $filteredQuestions = $allQuestions->filter(function ($question) {
+//         return in_array($question->type, ['Single Selection Questions', 'Multi Selection Questions']);
+//     });
+  
+   
+//     $questions = $filteredQuestions->take(10); 
+
+//     $correctCount = 0; 
+//     $totalQuestions = count($questions); 
+
+  
+//     foreach ($questions as $question) {
+//         $userAnswer = $request->input('question_' . $question->id); 
+//         $correctAnswers = unserialize($question->answers);
+//         $questionType = $question->type;
+
+      
+//         if ($questionType === 'Single Selection Questions') {
+          
+//             if ($userAnswer == $correctAnswers[0]) {
+//                 $correctCount++;
+//             }
+//         } elseif ($questionType === 'Multi Selection Questions') {
+           
+//             if (is_array($userAnswer) && count(array_diff($correctAnswers, $userAnswer)) === 0 && count(array_diff($userAnswer, $correctAnswers)) === 0) {
+//                 $correctCount++; 
+//             }
+//         }
+//     }
+
+   
+//     $score = ($correctCount / $totalQuestions) * 100;
+
+  
+//     $result = $score >= 80 ? 'Pass' : 'Fail';
+
+//     return view('frontend.TMS.Job_Training.job_quiz_result', [
+//         'totalQuestions' => $totalQuestions,
+//         'correctCount' => $correctCount,
+//         'score' => $score,
+//         'result' => $result
+//     ]);
+// }
+
+// public function checkAnswerOTJ(Request $request)
+// {
+//     // Fetch all questions in a random order
+//     $allQuestions = Question::inRandomOrder()->get();
+
+//     // Filter questions to include only Single and Multi Selection Questions
+//     $filteredQuestions = $allQuestions->filter(function ($question) {
+//         return in_array($question->type, ['Single Selection Questions', 'Multi Selection Questions']);
+//     });
+
+//     // Take the first 10 questions from the filtered list
+//     $questions = $filteredQuestions->take(10);
+
+//     $correctCount = 0; // Initialize correct answer count
+//     $totalQuestions = count($questions); // Total number of selected questions
+
+//     foreach ($questions as $question) {
+//         // Retrieve user's answer for each question
+//         $userAnswer = $request->input('question_' . $question->id);
+//         $correctAnswers = unserialize($question->answers); // Correct answers for the question
+//         $questionType = $question->type;
+
+//         if ($questionType === 'Single Selection Questions') {
+//             // If it's a single selection question, check if the user's answer matches the correct answer
+//             if ($userAnswer == $correctAnswers[0]) {
+//                 $correctCount++;
+//             }
+//         } elseif ($questionType === 'Multi Selection Questions') {
+//             // If it's a multi-selection question, check if all the answers match
+//             if (is_array($userAnswer)) {
+//                 // Check if the user's answer matches exactly with the correct answer set
+//                 if (count(array_diff($correctAnswers, $userAnswer)) === 0 && count(array_diff($userAnswer, $correctAnswers)) === 0) {
+//                     $correctCount++;
+//                 }
+//             }
+//         }
+//     }
+
+//     // Calculate the correct percentage based on the total questions
+//     $score = ($correctCount / $totalQuestions) * 100;
+
+//     // Determine the pass/fail result based on 80% correct criteria
+//     $result = $score >= 80 ? 'Pass' : 'Fail';
+
+//     return view('frontend.TMS.Job_Training.job_quiz_result', [
+//         'totalQuestions' => $totalQuestions, // Total questions shown
+//         'correctCount' => $correctCount, // Number of correctly answered questions
+//         'score' => $score, // Final score
+//         'result' => $result // Pass or Fail
+//     ]);
+// }
+
+
+public function checkAnswerOTJ(Request $request)
+{
+    // Fetch all questions in a random order
+    $allQuestions = Question::inRandomOrder()->get();
+
+    // Filter questions to include only Single and Multi Selection Questions
+    $filteredQuestions = $allQuestions->filter(function ($question) {
+        return in_array($question->type, ['Single Selection Questions', 'Multi Selection Questions']);
+    });
+
+    // Take the first 10 questions from the filtered list
+    $questions = $filteredQuestions->take(10);
+
+    $correctCount = 0; // Initialize correct answer count
+    $totalQuestions = count($questions); // Total number of selected questions (should be 10)
+
+    foreach ($questions as $question) {
+        // Retrieve user's answer for each question
+        $userAnswer = $request->input('question_' . $question->id);
+        $correctAnswers = unserialize($question->answers); // Correct answers for the question
+        $questionType = $question->type;
+
+        if ($questionType === 'Single Selection Questions') {
+            // If it's a single selection question, check if the user's answer matches the correct answer
+            if ($userAnswer == $correctAnswers[0]) {
+                $correctCount++;
+            }
+        } elseif ($questionType === 'Multi Selection Questions') {
+            // If it's a multi-selection question, check if the user's answer matches exactly with the correct answer set
+            if (is_array($userAnswer)) {
+                // Check if the user's answer matches exactly with the correct answer set
+                if (count(array_diff($correctAnswers, $userAnswer)) === 0 && count(array_diff($userAnswer, $correctAnswers)) === 0) {
+                    $correctCount++;
+                }
+            }
+        }
+    }
+
+    // Calculate the correct percentage for the 10 questions
+    $score = ($correctCount / $totalQuestions) * 100; // This will be based on 10 questions
+
+   
+    $result = $score >= 80 ? 'Pass' : 'Fail';
+
+    return view('frontend.TMS.Job_Training.job_quiz_result', [
+        'totalQuestions' => $totalQuestions, // Total questions shown
+        'correctCount' => $correctCount, // Number of correctly answered questions
+        'score' => $score, // Final score for these 10 questions
+        'result' => $result // Pass or Fail based on 80%
+    ]);
+}
+
+
+
 }
