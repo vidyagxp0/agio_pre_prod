@@ -6572,27 +6572,49 @@ $AuditorShow->save();
                 return back();
             }
             if ($changeControl->stage == 2) {
+                // if ($changeControl->form_progress !== 'cft')
+                // {
+                //     Session::flash('swal', [
+                //         'type' => 'warning',
+                //         'title' => 'Mandatory Fields!',
+                //         'message' => 'Summary and Response/CFT Tab is yet to be filled'
+                //     ]);
+
+                //     return redirect()->back();
+
+                // }
+                //  else {
+                //     Session::flash('swal', [
+                //         'type' => 'success',
+                //         'title' => 'Success',
+                //         'message' => 'Sent for CFT Review state'
+                //     ]);
+                // }
+                // $changeControl->stage = "3";
+                // $changeControl->status = "CFT Review";
+
+
+
+
                 if ($changeControl->form_progress !== 'cft')
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
-                        'message' => 'Summary and Response/CFT Tab is yet to be filled'
+                        'message' => 'QA/CQA initial review / CFT Mandatory Tab is yet to be filled!'
                     ]);
 
                     return redirect()->back();
-
-                }
-                 else {
+                } else {
                     Session::flash('swal', [
                         'type' => 'success',
                         'title' => 'Success',
-                        'message' => 'Sent for CFT Review state'
+                        'message' => 'Sent for CFT review state'
                     ]);
                 }
-                $changeControl->stage = "3";
-                $changeControl->status = "CFT Review";
 
+                $changeControl->stage = "4";
+                $changeControl->status = "CFT Review";
 
 
                  $stage = new ExternalAuditCFTResponse();
