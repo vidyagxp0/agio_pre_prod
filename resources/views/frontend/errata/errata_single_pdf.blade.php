@@ -998,7 +998,7 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Submitted By</th>
+                        <th class="w-20">Submit  By</th>
                         <td class="w-30">
                             @if ($data->submitted_by)
                                 {{ $data->submitted_by }}
@@ -1007,7 +1007,7 @@
                             @endif
                         </td>
 
-                        <th class="w-20">Submitted On</th>
+                        <th class="w-20">Submit  On</th>
                         <td class="w-30">
                             @if ($data->submitted_on)
                                 {{ $data->submitted_on }}
@@ -1017,7 +1017,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">Submit Comment</th>
                         <td class="w-80">
                             @if ($data->comment)
                                 {!! $data->comment !!}
@@ -1027,7 +1027,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">HOD Initial Review Completed By</th>
+                        <th class="w-20">HOD Initial Review Complete By</th>
                         <td class="w-30">
                             @if ($data->review_completed_by)
                                 {{ $data->review_completed_by }}
@@ -1036,7 +1036,7 @@
                             @endif
                         </td>
 
-                        <th class="w-20">HOD Initial Review Completed On</th>
+                        <th class="w-20">HOD Initial Review Complete On</th>
                         <td class="w-30">
                             @if ($data->review_completed_on)
                                 {{ $data->review_completed_on }}
@@ -1046,7 +1046,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">HOD Initial Review Complete Comment</th>
                         <td class="w-80">
                             @if ($data->review_completed_comment)
                                 {{ $data->review_completed_comment }}
@@ -1056,7 +1056,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Review Completed By</th>
+                        <th class="w-20">Review Complete By</th>
                         <td class="w-30">
                             @if ($data->Reviewed_by)
                                 {{ $data->Reviewed_by }}
@@ -1065,7 +1065,7 @@
                             @endif
                         </td>
 
-                        <th class="w-20">Review Completed On</th>
+                        <th class="w-20">Review Complete On</th>
                         <td class="w-30">
                             @if ($data->Reviewed_on)
                                 {{ $data->Reviewed_on }}
@@ -1075,7 +1075,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">Review Complete Comment</th>
                         <td class="w-80">
                             @if ($data->Reviewed_commemt)
                                 {{ $data->Reviewed_commemt }}
@@ -1085,7 +1085,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Approval Completed By</th>
+                        <th class="w-20">Approval Complete By</th>
                         <td class="w-30">
                             @if ($data->approved_by)
                                 {{ $data->approved_by }}
@@ -1094,7 +1094,7 @@
                             @endif
                         </td>
 
-                        <th class="w-20">Approval Completed On</th>
+                        <th class="w-20">Approval Complete On</th>
                         <td class="w-30">
                             @if ($data->approved_on)
                                 {{ $data->approved_on }}
@@ -1104,7 +1104,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">Approval Complete Comment</th>
                         <td class="w-80">
                             @if ($data->approved_comment)
                                 {{ $data->approved_comment }}
@@ -1135,7 +1135,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">Correction Completed Comment</th>
                         <td class="w-80">
                             @if ($data->correction_completed_comment)
                                 {{ $data->correction_completed_comment }}
@@ -1147,7 +1147,7 @@
 
 
                     <tr>
-                        <th class="w-20">HOD Review Complete By</th>
+                        <th class="w-20">HOD Review Completed By</th>
                         <td class="w-30">
                             @if ($data->hod_review_complete_by)
                                 {{ $data->hod_review_complete_by }}
@@ -1156,7 +1156,7 @@
                             @endif
                         </td>
 
-                        <th class="w-20">HOD Review Complete By On</th>
+                        <th class="w-20">HOD Review Completed By On</th>
                         <td class="w-30">
                             @if ($data->hod_review_complete_on)
                                 {{ $data->hod_review_complete_on }}
@@ -1166,7 +1166,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">HOD Review Completed Comment</th>
                         <td class="w-80">
                             @if ($data->hod_review_complete_comment)
                                 {{ $data->hod_review_complete_comment }}
@@ -1177,7 +1177,7 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">QA Head Aproval Completed By</th>
+                        <th class="w-20">QA/CQA Head Approval Completed By</th>
                         <td class="w-30">
                             @if ($data->qa_head_approval_completed_by)
                                 {{ $data->qa_head_approval_completed_by }}
@@ -1186,7 +1186,7 @@
                             @endif
                         </td>
 
-                        <th class="w-20">QA Head Aproval Completed On</th>
+                        <th class="w-20">QA/CQA Head Approval Completed On</th>
                         <td class="w-30">
                             @if ($data->qa_head_approval_completed_on)
                                 {{ $data->qa_head_approval_completed_on }}
@@ -1196,7 +1196,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">QA/CQA Head Approval Completed Comment</th>
                         <td class="w-80">
                             @if ($data->qa_head_approval_completed_comment)
                                 {{ $data->qa_head_approval_completed_comment }}
@@ -1207,7 +1207,7 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">Sent to Opened State By</th>
+                        <th class="w-20">Sent To Opened State By</th>
                         <td class="w-30">
                             @if ($data->sent_to_open_state_by)
                                 {{ $data->sent_to_open_state_by }}
@@ -1216,7 +1216,7 @@
                             @endif
                         </td>
 
-                        <th class="w-20">Sent to Opened State On</th>
+                        <th class="w-20">Sent To Opened State On</th>
                         <td class="w-30">
                             @if ($data->sent_to_open_state_on)
                                 {{ $data->sent_to_open_state_on }}
@@ -1226,7 +1226,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">Sent To Opened State Comment</th>
                         <td class="w-80">
                             @if ($data->sent_to_open_state_comment)
                                 {{ $data->sent_to_open_state_comment }}
@@ -1256,7 +1256,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">Cancel Comment</th>
                         <td class="w-80">
                             @if ($data->cancel_comment)
                                 {{ $data->cancel_comment }}

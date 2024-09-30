@@ -72,6 +72,30 @@ class TrainerController extends Controller
         return response()->json([]); // Return empty array if no questions found
     }
 
+    public function getQuestions($documentId)
+    {
+        $document_training = DocumentTraining::where('document_id', $documentId)->first();
+        if ($document_training && $document_training->training_plan) {
+            $training = Training::find($document_training->training_plan);
+            $quize = Quize::find($training->quize);
+    
+            // Assuming your Quize model has a relation to questions and choices
+            $questions = $quize->questions->map(function ($question) {
+                return [
+                    'id' => $question->id,
+                    'question' => $question->question_text,
+                    'choices' => $question->choices->pluck('option_text'), // Assuming choices relation
+                    'answer' => $question->answer,
+                ];
+            });
+    
+            return response()->json(['success' => true, 'questions' => $questions]);
+        }
+    
+        return response()->json(['success' => false]);
+    }
+    
+
     public function store(Request $request)
     {
         // return $request->all();
@@ -1067,7 +1091,7 @@ class TrainerController extends Controller
 
         return view('frontend.TMS.Trainer_qualification.trainer_qualification_auditTrail', compact('audit', 'trainer', 'document', 'today'));
     }
-
+ 
     public function auditDetailstrainer($id)
     {
 

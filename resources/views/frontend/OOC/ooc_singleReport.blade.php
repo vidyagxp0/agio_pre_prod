@@ -162,7 +162,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    OOC Single Report
+                    Out Of Calibration Single Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -174,7 +174,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>OOC No.</strong>
+                    <strong>Out Of Calibration No.</strong>
                 </td>
                 <td class="w-40">
                     {{ Helpers::getDivisionName($ooc->division_id) }}/OOC/{{ Helpers::year($ooc->created_at) }}/{{ $ooc->record }}
@@ -185,6 +185,22 @@
             </tr>
         </table>
     </header>
+
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                {{-- <td class="w-30">
+                <strong>Page :</strong> 1 of 1
+                </td> --}}
+            </tr>
+        </table>
+    </footer>
 
     <div class="inner-block">
         <div class="content-table">
@@ -477,7 +493,7 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">HOD Primary Remarks</th>
+                        <th class="w-20">HOD Primary Review Remarks</th>
                         <td class="w-80">
                             @if ($data->HOD_Remarks)
                                 {!! $data->HOD_Remarks !!}
@@ -487,7 +503,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">HOD Primary Attachments</th>
+                        <th class="w-20">HOD Primary Review Attachments</th>
                         <td class="w-80">
                             @if ($data->attachments_hod_ooc)
                                 {!! $data->attachments_hod_ooc !!}
@@ -524,7 +540,7 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">QA Head Primary Remarks</th>
+                        <th class="w-20">QA Head Primary Review Remarks</th>
                         <td class="w-80">
                             @if ($data->qaheadremarks)
                                 {!! $data->qaheadremarks !!}
@@ -534,7 +550,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">QA Head Primary Attachment</th>
+                        <th class="w-20">QA Head Primary Review Attachment</th>
                         <td class="w-80">
                             @if ($data->initial_attachment_capa_ooc)
                                 {!! $data->initial_attachment_capa_ooc !!}
@@ -658,7 +674,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Comments</th>
+                        <th class="w-20">Phase IA Investigation Comment</th>
                         <td class="w-80">
                             @if ($data->rootcausenewfield)
                                 {!! $data->rootcausenewfield !!}
@@ -809,7 +825,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Corrective & Preventive Action</th>
+                        <th class="w-20">Corrective and Preventive Action</th>
                         <td class="w-80">
                             @if ($data->initiated_through_capa_corrective_ooc)
                                 {{ $data->initiated_through_capa_corrective_ooc }}
@@ -1086,7 +1102,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Attachment</th>
+                        <th class="w-20">Phase IB Attachment</th>
                         <td class="w-80">
                             @if ($data->initial_attachment_reanalysisi_ooc)
                                 {!! $data->initial_attachment_reanalysisi_ooc !!}
@@ -1306,9 +1322,8 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Comment:</th>
+    
+                        <th class="w-20">Submit Comment:</th>
                         <td class="w-30">
                             @if ($data->comment)
                                 {!! $data->comment !!}
@@ -1336,9 +1351,8 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Comment:</th>
+
+                        <th class="w-20">HOD Primary Review Complete Comment:</th>
                         <td class="w-30">
                             @if ($data->initial_phase_i_investigation_comment)
                                 {!! $data->initial_phase_i_investigation_comment !!}
@@ -1366,9 +1380,8 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Comment:</th>
+
+                        <th class="w-20">QA Head Primary Review Complete Comment:</th>
                         <td class="w-30">
                             @if ($data->assignable_cause_f_completed_comment)
                                 {!! $data->assignable_cause_f_completed_comment !!}
@@ -1396,9 +1409,8 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Comment:</th>
+
+                        <th class="w-20">Phase IA Investigation Comment:</th>
                         <td class="w-30">
                             @if ($data->cause_f_completed_comment)
                                 {!! $data->cause_f_completed_comment !!}
@@ -1426,9 +1438,8 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Comment:</th>
+
+                        <th class="w-20">Phase IA HOD Review Complete Comment:</th>
                         <td class="w-30">
                             @if ($data->cause_i_ncompleted_comment)
                                 {!! $data->cause_i_ncompleted_comment !!}
@@ -1456,9 +1467,8 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Comment:</th>
+
+                        <th class="w-20">Phase IA QA Review Complete Comment:</th>
                         <td class="w-30">
                             @if ($data->correction_ooc_comment)
                                 {!! $data->correction_ooc_comment !!}
@@ -1486,9 +1496,8 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Comment:</th>
+
+                        <th class="w-20">Assignable Cause Found Comment:</th>
                         <td class="w-30">
                             @if ($data->approved_ooc_comment)
                                 {!! $data->approved_ooc_comment !!}
@@ -1516,9 +1525,8 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Comment:</th>
+
+                        <th class="w-20">Assignable Cause Not Found Comment:</th>
                         <td class="w-30">
                             @if ($data->correction_r_ncompleted_comment)
                                 {!! $data->correction_r_ncompleted_comment !!}
@@ -1546,9 +1554,8 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Comment:</th>
+                  
+                        <th class="w-20">Phase IB Investigation Comment:</th>
                         <td class="w-30">
                             @if ($data->correction_ooc_comment)
                                 {!! $data->correction_ooc_comment !!}
@@ -1576,9 +1583,8 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Comment:</th>
+                   
+                        <th class="w-20">Phase IB HOD Review Complete Comment:</th>
                         <td class="w-30">
                             @if ($data->Phase_IB_HOD_Review_Completed_Comment)
                                 {!! $data->Phase_IB_HOD_Review_Completed_Comment !!}
@@ -1606,9 +1612,8 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Comment:</th>
+                    
+                        <th class="w-20">Phase IB QA Review Complete Comment:</th>
                         <td class="w-30">
                             @if ($data->Phase_IB_QA_Review_Complete_12_comment)
                                 {!! $data->Phase_IB_QA_Review_Complete_12_comment !!}
@@ -1636,12 +1641,40 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Comment:</th>
+                    
+                        <th class="w-20">Approved Comment:</th>
                         <td class="w-30">
                             @if ($data->P_IB_Assignable_Cause_Found_comment)
                                 {!! $data->P_IB_Assignable_Cause_Found_comment !!}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Cancel By:</th>
+                        <td class="w-30">
+                            @if ($data->cancelled_by)
+                                {!! $data->cancelled_by !!}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
+                        <th class="w-20">Cancel On:</th>
+                        <td class="w-30">
+                            @if ($data->cancelled_on)
+                                {{ $data->cancelled_on }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    
+                        <th class="w-20">Cancel Comment:</th>
+                        <td class="w-30">
+                            @if ($data->cancell_comment)
+                                {!! $data->cancell_comment !!}
                             @else
                                 Not Applicable
                             @endif
@@ -1660,21 +1693,7 @@
 
 
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-                {{-- <td class="w-30">
-                <strong>Page :</strong> 1 of 1
-                </td> --}}
-            </tr>
-        </table>
-    </footer>
+
 
 </body>
 

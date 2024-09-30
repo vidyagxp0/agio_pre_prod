@@ -10,6 +10,17 @@
 </head>
 
 <style>
+    .w-5 {
+        width: 5%;
+    }
+
+    .w-10 {
+        width: 10%;
+    }
+
+    .w-15 {
+        width: 15%;
+    }
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
@@ -151,6 +162,10 @@
         word-break: break-all;
         word-wrap: break-word;
     }
+    .allow-wb {
+        word-break: break-all;
+        word-wrap: break-word;
+    }
 </style>
 
 <body>
@@ -159,7 +174,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                     Action Item Audit Trial Report
+                     Action Item Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -174,10 +189,7 @@
                     <strong> Action Item No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::getDivisionName($doc->division_id) }}/
-                    AI
-                    /{{ Helpers::year($doc->created_at) }}/
-                    {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::getDivisionName($doc->division_id) }}/AI/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -203,7 +215,7 @@
     <div class="inner-block">
 
         <div class="second-table">
-            <table class="allow-wb" style="table-layout: fixed; width: 700px;">
+        <table class="allow-wb" style="table-layout: fixed; width: 700px;">
                 <thead>
                     <tr class="table_bg">
                         <th class="w-5">S.No</th>

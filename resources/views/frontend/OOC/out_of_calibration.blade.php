@@ -764,7 +764,7 @@ $(document).ready(function() {
                             <div class="sub-head col-12">HOD Primary Review</div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="HOD Remarks">HOD Primary Remarks</label>
+                                    <label for="HOD Remarks">HOD Primary Review Remarks</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     <textarea class="summernote" name="HOD_Remarks" id="summernote-1"></textarea>
                                 </div>
@@ -774,7 +774,7 @@ $(document).ready(function() {
                             
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Initial Attachments">HOD Primary Attachments</label>
+                                    <label for="Initial Attachments">HOD Primary Review Attachments</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                     <div class="file-attachment-field">
@@ -845,14 +845,14 @@ $(document).ready(function() {
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initiator Group">QA Head Primary Remarks </label>
+                                <label for="Initiator Group">QA Head Primary Review Remarks </label>
                                 <textarea  name="qaheadremarks" placholder="enter review"></textarea>
                             </div>
                         </div>
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initial Attachments">QA Head Primary Attachment</label>
+                                <label for="Initial Attachments">QA Head Primary Review Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                 {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                 <div class="file-attachment-field">
@@ -1073,7 +1073,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-12" id="rootCauseGroup" style="display: none;">
                             <div class="group-input">
-                                <label for="RootCause">Comments</label>
+                                <label for="RootCause">Phase IA Investigation Comment</label>
                                 <textarea name="rootcausenewfield" id="rootCauseTextarea" rows="4" placeholder="Describe the root cause here"></textarea>
                             </div>
                         </div>
@@ -1124,7 +1124,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initial Attachments">Hypothesis Attachement</label>
+                                <label for="Initial Attachments">Hypothesis Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                 {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                 <div class="file-attachment-field">
@@ -1192,7 +1192,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initial Attachments">Phase IA Attachement</label>
+                                <label for="Initial Attachments">Phase IA Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                 {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                 <div class="file-attachment-field">
@@ -1252,7 +1252,7 @@ $(document).ready(function() {
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
+                                <label for="Corrective & Preventive Action">Corrective and Preventive Action</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                 <textarea  name="initiated_through_capa_corrective_ooc" id="summernote-1"></textarea>
                             </div>
@@ -1607,7 +1607,7 @@ $(document).ready(function() {
                         
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initial Attachments">Attachment</label>
+                                <label for="Initial Attachments">Phase IB Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                 {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                 <div class="file-attachment-field">
@@ -2038,9 +2038,7 @@ $(document).ready(function() {
                 <div class="inner-block-content">
 
                     <div class="row">
-
-
-
+                        
                         <center><div class="sub-head">
                             Activity Log
                         </div></center>
@@ -2054,8 +2052,6 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Submit By : </label>
                                 <div class="static"></div>
-
-
                             </div>
                         </div>
 
@@ -2072,12 +2068,12 @@ $(document).ready(function() {
                         </div>
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="comment">Comment : </label>
+                                <label for="comment">Submit Comment : </label>
                                 <div class="static"></div>
                         </div>
                         </div>
 
-                        <div class="sub-head col-lg-12">HOD Primary Review</div>
+                        <div class="sub-head col-lg-12">HOD Primary Review Complete</div>
 
                         <div class="col-lg-4">
 
@@ -2091,14 +2087,14 @@ $(document).ready(function() {
                         <div class="col-lg-4 new-date-data-field">
 
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">HOD Primary Review Complete On</label>
+                                <label for="OOC Logged On">HOD Primary Review Complete On : </label>
                                 <div class="static"></div>
                                 
                             </div>
                         </div>
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="hod_review_occ_comment"> Comment : </label>
+                                <label for="hod_review_occ_comment">HOD Primary Review Complete Comment : </label>
                                 <div class="static"></div>
 
 
@@ -2109,7 +2105,7 @@ $(document).ready(function() {
                         </div>
 
                         <div class="sub-head col-lg-12">
-                        QA Head Primary Review
+                          QA Head Primary Review Complete
                         </div>
                         <div class="col-lg-4">
 
@@ -2133,13 +2129,13 @@ $(document).ready(function() {
                         </div>
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="qa_intial_review_ooc_comment">Comment</label>
+                                <label for="qa_intial_review_ooc_comment">QA Head Primary Review Complete Comment : </label>
                                 <div class="static"></div>
 
                             </div>
                         </div>
                         <div class="sub-head col-lg-12">
-                           Under Phase IA Investigation
+                          Phase IA Investigation
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
@@ -2164,7 +2160,7 @@ $(document).ready(function() {
                         </div>
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="closure_ooc_comment">Comment : </label>
+                                <label for="closure_ooc_comment">Phase IA Investigation Comment : </label>
                                 <div class="static"></div>
 
                             </div>
@@ -2173,7 +2169,7 @@ $(document).ready(function() {
 
 
                         <div class="sub-head col-lg-12">
-                        Phase IA HOD Primary Review 
+                            Phase IA HOD Review Complete 
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
@@ -2198,14 +2194,14 @@ $(document).ready(function() {
                         </div>
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="closure_ooc_comment">Comment : </label>
+                                <label for="closure_ooc_comment">Phase IA HOD Review Complete Comment : </label>
                                 <div class="static"></div>
 
                             </div>
                         </div>
 
                         <div class="sub-head col-lg-12">
-                        Phase IA QA Review
+                            Phase IA QA Review Complete
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
@@ -2230,7 +2226,7 @@ $(document).ready(function() {
                         </div>
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="closure_ooc_comment">Comment : </label>
+                                <label for="closure_ooc_comment">Phase IA QA Review Complete Comment : </label>
                                 <div class="static"></div>
 
                             </div>
@@ -2242,7 +2238,7 @@ $(document).ready(function() {
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">Assignable Cause Found Complete By : </label>
+                                <label for="Initiator Group">Assignable Cause Found By : </label>
                                 <div class="static"></div>
 
 
@@ -2252,13 +2248,13 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Assignable Cause Found Complete On : </label>
+                                <label for="OOC Logged On">Assignable Cause Found On : </label>
                                 <div class="static"></div>
                              </div>
                         </div>
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="closure_ooc_comment">Comment : </label>
+                                <label for="closure_ooc_comment">Assignable Cause Found Comment : </label>
                                 <div class="static"></div>
 
                             </div>
@@ -2269,7 +2265,7 @@ $(document).ready(function() {
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">Assignable Cause Not Found Complete By : </label>
+                                <label for="Initiator Group">Assignable Cause Not Found By : </label>
                                 <div class="static"></div>
 
 
@@ -2279,19 +2275,19 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Assignable Cause Not Found Complete On : </label>
+                                <label for="OOC Logged On">Assignable Cause Not Found On : </label>
                                 <div class="static"></div>
                             </div>
                         </div>
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="closure_ooc_comment">Comment : </label>
+                                <label for="closure_ooc_comment">Assignable Cause Not Found Comment : </label>
                                 <div class="static"></div>
 
                             </div>
                         </div>
                         <div class="sub-head col-lg-12">
-                           Under Phase IB Investigation</div>
+                           Phase IB Investigation</div>
                       <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase IB Investigation By : </label>
@@ -2308,7 +2304,7 @@ $(document).ready(function() {
                         </div>
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="closure_ooc_comment">Comment : </label>
+                                <label for="closure_ooc_comment">Phase IB Investigation Comment : </label>
                                 <div class="static"></div>
 
                             </div>
@@ -2316,7 +2312,7 @@ $(document).ready(function() {
 
 
                         <div class="sub-head col-lg-12">
-                        Phase IB HOD Prime Review
+                            Phase IB HOD Review Complete
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
@@ -2334,7 +2330,7 @@ $(document).ready(function() {
                         </div>
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="closure_ooc_comment">Comment : </label>
+                                <label for="closure_ooc_comment">Phase IB HOD Review Complete Comment : </label>
                                 <div class="static"></div>
                             </div>
                         </div>
@@ -2354,16 +2350,11 @@ $(document).ready(function() {
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">Phase IB QA Review Complete  On : </label>
                                 <div class="static"></div>
-
-
-
-
-
                             </div>
                         </div>
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="closure_ooc_comment">Comment : </label>
+                                <label for="closure_ooc_comment">Phase IB QA Review Complete Comment : </label>
                                 <div class="static"></div>
 
                             </div>
@@ -2376,8 +2367,6 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Approved By : </label>
                                 <div class="static"></div>
-
-
                             </div>
                         </div>
 
@@ -2386,16 +2375,11 @@ $(document).ready(function() {
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">Approved On : </label>
                                 <div class="static"></div>
-
-
-
-
-
                             </div>
                         </div>
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="closure_ooc_comment">Comment : </label>
+                                <label for="closure_ooc_comment">Approved Comment : </label>
                                 <div class="static"></div>
 
                             </div>
@@ -2417,16 +2401,11 @@ $(document).ready(function() {
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">Cancel On: </label>
                                 <div class="static"></div>
-
-
-
-
-
                             </div>
                         </div>
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="comment">Comment : </label>
+                                <label for="comment">Cancel Comment : </label>
                                 <div class="static"></div>
                         </div>
                         </div>

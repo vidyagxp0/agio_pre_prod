@@ -81,14 +81,18 @@
                         {{-- {{ dd($data->stage);}} --}}
                        <a class="button_theme1 text-white"
                                 href="{{ route('resampling-audittrialshow', $data->id) }}"> Audit Trail </a> 
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+
+                         @if ($data->stage == 1 && (Helpers::check_roles($data->division_id, 'Resampling', 3)|| Helpers::check_roles($data->division_id, 'Resampling', 18)))
+                      
                             <a href="#signature-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button></a>
                            <a href="#cancel-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button></a>
-                            @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+
+                        @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 65) || Helpers::check_roles($data->division_id, 'Resampling', 18)))
+        
                            <a > <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
                             </button></a>
@@ -98,14 +102,17 @@
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approved
                             </button></a>
-                            @elseif($data->stage == 3 && (in_array(8, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Resampling', 8) || Helpers::check_roles($data->division_id, 'Resampling', 18)))
+
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledge  Complete
                             </button></a>
                             <a href="#more-info-required-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
                             </button></a>
-                            @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+
+                            @elseif($data->stage == 4 && (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 66)|| Helpers::check_roles($data->division_id, 'Resampling', 18)))
+                         
                            <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                            Varification  Complete
                             </button></a>
@@ -1307,19 +1314,19 @@
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="submitted by">Submitted By</label>
+                                            <label for="submitted by">Submit By</label>
                                             <div class="static">{{ $data->acknowledgement_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="submitted on">Submitted On</label>
+                                            <label for="submitted on">Submit On</label>
                                             <div class="Date">{{ $data->acknowledgement_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="submitted on">Submitted Comment</label>
+                                            <label for="submitted on">Submit Comment</label>
                                             <div class="static">{{ $data->acknowledgement_comment }}</div>
                                         </div>
                                     </div>
@@ -1357,7 +1364,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="submitted on"> Acknowledge Complete Comment</label>
+                                            <label for="submitted on"> Acknowledge Completete Comment</label>
                                             <div class="static">{{ $data->qa_varification_comment }}</div>
                                         </div>
                                     </div>
@@ -1381,37 +1388,37 @@
                                     </div> --}}
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="completed by"> Verification Completed By</label>
+                                            <label for="completed by">Verification Complete By</label>
                                             <div class="static">{{ $data->completed_by }}</div> 
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="completed on">Verification Completed On</label>
+                                            <label for="completed on">Verification Complete On</label>
                                             <div class="Date">{{ $data->completed_on }}</div> 
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="submitted on">Verification Comment</label>
+                                            <label for="submitted on">Verification Complete Comment</label>
                                             <div class="static">{{ $data->completed_comment }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="cancelled by">Cancelled By</label>
+                                            <label for="cancelled by">Cancel By</label>
                                             <div class="static">{{ $data->cancelled_by }}</div> 
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="cancelled on">Cancelled On</label>
+                                            <label for="cancelled on">Cancel On</label>
                                             <div class="Date">{{ $data->cancelled_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="submitted on">Cancelled Comment</label>
+                                            <label for="submitted on">Cancel Comment</label>
                                             <div class="static">{{ $data->cancelled_comment }}</div>
                                         </div>
                                     </div>

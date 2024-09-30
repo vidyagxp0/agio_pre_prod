@@ -1993,15 +1993,25 @@ $Checklist_Capsule->save();
       $string = 'remark_powder_manufacturing_filling_'. $i;
       $checklist_manufacturing_production->$string = $request->$string;
   }
-  for ($i = 1; $i <= 3; $i++)
+  for ($i = 1; $i <= 6; $i++)
   {
       $string = 'response_packing_'. $i;
       $checklist_manufacturing_production->$string = $request->$string;
   }
  
-  for ($i = 1; $i <= 3; $i++)
+  for ($i = 1; $i <= 6; $i++)
   {
-      $string = 'remark_packing_'. $i;
+      $string = 'powder_response_packing_'. $i;
+      $checklist_manufacturing_production->$string = $request->$string;
+  }
+  for ($i = 1; $i <= 6; $i++)
+  {
+      $string = 'response_packing_'. $i;
+      $checklist_manufacturing_production->$string = $request->$string;
+  }
+  for ($i = 1; $i <= 6; $i++)
+  {
+      $string = 'powder_remark_packing_'. $i;
       $checklist_manufacturing_production->$string = $request->$string;
   }
   // dd($checklistTabletCompression->tablet_compress_remark_1)
