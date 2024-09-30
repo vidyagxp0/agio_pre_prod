@@ -997,6 +997,22 @@
                                                 <textarea {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
                                             </div>
                                         </div>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Audit Category">Audit Category</label>
+                                                <select name="Audit_Category" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                    <option value="0">-- Select --</option>
+                                                    <option @if ($data->Audit_Category == '1') selected @endif
+                                                         value="1">Internal Audit/Self Inspection</option>
+                                                    <option  @if ($data->Audit_Category == '2') selected @endif
+                                                         value="2">Supplier Audit</option>
+                                                    <option @if ($data->Audit_Category == '3') selected @endif
+                                                         value="3">Regulatory Audit</option>
+                                                    <option @if ($data->Audit_Category == '4') selected @endif
+                                                         value="4">Consultant Audit</option>
+                                                </select>
+                                            </div>
+                                        </div>
 
                                         <div class="col-12">
                                             <div class="group-input">
@@ -1888,28 +1904,13 @@
                                                     <option value="4">Consultant Audit</option>
                                                 </select>
                                             </div>
-                                        </div> --
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Audit Category">Audit Category</label>
-                                                <select name="Audit_Category" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    <option value="0">-- Select --</option>
-                                                    <option @if ($data->Audit_Category == '1') selected @endif
-                                                         value="1">Internal Audit/Self Inspection</option>
-                                                    <option  @if ($data->Audit_Category == '2') selected @endif
-                                                         value="2">Supplier Audit</option>
-                                                    <option @if ($data->Audit_Category == '3') selected @endif
-                                                         value="3">Regulatory Audit</option>
-                                                    <option @if ($data->Audit_Category == '4') selected @endif
-                                                         value="4">Consultant Audit</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
+                                        </div> --}}
+                                     
+                                       {{--  <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Supplier/Vendor/Manufacturer Details">Supplier/Vendor/Manufacturer
                                                     Details</label>
-                                                {{-- <input type="text"> --
+                                                <input type="text"> --
                                                 <textarea name="Supplier_Details" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Details }}</textarea>
                                             </div>
                                         </div>

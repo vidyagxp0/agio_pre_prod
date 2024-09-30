@@ -2380,7 +2380,7 @@
 
                                 <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Schedule On"> CancelledComment</label>
+                                                <label for="Audit Schedule On"> Cancelled Comment</label>
                                                 <div class="static"></div>
                                             </div>
                                         </div>
