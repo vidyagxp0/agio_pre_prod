@@ -56,6 +56,7 @@ class ManagementReviewController extends Controller
     {
          //$request->dd();
         //  return $request;
+         $form_progress = null;
 
         if (!$request->short_description) {
             toastr()->error("Short description is required");
@@ -102,6 +103,7 @@ class ManagementReviewController extends Controller
         $management->division_id = $request->division_id;
         $management->record = ((RecordNumber::first()->value('counter')) + 1);
         $management->initiator_id = Auth::user()->id;
+        $management->form_progress = isset($form_progress) ? $form_progress : null;
         $management->intiation_date = $request->intiation_date;
         $management->division_code = $request->division_code;
         // $management->Initiator_id = $request->Initiator_id;
@@ -1629,6 +1631,8 @@ class ManagementReviewController extends Controller
         // }
         $lastDocument = ManagementReview::find($id);
         $management = ManagementReview::find($id);
+            $changeControl = ManagementReview::find($id);
+
         $lastCft = managementCft::where('ManagementReview_id', $management->id)->first();
         $lastCft = hodmanagementCft::where('ManagementReview_id', $management->id)->first();
         $Cft = managementCft::where('ManagementReview_id', $id)->first();
@@ -1644,6 +1648,8 @@ class ManagementReviewController extends Controller
         $management->assign_to = implode(',', $request->assign_to);
 
 
+
+        $management->form_progress = isset($form_progress) ? $form_progress : null;
 
         $management->due_date = $request->due_date;
         $management->type = $request->type;
@@ -1712,7 +1718,8 @@ class ManagementReviewController extends Controller
     //    $attachments = json_decode($management->inv_attachment, true) ?? [];
         // Handle file removals
 
-            if($management->stage == 3 || $management->stage == 4 ){
+
+            if($changeControl->stage == 3 || $changeControl->stage == 4 ){
 
 
             if (!$form_progress) {
@@ -1720,7 +1727,7 @@ class ManagementReviewController extends Controller
             }
 
             $Cft = managementCft::withoutTrashed()->where('ManagementReview_id', $id)->first();
-            if($Cft && $management->stage == 4 ){
+            if($Cft && $changeControl->stage == 4 ){
                 $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
                 $Cft->RA_person = $request->RA_person == null ? $Cft->RA_person : $request->RA_person;
 
@@ -8448,12 +8455,28 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
                 return back();
             }
             if ($changeControl->stage == 3) {
-                 if (!$changeControl->customer_satisfaction_level || !$changeControl->external_supplier_performance) {
+                //  if (!$changeControl->customer_satisfaction_level || !$changeControl->external_supplier_performance) {
 
+                //         Session::flash('swal', [
+                //             'title' => 'Mandatory Fields Required!',
+                //             'message' => 'Meeting Start Date and Meeting End Date is yet to be filled!',
+                //             'type' => 'warning',
+                //         ]);
+
+                //         return redirect()->back();
+                //     } else {
+                //         Session::flash('swal', [
+                //             'type' => 'success',
+                //             'title' => 'Success',
+                //             'message' => 'Sent for CFT actions state'
+                //         ]);
+                //     }
+                 if ($changeControl->form_progress !== 'cft')
+                    {
                         Session::flash('swal', [
-                            'title' => 'Mandatory Fields Required!',
-                            'message' => 'Meeting Start Date and Meeting End Date is yet to be filled!',
                             'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'QA/CQA initial review / CFT Mandatory Tab is yet to be filled!'
                         ]);
 
                         return redirect()->back();
@@ -8461,7 +8484,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for CFT actions state'
+                            'message' => 'Sent for CFT review state'
                         ]);
                     }
                 $changeControl->stage = "4";
