@@ -472,7 +472,6 @@
                         <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Audit Observation</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Pending Response</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Response Verification</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                         <button class="cctablinks" style="display:none;" id="button1"
                             onclick="openCity(event, 'CCForm7')">Checklist - Production (Tablet Dispensing & Tablet Granulation)</button>
                         <button class="cctablinks" style="display:none;" id="button2"
@@ -534,6 +533,8 @@
                         <button class="cctablinks" style="display:none;" id="button17"
                             onclick="openCity(event, 'CCForm23')">Checklist - Formulation Research and Development
                         </button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
+
 
                         {{-- <button class="cctablinks" style="display:none;" id="button18"
                             onclick="openCity(event, 'CCForm24')">Checklist -LL / P2P

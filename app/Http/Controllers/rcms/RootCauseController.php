@@ -3259,7 +3259,7 @@ class RootCauseController extends Controller
             
 
             if ($root->stage == 1) {
-                if (!$root->name="short_description") {
+                if (!$root->short_description) {
 
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
