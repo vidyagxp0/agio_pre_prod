@@ -350,6 +350,88 @@
                         </td>
                     </tr>
                 </table>
+
+                <div class="block">
+                    <div class="block-head">
+                        Audit Program
+                    </div>
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20" style="width: 25px;">Row#</th>
+                                <th class="w-20">Auditees</th>
+                                <th class="w-20">Date Start</th>
+                                <th class="w-20">Date End</th>
+                                <th class="w-20"> Lead Investigator</th>
+                                <th class="w-20"> Comment</th>
+
+                            </tr>
+                            @if ($grid_Data3 && is_array($grid_Data3->data))
+                                    @foreach ($grid_Data3->data as $grid_Data)
+                                <tr>
+                                    <td class="w-20">{{ $loop->index + 1 }}</td>
+                                    <td class="w-20">
+                                        {{ isset($grid_Data['Auditees']) ? $grid_Data['Auditees'] : '' }}
+                                    </td>
+                                    <td>
+                                        {{ isset($grid_Data['Due_Date']) ? Helpers::getdateFormat( $grid_Data['Due_Date']) : '' }} 
+                                    </td>
+                                    <td>
+                                        {{ isset($grid_Data['End_date']) ?  Helpers::getdateFormat( $grid_Data['End_date']) : '' }} 
+                                    </td>
+                                    <td>
+                                        {{ isset($grid_Data['Lead_Investigator']) ? $grid_Data['Lead_Investigator'] : '' }} 
+                                    </td>
+                                    <td>
+                                        {{ isset($grid_Data['Comment']) ? $grid_Data['Comment'] : '' }} 
+                                    </td>
+                                </tr>
+                            @endforeach
+                            @endif
+                        </table>
+                    </div>
+                </div>
+
+                <div class="block">
+                    <div class="block-head">
+                        Self Inspection Planner
+                    </div>
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20" style="width: 25px;">Row#</th>
+                                <th class="w-20">Department</th>
+                                <th class="w-20">Months</th>
+                                <th class="w-20">Remarks</th>
+                               
+                            </tr>
+                            @if ($grid_Data4 && is_array($grid_Data4->data))
+                                    @foreach ($grid_Data4->data as $grid_Data)
+                                <tr>
+                                    <td class="w-20">{{ $loop->index + 1 }}</td>
+                                    <td class="w-20">
+                                        {{ isset($grid_Data['department']) ? $grid_Data['department'] : '' }}
+                                    </td>
+                                    <td>
+                                        {{ isset($grid_Data['Months']) ? $grid_Data['Months'] : '' }} 
+                                    </td>
+                                    <td>
+                                        {{ isset($grid_Data['Remarked']) ? $grid_Data['Remarked'] : '' }} 
+                                    </td>
+                                </tr>
+                            @endforeach
+                            @endif
+                        </table>
+                    </div>
+                </div>
+
+
+
+
+
+
+                
+             
                     {{-- <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px;">Comments
                     </label>
@@ -424,6 +506,40 @@
                 <div class="block-head">
                         Self Inspection Circular
                 </div>
+
+                
+            <div class="block">
+                <div class="block-head">
+                    Self Inspection Circular
+                </div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20" style="width: 25px;">Row#</th>
+                            <th class="w-20">Department</th>
+                            <th class="w-20">Audit Date</th>
+                            <th class="w-20">Name of Auditors</th>
+                        </tr>
+                        @if ($grid_Data2 && is_array($grid_Data2->data))
+                                @foreach ($grid_Data2->data as $grid_Data)
+                            <tr>
+                                <td class="w-20">{{ $loop->index + 1 }}</td>
+                                <td class="w-20">
+                                    {{ isset($grid_Data['departments']) ? $grid_Data['departments'] : '' }}
+                                </td>
+                                <td>
+                                    {{ isset($grid_Data['info_mfg_date']) ? Helpers::getdateFormat( $grid_Data['info_mfg_date']) : '' }} 
+                                </td>
+                                <td>
+                                    {{ isset($grid_Data['Auditor']) ? $grid_Data['Auditor'] : '' }} 
+                                </td>
+                            </tr>
+                        @endforeach
+                        @endif
+                    </table>
+                </div>
+            </div>
+
                         <table>
                             {{-- <tr>
                                 <th>Comments</th>
@@ -565,7 +681,7 @@
         <div class="content-table">
             <div class="block">
                 <div class="block-head">
-                    Signatures
+                    Activity Log
                 </div>
                 
                 <div class="block-head">
@@ -655,125 +771,8 @@
                 </table>
             </div>
 
-            <!-- ------------------------------- audit program grid--------------------------------------- -->
-
-
-
-            <div class="block">
-                <div class="block-head">
-                    Audit Program
-                </div>
-                <div class="border-table">
-                    <table style="margin-top: 20px; width:100%;table-layout:fixed;">
-                        <thead>
-                            <tr class="table_bg">
-                                <th style="width: 8%">Row#</th>
-                                <th style="width: 12%">Auditees</th>
-                                <th style="width: 15%">Date Start</th>
-                                <th style="width: 15%"> Date End</th>
-                                <th style="width: 15%"> Lead Investigator</th>
-                                <th style="width: 15%">Comment</th>
-                            </tr>
-                        </thead>
-                        <?php if ($grid_Data3 && is_array($grid_Data3->data)): ?>
-                        <?php $index2 = 0; ?>
-                        <?php foreach ($grid_Data3->data as $data): ?>
-                        <tr>
-                            <td><?php echo $index2 + 1; ?></td>
-                            <td><?php echo isset($data['Auditees']) ? $data['Auditees'] : 'N/A'; ?></td>
-                            <td><?php echo isset($data['Due_Date']) ? \Carbon\Carbon::parse($data['Due_Date'])->format('d-M-Y') : 'N/A'; ?></td>
-                            <td><?php echo isset($data['End_date']) ? \Carbon\Carbon::parse($data['End_date'])->format('d-M-Y') : 'N/A'; ?></td>
-                            <td><?php echo isset($data['Lead_Investigator']) ? $data['Lead_Investigator'] : 'N/A'; ?></td>
-                            <td><?php echo isset($data['Comment']) ? $data['Comment'] : 'N/A'; ?></td>
-                        </tr>
-                        <?php $index2++; ?>
-                        <?php endforeach; ?>
-                        <?php else: ?>
-                        <tr>
-                            <td>N/A</td>
-                            <td>N/A</td>
-                            <td>N/A</td>
-                            <td>N/A</td>
-                            <td>N/A</td>
-                            <td>N/A</td>
-                        </tr>
-                        <?php endif; ?>
-
-                    </table>
-                </div>
-            </div>
-            <div class="block">
-                <div class="block-head">
-                    Self Inspection Planner
-                </div>
-
-                <div class="border-table">
-                    <table style="margin-top: 20px; width:100%;table-layout:fixed;">
-                        <thead>
-                            <tr class="table_bg">
-                                <th style="width: 5%">Row#</th>
-                                <th style="width: 12%">Department</th>
-                                <th style="width: 15%">Months</th>
-                                <th style="width: 16%">Remarks</th>
-                            </tr>
-                        </thead>
-                        <?php if ($grid_Data4 && is_array($grid_Data4->data)): ?>
-                        <?php $index2 = 0; ?>
-                        <?php foreach ($grid_Data4->data as $data): ?>
-                        <tr>
-                            <td><?php echo $index2 + 1; ?></td>
-                            <td><?php echo isset($data['department']) ? $data['department'] : 'N/A'; ?></td>
-                            <td><?php echo isset($data['Months']) ? str_replace(',', ', ', $data['Months']) : 'N/A';  ?></td>
-                            <td><?php echo isset($data['Remarked']) ? $data['Remarked'] : 'N/A'; ?></td>
-                        </tr>
-                        <?php $index2++; ?>
-                        <?php endforeach; ?>
-                        <?php else: ?>
-                        <tr>
-                            <td colspan="4">N/A</td>
-                        </tr>
-                        <?php endif; ?>
-
-                    </table>
-                </div>
-            </div>
-
-            <div class="block">
-                <div class="block-head">
-                    Self Inspection Circular
-                </div>
-
-                <div class="border-table">
-                    <table style="margin-top: 20px; width:100%;table-layout:fixed;">
-                        <thead>
-                            <tr class="table_bg">
-                                <th style="width: 5%">Row#</th>
-                                <th style="width: 12%">Department</th>
-                                <th style="width: 15%">Audit Date</th>
-                                <th style="width: 16%">Name of Auditors</th>
-                            </tr>
-                        </thead>
-                        <?php if ($grid_Data2 && is_array($grid_Data2->data)): ?>
-                        <?php $index2 = 0; ?>
-                        <?php foreach ($grid_Data2->data as $data): ?>
-                        <tr>
-                            <td><?php echo $index2 + 1; ?></td>
-                            <td><?php echo isset($data['departments']) ? $data['departments'] : 'N/A'; ?></td>
-                            <td><?php echo isset($data['info_mfg_date']) ? \Carbon\Carbon::parse($data['info_mfg_date'])->format('d-M-Y') : 'N/A'; ?></td>
-                            <td><?php echo isset($data['Auditor']) ? $data['Auditor'] : 'N/A'; ?></td>
-                        </tr>
-                        <?php $index2++; ?>
-                        <?php endforeach; ?>
-                        <?php else: ?>
-                        <tr>
-                            <td colspan="4">N/A</td>
-                        </tr>
-                        <?php endif; ?>
-
-                    </table>
-                </div>
-            </div>
-
+            <!-- ------------------------------- audit program grid--------------------------------------- -->     
+            
         </div>
     </div>
     <!--  ------------------------------- audit program grid--------------------------------------- -->
