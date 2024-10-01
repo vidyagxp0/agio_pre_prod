@@ -687,7 +687,7 @@
                                         </div>
                                         <div class="col-12">
                                     <div class="group-input">
-                                        <label for="attach_files">Response Verification Attachements</label>
+                                        <label for="attach_files">Response and Summary Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -808,26 +808,24 @@
                                         </div>
 
                                         <div class="col-12">
-                                            <div class="sub-head">No CAPAs Plan Proposed</div>
+                                            <div class="sub-head">No CAPA's Required</div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="QA Approval Without CAPA By">No CAPAs Plan Proposed
-                                                    By</label>
+                                                <label for="QA Approval Without CAPA By">No CAPA's Required By</label>
                                                 <div class="static"></div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="No CAPA's Plan Proposed On">No CAPAs Plan Proposed
-                                                    On</label>
+                                                <label for="No CAPA's Plan Proposed On">No CAPA's Required On</label>
                                                 <div class="static"></div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted on">No CAPAs Plan Proposed Comment</label>
+                                                <label for="Submitted on">No CAPA's Required Comment</label>
                                                 <div class="Date"></div>
                                             </div>
                                         </div>

@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('induction_trainings', function (Blueprint $table) {
-            $table->integer('attempt_count')->default(3); // Change 'string' and options as needed
+        Schema::table('marketcompalints', function (Blueprint $table) {
+        $table->text('form_progress')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('induction_trainings', function (Blueprint $table) {
-            $table->dropColumn('attempt_count');
+        Schema::table('marketcompalints', function (Blueprint $table) {
+            //
         });
     }
 };

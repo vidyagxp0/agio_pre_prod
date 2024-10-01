@@ -172,7 +172,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Risk Assessment Single Report
+                    Risk Assessment Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -390,7 +390,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    Initial Attachments
+                    Initial Attachment
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -1054,7 +1054,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    Risk Assesment Attachments
+                    Risk Assesment Attachment
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -1232,7 +1232,7 @@
                         </table>
                         <div class="border-table">
                             <div class="block-head">
-                                Hod/Designee Attachments
+                                Hod/Designee Attachment
                             </div>
                             <table>
                                 <tr class="table_bg">
@@ -1506,7 +1506,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                 Corporate Quality Assurance Attachments
+                                 Corporate Quality Assurance Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -1560,7 +1560,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                 Store Attachments
+                                 Store Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -1613,7 +1613,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                 Engineering Attachments
+                                 Engineering Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -1667,7 +1667,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                 Regularory Affair Attachments
+                                 Regularory Affair Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -1721,7 +1721,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                    Quality Assurance Attachments
+                                    Quality Assurance Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -1775,7 +1775,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                    Production Liquid/Externa Preparation Attachments
+                                    Production Liquid/Externa Preparation Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -1829,7 +1829,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                    Quality Control Attachments
+                                    Quality Control Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -1884,7 +1884,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                    Microbiology Attachments
+                                    Microbiology Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -1998,7 +1998,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                    Other's 1 Attachments
+                                    Other's 1 Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -2058,7 +2058,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                    Other's 2 Attachments
+                                    Other's 2 Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -2118,7 +2118,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                    Other's 3 Attachments
+                                    Other's 3 Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -2178,7 +2178,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                    Other's 4 Attachments
+                                    Other's 4 Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -2238,7 +2238,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                    Other's 5 Attachments
+                                    Other's 5 Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
