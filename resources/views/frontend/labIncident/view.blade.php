@@ -289,7 +289,7 @@
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Extension</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Incident Details</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QC Initial Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QC Head Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QA Initial Review</button>
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Pending Initiator Update</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation Details</button>

@@ -32,7 +32,7 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QC Initial Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QC Head Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QA Initial Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QC Head/HOD Secondary Review</button>
@@ -887,7 +887,7 @@
     
     <div class="col-lg-12" id="other_incidence_div" style="display: none;">
         <div class="group-input">
-            <label for="other_incidence"><b>Other:</b></label>
+            <label for="other_incidence"><b>Other Incidence</b></label>
             <input type="text" name="other_incidence" id="other_incidence" placeholder="Specify other type of incidence">
         </div>
     </div>
@@ -1146,7 +1146,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="closure_attachment_c">File Attachment</label>
+                                    <label for="closure_attachment_c">Closure Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="closure_attachment_c"></div>
