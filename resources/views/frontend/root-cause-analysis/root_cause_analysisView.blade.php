@@ -80,6 +80,115 @@
                 }
             }
         </script>
+        <style>
+            textarea.note-codable {
+                display: none !important;
+            }
+
+            header {
+                display: none;
+            }
+
+            .sub-main-head {
+                display: flex;
+                justify-content: space-evenly;
+            }
+
+            .Activity-type {
+                margin-bottom: 7px;
+            }
+
+            /* .sub-head {
+                        margin-left: 280px;
+                        margin-right: 280px;
+                        color: #4274da;
+                        border-bottom: 2px solid #4274da;
+                        padding-bottom: 5px;
+                        margin-bottom: 20px;
+                        font-weight: bold;
+                        font-size: 1.2rem;
+
+                    } */
+            .launch_extension {
+                background: #4274da;
+                color: white;
+                border: 0;
+                padding: 4px 15px;
+                border: 1px solid #4274da;
+                transition: all 0.3s linear;
+            }
+
+            .main_head_modal li {
+                margin-bottom: 10px;
+            }
+
+            .extension_modal_signature {
+                display: block;
+                width: 100%;
+                border: 1px solid #837f7f;
+                border-radius: 5px;
+            }
+
+            .main_head_modal {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .create-entity {
+                background: #323c50;
+                padding: 10px 15px;
+                color: white;
+                margin-bottom: 20px;
+
+            }
+
+            .bottom-buttons {
+                display: flex;
+                justify-content: flex-end;
+                margin-right: 300px;
+                margin-top: 50px;
+                gap: 20px;
+            }
+
+            .text-danger {
+                margin-top: -22px;
+                padding: 4px;
+                margin-bottom: 3px;
+            }
+
+            /* .saveButton:disabled{
+                            background: black!important;
+                            border:  black!important;
+
+                        } */
+
+            .main-danger-block {
+                display: flex;
+            }
+
+            .swal-modal {
+                scale: 0.7 !important;
+            }
+
+            .swal-icon {
+                scale: 0.8 !important;
+            }
+        </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+            integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        @if (Session::has('swal'))
+            <script>
+                swal("{{ Session::get('swal')['title'] }}", "{{ Session::get('swal')['message'] }}",
+                    "{{ Session::get('swal')['type'] }}")
+            </script>
+        @endif
         <script>
             function addWhyField(con_class, name) {
                 let mainBlock = document.querySelector('.why-why-chart')
@@ -157,6 +266,7 @@
                                     Child
 
                                 </button>
+                                
                             @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 4))
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                     More Info Required
@@ -1880,13 +1990,27 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     CFT Feedback
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </div>  -->
                                 <div class="row">
-
+                                  
                                     <div class="col-lg-12">
-                                        <div class="group-input">
-                                            <label for="comments">Initial QA/CQA Review Comments</label>
-                                            <textarea name="cft_comments_new"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->cft_comments_new }}</textarea>
-                                        </div>
+                                             @if ($data->stage == 3)
+ 
+                                                <div class="group-input">
+                                                    <label for="comments" >Initial QA/CQA Review Comments <span
+                                                        class="text-danger">*</span></label>
+                                                    <textarea name="cft_comments_new"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->cft_comments_new }}</textarea>
+                                                </div>
+                                                
+                                              @else
+                                                <div class="group-input">
+                                                    <label for="comments">Initial QA/CQA Review Comments</label>
+                                                    <textarea name="cft_comments_new"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->cft_comments_new }}</textarea>
+                                                </div>
+                                            @endif
+                                                @error('cft_comments_new')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                     </div>
+                                    
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="comments">Initial QA/CQA Review Attachment</label>
@@ -1948,9 +2072,23 @@
                                     </div> --}}
                                     <div class="col-lg-12">
                                         <div class="group-input">
+                                      @if ($data->stage == 4)
+
+                                            <label for="root_cause">Root Cause<span
+                                                class="text-danger">*</span></label>
+                                            <textarea name="root_cause"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->root_cause }}</textarea>
+                                        </div>
+ 
+                                         @else
+                                        <div class="group-input">
                                             <label for="root_cause">Root Cause</label>
                                             <textarea name="root_cause"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->root_cause }}</textarea>
                                         </div>
+
+                                    @endif
+                                        @error('root_cause')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="group-input">
@@ -2045,11 +2183,30 @@
                             <div class="inner-block-content">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="group-input">
-                                            <label for="comments">HOD Review Comment </label>
-                                            <textarea name="hod_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_comments }}</textarea>
-                                        </div>
-                                    </div>
+
+                                            @if ($data->stage == 2)
+
+
+                                                    <div class="group-input">
+                                                        <label for="comments">HOD Review Comment<span
+                                                            class="text-danger">*</span> </label>
+                                                        <textarea name="hod_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_comments }}</textarea>
+                                                    </div>
+                                                </div>
+                                            @else
+
+                                                    <div class="group-input">
+                                                        <label for="comments">HOD Review Comment </label>
+                                                        <textarea name="hod_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_comments }}</textarea>
+                                                    </div>
+                                            </div>
+                                            @endif
+                                            @error('hod_comments')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                  </div>
+
+
 
                                     <div class="col-lg-12">
                                         <div class="group-input">
@@ -2105,13 +2262,26 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     CFT Feedback
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </div>  -->
                                 <div class="row">
-
                                     <div class="col-lg-12">
-                                        <div class="group-input">
-                                            <label for="comments">HOD Final Review Comments</label>
-                                            <textarea name="hod_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_final_comments }}</textarea>
-                                        </div>
+                                        @if ($data->stage == 5)
+
+                                           <div class="group-input">
+                                               <label for="comments" >HOD Final Review Comments <span
+                                                   class="text-danger">*</span></label>
+                                               <textarea name="hod_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_final_comments }}</textarea>
+                                           </div>
+                                           
+                                         @else
+                                           <div class="group-input">
+                                               <label for="comments">HOD Final Review Comments</label>
+                                               <textarea name="hod_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_final_comments }}</textarea>
+                                           </div>
+                                       @endif
+                                           @error('hod_final_comments')
+                                           <div class="text-danger">{{ $message }}</div>
+                                           @enderror
                                     </div>
+                                     
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="comments">HOD Final Review Attachment</label>
@@ -2165,13 +2335,26 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             CFT Feedback
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </div>  -->
                                 <div class="row">
-
                                     <div class="col-lg-12">
-                                        <div class="group-input">
-                                            <label for="comments">QA/CQA Final Review Comments</label>
-                                            <textarea name="qa_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_final_comments }}</textarea>
-                                        </div>
-                                    </div>
+                                        @if ($data->stage == 6)
+
+                                           <div class="group-input">
+                                               <label for="comments" >QA/CQA Final Review Comments <span
+                                                   class="text-danger">*</span></label>
+                                               <textarea name="qa_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_final_comments }}</textarea>
+                                           </div>
+                                           
+                                         @else
+                                           <div class="group-input">
+                                               <label for="comments">QA/CQA Final Review Comments</label>
+                                               <textarea name="qa_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_final_comments }}</textarea>
+                                           </div>
+                                       @endif
+                                           @error('qa_final_comments')
+                                           <div class="text-danger">{{ $message }}</div>
+                                           @enderror
+                               </div>
+                                  
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="comments">QA/CQA Final Review Attachment</label>
@@ -2225,13 +2408,27 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             CFT Feedback
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </div>  -->
                                 <div class="row">
-
                                     <div class="col-lg-12">
-                                        <div class="group-input">
-                                            <label for="comments">QAH/CQAH Final Approval Comment</label>
-                                            <textarea name="qah_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qah_final_comments }}</textarea>
-                                        </div>
-                                    </div>
+                                        @if ($data->stage == 7)
+
+                                           <div class="group-input">
+                                               <label for="comments" >QAH/CQAH Final Approval Comments <span
+                                                   class="text-danger">*</span></label>
+                                               <textarea name="qah_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qah_final_comments }}</textarea>
+                                           </div>
+                                           
+                                         @else
+                                           <div class="group-input">
+                                               <label for="comments">QAH/CQAH Final Approval Comments</label>
+                                               <textarea name="qah_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qah_final_comments }}</textarea>
+                                           </div>
+                                       @endif
+                                           @error('qah_final_comments')
+                                           <div class="text-danger">{{ $message }}</div>
+                                           @enderror
+                               </div>
+
+                                    
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="comments">QAH/CQAH Final Approval Attachment</label>
@@ -2324,7 +2521,7 @@
                                             <div class="static">{{ $data->More_Info_ack_comment }}</div>
                                         </div>
                                     </div> --}}
-
+                          
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="HOD_Review_Complete_By">HOD Review Completed By</label>
@@ -2444,7 +2641,7 @@
                                             <div class="static">{{ $data->More_Info_sub_comment }}</div>
                                         </div>
                                     </div> --}}
-
+                                
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="HOD_Final_Review_Complete_By">HOD Final Review Completed By</label>
