@@ -786,6 +786,13 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="Risk Assessment Required">Justification </label>
+                                                    <textarea name="train_comments" id="">{{ $data->train_comments }}</textarea>
+                                                </div>
+                                            </div>
+
                                             <div class="col-lg-6" id="justification_div" style="display:none;">
                                                 <div class="group-input">
                                                     <label for="Justification">Justification</label>
@@ -10122,7 +10129,7 @@
 
 
 
-                        <div class="sub-head"> QA/CQA Final Review Completed</div>
+                        <div class="sub-head"> QA/CQA Final Review Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="QA Final Review Complete By"> QA/CQA Final Review Complete By :-</label>
