@@ -195,14 +195,14 @@
                             </div>
                         </div>
 
-                        <div> <strong>ID.</strong> {{ $document->employee_id }}</div>
+                        <div> <strong>ID.</strong> {{ $document->full_employee_id }}</div>
                         <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
                             <!-- :{{ $document->initiator ? $document->initiator : '' }}</div> -->
                             :{{ $document->employee_name ? $document->employee_name : '' }}
                         </div>
-                        <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
+                        {{-- <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                             {{ $document->short_description }}
-                        </div>
+                        </div> --}}
                         <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ \Carbon\Carbon::parse( $document->due_date)->format('d-M-Y') }}</div>
 
                     </div>

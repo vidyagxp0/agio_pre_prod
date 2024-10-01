@@ -96,6 +96,9 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                 <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Induction Training</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm5')">On The Job Training</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm4')">Trainer Qualification</button>
+                
+                <button class="cctablinks " onclick="openCity(event, 'CCForm7')">Job Description</button>
+
                 <button class="cctablinks " onclick="openCity(event, 'CCForm1')">My Training</button>
                 @endif
                 @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
@@ -141,14 +144,15 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                         <tr>
                             <td>
                                 <a href="{{ url('employee_view', $employee->id) }}">
-                                    {{-- @php
-                                        $prefixAbbreviation = '';
-                                        if ($employee->prefix === 'PermanentWorkers') {
-                                            $prefixAbbreviation = 'PW';
-                                        } elseif ($employee->prefix === 'PermanentStaff') {
-                                            $prefixAbbreviation = 'PS';
-                                        }
-                                    @endphp --}}
+                                {{-- @php
+                                    $prefixAbbreviation = '';
+                                    if ($employee->prefix === 'PermanentWorkers') {
+                                        $prefixAbbreviation = 'PW';
+                                    } elseif ($employee->prefix === 'PermanentStaff') {
+                                        $prefixAbbreviation = 'PS';
+                                    }
+                                @endphp --}}
+                                {{-- {{ $prefixAbbreviation . $employee->emp_id }} --}}
                                     {{$employee->full_employee_id }}
                                 </a>
                             </td>
@@ -243,6 +247,8 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                 </div>
                 @endif
             </div>
+
+
             {{-- ================CC Form2================ --}}
 
             <div id="CCForm2" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
@@ -541,8 +547,97 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
         </table>
     </div>
 </div>
+@php
+  $jobTraining = DB::table('job_descriptions')->get();
+@endphp
+<div id="CCForm7" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
+            <div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Employee ID</th>
+                            <th>Name Of Employee</th>
+                            <th>Department</th>
+                            <!-- <th>Site Location</th> -->
+                            <th>Action</th>
+                            <th>Report</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            @foreach ($jobTraining->sortByDesc('id') as $induction)
+            <tr>
+                <td>
+                    @php
+                        $employee = \App\Models\Employee::where('employee_id', $induction->employee_id)->first();
+                        
+                        $prefixAbbreviation = '';
+                        if ($employee) {
+                            if ($employee->prefix === 'PW') {
+                                $prefixAbbreviation = 'PW';
+                            } elseif ($employee->prefix === 'PS') {
+                                $prefixAbbreviation = 'PS';
+                            }elseif ($employee->prefix === 'OS') {
+                                $prefixAbbreviation = 'OS';
+                            }
+                        }
+                    @endphp
+                    {{ $prefixAbbreviation . $induction->employee_id }}
+                </td>
+                <td>
+                    {{ \App\Models\Employee::find($induction->name_employee)?->employee_name ?? 'Employee not found' }}
+                </td>
 
+                <td>{{ Helpers::getFullDepartmentName($induction->new_department ) }}</td>
+                <!-- <td>{{ \Carbon\Carbon::parse($induction->date_joining)->format('d-M-Y') }}</td> -->
+                <td>
+                    <!-- <a href="{{ route('induction_training_view', $induction->id) }}">
+                        <i style="" class="fa-solid fa-pencil"></i>
+                    </a> -->
+                    <div class="action-buttons">
+    
+                        <a href="{{ route('induction_training_view', $induction->id) }}">
+                            <i class="fa-solid fa-pencil"></i>
+                        </a>
+                        </td>
+                        <td>
+                        
+                        <button type="button" class="view-report-btn"onclick="window.location.href='{{ url('rcms/induction_report/' . $induction->id) }}'" >
+                            View Report
+                        </button>
+                    </div>
+                    </td>
+<style>
+    .action-buttons {
+    display: flex;
+    align-items: center;
+}
 
+.action-buttons a {
+    margin-right: 10px; 
+}
+
+.view-report-btn {
+    padding: 5px 10px;
+    background-color: #4274da; 
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.view-report-btn:hover {
+    background-color: #0056b3; 
+}
+
+</style>
+                    
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+
+        </table>
+    </div>
+</div>
 
             {{-- ========================================== --}}
 
