@@ -181,12 +181,10 @@
                     <strong>Extension No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::getDivisionName($doc->site_location_code) }}/Extension
-                    /{{ Helpers::year($doc->created_at) }}/
-                    {{ str_pad($doc->record_number, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::getDivisionName($doc->site_location_code) }}/Extension/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($doc->record_number, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Record No.</strong>{{ str_pad($doc->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
             </tr>
         </table>

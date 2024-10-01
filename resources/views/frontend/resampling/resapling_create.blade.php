@@ -221,7 +221,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="HOD Persons">HOD Persons</label>
+                                        <label for="HOD Persons">HOD Person</label>
                                         <select   name="hod_preson" placeholder="Select HOD Persons" data-search="false"
                                             data-silent-initial-value-set="true" id="hod" >
                                             <option value="">select person</option>
@@ -353,7 +353,7 @@
                             
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="qa_comments">QA Remarks</label>
+                                        <label for="qa_comments">QA/CQA Head Remark</label>
                                         <textarea name="qa_remark"></textarea>
                                     </div>
                                 </div>
@@ -469,7 +469,7 @@
                                 <div class="sub-head">Action Approval</div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="qa_comments">QA Review Comments</label>
+                                        <label for="qa_comments">QA/CQA Review Comments</label>
                                         <textarea name="qa_comments"></textarea>
                                     </div>
                                 </div>
@@ -487,7 +487,7 @@
                                 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="file_attach">Action Approval Attachemnts</label>
+                                        <label for="file_attach">Action Approval Attachment</label>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="final_attach"></div>
                                             <div class="add-btn">
@@ -513,7 +513,7 @@
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
-                                Electronic Signatures
+                            Activity Log
                             </div>
                             <div class="row">
                                 <div class="col-lg-4">
@@ -592,19 +592,19 @@
                                 </div> --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="completed by"> Verification Complete By</label>
+                                        <label for="completed by"> Verification Completed By</label>
                                         <div class="static"></div> 
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="completed on">Verification Complete On</label>
+                                        <label for="completed on">Verification Completed On</label>
                                         <div class="Date"></div> 
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="submitted on">Verification Complete Comment</label>
+                                        <label for="submitted on">Verification Completed Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>

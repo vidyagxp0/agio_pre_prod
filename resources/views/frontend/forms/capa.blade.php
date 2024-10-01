@@ -55,9 +55,9 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QA/CQA Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm15')">QA/CQA Approval</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm19')">Initiator CAPA update </button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm19')">Initiator CAPA Update </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">HOD Final Review</button>
-                 <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA/CQA Final Closure Review</button>
+                 <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA/CQA Closure Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">CAPA Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Activity Log</button>
 
@@ -1009,7 +1009,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="QA Review & Closure">QA/CQA head closure review comment</label>
+                                        <label for="QA Review & Closure">QA/CQA Head Closure Review Comment</label>
                                         <textarea name="qa_review"></textarea>
                                     </div>
                                 </div>
@@ -1099,7 +1099,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments"> Hod Final Review Comment</label>
+                    <label for="Comments"> Hod Final Review Comments</label>
                     <textarea name="hod_final_review"></textarea>
                 </div>
             </div>
@@ -1447,49 +1447,49 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Plan Proposed By">Comment</label>
+                                    <label for="Plan Proposed By"> Propose Plan Comment</label>
                                     <input type="hidden" name="">
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Cancelled By">Cancelled By</label>
+                                    <label for="Cancelled By">Cancel By</label>
                                     <input type="hidden" name="cancelled_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Cancelled On">Cancelled On</label>
+                                    <label for="Cancelled On">Cancel On</label>
                                     <input type="hidden" name="cancelled_on">
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Plan Proposed By">Comment</label>
+                                    <label for="Plan Proposed By">Cancel Comment</label>
                                     <input type="hidden" name="">
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Plan Approved By">HOD Review Completed By</label>
+                                    <label for="Plan Approved By">HOD Review Complete By</label>
                                     <input type="hidden" name="hod_review_completed_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="HOD Review Completed On">HOD Review Completed On</label>
+                                    <label for="HOD Review Completed On">HOD Review Complete On</label>
                                     <input type="hidden" name="hod_review_completed_on">
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Plan Proposed By">Comment</label>
+                                    <label for="Plan Proposed By">HOD Review Complete Comment</label>
                                     <input type="hidden" name="">
                                     <div class="static"></div>
                                 </div>
@@ -1511,21 +1511,21 @@
                     
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By"> QA/CQA Review Completed By</label>
+                                    <label for="Completed By">QA/CQA Review Complete By</label>
                                     <input type="hidden" name="qa_review_completed_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed On"> QA/CQA Review Completed On</label>
+                                    <label for="Completed On"> QA/CQA Review Complete On</label>
                                     <input type="hidden" name="qa_review_completed_on">
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Plan Proposed By">Comment</label>
+                                    <label for="Plan Proposed By">QA/CQA Review Complete Comment</label>
                                     <input type="hidden" name="">
                                     <div class="static"></div>
                                 </div>
@@ -1561,7 +1561,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Plan Proposed By">Comment</label>
+                                    <label for="Plan Proposed By">Approved Comment</label>
                                     <input type="hidden" name="">
                                     <div class="static"></div>
                                 </div>
@@ -1596,7 +1596,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Plan Proposed By">Comment</label>
+                                    <label for="Plan Proposed By">Completed Comment</label>
                                     <input type="hidden" name="">
                                     <div class="static"></div>
                                 </div>
@@ -1631,7 +1631,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Plan Proposed By">Comment</label>
+                                    <label for="Plan Proposed By">HOD Final Review Completed Comment</label>
                                     <input type="hidden" name="">
                                     <div class="static"></div>
                                 </div>
@@ -1666,7 +1666,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Plan Proposed By">Comment</label>
+                                    <label for="Plan Proposed By">QA/CQA Closure Review Completed Comment</label>
                                     <input type="hidden" name="">
                                     <div class="static"></div>
                                 </div>
@@ -1687,21 +1687,21 @@
                             </div> --}}
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="QA More Info Required By"> QAH/CQA Approval Completed By</label>
+                                    <label for="QA More Info Required By">QAH/CQA Approval Completed By</label>
                                     <input type="hidden" name="qah_approval_completed_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="QA QA/CQA Approval Completed On"> QAH/CQA Approval Completed On</label>
+                                    <label for="QA QA/CQA Approval Completed On">QAH/CQA Approval Completed On</label>
                                     <input type="hidden" name="qah_approval_completed_on">
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Plan Proposed By">Comment</label>
+                                    <label for="Plan Proposed By">QAH/CQA Approval Completed Comment</label>
                                     <input type="hidden" name="">
                                     <div class="static"></div>
                                 </div>
