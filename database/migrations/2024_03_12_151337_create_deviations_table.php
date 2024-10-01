@@ -40,7 +40,7 @@ return new class extends Migration
             $table->string('Changecontrolchild')->nullable();
             $table->string('actionchild')->nullable();
             $table->string('Extensionchild')->nullable();
-            $table->string('audit_type')->nullable();
+            $table->longText('audit_type')->nullable();
             $table->longText('others')->nullable();
             $table->string('Facility_Equipment')->nullable();
             $table->string('Document_Details_Required')->nullable();
@@ -59,7 +59,7 @@ return new class extends Migration
             $table->string('customers')->nullable();
             $table->string('deviation_id')->nullable();
             $table->longText('QAInitialRemark')->nullable();
-           
+
             $table->longText('Investigation_Summary')->nullable();
             $table->longText('Impact_assessment')->nullable();
             $table->longText('Root_cause')->nullable();
@@ -94,7 +94,7 @@ return new class extends Migration
             $table->string('CFT_Review_Complete_By')->nullable();
             $table->string('CFT_Review_Complete_On')->nullable();
             $table->longText('CFT_Review_Comments')->nullable();
-             
+
             $table->string('qa_more_info_required_by')->nullable();
             $table->string('qa_more_info_required_on')->nullable();
             $table->string('Approved_By')->nullable();

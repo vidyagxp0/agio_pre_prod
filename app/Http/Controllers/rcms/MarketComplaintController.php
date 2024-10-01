@@ -1968,6 +1968,7 @@ class MarketComplaintController extends Controller
         $lastCft = MarketComplaintCft::where('mc_id', $lastmarketComplaint->id)->first();
 
         $marketComplaint = MarketComplaint::find($id);
+
         if (!$marketComplaint) {
             return redirect()->back()->with('error', 'Market Complaint not found.');
         }
@@ -7046,6 +7047,8 @@ class MarketComplaintController extends Controller
             try {
                 if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
                     $marketstat = MarketComplaint::find($id);
+                    $marketComplaint = MarketComplaint::find($id);
+            $Cft = marketComplaintCft::withoutTrashed()->where('mc_id', $id)->first();
                     $updateCFT = MarketComplaintCft::where('mc_id', $id)->latest()->first();
                     $lastDocument = MarketComplaint::find($id);
                     $cftDetails = MarketComplaintcftResponce::withoutTrashed()->where(['status' => 'In-progress', 'mc_id' => $id])->distinct('cft_user_id')->count();
@@ -7180,10 +7183,25 @@ class MarketComplaintController extends Controller
 
                     if ($marketstat->stage == 3) {
 
-                        if (!$marketstat->review_of_batch_manufacturing_record_BMR_gi) {
+                        if (!$marketstat->review_of_batch_manufacturing_record_BMR_gi ) {
                             Session::flash('swal', [
                                 'title' => 'Mandatory Fields Required!',
-                                'message' => 'Review of Batch Manufacturing Record (BMR) Tab is yet to be filled!',
+                                'message' => 'Preliminary Investigation Tab is yet to be filled!',
+                                'type' => 'warning',
+                            ]);
+
+                            return redirect()->back();
+                        } else {
+                            Session::flash('swal', [
+                                'type' => 'success',
+                                'title' => 'Success',
+                                'message' => 'CFT Reviews'
+                            ]);
+                        }
+                         if (!$Cft->Production_Table_Review || !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review || !$Cft->ContractGiver_Review || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
+                            Session::flash('swal', [
+                                'title' => 'Mandatory Fields Required!',
+                                'message' => 'CFT Tab is yet to be filled!',
                                 'type' => 'warning',
                             ]);
 

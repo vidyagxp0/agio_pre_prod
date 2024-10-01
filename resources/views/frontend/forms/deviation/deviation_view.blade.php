@@ -1384,142 +1384,123 @@
                                         }
                                     </script>
 
-                                    <div class="col-6 new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="severity-level">Deviation Observed On <span
-                                                    class="text-danger">*</span></label>
-                                            <div class="calenderauditee">
-                                                <input type="text"
-                                                    {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                    id="Deviation_date" readonly placeholder="DD-MMM-YYYY"
-                                                    value="{{ Helpers::getdateFormat($data->Deviation_date) }}" />
-                                                <input type="date" name="Deviation_date"
-                                                    max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                    {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                    value="{{ $data->Deviation_date }}" class="hide-input"
-                                                    oninput="handleDateInput(this, 'Deviation_date')" />
-                                            </div>
-                                            @error('Deviation_date')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
+                                <div class="col-6 new-date-data-field">
+    <div class="group-input input-date">
+        <label for="severity-level">Deviation Observed On <span class="text-danger">*</span></label>
+        <div class="calenderauditee">
+            <input type="text" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="Deviation_date" readonly placeholder="DD-MMM-YYYY"
+                value="{{ Helpers::getdateFormat($data->Deviation_date) }}" />
+            <input type="date" name="Deviation_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} value="{{ $data->Deviation_date }}"
+                class="hide-input" oninput="handleDateInput(this, 'Deviation_date')" />
+        </div>
+        @error('Deviation_date')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
 
+<div class="col-lg-6 new-time-data-field">
+    <div class="group-input input-time">
+        <label for="deviation_time">Deviation Observed On (Time) <span class="text-danger">*</span></label>
+        <input type="text" name="deviation_time" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="deviation_time"
+            value="{{ old('deviation_time') ? old('deviation_time') : $data->deviation_time }}">
+        @error('deviation_time')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
 
-                                    <div class="col-lg-6 new-time-data-field">
-                                        <div class="group-input input-time">
-                                            <label for="deviation_time">Deviation Observed On (Time) <span
-                                                    class="text-danger">*</span></label>
-                                            <input type="text"
-                                                name="deviation_time"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                id="deviation_time"
-                                                value="{{ old('deviation_time') ? old('deviation_time') : $data->deviation_time }}">
-                                            @error('deviation_time')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
+<div class="col-lg-6 new-time-data-field">
+    <div class="group-input input-time delayJustificationBlock">
+        <label for="deviation_time">Delay Justification <span class="text-danger">*</span></label>
+        <textarea id="Delay_Justification" name="Delay_Justification">{{ $data->Delay_Justification }}</textarea>
+    </div>
+    @error('Delay_Justification')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
 
+<script>
+    flatpickr("#deviation_time", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i", // 24-hour format with date and time
+        time_24hr: true, // Enable 24-hour time format
+        minuteIncrement: 1 // Set minute increment to 1
+    });
+</script>
 
-                                    <div class="col-lg-6 new-time-data-field">
-                                        <div
-                                            class="group-input input-time @if ($data->Delay_Justification) style="display: block !important" @endif @error('Delay_Justification') @else delayJustificationBlock @enderror">
-                                            <label for="deviation_time">Delay Justification <span
-                                                    class="text-danger">*</span></label>
-                                            <textarea id="Delay_Justification" name="Delay_Justification">{{ $data->Delay_Justification }}</textarea>
-                                        </div>
-                                        @error('Delay_Justification')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+<div class="col-lg-6">
+    <div class="group-input">
+        @php
+            $users = DB::table('users')->get();
+        @endphp
+        <label for="If Other">Deviation Observed By <span class="text-danger">*</span></label>
+        <input type="text" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} name="Facility" placeholder="Select Facility Name"
+            value="{{ $data->Facility }}">
+        @error('Facility')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
 
+<div class="col-6 new-date-data-field">
+    <div class="group-input input-date">
+        <label for="Initiator Group">Deviation Reported On <span class="text-danger">*</span></label>
+        <div class="calenderauditee">
+            <input type="text" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="Deviation_reported_date" readonly placeholder="DD-MMM-YYYY"
+                value="{{ Helpers::getdateFormat($data->Deviation_reported_date) }}" />
+            <input type="date" name="Deviation_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} value="{{ $data->Deviation_reported_date }}"
+                class="hide-input" oninput="handleDateInput(this, 'Deviation_reported_date')" />
+        </div>
+        @error('Deviation_reported_date')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
 
+<script>
+    $(document).ready(function() {
+        // Hide the delayJustificationBlock initially
+        $('.delayJustificationBlock').hide();
 
-                                    <script>
-                                        flatpickr("#deviation_time", {
-                                            enableTime: true,
-                                            noCalendar: true,
-                                            dateFormat: "H:i", // 24-hour format with date and time
-                                            time_24hr: true, // Enable 24-hour time format
-                                            minuteIncrement: 1 // Set minute increment to 1
+        // Check the condition on page load
+        checkDateDifference();
+    });
 
-                                        });
-                                    </script>
+    function checkDateDifference() {
+        let deviationDate = $('input[name=Deviation_date]').val();
+        let reportedDate = $('input[name=Deviation_reported_date]').val();
+        let deviationTime = $('#deviation_time').val();
 
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            @php
-                                                $users = DB::table('users')->get();
-                                            @endphp
+        if (!deviationDate || !reportedDate || !deviationTime) {
+            console.error('Deviation date, reported date, or deviation time is missing.');
+            return;
+        }
 
-                                            <label for="If Other">Deviation Observed By<span
-                                                    class="text-danger">*</span></label>
-                                            <input
-                                                type="text"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                name="Facility" placeholder="Select Facility Name"
-                                                value="{{ $data->Facility }}">
-                                            @error('Facility')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
+        // Combine date and time for accurate difference calculation
+        let deviationDateTime = moment(deviationDate + ' ' + deviationTime, 'YYYY-MM-DD HH:mm');
+        let reportedDateTime = moment(reportedDate + ' ' + moment().format('HH:mm'), 'YYYY-MM-DD HH:mm');
 
-                                    <div class="col-6 new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="Initiator Group">Deviation Reported On <span
-                                                    class="text-danger">*</span></label>
-                                            <div class="calenderauditee">
-                                                <input type="text"
-                                                    {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                    id="Deviation_reported_date" readonly placeholder="DD-MMM-YYYY"
-                                                    value="{{ Helpers::getdateFormat($data->Deviation_reported_date) }}" />
-                                                <input type="date" name="Deviation_reported_date"
-                                                    max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                    {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                    value="{{ $data->Deviation_reported_date }}" class="hide-input"
-                                                    oninput="handleDateInput(this, 'Deviation_reported_date')" />
-                                            </div>
-                                            @error('Deviation_reported_date')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
+        let diffInHours = reportedDateTime.diff(deviationDateTime, 'hours');
+        let diffInDays = reportedDateTime.diff(deviationDateTime, 'days');
 
-                                    <script>
-                                        $(document).ready(function() {
-                                            // Hide the delayJustificationBlock initially
-                                            $('.delayJustificationBlock').hide();
+        // Show delay justification if the difference is 24 hours or more OR if more than 2 days
+        if (diffInHours > = 24 || diffInDays >= 2) {
+            $('.delayJustificationBlock').show();
+        } else {
+            $('.delayJustificationBlock').hide();
+        }
+    }
 
-                                            // Check the condition on page load
-                                            checkDateDifference();
-                                        });
+    // Call checkDateDifference whenever the values are changed
+    $('input[name=Deviation_date], input[name=Deviation_reported_date], #deviation_time').on('change', function() {
+        checkDateDifference();
+    });
+</script>
 
-                                        function checkDateDifference() {
-                                            let deviationDate = $('input[name=Deviation_date]').val();
-                                            let reportedDate = $('input[name=Deviation_reported_date]').val();
-
-                                            if (!deviationDate || !reportedDate) {
-                                                console.error('Deviation date or reported date is missing.');
-                                                return;
-                                            }
-
-                                            let deviationDateMoment = moment(deviationDate);
-                                            let reportedDateMoment = moment(reportedDate);
-
-                                            let diffInDays = reportedDateMoment.diff(deviationDateMoment, 'days');
-
-                                            if (diffInDays > 0) {
-                                                $('.delayJustificationBlock').show();
-                                            } else {
-                                                $('.delayJustificationBlock').hide();
-                                            }
-                                        }
-
-                                        // Call checkDateDifference whenever the values are changed
-                                        $('input[name=Deviation_date], input[name=Deviation_reported_date]').on('change', function() {
-                                            checkDateDifference();
-                                        });
-                                    </script>
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
