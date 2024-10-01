@@ -165,7 +165,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Management Review Single Report
+                    Management Review Report
                 </td>
                 <td class="w-30">
                     <div class="logo">

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('induction_trainings', function (Blueprint $table) {
-            $table->int('attempt_count')->default(3); // Change 'string' and options as needed
+            $table->integer('attempt_count')->default(3); // Change 'string' and options as needed
         });
     }
 
