@@ -193,7 +193,7 @@
 
             <div class="division-bar">
                 <strong>Site Division/Project</strong> :
-                {{ Helpers::getDivisionName(session()->get('division')) }} / Risk Assesment
+                {{ Helpers::getDivisionName(session()->get('division')) }} / Risk Assessment
             </div>
         </div>
         @php
@@ -686,7 +686,6 @@
                                                                 <th>Probability (P)</th>
                                                                 <th>Detection (D)</th>
                                                                 <th>RPN</th>
-
                                                                 <th>Category of Risk Level (Low, Medium and High)</th>
                                                                 <th>Risk Acceptance (Y/N)</th>
                                                                 <th>Traceability document</th>
@@ -699,9 +698,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
-
 
                                     <div class="col-12" id="fishbone-section" style="display:none;">
                                         <div class="group-input">
@@ -1022,7 +1018,7 @@
                                     </div>
                                 </div>
 
-                              </div>
+
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1031,6 +1027,7 @@
                                 </div>
                             </div>
                         </div>
+
 
 
                          <!-------------------------------------------- Hod/ Designee------------------------------------------------->
@@ -3457,7 +3454,7 @@
                                 </div>
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                     Approval
+                                      Approved
                                 </div>
 
                                 <div class="col-lg-4">
