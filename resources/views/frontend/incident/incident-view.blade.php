@@ -1260,7 +1260,7 @@
                                                     <select name="short_description_required"
                                                         id="short_description_required" onchange="checkRecurring(this)"
                                                         value="{{ $data->short_description_required }}" {{ $data->stage == 1 ? '' : 'readonly' }}>
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option value="Recurring"
                                                             @if ($data->short_description_required == 'Recurring' || old('short_description_required') == 'Recurring') selected @endif>Yes</option>
                                                         <option value="Non_Recurring"
@@ -1415,7 +1415,7 @@
                                                 </div>
                                             </div>
 
-                                            <script>
+                                            {{--<script>
                                                 $(document).ready(function() {
                                                     // Hide the delayJustificationBlock initially
                                                     $('.delayJustificationBlock').hide();
@@ -1449,7 +1449,49 @@
                                                 $('input[name=incident_date], input[name=incident_reported_date]').on('change', function() {
                                                     checkDateDifference();
                                                 });
+                                            </script>--}}
+
+                                            <script>
+                                                $(document).ready(function() {
+                                                    // Hide the delayJustificationBlock initially
+                                                    $('.delayJustificationBlock').hide();
+
+                                                    // Check the condition on page load or whenever input changes
+                                                    checkDateDifference();
+
+                                                    // Call checkDateDifference whenever the values are changed
+                                                    $('input[name=incident_date], input[name=incident_time]').on('change', function() {
+                                                        checkDateDifference();
+                                                    });
+                                                });
+
+                                                function checkDateDifference() {
+                                                    let incidentDate = $('input[name=incident_date]').val(); // Incident Date
+                                                    let incidentTime = $('input[name=incident_time]').val(); // Incident Time
+
+                                                    if (!incidentDate || !incidentTime) {
+                                                        console.error('Incident date or time is missing.');
+                                                        $('.delayJustificationBlock').hide(); // Ensure it's hidden if either is missing
+                                                        return;
+                                                    }
+
+                                                    // Combine the incident date and time into a single moment object
+                                                    let incidentDateTime = moment(`${incidentDate} ${incidentTime}`, 'YYYY-MM-DD HH:mm');
+                                                    let currentDateTime = moment(); // Get the current date and time
+
+                                                    // Calculate the difference in hours
+                                                    let diffInHours = currentDateTime.diff(incidentDateTime, 'hours');
+                                                    //alert(diffInHours);
+                                                    // Show delay justification if the difference is more than 24 hours
+                                                    if (diffInHours < 24) {
+                                                        $('.delayJustificationBlock').hide();
+
+                                                    } else {
+                                                        $('.delayJustificationBlock').show();
+                                                    }
+                                                }
                                             </script>
+
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">

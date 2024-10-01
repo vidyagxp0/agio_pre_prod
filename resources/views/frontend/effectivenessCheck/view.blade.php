@@ -392,7 +392,7 @@
                             </div>
                             <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Attachment">Attachments</label>
+                                                <label for="Attachment">Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div disabled class="file-attachment-list" id="Attachments">

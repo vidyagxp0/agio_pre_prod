@@ -2068,18 +2068,41 @@ class IncidentController extends Controller
                 'incident_date' => 'required',
                 'incident_time' => 'required',
                 'incident_reported_date' => 'required',
-                'Delay_Justification' => [
-                    function ($attribute, $value, $fail) use ($request) {
-                        $incident_date = Carbon::parse($request->incident_date);
-                        $reported_date = Carbon::parse($request->incident_reported_date);
-                        $diff_in_days = $reported_date->diffInDays($incident_date);
-                        if ($diff_in_days !== 0) {
-                            if(!$request->Delay_Justification){
-                                $fail('The Delay Justification is required!');
+                //'Delay_Justification' => [
+                //    function ($attribute, $value, $fail) use ($request) {
+                //        $incident_date = Carbon::parse($request->incident_date);
+                //        $reported_date = Carbon::parse($request->incident_reported_date);
+                //        $diff_in_days = $reported_date->diffInDays($incident_date);
+
+                //        if ($diff_in_days !== 0) {
+                //            if(!$request->Delay_Justification){
+                //                $fail('The Delay Justification is required!');
+                //            }
+                //        }
+                //    },
+                //],
+               'Delay_Justification' => [
+                        function ($attribute, $value, $fail) use ($request) {
+                            // Combine incident date and time
+                            $incident_date_time = Carbon::parse($request->incident_date . ' ' . $request->incident_time);
+                            // Get current date and time
+                            $current_date_time = Carbon::now();
+
+                            // Calculate the difference in hours
+                            $diff_in_hours = $current_date_time->diffInHours($incident_date_time);
+
+                            // Check if the difference is greater than 24 hours
+                            if ($diff_in_hours > 24) {
+                                if (!$request->Delay_Justification) {
+                                    $fail('The Delay Justification is required!');
+                                }
                             }
-                        }
-                    },
-                ],
+                        },
+                    ],
+
+
+
+
                 'audit_type' => [
                     'required',
                     'array',

@@ -1082,7 +1082,6 @@ dd($pre);
                                     @enderror
                                 </div>
 
-
                                 <div class="col-lg-6 new-time-data-field">
                                     <div class="group-input input-time">
                                         <label for="incident_time">Incident Observed On (Time)</label>
@@ -1092,6 +1091,15 @@ dd($pre);
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                {{--<div class="col-lg-6 new-time-data-field">
+                                    <div class="group-input input-time">
+                                        <label for="incident_time">Incident Observed On (Time)</label>
+                                        <input type="text" name="incident_time" id="incident_time">
+                                    </div>
+                                    @error('incident_date')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>--}}
 
                                 <div class="col-lg-6 new-time-data-field">
                                     <div class="group-input input-time delayJustificationBlock">
@@ -1112,6 +1120,7 @@ dd($pre);
                                         time_24hr: true // Force 24-hour format in the time picker
                                     });
                                 </script>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="facility">Incident Observed By</label>
@@ -1131,7 +1140,7 @@ dd($pre);
                                         </div>
                                     </div>
                                 </div>
-                                <script>
+                                {{--<script>
                                     $('.delayJustificationBlock').hide();
 
                                     function calculateDateDifference() {
@@ -1163,7 +1172,88 @@ dd($pre);
                                     $('input[name=incident_reported_date]').on('change', function() {
                                         calculateDateDifference();
                                     })
+                                </script>--}}
+
+                                {{--<script>
+                                    $(document).ready(function() {
+                                        // Hide the delayJustificationBlock initially
+                                        $('.delayJustificationBlock').hide();
+
+                                        // Check the condition on page load
+                                        checkDateDifference();
+                                    });
+
+                                    function checkDateDifference() {
+                                        let incidentDate = $('input[name=incident_date]').val();
+                                        let incidentTime = $('input[name=incident_time]').val(); // Get incident time
+
+                                        if (!incidentDate || !incidentTime) {
+                                            console.error('Incident date or time is missing.');
+                                            return;
+                                        }
+
+                                        // Combine the incident date and time into a single moment object
+                                        let incidentDateTime = moment(`${incidentDate} ${incidentTime}`, 'YYYY-MM-DD HH:mm');
+                                        let currentDateTime = moment(); // Get current date and time
+
+                                        // Calculate the difference in hours
+                                        let diffInHours = currentDateTime.diff(incidentDateTime, 'hours');
+
+                                        // Show delay justification if the difference is more than 24 hours
+                                        if (diffInHours > 24) {
+                                            $('.delayJustificationBlock').show();
+                                        } else {
+                                            $('.delayJustificationBlock').hide();
+                                        }
+                                    }
+
+                                    // Call checkDateDifference whenever the values are changed
+                                    $('input[name=incident_date], input[name=incident_time]').on('change', function() {
+                                        checkDateDifference();
+                                    });
+                                </script>--}}
+
+                                <script>
+                                    $(document).ready(function() {
+                                        // Hide the delayJustificationBlock initially
+                                        $('.delayJustificationBlock').hide();
+
+                                        // Check the condition on page load or whenever input changes
+                                        checkDateDifference();
+
+                                        // Call checkDateDifference whenever the values are changed
+                                        $('input[name=incident_date], input[name=incident_time]').on('change', function() {
+                                            checkDateDifference();
+                                        });
+                                    });
+
+                                    function checkDateDifference() {
+                                        let incidentDate = $('input[name=incident_date]').val(); // Incident Date
+                                        let incidentTime = $('input[name=incident_time]').val(); // Incident Time
+
+                                        if (!incidentDate || !incidentTime) {
+                                            console.error('Incident date or time is missing.');
+                                            $('.delayJustificationBlock').hide(); // Ensure it's hidden if either is missing
+                                            return;
+                                        }
+
+                                        // Combine the incident date and time into a single moment object
+                                        let incidentDateTime = moment(`${incidentDate} ${incidentTime}`, 'YYYY-MM-DD HH:mm');
+                                        let currentDateTime = moment(); // Get the current date and time
+
+                                        // Calculate the difference in hours
+                                        let diffInHours = currentDateTime.diff(incidentDateTime, 'hours');
+                                        //alert(diffInHours);
+                                        // Show delay justification if the difference is more than 24 hours
+                                        if (diffInHours < 24) {
+                                            $('.delayJustificationBlock').hide();
+
+                                        } else {
+                                            $('.delayJustificationBlock').show();
+                                        }
+                                    }
                                 </script>
+
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
