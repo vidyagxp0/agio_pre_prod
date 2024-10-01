@@ -438,7 +438,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Interim Containnment">Interim Containnment</label>
+                                        <label for="Interim Containnment">Interim Containment</label>
                                         <select name="interim_containnment"
                                             onchange="otherController(this.value, 'required', 'containment_comments')">
                                             <option value="">Enter Your Selection Here</option>
@@ -1179,13 +1179,13 @@
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments"> Initiator CAPA update Comment</label>
+                    <label for="Comments"> Initiator CAPA Update Comment</label>
                     <textarea name="initiator_comment"></textarea>
                 </div>
             </div>
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Closure Attachments">Initiator CAPA update Attachment</label>
+                    <label for="Closure Attachments">Initiator CAPA Update Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
