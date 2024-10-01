@@ -3457,7 +3457,7 @@
                                 </div>
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    In Approval
+                                     Approval
                                 </div>
 
                                 <div class="col-lg-4">

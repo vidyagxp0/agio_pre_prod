@@ -170,7 +170,7 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName($data->division_id) }} / Risk Assesment
+            {{ Helpers::getDivisionName($data->division_id) }} / Risk Assessment
         </div>
     </div>
 
@@ -9022,7 +9022,7 @@
                                     </div>
 
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        In Approval
+                                         Approval
                                     </div>
 
 
