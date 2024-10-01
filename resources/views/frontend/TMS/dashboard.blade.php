@@ -547,9 +547,9 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
         </table>
     </div>
 </div>
-@php
+<!-- @php
   $jobTraining = DB::table('job_descriptions')->get();
-@endphp
+@endphp -->
 <div id="CCForm7" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
             <div>
                 <table class="table table-bordered">
@@ -558,7 +558,6 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             <th>Employee ID</th>
                             <th>Name Of Employee</th>
                             <th>Department</th>
-                            <!-- <th>Site Location</th> -->
                             <th>Action</th>
                             <th>Report</th>
                         </tr>
@@ -567,7 +566,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
             @foreach ($jobTraining->sortByDesc('id') as $induction)
             <tr>
                 <td>
-                    @php
+                    {{-- @php
                         $employee = \App\Models\Employee::where('employee_id', $induction->employee_id)->first();
                         
                         $prefixAbbreviation = '';
@@ -580,8 +579,8 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                 $prefixAbbreviation = 'OS';
                             }
                         }
-                    @endphp
-                    {{ $prefixAbbreviation . $induction->employee_id }}
+                    @endphp --}}
+                    {{ $induction->employee_id }}
                 </td>
                 <td>
                     {{ \App\Models\Employee::find($induction->name_employee)?->employee_name ?? 'Employee not found' }}
@@ -595,7 +594,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                     </a> -->
                     <div class="action-buttons">
     
-                        <a href="{{ route('induction_training_view', $induction->id) }}">
+                        <a href="{{ route('job_description_view', $induction->id) }}">
                             <i class="fa-solid fa-pencil"></i>
                         </a>
                         </td>

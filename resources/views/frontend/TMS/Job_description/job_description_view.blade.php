@@ -213,17 +213,19 @@
             <!-- <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button> -->
             <button class="cctablinks " onclick="openCity(event, 'CCForm2')">Job Description</button>
 
-            <button class="cctablinks " onclick="openCity(event, 'CCForm3')">QA Review</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm3')">Employee Remarks</button>
+
             <button class="cctablinks " onclick="openCity(event, 'CCForm4')">QA/CQA Approval</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Responsible Person Accept Renarks</button>
 
             {{-- <button class="cctablinks " onclick="openCity(event, 'CCForm5')">Questionaries</button> --}}
 
-            <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Evaluation</button>
+            <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Evaluation</button> -->
             @if ($jobTraining->stage >= 7)
             <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Certificate</button>
             @endif
-            <button class="cctablinks " onclick="openCity(event, 'CCForm8')">QA/CQA Head Final Review</button>
-            <button class="cctablinks " onclick="openCity(event, 'CCForm9')">Final Approval</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm8')">Respected Department Remarks</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm9')">QA JD Number Remarks</button>
 
         </div>
 
@@ -637,14 +639,14 @@
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Activated On">Remark</label>
-                                <textarea name="evaluation_comment" maxlength="255">{{ $jobTraining->evaluation_comment }}</textarea>
+                                <textarea name="responsible_person_comment" maxlength="255">{{ $jobTraining->responsible_person_comment }}</textarea>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="External Attachment">Attachment</label>
-                                <input type="file" id="myfile" name="evaluation_attachment" value="{{ $jobTraining->evaluation_attachment }}">
-                                <a href="{{ asset('upload/' . $jobTraining->evaluation_attachment) }}" target="_blank">{{ $jobTraining->evaluation_attachment }}</a>
+                                <input type="file" id="myfile" name="responsible_person_attachment" value="{{ $jobTraining->responsible_person_attachment }}">
+                                <a href="{{ asset('upload/' . $jobTraining->responsible_person_attachment) }}" target="_blank">{{ $jobTraining->responsible_person_attachment }}</a>
                             </div>
                         </div>
   
@@ -832,14 +834,14 @@
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Activated On">Remark</label>
-                                <textarea name="qa_cqa_head_comment" maxlength="255">{{ $jobTraining->qa_cqa_head_comment }}</textarea>
+                                <textarea name="respected_department_comment" maxlength="255">{{ $jobTraining->respected_department_comment }}</textarea>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="External Attachment">Attachment</label>
-                                <input type="file" id="myfile" name="qa_cqa_head_attachment" value="{{ $jobTraining->qa_cqa_head_attachment }}">
-                                <a href="{{ asset('upload/' . $jobTraining->qa_cqa_head_attachment) }}" target="_blank">{{ $jobTraining->qa_cqa_head_attachment }}</a>
+                                <input type="file" id="myfile" name="respected_department_attachment" value="{{ $jobTraining->respected_department_attachment }}">
+                                <a href="{{ asset('upload/' . $jobTraining->respected_department_attachment) }}" target="_blank">{{ $jobTraining->respected_department_attachment }}</a>
                             </div>
                         </div>
   

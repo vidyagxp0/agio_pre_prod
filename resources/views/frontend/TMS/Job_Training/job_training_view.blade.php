@@ -224,6 +224,7 @@
             @if ($jobTraining->stage >= 7)
             <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Certificate</button>
             @endif
+            
             <button class="cctablinks " onclick="openCity(event, 'CCForm8')">QA/CQA Head Final Review</button>
             <button class="cctablinks " onclick="openCity(event, 'CCForm9')">Final Approval</button>
 
@@ -1553,7 +1554,7 @@ if (marks >= percentageRequired) {
                     </div>
                 </div>
 
-                @if ($jobTraining->stage >= 3)
+                @if ($jobTraining->stage >= 7)
                     <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
