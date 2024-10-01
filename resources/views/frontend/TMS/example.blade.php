@@ -42,8 +42,9 @@
                                     </div>
 
                                     <div class="option-block-container" id="question-options">
-
+                                          
                                     </div>
+                                  
                                 </fieldset>
                                 <div class="quiz-buttons">
                                   <button name="next" id="back-btn">Back</button>
@@ -72,7 +73,9 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                 </div>
 
                 <!-- Modal body -->
@@ -116,18 +119,18 @@
     <script>
         var idElement = document.getElementById('qid');
         var questionElement = document.getElementById('question');
-var choicesElement = document.getElementById('question-options');
-var backBtn = document.getElementById('back-btn');
-var nextBtn = document.getElementById('next-btn');
-var submitBtn = document.getElementById('submit-btn');
-var summaryElement = document.getElementById('summary-container');
-var totalMarksElement = document.getElementById('total-marks');
+        var choicesElement = document.getElementById('question-options');
+        var backBtn = document.getElementById('back-btn');
+        var nextBtn = document.getElementById('next-btn');
+        var submitBtn = document.getElementById('submit-btn');
+        var summaryElement = document.getElementById('summary-container');
+        var totalMarksElement = document.getElementById('total-marks');
 
-var quizData;
-var currentQuestion = 0;
-var userAnswers = [];
+        var quizData;
+        var currentQuestion = 0;
+        var userAnswers = [];
 
-// Fetch quiz data from JSON file
+
 fetch("{{ url('example',$document->id) }}")
   .then(function(response) {
     return response.json();
@@ -136,33 +139,56 @@ fetch("{{ url('example',$document->id) }}")
     quizData = data;
     loadQuestion();
   })
-  .catch(function(error) {
+  .catch(function(error) {          
     console.log('Error fetching quiz data:', error);
   });
 
-// Function to load question and choices
+  // serve api https
+
+// fetch("{{ url()->secure('example', $document->id) }}")
+//   .then(function(response) {
+//     return response.json();
+//   })
+//   .then(function(data) {
+//     quizData = data;
+//     loadQuestion();
+//   })
+//   .catch(function(error) {
+//     console.log('Error fetching quiz data:', error);
+//   });
+
 function loadQuestion() {
+  var question = quizData[currentQuestion]; 
+  var questionType = question.type;
 
+  questionElement.textContent = question.question; 
+  idElement.textContent = question.id; 
+  choicesElement.innerHTML = ''; 
 
-  var question = quizData[currentQuestion];
-  questionElement.textContent = question.question;
-  idElement.textContent = question.id;
-  choicesElement.innerHTML = '';
-
-  if (typeof question.answer === 'string') {
-    var input = document.createElement('input');
-    input.type = 'text';
-    input.name = 'answer';
-    input.placeholder = 'Type your answer...';
-    choicesElement.appendChild(input);
-  } else {
+  if (questionType === 'Single Selection Questions') {
+    // Single selection (radio buttons)
     for (var i = 0; i < question.choices.length; i++) {
       var li = document.createElement('li');
       var label = document.createElement('label');
       var input = document.createElement('input');
-      input.type = question.answer instanceof Array ? 'checkbox' : 'radio';
+      input.type = 'radio';
       input.name = 'answer';
-      input.value = i+1;
+      input.value = i;
+      label.appendChild(input);
+      label.appendChild(document.createTextNode(question.choices[i]));
+      li.appendChild(label);
+      choicesElement.appendChild(li);
+    }
+  } 
+  else if (questionType === 'Multi Selection Questions') {
+    // Multi selection (checkboxes)
+    for (var i = 0; i < question.choices.length; i++) {
+      var li = document.createElement('li');
+      var label = document.createElement('label');
+      var input = document.createElement('input');
+      input.type = 'checkbox';
+      input.name = 'answer';
+      input.value = i;
       label.appendChild(input);
       label.appendChild(document.createTextNode(question.choices[i]));
       li.appendChild(label);
@@ -170,59 +196,118 @@ function loadQuestion() {
     }
   }
 
-  updateButtons();
+  // Update navigation buttons (Next/Submit)
+  updateButtons(); 
 }
 
-// Function to update navigation buttons
+
+
+
 function updateButtons() {
   backBtn.disabled = currentQuestion === 0;
   nextBtn.disabled = currentQuestion === quizData.length - 1;
   submitBtn.style.display = currentQuestion === quizData.length - 1 ? 'block' : 'none';
 }
 
-// Function to go to the next question
+
 function nextQuestion() {
   saveAnswer();
   currentQuestion++;
   loadQuestion();
 }
 
-// Function to go to the previous question
 function previousQuestion() {
   saveAnswer();
   currentQuestion--;
   loadQuestion();
 }
 
-// Function to save the user's answer
-function saveAnswer() {
-  var inputs = document.getElementsByName('answer');
 
-  var answer = [];
+function displaySummary(marks) {
+  // Hide the question UI and show the summary
+  questionElement.style.display = 'none';
+  choicesElement.style.display = 'none';
+  backBtn.style.display = 'none';
+  nextBtn.style.display = 'none';
+  submitBtn.style.display = 'none';
+  summaryElement.style.display = 'block';
+  totalMarksElement.textContent = 'Total Marks: ' + marks + '/' + quizData.length;
 
-  for (var i = 0; i < inputs.length; i++) {
-    if (inputs[i].type === 'text') {
-      
-      answer.push(inputs[i].value);
-    } else if (inputs[i].type === 'checkbox' && inputs[i].checked) {
-      answer.push(i);
-    } else if (inputs[i].type === 'radio' && inputs[i].checked) {
-      answer = [i];
-     // answer = i+1;
-      break;
+  // Clear the previous summary content
+  var summaryList = document.getElementById('summary');
+  summaryList.innerHTML = '';
+
+  // Loop through all the questions to display the summary
+  for (var i = 0; i < quizData.length; i++) {
+    var li = document.createElement('li');
+    var question = quizData[i].question;
+    var userAnswer = userAnswers[i];
+    var correctAnswer = parseCorrectAnswer(quizData[i].answers, quizData[i].type); // Get the correct answer based on type
+
+    var summaryText = `Question ${i + 1}: ${question} - `;
+
+    // For Single Selection Questions, show Correct/Incorrect
+    if (quizData[i].type === 'Single Selection Questions') {
+      if (correctAnswer === quizData[i].choices[userAnswer[0]]) { // Compare single selection based on the value
+        summaryText += 'Correct';
+      } else {
+        summaryText += 'Incorrect';
+      }
+    } 
+    // For Multi Selection Questions, show only Correct or Incorrect
+    else if (quizData[i].type === 'Multi Selection Questions') {
+      var userSelectedChoices = userAnswer.map(index => quizData[i].choices[index]); // Convert indexes to values
+      if (arraysEqual(correctAnswer, userSelectedChoices)) {
+        summaryText += 'Correct';
+      } else {
+        summaryText += 'Incorrect';
+      }
     }
+
+    // Append the summary text to the list item
+    li.textContent = summaryText;
+    summaryList.appendChild(li);
   }
-  
-  userAnswers[currentQuestion] = answer;
-  console.log('userAnswer',userAnswers);
 }
 
-// Function to compare two arrays
+
+
+
+function parseCorrectAnswer(serializedAnswer, questionType) {
+  // Check if the serializedAnswer format is valid
+  if (!serializedAnswer) return [];
+
+  // Extract the correct answer from the serialized format using a regex pattern
+  var match = serializedAnswer.match(/s:\d+:"(.*?)";/);
+  if (match && match[1]) {
+    var answerString = match[1].trim();
+
+    // For single selection questions, return the value directly
+    if (questionType === 'Single Selection Questions') {
+      return answerString; // Return the single correct answer as a string
+    }
+    // For multi-selection questions, split into multiple elements
+    else if (questionType === 'Multi Selection Questions') {
+      return answerString.split(',').map(answer => answer.trim());
+    }
+  }
+  return [];
+}
+
+
+
+
 function arraysEqual(arr1, arr2) {
+  // First, check if both arrays are of the same length
   if (arr1.length !== arr2.length) {
     return false;
   }
 
+  // Sort both arrays before comparing (order may not matter in multiple select questions)
+  arr1 = arr1.sort();
+  arr2 = arr2.sort();
+
+  // Compare element by element
   for (var i = 0; i < arr1.length; i++) {
     if (arr1[i] !== arr2[i]) {
       return false;
@@ -232,108 +317,66 @@ function arraysEqual(arr1, arr2) {
   return true;
 }
 
-// Function to display quiz summary
-function displaySummary(marks) {
-  questionElement.style.display = 'none';
-  choicesElement.style.display = 'none';
-  backBtn.style.display = 'none';
-  nextBtn.style.display = 'none';
-  submitBtn.style.display = 'none';
-  summaryElement.style.display = 'block';
-  totalMarksElement.textContent = 'Total Marks: ' + marks + '/' + quizData.length;
 
-  for (var i = 0; i < quizData.length; i++) {
-    var li = document.createElement('li');
-    var question = quizData[i].question;
-    var userAnswer = userAnswers[i];
-    var summaryText = '';
 
-    if (typeof quizData[i].answer === 'string') {
-      summaryText = question + ' (Exact Answer): ';
 
-      if (quizData[i].answer.toLowerCase() === userAnswer[0].toLowerCase()) {
-        summaryText += 'Correct';
-        marks++;
-      } else {
-        summaryText += 'Incorrect';
-      }
-    } else if (Array.isArray(quizData[i].answer)) {
-      summaryText = question + ' (Multiple Select): ';
 
-      if (arraysEqual(quizData[i].answer, userAnswer)) {
-        summaryText += 'Correct';
-        marks++;
-      } else {
-        summaryText += 'Incorrect';
-      }
-    } else {
-      summaryText = question + ' (Single Select): ';
+// Function to save the user's answer
+function saveAnswer() {
+  var inputs = document.getElementsByName('answer');
+  var answer = [];
 
-      if (quizData[i].answer == userAnswer) {
-        summaryText += 'Correct';
-        marks++;
-      } else {
-        summaryText += 'Incorrect';
+  if (quizData[currentQuestion].type === 'Single Selection Questions') {
+    for (var i = 0; i < inputs.length; i++) {
+      if (inputs[i].checked) {
+        answer = [i]; // Save selected radio button (single answer)
+        break;
       }
     }
-
-    li.textContent = summaryText;
-    summaryElement.appendChild(li);
+  } 
+  else if (quizData[currentQuestion].type === 'Multi Selection Questions') {
+    for (var i = 0; i < inputs.length; i++) {
+      if (inputs[i].checked) {
+        answer.push(i); // Save selected checkboxes (multiple answers)
+      }
+    }
   }
+
+  userAnswers[currentQuestion] = answer; // Save answer in the array
+  console.log(`Saved answer for question ${currentQuestion}`, answer);
 }
 
-// Function to submit the quiz
+
+// Function to submit the quiz and check answers
 function submitQuiz() {
-  saveAnswer();
+  saveAnswer(); // Save the last answer
   var marks = 0;
 
   for (var i = 0; i < quizData.length; i++) {
     var correctAnswer = quizData[i].answer;
     var userAnswer = userAnswers[i];
-    console.log(correctAnswer+' == '+userAnswer);
-    
-    if (typeof correctAnswer === 'string') {
-      if (correctAnswer.toLowerCase() === userAnswer[0].toLowerCase()) {
-        marks++;
+
+    if (quizData[i].type === 'Single Selection Questions') {
+      if (correctAnswer == userAnswer[0]) {
+        marks++; 
       }
-    } else if (Array.isArray(correctAnswer)) {
+    } 
+    else if (quizData[i].type === 'Multi Selection Questions') {
+      console.log(`Question ${i + 1} - Checking Multi Selection:`, userAnswer);
       if (arraysEqual(correctAnswer, userAnswer)) {
-        marks++;
-      }
-    } else {
-      if (correctAnswer == userAnswer) {
-        marks++;
+        marks++; 
       }
     }
   }
 
-  displaySummary(marks);
-
-  var passing =  {{ $quize->passing }};
-  var totalque = quizData.length;
-  var percentage = (passing/100)*totalque;
-
-  // if (marks >= percentage) {
-
-// Find the element with the "btns" class
-var btnsElement = document.querySelector(".btns");
-
-// Create the button element
-var button = document.createElement("button");
-button.id = "complete-training";
-button.setAttribute("data-bs-toggle", "modal");
-button.setAttribute("data-bs-target", "#trainee-sign");
-button.textContent = "Complete Training";
-
-// Append the button to the btnsElement
-btnsElement.innerHTML += button.outerHTML;
-
-// }
-
-
+  displaySummary(marks); 
 }
 
-// Event listeners for navigation buttons
+
+
+
+
+
 nextBtn.addEventListener('click', nextQuestion);
 backBtn.addEventListener('click', previousQuestion);
 submitBtn.addEventListener('click', submitQuiz);

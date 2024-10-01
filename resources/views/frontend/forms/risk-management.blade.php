@@ -211,7 +211,7 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk Assessment </button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm12')">HOD/Designee</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">CFT Review</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm9')">CQA/QA Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA/CQA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm11')">CQA/QA Head</button>
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Work Group Assignment</button> --}}
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk/Opportunity Analysis</button> --}}
@@ -304,86 +304,6 @@
                                     </div>
 
 
-                                    {{-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Initiator Group"><b>Assign To Department</b></label>
-                                            <select name="assign_department" id="assign_department">
-                                                <option value="">-- Select --</option>
-                                                <optio value="">Select Initiation Department</option>
-                                                    <option value="CQA" >Corporate Quality Assurance</option>
-                                                    <option value="QA" >Quality Assurance</option>
-                                                    <option value="QC" >Quality Control</option>
-                                                    <option value="QM" >Quality Control (Microbiology department)</option>
-                                                    <option value="PG" >Production General</option>
-                                                    <option value="PL" >Production Liquid Orals</option>
-                                                    <option value="PT" >Production Tablet and Powder</option>
-                                                    <option value="PE" >Production External (Ointment, Gels, Creams and Liquid)</option>
-                                                    <option value="PC" >Production Capsules</option>
-                                                    <option value="PI" >Production Injectable</option>
-                                                    <option value="EN" >Engineering</option>
-                                                    <option value="HR" >Human Resource</option>
-                                                    <option value="ST" >Store</option>
-                                                    <option value="IT" >Electronic Data Processing</option>
-                                                    <option value="FD" >Formulation  Development</option>
-                                                    <option value="AL" >Analytical research and Development Laboratory</option>
-                                                    <option value="PD">Packaging Development</option>
-                                                    <option value="PU">Purchase Department</option>
-                                                    <option value="DC">Document Cell</option>
-                                                    <option value="RA">Regulatory Affairs</option>
-                                                    <option value="PV">Pharmacovigilance</option>
-                                            </select>
-                                        </div>
-                                    </div> --}}
-
-                                    {{-- <div class="col-md-6">
-                                        <div class="group-input">
-                                            <label for="search">
-                                                Assigned To <span class="text-danger"></span>
-                                            </label>
-                                            <select id="select-state" placeholder="Select..." name="assign_to">
-                                                <option value="">Select a value</option>
-                                                @foreach ($users as $data)
-                                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('assign_to')
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-                                    </div> --}}
-                                    {{--  <div class="col-lg-6 new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="Date Due">Date Due</label>
-                                            <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
-                                            </div>
-                                            <div class="calenderauditee">
-                                                <input type="text" id="due_date" readonly
-                                                    placeholder="DD-MMM-YYYY" />
-                                                <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                    oninput="handleDateInput(this, 'due_date')" />
-                                            </div>
-                                        </div>
-                                    </div>  --}}
-
-                                    {{-- <div class="col-lg-6 new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="Date Due">Date Due</label>
-                                            <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
-                                            <div class="calenderauditee">
-                                                <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDatemonthly(null, false, 'd-M-Y') }}" />
-                                                <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" value="{{ Helpers::getDueDatemonthly(null, false, 'Y-m-d') ?? '' }}"/>
-                                            </div>
-                                        </div>
-                                    </div> --}}
-
-                                    {{-- <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="Short Description">Short Description <span
-                                                    class="text-danger">*</span></label>
-                                                    <div><small class="text-primary">Please mention brief summary</small></div>
-                                            <textarea name="short_description" id="short_desc"></textarea>
-                                        </div>
-                                    </div> --}}
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Short Description">Short Description<span class="text-danger">*</span></label><span id="rchars">255</span>  characters remaining
@@ -540,7 +460,6 @@
                                     </script> --}}
 
 
-
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Priority Level">Priority Level</label>
@@ -653,7 +572,7 @@
                                     </div> --}}
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="CAPA Attachments">Risk Assesment Attachment</label>
+                                            <label for="CAPA Attachments">Initial Attachment</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
                                             {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
@@ -681,7 +600,7 @@
                         <div id="CCForm2" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="sub-head">
-                                    Risk Assesment
+                                    Risk Assessment
                                 </div>
                                 <div class="row">
 
@@ -699,7 +618,8 @@
                                     <div class="col-6">
                                     <div id="rootCause" class="group-input" style="display: none;">
                                         <label for="otherFieldsUser">Other (Root Cause Methodology)</label>
-                                        <input type="text" name="other_root_cause_methodology" class="form-control"/>
+                                        {{-- <input type="text" id="summernote" name="other_root_cause_methodology" class="form-control"/> --}}
+                                        <textarea name="other_root_cause_methodology" id="summernote" ></textarea>
                                     </div>
                                     </div>
 
@@ -732,35 +652,45 @@
                                         <div class="group-input">
                                             <label for="agenda">
                                                 Failure Mode and Effect Analysis<button type="button" name="agenda"
-                                                    onclick="addRiskAssessmentdata('risk-assessment-risk-management')">+</button>
+                                                    onclick="addRiskAssessmentdata2('risk-assessment-risk-management')">+</button>
                                             </label>
                                             <div class="table-responsive">
                                                 <table class="table table-bordered" style="width: 200%"
                                                     id="risk-assessment-risk-management">
                                                     <thead>
-                                                        <tr>
-                                                            <th>Row #</th>
-                                                            <th>Activity</th>
-                                                            {{--  <th>Activity</th>  --}}
-                                                            <th>Possible Risk/Failure (Identified Risk)</th>
-                                                            <th>Consequences of Risk/Potential Causes</th>
-                                                            <th>Severity (S)</th>
-                                                            <th>Probability (P)</th>
-                                                            <th>Detection (D)</th>
-                                                            <th>Risk Level (RPN)</th>
+                                                            <tr>
+                                                                <th colspan="1"style="text-align:center;"> </th>
+                                                                <th colspan="2"style="text-align:center;">Risk Identification</th>
+                                                                <th colspan="1"style="text-align:center;">Risk Analysis</th>
+                                                                <th colspan="4"style="text-align:center;">Risk Evaluation</th>
+                                                                <th colspan="1"style="text-align:center;">Risk Control</th>
+                                                                <th colspan="6"style="text-align:center;">Risk Evaluation</th>
+                                                                <th colspan="2"style="text-align:center;"></th>
+                                                            </tr>
+                                                            <tr>
 
-                                                            {{--  <th>Risk Acceptance (Y/N)</th>  --}}
+                                                                <th>Row </th>
+                                                                <th>Activity</th>
+                                                                {{--  <th>Activity</th>  --}}
+                                                                <th>Possible Risk/Failure (Identified Risk)</th>
+                                                                <th>Consequences of Risk/Potential Causes</th>
+                                                                <th>Severity (S)</th>
+                                                                <th>Probability (P)</th>
+                                                                <th>Detection (D)</th>
+                                                                <th>Risk Level (RPN)</th>
 
-                                                            <th>Control Measures recommended/ Risk mitigation proposed</th>
-                                                            <th>Severity (S)</th>
-                                                            <th>Probability (P)</th>
-                                                            <th>Detection (D)</th>
-                                                            <th>RPN</th>
+                                                                {{--  <th>Risk Acceptance (Y/N)</th>  --}}
 
-                                                            <th>Category of Risk Level (Low, Medium and High)</th>
-                                                            <th>Risk Acceptance (Y/N)</th>
-                                                            <th>Traceability document</th>
-                                                            <th>Action</th>
+                                                                <th>Control Measures recommended/ Risk mitigation proposed</th>
+                                                                <th>Severity (S)</th>
+                                                                <th>Probability (P)</th>
+                                                                <th>Detection (D)</th>
+                                                                <th>RPN</th>
+
+                                                                <th>Category of Risk Level (Low, Medium and High)</th>
+                                                                <th>Risk Acceptance (Y/N)</th>
+                                                                <th>Traceability document</th>
+                                                                <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -769,6 +699,7 @@
                                             </div>
                                         </div>
                                     </div>
+
 
 
 
@@ -1076,7 +1007,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="CAPA Attachments">Risk Assesment Attachments</label>
+                                        <label for="CAPA Attachments">Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
@@ -1154,7 +1085,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="CAPA Attachments"> HOD/Designee Attachment</label>
+                                        <label for="CAPA Attachments"> HOD/Designee Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
@@ -3432,7 +3363,7 @@
                             <div class="row">
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    Opened
+                                    Submit
                                 </div>
 
                                 <div class="col-lg-4">
@@ -3450,13 +3381,13 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comments">Comments:</label>
+                                        <label for="Comments">Submit Comment:</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    HOD Review
+                                    HOD Review Complete
                                 </div>
 
                                 <div class="col-lg-4">
@@ -3474,13 +3405,13 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comments">Comments:</label>
+                                        <label for="Comments">HOD Review Comment:</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    CFT Review
+                                    CFT Review Complete
                                 </div>
 
                                 <div class="col-lg-4">
@@ -3497,13 +3428,13 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comments">Comments:</label>
+                                        <label for="Comments">CFT Review Complete Comment:</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    In QA/CQA Review
+                                     QA/CQA Review
                                 </div>
 
                                 <div class="col-lg-4">
@@ -3520,7 +3451,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comments">Comments:</label>
+                                        <label for="Comments">QA/CQA Review Complete Comment:</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -3537,13 +3468,13 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Plan Approved On">Approved On:</label>
+                                        <label for="Plan Approved On">Approved  On:</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comments">Comments:</label>
+                                        <label for="Comments">Approved Comment:</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -3589,7 +3520,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comments">Cancel Comments:</label>
+                                        <label for="Comments">Cancel Comment:</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -4676,127 +4607,105 @@
     }
 </script>
 
-<script>
-    function addRiskAssessmentdata(tableId) {
-    var table = document.getElementById(tableId);
-    var currentRowCount = table.rows.length;
-    var newRow = table.insertRow(currentRowCount);
-    newRow.setAttribute("id", "row" + currentRowCount);
+        <script>
 
-    var cell1 = newRow.insertCell(0);
-    cell1.innerHTML = currentRowCount;
+                                function addRiskAssessmentdata2(tableId) {
+                                var table = document.getElementById(tableId);
+                                var currentRowCount = table.children[1].rows.length;
+                                var newRow = table.children[1].insertRow(currentRowCount);
+                                newRow.setAttribute("id", "row" + currentRowCount);
+                                var cell1 = newRow.insertCell(0);
+                                cell1.innerHTML = currentRowCount + 1;
 
-    var cell2 = newRow.insertCell(1);
-    cell2.innerHTML = "<input name='risk_factor[]' type='text'>";
+                                var cell2 = newRow.insertCell(1);
+                                cell2.innerHTML = "<input name='risk_factor[]' type='text'>";
 
-    var cell4 = newRow.insertCell(2);
-    cell4.innerHTML = "<input name='problem_cause[]' type='text'>";
+                                var cell3 = newRow.insertCell(2);
+                                cell3.innerHTML = "<input name='risk_element[]' type='text'>";
 
-    var cell5 = newRow.insertCell(3);
-    cell5.innerHTML = "<input name='existing_risk_control[]' type='text'>";
+                                var cell4 = newRow.insertCell(3);
+                                cell4.innerHTML = "<input name='problem_cause[]' type='text'>";
 
-    var cell6 = newRow.insertCell(4);
-    cell6.innerHTML =
-        "<select onchange='calculateInitialResult(this)' class='fieldR' name='initial_severity[]'>" +
-        "<option value=''>-- Select --</option>" +
-        "<option value='1'>1-Insignificant</option>" +
-        "<option value='2'>2-Minor</option>" +
-        "<option value='3'>3-Major</option>" +
-        "<option value='4'>4-Critical</option>" +
-        "<option value='5'>5-Catastrophic</option>" +
-        "</select>";
+                                // var cell5 = newRow.insertCell(4);
+                                // cell5.innerHTML = "<input name='existing_risk_control[]' type='text'>";
 
-    var cell7 = newRow.insertCell(5);
-    cell7.innerHTML =
-        "<select onchange='calculateInitialResult(this)' class='fieldP' name='initial_probability[]'>" +
-        "<option value=''>-- Select --</option>" +
-        "<option value='1'>1-Very rare</option>" +
-        "<option value='2'>2-Unlikely</option>" +
-        "<option value='3'>3-Possibly</option>" +
-        "<option value='4'>4-Likely</option>" +
-        "<option value='5'>5-Almost certain (every time)</option>" +
-        "</select>";
+                                var cell5 = newRow.insertCell(4);
+                                cell5.innerHTML =
+                                    "<select onchange='calculateInitialResult(this)' class='fieldR' name='initial_severity[]'><option value=''>-- Select --</option><option value='1'>1-Insignificant</option><option value='2'>2-Minor</option><option value='3'>3-Major</option><option value='4'>4-Critical</option><option value='5'>5-Catastrophic</option></select>";
+                                    // "<input name='initial_severity[]' type='text'>";
 
-    var cell8 = newRow.insertCell(6);
-    cell8.innerHTML =
-        "<select onchange='calculateInitialResult(this)' class='fieldN' name='initial_detectability[]'>" +
-        "<option value=''>-- Select --</option>" +
-        "<option value='1'>1-Always detected</option>" +
-        "<option value='2'>2-Likely to detect</option>" +
-        "<option value='3'>3-Possible to detect</option>" +
-        "<option value='4'>4-Unlikely to detect</option>" +
-        "<option value='5'>5-Not detectable</option>" +
-        "</select>";
 
-    var cell9 = newRow.insertCell(7);
-    cell9.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn' readonly>";
+                                var cell6 = newRow.insertCell(5);
+                                cell6.innerHTML =
+                                    "<select onchange='calculateInitialResult(this)' class='fieldP' name='initial_probability[]'><option value=''>-- Select --</option><option value='1'>1-Very rare</option><option value='2'>2-Unlikely</option><option value='3'>3-Possibly</option><option value='4'>4-Likely</option><option value='5'>5-Almost certain (every time)</option></select>";
 
-    var cell11 = newRow.insertCell(8);
-    cell11.innerHTML = "<input name='risk_control_measure[]' type='text'>";
+                                var cell7 = newRow.insertCell(6);
+                                cell7.innerHTML =
+                                    "<select onchange='calculateInitialResult(this)' class='fieldN' name='initial_detectability[]'><option value=''>-- Select --</option><option value='1'>1-Always detected</option><option value='2'>2-Likely to detect</option><option value='3'>3-Possible to detect</option><option value='4'>4-Unlikely to detect</option><option value='5'>5-Not detectable</option></select>";
 
-    var cell12 = newRow.insertCell(9);
-    cell12.innerHTML =
-        "<select onchange='calculateResidualResult(this)' class='residual-fieldR' name='residual_severity[]'>" +
-        "<option value=''>-- Select --</option>" +
-        "<option value='1'>1-Insignificant</option>" +
-        "<option value='2'>2-Minor</option>" +
-        "<option value='3'>3-Major</option>" +
-        "<option value='4'>4-Critical</option>" +
-        "<option value='5'>5-Catastrophic</option>" +
-        "</select>";
+                                var cell8 = newRow.insertCell(7);
+                                cell8.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn' readonly>";
 
-    var cell13 = newRow.insertCell(10);
-    cell13.innerHTML =
-        "<select onchange='calculateResidualResult(this)' class='residual-fieldP' name='residual_probability[]'>" +
-        "<option value=''>-- Select --</option>" +
-        "<option value='1'>1-Very rare</option>" +
-        "<option value='2'>2-Unlikely</option>" +
-        "<option value='3'>3-Possibly</option>" +
-        "<option value='4'>4-Likely</option>" +
-        "<option value='5'>5-Almost certain (every time)</option>" +
-        "</select>";
+                                // var cell10 = newRow.insertCell(9);
+                                // cell10.innerHTML =
+                                //     "<select name='risk_acceptance[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
 
-    var cell14 = newRow.insertCell(11);
-    cell14.innerHTML =
-        "<select onchange='calculateResidualResult(this)' class='residual-fieldN' name='residual_detectability[]'>" +
-        "<option value=''>-- Select --</option>" +
-        "<option value='1'>1-Always detected</option>" +
-        "<option value='2'>2-Likely to detect</option>" +
-        "<option value='3'>3-Possible to detect</option>" +
-        "<option value='4'>4-Unlikely to detect</option>" +
-        "<option value='5'>5-Not detectable</option>" +
-        "</select>";
+                                var cell19 = newRow.insertCell(8);
+                                cell19.innerHTML = "<input name='risk_control_measure[]' type='text'>";
 
-    var cell15 = newRow.insertCell(12);
-    cell15.innerHTML = "<input name='residual_rpn[]' type='text' class='residual-rpn' readonly>";
+                                var cell10 = newRow.insertCell(9);
+                                cell10.innerHTML =
+                                    "<select onchange='calculateResidualResult(this)' class='residual-fieldR' name='residual_severity[]'><option value=''>-- Select --</option><option value='1'>1-Insignificant</option><option value='2'>2-Minor</option><option value='3'>3-Major</option><option value='4'>4-Critical</option><option value='5'>5-Catastrophic</option></select>";
 
-    var cell10 = newRow.insertCell(13);
-    cell10.innerHTML =
-        "<select name='risk_acceptance[]' class='risk-acceptance' readonly>" +
-        "<option value=''>-- Select --</option>" +
-        "<option value='Low'>Low</option>" +
-        "<option value='Medium'>Medium</option>" +
-        "<option value='High'>High</option>" +
-        "</select>";
+                                var cell11 = newRow.insertCell(10);
+                                cell11.innerHTML =
+                                    "<select onchange='calculateResidualResult(this)' class='residual-fieldP' name='residual_probability[]'><option value=''>-- Select --</option><option value='1'>1-Very rare</option><option value='2'>2-Unlikely</option><option value='3'>3-Possibly</option><option value='4'>4-Likely</option><option value='5'>5-Almost certain (every time)</option></select>";
 
-    var cell16 = newRow.insertCell(14);
-    cell16.innerHTML =
-        "<select name='risk_acceptance2[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
+                                var cell12 = newRow.insertCell(11);
+                                cell12.innerHTML =
+                                    "<select onchange='calculateResidualResult(this)' class='residual-fieldN' name='residual_detectability[]'><option value=''>-- Select --</option><option value='1'>1-Always detected</option><option value='2'>2-Likely to detect</option><option value='3'>3-Possible to detect</option><option value='4'>4-Unlikely to detect</option><option value='5'>5-Not detectable</option></select>";
 
-    var cell17 = newRow.insertCell(15);
-    cell17.innerHTML = "<input name='mitigation_proposal[]' type='text'>";
+                                var cell13 = newRow.insertCell(12);
+                                cell13.innerHTML = "<input name='residual_rpn[]' type='text' class='residual-rpn' readonly>";
+                                var cell14 = newRow.insertCell(13);
+                                cell14.innerHTML =
+                                    "<select name='risk_acceptance[]' class='risk-acceptance' readonly>" +
+                                    "<option value=''>-- Select --</option>" +
+                                    "<option value='Low'>Low</option>" +
+                                    "<option value='Medium'>Medium</option>" +
+                                    "<option value='High'>High</option>" +
+                                    "</select>";
 
-    var cell18 = newRow.insertCell(16);
-    cell18.innerHTML = "<button class='btn btn-dark removeBtn' onclick='removeRow(this)'>Remove</button>";
+                                var cell15 = newRow.insertCell(14);
+                                cell15.innerHTML =
+                                    "<select name='risk_acceptance2[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
 
-    // Update row numbers
-    for (var i = 1; i <= currentRowCount; i++) {
-        var row = table.rows[i];
-        row.cells[0].innerHTML = i;
-    }
+                                var cell16 = newRow.insertCell(15);
+                                cell16.innerHTML = "<input name='mitigation_proposal[]' type='text'>";
 
-    initializeRiskAcceptance();
-}
-</script>
+                                var cell17 = newRow.insertCell(16);
+                                cell17.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
+
+                                for (var i = 0; i < currentRowCount-1; i++) {
+                                    var row = table.children[1].rows[i];
+                                    row.cells[0].innerHTML = i+1;
+                                }
+                                //  initializeRiskAcceptance();
+
+                              }
+        </script>
 
 @endsection
+
+
+
+
+
+
+
+
+
+
+
+
+

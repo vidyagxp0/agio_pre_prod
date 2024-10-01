@@ -738,6 +738,7 @@
             var myarr = departmentCode;
             var url = "{{ route('data', [':myarr']) }}";
             url = url.replace(':myarr', myarr);
+            
             $('#question-list').empty();
             $.ajax({
                 url: url,
