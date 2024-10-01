@@ -681,7 +681,7 @@
         <div class="content-table">
             <div class="block">
                 <div class="block-head">
-                    Signatures
+                    Activity Log
                 </div>
                 
                 <div class="block-head">

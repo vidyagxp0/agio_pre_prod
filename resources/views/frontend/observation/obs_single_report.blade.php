@@ -315,43 +315,42 @@
                             Not Applicable
                         @endif
                     </td>
+                </tr>
+            </table>
 
-                    <th class="w-20">Observation (+)</th>
+                    <!-- <th class="w-20">Observation (+)</th>
                     <td class="w-80">
                         @if ($data->non_compliance)
                             {{ $data->non_compliance }}
                         @else
                             Not Applicable
                         @endif
-                    </td>
-                </tr>
+                    </td> -->
                
-                  
+                    <style>
+                    .head-number {
+                        font-weight: bold;
+                        font-size: 13px;
+                        padding-left: 8px;
+                    }
 
-              
-                {{-- <tr>
-                   
+                    .div-data {
+                        font-size: 13px;
+                        padding-left: 8px;
+                    }
+                </style>
 
-                    <th class="w-20">Attached Files</th>
-                    <td class="w-80">{{ str_replace(',', ', ', $data->attach_files_gi) }}</td>
+                <label class="head-number" for="Observation (+)">Observation (+)</label>
+                <div class="div-data">
+                    @if ($data->non_compliance)
+                        {{ $data->non_compliance }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
 
-                </tr> --}}
 
-                {{-- <tr>
-                    <th class="w-20">Recomendation Due Date for CAPA</th>
-                    <td class="w-80">
-                        @if ($data->recomendation_capa_date_due)
-                            {{ $data->recomendation_capa_date_due }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
 
-                    <th class="w-20">Non Compliance</th>
-                    <td class="w-80">{{ $data->non_compliance }}</td>
-
-                </tr> --}}
-                </table>
 
                 {{-- <h5>Non Compliance</h5>
                 <div style="font-size: 12px;">
@@ -424,7 +423,39 @@
             <div class="block-head">
                 Response and CAPA Plan Details
             </div>
-            <table>
+
+            
+            <label class="head-number" for="Observation (+)">Response Details (+)</label>
+                <div class="div-data">
+                    @if ($data->response_detail)
+                        {{ $data->response_detail }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
+
+                
+                <label class="head-number" for="Observation (+)">Corrective Actions (+)</label>
+                <div class="div-data">
+                    @if ($data->corrective_action)
+                        {{ $data->corrective_action }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
+
+                
+                <label class="head-number" for="Observation (+)">Preventive Action (+)</label>
+                <div class="div-data">
+                    @if ($data->preventive_action)
+                        {{ $data->preventive_action }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
+
+                
+            <!-- <table>
                 <tr>
                     <th class="w-20">Response Details (+)</th>
                     <td class="w-80">
@@ -467,7 +498,7 @@
                     </td>
 
                 </tr>
-            </table>
+            </table> -->
            
             {{-- <div style="font-weight: 200">Action Plan</div> --}}
 
@@ -507,6 +538,15 @@
                     </table>
                 </div>
             </div>
+
+            <label class="head-number" for="Observation (+)">Comments</label>
+                <div class="div-data">
+                    @if ($data->comments)
+                        {{ $data->comments }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
            
 
             <div class="block-head">
@@ -546,7 +586,7 @@
                     <th class="w-20">Actual Action Start Date</th>
                     <td class="w-80">
                         @if ($data->actual_start_date)
-                            {{ $data->actual_start_date }}
+                            {{ Helpers::getdateFormat($data->actual_start_date) }}
                         @else
                             Not Applicable
                         @endif
@@ -555,15 +595,25 @@
                     <th class="w-20">Actual Action End Date</th>
                     <td class="w-80">
                         @if ($data->actual_end_date)
-                            {{ $data->actual_end_date }}
+                            {{ Helpers::getdateFormat($data->actual_end_date) }}
                         @else
                             Not Applicable
                         @endif
                     </td>
 
                 </tr>
+            </table>
 
-                <tr>
+            <label class="head-number" for="Observation (+)">Action Taken</label>
+                <div class="div-data">
+                    @if ($data->action_taken)
+                        {{ $data->action_taken }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
+
+                <!-- <tr>
                     <th class="w-20">Action Taken</th>
                     <td class="w-80">
                         @if ($data->action_taken)
@@ -572,23 +622,30 @@
                             Not Applicable
                         @endif
                     </td>
-                </tr>
+                </tr> -->
 
-            </table>
 
             <div class="block-head">
                 Response Summary
             </div>
+            <!-- <th class="w-20">Response Summary</th>
+            <td class="w-80">
+                @if ($data->response_summary)
+                {{ $data->response_summary }}
+                @else
+                Not Applicable
+                @endif
+            </td> -->
+            <label class="head-number" for="Observation (+)">Response Summary</label>
+                <div class="div-data">
+                    @if ($data->response_summary)
+                        {{ $data->response_summary }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
             <table>
-                 <tr>
-                    <th class="w-20">Response Summary</th>
-                    <td class="w-80">
-                        @if ($data->response_summary)
-                            {{ $data->response_summary }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
+                    <tr>
 
                     <th class="w-20">Related URL</th>
                     <td class="w-80">
@@ -650,7 +707,7 @@
             </table>
             
             <div class="block-head">
-                Response Verification Attachements
+            Response and Summary Attachment
              </div>
                <div class="border-table">
                  <table>
@@ -849,11 +906,11 @@
 
        </table>
        <div class="block-head">
-        No CAPAs Plan Proposed
+        No CAPAs Required
      </div>
        <table>
         <tr>
-            <th class="w-20">No CAPAs Plan Proposed By</th>
+            <th class="w-20">No CAPAs Required By</th>
             <td class="w-80">
                 @if ($data->qa_approval_without_capa_by)
                     {{ $data->qa_approval_without_capa_by }}
@@ -862,7 +919,7 @@
                 @endif
             </td>
 
-            <th class="w-20">No CAPAs Plan Proposed On</th>
+            <th class="w-20">No CAPAs Required On</th>
             <td class="w-80">
                 @if ($data->qa_approval_without_capa_on)
                     {{ $data->qa_approval_without_capa_on }}
@@ -871,7 +928,7 @@
                 @endif
             </td>
       
-            <th class="w-20">No CAPAs Plan Proposed Comment</th>
+            <th class="w-20">No CAPAs Required Comment</th>
             <td class="w-80">
                 @if ($data->qa_approval_without_capa_comment)
                     {{ $data->qa_approval_without_capa_comment }}

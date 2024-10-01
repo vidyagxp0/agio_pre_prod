@@ -3,6 +3,7 @@
 use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\ExtensionNewController;
 use App\Http\Controllers\InductionTrainingController;
+use App\Http\Controllers\JobDescriptionController;
 use App\Http\Controllers\rcms\ActionItemController;
 use App\Http\Controllers\rcms\AuditeeController;
 use App\Http\Controllers\rcms\CCController;
@@ -55,9 +56,13 @@ Route::group(['prefix' => 'rcms'], function () {
     // Route::middleware(['rcms'])->group(
         Route::middleware(['rcms', 'active-account'])->group(
         function () {
+            
             Route::post('job_trainer_send/{id}', [JobTrainingController::class, 'sendStage']);
             Route::get('traineraudittrail/{id}', [TrainerController::class, 'trainerAuditTrial'])->name('trainer.audittrail');
-            Route::get('trainer_report/{id}', [TrainerController::class, 'trainerReport'])->name('trainer_report');   
+            Route::get('trainer_report/{id}', [TrainerController::class, 'trainerReport'])->name('trainer_report');
+
+            Route::post('job_description_send/{id}', [JobDescriptionController::class, 'sendJDStage']);
+
 
             Route::get('job_training_report/{id}', [JobTrainingController::class, 'jobReport'])->name('job_training_report');
             // Route::get('auditDetailsTrainer/{id}', [TrainerController::class, 'auditDetailstrainer'])->name('trainerauditDetails');

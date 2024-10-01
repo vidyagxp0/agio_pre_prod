@@ -206,12 +206,12 @@
         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
             View
         </button> 
-        <button class="button_theme1"><a class="text-white"
-                href="{{ url('rcms/observationshow/' . $document->id) }}"> Back
-            </a>
+        <button class="button_theme1">
+            Back
         </button>
-        <button class="button_theme1" onclick="window.print();">
-            Print
+        <button class="button_theme1"><a class="text-white"
+                href="{{ url('rcms/observationshow/' . $document->id) }}"> Exit
+            </a>
         </button>
     </div>
 </div>

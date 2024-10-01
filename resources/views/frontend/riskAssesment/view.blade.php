@@ -170,7 +170,7 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName($data->division_id) }} / Risk Assesment
+            {{ Helpers::getDivisionName($data->division_id) }} / Risk Assessment
         </div>
     </div>
 
@@ -198,6 +198,8 @@
                                 'Production_Table_Person',
                                 'Production_Injection_Person',
                                 'ResearchDevelopment_person',
+                                'Human_Resource_person',
+                                'CorporateQualityAssurance_person',
                                 'Store_person',
                                 'Quality_Control_Person',
                                 'QualityAssurance_person',
@@ -207,8 +209,6 @@
                                 'Engineering_person',
                                 'ContractGiver_person',
                                 'Environment_Health_Safety_person',
-                                'Human_Resource_person',
-                                'CorporateQualityAssurance_person',
                             ];
 
                             // Initialize an array to store the values
@@ -236,7 +236,7 @@
                         <button class="button_theme1"> <a class="text-white" href="{{ url('riskAuditTrial', $data->id) }}">
                                 Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Risk Assessment', 3))
                             <!-----------------Helpers::check_roles($data->division_id, 'Root Cause Analysis', 3)----------->
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
@@ -247,7 +247,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Risk Assessment', 4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
@@ -265,7 +265,7 @@
                             ($data->stage == 3 && Helpers::check_roles($data->division_id, 'Risk Assessment', 5)) ||
                                 in_array(Auth::user()->id, $valuesArray))
                             <!-- @if (!$cftCompleteUser)
-    -->
+                             -->
 
 
                             {{-- ($data->stage == 3 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds))) --}}
@@ -280,8 +280,8 @@
                                 Child
                             </button> --}}
                             <!--
-    @endif -->
-                        @elseif($data->stage == 4 && (in_array(49, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @endif -->
+                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Risk Assessment', 7)|| Helpers::check_roles($data->division_id, 'Risk Assessment', 66))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Request More Info
                             </button>
@@ -291,7 +291,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                        @elseif($data->stage == 5 && (in_array(42, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 5 && (in_array(42, $userRoleIds) || in_array(65 , $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 In Approval
                             </button>
@@ -887,7 +887,7 @@
                                                     <div class="col-6">
                                                         <div id="rootCause" class="group-input" style="display: none;">
                                                             <label for="otherFieldsUser">Other (Root Cause Methodology)</label>
-                                                            <input type="text" name="other_root_cause_methodology" class="form-control" value="{{ $data->other_root_cause_methodology ?? '' }}"/>
+                                                            <input type="text" name="other_root_cause_methodology" id="summernote" class="form-control" value="{{ $data->other_root_cause_methodology ?? '' }}"/>
                                                         </div>
                                                     </div>
 
@@ -923,7 +923,7 @@
                                                                 <label for="agenda">
                                                                     Failure Mode and Effect Analysis
                                                                     <button type="button" name="agenda"
-                                                                        onclick="addRiskAssessmentdata('risk-assessment-risk-management')"
+                                                                        onclick="addRiskAssessmentdata1('risk-assessment-risk-management')"
                                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
                                                                 </label>
                                                                 <div class="table-responsive">
@@ -931,7 +931,7 @@
                                                                         <thead>
                                                                             <tr>
 
-                                                                                <th colspan="1"style="text-align:center;">Row #</th>
+                                                                                <th colspan="1"style="text-align:center;"></th>
                                                                                 <th colspan="2"style="text-align:center;">Risk Identification</th>
                                                                                 <th colspan="1"style="text-align:center;">Risk Analysis</th>
                                                                                 <th colspan="4"style="text-align:center;">Risk Evaluation</th>
@@ -1403,7 +1403,7 @@
 
                                     <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="File Attachments">Risk Assesment Attachments</label>
+                                            <label for="File Attachments">Attachments</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
                                             <div class="file-attachment-field">
@@ -1435,8 +1435,6 @@
                                         </div>
                                     </div>
 
-
-
                                 </div>
                                 <div class="button-block">
                                     <button type="submit" id="ChangesaveButton02" class="saveButton"
@@ -1457,10 +1455,10 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Microbiology-Person">CFT Reviewer Selection <span class="text-danger">*</span></label>
+                                        <label for="Microbiology-Person">CFT Reviewer Selection <span class="text-danger"></span></label>
                                         <select multiple name="reviewer_person_value[]"
                                             placeholder="Select CFT Reviewers" data-search="false"
-                                            data-silent-initial-value-set="true"  id="reviewer_person_value"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} {{$data->stage == 2 ? 'required' : ''}}>
+                                            data-silent-initial-value-set="true"  id="reviewer_person_value"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                             <!-- <option value="">-- Select --</option> -->
                                             @foreach ($cft as $data1)
                                                 @if (Helpers::checkUserRolesMicrobiology_Person($data1))
@@ -1490,7 +1488,7 @@
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Inv Attachments">Hod/Designee Attachments</label>
+                                            <label for="Inv Attachments">HOD/Designee Attachments</label>
                                             <div>
                                                 <small class="text-primary">
                                                     Please Attach all relevant or supporting documents
@@ -1637,8 +1635,7 @@
                                                         does not require completion</small></div>
                                                 <textarea @if ($data1->Production_Table_Review == 'yes' && $data->stage == 3) required @endif class="summernote Production_Table_Assessment"
                                                     @if (
-                                                        $data->stage == 2 ||
-                                                            (isset($data1->Production_Table_Person) && Auth::user()->name != $data1->Production_Table_Person)) readonly @endif name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
+                                                        $data->stage == 2 || (isset($data1->Production_Table_Person) && Auth::user()->name != $data1->Production_Table_Person)) readonly @endif name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12 mb-3 productionTable">
@@ -1842,7 +1839,7 @@
                                                 <div class="group-input">
                                                     <label for="Production Tablet assessment">Impact Assessment (By
                                                         Production
-                                                        Tablet)
+                                                        Tablet/Capsule/Powder)
                                                         <!-- <span
                                                                                                                                                                                                                     id="asteriskInvi12" style="display: none"
                                                                                                                                                                                                                     class="text-danger">*</span> -->
@@ -1856,7 +1853,8 @@
                                             </div>
                                             <div class="col-md-12 mb-3 productionTable">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet feedback">Production Tablet Feedback
+                                                    <label for="Production Tablet feedback">Production
+                                                        Tablet/Capsule/Powder Feedback
                                                         <!-- <span
                                                                                                                                                                                                                     id="asteriskInvi22" style="display: none"
                                                                                                                                                                                                                     class="text-danger">*</span> -->
@@ -1945,7 +1943,7 @@
                                     </div>
                                     <script>
                                         $(document).ready(function() {
-                                            @if ($data1->Production_Injection_Review !== 'yes')
+                                            @if ($data1->ResearchDevelopment_Review !== 'yes')
                                                 $('.productionInjection').hide();
 
                                                 $('[name="Production_Injection_Review"]').change(function() {
@@ -1970,7 +1968,7 @@
                                     @if ($data->stage == 2 || $data->stage == 3)
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Production Injection"> Production Injection Required ?
+                                                <label for="Production Injection"> Production Injection Review Required ?
                                                     <span class="text-danger">*</span></label>
                                                 <select name="Production_Injection_Review"
                                                     id="Production_Injection_Review"
@@ -2162,7 +2160,7 @@
                                     @else
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Production Injection">Production Injection Required
+                                                <label for="Production Injection">Production Injection Review Required
                                                     ?</label>
                                                 <select name="Production_Injection_Review" disabled
                                                     id="Production_Injection_Review">
@@ -2340,6 +2338,7 @@
                                             </div>
                                         </div>
                                     @endif
+
 
 
                                     <div class="sub-head">
@@ -2731,6 +2730,10 @@
 
 
 
+
+
+
+
                                     <div class="sub-head">
                                         Human Resource
                                     </div>
@@ -3103,10 +3106,6 @@
                                             </div>
                                         </div>
                                     @endif
-
-
-
-
 
                                     <div class="sub-head">
                                         Corporate Quality Assurance
@@ -3885,22 +3884,26 @@
                                             </div>
                                         </div>
                                     @endif
+
+
+
                                     <div class="sub-head">
-                                        Engineering
+                                        Quality Control
                                     </div>
                                     <script>
                                         $(document).ready(function() {
-                                            @if ($data1->Engineering_review !== 'yes')
-                                                $('.Engineering').hide();
+                                            @if ($data1->Quality_review !== 'yes')
 
-                                                $('[name="Engineering_review"]').change(function() {
+                                                $('.qualityControl').hide();
+
+                                                $('[name="Quality_review"]').change(function() {
                                                     if ($(this).val() === 'yes') {
 
-                                                        $('.Engineering').show();
-                                                        $('.Engineering span').show();
+                                                        $('.qualityControl').show();
+                                                        $('.qualityControl span').show();
                                                     } else {
-                                                        $('.Engineering').hide();
-                                                        $('.Engineering span').hide();
+                                                        $('.qualityControl').hide();
+                                                        $('.qualityControl span').hide();
                                                     }
                                                 });
                                             @endif
@@ -3915,18 +3918,18 @@
                                     @if ($data->stage == 2 || $data->stage == 3)
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Engineering"> Engineering Required ? <span
+                                                <label for="Quality Control"> Quality Control Required ? <span
                                                         class="text-danger">*</span></label>
-                                                <select name="Engineering_review" id="Engineering_review"
+                                                <select name="Quality_review" id="Quality_review_Review"
                                                     @if ($data->stage == 3) disabled @endif>
                                                     <option value="">-- Select --</option>
-                                                    <option @if ($data1->Engineering_review == 'yes') selected @endif
+                                                    <option @if ($data1->Quality_review == 'yes') selected @endif
                                                         value='yes'>
                                                         Yes</option>
-                                                    <option @if ($data1->Engineering_review == 'no') selected @endif
+                                                    <option @if ($data1->Quality_review == 'no') selected @endif
                                                         value='no'>
                                                         No</option>
-                                                    <option @if ($data1->Engineering_review == 'na') selected @endif
+                                                    <option @if ($data1->Quality_review == 'na') selected @endif
                                                         value='na'>
                                                         NA</option>
                                                 </select>
@@ -3936,69 +3939,75 @@
                                         @php
                                             $userRoles = DB::table('user_roles')
                                                 ->where([
-                                                    'q_m_s_roles_id' => 25,
+                                                    'q_m_s_roles_id' => 24,
                                                     'q_m_s_divisions_id' => $data->division_id,
                                                 ])
                                                 ->get();
                                             $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                             $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                         @endphp
-                                        <div class="col-lg-6 Engineering">
+                                        <div class="col-lg-6 qualityControl">
                                             <div class="group-input">
-                                                <label for="Engineering notification">Engineering Person <span
+                                                <label for="Quality Control notification">Quality Control Person <span
                                                         id="asteriskPT"
-                                                        style="display: {{ $data1->Engineering_review == 'yes' ? 'inline' : 'none' }}"
+                                                        style="display: {{ $data1->Quality_review == 'yes' ? 'inline' : 'none' }}"
                                                         class="text-danger">*</span>
                                                 </label>
                                                 <select @if ($data->stage == 3) disabled @endif
-                                                    name="Engineering_person" class="Engineering_person"
-                                                    id="Engineering_person">
+                                                    name="Quality_Control_Person" class="Quality_Control_Person"
+                                                    id="Quality_Control_Person">
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $user)
                                                         <option value="{{ $user->name }}"
-                                                            @if ($user->name == $data1->Engineering_person) selected @endif>
+                                                            @if ($user->name == $data1->Quality_Control_Person) selected @endif>
                                                             {{ $user->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mb-3 Engineering">
+                                        <div class="col-md-12 mb-3 qualityControl">
                                             <div class="group-input">
-                                                <label for="Engineering assessment">Impact Assessment (By Engineering)
+                                                <label for="Quality Control assessment">Impact Assessment (By Quality
+                                                    Control)
                                                     <span id="asteriskPT1"
-                                                        style="display: {{ $data1->Engineering_review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
+                                                        style="display: {{ $data1->Quality_review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                                         class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field
                                                         if it
                                                         does not require completion</small></div>
-                                                <textarea @if ($data1->Engineering_review == 'yes' && $data->stage == 3) required @endif class="summernote Engineering_assessment"
-                                                    @if ($data->stage == 2 || (isset($data1->Engineering_person) && Auth::user()->name != $data1->Engineering_person)) readonly @endif name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
+                                                <textarea @if ($data1->Quality_review == 'yes' && $data->stage == 3) required @endif class="summernote Quality_Control_assessment"
+                                                    @if (
+                                                        $data->stage == 2 ||
+                                                            (isset($data1->Quality_Control_Person) && Auth::user()->name != $data1->Quality_Control_Person)) readonly @endif name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mb-3 Engineering">
+                                        <div class="col-md-12 mb-3 qualityControl">
                                             <div class="group-input">
-                                                <label for="Engineering feedback">Engineering Feedback <span
+                                                <label for="Quality Control feedback">Quality Control Feedback <span
                                                         id="asteriskPT2"
-                                                        style="display: {{ $data1->Engineering_review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
+                                                        style="display: {{ $data1->Quality_review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                                         class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field
                                                         if it
                                                         does not require completion</small></div>
-                                                <textarea class="summernote Engineering_feedback" @if ($data->stage == 2 || (isset($data1->Engineering_person) && Auth::user()->name != $data1->Engineering_person)) readonly @endif
-                                                    name="Engineering_feedback" id="summernote-18" @if ($data1->Engineering_review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Engineering_feedback }}</textarea>
+                                                <textarea class="summernote Quality_Control_feedback" @if (
+                                                    $data->stage == 2 ||
+                                                        (isset($data1->Quality_Control_Person) && Auth::user()->name != $data1->Quality_Control_Person)) readonly @endif
+                                                    name="Quality_Control_feedback" id="summernote-18" @if ($data1->Quality_review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Quality_Control_feedback }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-12 Engineering">
+                                        <div class="col-12 qualityControl">
                                             <div class="group-input">
-                                                <label for="Engineering attachment">Engineering Attachments</label>
+                                                <label for="Quality Control attachment">Quality Control
+                                                    Attachments</label>
                                                 <div><small class="text-primary">Please Attach all relevant or
                                                         supporting
                                                         documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div disabled class="file-attachment-list"
-                                                        id="Engineering_attachment">
-                                                        @if ($data1->Engineering_attachment)
-                                                            @foreach (json_decode($data1->Engineering_attachment) as $file)
+                                                        id="Quality_Control_attachment">
+                                                        @if ($data1->Quality_Control_attachment)
+                                                            @foreach (json_decode($data1->Quality_Control_attachment) as $file)
                                                                 <h6 type="button" class="file-container text-dark"
                                                                     style="background-color: rgb(243, 242, 240);">
                                                                     <b>{{ $file }}</b>
@@ -4019,60 +4028,61 @@
                                                         <input
                                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                             type="file" id="myfile"
-                                                            name="Engineering_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                            oninput="addMultipleFiles(this, 'Engineering_attachment')"
+                                                            name="Quality_Control_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="addMultipleFiles(this, 'Quality_Control_attachment')"
                                                             multiple>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 mb-3 Engineering">
+                                        <div class="col-md-6 mb-3 qualityControl">
                                             <div class="group-input">
-                                                <label for="Engineering Completed By">Engineering Completed
+                                                <label for="Quality Control Completed By">Quality Control Completed
                                                     By</label>
                                                 <input readonly type="text"
-                                                    value="{{ $data1->Engineering_by }}"
-                                                    name="Engineering_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
-                                                    id="Engineering_by">
+                                                    value="{{ $data1->Quality_Control_by }}"
+                                                    name="Quality_Control_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
+                                                    id="Quality_Control_by">
 
 
                                             </div>
                                         </div>
-                                        {{-- <div class="col-lg-6 Engineering">
-                                    <div class="group-input ">
-                                        <label for="Engineering Completed On">Engineering Completed
+                                        {{-- <div class="col-lg-6 qualityControl">
+                                         <div class="group-input ">
+                                        <label for="Quality Control Completed On">Quality Control Completed
                                             On</label>
                                         <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                        <input type="date"id="Engineering_on"
-                                            name="Engineering_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                            value="{{ $data1->Engineering_on }}">
-                                    </div>
-                                </div> --}}
-                                        <div class="col-lg-6 Engineering new-date-data-field">
+                                        <input type="date"id="Quality_Control_on"
+                                            name="Quality_Control_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                            value="{{ $data1->Quality_Control_on }}">
+                                         </div>
+                                        </div> --}}
+                                        <div class="col-lg-6 qualityControl new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="Store Completed On">Engineering
+                                                <label for="Quality Control Completed On">Quality Control
                                                     Completed On</label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="Engineering_on" readonly
+                                                    <input type="text" id="Quality_Control_on" readonly
                                                         placeholder="DD-MMM-YYYY"
-                                                        value="{{ Helpers::getdateFormat($data1->Engineering_on) }}" />
-                                                    <input readonly type="date" name="Engineering_on"
+                                                        value="{{ Helpers::getdateFormat($data1->Quality_Control_on) }}" />
+                                                    <input readonly type="date" name="Quality_Control_on"
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         value="" class="hide-input"
-                                                        oninput="handleDateInput(this, 'Engineering_on')" />
+                                                        oninput="handleDateInput(this, 'Quality_Control_on')" />
                                                 </div>
-                                                @error('Engineering_on')
+                                                @error('Quality_Control_on')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
+
                                         <script>
                                             document.addEventListener('DOMContentLoaded', function() {
-                                                var selectField = document.getElementById('Engineering_review');
+                                                var selectField = document.getElementById('Quality_review');
                                                 var inputsToToggle = [];
 
                                                 // Add elements with class 'facility-name' to inputsToToggle
-                                                var facilityNameInputs = document.getElementsByClassName('Engineering_person');
+                                                var facilityNameInputs = document.getElementsByClassName('Quality_Control_Person');
                                                 for (var i = 0; i < facilityNameInputs.length; i++) {
                                                     inputsToToggle.push(facilityNameInputs[i]);
                                                 }
@@ -4103,16 +4113,16 @@
                                     @else
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Engineering">Engineering Required ?</label>
-                                                <select name="Engineering_review" disabled id="Engineering_review">
+                                                <label for="Quality Control">Quality Control Required ?</label>
+                                                <select name="Quality_review" disabled id="Quality_review">
                                                     <option value="">-- Select --</option>
-                                                    <option @if ($data1->Engineering_review == 'yes') selected @endif
+                                                    <option @if ($data1->Quality_review == 'yes') selected @endif
                                                         value='yes'>
                                                         Yes</option>
-                                                    <option @if ($data1->Engineering_review == 'no') selected @endif
+                                                    <option @if ($data1->Quality_review == 'no') selected @endif
                                                         value='no'>
                                                         No</option>
-                                                    <option @if ($data1->Engineering_review == 'na') selected @endif
+                                                    <option @if ($data1->Quality_review == 'na') selected @endif
                                                         value='na'>
                                                         NA</option>
                                                 </select>
@@ -4122,84 +4132,90 @@
                                         @php
                                             $userRoles = DB::table('user_roles')
                                                 ->where([
-                                                    'q_m_s_roles_id' => 25,
+                                                    'q_m_s_roles_id' => 24,
                                                     'q_m_s_divisions_id' => $data->division_id,
                                                 ])
                                                 ->get();
                                             $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                             $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                         @endphp
-                                        <div class="col-lg-6 Engineering">
+                                        <div class="col-lg-6 qualityControl">
                                             <div class="group-input">
-                                                <label for="Engineering notification">Engineering Person <span
+                                                <label for="Quality Control notification">Quality Control Person <span
                                                         id="asteriskInvi11" style="display: none"
                                                         class="text-danger">*</span></label>
-                                                <select name="Engineering_person" disabled id="Engineering_person">
+                                                <select name="Quality_Control_Person" disabled
+                                                    id="Quality_Control_Person">
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $user)
                                                         <option value="{{ $user->name }}"
-                                                            @if ($user->name == $data1->Engineering_person) selected @endif>
+                                                            @if ($user->name == $data1->Quality_Control_Person) selected @endif>
                                                             {{ $user->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
                                         @if ($data->stage == 3)
-                                            <div class="col-md-12 mb-3 Engineering">
+                                            <div class="col-md-12 mb-3 qualityControl">
                                                 <div class="group-input">
-                                                    <label for="Engineering assessment">Impact Assessment (By
-                                                        Engineering)</label>
+                                                    <label for="Quality Control assessment">Impact Assessment (By
+                                                        Quality
+                                                        Control)</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
                                                             field if
                                                             it
                                                             does not require completion</small></div>
-                                                    <textarea class="tiny" name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
+                                                    <textarea class="tiny" name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 Engineering">
+                                            <div class="col-md-12 mb-3 qualityControl">
                                                 <div class="group-input">
-                                                    <label for="Engineering feedback">Engineering Feedback</label>
+                                                    <label for="Quality Control feedback">Quality Control
+                                                        Feedback</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
                                                             field if
                                                             it
                                                             does not require completion</small></div>
-                                                    <textarea class="tiny" name="Engineering_feedback" id="summernote-18">{{ $data1->Engineering_feedback }}</textarea>
+                                                    <textarea class="tiny" name="Quality_Control_feedback" id="summernote-18">{{ $data1->Quality_Control_feedback }}</textarea>
                                                 </div>
                                             </div>
                                         @else
-                                            <div class="col-md-12 mb-3 Engineering">
+                                            <div class="col-md-12 mb-3 qualityControl">
                                                 <div class="group-input">
-                                                    <label for="Engineering assessment">Impact Assessment (By
-                                                        Engineering)</label>
+                                                    <label for="Quality Control assessment">Impact Assessment (By
+                                                        Quality
+                                                        Control)</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
                                                             field if
                                                             it
                                                             does not require completion</small></div>
-                                                    <textarea disabled class="tiny" name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
+                                                    <textarea disabled class="tiny" name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 Engineering">
+                                            <div class="col-md-12 mb-3 qualityControl">
                                                 <div class="group-input">
-                                                    <label for="Engineering feedback">Engineering Feedback</label>
+                                                    <label for="Quality Control feedback">Quality Control
+                                                        Feedback</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
                                                             field if
                                                             it
                                                             does not require completion</small></div>
-                                                    <textarea disabled class="tiny" name="Engineering_feedback" id="summernote-18">{{ $data1->Engineering_feedback }}</textarea>
+                                                    <textarea disabled class="tiny" name="Quality_Control_feedback" id="summernote-18">{{ $data1->Quality_Control_feedback }}</textarea>
                                                 </div>
                                             </div>
                                         @endif
-                                        <div class="col-12 Engineering">
+                                        <div class="col-12 qualityControl">
                                             <div class="group-input">
-                                                <label for="Engineering attachment">Engineering Attachments</label>
+                                                <label for="Quality Control attachment">Quality Control
+                                                    Attachments</label>
                                                 <div><small class="text-primary">Please Attach all relevant or
                                                         supporting
                                                         documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div disabled class="file-attachment-list"
-                                                        id="Engineering_attachment">
-                                                        @if ($data1->Engineering_attachment)
-                                                            @foreach (json_decode($data1->Engineering_attachment) as $file)
+                                                        id="Quality_Control_attachment">
+                                                        @if ($data1->Quality_Control_attachment)
+                                                            @foreach (json_decode($data1->Quality_Control_attachment) as $file)
                                                                 <h6 type="button" class="file-container text-dark"
                                                                     style="background-color: rgb(243, 242, 240);">
                                                                     <b>{{ $file }}</b>
@@ -4220,43 +4236,237 @@
                                                         <input disabled
                                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                             type="file" id="myfile"
-                                                            name="Engineering_attachment[]"
-                                                            oninput="addMultipleFiles(this, 'Engineering_attachment')"
+                                                            name="Store_attachment[]"
+                                                            oninput="addMultipleFiles(this, 'Quality_Control_attachment')"
                                                             multiple>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 mb-3 Engineering">
+                                        <div class="col-md-6 mb-3 qualityControl">
                                             <div class="group-input">
-                                                <label for="Engineering Completed By">Engineering Completed
+                                                <label for="Quality Control Completed By">Quality Control Completed
                                                     By</label>
                                                 <input readonly type="text"
-                                                    value="{{ $data1->Engineering_by }}" name="Engineering_by"
-                                                    id="Engineering_by">
+                                                    value="{{ $data1->Quality_Control_by }}"
+                                                    name="Quality_Control_by" id="Quality_Control_by">
 
 
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 Engineering new-date-data-field">
+                                        <div class="col-lg-6 qualityControl new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="Store Completed On">Engineering
+                                                <label for="Quality Control Completed On">Quality Control
                                                     Completed On</label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="Engineering_on" readonly
+                                                    <input type="text" id="Quality_Control_on" readonly
                                                         placeholder="DD-MMM-YYYY"
-                                                        value="{{ Helpers::getdateFormat($data1->Engineering_on) }}" />
-                                                    <input readonly type="date" name="Engineering_on"
+                                                        value="{{ Helpers::getdateFormat($data1->Quality_Control_on) }}" />
+                                                    <input readonly type="date" name="Quality_Control_on"
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         value="" class="hide-input"
-                                                        oninput="handleDateInput(this, 'Engineering_on')" />
+                                                        oninput="handleDateInput(this, 'Quality_Control_on')" />
                                                 </div>
-                                                @error('Engineering_on')
+                                                @error('Quality_Control_on')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
                                     @endif
+
+
+                                    <div class="sub-head">
+                                        Quality Assurance
+                                    </div>
+                                    <script>
+                                        $(document).ready(function() {
+                                            @if ($data1->Quality_Assurance_Review !== 'yes')
+
+                                                $('.quality_assurance').hide();
+
+                                                $('[name="Quality_Assurance_Review"]').change(function() {
+                                                    if ($(this).val() === 'yes') {
+                                                        $('.quality_assurance').show();
+                                                        $('.quality_assurance span').show();
+                                                    } else {
+                                                        $('.quality_assurance').hide();
+                                                        $('.quality_assurance span').hide();
+                                                    }
+                                                });
+                                            @endif
+
+                                        });
+                                    </script>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Quality Assurance Review Required">Quality Assurance Review
+                                                Required ?
+                                                <span class="text-danger">*</span></label>
+                                            <select @if ($data->stage == 3) required @endif
+                                                name="Quality_Assurance_Review" id="Quality_Assurance_Review"
+                                                @if ($data->stage == 3) disabled @endif>
+                                                <option value="">-- Select --</option>
+                                                <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif
+                                                    value="yes">
+                                                    Yes</option>
+                                                <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif
+                                                    value="no">
+                                                    No
+                                                </option>
+                                                <option @if ($data1->Quality_Assurance_Review == 'na') selected @endif
+                                                    value="na">
+                                                    NA
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    @php
+                                        $userRoles = DB::table('user_roles')
+                                            ->where([
+                                                'q_m_s_roles_id' => 26,
+                                                'q_m_s_divisions_id' => $data->division_id,
+                                            ])
+                                            ->get();
+                                        $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                        //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    @endphp
+                                    <div class="col-lg-6 quality_assurance">
+                                        <div class="group-input">
+                                            <label for="Quality Assurance Person">Quality Assurance Person <span
+                                                    id="asteriskQQA"
+                                                    style="display: {{ $data1->Quality_Assurance_Review == 'yes' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span></label>
+                                            <select name="QualityAssurance_person" class="QualityAssurance_person"
+                                                id="QualityAssurance_person"
+                                                @if ($data->stage == 3) disabled @endif>
+                                                <option value="">-- Select --</option>
+                                                @foreach ($users as $user)
+                                                    <option
+                                                        {{ $data1->QualityAssurance_person == $user->name ? 'selected' : '' }}
+                                                        value="{{ $user->name }}">{{ $user->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mb-3 quality_assurance">
+                                        <div class="group-input">
+                                            <label for="Impact Assessment3">Impact Assessment (By Quality Assurance)
+                                                <span id="asteriskQQA1"
+                                                    style="display: {{ $data1->Quality_Assurance_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if
+                                                    it does
+                                                    not require completion</small></div>
+                                            <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 3) required @endif class="summernote QualityAssurance_assessment"
+                                                name="QualityAssurance_assessment" @if ($data->stage == 2 || Auth::user()->name != $data1->QualityAssurance_person) readonly @endif id="summernote-23">{{ $data1->QualityAssurance_assessment }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mb-3 quality_assurance">
+                                        <div class="group-input">
+                                            <label for="Quality Assurance Feedback">Quality Assurance Feedback <span
+                                                    id="asteriskQQA2"
+                                                    style="display: {{ $data1->Quality_Assurance_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if
+                                                    it does
+                                                    not require completion</small></div>
+                                            <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 3) required @endif class="summernote QualityAssurance_feedback"
+                                                name="QualityAssurance_feedback" @if ($data->stage == 2 || Auth::user()->name != $data1->QualityAssurance_person) readonly @endif id="summernote-24">{{ $data1->QualityAssurance_feedback }}</textarea>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            var selectField = document.getElementById('Quality_Assurance_Review');
+                                            var inputsToToggle = [];
+
+                                            // Add elements with class 'facility-name' to inputsToToggle
+                                            var facilityNameInputs = document.getElementsByClassName('QualityAssurance_person');
+                                            for (var i = 0; i < facilityNameInputs.length; i++) {
+                                                inputsToToggle.push(facilityNameInputs[i]);
+                                            }
+
+                                            selectField.addEventListener('change', function() {
+                                                var isRequired = this.value === 'yes';
+
+                                                inputsToToggle.forEach(function(input) {
+                                                    input.required = isRequired;
+                                                });
+
+                                                // Show or hide the asterisk icon based on the selected value
+                                                var asteriskIcon = document.getElementById('asteriskQQA');
+                                                asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+                                            });
+                                        });
+                                    </script>
+                                    <div class="col-12 quality_assurance">
+                                        <div class="group-input">
+                                            <label for="Quality Assurance Attachments">Quality Assurance
+                                                Attachments</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div disabled class="file-attachment-list"
+                                                    id="Quality_Assurance_attachment">
+                                                    @if ($data1->Quality_Assurance_attachment)
+                                                        @foreach (json_decode($data1->Quality_Assurance_attachment) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i
+                                                                        class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input
+                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        type="file" id="myfile"
+                                                        name="Quality_Assurance_attachment[]"
+                                                        oninput="addMultipleFiles(this, 'Quality_Assurance_attachment')"
+                                                        multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3 quality_assurance">
+                                        <div class="group-input">
+                                            <label for="Quality Assurance Review Completed By">Quality Assurance
+                                                Review
+                                                Completed By</label>
+                                            <input type="text" name="QualityAssurance_by"
+                                                id="QualityAssurance_by" value="{{ $data1->QualityAssurance_by }}"
+                                                disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 mb-3 quality_assurance new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Quality Assurance Review Completed On">Quality Assurance
+                                                Review
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="QualityAssurance_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->QualityAssurance_on) }}" />
+                                                <input type="date" name="QualityAssurance_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}"
+                                                    value="" class="hide-input"
+                                                    oninput="handleDateInput(this, 'QualityAssurance_on')" />
+                                            </div>
+                                            @error('QualityAssurance_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
 
                                     <div class="sub-head">
                                         Regulatory Affair
@@ -4648,205 +4858,6 @@
 
 
 
-
-
-
-
-
-
-                                    <div class="sub-head">
-                                        Quality Assurance
-                                    </div>
-                                    <script>
-                                        $(document).ready(function() {
-                                            @if ($data1->Quality_Assurance_Review !== 'yes')
-
-                                                $('.quality_assurance').hide();
-
-                                                $('[name="Quality_Assurance_Review"]').change(function() {
-                                                    if ($(this).val() === 'yes') {
-                                                        $('.quality_assurance').show();
-                                                        $('.quality_assurance span').show();
-                                                    } else {
-                                                        $('.quality_assurance').hide();
-                                                        $('.quality_assurance span').hide();
-                                                    }
-                                                });
-                                            @endif
-
-                                        });
-                                    </script>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Quality Assurance Review Required">Quality Assurance Review
-                                                Required ?
-                                                <span class="text-danger">*</span></label>
-                                            <select @if ($data->stage == 3) required @endif
-                                                name="Quality_Assurance_Review" id="Quality_Assurance_Review"
-                                                @if ($data->stage == 3) disabled @endif>
-                                                <option value="">-- Select --</option>
-                                                <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif
-                                                    value="yes">
-                                                    Yes</option>
-                                                <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif
-                                                    value="no">
-                                                    No
-                                                </option>
-                                                <option @if ($data1->Quality_Assurance_Review == 'na') selected @endif
-                                                    value="na">
-                                                    NA
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    @php
-                                        $userRoles = DB::table('user_roles')
-                                            ->where([
-                                                'q_m_s_roles_id' => 26,
-                                                'q_m_s_divisions_id' => $data->division_id,
-                                            ])
-                                            ->get();
-                                        $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                        //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                    @endphp
-                                    <div class="col-lg-6 quality_assurance">
-                                        <div class="group-input">
-                                            <label for="Quality Assurance Person">Quality Assurance Person <span
-                                                    id="asteriskQQA"
-                                                    style="display: {{ $data1->Quality_Assurance_Review == 'yes' ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span></label>
-                                            <select name="QualityAssurance_person" class="QualityAssurance_person"
-                                                id="QualityAssurance_person"
-                                                @if ($data->stage == 3) disabled @endif>
-                                                <option value="">-- Select --</option>
-                                                @foreach ($users as $user)
-                                                    <option
-                                                        {{ $data1->QualityAssurance_person == $user->name ? 'selected' : '' }}
-                                                        value="{{ $user->name }}">{{ $user->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 mb-3 quality_assurance">
-                                        <div class="group-input">
-                                            <label for="Impact Assessment3">Impact Assessment (By Quality Assurance)
-                                                <span id="asteriskQQA1"
-                                                    style="display: {{ $data1->Quality_Assurance_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span></label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if
-                                                    it does
-                                                    not require completion</small></div>
-                                            <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 3) required @endif class="summernote QualityAssurance_assessment"
-                                                name="QualityAssurance_assessment" @if ($data->stage == 2 || Auth::user()->name != $data1->QualityAssurance_person) readonly @endif id="summernote-23">{{ $data1->QualityAssurance_assessment }}</textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 mb-3 quality_assurance">
-                                        <div class="group-input">
-                                            <label for="Quality Assurance Feedback">Quality Assurance Feedback <span
-                                                    id="asteriskQQA2"
-                                                    style="display: {{ $data1->Quality_Assurance_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span></label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if
-                                                    it does
-                                                    not require completion</small></div>
-                                            <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 3) required @endif class="summernote QualityAssurance_feedback"
-                                                name="QualityAssurance_feedback" @if ($data->stage == 2 || Auth::user()->name != $data1->QualityAssurance_person) readonly @endif id="summernote-24">{{ $data1->QualityAssurance_feedback }}</textarea>
-                                        </div>
-                                    </div>
-
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', function() {
-                                            var selectField = document.getElementById('Quality_Assurance_Review');
-                                            var inputsToToggle = [];
-
-                                            // Add elements with class 'facility-name' to inputsToToggle
-                                            var facilityNameInputs = document.getElementsByClassName('QualityAssurance_person');
-                                            for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                inputsToToggle.push(facilityNameInputs[i]);
-                                            }
-
-                                            selectField.addEventListener('change', function() {
-                                                var isRequired = this.value === 'yes';
-
-                                                inputsToToggle.forEach(function(input) {
-                                                    input.required = isRequired;
-                                                });
-
-                                                // Show or hide the asterisk icon based on the selected value
-                                                var asteriskIcon = document.getElementById('asteriskQQA');
-                                                asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                            });
-                                        });
-                                    </script>
-                                    <div class="col-12 quality_assurance">
-                                        <div class="group-input">
-                                            <label for="Quality Assurance Attachments">Quality Assurance
-                                                Attachments</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting
-                                                    documents</small></div>
-                                            <div class="file-attachment-field">
-                                                <div disabled class="file-attachment-list"
-                                                    id="Quality_Assurance_attachment">
-                                                    @if ($data1->Quality_Assurance_attachment)
-                                                        @foreach (json_decode($data1->Quality_Assurance_attachment) as $file)
-                                                            <h6 type="button" class="file-container text-dark"
-                                                                style="background-color: rgb(243, 242, 240);">
-                                                                <b>{{ $file }}</b>
-                                                                <a href="{{ asset('upload/' . $file) }}"
-                                                                    target="_blank"><i
-                                                                        class="fa fa-eye text-primary"
-                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file"
-                                                                    data-file-name="{{ $file }}"><i
-                                                                        class="fa-solid fa-circle-xmark"
-                                                                        style="color:red; font-size:20px;"></i></a>
-                                                            </h6>
-                                                        @endforeach
-                                                    @endif
-                                                </div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                        type="file" id="myfile"
-                                                        name="Quality_Assurance_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'Quality_Assurance_attachment')"
-                                                        multiple>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 mb-3 quality_assurance">
-                                        <div class="group-input">
-                                            <label for="Quality Assurance Review Completed By">Quality Assurance
-                                                Review
-                                                Completed By</label>
-                                            <input type="text" name="QualityAssurance_by"
-                                                id="QualityAssurance_by" value="{{ $data1->QualityAssurance_by }}"
-                                                disabled>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 mb-3 quality_assurance new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="Quality Assurance Review Completed On">Quality Assurance
-                                                Review
-                                                Completed On</label>
-                                            <div class="calenderauditee">
-                                                <input type="text" id="QualityAssurance_on" readonly
-                                                    placeholder="DD-MMM-YYYY"
-                                                    value="{{ Helpers::getdateFormat($data1->QualityAssurance_on) }}" />
-                                                <input type="date" name="QualityAssurance_on"
-                                                    min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}"
-                                                    value="" class="hide-input"
-                                                    oninput="handleDateInput(this, 'QualityAssurance_on')" />
-                                            </div>
-                                            @error('QualityAssurance_on')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-
                                     <div class="sub-head">
                                         Production (Liquid/Externa Preparation)
                                     </div>
@@ -5234,392 +5245,9 @@
                                     @endif
 
 
-                                    <div class="sub-head">
-                                        Quality Control
-                                    </div>
-                                    <script>
-                                        $(document).ready(function() {
-                                            @if ($data1->Quality_review !== 'yes')
-
-                                                $('.qualityControl').hide();
-
-                                                $('[name="Quality_review"]').change(function() {
-                                                    if ($(this).val() === 'yes') {
-
-                                                        $('.qualityControl').show();
-                                                        $('.qualityControl span').show();
-                                                    } else {
-                                                        $('.qualityControl').hide();
-                                                        $('.qualityControl span').hide();
-                                                    }
-                                                });
-                                            @endif
-                                        });
-                                    </script>
-                                    @php
-                                        $data1 = DB::table('risk_managment_cfts')
-                                            ->where('risk_id', $data->id)
-                                            ->first();
-                                    @endphp
-
-                                    @if ($data->stage == 2 || $data->stage == 3)
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Quality Control"> Quality Control Required ? <span
-                                                        class="text-danger">*</span></label>
-                                                <select name="Quality_review" id="Quality_review_Review"
-                                                    @if ($data->stage == 3) disabled @endif>
-                                                    <option value="">-- Select --</option>
-                                                    <option @if ($data1->Quality_review == 'yes') selected @endif
-                                                        value='yes'>
-                                                        Yes</option>
-                                                    <option @if ($data1->Quality_review == 'no') selected @endif
-                                                        value='no'>
-                                                        No</option>
-                                                    <option @if ($data1->Quality_review == 'na') selected @endif
-                                                        value='na'>
-                                                        NA</option>
-                                                </select>
-
-                                            </div>
-                                        </div>
-                                        @php
-                                            $userRoles = DB::table('user_roles')
-                                                ->where([
-                                                    'q_m_s_roles_id' => 24,
-                                                    'q_m_s_divisions_id' => $data->division_id,
-                                                ])
-                                                ->get();
-                                            $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                            $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                        @endphp
-                                        <div class="col-lg-6 qualityControl">
-                                            <div class="group-input">
-                                                <label for="Quality Control notification">Quality Control Person <span
-                                                        id="asteriskPT"
-                                                        style="display: {{ $data1->Quality_review == 'yes' ? 'inline' : 'none' }}"
-                                                        class="text-danger">*</span>
-                                                </label>
-                                                <select @if ($data->stage == 3) disabled @endif
-                                                    name="Quality_Control_Person" class="Quality_Control_Person"
-                                                    id="Quality_Control_Person">
-                                                    <option value="">-- Select --</option>
-                                                    @foreach ($users as $user)
-                                                        <option value="{{ $user->name }}"
-                                                            @if ($user->name == $data1->Quality_Control_Person) selected @endif>
-                                                            {{ $user->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 mb-3 qualityControl">
-                                            <div class="group-input">
-                                                <label for="Quality Control assessment">Impact Assessment (By Quality
-                                                    Control)
-                                                    <span id="asteriskPT1"
-                                                        style="display: {{ $data1->Quality_review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
-                                                        class="text-danger">*</span></label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field
-                                                        if it
-                                                        does not require completion</small></div>
-                                                <textarea @if ($data1->Quality_review == 'yes' && $data->stage == 3) required @endif class="summernote Quality_Control_assessment"
-                                                    @if (
-                                                        $data->stage == 2 ||
-                                                            (isset($data1->Quality_Control_Person) && Auth::user()->name != $data1->Quality_Control_Person)) readonly @endif name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 mb-3 qualityControl">
-                                            <div class="group-input">
-                                                <label for="Quality Control feedback">Quality Control Feedback <span
-                                                        id="asteriskPT2"
-                                                        style="display: {{ $data1->Quality_review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
-                                                        class="text-danger">*</span></label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field
-                                                        if it
-                                                        does not require completion</small></div>
-                                                <textarea class="summernote Quality_Control_feedback" @if (
-                                                    $data->stage == 2 ||
-                                                        (isset($data1->Quality_Control_Person) && Auth::user()->name != $data1->Quality_Control_Person)) readonly @endif
-                                                    name="Quality_Control_feedback" id="summernote-18" @if ($data1->Quality_review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Quality_Control_feedback }}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 qualityControl">
-                                            <div class="group-input">
-                                                <label for="Quality Control attachment">Quality Control
-                                                    Attachments</label>
-                                                <div><small class="text-primary">Please Attach all relevant or
-                                                        supporting
-                                                        documents</small></div>
-                                                <div class="file-attachment-field">
-                                                    <div disabled class="file-attachment-list"
-                                                        id="Quality_Control_attachment">
-                                                        @if ($data1->Quality_Control_attachment)
-                                                            @foreach (json_decode($data1->Quality_Control_attachment) as $file)
-                                                                <h6 type="button" class="file-container text-dark"
-                                                                    style="background-color: rgb(243, 242, 240);">
-                                                                    <b>{{ $file }}</b>
-                                                                    <a href="{{ asset('upload/' . $file) }}"
-                                                                        target="_blank"><i
-                                                                            class="fa fa-eye text-primary"
-                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
-                                                                            class="fa-solid fa-circle-xmark"
-                                                                            style="color:red; font-size:20px;"></i></a>
-                                                                </h6>
-                                                            @endforeach
-                                                        @endif
-                                                    </div>
-                                                    <div class="add-btn">
-                                                        <div>Add</div>
-                                                        <input
-                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                            type="file" id="myfile"
-                                                            name="Quality_Control_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                            oninput="addMultipleFiles(this, 'Quality_Control_attachment')"
-                                                            multiple>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3 qualityControl">
-                                            <div class="group-input">
-                                                <label for="Quality Control Completed By">Quality Control Completed
-                                                    By</label>
-                                                <input readonly type="text"
-                                                    value="{{ $data1->Quality_Control_by }}"
-                                                    name="Quality_Control_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
-                                                    id="Quality_Control_by">
 
 
-                                            </div>
-                                        </div>
-                                        {{-- <div class="col-lg-6 qualityControl">
-                                    <div class="group-input ">
-                                        <label for="Quality Control Completed On">Quality Control Completed
-                                            On</label>
-                                        <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                        <input type="date"id="Quality_Control_on"
-                                            name="Quality_Control_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                            value="{{ $data1->Quality_Control_on }}">
-                                    </div>
-                                </div> --}}
-                                        <div class="col-lg-6 qualityControl new-date-data-field">
-                                            <div class="group-input input-date">
-                                                <label for="Quality Control Completed On">Quality Control
-                                                    Completed On</label>
-                                                <div class="calenderauditee">
-                                                    <input type="text" id="Quality_Control_on" readonly
-                                                        placeholder="DD-MMM-YYYY"
-                                                        value="{{ Helpers::getdateFormat($data1->Quality_Control_on) }}" />
-                                                    <input readonly type="date" name="Quality_Control_on"
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                        value="" class="hide-input"
-                                                        oninput="handleDateInput(this, 'Quality_Control_on')" />
-                                                </div>
-                                                @error('Quality_Control_on')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
 
-                                        <script>
-                                            document.addEventListener('DOMContentLoaded', function() {
-                                                var selectField = document.getElementById('Quality_review');
-                                                var inputsToToggle = [];
-
-                                                // Add elements with class 'facility-name' to inputsToToggle
-                                                var facilityNameInputs = document.getElementsByClassName('Quality_Control_Person');
-                                                for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                    inputsToToggle.push(facilityNameInputs[i]);
-                                                }
-                                                // var facilityNameInputs = document.getElementsByClassName('Production_Injection_Assessment');
-                                                // for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                //     inputsToToggle.push(facilityNameInputs[i]);
-                                                // }
-                                                // var facilityNameInputs = document.getElementsByClassName('Production_Injection_Feedback');
-                                                // for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                //     inputsToToggle.push(facilityNameInputs[i]);
-                                                // }
-
-                                                selectField.addEventListener('change', function() {
-                                                    var isRequired = this.value === 'yes';
-                                                    console.log(this.value, isRequired, 'value');
-
-                                                    inputsToToggle.forEach(function(input) {
-                                                        input.required = isRequired;
-                                                        console.log(input.required, isRequired, 'input req');
-                                                    });
-
-                                                    // Show or hide the asterisk icon based on the selected value
-                                                    var asteriskIcon = document.getElementById('asteriskPT');
-                                                    asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                                });
-                                            });
-                                        </script>
-                                    @else
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Quality Control">Quality Control Required ?</label>
-                                                <select name="Quality_review" disabled id="Quality_review">
-                                                    <option value="">-- Select --</option>
-                                                    <option @if ($data1->Quality_review == 'yes') selected @endif
-                                                        value='yes'>
-                                                        Yes</option>
-                                                    <option @if ($data1->Quality_review == 'no') selected @endif
-                                                        value='no'>
-                                                        No</option>
-                                                    <option @if ($data1->Quality_review == 'na') selected @endif
-                                                        value='na'>
-                                                        NA</option>
-                                                </select>
-
-                                            </div>
-                                        </div>
-                                        @php
-                                            $userRoles = DB::table('user_roles')
-                                                ->where([
-                                                    'q_m_s_roles_id' => 24,
-                                                    'q_m_s_divisions_id' => $data->division_id,
-                                                ])
-                                                ->get();
-                                            $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                            $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                        @endphp
-                                        <div class="col-lg-6 qualityControl">
-                                            <div class="group-input">
-                                                <label for="Quality Control notification">Quality Control Person <span
-                                                        id="asteriskInvi11" style="display: none"
-                                                        class="text-danger">*</span></label>
-                                                <select name="Quality_Control_Person" disabled
-                                                    id="Quality_Control_Person">
-                                                    <option value="">-- Select --</option>
-                                                    @foreach ($users as $user)
-                                                        <option value="{{ $user->name }}"
-                                                            @if ($user->name == $data1->Quality_Control_Person) selected @endif>
-                                                            {{ $user->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        @if ($data->stage == 3)
-                                            <div class="col-md-12 mb-3 qualityControl">
-                                                <div class="group-input">
-                                                    <label for="Quality Control assessment">Impact Assessment (By
-                                                        Quality
-                                                        Control)</label>
-                                                    <div><small class="text-primary">Please insert "NA" in the data
-                                                            field if
-                                                            it
-                                                            does not require completion</small></div>
-                                                    <textarea class="tiny" name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12 mb-3 qualityControl">
-                                                <div class="group-input">
-                                                    <label for="Quality Control feedback">Quality Control
-                                                        Feedback</label>
-                                                    <div><small class="text-primary">Please insert "NA" in the data
-                                                            field if
-                                                            it
-                                                            does not require completion</small></div>
-                                                    <textarea class="tiny" name="Quality_Control_feedback" id="summernote-18">{{ $data1->Quality_Control_feedback }}</textarea>
-                                                </div>
-                                            </div>
-                                        @else
-                                            <div class="col-md-12 mb-3 qualityControl">
-                                                <div class="group-input">
-                                                    <label for="Quality Control assessment">Impact Assessment (By
-                                                        Quality
-                                                        Control)</label>
-                                                    <div><small class="text-primary">Please insert "NA" in the data
-                                                            field if
-                                                            it
-                                                            does not require completion</small></div>
-                                                    <textarea disabled class="tiny" name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12 mb-3 qualityControl">
-                                                <div class="group-input">
-                                                    <label for="Quality Control feedback">Quality Control
-                                                        Feedback</label>
-                                                    <div><small class="text-primary">Please insert "NA" in the data
-                                                            field if
-                                                            it
-                                                            does not require completion</small></div>
-                                                    <textarea disabled class="tiny" name="Quality_Control_feedback" id="summernote-18">{{ $data1->Quality_Control_feedback }}</textarea>
-                                                </div>
-                                            </div>
-                                        @endif
-                                        <div class="col-12 qualityControl">
-                                            <div class="group-input">
-                                                <label for="Quality Control attachment">Quality Control
-                                                    Attachments</label>
-                                                <div><small class="text-primary">Please Attach all relevant or
-                                                        supporting
-                                                        documents</small></div>
-                                                <div class="file-attachment-field">
-                                                    <div disabled class="file-attachment-list"
-                                                        id="Quality_Control_attachment">
-                                                        @if ($data1->Quality_Control_attachment)
-                                                            @foreach (json_decode($data1->Quality_Control_attachment) as $file)
-                                                                <h6 type="button" class="file-container text-dark"
-                                                                    style="background-color: rgb(243, 242, 240);">
-                                                                    <b>{{ $file }}</b>
-                                                                    <a href="{{ asset('upload/' . $file) }}"
-                                                                        target="_blank"><i
-                                                                            class="fa fa-eye text-primary"
-                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
-                                                                            class="fa-solid fa-circle-xmark"
-                                                                            style="color:red; font-size:20px;"></i></a>
-                                                                </h6>
-                                                            @endforeach
-                                                        @endif
-                                                    </div>
-                                                    <div class="add-btn">
-                                                        <div>Add</div>
-                                                        <input disabled
-                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                            type="file" id="myfile"
-                                                            name="Store_attachment[]"
-                                                            oninput="addMultipleFiles(this, 'Quality_Control_attachment')"
-                                                            multiple>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3 qualityControl">
-                                            <div class="group-input">
-                                                <label for="Quality Control Completed By">Quality Control Completed
-                                                    By</label>
-                                                <input readonly type="text"
-                                                    value="{{ $data1->Quality_Control_by }}"
-                                                    name="Quality_Control_by" id="Quality_Control_by">
-
-
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 qualityControl new-date-data-field">
-                                            <div class="group-input input-date">
-                                                <label for="Quality Control Completed On">Quality Control
-                                                    Completed On</label>
-                                                <div class="calenderauditee">
-                                                    <input type="text" id="Quality_Control_on" readonly
-                                                        placeholder="DD-MMM-YYYY"
-                                                        value="{{ Helpers::getdateFormat($data1->Quality_Control_on) }}" />
-                                                    <input readonly type="date" name="Quality_Control_on"
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                        value="" class="hide-input"
-                                                        oninput="handleDateInput(this, 'Quality_Control_on')" />
-                                                </div>
-                                                @error('Quality_Control_on')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    @endif
 
                                     <div class="sub-head">
                                         Microbiology
@@ -5995,7 +5623,378 @@
                                         </div>
                                     @endif
 
+                                    <div class="sub-head">
+                                        Engineering
+                                    </div>
+                                    <script>
+                                        $(document).ready(function() {
+                                            @if ($data1->Engineering_review !== 'yes')
+                                                $('.Engineering').hide();
 
+                                                $('[name="Engineering_review"]').change(function() {
+                                                    if ($(this).val() === 'yes') {
+
+                                                        $('.Engineering').show();
+                                                        $('.Engineering span').show();
+                                                    } else {
+                                                        $('.Engineering').hide();
+                                                        $('.Engineering span').hide();
+                                                    }
+                                                });
+                                            @endif
+                                        });
+                                    </script>
+                                    @php
+                                        $data1 = DB::table('risk_managment_cfts')
+                                            ->where('risk_id', $data->id)
+                                            ->first();
+                                    @endphp
+
+                                    @if ($data->stage == 2 || $data->stage == 3)
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Engineering"> Engineering Required ? <span
+                                                        class="text-danger">*</span></label>
+                                                <select name="Engineering_review" id="Engineering_review"
+                                                    @if ($data->stage == 3) disabled @endif>
+                                                    <option value="">-- Select --</option>
+                                                    <option @if ($data1->Engineering_review == 'yes') selected @endif
+                                                        value='yes'>
+                                                        Yes</option>
+                                                    <option @if ($data1->Engineering_review == 'no') selected @endif
+                                                        value='no'>
+                                                        No</option>
+                                                    <option @if ($data1->Engineering_review == 'na') selected @endif
+                                                        value='na'>
+                                                        NA</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        @php
+                                            $userRoles = DB::table('user_roles')
+                                                ->where([
+                                                    'q_m_s_roles_id' => 25,
+                                                    'q_m_s_divisions_id' => $data->division_id,
+                                                ])
+                                                ->get();
+                                            $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                            $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                        @endphp
+                                        <div class="col-lg-6 Engineering">
+                                            <div class="group-input">
+                                                <label for="Engineering notification">Engineering Person <span
+                                                        id="asteriskPT"
+                                                        style="display: {{ $data1->Engineering_review == 'yes' ? 'inline' : 'none' }}"
+                                                        class="text-danger">*</span>
+                                                </label>
+                                                <select @if ($data->stage == 3) disabled @endif
+                                                    name="Engineering_person" class="Engineering_person"
+                                                    id="Engineering_person">
+                                                    <option value="">-- Select --</option>
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->name }}"
+                                                            @if ($user->name == $data1->Engineering_person) selected @endif>
+                                                            {{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-3 Engineering">
+                                            <div class="group-input">
+                                                <label for="Engineering assessment">Impact Assessment (By Engineering)
+                                                    <span id="asteriskPT1"
+                                                        style="display: {{ $data1->Engineering_review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
+                                                        class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field
+                                                        if it
+                                                        does not require completion</small></div>
+                                                <textarea @if ($data1->Engineering_review == 'yes' && $data->stage == 3) required @endif class="summernote Engineering_assessment"
+                                                    @if ($data->stage == 2 || (isset($data1->Engineering_person) && Auth::user()->name != $data1->Engineering_person)) readonly @endif name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-3 Engineering">
+                                            <div class="group-input">
+                                                <label for="Engineering feedback">Engineering Feedback <span
+                                                        id="asteriskPT2"
+                                                        style="display: {{ $data1->Engineering_review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
+                                                        class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field
+                                                        if it
+                                                        does not require completion</small></div>
+                                                <textarea class="summernote Engineering_feedback" @if ($data->stage == 2 || (isset($data1->Engineering_person) && Auth::user()->name != $data1->Engineering_person)) readonly @endif
+                                                    name="Engineering_feedback" id="summernote-18" @if ($data1->Engineering_review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Engineering_feedback }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 Engineering">
+                                            <div class="group-input">
+                                                <label for="Engineering attachment">Engineering Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or
+                                                        supporting
+                                                        documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list"
+                                                        id="Engineering_attachment">
+                                                        @if ($data1->Engineering_attachment)
+                                                            @foreach (json_decode($data1->Engineering_attachment) as $file)
+                                                                <h6 type="button" class="file-container text-dark"
+                                                                    style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                                        target="_blank"><i
+                                                                            class="fa fa-eye text-primary"
+                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a type="button" class="remove-file"
+                                                                        data-file-name="{{ $file }}"><i
+                                                                            class="fa-solid fa-circle-xmark"
+                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                </h6>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input
+                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                            type="file" id="myfile"
+                                                            name="Engineering_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="addMultipleFiles(this, 'Engineering_attachment')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3 Engineering">
+                                            <div class="group-input">
+                                                <label for="Engineering Completed By">Engineering Completed
+                                                    By</label>
+                                                <input readonly type="text"
+                                                    value="{{ $data1->Engineering_by }}"
+                                                    name="Engineering_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
+                                                    id="Engineering_by">
+
+
+                                            </div>
+                                        </div>
+                                        {{-- <div class="col-lg-6 Engineering">
+                                    <div class="group-input ">
+                                        <label for="Engineering Completed On">Engineering Completed
+                                            On</label>
+                                        <!-- <div><small class="text-primary">Please select related information</small></div> -->
+                                        <input type="date"id="Engineering_on"
+                                            name="Engineering_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                            value="{{ $data1->Engineering_on }}">
+                                    </div>
+                                </div> --}}
+                                        <div class="col-lg-6 Engineering new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="Store Completed On">Engineering
+                                                    Completed On</label>
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="Engineering_on" readonly
+                                                        placeholder="DD-MMM-YYYY"
+                                                        value="{{ Helpers::getdateFormat($data1->Engineering_on) }}" />
+                                                    <input readonly type="date" name="Engineering_on"
+                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        value="" class="hide-input"
+                                                        oninput="handleDateInput(this, 'Engineering_on')" />
+                                                </div>
+                                                @error('Engineering_on')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                var selectField = document.getElementById('Engineering_review');
+                                                var inputsToToggle = [];
+
+                                                // Add elements with class 'facility-name' to inputsToToggle
+                                                var facilityNameInputs = document.getElementsByClassName('Engineering_person');
+                                                for (var i = 0; i < facilityNameInputs.length; i++) {
+                                                    inputsToToggle.push(facilityNameInputs[i]);
+                                                }
+                                                // var facilityNameInputs = document.getElementsByClassName('Production_Injection_Assessment');
+                                                // for (var i = 0; i < facilityNameInputs.length; i++) {
+                                                //     inputsToToggle.push(facilityNameInputs[i]);
+                                                // }
+                                                // var facilityNameInputs = document.getElementsByClassName('Production_Injection_Feedback');
+                                                // for (var i = 0; i < facilityNameInputs.length; i++) {
+                                                //     inputsToToggle.push(facilityNameInputs[i]);
+                                                // }
+
+                                                selectField.addEventListener('change', function() {
+                                                    var isRequired = this.value === 'yes';
+                                                    console.log(this.value, isRequired, 'value');
+
+                                                    inputsToToggle.forEach(function(input) {
+                                                        input.required = isRequired;
+                                                        console.log(input.required, isRequired, 'input req');
+                                                    });
+
+                                                    // Show or hide the asterisk icon based on the selected value
+                                                    var asteriskIcon = document.getElementById('asteriskPT');
+                                                    asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+                                                });
+                                            });
+                                        </script>
+                                    @else
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Engineering">Engineering Required ?</label>
+                                                <select name="Engineering_review" disabled id="Engineering_review">
+                                                    <option value="">-- Select --</option>
+                                                    <option @if ($data1->Engineering_review == 'yes') selected @endif
+                                                        value='yes'>
+                                                        Yes</option>
+                                                    <option @if ($data1->Engineering_review == 'no') selected @endif
+                                                        value='no'>
+                                                        No</option>
+                                                    <option @if ($data1->Engineering_review == 'na') selected @endif
+                                                        value='na'>
+                                                        NA</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        @php
+                                            $userRoles = DB::table('user_roles')
+                                                ->where([
+                                                    'q_m_s_roles_id' => 25,
+                                                    'q_m_s_divisions_id' => $data->division_id,
+                                                ])
+                                                ->get();
+                                            $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                            $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                        @endphp
+                                        <div class="col-lg-6 Engineering">
+                                            <div class="group-input">
+                                                <label for="Engineering notification">Engineering Person <span
+                                                        id="asteriskInvi11" style="display: none"
+                                                        class="text-danger">*</span></label>
+                                                <select name="Engineering_person" disabled id="Engineering_person">
+                                                    <option value="">-- Select --</option>
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->name }}"
+                                                            @if ($user->name == $data1->Engineering_person) selected @endif>
+                                                            {{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        @if ($data->stage == 3)
+                                            <div class="col-md-12 mb-3 Engineering">
+                                                <div class="group-input">
+                                                    <label for="Engineering assessment">Impact Assessment (By
+                                                        Engineering)</label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data
+                                                            field if
+                                                            it
+                                                            does not require completion</small></div>
+                                                    <textarea class="tiny" name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 mb-3 Engineering">
+                                                <div class="group-input">
+                                                    <label for="Engineering feedback">Engineering Feedback</label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data
+                                                            field if
+                                                            it
+                                                            does not require completion</small></div>
+                                                    <textarea class="tiny" name="Engineering_feedback" id="summernote-18">{{ $data1->Engineering_feedback }}</textarea>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="col-md-12 mb-3 Engineering">
+                                                <div class="group-input">
+                                                    <label for="Engineering assessment">Impact Assessment (By
+                                                        Engineering)</label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data
+                                                            field if
+                                                            it
+                                                            does not require completion</small></div>
+                                                    <textarea disabled class="tiny" name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 mb-3 Engineering">
+                                                <div class="group-input">
+                                                    <label for="Engineering feedback">Engineering Feedback</label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data
+                                                            field if
+                                                            it
+                                                            does not require completion</small></div>
+                                                    <textarea disabled class="tiny" name="Engineering_feedback" id="summernote-18">{{ $data1->Engineering_feedback }}</textarea>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        <div class="col-12 Engineering">
+                                            <div class="group-input">
+                                                <label for="Engineering attachment">Engineering Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or
+                                                        supporting
+                                                        documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list"
+                                                        id="Engineering_attachment">
+                                                        @if ($data1->Engineering_attachment)
+                                                            @foreach (json_decode($data1->Engineering_attachment) as $file)
+                                                                <h6 type="button" class="file-container text-dark"
+                                                                    style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                                        target="_blank"><i
+                                                                            class="fa fa-eye text-primary"
+                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a type="button" class="remove-file"
+                                                                        data-file-name="{{ $file }}"><i
+                                                                            class="fa-solid fa-circle-xmark"
+                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                </h6>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input disabled
+                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                            type="file" id="myfile"
+                                                            name="Engineering_attachment[]"
+                                                            oninput="addMultipleFiles(this, 'Engineering_attachment')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3 Engineering">
+                                            <div class="group-input">
+                                                <label for="Engineering Completed By">Engineering Completed
+                                                    By</label>
+                                                <input readonly type="text"
+                                                    value="{{ $data1->Engineering_by }}" name="Engineering_by"
+                                                    id="Engineering_by">
+
+
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 Engineering new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="Store Completed On">Engineering
+                                                    Completed On</label>
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="Engineering_on" readonly
+                                                        placeholder="DD-MMM-YYYY"
+                                                        value="{{ Helpers::getdateFormat($data1->Engineering_on) }}" />
+                                                    <input readonly type="date" name="Engineering_on"
+                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        value="" class="hide-input"
+                                                        oninput="handleDateInput(this, 'Engineering_on')" />
+                                                </div>
+                                                @error('Engineering_on')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    @endif
 
                                     <div class="sub-head">
                                         Safety
@@ -8786,12 +8785,12 @@
                         <div id="CCForm5" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="sub-head">
-                                    CQA/QA Review
+                                    QA/CQA Review
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Closure Comment">CQA/QA Review Comment <span
+                                            <label for="Closure Comment">QA/CQA Review Comment <span
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not
@@ -8803,7 +8802,7 @@
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Inv Attachments">CQA/QA Review Attachment</label>
+                                            <label for="Inv Attachments">QA/CQA Review Attachment</label>
                                             <div>
                                                 <small class="text-primary">
                                                     Please Attach all relevant or supporting documents
@@ -8930,7 +8929,7 @@
                                 <div class="row">
 
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        Opened
+                                        Submit
                                     </div>
 
                                     <div class="col-lg-4">
@@ -8948,13 +8947,13 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments">Comments:</label>
+                                            <label for="Comments">Submit Comment:</label>
                                             <div class="static">{{ $data->submit_comment }}</div>
                                         </div>
                                     </div>
 
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        HOD Review
+                                        HOD Review Complete
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
@@ -8971,13 +8970,13 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments">Comments:</label>
+                                            <label for="Comments">HOD Review Complete Comment:</label>
                                             <div class="static">{{ $data->evaluation_complete_comment }}</div>
                                         </div>
                                     </div>
 
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        CFT Review
+                                        CFT Review Complete
                                     </div>
 
                                     <div class="col-lg-4">
@@ -8994,36 +8993,36 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments">Comments:</label>
+                                            <label for="Comments">CFT Review Complete Comment:</label>
                                             <div class="static">{{ $data->CFT_Review_Comments }}</div>
                                         </div>
                                     </div>
 
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        In CQA/QA Review
+                                     QA/CQA Review Complete
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Plan Approved By"> In QA/CQA Review Complete By:</label>
+                                            <label for="Plan Approved By">QA/CQA Review Complete By:</label>
                                             <div class="static">{{ $data->QA_Initial_Review_Complete_By }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Plan Approved On">In QA/CQA Review Complete On:</label>
+                                            <label for="Plan Approved On">QA/CQA Review Complete On:</label>
                                             <div class="static">{{ $data->QA_Initial_Review_Complete_On }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments">Comments:</label>
+                                            <label for="Comments">QA/CQA Review Complete Comment:</label>
                                             <div class="static">{{ $data->QA_Initial_Review_Comments }}</div>
                                         </div>
                                     </div>
 
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        In Approval
+                                         Approval
                                     </div>
 
 
@@ -9041,7 +9040,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments">Comments:</label>
+                                            <label for="Comments">Approved Comment:</label>
                                             <div class="static">{{ $data->in_approve_Comments }}</div>
                                         </div>
                                     </div>
@@ -9070,7 +9069,7 @@
                                     </div> --}}
 
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        Cancel By
+                                        Cancel
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
@@ -9086,7 +9085,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments">Comments:</label>
+                                            <label for="Comments">Cancle Comment:</label>
                                             <div class="static">{{ $data->comments }}</div>
                                         </div>
                                     </div>
@@ -11028,14 +11027,14 @@
         </style>
 
         <script>
-            function addRiskAssessmentdata(tableId) {
+            function addRiskAssessmentdata1(tableId) {
                 var table = document.getElementById(tableId);
-                var currentRowCount = table.rows.length;
-                var newRow = table.insertRow(currentRowCount);
-                newRow.setAttribute("id", "row" + currentRowCount);
+            var currentRowCount = table.children[1].rows.length;
+            var newRow = table.children[1].insertRow(currentRowCount);
+            newRow.setAttribute("id", "row" + currentRowCount);
 
                 var cell1 = newRow.insertCell(0);
-                cell1.innerHTML = currentRowCount;
+                cell1.innerHTML = currentRowCount +1;
 
                 var cell2 = newRow.insertCell(1);
                 cell2.innerHTML = "<input name='risk_factor[]' type='text'>";
@@ -11141,12 +11140,12 @@
                 cell18.innerHTML = "<button class='btn btn-dark removeBtn' onclick='removeRow(this)'>Remove</button>";
 
                 // Update row numbers
-                for (var i = 1; i <= currentRowCount; i++) {
-                    var row = table.rows[i];
-                    row.cells[0].innerHTML = i;
-                }
+                for (var i = 0; i < currentRowCount-1; i++) {
+                var row = table.children[1].rows[i];
+                row.cells[0].innerHTML = i+1;
+            }
 
-                initializeRiskAcceptance();
+                // initializeRiskAcceptance();
             }
         </script>
 
