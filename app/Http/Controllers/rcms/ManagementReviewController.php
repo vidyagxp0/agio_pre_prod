@@ -1639,6 +1639,8 @@ class ManagementReviewController extends Controller
         $hodCft = hodmanagementCft::where('ManagementReview_id', $id)->first();
 
         $management->initiator_id = Auth::user()->id;
+        // $changeControl->form_progress = isset($form_progress) ? $form_progress : null;
+
         $management->division_code = $request->division_code;
         // $management->Initiator_id= $request->Initiator_id;
         $management->short_description = $request->short_description;
@@ -1719,7 +1721,7 @@ class ManagementReviewController extends Controller
         // Handle file removals
 
 
-            if($changeControl->stage == 3 || $changeControl->stage == 4 ){
+            if($management->stage == 3 || $management->stage == 4 ){
 
 
             if (!$form_progress) {
@@ -1727,7 +1729,7 @@ class ManagementReviewController extends Controller
             }
 
             $Cft = managementCft::withoutTrashed()->where('ManagementReview_id', $id)->first();
-            if($Cft && $changeControl->stage == 4 ){
+            if($Cft && $management->stage == 4 ){
                 $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
                 $Cft->RA_person = $request->RA_person == null ? $Cft->RA_person : $request->RA_person;
 
@@ -2222,63 +2224,63 @@ class ManagementReviewController extends Controller
 
 
 
-            $hodCft->hod_Production_Table_Review = $request->hod_Production_Table_Review ?? $hodCft->hod_Production_Table_Review;
-            $hodCft->hod_Production_Table_Person = $request->hod_Production_Table_Person ?? $hodCft->hod_Production_Table_Person;
+            $hodCft->hod_Production_Table_Review = $request->hod_Production_Table_Review == null ? $hodCft->hod_Production_Table_Review : $request->hod_Production_Table_Review;
+            $hodCft->hod_Production_Table_Person = $request->hod_Production_Table_Person == null ? $hodCft->hod_Production_Table_Person : $request->hod_Production_Table_Person;
 
 
-            $hodCft->hod_Production_Injection_Review = $request->hod_Production_Injection_Review ?? $hodCft->hod_Production_Injection_Review;
-            $hodCft->hod_Production_Injection_Person = $request->hod_Production_Injection_Person ?? $hodCft->hod_Production_Injection_Person;
+            $hodCft->hod_Production_Injection_Review = $request->hod_Production_Injection_Review == null ? $hodCft->hod_Production_Injection_Review : $request->hod_Production_Injection_Review;
+            $hodCft->hod_Production_Injection_Person = $request->hod_Production_Injection_Person == null ? $hodCft->hod_Production_Injection_Person : $request->hod_Production_Injection_Person;
 
-            $hodCft->hod_ProductionLiquid_Review = $request->hod_ProductionLiquid_Review ?? $hodCft->hod_ProductionLiquid_Review;
-            $hodCft->hod_ProductionLiquid_person = $request->hod_ProductionLiquid_person ?? $hodCft->hod_ProductionLiquid_person;
+            $hodCft->hod_ProductionLiquid_Review = $request->hod_ProductionLiquid_Review == null ? $hodCft->hod_ProductionLiquid_Review : $request->hod_ProductionLiquid_Review;
+            $hodCft->hod_ProductionLiquid_person = $request->hod_ProductionLiquid_person == null ? $hodCft->hod_ProductionLiquid_person : $request->hod_ProductionLiquid_person;
 
-            $hodCft->hod_Store_person = $request->hod_Store_person ?? $hodCft->hod_Store_person;
-            $hodCft->hod_Store_Review = $request->hod_Store_Review ?? $hodCft->hod_Store_Review;
+            $hodCft->hod_Store_person = $request->hod_Store_person == null ? $hodCft->hod_Store_person : $request->hod_Store_person;
+            $hodCft->hod_Store_Review = $request->hod_Store_Review == null ? $hodCft->hod_Store_Review : $request->hod_Store_Review;
 
-            $hodCft->hod_ResearchDevelopment_person = $request->hod_ResearchDevelopment_person ?? $hodCft->hod_ResearchDevelopment_person;
-            $hodCft->hod_ResearchDevelopment_Review = $request->hod_ResearchDevelopment_Review ?? $hodCft->hod_ResearchDevelopment_Review;
+            $hodCft->hod_ResearchDevelopment_person = $request->hod_ResearchDevelopment_person == null ? $hodCft->hod_ResearchDevelopment_person : $request->hod_ResearchDevelopment_person;
+            $hodCft->hod_ResearchDevelopment_Review = $request->hod_ResearchDevelopment_Review == null ? $hodCft->hod_ResearchDevelopment_Review : $request->hod_ResearchDevelopment_Review;
 
-            $hodCft->hod_Microbiology_person = $request->hod_Microbiology_person ?? $hodCft->hod_Microbiology_person;
-            $hodCft->hod_Microbiology_Review = $request->hod_Microbiology_Review ?? $hodCft->hod_Microbiology_Review;
+            $hodCft->hod_Microbiology_person = $request->hod_Microbiology_person == null ? $hodCft->hod_Microbiology_person : $request->hod_Microbiology_person;
+            $hodCft->hod_Microbiology_Review = $request->hod_Microbiology_Review == null ? $hodCft->hod_Microbiology_Review : $request->hod_Microbiology_Review;
 
-            $hodCft->hod_RegulatoryAffair_person = $request->hod_RegulatoryAffair_person ?? $hodCft->hod_RegulatoryAffair_person;
-            $hodCft->hod_RegulatoryAffair_Review = $request->hod_RegulatoryAffair_Review ?? $hodCft->hod_RegulatoryAffair_Review;
+            $hodCft->hod_RegulatoryAffair_person = $request->hod_RegulatoryAffair_person == null ? $hodCft->hod_RegulatoryAffair_person : $request->hod_RegulatoryAffair_person;
+            $hodCft->hod_RegulatoryAffair_Review = $request->hod_RegulatoryAffair_Review == null ? $hodCft->hod_RegulatoryAffair_Review : $request->hod_RegulatoryAffair_Review;
 
-            $hodCft->hod_CorporateQualityAssurance_person = $request->hod_CorporateQualityAssurance_person ?? $hodCft->hod_CorporateQualityAssurance_person;
-            $hodCft->hod_CorporateQualityAssurance_Review = $request->hod_CorporateQualityAssurance_Review ?? $hodCft->hod_CorporateQualityAssurance_Review;
+            $hodCft->hod_CorporateQualityAssurance_person = $request->hod_CorporateQualityAssurance_person == null ? $hodCft->hod_CorporateQualityAssurance_person : $request->hod_CorporateQualityAssurance_person;
+            $hodCft->hod_CorporateQualityAssurance_Review = $request->hod_CorporateQualityAssurance_Review == null ? $hodCft->hod_CorporateQualityAssurance_Review : $request->hod_CorporateQualityAssurance_Review;
 
-            $hodCft->hod_ContractGiver_person = $request->hod_ContractGiver_person ?? $hodCft->hod_ContractGiver_person;
-            $hodCft->hod_ContractGiver_Review = $request->hod_ContractGiver_Review ?? $hodCft->hod_ContractGiver_Review;
+            $hodCft->hod_ContractGiver_person = $request->hod_ContractGiver_person == null ? $hodCft->hod_ContractGiver_person : $request->hod_ContractGiver_person;
+            $hodCft->hod_ContractGiver_Review = $request->hod_ContractGiver_Review == null ? $hodCft->hod_ContractGiver_Review : $request->hod_ContractGiver_Review;
 
-            $hodCft->hod_Quality_review = $request->hod_Quality_review ?? $hodCft->hod_Quality_review;
-            $hodCft->hod_Quality_Control_Person = $request->hod_Quality_Control_Person ?? $hodCft->hod_Quality_Control_Person;
+            $hodCft->hod_Quality_review = $request->hod_Quality_review == null ? $hodCft->hod_Quality_review : $request->hod_Quality_review;
+            $hodCft->hod_Quality_Control_Person = $request->hod_Quality_Control_Person == null ? $hodCft->hod_Quality_Control_Person : $request->hod_Quality_Control_Person;
 
-            $hodCft->hod_Quality_Assurance_Review = $request->hod_Quality_Assurance_Review ?? $hodCft->hod_Quality_Assurance_Review;
-            $hodCft->hod_QualityAssurance_person = $request->hod_QualityAssurance_person ?? $hodCft->hod_QualityAssurance_person;
+            $hodCft->hod_Quality_Assurance_Review = $request->hod_Quality_Assurance_Review == null ? $hodCft->hod_Quality_Assurance_Review : $request->hod_Quality_Assurance_Review;
+            $hodCft->hod_QualityAssurance_person = $request->hod_QualityAssurance_person == null ? $hodCft->hod_QualityAssurance_person : $request->hod_QualityAssurance_person;
 
-            $hodCft->hod_Engineering_review = $request->hod_Engineering_review ?? $hodCft->hod_Engineering_review;
-            $hodCft->hod_Engineering_person = $request->hod_Engineering_person ?? $hodCft->hod_Engineering_person;
+            $hodCft->hod_Engineering_review = $request->hod_Engineering_review == null ? $hodCft->hod_Engineering_review : $request->hod_Engineering_review;
+            $hodCft->hod_Engineering_person = $request->hod_Engineering_person == null ? $hodCft->hod_Engineering_person : $request->hod_Engineering_person;
 
-            $hodCft->hod_Environment_Health_review = $request->Environment_Health_review ?? $hodCft->hod_Environment_Health_review;
-            $hodCft->hod_Environment_Health_Safety_person = $request->Environment_Health_Safety_person ?? $hodCft->hod_Environment_Health_Safety_person;
+            $hodCft->hod_Environment_Health_review = $request->Environment_Health_review == null ? $hodCft->hod_Environment_Health_review : $request->hod_Environment_Health_review;
+            $hodCft->hod_Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $hodCft->hod_Environment_Health_Safety_person : $request->hod_Environment_Health_Safety_person;
 
-            $hodCft->hod_Human_Resource_review = $request->hod_Human_Resource_review ?? $hodCft->hod_Human_Resource_review;
-            $hodCft->hod_Human_Resource_person = $request->hod_Human_Resource_person ?? $hodCft->hod_Human_Resource_person;
+            $hodCft->hod_Human_Resource_review = $request->hod_Human_Resource_review == null ? $hodCft->hod_Human_Resource_review : $request->hod_Human_Resource_review;
+            $hodCft->hod_Human_Resource_person = $request->hod_Human_Resource_person == null ? $hodCft->hod_Human_Resource_person : $request->hod_Human_Resource_person;
 
-            $hodCft->hod_Other1_review = $request->hod_Other1_review ?? $hodCft->hod_Other1_review;
-            $hodCft->hod_Other1_person = $request->hod_Other1_person ?? $hodCft->hod_Other1_person;
+            $hodCft->hod_Other1_review = $request->hod_Other1_review == null ? $hodCft->hod_Other1_review : $request->hod_Other1_review;
+            $hodCft->hod_Other1_person = $request->hod_Other1_person == null ? $hodCft->hod_Other1_person : $request->hod_Other1_person;
 
-            $hodCft->hod_Other2_review = $request->hod_Other2_review ?? $hodCft->hod_Other2_review;
-            $hodCft->hod_Other2_person = $request->hod_Other2_person ?? $hodCft->hod_Other2_person;
+            $hodCft->hod_Other2_review = $request->hod_Other2_review == null ? $hodCft->hod_Other2_review : $request->hod_Other2_review;
+            $hodCft->hod_Other2_person = $request->hod_Other2_person == null ? $hodCft->hod_Other2_person : $request->hod_Other2_person;
 
-            $hodCft->hod_Other3_review = $request->hod_Other3_review ?? $hodCft->hod_Other3_review;
-            $hodCft->hod_Other3_person = $request->hod_Other3_person ?? $hodCft->hod_Other3_person;
+            $hodCft->hod_Other3_review = $request->hod_Other3_review == null ? $hodCft->hod_Other3_review : $request->hod_Other3_review;
+            $hodCft->hod_Other3_person = $request->hod_Other3_person == null ? $hodCft->hod_Other3_person : $request->hod_Other3_person;
 
-            $hodCft->hod_Other4_review = $request->hod_Other4_review ?? $hodCft->hod_Other4_review;
-            $hodCft->hod_Other4_person = $request->hod_Other4_person ?? $hodCft->hod_Other4_person;
+            $hodCft->hod_Other4_review = $request->hod_Other4_review == null ? $hodCft->hod_Other4_review : $request->hod_Other4_review;
+            $hodCft->hod_Other4_person = $request->hod_Other4_person == null ? $hodCft->hod_Other4_person : $request->hod_Other4_person;
 
-            $hodCft->hod_Other5_review = $request->hod_Other5_review ?? $hodCft->hod_Other5_review;
-            $hodCft->hod_Other5_person = $request->hod_Other5_person ?? $hodCft->hod_Other5_person;
+            $hodCft->hod_Other5_review = $request->hod_Other5_review == null ? $hodCft->hod_Other5_review : $request->hod_Other5_review;
+            $hodCft->hod_Other5_person = $request->hod_Other5_person == null ? $hodCft->hod_Other5_person : $request->hod_Other5_person;
 
             }
             else{
@@ -8259,6 +8261,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = ManagementReview::find($id);
+            $management = ManagementReview::find($id);
             $lastDocument =  ManagementReview::find($id);
             $data =  ManagementReview::find($id);
              $updateCFT = managementCft::where('ManagementReview_id', $id)->latest()->first();
@@ -8471,22 +8474,22 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
                 //             'message' => 'Sent for CFT actions state'
                 //         ]);
                 //     }
-                 if ($changeControl->form_progress !== 'cft')
-                    {
-                        Session::flash('swal', [
-                            'type' => 'warning',
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'QA/CQA initial review / CFT Mandatory Tab is yet to be filled!'
-                        ]);
+                //  if ($management->form_progress !== 'cft')
+                //     {
+                //         Session::flash('swal', [
+                //             'type' => 'warning',
+                //             'title' => 'Mandatory Fields!',
+                //             'message' => 'QA/CQA initial review / CFT Mandatory Tab is yet to be filled!'
+                //         ]);
 
-                        return redirect()->back();
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent for CFT review state'
-                        ]);
-                    }
+                //         return redirect()->back();
+                //     } else {
+                //         Session::flash('swal', [
+                //             'type' => 'success',
+                //             'title' => 'Success',
+                //             'message' => 'Sent for CFT review state'
+                //         ]);
+                //     }
                 $changeControl->stage = "4";
                 $changeControl->status = 'CFT actions';
                  $stage = new managementCft_Response();
