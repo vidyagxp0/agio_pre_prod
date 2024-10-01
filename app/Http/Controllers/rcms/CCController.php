@@ -1000,7 +1000,7 @@ class CCController extends Controller
         if (!empty($openState->division_id)) {
             $history = new RcmDocHistory();
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Division Code';
+            $history->activity_type = 'Site/Location Code';
             $history->previous = "Null";
             $history->current = Helpers::getDivisionName($openState->division_id);
             $history->comment = "NA";
@@ -1250,7 +1250,7 @@ class CCController extends Controller
         if(!empty($review->qa_head)){    
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'QA Attachments';
+            $history->activity_type = 'QA/CQA Initial Attachments';
             $history->previous = "NULL";
             $history->current = $review->qa_head;
             $history->comment = "Not Applicable";
@@ -1421,7 +1421,7 @@ class CCController extends Controller
         if(!empty($Cft->Human_Resource_attachment)){    
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Human Resource Attachments';
+            $history->activity_type = 'Human Resource Attachment';
             $history->previous = "NULL";
             $history->current = $Cft->Human_Resource_attachment;
             $history->comment = "Not Applicable";
@@ -1779,7 +1779,7 @@ class CCController extends Controller
         if(!empty($request->qa_comments)){    
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'QA Review Comments';
+            $history->activity_type = 'QA/CQA Review Comments';
             $history->previous = "NULL";
             $history->current = $openState->qa_comments;
             $history->comment = "Not Applicable";
@@ -2372,7 +2372,7 @@ class CCController extends Controller
         if(!empty($request->qa_closure_comments)){    
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'QA Closure Comments';
+            $history->activity_type = 'QA/CQA Closure Comments';
             $history->previous = "NULL";
             $history->current = $openState->qa_closure_comments;
             $history->comment = "Not Applicable";
@@ -2858,19 +2858,6 @@ class CCController extends Controller
 
 
         
-            // $getId = $openState->reviewer_person_value;
-            // $reviewer_person_valueIdsArray = explode(',', $getId);
-            // $lastcapa_teamNames = User::whereIn('id', $reviewer_person_valueIdsArray)->pluck('name')->toArray();
-            // $reviewer_person_value_Name = implode(', ', $lastcapa_teamNames);
-
-
-
-
-            // $capa->reviewer_person_value =  implode(',', $request->reviewer_person_value);
-            // $reviewer_person_valueIdsArray = explode(',', $capa->reviewer_person_value);
-            // $capa_teamNames = User::whereIn('id', $reviewer_person_valueIdsArray)->pluck('name')->toArray();
-            // $reviewer_person_value_Name_String = implode(', ', $capa_teamNames);
-
 
 
        
@@ -4237,11 +4224,11 @@ class CCController extends Controller
         
         if ($areQaHeadAttachSame != true) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'QA Attachments')
+                ->where('activity_type', 'QA/CQA Initial Attachments')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA Attachments';
+            $history->activity_type = 'QA/CQA Initial Attachments';
             $history->previous = $lastDocCft->qa_head;
             $history->current = $Cft->qa_head;
             $history->comment = "";
@@ -4729,11 +4716,11 @@ class CCController extends Controller
         
         if ($areQaHeadAttachSame != true) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'QA Attachments')
+                ->where('activity_type', 'QA/CQA Initial Attachments')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA Attachments';
+            $history->activity_type = 'QA/CQA Initial Attachments';
             $history->previous = $lastDocument->qa_head;
             $history->current = $openState->qa_head;
             $history->comment = "";
@@ -4979,8 +4966,8 @@ class CCController extends Controller
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Related Records';
-            $history->previous = $lastDocument->risk_assessment_related_record;
-            $history->current = $openState->risk_assessment_related_record;
+            $history->previous =  str_replace(',', ', ', $lastDocument->risk_assessment_related_record); 
+            $history->current =  str_replace(',', ', ',  $openState->risk_assessment_related_record);
             $history->comment = "";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5395,12 +5382,12 @@ $lastDocumentQaHead = is_array($lastDocument->qa_head) ? implode(',', $lastDocum
 
 if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'QA Attachments')
+        ->where('activity_type', 'QA/CQA Attachments')
         ->exists();
         
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'QA Attachments';
+    $history->activity_type = 'QA/CQA Attachments';
     $history->previous = $lastDocumentQaHead;
     $history->current = $requestQaHead;
     $history->comment = "Not Applicable";
@@ -5689,15 +5676,15 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         }     
         
 
-        if ($review->qa_comments != $request->qa_comments && $request->qa_comments != null) {
+        if ($review->qa_comments != $request->qa_review_comments && $request->qa_review_comments != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
                 ->where('activity_type', 'QA/CQA Initial Review Comments')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA.CQA Initial Review Comments';
+            $history->activity_type = 'QA/CQA Initial Review Comments';
             $history->previous = $review->qa_comments;
-            $history->current = $request->qa_comments;
+            $history->current = $request->qa_review_comments;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -8579,11 +8566,11 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         /************ Change Closure ************/
         if ($lastDocument->qa_closure_comments != $openState->qa_closure_comments) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'QA Closure Comment')
+                ->where('activity_type', 'QA/CQA Closure Comment')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA Closure Comment';
+            $history->activity_type = 'QA/CQA Closure Comment';
             $history->previous = $lastDocument->qa_closure_comments;
             $history->current = $openState->qa_closure_comments;
             $history->comment = "";
@@ -12900,7 +12887,9 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $preRiskAssessment = RiskAssessment::where('cc_id', $data->id)->get(); // Adjust this condition based on your actual requirement
 
+  
             $docdetail = Docdetail::where('cc_id', $data->id)->first();
             $review = Qareview::where('cc_id', $data->id)->first();
             $evaluation = Evaluation::where('cc_id', $data->id)->first();
@@ -12922,6 +12911,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             $cft_teamNamesString = implode(', ', $cft_teamNames);
 
 
+
+
             // pdf related work
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
@@ -12940,7 +12931,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 'affectedDoc',
                 'commnetData',
                 'QaApprovalComments',
-                'cft_teamNamesString'
+                'cft_teamNamesString',
+                'preRiskAssessment'
             ))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',

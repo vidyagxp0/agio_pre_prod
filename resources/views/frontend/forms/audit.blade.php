@@ -2361,7 +2361,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Schedule On">Comment</label>
+                                                <label for="Audit Schedule On"> Schedule Audit Comment</label>
                                                 <div class="static"></div>
                                             </div>
                                         </div>
@@ -2380,7 +2380,7 @@
 
                                 <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Schedule On">Comment</label>
+                                                <label for="Audit Schedule On"> CancelledComment</label>
                                                 <div class="static"></div>
                                             </div>
                                         </div>
@@ -2399,7 +2399,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Schedule On">Comment</label>
+                                                <label for="Audit Schedule On"> Acknowledement Comment</label>
                                                 <div class="static"></div>
                                             </div>
                                         </div>
@@ -2438,12 +2438,12 @@
                                 </div>
                                 <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Schedule On">Comment</label>
+                                                <label for="Audit Schedule On"> Issue Report Comment</label>
                                                 <div class="static"></div>
                                             </div>
                                         </div>
 
-                                <div class="col-lg-4">
+                                {{-- <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancelled By</label>
                                         <div class="static"></div>
@@ -2458,10 +2458,10 @@
 
                                 <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Schedule On">Comment</label>
+                                                <label for="Audit Schedule On"> Cancelled Comment</label>
                                                 <div class="static"></div>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -2477,7 +2477,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Schedule On">Comment</label>
+                                                <label for="Audit Schedule On"> CAPA Plan Proposed Comment</label>
                                                 <div class="static"></div>
                                             </div>
                                         </div>
@@ -2495,7 +2495,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Schedule On">Comment</label>
+                                                <label for="Audit Schedule On"> No CAPAs Required Comment</label>
                                                 <div class="static"></div>
                                             </div>
                                         </div>
@@ -2513,7 +2513,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Response Feedback Verified By">Comment</label>
+                                        <label for="Response Feedback Verified By"> Response Reviewed Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -21187,7 +21187,7 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
-                                Checklist for Injection Packing
+                                    STAGE 1 : INJECTION PACKING
                                 </div>
 
                                 <div class="col-12">

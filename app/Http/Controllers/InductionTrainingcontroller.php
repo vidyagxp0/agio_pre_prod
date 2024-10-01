@@ -90,6 +90,8 @@ class InductionTrainingController extends Controller
         $inductionTraining->qualification = $request->qualification;
         $inductionTraining->experience_if_any = $request->experience_if_any;
         $inductionTraining->date_joining = $request->date_joining;
+        $inductionTraining->start_date = $request->start_date;
+        $inductionTraining->end_date = $request->end_date;
 
         $inductionTraining->training_date_1 = $request->training_date_1;
         $inductionTraining->training_date_2 = $request->training_date_2;
@@ -347,6 +349,9 @@ class InductionTrainingController extends Controller
         $inductionTraining->hr_head_comment = $request->hr_head_comment;
         $inductionTraining->qa_final_comment = $request->qa_final_comment;
         $inductionTraining->hr_final_comment = $request->hr_final_comment;
+        $inductionTraining->start_date = $request->start_date;
+        $inductionTraining->end_date = $request->end_date;
+
 
         
         $inductionTraining->training_date_1 = $request->training_date_1;
@@ -954,5 +959,25 @@ class InductionTrainingController extends Controller
             $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('example.pdf' . $id . '.pdf');
         }
+    }
+
+    
+
+    public function viewrendersopinduction($id){
+
+        return view('frontend.TMS.induction_training_detail', compact('id'));
+    }
+
+    public function inductionquestionshow($sopids, $inductiontrainingid){
+        $inductiontrainingid = Induction_training::find($inductiontrainingid);
+        $inductiontrainingid->attempt_count = $inductiontrainingid->attempt_count == 0 ? 0 : $inductiontrainingid->attempt_count - 1;
+        $inductiontrainingid->save();
+        $sopidsArray = explode(',', $sopids);
+
+        $sopidsArray = array_map('trim', $sopidsArray);
+        $questions = Question::where('document_id', $sopidsArray)
+            ->get();
+        return view('frontend.TMS.induction_training.Induction_training_question_Answer', compact('questions', 'inductiontrainingid'));
+
     }
 }

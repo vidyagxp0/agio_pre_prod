@@ -606,7 +606,7 @@
                                 </div> -->
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="others">Initial attachment</label>
+                                        <label for="others">Initial Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -895,7 +895,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="qa_comments">QA Review Comments</label>
+                                        <label for="qa_comments">QA/CQA Initial Review Comments</label>
                                         <textarea name="qa_comments" disabled></textarea>
                                     </div>
                                 </div>
@@ -916,7 +916,7 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="qa head">QA Attachments</label>
+                                        <label for="qa head">QA/CQA Initial Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -1064,7 +1064,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Quality Assurance"> Quality Assurance</label>
+                                        <label for="Quality Assurance">Quality Assurance Review Required </label>
                                         <select name="Quality_Assurance_Review" id="Quality_Assurance_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>Yes</option>
@@ -1159,7 +1159,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Tablet"> Production Tablet</label>
+                                        <label for="Production Tablet"> Production Tablet/Capsule/Powder Required ?</label>
                                         <select name="Production_Table_Review" id="Production_Table_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -1257,7 +1257,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Liquid"> Production Liquid </label>
+                                        <label for="Production Liquid">Production Liquid/Ointment Required?</label>
                                         <select name="ProductionLiquid_Review" id="ProductionLiquid_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -1354,7 +1354,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Injection"> Production Injection </label>
+                                        <label for="Production Injection">Production Injection Required ? </label>
                                         <select name="Production_Injection_Review" id="Production_Injection_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -1453,7 +1453,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Store"> Store</label>
+                                        <label for="Store"> Store Required ?</label>
                                         <select name="Store_Review" id="Store_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -1572,7 +1572,7 @@
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Quality Control Person">Quality Control Person</label>
+                                        <label for="Quality Control Person">Quality Control Required ?</label>
                                         <select name="Quality_Control_Person" id="Quality_Control_Person" disabled>
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $user)
@@ -1654,7 +1654,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Research Development"> Research Development Required ?</label>
+                                        <label for="Research Development">Research & Development Required ?</label>
                                         <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -1749,7 +1749,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Engineering Review Required">Engineering Review Required ?</label>
+                                        <label for="Engineering Review Required">Engineering Required ?</label>
                                         <select name="Engineering_review" id="Engineering_review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -2361,8 +2361,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Information Technology Review Required"> Information Technology Review
-                                            Required ?</label>
+                                        <label for="Information Technology Review Required"> Information Technology Required ?</label>
                                         <select name=" Information_Technology_review" id=" Information_Technology_review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -3380,7 +3379,7 @@
                                 <textarea name="feedback" disabled></textarea>
                             </div>
                             <div class="group-input">
-                                <label for="tran-attach">Training Attachments</label>
+                                <label for="tran-attach">Implementation Verification Attachments</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
                                 </div>
                                 <div class="file-attachment-field">
@@ -3408,7 +3407,7 @@
                         <div class="inner-block-content">
 
                             <div class="group-input">
-                                <label for="qa-closure-comments">QA Closure Comments</label>
+                                <label for="qa-closure-comments">QA/CQA Closure Comments</label>
                                 <textarea name="qa_closure_comments" disabled></textarea>
                             </div>
 
@@ -4005,176 +4004,349 @@
         @endphp
 
         <div id="CCForm11" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Electronic Signatures
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="submitted">Submit By</label>
-                            {{--  <div class="static">Piyush Sahu</div>  --}}
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="submitted">Submit On</label>
-                            {{--  <div class="static">12-12-2032</div>  --}}
-                        </div>
-                    </div>
-                    {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">Cancelled By</label>
-                                         <div class="static">Piyush Sahu</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">Cancelled On</label>
-                                     <div class="static">12-12-2032</div>
-                                    </div>
-                                </div> --}}
-                    {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">More Information Required By</label>
-                                          <div class="static">Piyush Sahu</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">More Information Required On</label>
-                                          <div class="static">12-12-2032</div>
-                                    </div>
-                                </div> --}}
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="submitted">HOD Review Complete By</label>
-                            {{-- <div class="static">Piyush Sahu</div> --}}
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="submitted">HOD Review Complete On</label>
-                            {{-- <div class="static">12-12-2032</div> --}}
-                        </div>
-                    </div>
-                    {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">More Information Req. By</label>
-                                        <div class="static">Piyush Sahu</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">More Information Req. On</label>
-                                         <div class="static">12-12-2032</div>
-                                    </div>
-                                </div> --}}
-                    {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">QA Review Completed By</label>
-                                         <div class="static">Piyush Sahu</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">QA Review Completed On</label>
-                                        <div class="static">12-12-2032</div>
-                                    </div>
-                                </div> --}}
-                    {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">More Info Req. By</label>
-                                         <div class="static">Piyush Sahu</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">More Info Req. On</label>
-                                         <div class="static">12-12-2032</div>
-                                    </div>
-                                </div> --}}
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="submitted">Send to CFT/SME/QA Review By</label>
-                            {{-- <div class="static">Piyush Sahu</div> --}}
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="submitted">Send to CFT/SME/QA Review On</label>
-                            {{-- <div class="static">12-12-2032</div> --}}
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="submitted">CFT/SME/QA Review Not required By</label>
-                            {{-- <div class="static">Piyush Sahu</div> --}}
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="submitted">CFT/SME/QA Review Not required On</label>
-                            {{-- <div class="static">12-12-2032</div> --}}
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="submitted">Review Completed By</label>
-                            {{-- <div class="static">Piyush Sahu</div> --}}
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="submitted">Review Completed On</label>
-                            {{-- <div class="static">12-12-2032</div> --}}
-                        </div>
-                    </div>
-                    {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">Change Implemented By</label>
-                                        <div class="static">Piyush Sahu</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">Change Implemented On</label>
-                                        <div class="static">12-12-2032</div>
-                                    </div>
-                                </div> --}}
-                    {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">QA More Information Required By</label>
-                                         <div class="static">Piyush Sahu</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">QA More Information Required On</label>
-                                        <div class="static">12-12-2032</div>
-                                    </div>
-                                </div> --}}
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="submitted">Implemented By</label>
-                            {{-- <div class="static">Piyush Sahu</div> --}}
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="submitted">Implemented On</label>
-                            {{-- <div class="static">12-12-2032</div> --}}
-                        </div>
-                    </div>
-                </div>
-                <div class="button-block">
-                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
-                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                    <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                            Exit </a> </button>
-                    <button type="submit">Submit</button>
-                </div>
-            </div>
+        <div class="inner-block-content">
+                   
+                   <div class="row">
+                       <div class="sub-head">Submit</div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="submit by">Submit By :-</label>
+                               <div class="static"></div>
+                           </div>
+                       </div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="submit on">Submit On :-</label>
+                               <div class="static"></div>
+                           </div>
+                       </div>
+                       <div class="col-lg-6">
+                           <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
+                               <label for="submit comment">Submit Comment :-</label>
+                               <div class=""></div>
+                           </div>
+                       </div>
+
+                       <div class="sub-head">HOD Assessment Complete</div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="HOD Review Complete By">HOD Assessment Complete By :-</label>
+                               <div class="static"></div>
+                           </div>
+                       </div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="HOD Review Complete On">HOD Assessment Complete On :-</label>
+                               <div class="static"></div>
+                           </div>
+                       </div>
+                       <div class="col-lg-6">
+                           <div class="group-input" style=" ">
+                               <label for="HOD Review Comments">HOD Assessment Complete Comment :-</label>
+                               <div class=""></div>
+                           </div>
+                       </div>
+
+                       {{--  <div class="sub-head">Sent to Initiator (From HOD)</div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="HOD Review Complete By">Initiator Complete By :-</label>
+                               <div class="static">{{ $data->hod_to_initiator_by }}</div>
+                           </div>
+                       </div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="HOD Review Complete On">Initiator Complete On :-</label>
+                               <div class="static">{{ $data->hod_to_initiator_on }}</div>
+                           </div>
+                       </div>
+                       <div class="col-lg-6">
+                           <div class="group-input" style=" ">
+                               <label for="HOD Review Comments">Initiator Comment :-</label>
+                               <div class="">{{ $data->hod_to_initiator_comment }}</div>
+                           </div>
+                       </div>  --}}
+
+
+                       <div class="sub-head">QA/CQA Initial Assessment Complete</div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="QA Initial Review Complete By">QA/CQA Initial Assessment Complete By :-</label>
+                               <div class="static"></div>
+                           </div>
+                       </div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="QA Initial Review Complete On">QA/CQA Initial Assessment Complete On :-</label>
+                               <div class="static"></div>
+                           </div>
+                       </div>
+                       <div class="col-lg-6">
+                           <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
+                               <label for="QA Initial Review Comments">QA/CQA Initial Review Comment:-</label>
+                               <div class=""></div>
+                           </div>
+                       </div>
+
+                       {{--  <div class="sub-head">Sent to HOD (From QA Initial)</div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="HOD Review Complete By">HOD Complete By :-</label>
+                               <div class="static">{{ $data->QA_initialTo_HOD_by }}</div>
+                           </div>
+                       </div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="HOD Review Complete On">HOD Complete On :-</label>
+                               <div class="static">{{ $data->QA_initialTo_HOD_on }}</div>
+                           </div>
+                       </div>
+                       <div class="col-lg-6">
+                           <div class="group-input" style=" ">
+                               <label for="HOD Review Comments">HOD Comments :-</label>
+                               <div class="">{{ $data->QA_initialTo_HOD_comment }}</div>
+                           </div>
+                       </div>  --}}
+
+                       <div class="sub-head">CFT Assessment Complete</div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="CFT Review Complete By">CFT Assessment Complete By :-</label>
+                               <div class="static"></div>
+                           </div>
+                       </div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="CFT Review Complete On">CFT Assessment Complete On :-</label>
+                               <div class="static"></div>
+                           </div>
+                       </div>
+                       <div class="col-lg-6">
+                           <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                               <label for="CFT Review Comments">CFT Assessment Complete Comment :-</label>
+                               <div class=""></div>
+                           </div>
+                       </div>
+
+
+                       {{--  <div class="sub-head">Sent to QA Initial (From CFT)</div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="HOD Review Complete By">QA Initial Complete By :-</label>
+                               <div class="static">{{ $data->cft_to_qaInitial_by }}</div>
+                           </div>
+                       </div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="HOD Review Complete On">QA Initial Complete On :-</label>
+                               <div class="static">{{ $data->cft_to_qaInitial_on }}</div>
+                           </div>
+                       </div>
+                       <div class="col-lg-6">
+                           <div class="group-input" style=" ">
+                               <label for="HOD Review Comments">QA Initial Comments :-</label>
+                               <div class="">{{ $data->cft_to_qaInitial_comment }}</div>
+                           </div>
+                       </div>  --}}
+
+                       <div class="sub-head">RA Approval Required</div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="CFT Review Complete By">RA Approval Required By :-</label>
+                               <div class="static"></div>
+                           </div>
+                       </div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="CFT Review Complete On">RA Approval Required On :-</label>
+                               <div class="static"></div>
+                           </div>
+                       </div>
+                       <div class="col-lg-6">
+                           <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                               <label for="CFT Review Comments">RA Approval Required Comment :-</label>
+                               <div class=""></div>
+                           </div>
+                       </div>
+
+
+
+
+                       <div class="sub-head">RA Approval Complete</div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="CFT Review Complete By">RA Approval Complete By :-</label>
+                               <div class="static"></div>
+                           </div>
+                       </div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="CFT Review Complete On">RA Approval Complete On :-</label>
+                               <div class="static"></div>
+                           </div>
+                       </div>
+                       <div class="col-lg-6">
+                           <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                               <label for="CFT Review Comments"> RA Approval Comment :-</label>
+                               <div class=""></div>
+                           </div>
+                       </div>
+
+                  
+
+                       <div class="sub-head"> QA/CQA Final Review Completed</div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="QA Final Review Complete By"> QA/CQA Final Review Complete By :-</label>
+                               <div class="static"></div>
+                           </div>
+                       </div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="QA Final Review Complete On"> QA/CQAFinal Review Complete On :-</label>
+                               <div class="static"></div>
+                           </div>
+                       </div>
+                       <div class="col-lg-6">
+                           <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                               <label for="QA Final Review Comments"> QA/CQA Final Review Comment :-</label>
+                               <div class=""></div>
+                           </div>
+                       </div>
+
+
+
+                       <div class="sub-head"> Approved </div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="QA Final Review Complete By">  Approved  By :-</label>
+                               <div class="static"></div>
+                           </div>
+                       </div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="QA Final Review Complete On">  Approved  On :-</label>
+                               <div class="static"></div>
+                           </div>
+                       </div>
+                       <div class="col-lg-6">
+                           <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                               <label for="QA Final Review Comments"> Approved Comment :-</label>
+                               <div class=""></div>
+                           </div>
+                       </div>
+
+
+                     
+                   <div class="sub-head">Initiator Updated Completed</div>
+                   
+                   <div class="col-lg-3">
+                       <div class="group-input">
+                           <label for="QA Final Review Complete By">Initiator Updated Completed By :-</label>
+                           <div class="static">
+                            
+                           </div>
+                       </div>
+                   </div>
+                   
+                   <div class="col-lg-3">
+                       <div class="group-input">
+                           <label for="QA Final Review Complete On">Initiator Updated Completed On :-</label>
+                           <div class="static">
+                        
+                           </div>
+                       </div>
+                   </div>
+                   
+                   <div class="col-lg-6">
+                       <div class="group-input" style="width:1620px; height:100px; padding:5px;">
+                           <label for="QA Final Review Comments">Initiator Updated Completed Comment :-</label>
+                           <div class="">
+                              
+                           </div>
+                       </div>
+                   </div>
+                   
+
+
+                       <div class="sub-head">HOD Final Review Complete
+                       </div>
+                  <div class="col-lg-3">
+                      <div class="group-input">
+                          <label for="QA Final Review Complete By">  HOD Final Review Complete  By :-</label>
+                          <div class="static"></div>
+                      </div>
+                  </div>
+                  <div class="col-lg-3">
+                      <div class="group-input">
+                          <label for="QA Final Review Complete On">  HOD Final Review Complete  On :-</label>
+                          <div class="static"></div>
+                      </div>
+                  </div>
+                  <div class="col-lg-6">
+                      <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                          <label for="QA Final Review Comments"> HOD Final Review Complete Comment :-</label>
+                          <div class=""></div>
+                      </div>
+                  </div>
+
+
+                       <div class="sub-head">Send For Final QA/CQA Head Approval
+                           </div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="QA Final Review Complete By">Send For Final QA/CQA Head Approval By :-</label>
+                               <div class="static"></div>
+                           </div>
+                       </div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="QA Final Review Complete On">Send For Final QA/CQA Head Approval On :-</label>
+                               <div class="static"></div>
+                           </div>
+                       </div>
+                       <div class="col-lg-6">
+                           <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                               <label for="QA Final Review Comments">Send For Final QA/CQA Head Approval Comment :-</label>
+                               <div class=""></div>
+                           </div>
+                       </div>
+
+
+                       <div class="sub-head">Closure Approved
+
+                       </div>
+                   <div class="col-lg-3">
+                       <div class="group-input">
+                           <label for="QA Final Review Complete By">Closure Approved By :-</label>
+                           <div class="static">
+                            
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-lg-3">
+                       <div class="group-input">
+                           <label for="QA Final Review Complete On">Closure Approved On :-</label>
+                           <div class="static"></div>
+                       </div>
+                   </div>
+                   <div class="col-lg-6">
+                       <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                           <label for="QA Final Review Comments">Closure Approved Comment :-</label>
+                           <div class=""></div>
+                       </div>
+                   </div>
+
+                       
+                   </div>
+                   <div class="button-block">
+                       <button type="submit" class="saveButton">Save</button>
+                       <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                       <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
+                           <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                       </button>
+                   </div>
+               </div>
         </div>
 
 

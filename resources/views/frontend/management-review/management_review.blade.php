@@ -36,6 +36,8 @@
         </script>
     @endif
 
+
+
     <script>
         function otherController(value, checkValue, blockID) {
             let block = document.getElementById(blockID)
@@ -330,11 +332,11 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Head review </button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Meetings and summary</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Head Review </button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Meetings and Summary</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">CFT</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">CFT HOD Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA verification</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA Verification</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity log</button>
             </div>
@@ -1119,6 +1121,7 @@
                                 @error('assign_to')
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror
+
 
                             </div>
 
@@ -13734,7 +13737,7 @@
                      <div class="col-md-12">
                                         @if ($data->stage == 6)
                                             <div class="group-input">
-                                                <label for="HOD Remarks">QA verification Comment <span
+                                                <label for="HOD Remarks">QA Verification Comment <span
                                                         class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
@@ -13742,7 +13745,7 @@
                                             </div>
                                         @else
                                             <div class="group-input">
-                                                <label for="HOD Remarks">QA verification Comment</label>
+                                                <label for="HOD Remarks">QA Verification Comment</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                                 <textarea readonly class="tiny" name="additional_suport_required" id="summernote-4">{{ $data->additional_suport_required }}</textarea>
@@ -14790,6 +14793,116 @@
             });
         });
     </script>
+      <script>
+            console.log('Script working')
+
+            $(document).ready(function() {
+
+
+                function submitForm() {
+
+                    let auditForm = document.getElementById('auditForm');
+
+
+                    console.log('sumitting form')
+
+                    document.querySelectorAll('.saveAuditFormBtn').forEach(function(button) {
+                        button.disabled = true;
+                    })
+
+                    document.querySelectorAll('.auditFormSpinner').forEach(function(spinner) {
+                        spinner.style.display = 'flex';
+                    })
+
+                    auditForm.submit();
+                }
+
+                $('#ChangesaveButton01').click(function() {
+                    document.getElementById('formNameField').value = 'general-open';
+                    submitForm();
+                });
+
+                $('#ChangesaveButton02').click(function() {
+                    document.getElementById('formNameField').value = 'hod';
+                    submitForm();
+                });
+                $('#ChangesaveButton02221').click(function() {
+                    document.getElementById('formNameField').value = 'pending';
+                    submitForm();
+                });
+                $('#ChangesaveButton02222').click(function() {
+                    document.getElementById('formNameField').value = 'hod final';
+                    submitForm();
+                });
+
+                $('#ChangesaveButton03').click(function() {
+                    document.getElementById('formNameField').value = 'qa';
+                    submitForm();
+                });
+
+                $('#ChangesaveButton04').click(function() {
+                    document.getElementById('formNameField').value = 'capa';
+                    submitForm();
+                });
+                $('#ChangesaveButton022').click(function() {
+                    document.getElementById('formNameField').value = 'qrm';
+                    submitForm();
+                });
+                $('#ChangesaveButton023').click(function() {
+                    document.getElementById('formNameField').value = 'inv';
+                    submitForm();
+                });
+
+                $('#ChangesaveButton05').click(function() {
+                    document.getElementById('formNameField').value = 'qa-final';
+                    submitForm();
+                });
+
+                $('#ChangesaveButton06').click(function() {
+                    document.getElementById('formNameField').value = 'qah';
+                    submitForm();
+                });
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var signatureForm = document.getElementById('signatureModalForm');
+
+                signatureForm.addEventListener('submit', function(e) {
+
+                    var submitButton = signatureForm.querySelector('.signatureModalButton');
+                    var spinner = signatureForm.querySelector('.signatureModalSpinner');
+
+                    submitButton.disabled = true;
+
+                    spinner.style.display = 'inline-block';
+                });
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var signatureForm = document.getElementById('pendingInitiatorForm');
+
+                signatureForm.addEventListener('submit', function(e) {
+
+                    var submitButton = signatureForm.querySelector('.pendingInitiatorModalButton');
+                    var spinner = signatureForm.querySelector('.pendingInitiatorModalSpinner');
+
+                    submitButton.disabled = true;
+
+                    spinner.style.display = 'inline-block';
+                });
+            });
+
+
+            // =========================
+            wow = new WOW({
+                boxClass: 'wow', // default
+                animateClass: 'animated', // default
+                offset: 0, // default
+                mobile: true, // default
+                live: true // default
+            })
+            wow.init();
+        </script>
     <script>
         var maxLength = 255;
         $('#docname').keyup(function() {

@@ -4291,11 +4291,11 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             }
             if($lastIncident->Impact_Assessmenta !=$incident->Impact_Assessmenta || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Impact Assessmenta')
+                                ->where('activity_type', 'Impact Assessment')
                                 ->exists();
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $incident->id;
-                $history->activity_type = 'Impact Assessmenta';
+                $history->activity_type = 'Impact Assessment';
                 $history->previous =  $lastIncident->Impact_Assessmenta;
                 $history->current = $incident->Impact_Assessmenta;
                 $history->comment = $request->comment;
@@ -5999,7 +5999,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
                         $history = new IncidentAuditTrail();
                         $history->incident_id = $id;
-                        $history->activity_type = 'Pending Initiator Update Complete By,Pending Initiator Update Complete On';
+                        $history->activity_type = 'Pending Initiator Update Complete By, Pending Initiator Update Complete On';
                         $history->previous = "";
                         $history->action='Pending Initiator Update Complete';
                         $history->current = $incident->Pending_Review_Complete_By;
@@ -6078,7 +6078,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
                     $history = new IncidentAuditTrail();
                     $history->incident_id = $id;
-                    $history->activity_type = 'HOD Final Review Complete By,HOD Final Review Complete On';
+                    $history->activity_type = 'HOD Final Review Complete By, HOD Final Review Complete On';
                     $history->previous = "";
                     $history->current = $incident->Hod_Final_Review_Complete_By;
                     $history->comment = $request->comment;
@@ -6182,7 +6182,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
                     $history = new IncidentAuditTrail();
                     $history->incident_id = $id;
-                    $history->activity_type = 'QA Final Review Complete By,QA Final Review Complete On';
+                    $history->activity_type = 'QA Final Review Complete By, QA Final Review Complete On';
                     $history->previous = "";
                     $history->action ='QA Final Review Complete';
                     $history->current = $incident->Qa_Final_Review_Complete_By;

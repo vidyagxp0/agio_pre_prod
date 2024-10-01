@@ -137,7 +137,8 @@
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     HOD Review Complete
                                 </button>
-                            @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 7))
+                            
+                                @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Root Cause Analysis', 7) || Helpers::check_roles($data->division_id, 'Root Cause Analysis', 66)))
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                     More Info Required
                                 </button>
@@ -165,7 +166,7 @@
                                     HOD Final Review Complete
 
                                 </button>
-                            @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 7))
+                            @elseif($data->stage == 6 && ( Helpers::check_roles($data->division_id, 'Root Cause Analysis', 7) || Helpers::check_roles($data->division_id, 'Root Cause Analysis', 66)))
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                     More Information
                                     Required
@@ -174,7 +175,7 @@
                                     Final QA/CQA Review Complete
                                 </button>
                             @elseif(
-                                ($data->stage == 7 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 42)))
+                                ($data->stage == 7 && (Helpers::check_roles($data->division_id, 'Root Cause Analysis', 42)|| Helpers::check_roles($data->division_id,'Root Cause Analysis',66))))
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                     More Information
                                     Required
@@ -281,7 +282,7 @@
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation & Root Cause</button> --}}
                    
                         <button class="cctablinks" onclick="openCity(event, 'CCForm10')">HOD Final Review</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm11')">QA Final Review</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm11')">QA/CQA Final Review</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QAH/CQAH Final Approval</button>
 
 
@@ -1882,13 +1883,13 @@
 
                                     <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="comments">QA Review Comments</label>
+                                            <label for="comments">Initial QA/CQA Review Comments</label>
                                             <textarea name="cft_comments_new"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->cft_comments_new }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="comments">QA Review Attachment</label>
+                                            <label for="comments">Initial QA/CQA Review Attachment</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
                                             <div class="file-attachment-field">
@@ -2042,17 +2043,14 @@
 
                         <div id="CCForm9" class="inner-block cctabcontent">
                             <div class="inner-block-content">
-                                <!-- <div class="sub-head">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    CFT Feedback
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>  -->
                                 <div class="row">
-
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="comments">HOD Review Comment </label>
-                                            <textarea name="hod_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_final_comments }}</textarea>
+                                            <textarea name="hod_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_comments }}</textarea>
                                         </div>
                                     </div>
+
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="comments">HOD Review Attachments</label>
@@ -2170,13 +2168,13 @@
 
                                     <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="comments">QA Final Review Comments</label>
+                                            <label for="comments">QA/CQA Final Review Comments</label>
                                             <textarea name="qa_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_final_comments }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="comments">QA Final Review Attachment</label>
+                                            <label for="comments">QA/CQA Final Review Attachment</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
                                             <div class="file-attachment-field">

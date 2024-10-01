@@ -81,7 +81,7 @@ class AuditeeController extends Controller
         $internalAudit->initial_comments = $request->initial_comments;
         $internalAudit->severity_level = $request->severity_level;
 
-        $internalAudit->reviewer_person_value = implode(',', $request->reviewer_person_value);
+        $internalAudit->reviewer_person_value = is_array($request->reviewer_person_value) ? implode(',',$request->reviewer_person_value) : $request->reviewer_person_value;
 
 
         $internalAudit->start_date = $request->start_date;
@@ -1787,7 +1787,7 @@ class AuditeeController extends Controller
         $internalAudit->Remarks = $request->Remarks;
 
 
-        $internalAudit->reviewer_person_value = implode(',', $request->reviewer_person_value);
+        $internalAudit->reviewer_person_value = is_array($request->reviewer_person_value) ? implode(',',$request->reviewer_person_value) : $request->reviewer_person_value;
 
 
 
@@ -6572,7 +6572,7 @@ $AuditorShow->save();
                 return back();
             }
             if ($changeControl->stage == 2) {
-                if ($changeControl->form_progress !== 'cft')
+               if ($changeControl->form_progress !== 'cft')
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
@@ -6581,18 +6581,16 @@ $AuditorShow->save();
                     ]);
 
                     return redirect()->back();
-
-                }
-                 else {
+                } else {
                     Session::flash('swal', [
                         'type' => 'success',
                         'title' => 'Success',
-                        'message' => 'Sent for CFT Review state'
+                        'message' => 'Sent for CFT review state'
                     ]);
                 }
+
                 $changeControl->stage = "3";
                 $changeControl->status = "CFT Review";
-
 
 
                  $stage = new ExternalAuditCFTResponse();
@@ -6677,23 +6675,23 @@ $AuditorShow->save();
             if ($changeControl->stage == 3) {
 
                 // // CFT review state update form_progress
-                // if ($changeControl->form_progress !== 'cft')
-                // {
-                //     Session::flash('swal', [
-                //         'type' => 'warning',
-                //         'title' => 'Mandatory Fields!',
-                //         'message' => 'CFT Tab is yet to be filled'
-                //     ]);
+                if ($changeControl->form_progress !== 'cft')
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'CFT Tab is yet to be filled'
+                    ]);
 
-                //     return redirect()->back();
-                // }
-                //  else {
-                //     Session::flash('swal', [
-                //         'type' => 'success',
-                //         'title' => 'Success',
-                //         'message' => 'Sent for QA/CQA Head Approval state'
-                //     ]);
-                // }
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for QA/CQA Head Approval state'
+                    ]);
+                }
 
 
                 $IsCFTRequired = ExternalAuditCFTResponse::where(['is_required' => 1, 'external_audit_id' => $id])->latest()->first();

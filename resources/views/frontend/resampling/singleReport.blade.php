@@ -209,8 +209,16 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Record Number</th>
-                        <td class="w-30">@if($data->record){{  str_pad($data->record, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                
+                       
+                    <th class="w-20">Record Number</th>
+                        <td class="w-30">
+                            @if ($data->record)
+                                {{ Helpers::divisionNameForQMS($data->division_id) }}/Resampling/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                         <th class="w-20">Division Code</th>
                         <td class="w-30">@if($data->division_id){{  Helpers::getDivisionName($data->division_id) }} @else Not Applicable @endif</td>
                     </tr>
@@ -237,7 +245,7 @@
                           
                    </tr> -->
                    <tr>
-                        <th class="w-20">HOD Persons</th>
+                        <th class="w-20">HOD Person</th>
 
                         
                         <td class="w-80"> @if ($data->hod_preson)
@@ -372,7 +380,7 @@
                     </div>
                     <table>
                         <tr>
-                            <th class="w-20">QA Remarks</th>
+                            <th class="w-20">QA/CQA Head Remark</th>
                             <td class="w-80">@if($data->qa_remark){{$data->qa_remark }}@else Not Applicable @endif</td>
                             
                        </tr>
@@ -380,7 +388,7 @@
                     </table>
 
                 <div class="block-head">
-                       File Attachments
+                       File Attachment
                     </div>
                     <div class="border-table">
                         <table>
@@ -489,7 +497,7 @@
                     </div>
                     <table>
                    <tr>
-                        <th class="w-20">QA Review Comments</th>
+                        <th class="w-20">QA/CQA Review Comments</th>
                         <td class="w-80">@if($data->qa_comments){{ $data->qa_comments }}@else Not Applicable @endif</td>
                        
                    </tr>
@@ -551,13 +559,13 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Submitted By</th>
+                        <th class="w-20">Submit By</th>
                         <td class="w-30">{{ $data->acknowledgement_by }}</td>
-                        <th class="w-20">Submitted On</th>
+                        <th class="w-20">Submit On</th>
                         <td class="w-30">{{ $data->acknowledgement_on }}</td>
                     </tr>
                    <tr>
-                    <th class="w-20"> Submitted comment</th>
+                    <th class="w-20"> Submit comment</th>
                     <td class="w-80">{{ $data->acknowledgement_comment }}</td>
              
                    </tr>
@@ -590,19 +598,19 @@
                         <td class="w-30">{{ $data->completed_on }}</td>
                     </tr>
                    <tr>
-                    <th class="w-20"> Verification Complete Comment</th>
+                    <th class="w-20"> Verification Completed Comment</th>
                     <td class="w-80">{{ $data->completed_comment }}</td>
              
                    </tr>
                     <tr>
-                        <th class="w-20">Cancelled By </th>
+                        <th class="w-20">Cancel By </th>
                         <td class="w-30">{{ $data->cancelled_by }}</td>
                         <th class="w-20">
-                        Cancelled On</th>
+                        Cancel On</th>
                         <td class="w-30">{{ $data->cancelled_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">  Cancelled Comment</th>
+                        <th class="w-20">  Cancel Comment</th>
                          <td class="w-80">{{ $data->cancelled_on }}</td>
                        
                     </tr>

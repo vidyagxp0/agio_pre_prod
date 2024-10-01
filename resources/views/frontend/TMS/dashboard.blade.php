@@ -96,6 +96,9 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                 <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Induction Training</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm5')">On The Job Training</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm4')">Trainer Qualification</button>
+                
+                <button class="cctablinks " onclick="openCity(event, 'CCForm7')">Job Description</button>
+
                 <button class="cctablinks " onclick="openCity(event, 'CCForm1')">My Training</button>
                 @endif
                 @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
@@ -141,14 +144,15 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                         <tr>
                             <td>
                                 <a href="{{ url('employee_view', $employee->id) }}">
-                                    {{-- @php
-                                        $prefixAbbreviation = '';
-                                        if ($employee->prefix === 'PermanentWorkers') {
-                                            $prefixAbbreviation = 'PW';
-                                        } elseif ($employee->prefix === 'PermanentStaff') {
-                                            $prefixAbbreviation = 'PS';
-                                        }
-                                    @endphp --}}
+                                {{-- @php
+                                    $prefixAbbreviation = '';
+                                    if ($employee->prefix === 'PermanentWorkers') {
+                                        $prefixAbbreviation = 'PW';
+                                    } elseif ($employee->prefix === 'PermanentStaff') {
+                                        $prefixAbbreviation = 'PS';
+                                    }
+                                @endphp --}}
+                                {{-- {{ $prefixAbbreviation . $employee->emp_id }} --}}
                                     {{$employee->full_employee_id }}
                                 </a>
                             </td>
@@ -243,67 +247,386 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                 </div>
                 @endif
             </div>
+
+
             {{-- ================CC Form2================ --}}
-
+<style>
+    .heading-tms{
+        font-size: 18px;
+    font-weight: 700;
+    margin-top: 20px;
+    }
+</style>
+          
             <div id="CCForm2" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
-                @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
-                <div>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                {{-- <th style="width:15%;">Document Number</th> --}}
-                                <th>Training Plan</th>
-                                <th>Document Title</th>
-                                <th>Trainer Name</th>
-                                <th>Overall Training Status</th>
-                                <th>Due Date</th>
-                                <th>My Training Completion date</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody id="searchTable">
-                            @foreach ($documents2 as $temp)
-                            @php
-                            $trainingStatusCheck = DB::table('training_statuses')
-                            ->where([
-                            'user_id' => Auth::user()->id,
-                            'sop_id' => $temp->id,
-                            'training_id' => $temp->traningstatus->training_plan,
-                            'status' => 'Complete'
-                            ])->first();
-                            $trainingPlanName = DB::table('trainings')
-                            ->where('id', $temp->traningstatus->training_plan)
-                            ->first();
-                            $traininerName = DB::table('users')
-                            ->where('id', $trainingPlanName->trainner_id)
-                            ->first();
-                            @endphp
-                            <tr>
-                                <td>{{ $trainingPlanName ? $trainingPlanName->traning_plan_name : ''}}</td>
-                                <td>{{ $temp->document_name }}</td>
-                                <td>{{ $traininerName ? $traininerName->name : ''}}</td>
-                                <td>{{ $temp->traningstatus->status }}</td>
-                                <td>{{ \Carbon\Carbon::parse($temp->due_dateDoc)->format('d M Y') }}</td>
-                                <td>
-                                    {{ $trainingStatusCheck ? \Carbon\Carbon::parse($trainingStatusCheck->created_at)->format('d M Y') : '-' }}
-                                </td>
-                                @if($trainingStatusCheck)
-                                <th>Completed</th>
-                                @else
-                                @if($temp->traningstatus->status == "Complete")
-                                <th>Training Criteria Met</th>
-                                @elseif( $temp->due_dateDoc < now()) <th>Training Date Passed</th>
+            <div class="heading-tms">Induction Training</div>
+            @php
+                        // Convert the array to a collection
+                        $documentsCollection = collect($useDocFromInductionTraining);
 
+                        // Set the current page from the URL or default to 1
+                        $currentPage = request()->get('page', 1);
+
+                        // Number of items per page
+                        $perPage = 5;
+
+                        // Slice the collection to get only the items for the current page
+                        $paginatedData = $documentsCollection->forPage($currentPage, $perPage);
+
+                        // Calculate total pages based on the total number of items and perPage limit
+                        $totalPages = ceil($documentsCollection->count() / $perPage);
+                    @endphp
+
+                    <div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Emp Code</th>
+                                    <th>Employee Name</th>
+                                    <th>Designation</th>
+                                    <th>SOP No.</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Remaining Attempts</th>
+                                    <th>Training Completion date</th>
+                                    <th>Preview SOP</th>
+                                    <th>Quiz</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody id="searchTable">
+                            @foreach ($paginatedData as $temp)
+                            @php
+                                $getSOPNo = ['document_number_1', 'document_number_2', 'document_number_3', 'document_number_4', 'document_number_5','document_number_6', 'document_number_7', 'document_number_8', 'document_number_9', 'document_number_10', 'document_number_11', 'document_number_12', 'document_number_13', 'document_number_14', 'document_number_15','document_number_16'];
+                                $dateValue = []; // Initialize an empty array to store dates
+
+                                if ($temp) {
+                                    foreach ($getSOPNo as $key => $document) {
+                                        // Construct the corresponding startdate column name
+                                        $startDateColumn = 'document_number_' .($key + 1); // This will create document_number_1, document_number_2, etc.
+
+                                        // Check if the start date exists and is not null
+                                        if (isset($temp->$startDateColumn) && !is_null($temp->$startDateColumn)) {
+                                            $dateValue[] = $temp->$startDateColumn; // Add the date to the array
+                                        }
+                                    }
+                                }
+
+                                // Join the non-null start dates into a comma-separated string
+                                $commaSeparatedStartDates = implode(', ', $dateValue);
+                            @endphp
+                            
+                            <!-- You can output the commaSeparatedStartDates here if needed -->
+                            
+                     
+                                       
+                                <tr>
+                                <td>{{ $temp->employee_id }}</td>
+                                    <td>{{ $temp->name_employee }}</td>
+                                    <td>{{ $temp->designation }}</td>
+                                    <td>{{ $commaSeparatedStartDates }}</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>{{ $temp->attempt_count }}</td>
+                                 
+                                    <td><a href="{{ url('induction_training-details', $commaSeparatedStartDates) }}"><i class="fa-solid fa-eye"></i></a></td> 
+                                    
+                                    <td>
+                                        <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" onclick="window.location.href='/induction_question_training/{{$commaSeparatedStartDates}}/{{$temp->id}}';">
+                                            Attempt Quiz
+                                        </button>
+                                    </td>
+                                  
+                                    
+                                  
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        <!-- Pagination Links -->
+                        <nav>
+                            <ul class="pagination justify-content-center">
+                                <!-- Previous Page Link -->
+                                <li class="page-item {{ $currentPage == 1 ? 'disabled' : '' }}">
+                                    <a class="page-link" href="?page={{ $currentPage - 1 }}">Previous</a>
+                                </li>
+
+                                <!-- Page Number Links -->
+                                @for ($page = 1; $page <= $totalPages; $page++)
+                                    <li class="page-item {{ $currentPage == $page ? 'active' : '' }}">
+                                        <a class="page-link" href="?page={{ $page }}">{{ $page }}</a>
+                                    </li>
+                                @endfor
+
+                                <!-- Next Page Link -->
+                                <li class="page-item {{ $currentPage == $totalPages ? 'disabled' : '' }}">
+                                    <a class="page-link" href="?page={{ $currentPage + 1 }}">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+            <div class="heading-tms">On The Job Training</div>
+                   @php
+                        // Convert the array to a collection
+                        $documentsCollection = collect($useDocFromJobTraining);
+
+                        // Set the current page from the URL or default to 1
+                        $currentPage = request()->get('page', 1);
+
+                        // Number of items per page
+                        $perPage = 5;
+
+                        // Slice the collection to get only the items for the current page
+                        $paginatedData = $documentsCollection->forPage($currentPage, $perPage);
+
+                        // Calculate total pages based on the total number of items and perPage limit
+                        $totalPages = ceil($documentsCollection->count() / $perPage);
+
+                    @endphp
+
+                    <div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Emp Code</th>
+                                    <th>Employee Name</th>
+                                    <th>SOP No.</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Remaining Attempts</th>
+                                    <th>My Training Completion date</th>
+                                    <th>Preview SOP</th>
+                                    <th>Quiz</th>
+                                </tr>
+                            </thead>
+                            <tbody id="searchTable">
+                                @foreach ($paginatedData as $temp)
+                                @php
+                                    $getSOPNo = ['subject_1', 'subject_2', 'subject_3', 'subject_4', 'subject_5'];
+                                    $dateValue = null; // Variable to store the date
+                                if ($temp) {
+                                            foreach ($getSOPNo as $key => $subject) {
+                                                // Construct the corresponding startdate column name
+                                                $startDateColumn = 'subject_' . ($key + 1); // This will create startdate_1, startdate_2, etc.
+
+                                                // Check if the start date exists and is not null
+                                                if (isset($temp->$startDateColumn) && !is_null($temp->$startDateColumn)) {
+                                                    $dateValue[] = $temp->$startDateColumn; // Add the date to the array
+                                                }
+                                            }
+                                        }
+
+                                        // Join the non-null start dates into a comma-separated string
+                                        $commaSeparatedStartDates = implode(', ', $dateValue);
+                                        
+                                        
+                                @endphp
+                                <tr>
+                                    <td>{{ $temp->empcode }}</td>
+                                    <td>{{ $temp->name_employee }}</td>
+                                    <td>{{ $commaSeparatedStartDates }}</td>
+                                    <td>{{ $temp->start_date }}</td>
+                                    <td>{{ $temp->enddate_1 }}</td>
+                                    <td>{{ $temp->attempt_count }}</td>
+                                    <td>{{$temp->start_date}} </td>
+                                           
+                                    
+                                    
+                                    <td><a href="{{ url('job_training-details', $commaSeparatedStartDates) }}"><i class="fa-solid fa-eye"></i></a></td>
+                                    
+                                    <td>
+                                        <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" onclick="window.location.href='/on_the_job_question_training/{{$commaSeparatedStartDates}}/{{$temp->id}}';">
+                                            Attempt Quiz
+                                        </button>
+                                    </td>
+                                                             
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        <!-- Pagination Links -->
+                        <nav>
+                            <ul class="pagination justify-content-center">
+                                <!-- Previous Page Link -->
+                                <li class="page-item {{ $currentPage == 1 ? 'disabled' : '' }}">
+                                    <a class="page-link" href="?page={{ $currentPage - 1 }}">Previous</a>
+                                </li>
+
+                                <!-- Page Number Links -->
+                                @for ($page = 1; $page <= $totalPages; $page++)
+                                    <li class="page-item {{ $currentPage == $page ? 'active' : '' }}">
+                                        <a class="page-link" href="?page={{ $page }}">{{ $page }}</a>
+                                    </li>
+                                @endfor
+
+                                <!-- Next Page Link -->
+                                <li class="page-item {{ $currentPage == $totalPages ? 'disabled' : '' }}">
+                                    <a class="page-link" href="?page={{ $currentPage + 1 }}">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+            <div class="heading-tms">SOP Training</div>
+
+                @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
+                    <!-- <div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    {{-- <th style="width:15%;">Document Number</th> --}}
+                                    <th>Training Plan</th>
+                                    <th>Document Title</th>
+                                    <th>Trainer Name</th>
+                                    <th>Overall Training Status</th>
+                                    <th>Due Date</th>
+                                    <th>My Training Completion date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="searchTable">
+                                @foreach ($documents2 as $temp)
+                                @php
+                                    $trainingStatusCheck = DB::table('training_statuses')
+                                    ->where([
+                                    'user_id' => Auth::user()->id,
+                                    'sop_id' => $temp->id,
+                                    'training_id' => $temp->traningstatus->training_plan,
+                                    'status' => 'Complete'
+                                    ])->first();
+                                    $trainingPlanName = DB::table('trainings')
+                                    ->where('id', $temp->traningstatus->training_plan)
+                                    ->first();
+                                    $traininerName = DB::table('users')
+                                    ->where('id', $trainingPlanName->trainner_id)
+                                    ->first();
+                                @endphp
+                                <tr>
+                                    <td>{{ $trainingPlanName ? $trainingPlanName->traning_plan_name : ''}}</td>
+                                    <td>{{ $temp->document_name }}</td>
+                                    <td>{{ $traininerName ? $traininerName->name : ''}}</td>
+                                    <td>{{ $temp->traningstatus->status }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($trainingPlanName->training_end_date) }}</td>
+                                    <td>
+                                        {{ $trainingStatusCheck ? \Carbon\Carbon::parse($trainingStatusCheck->created_at)->format('d M Y') : '-' }}
+                                    </td>
+                                    @if($trainingStatusCheck)
+                                    <th>Completed</th>
+                                    @else
+                                    @if($temp->traningstatus->status == "Complete")
+                                    <th>Training Criteria Met</th>
+                                    @elseif( $trainingPlanName->training_end_date < now()) <th>Training Date Passed</th>
+
+                                        @else
+                                        <td><a href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i class="fa-solid fa-eye"></i></a></td>
+                                        @endif
+                                        @endif
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div> -->
+                    @php
+                        // Convert the array to a collection
+                        $documentsCollection = collect($documents2);
+
+                        // Set the current page from the URL or default to 1
+                        $currentPage = request()->get('page', 1);
+
+                        // Number of items per page
+                        $perPage = 5;
+
+                        // Slice the collection to get only the items for the current page
+                        $paginatedData = $documentsCollection->forPage($currentPage, $perPage);
+
+                        // Calculate total pages based on the total number of items and perPage limit
+                        $totalPages = ceil($documentsCollection->count() / $perPage);
+                    @endphp
+
+                    <div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Training Plan</th>
+                                    <th>Document Title</th>
+                                    <th>Trainer Name</th>
+                                    <th>Overall Training Status</th>
+                                    <th>Due Date</th>
+                                    <th>My Training Completion date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="searchTable">
+                                @foreach ($paginatedData as $temp)
+                                @php
+                                    $trainingStatusCheck = DB::table('training_statuses')
+                                        ->where([
+                                            'user_id' => Auth::user()->id,
+                                            'sop_id' => $temp->id,
+                                            'training_id' => $temp->traningstatus->training_plan,
+                                            'status' => 'Complete'
+                                        ])->first();
+
+                                    $trainingPlanName = DB::table('trainings')
+                                        ->where('id', $temp->traningstatus->training_plan)
+                                        ->first();
+
+                                    $trainerName = DB::table('users')
+                                        ->where('id', $trainingPlanName->trainner_id)
+                                        ->first();
+                                @endphp
+                                <tr>
+                                    <td>{{ $trainingPlanName ? $trainingPlanName->traning_plan_name : '' }}</td>
+                                    <td>{{ $temp->document_name }}</td>
+                                    <td>{{ $trainerName ? $trainerName->name : '' }}</td>
+                                    <td>{{ $temp->traningstatus->status }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($trainingPlanName->training_end_date) }}</td>
+                                    <td>{{ $trainingStatusCheck ? \Carbon\Carbon::parse($trainingStatusCheck->created_at)->format('d M Y') : '-' }}</td>
+                                    @if($trainingStatusCheck)
+                                    <th>Completed</th>
+                                    @else
+                                    @if($temp->traningstatus->status == "Complete")
+                                    <th>Training Criteria Met</th>
+                                    @elseif($trainingPlanName->training_end_date < now())
+                                        <th>Training Date Passed</th>
                                     @else
                                     <td><a href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i class="fa-solid fa-eye"></i></a></td>
                                     @endif
                                     @endif
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        <!-- Pagination Links -->
+                        <nav>
+                            <ul class="pagination justify-content-center">
+                                <!-- Previous Page Link -->
+                                <li class="page-item {{ $currentPage == 1 ? 'disabled' : '' }}">
+                                    <a class="page-link" href="?page={{ $currentPage - 1 }}">Previous</a>
+                                </li>
+
+                                <!-- Page Number Links -->
+                                @for ($page = 1; $page <= $totalPages; $page++)
+                                    <li class="page-item {{ $currentPage == $page ? 'active' : '' }}">
+                                        <a class="page-link" href="?page={{ $page }}">{{ $page }}</a>
+                                    </li>
+                                @endfor
+
+                                <!-- Next Page Link -->
+                                <li class="page-item {{ $currentPage == $totalPages ? 'disabled' : '' }}">
+                                    <a class="page-link" href="?page={{ $currentPage + 1 }}">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
                 @endif
+
+                
             </div>
             {{-- ================employee Data================ --}}
 
@@ -509,6 +832,97 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                         </button>
                     </div>
                     </td>
+                    <style>
+                        .action-buttons {
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    .action-buttons a {
+                        margin-right: 10px; 
+                    }
+
+                    .view-report-btn {
+                        padding: 5px 10px;
+                        background-color: #4274da; 
+                        color: white;
+                        border: none;
+                        cursor: pointer;
+                    }
+
+                    .view-report-btn:hover {
+                        background-color: #0056b3; 
+                    }
+
+                    </style>
+                                        
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+
+        </table>
+    </div>
+</div>
+@php
+  $jobTraining = DB::table('job_descriptions')->get();
+@endphp
+<div id="CCForm7" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
+            <div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Employee ID</th>
+                            <th>Name Of Employee</th>
+                            <th>Department</th>
+                            <!-- <th>Site Location</th> -->
+                            <th>Action</th>
+                            <th>Report</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            @foreach ($jobTraining->sortByDesc('id') as $induction)
+            <tr>
+                <td>
+                    @php
+                        $employee = \App\Models\Employee::where('employee_id', $induction->employee_id)->first();
+                        
+                        $prefixAbbreviation = '';
+                        if ($employee) {
+                            if ($employee->prefix === 'PW') {
+                                $prefixAbbreviation = 'PW';
+                            } elseif ($employee->prefix === 'PS') {
+                                $prefixAbbreviation = 'PS';
+                            }elseif ($employee->prefix === 'OS') {
+                                $prefixAbbreviation = 'OS';
+                            }
+                        }
+                    @endphp
+                    {{ $prefixAbbreviation . $induction->employee_id }}
+                </td>
+                <td>
+                    {{ \App\Models\Employee::find($induction->name_employee)?->employee_name ?? 'Employee not found' }}
+                </td>
+
+                <td>{{ Helpers::getFullDepartmentName($induction->new_department ) }}</td>
+                <!-- <td>{{ \Carbon\Carbon::parse($induction->date_joining)->format('d-M-Y') }}</td> -->
+                <td>
+                    <!-- <a href="{{ route('induction_training_view', $induction->id) }}">
+                        <i style="" class="fa-solid fa-pencil"></i>
+                    </a> -->
+                    <div class="action-buttons">
+    
+                        <a href="{{ route('induction_training_view', $induction->id) }}">
+                            <i class="fa-solid fa-pencil"></i>
+                        </a>
+                        </td>
+                        <td>
+                        
+                        <button type="button" class="view-report-btn"onclick="window.location.href='{{ url('rcms/induction_report/' . $induction->id) }}'" >
+                            View Report
+                        </button>
+                    </div>
+                    </td>
 <style>
     .action-buttons {
     display: flex;
@@ -541,8 +955,6 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
         </table>
     </div>
 </div>
-
-
 
             {{-- ========================================== --}}
 
@@ -631,19 +1043,19 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                     @foreach ($pending as $temp)
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
-    000{{ $temp->document_id }}</td>
-    <td>{{ $temp->training ? $temp->training->document_name : '' }}</td>
-    <td>{{ $temp->document_type_name }}</td>
-    <td>{{ $temp->division_name }}</td>
-    <td>{{ $temp->status }} </td>
-    <td><a href="#"><i class="fa-solid fa-eye"></i></a></td>
-    </tr>
-    @endforeach
+                                            000{{ $temp->document_id }}</td>
+                                            <td>{{ $temp->training ? $temp->training->document_name : '' }}</td>
+                                            <td>{{ $temp->document_type_name }}</td>
+                                            <td>{{ $temp->division_name }}</td>
+                                            <td>{{ $temp->status }} </td>
+                                            <td><a href="#"><i class="fa-solid fa-eye"></i></a></td>
+                                            </tr>
+                                            @endforeach
 
-    </tbody>
-    </table>
-</div>
-@else
+                                            </tbody>
+                                            </table>
+                                        </div>
+                                        @else
 <div class="block-table">
     <table class="table table-bordered">
         <thead>
@@ -695,55 +1107,55 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                     @foreach ($complete as $temp)
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
-000{{ $temp->document_id }}</td>
-<td>{{ $temp->training ? $temp->training->document_name : '' }}</td>
-<td>{{ $temp->document_type_name }}</td>
-<td>{{ $temp->division_name }}</td>
-<td>{{ $temp->status }} </td>
-<td><a href="#"><i class="fa-solid fa-eye"></i></a></td>
-</tr>
-@endforeach
+                                            000{{ $temp->document_id }}</td>
+                                            <td>{{ $temp->training ? $temp->training->document_name : '' }}</td>
+                                            <td>{{ $temp->document_type_name }}</td>
+                                            <td>{{ $temp->division_name }}</td>
+                                            <td>{{ $temp->status }} </td>
+                                            <td><a href="#"><i class="fa-solid fa-eye"></i></a></td>
+                                            </tr>
+                                            @endforeach
 
 
-</tbody>
-</table>
-</div>
-@else
-<div class="block-table">
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Document Number</th>
-                <th>Name</th>
-                <th>Revision</th>
-                <th>Training Status</th>
-                <th>Content Type</th>
-                <th>Due Date</th>
-                <th>Completed Date</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($documents as $temp)
-            <tr>
-                <td>Sop-000{{ $temp->id }}</td>
-                <td>{{ $temp->document_name }}</td>
-                <th>1</th>
-                <td>{{ $temp->traningstatus->status }}</td>
-                <td>Document</td>
-                <td>{{ $temp->due_dateDoc  }}</td>
-                <td>{{ $temp->due_dateDoc  }}</td>
-                <td><a href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i class="fa-solid fa-eye"></i></a></td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
-@endif
-</div> --}}
-</div>
-</div>
-</div>
+                                            </tbody>
+                                            </table>
+                                            </div>
+                                            @else
+                                        <div class="block-table">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Document Number</th>
+                                                        <th>Name</th>
+                                                        <th>Revision</th>
+                                                        <th>Training Status</th>
+                                                        <th>Content Type</th>
+                                                        <th>Due Date</th>
+                                                        <th>Completed Date</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($documents as $temp)
+                                                    <tr>
+                                                        <td>Sop-000{{ $temp->id }}</td>
+                                                        <td>{{ $temp->document_name }}</td>
+                                                        <th>1</th>
+                                                        <td>{{ $temp->traningstatus->status }}</td>
+                                                        <td>Document</td>
+                                                        <td>{{ $temp->due_dateDoc  }}</td>
+                                                        <td>{{ $temp->due_dateDoc  }}</td>
+                                                        <td><a href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i class="fa-solid fa-eye"></i></a></td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        @endif
+                                        </div> --}}
+                                        </div>
+                                        </div>
+                                        </div>
 
 {{-- ======================================
                 SUBSCRIBE MODAL

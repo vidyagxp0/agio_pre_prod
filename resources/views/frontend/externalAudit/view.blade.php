@@ -293,8 +293,13 @@
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('ShowexternalAuditTrial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(7, $userRoleIds) || in_array(66, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+
+                      
+                        
+                        @if ($data->stage == 1 && (Helpers::check_roles($data->division_id, 'External Audit', 7) || Helpers::check_roles($data->division_id, 'External Audit', 66) || Helpers::check_roles($data->division_id, 'External Audit', 18)))
+
+
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Audit Details Summary
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
@@ -303,7 +308,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && (in_array(7, $userRoleIds) || in_array(66, $userRoleIds)))
+                        @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'External Audit', 7) || Helpers::check_roles($data->division_id, 'External Audit', 66) || Helpers::check_roles($data->division_id, 'External Audit', 18)))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                             More Info Required
                         </button>
@@ -317,7 +322,13 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal1">
                                 CFT Review Not Required
                             </button>
-                        @elseif($data->stage == 3 && (in_array(5, $userRoleIds)) || in_array(Auth::user()->id, $valuesArray))
+                       
+                            @elseif(
+                                ($data->stage == 3 && (Helpers::check_roles($data->division_id, 'External Audit', 5) || Helpers::check_roles($data->division_id, 'External Audit', 18))) ||
+                                in_array(Auth::user()->id, $valuesArray)
+                            )
+
+                       
                             <!-- @if (!$cftCompleteUser) -->
 
                              <button class="button_theme1" data-bs-toggle="modal"
@@ -340,7 +351,8 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 4 && (in_array(66, $userRoleIds) || in_array(43, $userRoleIds)))
+                            @elseif($data->stage == 4 && (Helpers::check_roles($data->division_id, 'External Audit', 66)|| Helpers::check_roles($data->division_id, 'External Audit', 43)|| Helpers::check_roles($data->division_id, 'External Audit', 18)))
+                       
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             Approval Complete
                             </button>
@@ -348,8 +360,8 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Send to Opened
                             </button>
-
-                        @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(11, $userRoleIds) ))
+                          
+                            @elseif($data->stage == 5 && (Helpers::check_roles($data->division_id, 'External Audit', 66) || Helpers::check_roles($data->division_id, 'External Audit', 43) || Helpers::check_roles($data->division_id, 'External Audit', 18)))
 
                         <button class="button_theme1"> <a class="text-white" href="{{ url('auditee') }}">
                             Reopen
@@ -525,7 +537,7 @@
                                                     <input type="date" id="due_date" name="due_date"
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         class="hide-input" value="{{ $data->due_date }}"
-                                                        oninput="handleDateInput(this, 'due_date_display')" />
+                                                        oninput="handleDateInput(this, 'due_date_display')" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} />
                                                 </div>
                                             </div>
                                         </div>
@@ -669,7 +681,7 @@
                                                         value="recall">Recall</option>
                                                     <option @if ($data->initiated_through == 'return') selected @endif
                                                         value="return">Return</option>
-                                                    <!-- <option @if ($data->initiated_through == 'deviation') selected @endif
+                                                    <!-- <option @if ($data->initiated_through == 'External Audit') selected @endif
                                                             value="deviation">Deviation</option> -->
                                                     <option @if ($data->initiated_through == 'complaint') selected @endif
                                                         value="complaint">Complaint</option>
@@ -1958,7 +1970,7 @@
                                     <div class="group-input">
                                         <label for="reviewer_person_value">CFT review selection</label>
                                         <select id="reviewer_person_value" name="reviewer_person_value[]" multiple
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                             <option value="">Select a value</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->name }}" {{-- Pass the user's name instead of id --}}
@@ -1973,104 +1985,104 @@
                                     </div>
                                     </div>
                                     <div class="col-12">
-    <div class="group-input">
-        <label for="myfile">Summary And Response Attachments</label>
-        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-        <div class="file-attachment-field">
-            <!-- Update the ID of the file attachment list container -->
-            <div class="file-attachment-list" id="myfile-list">
-                @if ($data->myfile)
-                    @foreach(json_decode($data->myfile) as $file)
-                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                            <b>{{ $file }}</b>
-                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
-                            </a>
-                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
-                            </a>
-                            <input type="hidden" name="existing_myfile[]" value="{{ $file }}">
-                        </h6>
-                    @endforeach
-                @endif
-            </div>
-            <div class="add-btn">
-                <div>Add</div>
-                <!-- Keep the ID of the input file as 'myfile' -->
-                <input type="file" id="myfile" name="myfile[]" 
-                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                    oninput="addMultipleFiles(this, 'myfile-list')" multiple>
-            </div>
-        </div>
-    </div>
-</div>
+                                            <div class="group-input">
+                                                <label for="myfile">Summary And Response Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <!-- Update the ID of the file attachment list container -->
+                                                    <div class="file-attachment-list" id="myfile-list">
+                                                        @if ($data->myfile)
+                                                            @foreach(json_decode($data->myfile) as $file)
+                                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                    </a>
+                                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                                        <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                                    </a>
+                                                                    <input type="hidden" name="existing_myfile[]" value="{{ $file }}">
+                                                                </h6>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <!-- Keep the ID of the input file as 'myfile' -->
+                                                        <input type="file" id="myfile" name="myfile[]" 
+                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                            oninput="addMultipleFiles(this, 'myfile-list')" multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-<!-- Hidden field to keep track of files to be deleted -->
-<input type="hidden" id="deleted_myfile" name="deleted_myfile" value="">
+                                        <!-- Hidden field to keep track of files to be deleted -->
+                                        <input type="hidden" id="deleted_myfile" name="deleted_myfile" value="">
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const removeButtons = document.querySelectorAll('.remove-file');
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                const removeButtons = document.querySelectorAll('.remove-file');
 
-        removeButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const fileName = this.getAttribute('data-file-name');
-                const fileContainer = this.closest('.file-container');
+                                                removeButtons.forEach(button => {
+                                                    button.addEventListener('click', function() {
+                                                        const fileName = this.getAttribute('data-file-name');
+                                                        const fileContainer = this.closest('.file-container');
 
-                // Hide the file container
-                if (fileContainer) {
-                    fileContainer.style.display = 'none';
-                    // Remove hidden input associated with this file
-                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
-                    if (hiddenInput) {
-                        hiddenInput.remove();
-                    }
+                                                        // Hide the file container
+                                                        if (fileContainer) {
+                                                            fileContainer.style.display = 'none';
+                                                            // Remove hidden input associated with this file
+                                                            const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                            if (hiddenInput) {
+                                                                hiddenInput.remove();
+                                                            }
 
-                    // Add the file name to the deleted files list
-                    const deletedFilesInput = document.getElementById('deleted_myfile');
-                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
-                    deletedFiles.push(fileName);
-                    deletedFilesInput.value = deletedFiles.join(',');
-                }
-            });
-        });
-    });
+                                                            // Add the file name to the deleted files list
+                                                            const deletedFilesInput = document.getElementById('deleted_myfile');
+                                                            let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                            deletedFiles.push(fileName);
+                                                            deletedFilesInput.value = deletedFiles.join(',');
+                                                        }
+                                                    });
+                                                });
+                                            });
 
-    function addMultipleFiles(input, id) {
-        const fileListContainer = document.getElementById(id);
-        const files = input.files;
+                                            function addMultipleFiles(input, id) {
+                                                const fileListContainer = document.getElementById(id);
+                                                const files = input.files;
 
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const fileName = file.name;
-            const fileContainer = document.createElement('h6');
-            fileContainer.classList.add('file-container', 'text-dark');
-            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+                                                for (let i = 0; i < files.length; i++) {
+                                                    const file = files[i];
+                                                    const fileName = file.name;
+                                                    const fileContainer = document.createElement('h6');
+                                                    fileContainer.classList.add('file-container', 'text-dark');
+                                                    fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
 
-            const fileText = document.createElement('b');
-            fileText.textContent = fileName;
+                                                    const fileText = document.createElement('b');
+                                                    fileText.textContent = fileName;
 
-            const viewLink = document.createElement('a');
-            viewLink.href = '#'; // You might need to adjust this to handle local previews
-            viewLink.target = '_blank';
-            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                                    const viewLink = document.createElement('a');
+                                                    viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                                    viewLink.target = '_blank';
+                                                    viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
 
-            const removeLink = document.createElement('a');
-            removeLink.classList.add('remove-file');
-            removeLink.dataset.fileName = fileName;
-            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
-            removeLink.addEventListener('click', function() {
-                fileContainer.style.display = 'none';
-            });
+                                                    const removeLink = document.createElement('a');
+                                                    removeLink.classList.add('remove-file');
+                                                    removeLink.dataset.fileName = fileName;
+                                                    removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                                    removeLink.addEventListener('click', function() {
+                                                        fileContainer.style.display = 'none';
+                                                    });
 
-            fileContainer.appendChild(fileText);
-            fileContainer.appendChild(viewLink);
-            fileContainer.appendChild(removeLink);
+                                                    fileContainer.appendChild(fileText);
+                                                    fileContainer.appendChild(viewLink);
+                                                    fileContainer.appendChild(removeLink);
 
-            fileListContainer.appendChild(fileContainer);
-        }
-    }
-</script>
+                                                    fileListContainer.appendChild(fileContainer);
+                                                }
+                                            }
+                                        </script>
 
                                         <!-- <div class="col-12">
                                                 <div class="group-input">
@@ -2089,7 +2101,7 @@
                                     <div class="button-block">
                                        
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
-                                               >Save</button>
+                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}   >Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
@@ -2131,7 +2143,7 @@
                                         @if ($data->stage == 2 || $data->stage == 3)
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet"> Production Tablet/Capsule Powdert Required ?  <span
+                                                    <label for="Production Tablet"> Production Tablet/Capsule Powder Required ?  <span
                                                             class="text-danger">*</span></label>
                                                     <select name="Production_Table_Review" id="Production_Table_Review"
                                                         @if ($data->stage == 3) disabled @endif>
@@ -9061,7 +9073,7 @@
                                     </div>
                                     <div class="button-block">
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
-                                            type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 12 ? 'disabled' : '' }}
+                                            type="submit"{{ $data->stage == 0 || $data->stage == 5  ? 'disabled' : '' }}
                                             id="ChangesaveButton" class="saveButton saveAuditFormBtn d-flex"
                                             style="align-items: center;">
                                             <div class="spinner-border spinner-border-sm auditFormSpinner"
@@ -9073,7 +9085,7 @@
                                         <button type="button" class="backButton"
                                             onclick="previousStep()">Back</button>
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
-                                            type="button"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                            type="button"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                             id="ChangeNextButton" class="nextButton"
                                             onclick="nextStep()">Next</button>
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
@@ -9238,7 +9250,7 @@
                                
 
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        Audit Details Summary
+                                    Audit Details Summary
                                     </div>
                                     
 
@@ -9261,30 +9273,30 @@
                                         
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Comments">Comments</label>
+                                                <label for="Comments">Audit Details Summary Comment</label>
                                                 <div class="static">{{ $data->audit_details_summary_on_comment }}</div>
                                             </div>
                                         </div>
-                                            </div>
-                                        <div class="col-12 sub-head" style="font-size: 16px">
+                                            
+                                        <!-- <div class="col-12 sub-head" style="font-size: 16px">
                                             Cancel
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Cancelled By">Cancelled By</label>
+                                                <label for="Cancelled By">Cancel By</label>
                                                 <div class="static">{{ $data->cancelled_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Cancelled On">Cancelled On</label>
+                                                <label for="Cancelled On">Cancel On</label>
                                                 <div class="static">{{ $data->cancelled_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Comments">Comments</label>
+                                                <label for="Comments"> Cancel Comment</label>
                                                 <div class="static">{{ $data->cancelled_on_comment }}</div>
                                             </div>
                                         </div>
@@ -9293,9 +9305,9 @@
 
 
 
-                                    <div class="col-12 sub-head" style="font-size: 16px">
-                                        Summary and Response Complete
-                                    </div>
+                                        <div class="col-12 sub-head" style="font-size: 16px">
+                                            Summary and Response Complete
+                                        </div>
                                     
                                         <div class="col-lg-4">
                                             <div class="group-input">
@@ -9315,7 +9327,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Comments">Comments</label>
+                                                <label for="Comments">Summary and Response Complete Comment</label>
                                                 <div class="static">{{ $data->summary_and_response_com_on_comment }}
                                                 </div>
                                             </div>
@@ -9325,9 +9337,9 @@
 
 
 
-                                        <div class="col-12 sub-head" style="font-size: 16px">
-                                            CFT Review Not Required
-                                        </div>
+                                        <!-- <div class="col-12 sub-head" style="font-size: 16px">
+                                        CFT Review Not Required
+                                        </div> -->
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
@@ -9345,7 +9357,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Comments">Comments</label>
+                                                <label for="Comments">CFT Review Not Required Comment</label>
                                                 <div class="static">{{ $data->cft_review_not_req_on_comment }}</div>
                                             </div>
                                         </div>
@@ -9354,12 +9366,12 @@
 
                                     
                                         <div class="col-12 sub-head" style="font-size: 16px">
-                                            CFT Review Complete
+                                        CFT Review Complete
                                         </div>
 
 
 
-                                        <div>
+                                       
                                             <div class="col-lg-4">
                                                 <div class="group-input">
                                                     <label for="Audit Preparation Completed On">CFT Review Complete
@@ -9376,67 +9388,16 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="group-input">
-                                                    <label for="Comments">Comments</label>
+                                                    <label for="Comments">CFT Review Complete Comment</label>
                                                     <div class="static">{{ $data->cft_review_complete_comment }}</div>
                                                 </div>
                                             </div>
 
-
-
-
-                                            {{-- <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Preparation Completed On">More Information Required By </label>
-                                                <div class="static">{{ $data->more_info_req_crc_by }}</div>
-                                            </div>
-                                      
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Preparation Completed On">More Information Required On</label>
-                                                <div class="static">{{ $data->more_info_req_crc_on }}</div>
-                                            </div>
-                                        </div>
-                                         <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->more_info_req_crc_on_comment }}</div>
-                                        </div>
-                                    </div> --}}
-                                        </div>
-
-
-
-
-
-
-
-
-                                        {{-- <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Mgr.more Info Reqd By">Pending Response(Issue Report)
-                                                    By</label>
-                                                <div class="static">{{ $data->audit_mgr_more_info_reqd_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Mgr.more Info Reqd On">Pending Response(Issue Report)
-                                                    On</label>
-                                                <div class="static">{{ $data->audit_mgr_more_info_reqd_on }}</div>
-                                            </div>
-                                        </div>
-                                         <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->audit_mgr_more_info_reqd_on_comment }}</div>
-                                        </div> --}}
-                                    </div>
-
-                                    <div class="col-12 sub-head" style="font-size: 16px">
+                                        <div class="col-12 sub-head" style="font-size: 16px">
                                         Approval Complete
-                                    </div>
+                                        </div>
 
-                                    <div>
+                                    
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Audit Observation Submitted By">Approval Complete By</label>
@@ -9451,13 +9412,11 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Comments">Comments</label>
+                                                <label for="Comments">Approval Complete Comment</label>
                                                 <div class="static">{{ $data->approval_complete_on_comment }}</div>
                                             </div>
                                         </div>
-                                            <div class="col-12 sub-head" style="font-size: 16px">
-                                                Send to Opened
-                                            </div>
+                                           
 
                                             <div class="col-lg-4">
                                                 <div class="group-input">
@@ -9473,100 +9432,14 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="group-input">
-                                                    <label for="Comments">Comments</label>
+                                                    <label for="Comments">Send to Opened Comment</label>
                                                     <div class="static">{{ $data->send_to_opened_comment }}</div>
                                                 </div>
                                             </div>
-                                        
+                                        </div>
 
 
-                                        {{-- <div class="col-12 sub-head"  style="font-size: 16px">
-                                          CAPA Execution in Progress
-                                       </div>
-
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Lead More Info Reqd By">All CAPA Close
-                                                    By</label>
-                                                <div class="static">{{ $data->audit_lead_more_info_reqd_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Lead More Info Reqd On">All CAPA Close
-                                                    On</label>
-                                                <div class="static">{{ $data->audit_lead_more_info_reqd_on }}</div>
-                                            </div>
-                                        </div>
-                                         <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->audit_lead_more_info_reqd_on_comment }}</div>
-                                        </div> --}}
-
-
-                                        {{--
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Response Completed By">Audit Response Completed
-                                                    By</label>
-                                                <div class="static">{{ $data->audit_response_completed_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Response Completed On">Audit Response Completed
-                                                    On</label>
-                                                <div class="static">{{ $data->audit_response_completed_on }}</div>
-                                            </div>
-                                        </div>
-                                         <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->comment }}</div>
-                                        </div>
-                                    </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Response Feedback Verified By">Response Feedback Verified
-                                                    By</label>
-                                                <div class="static">{{ $data->response_feedback_verified_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Response Feedback Verified On">Response Feedback Verified
-                                                    On</label>
-                                                <div class="static">{{ $data->response_feedback_verified_on }}</div>
-                                            </div>
-                                        </div>
-                                         <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->comment }}</div>
-                                        </div>
-                                    </div>  --}}
-                                        {{--  <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Response Feedback Verified By"> Rejected By
-                                                    </label>
-                                                <div class="static">{{ $data->rejected_by}}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Response Feedback Verified On"> Rejected On
-                                                    </label>
-                                                <div class="static">{{ $data->rejected_on }}</div>
-                                            </div>
-                                        </div>
-                                         <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->comment }}</div>
-                                        </div>
-                                    </div>  --}}
-
+                                      
 
                                         <div class="button-block">
                                             @if ($data->stage != 0)
@@ -9583,7 +9456,7 @@
                                     </div>
                                 </div>
 
-                            </div>
+                        </div>
                     </form>
 
                 </div>
