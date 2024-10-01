@@ -9022,7 +9022,7 @@
                                     </div>
 
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                         Approval
+                                        Approved
                                     </div>
 
 
