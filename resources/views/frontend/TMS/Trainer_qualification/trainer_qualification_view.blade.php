@@ -578,11 +578,12 @@ $departments = DB::table('departments')->select('id', 'name')->get();
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Experience">Experience (No. of Years)</label>
-                    <select name="experience" id="experience">
+                    <input type="number" name="experience" min="1" value ="{{$trainer->experience}}"  id="experience" >
+                    <!-- <select name="experience" id="experience">
                         <option>Select </option>
                         @for ($experience = 1; $experience <= 70; $experience++) <option value="{{ $experience }}" @if ($experience==$trainer->experience) selected @endif>{{ $experience }}</option>
                             @endfor
-                    </select>
+                    </select> -->
                 </div>
             </div>
 
@@ -650,7 +651,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="site_name">Site Division/Project <span class="text-danger">*</span></label>
+                                    <label for="site_name">Site Division/Project </label>
                                     <!-- <input type="text" id="site_code" name="site_code" value="{{$trainer->site_code}}" required> -->
                                     <select name="site_code">
                                         <option value="">Enter Your Selection Here</option>
@@ -739,7 +740,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
 
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Short Description">Short Description</label><span id="rchars">255</span>
+                    <label for="Short Description">Short Description<span class="text-danger">*</span></label><span id="rchars">255</span>
                     characters remaining
                     <input id="short_description" type="text" name="short_description" maxlength="255" value="{{ $trainer->short_description }}">
                 </div>
