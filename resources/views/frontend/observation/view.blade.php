@@ -42,6 +42,17 @@
             width: 100%;
         }
     </style>
+     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+     integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+ @if (Session::has('swal'))
+     <script>
+         swal("{{ Session::get('swal')['title'] }}", "{{ Session::get('swal')['message'] }}",
+             "{{ Session::get('swal')['type'] }}")
+     </script>
+ @endif
 
     <div class="form-field-head">
         <div class="division-bar">
@@ -69,14 +80,14 @@
                                 href="{{ route('ShowObservationAuditTrial', $data->id) }}">
                                 Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(12, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_code, 'Observation', 12))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Report Issued
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-model">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && (in_array(11, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_code, 'Observation', 11))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
@@ -89,7 +100,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                        @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 3 && (Helpers::check_roles($data->division_code, 'Observation', 13) || Helpers::check_roles($data->division_code, 'Observation', 7) || Helpers::check_roles($data->division_code, 'Observation', 66)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Response Reviewed
                             </button>
@@ -768,7 +779,7 @@
                                 </div> --}}
                                         <div class="col-md-12 new-date-data-field">
                                             <div class="group-input input-date ">
-                                                <label for="date_Response_due1">Response Details (+) </label>
+                                                <label for="date_Response_due1">Response Details (+)  @if($data->stage == 2)<span class="text-danger">*</span>@endif</label>
                                                 <textarea name="response_detail" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} id="">{{ $data->response_detail }}</textarea>
                                             </div>
                                         </div>
@@ -1242,26 +1253,26 @@
                                         </div>
 
                                         <div class="col-12">
-                                            <div class="sub-head">No CAPAs Plan Proposed</div>
+                                            <div class="sub-head">No CAPA's Required</div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="QA Approval Without CAPA By">No CAPAs Plan Proposed
+                                                <label for="QA Approval Without CAPA By">No CAPA's Required
                                                     By</label>
                                                 <div class="static">{{ $data->qa_approval_without_capa_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="No CAPA's Plan Proposed On">No CAPAs Plan Proposed
+                                                <label for="No CAPA's Required On">No CAPA's Required
                                                     On</label>
                                                 <div class="static">{{ $data->qa_approval_without_capa_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted on">No CAPAs Plan Proposed Comment</label>
+                                                <label for="Submitted on">No CAPA's Required Comment</label>
                                                 <div class="Date">{{ $data->qa_approval_without_capa_comment }}</div>
                                             </div>
                                         </div>
@@ -1316,13 +1327,13 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="impact">Response Verification Comment</label>
+                                                <label for="impact">Response Verification Comment  @if($data->stage == 3)<span class="text-danger">*</span>@endif</label>
                                                 <textarea name="impact" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->impact }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Attachments">Response Verification Attachements</label>
+                                                <label for="Attachments">Response and Summary Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field"> 
                                                     <div class="file-attachment-list" id="impact_analysis">
