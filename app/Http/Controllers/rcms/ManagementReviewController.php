@@ -8263,6 +8263,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
             $changeControl = ManagementReview::find($id);
             $management = ManagementReview::find($id);
             $lastDocument =  ManagementReview::find($id);
+             $Cft = managementCft::withoutTrashed()->where('ManagementReview_id', $id)->first();
             $data =  ManagementReview::find($id);
              $updateCFT = managementCft::where('ManagementReview_id', $id)->latest()->first();
              $updatehodCFT = hodmanagementCft::where('ManagementReview_id', $id)->latest()->first();
@@ -8458,22 +8459,36 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
                 return back();
             }
             if ($changeControl->stage == 3) {
-                //  if (!$changeControl->customer_satisfaction_level || !$changeControl->external_supplier_performance) {
+                if (!$changeControl->customer_satisfaction_level || !$changeControl->external_supplier_performance ) {
+                            Session::flash('swal', [
+                                'title' => 'Mandatory Fields Required!',
+                                'message' => 'Meeting And Summary Tab is yet to be filled!',
+                                'type' => 'warning',
+                            ]);
 
-                //         Session::flash('swal', [
-                //             'title' => 'Mandatory Fields Required!',
-                //             'message' => 'Meeting Start Date and Meeting End Date is yet to be filled!',
-                //             'type' => 'warning',
-                //         ]);
+                            return redirect()->back();
+                        } else {
+                            Session::flash('swal', [
+                                'type' => 'success',
+                                'title' => 'Success',
+                                'message' => 'CFT Reviews'
+                            ]);
+                        }
+                         if (!$Cft->Production_Table_Review || !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review || !$Cft->ContractGiver_Review || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
+                            Session::flash('swal', [
+                                'title' => 'Mandatory Fields Required!',
+                                'message' => 'CFT Tab is yet to be filled!',
+                                'type' => 'warning',
+                            ]);
 
-                //         return redirect()->back();
-                //     } else {
-                //         Session::flash('swal', [
-                //             'type' => 'success',
-                //             'title' => 'Success',
-                //             'message' => 'Sent for CFT actions state'
-                //         ]);
-                //     }
+                            return redirect()->back();
+                        } else {
+                            Session::flash('swal', [
+                                'type' => 'success',
+                                'title' => 'Success',
+                                'message' => 'CFT Reviews'
+                            ]);
+                        }
                 //  if ($management->form_progress !== 'cft')
                 //     {
                 //         Session::flash('swal', [
