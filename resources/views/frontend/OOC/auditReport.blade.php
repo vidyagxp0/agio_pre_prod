@@ -18,8 +18,15 @@
         min-height: 100vh;
     }
 
+    .w-5 {
+        width: 5%;
+    }
+
     .w-10 {
         width: 10%;
+    }
+    .w-15 {
+        width: 15%;
     }
 
     .w-20 {
@@ -145,6 +152,11 @@
     .table_bg {
         background: #4274da57;
     }
+
+    .allow-wb {
+        word-break: break-all;
+        word-wrap: break-word;
+    }
 </style>
 
 <body>
@@ -197,15 +209,15 @@
 
 
         <div class="second-table">
-            <table>
-                <thead>
+            <table class="allow-wb" style="table-layout: fixed; width: 700px;">>
+                <thead style="max-width: 100px;">
                     <tr class="table_bg">
-                        <th>S.No</th>
-                        <th>Flow Changed From</th>
-                        <th>Flow Changed To</th>
-                        <th>Data Field</th>
-                        <th>Action Type</th>
-                        <th>Performer</th>
+                        <th class="w-5">S.No</th>
+                        <th class="w-15">Flow Changed From</th>
+                        <th class="w-15">Flow Changed To</th>
+                        <th class="w-30">Data Field</th>
+                        <th class="w-15" style="word-break: break-all;">Action Type</th>
+                        <th class="w-15" style="word-break: break-all;">Performer</th>
                     </tr>
                 </thead>
                 {{-- @foreach ($data as $datas)
@@ -213,22 +225,22 @@
                         @php
                             $previousItem = null;
                         @endphp --}}
-                <tbody>
+                <tbody style="max-width: 100px;">
                     @foreach ($audit as $index => $dataDemo)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>
+                            <td class="w-10">{{ $loop->iteration }}</td>
+                            <td class="w-20">
                                 <div><strong>Changed From :</strong> {{ $dataDemo->change_from }}</div>
                             </td>
-                            <td>
+                            <td class="w-20">
                                 <div><strong>Changed To :</strong> {{ $dataDemo->change_to }}</div>
                             </td>
-                            <td>
-                                <div>
+                            <td class="w-30">
+                                <div class="allow-wb">
                                     <strong>Data Field Name :</strong>
                                     {{ $dataDemo->activity_type ?: 'Not Applicable' }}
                                 </div>
-                                <div style="margin-top: 5px;" class="imageContainer">
+                                <div style="margin-top: 5px;" class="imageContainer allow-wb">
                                     <!-- Assuming $dataDemo->image_url contains the URL of your image -->
                                     @if ($dataDemo->activity_type == 'Activity Log')
                                         <strong>Change From :</strong>
@@ -261,7 +273,7 @@
                                     @endif
                                 </div>
                                 <br>
-                                <div class="imageContainer">
+                                <div class="allow-wb">
                                     @if ($dataDemo->activity_type == 'Activity Log')
                                         <strong>Change To :</strong>
                                         @if (strtotime($dataDemo->change_to))
@@ -278,16 +290,16 @@
                                         @endif
                                     @endif
                                 </div>
-                                <div style="margin-top: 5px;">
+                                <div class="allow-wb" style="margin-top: 5px;">
                                     <strong>Change Type :</strong>
                                     {{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
                                 </div>
                             </td>
-                            <td>
+                            <td class="w-10">
                                 <div><strong>Action Name :</strong>
                                     {{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}</div>
                             </td>
-                            <td>
+                            <td class="w-15">
                                 <div><strong>Performed By :</strong>
                                     {{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}</div>
                                 <div style="margin-top: 5px;">
@@ -313,3 +325,7 @@
 </body>
 
 </html>
+
+
+
+
