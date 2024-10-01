@@ -2760,13 +2760,13 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">Send to Letter By</th>
+                        <th class="w-20">Send Letter By</th>
                         <td class="w-80">{{ $data->send_letter_by }}</td>
-                        <th class="w-20">Send to Letter On</th>
+                        <th class="w-20">Send Letter On</th>
                         <td class="w-80">{{ $data->send_letter_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Send to Letter Comment</th>
+                        <th class="w-20">Send Letter Comment</th>
                         <td class="w-80">{{ $data->send_letter_comment }}</td>
                     </tr>
 

@@ -10404,7 +10404,7 @@
 
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">Send to CFT By :</label>
+                                <label for="Initiator Group">Send CFT By :</label>
                                 <div class="static">{{ $data->send_cft_by }}</div>
 
                             </div>
@@ -10412,13 +10412,13 @@
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Send to CFT On :</label>
+                                <label for="OOC Logged On">Send CFT On :</label>
                                 <div class="static">{{ $data->send_cft_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Comment">Send to CFT Comment</label>
+                                <label for="Comment">Send CFT Comment</label>
                                 <div class="static">{{ $data->send_cft_comment }}</div>
                             </div>
                         </div>
