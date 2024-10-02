@@ -9717,7 +9717,7 @@
                                             By</label>
                                         <input readonly type="text"
                                             value="{{ $data5->hod_ResearchDevelopment_by }}"
-                                            name="hod_ResearchDevelopment_by" id="Storhod_ResearchDevelopment_by">
+                                            name="hod_ResearchDevelopment_by" id="hod_ResearchDevelopment_by">
 
 
                                     </div>

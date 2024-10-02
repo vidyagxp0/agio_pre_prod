@@ -93,7 +93,7 @@ class AuditeeController extends Controller
         $internalAudit->if_comments = $request->if_comments;
         $internalAudit->lead_auditor = $request->lead_auditor;
         $internalAudit->Audit_team = is_array($request->Audit_team) ? implode(',', $request->Audit_team) : $request->Audit_team;
-        $internalAudit->Auditee =  is_array($request->Auditee) ? implode(',', $request->Auditee) : $request->Auditee; 
+        $internalAudit->Auditee =  is_array($request->Auditee) ? implode(',', $request->Auditee) : $request->Auditee;
         $internalAudit->Auditor_Details = $request->Auditor_Details;
         $internalAudit->External_Auditing_Agency = $request->External_Auditing_Agency;
         $internalAudit->Relevant_Guidelines = $request->Relevant_Guidelines;
@@ -481,18 +481,18 @@ class AuditeeController extends Controller
         $Cft->Other5_by = $request->Other5_by;
         $Cft->Other5_on = $request->Other5_on;
 
-        if (!empty ($request->production_attachment)) {
+        if (!empty ($request->Production_Table_Attachment)) {
             $files = [];
-            if ($request->hasfile('production_attachment')) {
-                foreach ($request->file('production_attachment') as $file) {
-                    $name = $request->name . 'production_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            if ($request->hasfile('Production_Table_Attachment')) {
+                foreach ($request->file('Production_Table_Attachment') as $file) {
+                    $name = $request->name . 'Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
 
 
-            $Cft->production_attachment = json_encode($files);
+            $Cft->Production_Table_Attachment = json_encode($files);
         }
         if (!empty ($request->Warehouse_attachment)) {
             $files = [];
@@ -724,10 +724,10 @@ class AuditeeController extends Controller
 
 
 
-       
 
 
-      
+
+
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Inititator';
@@ -743,7 +743,7 @@ class AuditeeController extends Controller
             $history->action_name = 'Create';
 
             $history->save();
-    
+
 
         if (!empty($internalAudit->assign_to)) {
             $history = new AuditTrialExternal();
@@ -1077,7 +1077,7 @@ class AuditeeController extends Controller
 
 
 
-        
+
         if (!empty($internalAudit->reviewer_person_value)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
@@ -1475,7 +1475,7 @@ class AuditeeController extends Controller
         if (!empty($internalAudit->inv_attachment)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'GI Attachments';
+            $history->activity_type = 'GI Attachment';
             $history->previous = "Null";
             $history->current = $internalAudit->inv_attachment;
             $history->comment = "NA";
@@ -1584,7 +1584,7 @@ class AuditeeController extends Controller
         if (!empty($internalAudit->myfile)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Summary And Response Attachments';
+            $history->activity_type = 'Summary And Response Attachment';
             $history->previous = "Null";
             $history->current = $internalAudit->myfile;
             $history->comment = "NA";
@@ -1774,7 +1774,7 @@ class AuditeeController extends Controller
         $internalAudit->lead_auditor = $request->lead_auditor;
         $internalAudit->Audit_team = is_array($request->Audit_team) ? implode(',', $request->Audit_team) : $request->Audit_team;
         $internalAudit->Auditee = is_array($request->Auditee) ? implode(',', $request->Auditee) : $request->Auditee;
-        
+
         $internalAudit->Auditor_Details = $request->Auditor_Details;
         $internalAudit->Audit_Category = $request->Audit_Category;
         $internalAudit->External_Auditing_Agency = $request->External_Auditing_Agency;
@@ -1793,7 +1793,7 @@ class AuditeeController extends Controller
 
 
         $internalAudit->qa_cqa_comment = $request->qa_cqa_comment;
-        
+
 
 
 
@@ -1820,7 +1820,7 @@ class AuditeeController extends Controller
 
         if (!empty($request->qa_cqa_attach) || !empty($request->deleted_qa_cqa_attach)) {
             $existingFiles = json_decode($internalAudit->qa_cqa_attach, true) ?? [];
-        
+
             // Handle deleted files
             if (!empty($request->deleted_qa_cqa_attach)) {
                 $filesToDelete = explode(',', $request->deleted_qa_cqa_attach);
@@ -1828,7 +1828,7 @@ class AuditeeController extends Controller
                     return !in_array($file, $filesToDelete);
                 });
             }
-        
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('qa_cqa_attach')) {
@@ -1838,7 +1838,7 @@ class AuditeeController extends Controller
                     $newFiles[] = $name;
                 }
             }
-        
+
             // Merge existing and new files
             $allFiles = array_merge($existingFiles, $newFiles);
             $internalAudit->qa_cqa_attach = json_encode($allFiles);
@@ -1883,7 +1883,7 @@ class AuditeeController extends Controller
 
         if (!empty($request->inv_attachment) || !empty($request->deleted_inv_attachment)) {
             $existingFiles = json_decode($internalAudit->inv_attachment, true) ?? [];
-        
+
             // Handle deleted files
             if (!empty($request->deleted_inv_attachment)) {
                 $filesToDelete = explode(',', $request->deleted_inv_attachment);
@@ -1891,7 +1891,7 @@ class AuditeeController extends Controller
                     return !in_array($file, $filesToDelete);
                 });
             }
-        
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('inv_attachment')) {
@@ -1901,7 +1901,7 @@ class AuditeeController extends Controller
                     $newFiles[] = $name;
                 }
             }
-        
+
             // Merge existing and new files
             $allFiles = array_merge($existingFiles, $newFiles);
             $internalAudit->inv_attachment = json_encode($allFiles);
@@ -1951,13 +1951,13 @@ class AuditeeController extends Controller
 
             $internalAudit->report_file = json_encode($files);
         }
-      
+
 
 
 
         if (!empty($request->myfile) || !empty($request->deleted_myfile)) {
             $existingFiles = json_decode($internalAudit->myfile, true) ?? [];
-        
+
             // Handle deleted files
             if (!empty($request->deleted_myfile)) {
                 $filesToDelete = explode(',', $request->deleted_myfile);
@@ -1965,7 +1965,7 @@ class AuditeeController extends Controller
                     return !in_array($file, $filesToDelete);
                 });
             }
-        
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('myfile')) {
@@ -1975,7 +1975,7 @@ class AuditeeController extends Controller
                     $newFiles[] = $name;
                 }
             }
-        
+
             // Merge existing and new files
             $allFiles = array_merge($existingFiles, $newFiles);
             $internalAudit->myfile = json_encode($allFiles);
@@ -2493,7 +2493,7 @@ class AuditeeController extends Controller
             }
         }
 
-        $internalAudit->form_progress = isset($form_progress) ? $form_progress : null;
+        // $internalAudit->form_progress = isset($form_progress) ? $form_progress : null;
         $internalAudit->update();
 
         $data3 = InternalAuditGrid::where('audit_id',$internalAudit->id)->where('type','external_audit')->first();
@@ -3421,7 +3421,7 @@ class AuditeeController extends Controller
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'GI Attachments';
+            $history->activity_type = 'GI Attachment';
             $history->previous = $lastDocument->inv_attachment;
             $history->current = $internalAudit->inv_attachment;
             $history->comment = $request->date_comment;
@@ -3539,7 +3539,7 @@ class AuditeeController extends Controller
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Summary And Response Attachments';
+            $history->activity_type = 'Summary And Response Attachment';
             $history->previous = $lastDocument->myfile;
             $history->current = $internalAudit->myfile;
             $history->comment = $request->date_comment;
@@ -6492,6 +6492,7 @@ $AuditorShow->save();
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Auditee::find($id);
+            $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $emailverification = User:: find($changeControl->initiator_id);
             $lastDocument = Auditee::find($id);
             $internalAudit = Auditee::find($id);
@@ -6572,22 +6573,37 @@ $AuditorShow->save();
                 return back();
             }
             if ($changeControl->stage == 2) {
-               if ($changeControl->form_progress !== 'cft')
-                {
-                    Session::flash('swal', [
-                        'type' => 'warning',
-                        'title' => 'Mandatory Fields!',
-                        'message' => 'Summary and Response/CFT Tab is yet to be filled'
-                    ]);
+            //    if ($changeControl->form_progress !== 'cft')
+            //     {
+            //         Session::flash('swal', [
+            //             'type' => 'warning',
+            //             'title' => 'Mandatory Fields!',
+            //             'message' => 'Summary and Response/CFT Tab is yet to be filled'
+            //         ]);
 
-                    return redirect()->back();
-                } else {
-                    Session::flash('swal', [
-                        'type' => 'success',
-                        'title' => 'Success',
-                        'message' => 'Sent for CFT review state'
-                    ]);
-                }
+            //         return redirect()->back();
+            //     } else {
+            //         Session::flash('swal', [
+            //             'type' => 'success',
+            //             'title' => 'Success',
+            //             'message' => 'Sent for CFT review state'
+            //         ]);
+            //     }
+                         if (!$Cft->Production_Table_Review || !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review || !$Cft->ContractGiver_Review || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
+                            Session::flash('swal', [
+                                'title' => 'Mandatory Fields Required!',
+                                'message' => 'CFT Tab is yet to be filled!',
+                                'type' => 'warning',
+                            ]);
+
+                            return redirect()->back();
+                        } else {
+                            Session::flash('swal', [
+                                'type' => 'success',
+                                'title' => 'Success',
+                                'message' => 'CFT Reviews'
+                            ]);
+                        }
 
                 $changeControl->stage = "3";
                 $changeControl->status = "CFT Review";
@@ -6675,23 +6691,23 @@ $AuditorShow->save();
             if ($changeControl->stage == 3) {
 
                 // // CFT review state update form_progress
-                if ($changeControl->form_progress !== 'cft')
-                {
-                    Session::flash('swal', [
-                        'type' => 'warning',
-                        'title' => 'Mandatory Fields!',
-                        'message' => 'CFT Tab is yet to be filled'
-                    ]);
+                // if ($changeControl->form_progress !== 'cft')
+                // {
+                //     Session::flash('swal', [
+                //         'type' => 'warning',
+                //         'title' => 'Mandatory Fields!',
+                //         'message' => 'CFT Tab is yet to be filled'
+                //     ]);
 
-                    return redirect()->back();
-                }
-                 else {
-                    Session::flash('swal', [
-                        'type' => 'success',
-                        'title' => 'Success',
-                        'message' => 'Sent for QA/CQA Head Approval state'
-                    ]);
-                }
+                //     return redirect()->back();
+                // }
+                //  else {
+                //     Session::flash('swal', [
+                //         'type' => 'success',
+                //         'title' => 'Success',
+                //         'message' => 'Sent for QA/CQA Head Approval state'
+                //     ]);
+                // }
 
 
                 $IsCFTRequired = ExternalAuditCFTResponse::where(['is_required' => 1, 'external_audit_id' => $id])->latest()->first();
