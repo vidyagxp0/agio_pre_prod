@@ -511,7 +511,7 @@ class DeviationController extends Controller
         $data3->save();
         $data4 = new DeviationGrid();
         $data4->deviation_grid_id = $deviation->id;
-        $data4->type = "Document ";
+        $data4->type = "Document";
         if (!empty($request->Number)) {
             $data4->Number = serialize($request->Number);
         }
@@ -526,7 +526,7 @@ class DeviationController extends Controller
 
         $data5 = new DeviationGrid();
         $data5->deviation_grid_id = $deviation->id;
-        $data5->type = "Product ";
+        $data5->type = "Product";
         if (!empty($request->product_name)) {
             $data5->product_name = serialize($request->product_name);
         }

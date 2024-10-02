@@ -43,6 +43,21 @@
             {{ Helpers::getDivisionName(session()->get('division')) }}/ Market Complaint
         </div>
     </div>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+        integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    @if (Session::has('swal'))
+        <script>
+            swal("{{ Session::get('swal')['title'] }}", "{{ Session::get('swal')['message'] }}",
+                "{{ Session::get('swal')['type'] }}")
+        </script>
+    @endif
+
 
     {{-- @if (Session::has('swal'))
         <script>
@@ -11102,8 +11117,8 @@ document.getElementById('initiator_group').addEventListener('change', function()
 
 
     <!-- SweetAlert2 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+    {{-- <script>
         @if (Session::has('swal'))
             Swal.fire({
                 title: '{{ Session::get('swal.title') }}',
@@ -11115,8 +11130,8 @@ document.getElementById('initiator_group').addEventListener('change', function()
                 size: '50px',
             });
         @endif
-    </script>
-    <style>
+    </script> --}}
+    {{-- <style>
         .swal2-title {
             font-size: 18px;
             /* Customize title font size */
@@ -11131,6 +11146,6 @@ document.getElementById('initiator_group').addEventListener('change', function()
             font-size: 14px;
             /* Customize confirm button font size */
         }
-    </style>
+    </style> --}}
 
 @endsection
