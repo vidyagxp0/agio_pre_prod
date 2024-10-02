@@ -165,7 +165,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Out Of Calibration Audit Trial Report
+                    Out Of Calibration Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
