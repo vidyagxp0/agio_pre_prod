@@ -1721,7 +1721,7 @@ dd($pre);
                                         <label for="Description Incident">Description of Incident</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Description_incident[]" id="summernote-1" required> </textarea>
+                                        <textarea class="tiny" name="Description_incident" id="summernote-1" required> </textarea>
                                     </div>
                                     @error('Description_incident[]')
                                         <div class="text-danger">{{ $message }}</div>

@@ -1086,8 +1086,8 @@
                                             <div class="col-lg-12 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <label for="Audit Schedule Start Date">Due Date</label>
-                                                    <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                        reason in "Due Date Extension Justification" data field.</small></div>
+                                                    {{--<div><small class="text-primary">If revising Due Date, kindly mention revision
+                                                        reason in "Due Date Extension Justification" data field.</small></div>--}}
                                                      <div class="calenderauditee">
                                                         <input type="text" id="due_dateq" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}" {{ $data->stage == 1 ? '' : 'readonly' }}
                                                     />
@@ -2096,7 +2096,7 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="group-input">
-                                                    <label for="Description Incident">Immediate corrective action<span
+                                                    <label for="Description Incident">Immediate Corrective Action<span
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>

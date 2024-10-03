@@ -120,7 +120,7 @@ class IncidentController extends Controller
 //  dd($incident->others);
         $incident->Product_Batch = $request->Product_Batch;
 
-        $incident->Description_incident = implode(',', $request->Description_incident);
+        $incident->Description_incident = $request->Description_incident;
         // dd($incident->Description_incident );
         // $incident->Immediate_Action = implode(',', $request->Immediate_Action);
         // $incident->Preliminary_Impact = implode(',', $request->Preliminary_Impact);
@@ -1001,7 +1001,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
 
-            if (!empty ($request->record)){
+            if (!empty($request->record)){
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $incident->id;
                $history->activity_type = 'Record Number';
@@ -1190,7 +1190,7 @@ class IncidentController extends Controller
         if (!empty ($request->immediate_correction)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
-            $history->activity_type = 'Immediate corrective action';
+            $history->activity_type = 'Immediate Corrective Action';
             $history->previous = "Null";
             $history->current = $incident->immediate_correction;
             $history->comment = "Not Applicable";
@@ -1203,22 +1203,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if (!empty ($request->investigation)){
-            $history = new IncidentAuditTrail();
-            $history->incident_id = $incident->id;
-            $history->activity_type = 'Investigation';
-            $history->previous = "Null";
-            $history->current = $incident->investigation;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $incident->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = 'Create';
-            $history->save();
-        }
+
         if (!empty ($request->qa_reviewer)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
@@ -1235,7 +1220,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if (!empty ($request->department_head)){
+        if (!empty($request->department_head)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Department Head';
@@ -1267,23 +1252,23 @@ class IncidentController extends Controller
         //     $history->action_name = 'Create';
         //     $history->save();
         // }
-        if (is_array($request->Facility) && $request->Facility[0] !== null){
-            $history = new IncidentAuditTrail();
-            $history->incident_id = $incident->id;
-            $history->activity_type = 'Observed by';
-            $history->previous = "Null";
-            $history->current = $incident->Facility;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $incident->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = 'Create';
-            $history->save();
-        }
-        if (!empty ($request->incident_reported_date)){
+        //if (is_array($request->Facility) && $request->Facility[0] !== null){
+        //    $history = new IncidentAuditTrail();
+        //    $history->incident_id = $incident->id;
+        //    $history->activity_type = 'Observed by';
+        //    $history->previous = "Null";
+        //    $history->current = $incident->Facility;
+        //    $history->comment = "Not Applicable";
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $incident->status;
+        //    $history->change_to =   "Opened";
+        //    $history->change_from = "Initiator";
+        //    $history->action_name = 'Create';
+        //    $history->save();
+        //}
+        if (!empty($request->incident_reported_date)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Incident Reported on';
@@ -1334,7 +1319,7 @@ class IncidentController extends Controller
         if (!empty ($request->Facility_Equipment)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
-            $history->activity_type = 'Facility/ Equipment/ Instrument/ System Details Required?';
+            $history->activity_type = 'Facility/Equipment/Instrument/System Details Required?';
             $history->previous = "Null";
             $history->current = $incident->Facility_Equipment;
             $history->comment = "Not Applicable";
@@ -1363,12 +1348,12 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if (!empty ($request->Product_Batch)){
+        if (!empty ($request->Product_Details_Required)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
-            $history->activity_type = 'Name of Product & Batch No';
+            $history->activity_type = 'Product/Material details Required';
             $history->previous = "Null";
-            $history->current = $incident->Product_Batch;
+            $history->current = $incident->Product_Details_Required;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1379,6 +1364,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+
         if (!empty($request->Description_incident)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
@@ -1395,44 +1381,13 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        // if ($request->Immediate_Action[0] !== null){
-        //     $history = new IncidentAuditTrail();
-        // $history->incident_id = $incident->id;
-        // $history->activity_type = 'Immediate Action (if any)';
-        // $history->previous = "Null";
-        // $history->current = $incident->Immediate_Action;
-        // $history->comment = "Not Applicable";
-        // $history->user_id = Auth::user()->id;
-        // $history->user_name = Auth::user()->name;
-        // $history->change_to =   "Opened";
-        //     $history->change_from = "Initiator";
-        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        // $history->origin_state = $incident->status;
-        // $history->action_name = 'Create';
-        // $history->save();
-        // }
-        // if ($request->Preliminary_Impact[0] !== null){
-        //     $history = new IncidentAuditTrail();
-        //     $history->incident_id = $incident->id;
-        //     $history->activity_type = 'Preliminary Impact of Incident';
-        //     $history->previous = "Null";
-        //     $history->current = $incident->Preliminary_Impact;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->change_to =   "Opened";
-        //     $history->change_from = "Initiator";
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $incident->status;
-        //     $history->action_name = 'Create';
-        //     $history->save();
-        // }
-        if ($request->Initial_attachment){
+
+        if (!empty($request->investigation)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
-            $history->activity_type = 'Initial Attachments';
+            $history->activity_type = 'Investigation';
             $history->previous = "Null";
-            $history->current = $incident->Initial_attachment;
+            $history->current = $incident->investigation;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1444,7 +1399,24 @@ class IncidentController extends Controller
             $history->save();
         }
 
-        if ($request->review_of_verific){
+        if ($request->Audit_file){
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Initial Attachment';
+            $history->previous = "Null";
+            $history->current = $incident->Audit_file;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $incident->status;
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($request->review_of_verific)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Review Of Incident And Verfication Of Effectivess Of Correction';
@@ -1460,7 +1432,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->Recommendations){
+        if (!empty($request->Recommendations)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Recommendations';
@@ -1477,7 +1449,7 @@ class IncidentController extends Controller
             $history->save();
 
 
-        } if ($request->Impact_Assessmenta){
+        } if(!empty($request->Impact_Assessmenta)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Impact Assessment';
@@ -1493,7 +1465,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->HOD_Remarks){
+        if (!empty($request->HOD_Remarks)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'HOD Remarks';
@@ -1509,7 +1481,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->hod_attachments){
+        if (!empty($request->hod_attachments)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'HOD Attachments';
@@ -1525,7 +1497,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->product_quality_imapct){
+        if (!empty($request->product_quality_imapct)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Product Quality Impact';
@@ -1542,7 +1514,7 @@ class IncidentController extends Controller
             $history->save();
         }
 
-        if ($request->process_performance_impact){
+        if (!empty($request->process_performance_impact)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Process Performance Impact';
@@ -1558,7 +1530,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->yield_impact){
+        if (!empty($request->yield_impact)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Yield Impact';
@@ -1574,7 +1546,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->gmp_impact){
+        if (!empty($request->gmp_impact)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'GMP Impact:';
@@ -1590,7 +1562,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->additionl_testing_required){
+        if (!empty($request->additionl_testing_required)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Additional Testing Required:';
@@ -1606,7 +1578,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->any_similar_incident_in_past){
+        if (!empty($request->any_similar_incident_in_past)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'If Yes, Then Mention';
@@ -1624,7 +1596,7 @@ class IncidentController extends Controller
         }
 
 
-        if ($request->capa_require){
+        if (!empty($request->capa_require)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Any Similar Incident in Past';
@@ -1641,7 +1613,7 @@ class IncidentController extends Controller
             $history->save();
         }
 
-         if ($request->classification_by_qa){
+         if (!empty($request->classification_by_qa)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Classification by QA';
@@ -1657,7 +1629,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->QAInitialRemark){
+        if (!empty($request->QAInitialRemark)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'QA Initial Review Remarks';
@@ -1674,7 +1646,7 @@ class IncidentController extends Controller
             $history->save();
         }
 
-        if ($request->Initial_attachment){
+        if (!empty($request->Initial_attachment)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'QA Initial Review Attachments';
@@ -1691,7 +1663,7 @@ class IncidentController extends Controller
             $history->save();
         }
 
-        if ($request->qa_head_deginee_comment){
+        if (!empty($request->qa_head_deginee_comment)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'QA Head/Designee approval comment';
@@ -1708,7 +1680,7 @@ class IncidentController extends Controller
             $history->save();
         }
 
-        if ($request->qa_head_deginee_attachments){
+        if (!empty($request->qa_head_deginee_attachments)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'QA Head/Designee approval comment';
@@ -1725,7 +1697,7 @@ class IncidentController extends Controller
             $history->save();
         }
 
-        if ($request->capa_implementation){
+        if (!empty($request->capa_implementation)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'CAPA Implementation';
@@ -1741,7 +1713,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->corrective_actions){
+        if (!empty($request->corrective_actions)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Based upon the assessment of the corrective actions planned, whether unplanned deviation is required:';
@@ -1757,7 +1729,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->batch_release){
+        if (!empty($request->batch_release)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Batch release satisfactory';
@@ -1774,7 +1746,7 @@ class IncidentController extends Controller
             $history->save();
         }
 
-        if ($request->affected_documents){
+        if (!empty($request->affected_documents)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Affected documents closed';
@@ -1790,7 +1762,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->QA_Feedbacks){
+        if (!empty($request->QA_Feedbacks)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Initiator Update Comments';
@@ -1806,7 +1778,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->QA_attachments){
+        if (!empty($request->QA_attachments)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Initiator Update Attachments';
@@ -1822,7 +1794,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->qa_head_Remarks){
+        if (!empty($request->qa_head_Remarks)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'HOD Final Review Comments';
@@ -1838,7 +1810,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->qa_head_attachments){
+        if (!empty($request->qa_head_attachments)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'HOD Final Review Attachments';
@@ -1855,7 +1827,7 @@ class IncidentController extends Controller
             $history->save();
         }
 
-        if ($request->qa_final_review){
+        if (!empty($request->qa_final_review)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'QA Final Review Comments';
@@ -1872,7 +1844,7 @@ class IncidentController extends Controller
             $history->save();
         }
 
-        if ($request->qa_final_ra_attachments){
+        if (!empty($request->qa_final_ra_attachments)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'QA Final Review Attachments';
@@ -1923,7 +1895,7 @@ class IncidentController extends Controller
         //     $history->save();
         // }
 
-        if ($request->Closure_Comments){
+        if (!empty($request->Closure_Comments)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Closure Comments';
@@ -1940,7 +1912,7 @@ class IncidentController extends Controller
             $history->save();
         }
 
-        if ($request->Disposition_Batch){
+        if (!empty($request->Disposition_Batch)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Disposition of Batch';
@@ -1956,7 +1928,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->closure_attachment){
+        if (!empty($request->closure_attachment)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Closure Attachments';
@@ -3509,6 +3481,26 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
+            if($lastIncident->immediate_correction !=$incident->immediate_correction || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Immediate Corrective Action')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Immediate Corrective Action';
+                $history->previous =  $lastIncident->immediate_correction;
+                $history->current = $incident->immediate_correction;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state= $lastIncident->status;
+                $history->change_to= "Not Applicable";
+                $history->change_from= $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
             if($lastIncident->product_quality_imapct !=$incident->product_quality_imapct || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Product Quality Impact')
@@ -3567,6 +3559,47 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
+            if($lastIncident->department_head != $incident->department_head || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Department Head')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Department Head';
+                $history->previous =  Helpers::getInitiatorName($lastIncident->department_head);
+                $history->current = Helpers::getInitiatorName($incident->department_head);
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state= $lastIncident->status;
+                $history->change_to= "Not Applicable";
+                $history->change_from= $lastIncident->status;
+                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+            if($lastIncident->qa_reviewer != $incident->qa_reviewer || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'QA Reviewer')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'QA Reviewer';
+                $history->previous = Helpers::getInitiatorName($lastIncident->qa_reviewer);
+                $history->current = Helpers::getInitiatorName($incident->qa_reviewer);
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state= $lastIncident->status;
+                $history->change_to= "Not Applicable";
+                $history->change_from= $lastIncident->status;
+                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+
             // if($lastIncident->Initiator_Group !=$incident->Initiator_Group || !empty($request->Initiator_Group)) {
             //     $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
             //                     ->where('activity_type', 'Initiator Group')
@@ -3587,29 +3620,29 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             //     $history->save();
             // }
 
-            if($lastIncident->Facility !=$incident->Facility || !empty($request->comment)) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Initiator Group')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Facility';
-                $history->previous =  $lastIncident->Facility;
-                $history->current = $incident->Facility;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
+            //if($lastIncident->Facility !=$incident->Facility || !empty($request->comment)) {
+            //    $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+            //                    ->where('activity_type', 'Initiator Group')
+            //                    ->exists();
+            //    $history = new IncidentAuditTrail();
+            //    $history->incident_id = $incident->id;
+            //    $history->activity_type = 'Facility';
+            //    $history->previous =  $lastIncident->Facility;
+            //    $history->current = $incident->Facility;
+            //    $history->comment = $request->comment;
+            //    $history->user_id = Auth::user()->id;
+            //    $history->user_name = Auth::user()->name;
+            //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //    $history->origin_state= $lastIncident->status;
+            //    $history->change_to= "Not Applicable";
+            //    $history->change_from= $lastIncident->status;
+            //    $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+            //    $history->save();
+            //}
 
             if($lastIncident->incident_reported_date !=$incident->incident_reported_date || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Incident Deported')
+                                ->where('activity_type', 'Incident Reported On')
                                 ->exists();
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $incident->id;
@@ -3630,11 +3663,11 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
             if($lastIncident->audit_type !=$incident->audit_type || !empty($request->audit_type_comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Audit Type')
+                                ->where('activity_type', 'Incident Related To')
                                 ->exists();
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $incident->id;
-                $history->activity_type = 'Audit Type';
+                $history->activity_type = 'Incident Related To';
                 $history->previous =  $lastIncident->audit_type;
                 $history->current = $incident->audit_type;
                 $history->comment = $request->audit_type_comment;
@@ -3669,7 +3702,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             }
 
 
-            if($lastIncident->Facility !=$incident->Facility || !empty($request->Delay_Justification_comment)) {
+            if($lastIncident->Facility != $incident->Facility || !empty($request->Delay_Justification_comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Incident Observed By')
                                 ->exists();
@@ -3691,11 +3724,11 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
             if($lastIncident->Facility_Equipment !=$incident->Facility_Equipment || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Facility Equipment')
+                                ->where('activity_type', 'Facility/ Equipment/ Instrument/ System Details Required')
                                 ->exists();
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $incident->id;
-                $history->activity_type = 'Facility Equipment';
+                $history->activity_type = 'Facility/Equipment/Instrument/System Details Required';
                 $history->previous =  $lastIncident->Facility_Equipment;
                 $history->current = $incident->Facility_Equipment;
                 $history->comment = $request->comment;
@@ -3730,15 +3763,15 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->Product_Batch !=$incident->Product_Batch || !empty($request->comment)) {
+            if($lastIncident->Product_Details_Required !=$incident->Product_Details_Required || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Product Batch')
+                                ->where('activity_type', 'Product / Material details Required')
                                 ->exists();
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $incident->id;
-                $history->activity_type = 'Product Batch';
-                $history->previous =  $lastIncident->Product_Batch;
-                $history->current = $incident->Product_Batch;
+                $history->activity_type = 'Product / Material details Required';
+                $history->previous =  $lastIncident->Product_Details_Required;
+                $history->current = $incident->Product_Details_Required;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3750,13 +3783,13 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->Description_incident !=$incident->Description_incident || !empty($request->comment)) {
+            if($lastIncident->Description_incident != $incident->Description_incident || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Description Incident')
+                                ->where('activity_type', 'Description of Incident')
                                 ->exists();
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $incident->id;
-                $history->activity_type = 'Description Incident';
+                $history->activity_type = 'Description of Incident';
                 $history->previous =  $lastIncident->Description_incident;
                 $history->current = $incident->Description_incident;
                 $history->comment = $request->comment;
@@ -3771,25 +3804,26 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             }
 
 
-            // if($lastIncident->Immediate_Action !=$incident->Immediate_Action || !empty($request->comment)) {
-            //     $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-            //                     ->where('activity_type', 'Immediate Action')
-            //                     ->exists();
-            //     $history = new IncidentAuditTrail();
-            //     $history->incident_id = $incident->id;
-            //     $history->activity_type = 'Immediate Action';
-            //     $history->previous =  $lastIncident->Immediate_Action;
-            //     $history->current = $incident->Immediate_Action;
-            //     $history->comment = $request->comment;
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state= $lastIncident->status;
-            //     $history->change_to= "Not Applicable";
-            //     $history->change_from= $lastIncident->status;
-            //     $history->action_name=$lastDataAuditTrail ? "Update" : "New";
-            //     $history->save();
-            // }
+
+             if($lastIncident->investigation !=$incident->investigation || !empty($request->comment)) {
+                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                 ->where('activity_type', 'Immediate Action')
+                                 ->exists();
+                 $history = new IncidentAuditTrail();
+                 $history->incident_id = $incident->id;
+                 $history->activity_type = 'Investigation';
+                 $history->previous =  $lastIncident->investigation;
+                 $history->current = $incident->investigation;
+                 $history->comment = $request->comment;
+                 $history->user_id = Auth::user()->id;
+                 $history->user_name = Auth::user()->name;
+                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                 $history->origin_state= $lastIncident->status;
+                 $history->change_to= "Not Applicable";
+                 $history->change_from= $lastIncident->status;
+                 $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                 $history->save();
+             }
 
             // if($lastIncident->Preliminary_Impact !=$incident->Preliminary_Impact || !empty($request->comment)) {
             //     $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
@@ -4015,13 +4049,33 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
             if($lastIncident->QAInitialRemark !=$incident->QAInitialRemark || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'QAInitialRemark')
+                                ->where('activity_type', 'QA Initial Review Remarks')
                                 ->exists();
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $incident->id;
-                $history->activity_type = 'QAInitialRemark';
+                $history->activity_type = 'QA Initial Review Remarks';
                 $history->previous =  $lastIncident->QAInitialRemark;
                 $history->current = $incident->QAInitialRemark;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state= $lastIncident->status;
+                $history->change_to= "Not Applicable";
+                $history->change_from= $lastIncident->status;
+                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+            if($lastIncident->Initial_attachment !=$incident->Initial_attachment || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'QA Initial Review Attachments')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'QA Initial Review Attachments';
+                $history->previous =  $lastIncident->Initial_attachment;
+                $history->current = $incident->Initial_attachment;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -4255,7 +4309,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->Disposition_Batch !=$incident->Disposition_Batch || !empty($request->comment)) {
+            if($lastIncident->Disposition_Batch != $incident->Disposition_Batch || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Disposition Batch')
                                 ->exists();
@@ -4268,12 +4322,33 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
+
+            if($lastIncident->Audit_file != $incident->Audit_file) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Initial Attachment')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Initial Attachment';
+                $history->previous =  $lastIncident->Audit_file;
+                $history->current = $incident->Audit_file;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
             if($lastIncident->review_of_verific !=$incident->review_of_verific || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Review Of Incident And Verfication Of Effectivess Of Correction')
@@ -4353,7 +4428,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             }
 
 
-            if($lastIncident->qa_head_deginee_attachments !=$incident->qa_head_deginee_attachments || !empty($request->comment)) {
+            if($lastIncident->qa_head_deginee_attachments != $incident->qa_head_deginee_attachments || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'QA Head/Designee approval attachement')
                                 ->exists();
@@ -4416,7 +4491,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->qa_final_ra_attachments !=$incident->qa_final_ra_attachments || !empty($request->comment)) {
+            if($lastIncident->qa_final_ra_attachments != $incident->qa_final_ra_attachments || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'QA Final Review Attachments')
                                 ->exists();
@@ -4438,7 +4513,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
 
 
-            if($lastIncident->closure_attachment !=$incident->closure_attachment || !empty($request->comment)) {
+            if($lastIncident->closure_attachment != $incident->closure_attachment || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Closure Attachments')
                                 ->exists();

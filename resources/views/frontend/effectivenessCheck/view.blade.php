@@ -513,7 +513,7 @@
                                         <label for="Effectiveness Results">Effectiveness Results <span style="color: red;">*</span>
 
                                         </label>
-                                            <textarea type="text" name="Effectiveness_Results" id="Effectiveness_Results" required {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->Effectiveness_Results }}</textarea>
+                                            <textarea type="text" name="Effectiveness_Results" id="Effectiveness_Results" required {{ $data->stage == 3 ? '' : 'readonly' }} required>{{ $data->Effectiveness_Results }}</textarea>
                                     </div>
                                 </div>
                                 @else
@@ -632,12 +632,12 @@
                                   HOD Review
                                 </div>
                                 <div class="col-12">
-                                    @if ($data->stage == 5)
+                                    @if ($data->stage == 4)
                                     <div class="group-input">
                                         <label for="Comments"><b>HOD Review Comments</b> <span style="color: red;">*</span>
                                         </label>
                                         {{-- <textarea name="Comments" {{ $data->stage == 0 || $data->stage == 7 || $data->stage == 8  ||  $data->stage == 9 ? "disabled" : "" }} >{{ $data->Comments }}</textarea> --}}
-                                        <textarea type="text" name="Comments" id="acknowledge_comment" required {{ $data->stage == 4 ? '' : 'readonly' }}>{{ $data->Comments }}</textarea>
+                                        <textarea type="text" name="Comments" id="acknowledge_comment" required {{ $data->stage == 4 ? '' : 'readonly' }} required>{{ $data->Comments }}</textarea>
                                     </div>
                                 </div>
                                 @else
@@ -768,7 +768,7 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input {{ $data->stage == 5 ? '' : 'readonly' }} value="{{ $data->qa_cqa_review_Attachment }}" type="file" id="myfile" name="qa_cqa_review_Attachment[]"
+                                                <input {{ $data->stage == 5 ? '' : 'disabled' }} value="{{ $data->qa_cqa_review_Attachment }}" type="file" id="myfile" name="qa_cqa_review_Attachment[]"
                                                     oninput="addMultipleFiles(this, 'qa_cqa_review_Attachment')"
                                                     multiple>
                                             </div>
