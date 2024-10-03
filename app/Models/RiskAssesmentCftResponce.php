@@ -11,4 +11,6 @@ class RiskAssesmentCftResponce extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    protected $table = 'risk_assesment_cft_responces';
+
 }

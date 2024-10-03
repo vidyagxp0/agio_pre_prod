@@ -691,7 +691,7 @@
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Interim Containnment">Interim Containnment</label>
+                                                <label for="Interim Containnment">Interim Containment</label>
                                                 <select name="interim_containnment"
                                                     onchange="otherController(this.value, 'required', 'containment_comments')"
                                                     {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>

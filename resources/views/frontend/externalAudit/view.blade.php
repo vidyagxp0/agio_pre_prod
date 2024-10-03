@@ -1798,7 +1798,7 @@
                                                     <button type="button"
                                                         {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                         name="audit-incident-grid" id="IncidentAdd">+</button>
-                                                    <<span class="text-primary"
+                                                    <span class="text-primary"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#observation-field-instruction-modal"
                                                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -7042,7 +7042,7 @@
 
 
                                         <!-- HTML Section -->
-                                    <div class="sub-head">
+                                    <!-- <div class="sub-head">
                                                 Contract Giver
                                             </div>
 
@@ -7303,7 +7303,7 @@
                                                                                     style="color:red; font-size:20px;"></i></a>
                                                                         </h6>
     @endforeach
-    @endif
+    @endif                      
                                                             </div>
                                                             <div class="add-btn">
                                                                 <div>Add</div>
@@ -7347,7 +7347,7 @@
     @enderror
                                                     </div>
                                                 </div>
-                                            @endif
+                                            @endif -->
 
 
                                         @if ($data->stage == 2 || $data->stage == 3)
@@ -8363,6 +8363,27 @@
                                                 value="{{ $data1->Other5_on }}">
                                         </div>
                                     </div> --}}
+                                            <!-- <div class="col-6  new-date-data-field Other5_reviews">
+                                                <div class="group-input input-date">
+                                                    <label for="Others 5 Completed On">Others 5
+                                                        Completed On</label>
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="Other5_on" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Other5_on) }}" />
+                                                        <input readonly type="date" name="Other5_on"
+                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                            value="" class="hide-input"
+                                                            oninput="handleDateInput(this, 'Other5_on')" />
+                                                    </div>
+                                                    @error('Other5_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div> -->
+
+
+
                                             <div class="col-6  new-date-data-field Other5_reviews">
                                                 <div class="group-input input-date">
                                                     <label for="Others 5 Completed On">Others 5
@@ -9144,12 +9165,26 @@
 
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 mb-3">
-                                                <div class="group-input">
-                                                    <label for="Review Completed On5">Other's 5 Review Completed
-                                                        On</label>
-                                                    <input disabled type="date" name="Other5_on" id="Other5_on"
-                                                        value="{{ $data1->Other5_on }}">
+                                           
+
+
+
+                                            <div class="col-6  new-date-data-field Other5_reviews">
+                                                <div class="group-input input-date">
+                                                    <label for="Others 4 Completed On">Others 5
+                                                        Completed On</label>
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="Other5_on" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Other5_on) }}" />
+                                                        <input readonly type="date" name="Other5_on"
+                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                            value="" class="hide-input"
+                                                            oninput="handleDateInput(this, 'Other5_on')" />
+                                                    </div>
+                                                    @error('Other5_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
                                                 </div>
                                             </div>
                                         @endif

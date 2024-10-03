@@ -558,10 +558,8 @@ DATA FIELDS
                                 <label for="Year">Initiated through</label>
                                 <select name="year" id="year">
                                     <option value="">-- Select --</option>
-                                    <option value="Deviation">Deviation</option>
-                                    <option value="CAPA">CAPA</option>
-                                    <option value="Lab Incident">Lab Incident</option>
-                                    <option value="Internal Audit">Internal Audit</option>
+                                    <option value="Yearly Planner">Yearly Planner</option>
+                                    <option value="Monthly Planner">Monthly Planner</option>
                                     <option value="Other">Other</option>
                                 </select>
                             </div>
