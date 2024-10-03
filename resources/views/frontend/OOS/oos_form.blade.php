@@ -10415,20 +10415,13 @@ $users = DB::table('users')
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">CAPA Ref No.</label>
-                            {{-- <select multiple id="reference_record" name="capa_ref_no_oosc" id="">
-                                <option value="">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select> --}}
-                            <select multiple id="reference_record" name="capa_ref_no_oosc[]"
-                                placeholder="Select Reference Records">
-                                @if (!empty($capa_record)) 
+                            <select multiple id="capa_ref_no_oosc" name="capa_ref_no_oosc[]"
+                                placeholder="Select Capa Reference Records">
                                 @foreach ($capa_record as $new)
                                     <option value="{{ $new->id }}">
                                         {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                     </option>
                                 @endforeach
-                            @endif
                         </select>
                         </div>
                     </div>
@@ -12176,7 +12169,7 @@ $users = DB::table('users')
 
 
 
-   </script>s
+   </script>
     <script>
         $(document).ready(function() {
             
@@ -12208,7 +12201,7 @@ $users = DB::table('users')
 
     <script>
         VirtualSelect.init({
-            ele: '#reference_record, #notify_to'
+            ele: '#reference_record, #notify_to, #capa_ref_no_oosc'
         });
 
         $('#summernote').summernote({

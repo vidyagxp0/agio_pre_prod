@@ -692,7 +692,7 @@ class OOSService
                 $history->current = $oos->Comments_plidata;
                 $history->save();
             }
-            if (!empty($request->checklists)){
+            if (!empty($oos->checklists)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
                 $history->previous = "Null";
@@ -706,8 +706,7 @@ class OOSService
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
                 $history->activity_type = 'Checklists';
-                $history->current = implode(', ', $request->checklists);
-                // $history->current = $oos->checklists;
+                $history->current = implode(', ', $oos->checklists);
                 $history->save();
             }
             if (!empty($request->justify_if_no_field_alert_pli)){
@@ -1358,7 +1357,7 @@ class OOSService
                 $history->current = $request->Probable_cause_iden;
                 $history->save();
             }
-            if (!empty($request->proposal_for_hypothesis_IB)) {
+            if (!empty($oos->proposal_for_hypothesis_IB)) {
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
                 $history->previous = "Null";
@@ -1373,7 +1372,7 @@ class OOSService
                 $history->action_name = 'Create';
                 $history->activity_type = 'Proposal for Phase IB hypothesis';
             
-                $history->current = implode(', ', $request->proposal_for_hypothesis_IB);
+                $history->current = implode(', ', $oos->proposal_for_hypothesis_IB);
             
                 $history->save();
             }
