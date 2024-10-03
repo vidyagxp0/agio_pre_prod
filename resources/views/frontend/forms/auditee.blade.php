@@ -2796,7 +2796,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="sub-head">
+
+
+
+                                <!-- <div class="sub-head">
                                     Contract Giver
                                 </div>
                                 <script>
@@ -2894,7 +2897,7 @@
                                         <label for="Contract Giver Completed On">Contract Giver Completed On</label>
                                         <input type="date"id="ContractGiver_on" name="ContractGiver_on">
                                     </div>
-                                </div>
+                                </div> -->
 
 
 
