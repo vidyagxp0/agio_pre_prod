@@ -169,10 +169,11 @@ $users = DB::table('users')->get();
             <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Phase IB HOD Primary Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Phase IB QA Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm11')">P-IB QAH Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Activity Log</button>
             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">HOD Review</button> -->
             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Stage I</button> -->
             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Closure</button> -->
-            <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Activity Log</button>
+            {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Activity Log</button> --}}
 
         </div>
 
@@ -1955,7 +1956,7 @@ $(document).ready(function() {
                 </div>
             </div> -->
 
-            <div id="CCForm13" class="inner-block cctabcontent">
+            {{-- <div id="CCForm13" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
                         CAPA
@@ -1982,7 +1983,7 @@ $(document).ready(function() {
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                 {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                 
-                                <div class="file-attachment-field">
+                               {{-- <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="initial_attachment_closuress_ooc"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
@@ -2028,7 +2029,7 @@ $(document).ready(function() {
                             </a> </button>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
                 
 
