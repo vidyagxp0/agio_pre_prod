@@ -126,6 +126,54 @@
                             // dd($cftCompleteUser);
                         @endphp
 
+                             @php
+                            $userRoles = DB::table('user_roles')
+                                ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])
+                                ->get();
+                            $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                            $cftRolesAssignUsers = collect($userRoleIds); //->contains(fn ($roleId) => $roleId >= 22 && $roleId <= 33);
+                            $hodcftUsers = DB::table('hodmanagement_cfts')
+                                ->where(['ManagementReview_id' => $data->id])
+                                ->first();
+
+                            // Define the column names
+                            $columns2 = [
+                                'hod_Production_Table_Person',
+                                'hod_Production_Injection_Person',
+                                'hod_ResearchDevelopment_person',
+                                'hod_Store_person',
+                                'hod_Quality_Control_Person',
+                                'hod_QualityAssurance_person',
+                                'hod_RegulatoryAffair_person',
+                                'hod_ProductionLiquid_person',
+                                'hod_Microbiology_person',
+                                'hod_Engineering_person',
+                                'hod_ContractGiver_person',
+                                'hod_Environment_Health_Safety_person',
+                                'hod_Human_Resource_person',
+                                'hod_CorporateQualityAssurance_person',
+                            ];
+
+                            // Initialize an array to store the values
+                            $valuesArray = [];
+
+                            // Iterate over the columns and retrieve the values
+                            foreach ($columns2 as $column) {
+                                $value = $hodcftUsers->$column;
+                                // Check if the value is not null and not equal to 0
+                                if ($value !== null && $value != 0) {
+                                    $valuesArray[] = $value;
+                                }
+                            }
+                            $hodcftCompleteUser = DB::table('hodmanagement_cft__responses')
+                                ->whereIn('status', ['In-progress', 'Completed'])
+                                ->where('ManagementReview_id', $data->id)
+                                ->where('cft_user_id', Auth::user()->id)
+                                ->whereNull('deleted_at')
+                                ->first();
+                            // dd($cftCompleteUser);
+                        @endphp
+
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
                         <button class="button_theme1"> <a class="text-white"
@@ -163,16 +211,26 @@
                         @elseif(
                             ($data->stage == 4 && Helpers::check_roles($data->division_id, 'Management Review', 5)) ||
                                 in_array(Auth::user()->id, $valuesArray))
+                                 <!-- @if (!$cftCompleteUser)
+    -->
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CFT Action Complete
                             </button>
-                        @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                             <!--
+    @endif -->
+                        @elseif(
+                        ($data->stage == 5 && Helpers::check_roles($data->division_id, 'Management Review', 5)) ||
+                                in_array(Auth::user()->id, $valuesArray))
+                                 <!-- @if (!$hodcftCompleteUser)
+    -->
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CFT HOD Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
+                             <!--
+    @endif -->
                         @elseif($data->stage == 6 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Verification Complete
@@ -1046,8 +1104,8 @@
                                 $assignedUsers = explode(',', $data->assign_to ?? '');
 
                             @endphp
-                          <div class="col-lg-12">
-                              <div class="group-input">
+                        <div class="col-lg-12">
+                            <div class="group-input">
                                 <label for="assign_to">Invite Person Notify <span class="text-danger">*</span></label>
 
                                     <!-- Disabled select for stages 0 or 2 -->
@@ -1067,7 +1125,7 @@
 
                             </div>
 
-                            </div>
+                        </div>
 
 
                             {{-- <div class="col-12">
@@ -6719,345 +6777,7 @@
 
 
                                 <!-- HTML Section -->
-                                <div class="sub-head">
-                                    Contract Giver
-                                </div>
-
-                                @php
-                                    $data1 = DB::table('management_cfts')
-                                        ->where('ManagementReview_id', $data->id)
-                                        ->first();
-                                @endphp
-
-                                @if ($data1->ContractGiver_Review !== 'yes')
-                                    <script>
-                                        $(document).ready(function() {
-                                            // Initially hide or show based on the current value of the select
-                                            if ($('[name="ContractGiver_Review"]').val() === 'yes') {
-                                                $('.ContractGiver').show();
-                                                $('.ContractGiver span').show();
-                                            } else {
-                                                $('.ContractGiver').hide();
-                                                $('.ContractGiver span').hide();
-                                            }
-
-                                            // Handle changes to the select field
-                                            $('[name="ContractGiver_Review"]').change(function() {
-                                                if ($(this).val() === 'yes') {
-                                                    $('.ContractGiver').show();
-                                                    $('.ContractGiver span').show();
-                                                } else {
-                                                    $('.ContractGiver').hide();
-                                                    $('.ContractGiver span').hide();
-                                                }
-                                            });
-                                        });
-                                    </script>
-                                @endif
-
-                                @if ($data->stage == 3 || $data->stage == 4)
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Contract Giver">Contract Required ? <span
-                                                    class="text-danger">*</span></label>
-                                            <select name="ContractGiver_Review" id="ContractGiver_Review">
-                                                <option value="">-- Select --</option>
-                                                <option @if ($data1->ContractGiver_Review == 'yes') selected @endif
-                                                    value='yes'>Yes</option>
-                                                <option @if ($data1->ContractGiver_Review == 'no') selected @endif
-                                                    value='no'>No</option>
-                                                <option @if ($data1->ContractGiver_Review == 'na') selected @endif
-                                                    value='na'>NA</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    @php
-                                        $userRoles = DB::table('user_roles')
-                                            ->where([
-                                                'q_m_s_roles_id' => 60,
-                                                'q_m_s_divisions_id' => $data->division_id,
-                                            ])
-                                            ->get();
-                                        $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                        $users = DB::table('users')->whereIn('id', $userRoleIds)->get();
-                                    @endphp
-
-                                    <div class="col-lg-6 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver notification">Contract Giver Person <span
-                                                    id="asteriskPT" class="text-danger">*</span></label>
-                                            <select @if ($data->stage == 4) disabled @endif
-                                                name="ContractGiver_person" id="ContractGiver_person">
-                                                <option value="">-- Select --</option>
-                                                @foreach ($users as $user)
-                                                    <option value="{{ $user->name }}"
-                                                        @if ($user->name == $data1->ContractGiver_person) selected @endif>
-                                                        {{ $user->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver notification">HOD Contract Giver Person <span
-                                                    id="asteriskPT" class="text-danger">*</span></label>
-                                            <select @if ($data->stage == 4) disabled @endif
-                                                name="hod_ContractGiver_person" id="hod_ContractGiver_person">
-                                                <option value="">-- Select --</option>
-                                                @foreach ($users as $user)
-                                                    <option value="{{ $user->name }}"
-                                                        @if ($user->name == $data5->hod_ContractGiver_person) selected @endif>
-                                                        {{ $user->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12 mb-3 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver assessment">Description of Action Item (By Contract
-                                                Giver)
-                                                <span id="asteriskPT1" class="text-danger"
-                                                    style="display: {{ $data1->ContractGiver_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"></span></label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                            <textarea @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 4) required @endif class="summernote ContractGiver_assessment"
-                                                @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->name != $data1->ContractGiver_person)) readonly @endif name="ContractGiver_assessment" id="summernote-17">{{ $data1->ContractGiver_assessment }}</textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12 mb-3 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver feedback">Contract Giver Status of Action Item
-                                                <span id="asteriskPT2" class="text-danger"
-                                                    style="display: {{ $data1->ContractGiver_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"></span></label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                            <textarea class="summernote ContractGiver_feedback" @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->name != $data1->ContractGiver_person)) readonly @endif
-                                                name="ContractGiver_feedback" id="summernote-18" @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ContractGiver_feedback }}</textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver attachment">Contract Giver Attachments</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting
-                                                    documents</small></div>
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="ContractGiver_attachment">
-                                                    @if ($data1->ContractGiver_attachment)
-                                                        @foreach (json_decode($data1->ContractGiver_attachment) as $file)
-                                                            <h6 type="button" class="file-container text-dark"
-                                                                style="background-color: rgb(243, 242, 240);">
-                                                                <b>{{ $file }}</b>
-                                                                <a href="{{ asset('upload/' . $file) }}"
-                                                                    target="_blank"><i class="fa fa-eye text-primary"
-                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file"
-                                                                    data-file-name="{{ $file }}"><i
-                                                                        class="fa-solid fa-circle-xmark"
-                                                                        style="color:red; font-size:20px;"></i></a>
-                                                            </h6>
-                                                        @endforeach
-                                                    @endif
-                                                </div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                        type="file" id="myfile"
-                                                        name="ContractGiver_attachment[]"
-                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        oninput="addMultipleFiles(this, 'ContractGiver_attachment')"
-                                                        multiple>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 mb-3 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver Completed By">Contract Giver Completed By</label>
-                                            <input readonly type="text" value="{{ $data1->ContractGiver_by }}"
-                                                name="ContractGiver_by" id="ContractGiver_by">
-                                        </div>
-                                    </div>
-
-                                    {{-- <div class="col-lg-6 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver Completed On">Contract Giver Completed On</label>
-                                            <input type="date" id="ContractGiver_on" name="ContractGiver_on"
-                                                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                value="{{ $data1->ContractGiver_on }}">
-                                        </div>
-                                    </div> --}}
-                                    <div class="col-6 ContractGiver new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="Contract Giver Completed On">Contract Giver
-                                                Completed On</label>
-                                            <div class="calenderauditee">
-                                                <input type="text" id="ContractGiver_on" readonly
-                                                    placeholder="DD-MMM-YYYY"
-                                                    value="{{ Helpers::getdateFormat($data1->ContractGiver_on) }}" />
-                                                <input readonly type="date" name="ContractGiver_on"
-                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                                    class="hide-input"
-                                                    oninput="handleDateInput(this, 'ContractGiver_on')" />
-                                            </div>
-                                            @error('ContractGiver_on')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Contract Giver">Contract Giver Required ?</label>
-                                            <select name="ContractGiver_Review" disabled id="ContractGiver_Review">
-                                                <option value="">-- Select --</option>
-                                                <option @if ($data1->ContractGiver_Review == 'yes') selected @endif
-                                                    value='yes'>Yes</option>
-                                                <option @if ($data1->ContractGiver_Review == 'no') selected @endif
-                                                    value='no'>No</option>
-                                                <option @if ($data1->ContractGiver_Review == 'na') selected @endif
-                                                    value='na'>NA</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    @php
-                                        $userRoles = DB::table('user_roles')
-                                            ->where([
-                                                'q_m_s_roles_id' => 60,
-                                                'q_m_s_divisions_id' => $data->division_id,
-                                            ])
-                                            ->get();
-                                        $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                        $users = DB::table('users')->whereIn('id', $userRoleIds)->get();
-                                    @endphp
-
-                                    <div class="col-lg-6 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver notification">Contract Giver Person <span
-                                                    id="asteriskInvi11" style="display: none"
-                                                    class="text-danger">*</span></label>
-                                            <select @if ($data->stage == 4) disabled @endif
-                                                name="ContractGiver_person" id="ContractGiver_person">
-                                                <option value="">-- Select --</option>
-                                                @foreach ($users as $user)
-                                                    <option value="{{ $user->name }}"
-                                                        @if ($user->name == $data1->ContractGiver_person) selected @endif>
-                                                        {{ $user->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver notification">HOD Contract Giver Person <span
-                                                    id="asteriskInvi11" style="display: none"
-                                                    class="text-danger">*</span></label>
-                                            <select @if ($data->stage == 4) disabled @endif
-                                                name="hod_ContractGiver_person" id="hod_ContractGiver_person">
-                                                <option value="">-- Select --</option>
-                                                @foreach ($users as $user)
-                                                    <option value="{{ $user->name }}"
-                                                        @if ($user->name == $data5->hod_ContractGiver_person) selected @endif>
-                                                        {{ $user->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12 mb-3 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver assessment">Description of Action Item (By Contract
-                                                Giver)
-                                                <span id="asteriskPT1" style="display: none"
-                                                    class="text-danger">*</span></label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                            <textarea class="summernote ContractGiver_assessment" @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->name != $data1->ContractGiver_person)) readonly @endif
-                                                name="ContractGiver_assessment" id="summernote-17">{{ $data1->ContractGiver_assessment }}</textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12 mb-3 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver feedback">Contract Giver Status of Action Item
-                                                <span id="asteriskPT2" style="display: none"
-                                                    class="text-danger">*</span></label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                            <textarea class="summernote ContractGiver_feedback" @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->name != $data1->ContractGiver_person)) readonly @endif
-                                                name="ContractGiver_feedback" id="summernote-18">{{ $data1->ContractGiver_feedback }}</textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver attachment">Contract Giver Attachments</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting
-                                                    documents</small></div>
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="ContractGiver_attachment">
-                                                    @if ($data1->ContractGiver_attachment)
-                                                        @foreach (json_decode($data1->ContractGiver_attachment) as $file)
-                                                            <h6 type="button" class="file-container text-dark"
-                                                                style="background-color: rgb(243, 242, 240);">
-                                                                <b>{{ $file }}</b>
-                                                                <a href="{{ asset('upload/' . $file) }}"
-                                                                    target="_blank"><i class="fa fa-eye text-primary"
-                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file"
-                                                                    data-file-name="{{ $file }}"><i
-                                                                        class="fa-solid fa-circle-xmark"
-                                                                        style="color:red; font-size:20px;"></i></a>
-                                                            </h6>
-                                                        @endforeach
-                                                    @endif
-                                                </div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                        type="file" id="myfile"
-                                                        name="ContractGiver_attachment[]"
-                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        oninput="addMultipleFiles(this, 'ContractGiver_attachment')"
-                                                        multiple>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 mb-3 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver Completed By">Contract Giver Completed By</label>
-                                            <input readonly type="text" value="{{ $data1->ContractGiver_by }}"
-                                                name="ContractGiver_by" id="ContractGiver_by">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6 ContractGiver new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="Contract Giver Completed On">Contract Giver
-                                                Completed On</label>
-                                            <div class="calenderauditee">
-                                                <input type="text" id="ContractGiver_on" readonly
-                                                    placeholder="DD-MMM-YYYY"
-                                                    value="{{ Helpers::getdateFormat($data1->ContractGiver_on) }}" />
-                                                <input readonly type="date" name="ContractGiver_on"
-                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                                    class="hide-input"
-                                                    oninput="handleDateInput(this, 'ContractGiver_on')" />
-                                            </div>
-                                            @error('ContractGiver_on')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                @endif
-
+                               
 
                                 @if ($data->stage == 3 || $data->stage == 4)
                                     <div class="sub-head Other1_review">
@@ -8980,7 +8700,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 51,
+                                            'q_m_s_roles_id' => 68,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9111,7 +8831,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 51,
+                                            'q_m_s_roles_id' => 68,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9235,7 +8955,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 53,
+                                            'q_m_s_roles_id' => 70,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9368,7 +9088,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 53,
+                                            'q_m_s_roles_id' => 70,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9509,7 +9229,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 55,
+                                            'q_m_s_roles_id' => 72,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9641,7 +9361,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 55,
+                                            'q_m_s_roles_id' => 72,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9717,7 +9437,7 @@
                                             By</label>
                                         <input readonly type="text"
                                             value="{{ $data5->hod_ResearchDevelopment_by }}"
-                                            name="hod_ResearchDevelopment_by" id="hod_ResearchDevelopment_by">
+                                            name="hod_ResearchDevelopment_by" id="Storhod_ResearchDevelopment_by">
 
 
                                     </div>
@@ -9777,7 +9497,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 31,
+                                            'q_m_s_roles_id' => 77,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9922,7 +9642,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 31,
+                                            'q_m_s_roles_id' => 77,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10079,7 +9799,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 58,
+                                            'q_m_s_roles_id' => 74,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10222,7 +9942,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 58,
+                                            'q_m_s_roles_id' => 74,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10362,7 +10082,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 54,
+                                            'q_m_s_roles_id' => 71,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10490,7 +10210,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 54,
+                                            'q_m_s_roles_id' => 71,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10620,7 +10340,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 25,
+                                            'q_m_s_roles_id' => 78,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10754,7 +10474,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 25,
+                                            'q_m_s_roles_id' => 78,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10879,7 +10599,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 57,
+                                            'q_m_s_roles_id' => 81,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -11015,7 +10735,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 57,
+                                            'q_m_s_roles_id' => 81,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -11144,7 +10864,7 @@
 
                             @php
                                 $userRoles = DB::table('user_roles')
-                                    ->where(['q_m_s_roles_id' => 26, 'q_m_s_divisions_id' => $data->division_id])
+                                    ->where(['q_m_s_roles_id' => 79, 'q_m_s_divisions_id' => $data->division_id])
                                     ->get();
                                 $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                 //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -11283,7 +11003,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 52,
+                                            'q_m_s_roles_id' => 69,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -11420,7 +11140,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 52,
+                                            'q_m_s_roles_id' => 69,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -11552,7 +11272,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 24,
+                                            'q_m_s_roles_id' => 80,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -11688,7 +11408,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 24,
+                                            'q_m_s_roles_id' => 80,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -11814,7 +11534,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 56,
+                                            'q_m_s_roles_id' => 73,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -11948,7 +11668,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 56,
+                                            'q_m_s_roles_id' => 73,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -12075,7 +11795,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 59,
+                                            'q_m_s_roles_id' => 75,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -12211,7 +11931,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 59,
+                                            'q_m_s_roles_id' => 75,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -12313,233 +12033,7 @@
 
 
                             <!-- HTML Section -->
-                            <div class="sub-head">
-                                Contract Giver
-                            </div>
 
-                            @php
-                                $data5 = DB::table('hodmanagement_cfts')
-                                    ->where('ManagementReview_id', $data->id)
-                                    ->first();
-                            @endphp
-
-                            @if ($data5->hod_ContractGiver_Review !== 'yes')
-                                <!-- <script>
-                                    $(document).ready(function() {
-                                        // Initially hide or show based on the current value of the select
-                                        if ($('[name="hod_ContractGiver_Review"]').val() === 'yes') {
-                                            $('.ContractGiver').show();
-                                            $('.ContractGiver span').show();
-                                        } else {
-                                            $('.ContractGiver').hide();
-                                            $('.ContractGiver span').hide();
-                                        }
-
-                                        // Handle changes to the select field
-                                        $('[name="hod_ContractGiver_Review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-                                                $('.ContractGiver').show();
-                                                $('.ContractGiver span').show();
-                                            } else {
-                                                $('.ContractGiver').hide();
-                                                $('.ContractGiver span').hide();
-                                            }
-                                        });
-                                    });
-                                </script> -->
-                            @endif
-
-                            @if ($data->stage == 3 || $data->stage == 5)
-
-
-                                @php
-                                    $userRoles = DB::table('user_roles')
-                                        ->where([
-                                            'q_m_s_roles_id' => 60,
-                                            'q_m_s_divisions_id' => $data->division_id,
-                                        ])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get();
-                                @endphp
-
-
-
-
-                                <div class="col-md-12 mb-3 ContractGiver">
-                                    <div class="group-input">
-                                        <label for="Contract Giver feedback">HOD Contract Giver Comments <span
-                                                id="asteriskPT2" class="text-danger"
-                                                style="display: {{ $data5->hod_ContractGiver_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"></span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                does not require completion</small></div>
-                                        <textarea class="summernote hod_ContractGiver_feedback" @if (
-                                            $data->stage == 3 ||
-                                                (isset($data5->hod_ContractGiver_person) && Auth::user()->name != $data5->hod_ContractGiver_person)) readonly @endif
-                                            name="hod_ContractGiver_feedback" id="summernote-18" @if ($data5->hod_ContractGiver_Review == 'yes' && $data->stage == 5) required @endif>{{ $data5->hod_ContractGiver_feedback }}</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 ContractGiver">
-                                    <div class="group-input">
-                                        <label for="Contract Giver attachment">HOD Contract Giver Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="hod_ContractGiver_attachment">
-                                                @if ($data5->hod_ContractGiver_attachment)
-                                                    @foreach (json_decode($data5->hod_ContractGiver_attachment) as $file)
-                                                        <h6 type="button" class="file-container text-dark"
-                                                            style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}"
-                                                                target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
-                                                                data-file-name="{{ $file }}"><i
-                                                                    class="fa-solid fa-circle-xmark"
-                                                                    style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                    type="file" id="myfile"
-                                                    name="hod_ContractGiver_attachment[]"
-                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    oninput="addMultipleFiles(this, 'hod_ContractGiver_attachment')"
-                                                    multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 mb-3 ContractGiver">
-                                    <div class="group-input">
-                                        <label for="Contract Giver Completed By">HOD Contract Giver Completed By</label>
-                                        <input readonly type="text" value="{{ $data5->hod_ContractGiver_by }}"
-                                            name="hod_ContractGiver_by" id="hod_ContractGiver_by">
-                                    </div>
-                                </div>
-
-                                {{-- <div class="col-lg-6 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver Completed On">Contract Giver Completed On</label>
-                                            <input type="date" id="ContractGiver_on" name="ContractGiver_on"
-                                                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                value="{{ $data5->ContractGiver_on }}">
-                                        </div>
-                                    </div> --}}
-                                <div class="col-6 ContractGiver new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Contract Giver Completed On">HOD Contract Giver
-                                            Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="hod_ContractGiver_on" readonly
-                                                placeholder="DD-MMM-YYYY"
-                                                value="{{ Helpers::getdateFormat($data5->hod_ContractGiver_on) }}" />
-                                            <input readonly type="date" name="hod_ContractGiver_on"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                                class="hide-input"
-                                                oninput="handleDateInput(this, 'hod_ContractGiver_on')" />
-                                        </div>
-                                        @error('hod_ContractGiver_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            @else
-                                @php
-                                    $userRoles = DB::table('user_roles')
-                                        ->where([
-                                            'q_m_s_roles_id' => 60,
-                                            'q_m_s_divisions_id' => $data->division_id,
-                                        ])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get();
-                                @endphp
-
-
-
-
-                                <div class="col-md-12 mb-3 ContractGiver">
-                                    <div class="group-input">
-                                        <label for="Contract Giver feedback">HOD Contract Giver Comments <span
-                                                id="asteriskPT2" style="display: none"
-                                                class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                does not require completion</small></div>
-                                        <textarea class="summernote hod_ContractGiver_feedback" @if ($data->stage == 3 || (isset($data5->ContractGiver_person) && Auth::user()->name != $data5->ContractGiver_person)) readonly @endif
-                                            name="hod_ContractGiver_feedback" id="summernote-18">{{ $data5->hod_ContractGiver_feedback }}</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 ContractGiver">
-                                    <div class="group-input">
-                                        <label for="Contract Giver attachment">HOD Contract Giver Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="hod_ContractGiver_attachment">
-                                                @if ($data5->hod_ContractGiver_attachment)
-                                                    @foreach (json_decode($data5->hod_ContractGiver_attachment) as $file)
-                                                        <h6 type="button" class="file-container text-dark"
-                                                            style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}"
-                                                                target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
-                                                                data-file-name="{{ $file }}"><i
-                                                                    class="fa-solid fa-circle-xmark"
-                                                                    style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                    type="file" id="myfile"
-                                                    name="hod_ContractGiver_attachment[]"
-                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    oninput="addMultipleFiles(this, 'hod_ContractGiver_attachment')"
-                                                    multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 mb-3 ContractGiver">
-                                    <div class="group-input">
-                                        <label for="Contract Giver Completed By">HOD Contract Giver Completed By</label>
-                                        <input readonly type="text" value="{{ $data5->hod_ContractGiver_by }}"
-                                            name="hod_ContractGiver_by" id="hod_ContractGiver_by">
-                                    </div>
-                                </div>
-
-                                <div class="col-6 ContractGiver new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Contract Giver Completed On">HOD Contract Giver
-                                            Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="hod_ContractGiver_on" readonly
-                                                placeholder="DD-MMM-YYYY"
-                                                value="{{ Helpers::getdateFormat($data5->hod_ContractGiver_on) }}" />
-                                            <input readonly type="date" name="hod_ContractGiver_on"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                                class="hide-input"
-                                                oninput="handleDateInput(this, 'hod_ContractGiver_on')" />
-                                        </div>
-                                        @error('hod_ContractGiver_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            @endif
 
 
                             @if ($data->stage == 3 || $data->stage == 5)
