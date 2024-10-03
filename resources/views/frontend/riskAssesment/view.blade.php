@@ -184,52 +184,52 @@
 
                     <div class="d-flex" style="gap:20px;">
                         @php
-                            $userRoles = DB::table('user_roles')
-                                ->where(['user_id' => Auth::user()->id])
-                                ->get();
-                            $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-                            $cftRolesAssignUsers = collect($userRoleIds); //->contains(fn ($roleId) => $roleId >= 22 && $roleId <= 33);
-                            $cftUsers = DB::table('risk_managment_cfts')
-                                ->where(['risk_id' => $data->id])
-                                ->first();
+                        $userRoles = DB::table('user_roles')
+                            ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])
+                            ->get();
+                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                        $cftRolesAssignUsers = collect($userRoleIds); //->contains(fn ($roleId) => $roleId >= 22 && $roleId <= 33);
+                        $cftUsers = DB::table('risk_managment_cfts')
+                            ->where(['risk_id' => $data->id])
+                            ->first();
 
-                            // Define the column names
-                            $columns = [
-                                'Production_Table_Person',
-                                'Production_Injection_Person',
-                                'ResearchDevelopment_person',
-                                'Human_Resource_person',
-                                'CorporateQualityAssurance_person',
-                                'Store_person',
-                                'Quality_Control_Person',
-                                'QualityAssurance_person',
-                                'RegulatoryAffair_person',
-                                'ProductionLiquid_person',
-                                'Microbiology_person',
-                                'Engineering_person',
-                                'ContractGiver_person',
-                                'Environment_Health_Safety_person',
-                            ];
+                        // Define the column names
+                        $columns = [
+                            'Production_Table_Person',
+                            'Production_Injection_Person',
+                            'ResearchDevelopment_person',
+                            'Store_person',
+                            'Quality_Control_Person',
+                            'QualityAssurance_person',
+                            'RegulatoryAffair_person',
+                            'ProductionLiquid_person',
+                            'Microbiology_person',
+                            'Engineering_person',
+                            'ContractGiver_person',
+                            'Environment_Health_Safety_person',
+                            'Human_Resource_person',
+                            'CorporateQualityAssurance_person',
+                        ];
 
-                            // Initialize an array to store the values
-                            $valuesArray = [];
+                        // Initialize an array to store the values
+                        $valuesArray = [];
 
-                            // Iterate over the columns and retrieve the values
-                            foreach ($columns as $column) {
-                                $value = $cftUsers->$column;
-                                // Check if the value is not null and not equal to 0
-                                if ($value !== null && $value != 0) {
-                                    $valuesArray[] = $value;
-                                }
+                        // Iterate over the columns and retrieve the values
+                        foreach ($columns as $column) {
+                            $value = $cftUsers->$column;
+                            // Check if the value is not null and not equalto 0
+                            if ($value !== null && $value != 0) {
+                                $valuesArray[] = $value;
                             }
-                            $cftCompleteUser = DB::table('risk_assesment_cft_responces')
-                                ->whereIn('status', ['In-progress', 'Completed'])
-                                ->where('risk_id', $data->id)
-                                ->where('cft_user_id', Auth::user()->id)
-                                ->whereNull('deleted_at')
-                                ->first();
-                            //  dd($userRoleIds);
-                        @endphp
+                        }
+                        $cftCompleteUser = DB::table('risk_assesment_cft_responces')
+                            ->whereIn('status', ['In-progress', 'Completed'])
+                            ->where('risk_id', $data->id)
+                            ->where('cft_user_id', Auth::user()->id)
+                            ->whereNull('deleted_at')
+                            ->first();
+                        // dd($cftCompleteUser);
+                    @endphp
                         {{-- <a href="{{route('riskSingleReport', $data->id)}}"><button class="button_theme1"
                             class="new-doc-btn">Print</button></a> --}}
 
@@ -258,11 +258,11 @@
                                 Cancel
                             </button>
 
-                        @elseif(
-                            ($data->stage == 3 && Helpers::check_roles($data->division_id, 'Risk Assessment', 5)) ||
-                                in_array(Auth::user()->id, $valuesArray))
-                            <!-- @if (!$cftCompleteUser)
-                             -->
+                            @elseif(
+                                ($data->stage == 3 && Helpers::check_roles($data->division_id, 'Risk Assessment', 5)) ||
+                                    in_array(Auth::user()->id, $valuesArray))
+                                <!-- @if (!$cftCompleteUser)
+        -->
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
@@ -272,8 +272,9 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button> --}}
-                            <!--
-                        @endif -->
+
+                        <!--
+    @endif -->
                         @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Risk Assessment', 7))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                             Request More Info
@@ -759,7 +760,7 @@
 
                                         <div class="col-lg-12">
                                             <div class="group-input">
-                                                <label for="File Attachments">Initial Attachments</label>
+                                                <label for="File Attachments">Initial Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                                         documents</small></div>
                                                 <div class="file-attachment-field">
@@ -1941,408 +1942,385 @@
                                     @endif
 
 
-                                    <div class="sub-head">
-                                        Production Injection
+                                       <div class="sub-head">
+                                    Production Injection
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        @if ($data1->Production_Injection_Review !== 'yes')
+                                            $('.productionInjection').hide();
+
+                                            $('[name="Production_Injection_Review"]').change(function() {
+                                                if ($(this).val() === 'yes') {
+
+                                                    $('.productionInjection').show();
+                                                    $('.productionInjection span').show();
+                                                } else {
+                                                    $('.productionInjection').hide();
+                                                    $('.productionInjection span').hide();
+                                                }
+                                            });
+                                        @endif
+                                    });
+                                </script>
+                                @php
+                                    $data1 = DB::table('risk_managment_cfts')
+                                        ->where('risk_id', $data->id)
+                                        ->first();
+                                @endphp
+
+                                @if ($data->stage == 2 || $data->stage == 3)
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Production Injection"> Production Injection Required ? <span
+                                                    class="text-danger">*</span></label>
+                                            <select name="Production_Injection_Review" id="Production_Injection_Review"
+                                                @if ($data->stage == 3) disabled @endif>
+                                                <option value="">-- Select --</option>
+                                                <option @if ($data1->Production_Injection_Review == 'yes') selected @endif
+                                                    value='yes'>
+                                                    Yes</option>
+                                                <option @if ($data1->Production_Injection_Review == 'no') selected @endif
+                                                    value='no'>
+                                                    No</option>
+                                                <option @if ($data1->Production_Injection_Review == 'na') selected @endif
+                                                    value='na'>
+                                                    NA</option>
+                                            </select>
+
+                                        </div>
                                     </div>
+                                    @php
+                                        $userRoles = DB::table('user_roles')
+                                            ->where([
+                                                'q_m_s_roles_id' => 53,
+                                                'q_m_s_divisions_id' => $data->division_id,
+                                            ])
+                                            ->get();
+                                        $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                        $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    @endphp
+                                    <div class="col-lg-6 productionInjection">
+                                        <div class="group-input">
+                                            <label for="Production Injection notification">Production Injection Person
+                                                <span id="asteriskPT"
+                                                    style="display: {{ $data1->Production_Injection_Review == 'yes' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span>
+                                            </label>
+                                            <select @if ($data->stage == 3) disabled @endif
+                                                name="Production_Injection_Person" class="Production_Injection_Person"
+                                                id="Production_Injection_Person">
+                                                <option value="">-- Select --</option>
+                                                @foreach ($users as $user)
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->Production_Injection_Person) selected @endif>
+                                                        {{ $user->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mb-3 productionInjection">
+                                        <div class="group-input">
+                                            <label for="Production Injection assessment">Impact Assessment (By Production
+                                                Injection) <span id="asteriskPT1"
+                                                    style="display: {{ $data1->Production_Injection_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                            <textarea @if ($data1->Production_Injection_Review == 'yes' && $data->stage == 3) required @endif class="summernote Production_Injection_Assessment"
+                                                @if (
+                                                    $data->stage == 2 ||
+                                                        (isset($data1->Production_Injection_Person) && Auth::user()->name != $data1->Production_Injection_Person)) readonly @endif name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mb-3 productionInjection">
+                                        <div class="group-input">
+                                            <label for="Production Injection feedback">Production Injection Feedback <span
+                                                    id="asteriskPT2"
+                                                    style="display: {{ $data1->Production_Injection_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                            <textarea class="summernote Production_Injection_Feedback" @if (
+                                                $data->stage == 2 ||
+                                                    (isset($data1->Production_Injection_Person) && Auth::user()->name != $data1->Production_Injection_Person)) readonly @endif
+                                                name="Production_Injection_Feedback" id="summernote-18" @if ($data1->Production_Injection_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Production_Injection_Feedback }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 productionInjection">
+                                        <div class="group-input">
+                                            <label for="Production Injection attachment">Production Injection
+                                                Attachments</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div disabled class="file-attachment-list"
+                                                    id="Production_Injection_Attachment">
+                                                    @if ($data1->Production_Injection_Attachment)
+                                                        @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        type="file" id="myfile"
+                                                        name="Production_Injection_Attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        oninput="addMultipleFiles(this, 'Production_Injection_Attachment')"
+                                                        multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3 productionInjection">
+                                        <div class="group-input">
+                                            <label for="Production Injection Completed By">Production Injection Completed
+                                                By</label>
+                                            <input readonly type="text"
+                                                value="{{ $data1->Production_Injection_By }}"
+                                                name="Production_Injection_By"{{ $data->stage == 0 || $data->stage == 6 ? 'readonly' : '' }}
+                                                id="Production_Injection_By">
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-6 productionInjection new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Production Injection Completed On">Production Injection
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Production_Injection_On" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Production_Injection_On) }}" />
+                                                <input readonly type="date" name="Production_Injection_On"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'Production_Injection_On')" />
+                                            </div>
+                                            @error('Production_Injection_On')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+
+
+
                                     <script>
-                                        $(document).ready(function() {
-                                            @if ($data1->ResearchDevelopment_Review !== 'yes')
-                                                $('.productionInjection').hide();
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            var selectField = document.getElementById('Production_Injection_Review');
+                                            var inputsToToggle = [];
 
-                                                $('[name="Production_Injection_Review"]').change(function() {
-                                                    if ($(this).val() === 'yes') {
+                                            // Add elements with class 'facility-name' to inputsToToggle
+                                            var facilityNameInputs = document.getElementsByClassName('Production_Injection_Person');
+                                            for (var i = 0; i < facilityNameInputs.length; i++) {
+                                                inputsToToggle.push(facilityNameInputs[i]);
+                                            }
+                                            // var facilityNameInputs = document.getElementsByClassName('Production_Injection_Assessment');
+                                            // for (var i = 0; i < facilityNameInputs.length; i++) {
+                                            //     inputsToToggle.push(facilityNameInputs[i]);
+                                            // }
+                                            // var facilityNameInputs = document.getElementsByClassName('Production_Injection_Feedback');
+                                            // for (var i = 0; i < facilityNameInputs.length; i++) {
+                                            //     inputsToToggle.push(facilityNameInputs[i]);
+                                            // }
 
-                                                        $('.productionInjection').show();
-                                                        $('.productionInjection span').show();
-                                                    } else {
-                                                        $('.productionInjection').hide();
-                                                        $('.productionInjection span').hide();
-                                                    }
+                                            selectField.addEventListener('change', function() {
+                                                var isRequired = this.value === 'yes';
+                                                console.log(this.value, isRequired, 'value');
+
+                                                inputsToToggle.forEach(function(input) {
+                                                    input.required = isRequired;
+                                                    console.log(input.required, isRequired, 'input req');
                                                 });
-                                            @endif
+
+                                                // Show or hide the asterisk icon based on the selected value
+                                                var asteriskIcon = document.getElementById('asteriskPT');
+                                                asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+                                            });
                                         });
                                     </script>
+                                @else
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Production Injection">Production Injection Required ?</label>
+                                            <select name="Production_Injection_Review" disabled
+                                                id="Production_Injection_Review">
+                                                <option value="">-- Select --</option>
+                                                <option @if ($data1->Production_Injection_Review == 'yes') selected @endif
+                                                    value='yes'>
+                                                    Yes</option>
+                                                <option @if ($data1->Production_Injection_Review == 'no') selected @endif
+                                                    value='no'>
+                                                    No</option>
+                                                <option @if ($data1->Production_Injection_Review == 'na') selected @endif
+                                                    value='na'>
+                                                    NA</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
                                     @php
-                                        $data1 = DB::table('risk_managment_cfts')
-                                            ->where('risk_id', $data->id)
-                                            ->first();
+                                        $userRoles = DB::table('user_roles')
+                                            ->where([
+                                                'q_m_s_roles_id' => 53,
+                                                'q_m_s_divisions_id' => $data->division_id,
+                                            ])
+                                            ->get();
+                                        $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                        $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                     @endphp
-
-                                    @if ($data->stage == 2 || $data->stage == 3)
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Production Injection"> Production Injection Review Required ?
-                                                    <span class="text-danger">*</span></label>
-                                                <select name="Production_Injection_Review"
-                                                    id="Production_Injection_Review"
-                                                    @if ($data->stage == 3) disabled @endif>
-                                                    <option value="">-- Select --</option>
-                                                    <option @if ($data1->Production_Injection_Review == 'yes') selected @endif
-                                                        value='yes'>
-                                                        Yes</option>
-                                                    <option @if ($data1->Production_Injection_Review == 'no') selected @endif
-                                                        value='no'>
-                                                        No</option>
-                                                    <option @if ($data1->Production_Injection_Review == 'na') selected @endif
-                                                        value='na'>
-                                                        NA</option>
-                                                </select>
-
-                                            </div>
+                                    <div class="col-lg-6 productionInjection">
+                                        <div class="group-input">
+                                            <label for="Production Injection notification">Production Injection Person
+                                                <span id="asteriskInvi11" style="display: none"
+                                                    class="text-danger">*</span></label>
+                                            <select name="Production_Injection_Person" disabled
+                                                id="Production_Injection_Person">
+                                                <option value="">-- Select --</option>
+                                                @foreach ($users as $user)
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->Production_Injection_Person) selected @endif>
+                                                        {{ $user->name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
-                                        @php
-                                            $userRoles = DB::table('user_roles')
-                                                ->where([
-                                                    'q_m_s_roles_id' => 53,
-                                                    'q_m_s_divisions_id' => $data->division_id,
-                                                ])
-                                                ->get();
-                                            $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                            $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                        @endphp
-                                        <div class="col-lg-6 productionInjection">
-                                            <div class="group-input">
-                                                <label for="Production Injection notification">Production Injection
-                                                    Person
-                                                    <span id="asteriskPT"
-                                                        style="display: {{ $data1->Production_Injection_Review == 'yes' ? 'inline' : 'none' }}"
-                                                        class="text-danger">*</span>
-                                                </label>
-                                                <select @if ($data->stage == 3) disabled @endif
-                                                    name="Production_Injection_Person"
-                                                    class="Production_Injection_Person"
-                                                    id="Production_Injection_Person">
-                                                    <option value="">-- Select --</option>
-                                                    @foreach ($users as $user)
-                                                        <option value="{{ $user->name }}"
-                                                            @if ($user->name == $data1->Production_Injection_Person) selected @endif>
-                                                            {{ $user->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
+                                    </div>
+                                    @if ($data->stage == 3)
                                         <div class="col-md-12 mb-3 productionInjection">
                                             <div class="group-input">
                                                 <label for="Production Injection assessment">Impact Assessment (By
-                                                    Production
-                                                    Injection) <span id="asteriskPT1"
-                                                        style="display: {{ $data1->Production_Injection_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
-                                                        class="text-danger">*</span></label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field
-                                                        if it
+                                                    Production Injection)
+                                                    <!-- <span
+                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
+                                                </label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if
+                                                        it
                                                         does not require completion</small></div>
-                                                <textarea @if ($data1->Production_Injection_Review == 'yes' && $data->stage == 3) required @endif class="summernote Production_Injection_Assessment"
-                                                    @if (
-                                                        $data->stage == 2 ||
-                                                            (isset($data1->Production_Injection_Person) && Auth::user()->name != $data1->Production_Injection_Person)) readonly @endif name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
+                                                <textarea class="tiny" name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12 mb-3 productionInjection">
                                             <div class="group-input">
-                                                <label for="Production Injection feedback">Production Injection (By Production
-                                                    Injection)
-                                                    Feedback <span id="asteriskPT2"
-                                                        style="display: {{ $data1->Production_Injection_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
-                                                        class="text-danger">*</span></label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field
-                                                        if it
+                                                <label for="Production Injection feedback">Production Injection Feedback
+                                                    <!-- <span
+                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
+                                                </label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if
+                                                        it
                                                         does not require completion</small></div>
-                                                <textarea class="summernote Production_Injection_Feedback" @if (
-                                                    $data->stage == 2 ||
-                                                        (isset($data1->Production_Injection_Person) && Auth::user()->name != $data1->Production_Injection_Person)) readonly @endif
-                                                    name="Production_Injection_Feedback" id="summernote-18" @if ($data1->Production_Injection_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Production_Injection_Feedback }}</textarea>
+                                                <textarea class="tiny" name="Production_Injection_Feedback" id="summernote-18">{{ $data1->Production_Injection_Feedback }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-12 productionInjection">
-                                            <div class="group-input">
-                                                <label for="Production Injection attachment">Production Injection
-                                                    Attachments</label>
-                                                <div><small class="text-primary">Please Attach all relevant or
-                                                        supporting
-                                                        documents</small></div>
-                                                <div class="file-attachment-field">
-                                                    <div disabled class="file-attachment-list"
-                                                        id="Production_Injection_Attachment">
-                                                        @if ($data1->Production_Injection_Attachment)
-                                                            @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                                <h6 type="button" class="file-container text-dark"
-                                                                    style="background-color: rgb(243, 242, 240);">
-                                                                    <b>{{ $file }}</b>
-                                                                    <a href="{{ asset('upload/' . $file) }}"
-                                                                        target="_blank"><i
-                                                                            class="fa fa-eye text-primary"
-                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
-                                                                            class="fa-solid fa-circle-xmark"
-                                                                            style="color:red; font-size:20px;"></i></a>
-                                                                </h6>
-                                                            @endforeach
-                                                        @endif
-                                                    </div>
-                                                    <div class="add-btn">
-                                                        <div>Add</div>
-                                                        <input
-                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                            type="file" id="myfile"
-                                                            name="Production_Injection_Attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                            oninput="addMultipleFiles(this, 'Production_Injection_Attachment')"
-                                                            multiple>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3 productionInjection">
-                                            <div class="group-input">
-                                                <label for="Production Injection Completed By">Production Injection
-                                                    Completed
-                                                    By</label>
-                                                <input readonly type="text"
-                                                    value="{{ $data1->Production_Injection_By }}"
-                                                    name="Production_Injection_By"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
-                                                    id="Production_Injection_By">
-
-
-                                            </div>
-                                        </div>
-                                        <div class="col-6 productionInjection new-date-data-field">
-                                            <div class="group-input input-date">
-                                                <label for="Production Injection Completed On">Production Injection
-                                                    Completed On</label>
-                                                <div class="calenderauditee">
-                                                    <input type="text" id="Production_Injection_On" readonly
-                                                        placeholder="DD-MMM-YYYY"
-                                                        value="{{ Helpers::getdateFormat($data1->Production_Injection_On) }}" />
-                                                    <input readonly type="date" name="Production_Injection_On"
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                        value="" class="hide-input"
-                                                        oninput="handleDateInput(this, 'Production_Injection_On')" />
-                                                </div>
-                                                @error('Production_Injection_On')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-
-
-
-
-                                        <script>
-                                            document.addEventListener('DOMContentLoaded', function() {
-                                                var selectField = document.getElementById('Production_Injection_Review');
-                                                var inputsToToggle = [];
-
-                                                // Add elements with class 'facility-name' to inputsToToggle
-                                                var facilityNameInputs = document.getElementsByClassName('Production_Injection_Person');
-                                                for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                    inputsToToggle.push(facilityNameInputs[i]);
-                                                }
-                                                // var facilityNameInputs = document.getElementsByClassName('Production_Injection_Assessment');
-                                                // for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                //     inputsToToggle.push(facilityNameInputs[i]);
-                                                // }
-                                                // var facilityNameInputs = document.getElementsByClassName('Production_Injection_Feedback');
-                                                // for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                //     inputsToToggle.push(facilityNameInputs[i]);
-                                                // }
-
-                                                selectField.addEventListener('change', function() {
-                                                    var isRequired = this.value === 'yes';
-                                                    console.log(this.value, isRequired, 'value');
-
-                                                    inputsToToggle.forEach(function(input) {
-                                                        input.required = isRequired;
-                                                        console.log(input.required, isRequired, 'input req');
-                                                    });
-
-                                                    // Show or hide the asterisk icon based on the selected value
-                                                    var asteriskIcon = document.getElementById('asteriskPT');
-                                                    asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                                });
-                                            });
-                                        </script>
                                     @else
-                                        <div class="col-lg-6">
+                                        <div class="col-md-12 mb-3 productionInjection">
                                             <div class="group-input">
-                                                <label for="Production Injection">Production Injection Review Required
-                                                    ?</label>
-                                                <select name="Production_Injection_Review" disabled
-                                                    id="Production_Injection_Review">
-                                                    <option value="">-- Select --</option>
-                                                    <option @if ($data1->Production_Injection_Review == 'yes') selected @endif
-                                                        value='yes'>
-                                                        Yes</option>
-                                                    <option @if ($data1->Production_Injection_Review == 'no') selected @endif
-                                                        value='no'>
-                                                        No</option>
-                                                    <option @if ($data1->Production_Injection_Review == 'na') selected @endif
-                                                        value='na'>
-                                                        NA</option>
-                                                </select>
-
+                                                <label for="Production Injection assessment">Impact Assessment (By
+                                                    Production Injection)
+                                                    <!-- <span
+                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
+                                                </label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if
+                                                        it
+                                                        does not require completion</small></div>
+                                                <textarea disabled class="tiny" name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
                                             </div>
                                         </div>
-                                        @php
-                                            $userRoles = DB::table('user_roles')
-                                                ->where([
-                                                    'q_m_s_roles_id' => 53,
-                                                    'q_m_s_divisions_id' => $data->division_id,
-                                                ])
-                                                ->get();
-                                            $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                            $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                        @endphp
-                                        <div class="col-lg-6 productionInjection">
+                                        <div class="col-md-12 mb-3 productionInjection">
                                             <div class="group-input">
-                                                <label for="Production Injection notification">Production Injection
-                                                    Person
-                                                    <span id="asteriskInvi11" style="display: none"
-                                                        class="text-danger">*</span></label>
-                                                <select name="Production_Injection_Person" disabled
-                                                    id="Production_Injection_Person">
-                                                    <option value="">-- Select --</option>
-                                                    @foreach ($users as $user)
-                                                        <option value="{{ $user->name }}"
-                                                            @if ($user->name == $data1->Production_Injection_Person) selected @endif>
-                                                            {{ $user->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        @if ($data->stage == 3)
-                                            <div class="col-md-12 mb-3 productionInjection">
-                                                <div class="group-input">
-                                                    <label for="Production Injection assessment">Impact Assessment (By
-                                                        Production Injection)
-                                                        <!-- <span
-                                                                                                                                                                                                                    id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                    class="text-danger">*</span> -->
-                                                    </label>
-                                                    <div><small class="text-primary">Please insert "NA" in the data
-                                                            field if
-                                                            it
-                                                            does not require completion</small></div>
-                                                    <textarea class="tiny" name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12 mb-3 productionInjection">
-                                                <div class="group-input">
-                                                    <label for="Production Injection feedback">Production Injection
-                                                        Feedback
-                                                        <!-- <span
-                                                                                                                                                                                                                    id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                    class="text-danger">*</span> -->
-                                                    </label>
-                                                    <div><small class="text-primary">Please insert "NA" in the data
-                                                            field if
-                                                            it
-                                                            does not require completion</small></div>
-                                                    <textarea class="tiny" name="Production_Injection_Feedback" id="summernote-18">{{ $data1->Production_Injection_Feedback }}</textarea>
-                                                </div>
-                                            </div>
-                                        @else
-                                            <div class="col-md-12 mb-3 productionInjection">
-                                                <div class="group-input">
-                                                    <label for="Production Injection assessment">Impact Assessment (By
-                                                        Production Injection)
-                                                        <!-- <span
-                                                                                                                                                                                                                    id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                    class="text-danger">*</span> -->
-                                                    </label>
-                                                    <div><small class="text-primary">Please insert "NA" in the data
-                                                            field if
-                                                            it
-                                                            does not require completion</small></div>
-                                                    <textarea disabled class="tiny" name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12 mb-3 productionInjection">
-                                                <div class="group-input">
-                                                    <label for="Production Injection feedback">Production Injection
-                                                        Feedback
-                                                        <!-- <span
-                                                                                                                                                                                                                    id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                    class="text-danger">*</span> -->
-                                                    </label>
-                                                    <div><small class="text-primary">Please insert "NA" in the data
-                                                            field if
-                                                            it
-                                                            does not require completion</small></div>
-                                                    <textarea disabled class="tiny" name="Production_Injection_Feedback" id="summernote-18">{{ $data1->Production_Injection_Feedback }}</textarea>
-                                                </div>
-                                            </div>
-                                        @endif
-                                        <div class="col-12 productionInjection">
-                                            <div class="group-input">
-                                                <label for="Production Injection attachment">Production Injection
-                                                    Attachments</label>
-                                                <div><small class="text-primary">Please Attach all relevant or
-                                                        supporting
-                                                        documents</small></div>
-                                                <div class="file-attachment-field">
-                                                    <div disabled class="file-attachment-list"
-                                                        id="Production_Injection_Attachment">
-                                                        @if ($data1->Production_Injection_Attachment)
-                                                            @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                                <h6 type="button" class="file-container text-dark"
-                                                                    style="background-color: rgb(243, 242, 240);">
-                                                                    <b>{{ $file }}</b>
-                                                                    <a href="{{ asset('upload/' . $file) }}"
-                                                                        target="_blank"><i
-                                                                            class="fa fa-eye text-primary"
-                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
-                                                                            class="fa-solid fa-circle-xmark"
-                                                                            style="color:red; font-size:20px;"></i></a>
-                                                                </h6>
-                                                            @endforeach
-                                                        @endif
-                                                    </div>
-                                                    <div class="add-btn">
-                                                        <div>Add</div>
-                                                        <input disabled
-                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                            type="file" id="myfile"
-                                                            name="Production_Injection_Attachment[]"
-                                                            oninput="addMultipleFiles(this, 'Production_Injection_Attachment')"
-                                                            multiple>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3 productionInjection">
-                                            <div class="group-input">
-                                                <label for="Production Injection Completed By">Production Injection
-                                                    Completed
-                                                    By</label>
-                                                <input readonly type="text"
-                                                    value="{{ $data1->Production_Injection_By }}"
-                                                    name="Production_Injection_By" id="Production_Injection_By">
-
-
-                                            </div>
-                                        </div>
-                                        <div class="col-6 productionInjection new-date-data-field">
-                                            <div class="group-input input-date">
-                                                <label for="Production Injection Completed On">Production Injection
-                                                    Completed On</label>
-                                                <div class="calenderauditee">
-                                                    <input type="text" id="Production_Injection_On" readonly
-                                                        placeholder="DD-MMM-YYYY"
-                                                        value="{{ Helpers::getdateFormat($data1->Production_Injection_On) }}" />
-                                                    <input readonly type="date" name="Production_Injection_On"
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                        value="" class="hide-input"
-                                                        oninput="handleDateInput(this, 'Production_Injection_On')" />
-                                                </div>
-                                                @error('Production_Injection_On')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
+                                                <label for="Production Injection feedback">Production Injection Feedback
+                                                    <!-- <span
+                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
+                                                </label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if
+                                                        it
+                                                        does not require completion</small></div>
+                                                <textarea disabled class="tiny" name="Production_Injection_Feedback" id="summernote-18">{{ $data1->Production_Injection_Feedback }}</textarea>
                                             </div>
                                         </div>
                                     @endif
+                                    <div class="col-12 productionInjection">
+                                        <div class="group-input">
+                                            <label for="Production Injection attachment">Production Injection
+                                                Attachments</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div disabled class="file-attachment-list"
+                                                    id="Production_Injection_Attachment">
+                                                    @if ($data1->Production_Injection_Attachment)
+                                                        @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input disabled
+                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        type="file" id="myfile"
+                                                        name="Production_Injection_Attachment[]"
+                                                        oninput="addMultipleFiles(this, 'Production_Injection_Attachment')"
+                                                        multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3 productionInjection">
+                                        <div class="group-input">
+                                            <label for="Production Injection Completed By">Production Injection Completed
+                                                By</label>
+                                            <input readonly type="text"
+                                                value="{{ $data1->Production_Injection_By }}"
+                                                name="Production_Injection_By" id="Production_Injection_By">
 
+
+                                        </div>
+                                    </div>
+                                    <div class="col-6 productionInjection new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Production Injection Completed On">Production Injection
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Production_Injection_On" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Production_Injection_On) }}" />
+                                                <input readonly type="date" name="Production_Injection_On"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'Production_Injection_On')" />
+                                            </div>
+                                            @error('Production_Injection_On')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                @endif
 
 
                                     <div class="sub-head">
