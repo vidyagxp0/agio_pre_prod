@@ -1222,7 +1222,7 @@
                         <table>
                             <tr>
                                 <th class="w-20">CFT Reviewer Selection</th>
-                                {{-- <td class="w-80">{!! Helpers::checkUserRolesMicrobiology_Person(data->reviewer_person_value) ?? 'Not Applicable' !!}</td> --}}
+                                <td class="w-80">{!! Helpers::getInitiatorName($data->reviewer_person_value) ?? 'Not Applicable' !!}</td>
                             </tr>
                             <tr>
                                 <th class="w-20">HOD/Designee Review Comment</th>
@@ -2334,7 +2334,7 @@
                         </table>
                         <div class="border-table">
                             <div class="block-head">
-                                QA/CQA REview Attachment
+                                QA/CQA Review Attachment
                             </div>
                             <table>
                                 <tr class="table_bg">
