@@ -501,7 +501,7 @@
 
                             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Evaluation</button> -->
                             <button class="cctablinks" onclick="openCity(event, 'CCForm5')"> Initiator Update</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">HOD Final review</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">HOD Final Review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Implementation Verification by QA/CQA</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Change Closure</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Activity Log</button>
@@ -606,7 +606,7 @@
                                                             // Set formattedDate to an empty string if due_date is not set
                                                             $formattedDate = str_contains('NaN-undefined-NaN', $data->due_date) ? '' : $data->due_date;
                                                         @endphp
-                                                        <input type="text" id="due_date" name="due_date" placeholder="Select Due Date" value="{{ Helpers::getdateFormat($formattedDate) }}" />
+                                                        <input type="text" id="due_date" name="due_date" placeholder="Select Due Date" value="{{ Helpers::getdateFormat($formattedDate) }}" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} />
                                                     </div>
                                                     <script>
                                                         $(document).ready(function() {
@@ -629,7 +629,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="initiator-group">Initiation Department</label>
-                                                    <select name="Initiator_Group" id="initiator_group">
+                                                    <select name="Initiator_Group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option value="CQA"
                                                             @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
@@ -786,17 +786,17 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-12">
+                                            <!-- <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="Risk Assessment Required">Justification </label>
                                                     <textarea name="train_comments" id="">{{ $data->train_comments }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                             <div class="col-lg-6" id="justification_div" style="display:none;">
                                                 <div class="group-input">
                                                     <label for="Justification">Justification</label>
-                                                    <textarea name="risk_identification" id="justification" rows="4" placeholder="Provide justification if risk assessment is not required.">{{ $data->risk_identification ?? '' }}</textarea>
+                                                    <textarea name="risk_identification" id="justification" rows="4" placeholder="Provide justification if risk assessment is not required." {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->risk_identification ?? '' }}</textarea>
                                                     <!-- @error('justification')
                                                         <div class="text-danger">{{ $message }}</div>
                                                     @enderror -->
@@ -1195,7 +1195,7 @@
 
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="migration-action">comments</label>
+                                                    <label for="migration-action">Comments</label>
                                                     <textarea name="migration_action"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->migration_action }}</textarea>
                                                 </div>
                                             </div>

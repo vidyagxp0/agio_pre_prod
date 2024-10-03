@@ -387,12 +387,12 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12">
+                                <!-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Risk Assessment Required">Justification </label>
                                         <textarea name="train_comments" id=""></textarea>
                                     </div>
-                                </div>
+                                </div> -->
 
 
 
@@ -661,7 +661,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="migration-action">comments</label>
+                                        <label for="migration-action">Comments</label>
                                         <textarea name="migration_action" disabled></textarea>
                                     </div>
                                 </div>

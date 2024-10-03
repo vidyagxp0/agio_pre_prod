@@ -198,7 +198,7 @@
                             <div style="color: red; font-weight: 600">The Audit Trail has is yet to be reviewed.</div>
                         @endif
                         <div class="buttons-new">
-                            @if ($document->stage < 7 && !(count($userRoleIds) === 1 && in_array(3, $userRoleIds)))
+                            @if ($document->stage < 13 && !(count($userRoleIds) === 1 && in_array(3, $userRoleIds)))
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
                                     Review
                                 </button>
