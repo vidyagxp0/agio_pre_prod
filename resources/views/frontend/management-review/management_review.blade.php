@@ -179,11 +179,11 @@
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('ManagementReviewAuditTrial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Management Review', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                        @elseif($data->stage == 2 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Management Review', 42))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
@@ -195,7 +195,7 @@
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     Child
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </button> -->
-                        @elseif($data->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 3  && Helpers::check_roles($data->division_id, 'Management Review', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Meeting and Summary Complete
                             </button>
@@ -231,14 +231,14 @@
                             </button>
                              <!--
     @endif -->
-                        @elseif($data->stage == 6 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Management Review', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Verification Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
-                        @elseif($data->stage == 7 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 7 && Helpers::check_roles($data->division_id, 'Management Review', 42))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approved
                             </button>
@@ -6777,7 +6777,7 @@
 
 
                                 <!-- HTML Section -->
-                               
+
 
                                 @if ($data->stage == 3 || $data->stage == 4)
                                     <div class="sub-head Other1_review">
