@@ -55,6 +55,7 @@ class OOSController extends Controller
         try {
             
             $oos_record = OOSService::create_oss($request);
+            // dd($request->capa_ref_no_oosc);
 
             if ($oos_record['status'] == 'error')
             {
@@ -78,7 +79,6 @@ class OOSController extends Controller
         $revised_date = "";
         $data = OOS::find($id);
 
-        // dd($data);
         $old_records = OOS::select('id', 'division_id', 'record_number')->get();
         $old_record = ActionItem::select('id', 'division_id', 'record')->get();
         $capa_record = Capa::select('id', 'division_id', 'record')->get();

@@ -209,9 +209,13 @@
                             <button class="button_theme1"><a class="text-white"
                                 href="{{ url('RiskManagement/' . $document->id) }}"> Back </a>
                         </button>
-                            <button class="button_theme1" onclick="window.print();">
+
+                        <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> <button class="button_theme1">
+                            Exit
+                          </a> </button>
+                            {{-- <button class="button_theme1" onclick="window.print();">
                                 Print
-                            </button>
+                            </button> --}}
                         </div>
                     </div>
 
