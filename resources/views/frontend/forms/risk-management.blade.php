@@ -212,7 +212,7 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm12')">HOD/Designee</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">CFT Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA/CQA Review</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm11')">CQA/QA Head</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm11')">QA/CQA Head Approval</button>
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Work Group Assignment</button> --}}
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk/Opportunity Analysis</button> --}}
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Residual Risk</button> --}}
@@ -1234,7 +1234,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Injection"> Production Injection </label>
+                                        <label for="Production Injection"> Production Injection Review Required ? </label>
                                         <select name="Production_Injection_Review" id="Production_Injection_Review"
                                             disabled>
                                             <option value="">-- Select --</option>
@@ -1279,7 +1279,8 @@
                                 </div>
                                 <div class="col-md-12 mb-3 productionInjection">
                                     <div class="group-input">
-                                        <label for="Production Injection feedback">Production Injection Feedback </label>
+                                        <label for="Production Injection feedback">Production Injection Feedback (By Production
+                                            Injection) </label>
                                         <textarea class="summernote Production_Injection_Feedback" name="Production_Injection_Feedback" id="summernote-18"></textarea>
                                     </div>
                                 </div>
@@ -1663,7 +1664,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Store"> Store</label>
+                                        <label for="Store"> Store Required ?</label>
                                         <select name="Store_Review" id="Store_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -2093,7 +2094,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Liquid"> Production Liquid/Externa Preparation Required </label>
+                                        <label for="Production Liquid"> Production Liquid/Externa Preparation Required ? </label>
                                         <select name="ProductionLiquid_Review" id="ProductionLiquid_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -2394,7 +2395,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Safety Review Required">Safety Review Required
+                                        <label for="Safety Review Required">Safety Required
                                             ?</label>
                                         <select name="Environment_Health_review" id="Environment_Health_review"
                                             disabled>

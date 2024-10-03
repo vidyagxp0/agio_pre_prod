@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::table('deviation_grids', function (Blueprint $table) {
-            $table->string('product_name')->nullable()->after('Document_Remarks');
-            $table->string('product_stage')->nullable()->after('product_name');
-            $table->string('batch_no')->nullable()->after('product_stage');
-            $table->string('product_remark')->nullable()->after('batch_no');
+            $table->longText('product_name')->nullable()->after('Document_Remarks');
+            $table->longText('product_stage')->nullable()->after('product_name');
+            $table->longText('batch_no')->nullable()->after('product_stage');
+            $table->longText('product_remark')->nullable()->after('batch_no');
         });
     }
 

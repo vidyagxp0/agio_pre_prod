@@ -174,7 +174,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Change Control Single Report
+                    Change Control Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -273,8 +273,8 @@
 
                     <th class="w-20">Justification</th>
                     <td class="w-30">
-                        @if ($data->risk_identification)
-                            {{ $data->risk_identification }}
+                        @if ($data->justification)
+                            {{ $data->justification }}
                         @else
                             Not Applicable
                         @endif

@@ -795,7 +795,7 @@
                                                     <textarea name="preventive_action" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->preventive_action }}</textarea>
                                             </div>
                                         </div>
-                                        {{-- <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="cro_vendor">CRO/Vendor</label>
                                         <select name="cro_vendor" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>
@@ -921,8 +921,9 @@
     $value = isset($item_status[$key]) ? $item_status[$key] : '';
     @endphp
     <input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $value }}">
-</td> --}} <td><button type="text"
-    class="removeRowBtn">Remove</button></td>
+</td> --}} 
+                                    <td><button type="text"
+                                        class="removeRowBtn">Remove</button></td>
 
                                                             </tr>
                                                         @endforeach
