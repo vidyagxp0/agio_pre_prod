@@ -125,8 +125,8 @@
                     <select multiple id="reference_record" name="capa_ref_no_oosc[]"
                         placeholder="Select Reference Records">
                         
-                        @if (!empty($old_record))
-                            @foreach ($old_record as $new)
+                        @if (!empty($capa_record))
+                            @foreach ($capa_record as $new)
                                 @php
                                     $recordValue =
                                         Helpers::getDivisionName($new->division_id) .

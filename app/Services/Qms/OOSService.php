@@ -275,9 +275,8 @@ class OOSService
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
-                $history->activity_type = 'Initiation department Group
-';
-                $history->current = $request->initiator_group;
+                $history->activity_type = 'Initiation department Group';
+                $history->current = Helpers::getFullDepartmentName($request->initiator_group);
                 $history->save();
             }
             if (!empty($request->initiator_group_code)){
@@ -693,7 +692,7 @@ class OOSService
                 $history->current = $oos->Comments_plidata;
                 $history->save();
             }
-            if (!empty($request->checklists)){
+            if (!empty($oos->checklists)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
                 $history->previous = "Null";
@@ -707,8 +706,7 @@ class OOSService
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
                 $history->activity_type = 'Checklists';
-                $history->current = implode(', ', $request->checklists);
-                // $history->current = $oos->checklists;
+                $history->current = implode(', ', $oos->checklists);
                 $history->save();
             }
             if (!empty($request->justify_if_no_field_alert_pli)){
@@ -1359,7 +1357,7 @@ class OOSService
                 $history->current = $request->Probable_cause_iden;
                 $history->save();
             }
-            if (!empty($request->proposal_for_hypothesis_IB)) {
+            if (!empty($oos->proposal_for_hypothesis_IB)) {
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
                 $history->previous = "Null";
@@ -1374,7 +1372,7 @@ class OOSService
                 $history->action_name = 'Create';
                 $history->activity_type = 'Proposal for Phase IB hypothesis';
             
-                $history->current = implode(', ', $request->proposal_for_hypothesis_IB);
+                $history->current = implode(', ', $oos->proposal_for_hypothesis_IB);
             
                 $history->save();
             }
@@ -2331,7 +2329,7 @@ class OOSService
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
-                $history->activity_type = 'Results Of Repeat testing required IIB Inv.';
+                $history->activity_type = 'Results Of Repeat testing IIB Inv.';
                 $history->current = $request->result_of_rep_test_IIB;
                 $history->save();
             }
@@ -3344,7 +3342,7 @@ class OOSService
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->initiator_group;
                 $history->activity_type = 'Initiation department Group';
-                $history->current = $request->initiator_group;
+                $history->current = Helpers::getFullDepartmentName($request->initiator_group);
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -6355,12 +6353,12 @@ $history->save();
 
 if ($lastOosRecod->result_of_rep_test_IIB !=  $request->result_of_rep_test_IIB || !empty($request->result_of_rep_test_IIB_comment)) {
     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-            ->where('activity_type', 'Results Of Repeat testing required IIB Inv.')
+            ->where('activity_type', 'Results Of Repeat testing IIB Inv.')
             ->exists();
 $history = new OosAuditTrial();
 $history->oos_id = $lastOosRecod->id;
 $history->previous = $lastOosRecod->result_of_rep_test_IIB;
-$history->activity_type = 'Results Of Repeat testing required IIB Inv.';
+$history->activity_type = 'Results Of Repeat testing IIB Inv.';
 $history->current = $request->result_of_rep_test_IIB;
 $history->comment = "Not Applicable";
 $history->user_id = Auth::user()->id;
