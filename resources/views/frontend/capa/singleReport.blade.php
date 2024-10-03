@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   CAPA Single Report
+                   CAPA Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -304,7 +304,7 @@
 
                 <table>
                     <tr>  
-                        <th class="w-20">Interim Containnment</th>
+                        <th class="w-20">Interim Containment</th>
                         <td class="w-30">@if($data->interim_containnment){{ $data->interim_containnment }}@else Not Applicable @endif</td>
                         <th class="w-20"> Containment Comments </th>
                         <td class="w-30">@if($data->containment_comments){{ $data->containment_comments }}@else Not Applicable @endif </td>
