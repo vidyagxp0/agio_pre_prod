@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   Resampling Single Report
+                   Resampling Report
                 </td>
                 <td class="w-30">
                     <div class="logo">

@@ -2369,7 +2369,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Results Of Repeat testing required IIB Inv.</label>
+                                <label for="If Others">Results Of Repeat testing IIB Inv.</label>
                                 <textarea id="result_of_rep_test_IIB"  name="result_of_rep_test_IIB" ></textarea>
                             </div>
                         </div>
@@ -9093,18 +9093,41 @@ $users = DB::table('users')
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        
+                        <div class="col-lg-6" id="notification_field" style="display:none;">
                             <div class="group-input">
-                                <label for="If Others">Notification details</label>
-                                <textarea id="notification_ib"  name="notification_ib" ></textarea>
+                                <label for="If Others">If Yes, Notification</label>
+                                <textarea id="notification_ib" name="notification_ib"></textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        
+                        <div class="col-lg-6" id="justification_field" style="display:none;">
                             <div class="group-input">
-                                <label for="If Others">Justification details</label>
-                                <textarea id="justification_ib"  name="justification_ib" ></textarea>
+                                <label for="If Others">If No, Justification</label>
+                                <textarea id="justification_ib" name="justification_ib"></textarea>
                             </div>
                         </div>
+                        
+                        <script>
+                            $(document).ready(function() {
+                                $('#escalation_required').change(function() {
+                                    var selectedValue = $(this).val();
+                        
+                                    if (selectedValue === 'Yes') {
+                                        $('#notification_field').show();  // Show notification field
+                                        $('#justification_field').hide(); // Hide justification field
+                                    } else if (selectedValue === 'No') {
+                                        $('#justification_field').show();  // Show justification field
+                                        $('#notification_field').hide();   // Hide notification field
+                                    } else {
+                                        // If no value is selected, hide both fields
+                                        $('#notification_field').hide();
+                                        $('#justification_field').hide();
+                                    }
+                                });
+                            });
+                        </script>
+                        
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase IB CQAH/QAH Remark</label>
@@ -10392,20 +10415,13 @@ $users = DB::table('users')
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">CAPA Ref No.</label>
-                            {{-- <select multiple id="reference_record" name="capa_ref_no_oosc" id="">
-                                <option value="">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select> --}}
-                            <select multiple id="reference_record" name="capa_ref_no_oosc[]"
-                                placeholder="Select Reference Records">
-                                @if (!empty($capa_record)) 
+                            <select multiple id="capa_ref_no_oosc" name="capa_ref_no_oosc[]"
+                                placeholder="Select Capa Reference Records">
                                 @foreach ($capa_record as $new)
                                     <option value="{{ $new->id }}">
                                         {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                     </option>
                                 @endforeach
-                            @endif
                         </select>
                         </div>
                     </div>
@@ -12153,7 +12169,7 @@ $users = DB::table('users')
 
 
 
-   </script>s
+   </script>
     <script>
         $(document).ready(function() {
             
@@ -12185,7 +12201,7 @@ $users = DB::table('users')
 
     <script>
         VirtualSelect.init({
-            ele: '#reference_record, #notify_to'
+            ele: '#reference_record, #notify_to, #capa_ref_no_oosc'
         });
 
         $('#summernote').summernote({

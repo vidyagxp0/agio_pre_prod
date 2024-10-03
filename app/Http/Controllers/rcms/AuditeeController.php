@@ -6589,7 +6589,7 @@ $AuditorShow->save();
             //             'message' => 'Sent for CFT review state'
             //         ]);
             //     }
-                         if (!$Cft->Production_Table_Review || !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review || !$Cft->ContractGiver_Review || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
+                         if (!$Cft->Production_Table_Review || !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review  || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
                             Session::flash('swal', [
                                 'title' => 'Mandatory Fields Required!',
                                 'message' => 'CFT Tab is yet to be filled!',
@@ -6599,6 +6599,7 @@ $AuditorShow->save();
                             return redirect()->back();
                         } else {
                             Session::flash('swal', [
+                                
                                 'type' => 'success',
                                 'title' => 'Success',
                                 'message' => 'CFT Reviews'
