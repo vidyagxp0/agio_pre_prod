@@ -275,9 +275,8 @@ class OOSService
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
-                $history->activity_type = 'Initiation department Group
-';
-                $history->current = $request->initiator_group;
+                $history->activity_type = 'Initiation department Group';
+                $history->current = Helpers::getFullDepartmentName($request->initiator_group);
                 $history->save();
             }
             if (!empty($request->initiator_group_code)){
@@ -2331,7 +2330,7 @@ class OOSService
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
-                $history->activity_type = 'Results Of Repeat testing required IIB Inv.';
+                $history->activity_type = 'Results Of Repeat testing IIB Inv.';
                 $history->current = $request->result_of_rep_test_IIB;
                 $history->save();
             }
@@ -3344,7 +3343,7 @@ class OOSService
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->initiator_group;
                 $history->activity_type = 'Initiation department Group';
-                $history->current = $request->initiator_group;
+                $history->current = Helpers::getFullDepartmentName($request->initiator_group);
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -6355,12 +6354,12 @@ $history->save();
 
 if ($lastOosRecod->result_of_rep_test_IIB !=  $request->result_of_rep_test_IIB || !empty($request->result_of_rep_test_IIB_comment)) {
     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-            ->where('activity_type', 'Results Of Repeat testing required IIB Inv.')
+            ->where('activity_type', 'Results Of Repeat testing IIB Inv.')
             ->exists();
 $history = new OosAuditTrial();
 $history->oos_id = $lastOosRecod->id;
 $history->previous = $lastOosRecod->result_of_rep_test_IIB;
-$history->activity_type = 'Results Of Repeat testing required IIB Inv.';
+$history->activity_type = 'Results Of Repeat testing IIB Inv.';
 $history->current = $request->result_of_rep_test_IIB;
 $history->comment = "Not Applicable";
 $history->user_id = Auth::user()->id;

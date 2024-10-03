@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    OOS/OOT Single Report
+                    OOS/OOT Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -616,8 +616,8 @@
                             <td class="w-15">{{ $instrument_detail ? $key + 1  : "Not Applicable" }}</td>
                             <td class="w-15">{{ $instrument_detail['instrument_name'] ?  $instrument_detail['instrument_name']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $instrument_detail['instrument_id_number'] ?  $instrument_detail['instrument_id_number']: "Not Applicable"}}</td>
-                            <td class="w-15">{{ $instrument_detail['calibrated_on'] ?  $products_detail['calibrated_on']: "Not Applicable"}}</td>
-                            <td class="w-15">{{ $instrument_detail['calibratedduedate_on'] ?  $products_detail['calibratedduedate_on']: "Not Applicable"}}</td>
+                            <td class="w-15">{{ $instrument_detail['calibrated_on'] ?  $instrument_detail['calibrated_on']: "Not Applicable"}}</td>
+                            <td class="w-15">{{ $instrument_detail['calibratedduedate_on'] ?  $instrument_detail['calibratedduedate_on']: "Not Applicable"}}</td>
                         </tr>
                         @endforeach
                         @else
@@ -1595,7 +1595,7 @@
                             <td class="w-80">{{ $data->Repeat_testing_IIB ? $data->Repeat_testing_IIB : 'Not Applicable' }}</td>
                         </tr>
                         <tr>
-                            <th class="w-20">Results Of Repeat testing required IIB Inv.</th>
+                            <th class="w-20">Results Of Repeat testing IIB Inv.</th>
                             <td class="w-80">{{ $data->result_of_rep_test_IIB ? $data->result_of_rep_test_IIB : 'Not Applicable' }}</td>
                         </tr>
                         <tr>
