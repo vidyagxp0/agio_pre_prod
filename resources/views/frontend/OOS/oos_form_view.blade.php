@@ -295,6 +295,7 @@
         $(document).ready(function() {
             $('#instrument_details').click(function(e) {
                 function generateTableRow(serialNumber) {
+                    var currentDate = new Date().toISOString().split('T')[0]; 
                     var html =
                         '<tr>' +
                             '<td><input disabled type="text" name="instrument_detail['+ serialNumber +'][serial]" value="' + serialNumber +
@@ -306,7 +307,7 @@
                                 '<div class="group-input input-date">' +
                                 '<div class="calenderauditee">' +
                                 '<input type="text" readonly id="calibrated_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                                '<input type="date" name="instrument_detail[' + serialNumber + '][calibrated_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibrated_on' + serialNumber + '\')">' +
+                                '<input type="date" name="instrument_detail[' + serialNumber + '][calibrated_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibrated_on' + serialNumber + '\')" max="' + currentDate + '">' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -316,13 +317,12 @@
                                 '<div class="group-input input-date">' +
                                 '<div class="calenderauditee">' +
                                 '<input type="text" readonly id="calibratedduedate_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                                '<input type="date" name="instrument_detail[' + serialNumber + '][calibratedduedate_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibratedduedate_on' + serialNumber + '\')">' +
+                                '<input type="date" name="instrument_detail[' + serialNumber + '][calibratedduedate_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibratedduedate_on' + serialNumber + '\')" max="' + currentDate + '">' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
                             '</td>' +
                             '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
-
                         '</tr>'; 
                     return html;
                 }
@@ -362,7 +362,7 @@
                             '<div class="group-input input-date">' +
                             '<div class="calenderauditee">' +
                             '<input type="text" readonly id="info_oos_closure_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                            '<input type="date" name="oos_capa[' + serialNumber + '][info_oos_closure_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_oos_closure_date' + serialNumber + '\')">' +
+                            '<input type="date" name="oos_capa[' + serialNumber + '][info_oos_closure_date]" value="" class="hide-input"oninput="handleDateInput(this, \'info_oos_closure_date' + serialNumber + '\')">' +
                             '</div>' +
                             '</div>' +
                             '</div>' +
@@ -8448,25 +8448,57 @@
                          <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Escalation required</label>
-                                    <select name="escalation_required" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 12 ? '' : 'readonly' }}>
-                                    <option value="" >--Select---</option>
+                                <select id="escalation_required" name="escalation_required" {{ Helpers::isOOSChemical($data->stage) }} {{ $data->stage == 12 ? '' : 'readonly' }}>
+                                    <option value="">--Select---</option>
                                     <option value="Yes" {{ $data->escalation_required == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->escalation_required == 'No' ? 'selected' : '' }}>No</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
-                            <div class="group-input input-time ">
-                                <label for="If Others">Notification details</label>
+                        
+                        <div class="col-lg-6 new-time-data-field" id="notification_field" style="display: none;">
+                            <div class="group-input input-time">
+                                <label for="If Others">If Yes, Notification</label>
                                 <textarea id="notification_ib" name="notification_ib" {{ $data->stage == 12 ? '' : 'readonly' }}>{{ $data->notification_ib }}</textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
-                            <div class="group-input input-time ">
-                                <label for="If Others">Justification details</label>
+                        
+                        <div class="col-lg-6 new-time-data-field" id="justification_field" style="display: none;">
+                            <div class="group-input input-time">
+                                <label for="If Others">If No, Justification</label>
                                 <textarea id="justification_ib" name="justification_ib" {{ $data->stage == 12 ? '' : 'readonly' }}>{{ $data->justification_ib }}</textarea>
                             </div>
                         </div>
+                        
+                        <script>
+                            $(document).ready(function() {
+                                // Function to show or hide the fields based on the selected value
+                                function toggleFields() {
+                                    var selectedValue = $('#escalation_required').val();
+                        
+                                    if (selectedValue === 'Yes') {
+                                        $('#notification_field').show();  // Show notification field
+                                        $('#justification_field').hide(); // Hide justification field
+                                    } else if (selectedValue === 'No') {
+                                        $('#justification_field').show();  // Show justification field
+                                        $('#notification_field').hide();   // Hide notification field
+                                    } else {
+                                        // If no value is selected, hide both fields
+                                        $('#notification_field').hide();
+                                        $('#justification_field').hide();
+                                    }
+                                }
+                        
+                                // On page load, toggle the fields based on the selected value
+                                toggleFields();
+                        
+                                // Event listener for the dropdown change event
+                                $('#escalation_required').change(function() {
+                                    toggleFields();
+                                });
+                            });
+                        </script>
+                        
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase IB CQAH/QAH Remark<span class="text-danger">*</span></label>
@@ -8612,7 +8644,7 @@
             <div id="CCForm37" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase II A CQA/QA
+                        Phase II A CQA/QA Review
                     </div>
                     <div class="row">
                          <!-- Others Field -->
@@ -8818,7 +8850,7 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Results Of Repeat testing required IIB Inv.</label>
+                                <label for="If Others">Results Of Repeat testing IIB Inv.</label>
                                 <textarea id="result_of_rep_test_IIB" name="result_of_rep_test_IIB" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->result_of_rep_test_IIB }}</textarea>
                             </div>
                         </div>
@@ -8986,7 +9018,7 @@
             <div id="CCForm40" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase II B CQA/QA
+                        Phase II B CQA/QA Review
                     </div>
                     <div class="row">
                          <!-- Others Field -->
