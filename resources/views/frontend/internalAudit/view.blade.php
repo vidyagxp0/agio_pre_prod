@@ -2224,9 +2224,9 @@
                                                     <option value="17"
                                                         @if (in_array('17', $selectedChecklist)) selected @endif>Checklist -
                                                         Formulation Research and Development</option>
-                                                    <option value="18"
+                                                    {{-- <option value="18"
                                                         @if (in_array('18', $selectedChecklist)) selected @endif>Checklist - LL /
-                                                        P2P</option>
+                                                        P2P</option> --}}
                                                 </select>
 
                                             </div>
@@ -3155,21 +3155,18 @@
                                                     <div class="group-input">
                                                         <label for="Audit Mgr.more Info Reqd By">More Info Required
                                                             By</label>
-                                                        <div class="static">{{ $data->more_info_2_by }}</div>
-                                                    </div>
+\                                                    </div>
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <div class="group-input">
                                                         <label for="More Info Required On">More Info Required
                                                             On</label>
-                                                        <div class="static">{{ $data->more_info_2_on }}</div>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-lg-4">
                                                     <div class="group-input">
                                                         <label for="Audit Schedule On">Comment</label>
-                                                        <div class="static">{{ $data->more_info_2_comment }}</div>
                                                     </div>
                                                 </div> -->
 
@@ -3219,21 +3216,18 @@
                                                     <div class="group-input">
                                                         <label for="Audit Mgr.more Info Reqd By">More Info Required
                                                             By</label>
-                                                        <div class="static">{{ $data->more_info_3_by }}</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <div class="group-input">
                                                         <label for="More Info Required On">More Info Required
                                                             On</label>
-                                                        <div class="static">{{ $data->more_info_3_on }}</div>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-lg-4">
                                                     <div class="group-input">
                                                         <label for="Audit Schedule On">Comment</label>
-                                                        <div class="static">{{ $data->more_info_3_comment }}</div>
                                                     </div>
                                                 </div> -->
 

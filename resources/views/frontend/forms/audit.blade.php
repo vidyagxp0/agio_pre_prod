@@ -1693,7 +1693,7 @@
                                             <option value="15">Checklist - Production (Powder Manufacturing and Packing)</option>
                                             <option value="16">Checklist - Analytical Research and Development</option>
                                             <option value="17">Checklist - Formulation Research and Development</option>
-                                            <option value="18">Checklist - LL / P2P</option>
+                                            {{-- <option value="18">Checklist - LL / P2P</option> --}}
                                         </select>
      
                                     </div>

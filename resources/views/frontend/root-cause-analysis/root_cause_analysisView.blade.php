@@ -2097,19 +2097,19 @@
                           
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="HOD_Review_Complete_By">HOD Review Completed By</label>
+                                            <label for="HOD_Review_Complete_By">HOD Review Complete By</label>
                                             <div class="static">{{ $data->HOD_Review_Complete_By }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="HOD_Review_Complete_On">HOD Review Completed On</label>
+                                            <label for="HOD_Review_Complete_On">HOD Review Complete On</label>
                                             <div class="static">{{ $data->HOD_Review_Complete_On }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments"> HOD Review Completed Comments</label>
+                                            <label for="Comments"> HOD Review Complete Comment</label>
                                             <div class="static">{{ $data->HOD_Review_Complete_Comment }}</div>
                                         </div>
                                     </div>
@@ -2131,25 +2131,25 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="More_Info_hrc_comment">Comments</label>
+                                            <label for="More_Info_hrc_comment">Comment</label>
                                             <div class="static">{{ $data->More_Info_hrc_comment }}</div>
                                         </div>
                                     </div> --}}
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="QQQA_Review_Complete_By">QA/CQA Review Completed By</label>
+                                            <label for="QQQA_Review_Complete_By">QA/CQA Review Complete By</label>
                                             <div class="static">{{ $data->QQQA_Review_Complete_By }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="QQQA_Review_Complete_On">QA/CQA Review Completed On</label>
+                                            <label for="QQQA_Review_Complete_On">QA/CQA Review Complete On</label>
                                             <div class="static">{{ $data->QQQA_Review_Complete_On }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments"> QA/CQA Review Completed Comment</label>
+                                            <label for="Comment"> QA/CQA Review Complete Comment</label>
                                             <div class="static">{{ $data->QAQQ_Review_Complete_comment }}</div>
                                         </div>
                                     </div>
@@ -2171,25 +2171,25 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="More_Info_qac_comment">Comments</label>
+                                            <label for="More_Info_qac_comment">Comment</label>
                                             <div class="static">{{ $data->More_Info_qac_comment }}</div>
                                         </div>
                                     </div> --}}
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="submitted_by">Submitted By</label>
+                                            <label for="submitted_by">Submit By</label>
                                             <div class="static">{{ $data->submitted_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="submitted_on">Submitted On</label>
+                                            <label for="submitted_on">Submit On</label>
                                             <div class="static">{{ $data->submitted_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments"> Submitted Comments</label>
+                                            <label for="Comment"> Submit Comment</label>
                                             <div class="static">{{ $data->qa_comments_new }}</div>
                                         </div>
                                     </div>
@@ -2217,19 +2217,19 @@
                                 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="HOD_Final_Review_Complete_By">HOD Final Review Completed By</label>
+                                            <label for="HOD_Final_Review_Complete_By">HOD Final Review Complete By</label>
                                             <div class="static">{{ $data->HOD_Final_Review_Complete_By }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="HOD_Final_Review_Complete_On">HOD Final Review Completed On</label>
+                                            <label for="HOD_Final_Review_Complete_On">HOD Final Review Complete On</label>
                                             <div class="static">{{ $data->HOD_Final_Review_Complete_On }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments"> HOD Final Review Completed Comment</label>
+                                            <label for="Comments"> HOD Final Review Complete Comment</label>
                                             <div class="static">{{ $data->HOD_Final_Review_Complete_Comment }}</div>
                                         </div>
                                     </div>
@@ -2255,21 +2255,21 @@
                                     </div> --}}
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Final_QA_Review_Complete_By">Final QA/CQA Review Completed
+                                            <label for="Final_QA_Review_Complete_By">Final QA/CQA Review Complete
                                                 By</label>
                                             <div class="static">{{ $data->Final_QA_Review_Complete_By }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Final_QA_Review_Complete_On">Final QA/CQA Review Completed
+                                            <label for="Final_QA_Review_Complete_On">Final QA/CQA Review Complete
                                                 On</label>
                                             <div class="static">{{ $data->Final_QA_Review_Complete_On }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments"> Final QA/CQA Review Completed Comments</label>
+                                            <label for="Comments"> Final QA/CQA Review Complete Comments</label>
                                             <div class="static">{{ $data->Final_QA_Review_Complete_Comment }}</div>
                                         </div>
                                     </div>
@@ -2308,26 +2308,26 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="evalution_Closure_comment"> QAH/CQAH Closure Comments</label>
+                                            <label for="evalution_Closure_comment"> QAH/CQAH Closure Comment</label>
                                             <div class="static">{{ $data->evalution_Closure_comment }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Cancelled By">Cancelled By</label>
+                                            <label for="Cancelled By">Cancel By</label>
                                             <div class="static">{{ $data->cancelled_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Cancelled On">Cancelled On</label>
+                                            <label for="Cancelled On">Cancel On</label>
                                             <div class="static">{{ $data->cancelled_on }}</div>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments"> Cancelled Comments</label>
+                                            <label for="Comments"> Cancel Comment</label>
                                             <div class="static">{{ $data->cancel_comment }}</div>
                                         </div>
                                     </div>
