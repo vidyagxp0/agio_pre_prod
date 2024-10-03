@@ -170,7 +170,7 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName($data->division_id) }} / Risk Assesment
+            {{ Helpers::getDivisionName($data->division_id) }} / Risk Assessment
         </div>
     </div>
 
@@ -258,18 +258,11 @@
                                 Cancel
                             </button>
 
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                                Child
-                            </button> --}}
                         @elseif(
                             ($data->stage == 3 && Helpers::check_roles($data->division_id, 'Risk Assessment', 5)) ||
                                 in_array(Auth::user()->id, $valuesArray))
                             <!-- @if (!$cftCompleteUser)
                              -->
-
-
-                            {{-- ($data->stage == 3 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
@@ -281,7 +274,24 @@
                             </button> --}}
                             <!--
                         @endif -->
-                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Risk Assessment', 7)|| Helpers::check_roles($data->division_id, 'Risk Assessment', 66))
+                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Risk Assessment', 7))
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            Request More Info
+                        </button>
+
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            QA/CQA Review Complete
+                        </button>
+
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                            Child
+                        </button>
+                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Risk Assessment', 42))
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            In Approval
+                        </button>
+                        @endif
+                        {{-- @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Risk Assessment', 7) || Helpers::check_roles($data->division_id, 'Risk Assessment', 66))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Request More Info
                             </button>
@@ -291,24 +301,17 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
+
                         @elseif($data->stage == 5 && (in_array(42, $userRoleIds) || in_array(65 , $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 In Approval
                             </button>
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                                Child
-                            </button> --}}
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Request More Info
                             </button>
-                        @elseif($data->stage == 6 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Residual Risk Evaluation Completed
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                More Actions Needed
-                            </button> --}}
-                        @endif
+
+                        @endif --}}
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
                     </div>
@@ -2036,7 +2039,8 @@
                                         </div>
                                         <div class="col-md-12 mb-3 productionInjection">
                                             <div class="group-input">
-                                                <label for="Production Injection feedback">Production Injection
+                                                <label for="Production Injection feedback">Production Injection (By Production
+                                                    Injection)
                                                     Feedback <span id="asteriskPT2"
                                                         style="display: {{ $data1->Production_Injection_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                                         class="text-danger">*</span></label>
@@ -2372,7 +2376,7 @@
                                     @if ($data->stage == 2 || $data->stage == 3)
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Research Development"> Research Development Required ?
+                                                <label for="Research Development"> Research & Development Required ?
                                                     <span class="text-danger">*</span></label>
                                                 <select name="ResearchDevelopment_Review"
                                                     id="ResearchDevelopment_Review"
@@ -2403,7 +2407,7 @@
                                         @endphp
                                         <div class="col-lg-6 researchDevelopment">
                                             <div class="group-input">
-                                                <label for="Research Development notification">Research Development
+                                                <label for="Research Development notification">Research & Development
                                                     Person
                                                     <span id="asteriskPT"
                                                         style="display: {{ $data1->ResearchDevelopment_Review == 'yes' ? 'inline' : 'none' }}"
@@ -2426,7 +2430,7 @@
                                         <div class="col-md-12 mb-3 researchDevelopment">
                                             <div class="group-input">
                                                 <label for="Research Development assessment">Impact Assessment (By
-                                                    Research
+                                                    Research &
                                                     Development) <span id="asteriskPT1"
                                                         style="display: {{ $data1->ResearchDevelopment_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                                         class="text-danger">*</span></label>
@@ -2441,7 +2445,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 researchDevelopment">
                                             <div class="group-input">
-                                                <label for="Research Development feedback">Research Development
+                                                <label for="Research Development feedback">Research & Development
                                                     Feedback <span id="asteriskPT2"
                                                         style="display: {{ $data1->ResearchDevelopment_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                                         class="text-danger">*</span></label>
@@ -2457,7 +2461,7 @@
 
                                         <div class="col-12 researchDevelopment">
                                             <div class="group-input">
-                                                <label for="Research Development attachment">Research Development
+                                                <label for="Research Development attachment">Research & Development
                                                     Attachments</label>
                                                 <div><small class="text-primary">Please Attach all relevant or
                                                         supporting
@@ -2496,7 +2500,7 @@
                                         </div>
                                         <div class="col-md-6 mb-3 researchDevelopment">
                                             <div class="group-input">
-                                                <label for="Research Development Completed By">Research Development
+                                                <label for="Research Development Completed By">Research & Development
                                                     Completed
                                                     By</label>
                                                 <input readonly type="text"
@@ -2510,7 +2514,7 @@
 
                                         <div class="col-6 researchDevelopment new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="Research Development Completed On">Research Development
+                                                <label for="Research Development Completed On">Research & Development
                                                     Completed On</label>
                                                 <div class="calenderauditee">
                                                     <input type="text" id="ResearchDevelopment_on" readonly
@@ -2563,7 +2567,7 @@
                                     @else
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Research Development">Research Development Required
+                                                <label for="Research Development">Research & Development Required
                                                     ?</label>
                                                 <select name="ResearchDevelopment_Review" disabled
                                                     id="ResearchDevelopment_Review">
@@ -2593,7 +2597,7 @@
                                         @endphp
                                         <div class="col-lg-6 researchDevelopment">
                                             <div class="group-input">
-                                                <label for="Research Development notification">Research Development
+                                                <label for="Research Development notification">Research & Development
                                                     Person
                                                     <span id="asteriskInvi11" style="display: none"
                                                         class="text-danger">*</span></label>
@@ -2612,7 +2616,7 @@
                                             <div class="col-md-12 mb-3 researchDevelopment">
                                                 <div class="group-input">
                                                     <label for="Research Development assessment">Impact Assessment (By
-                                                        Research
+                                                        Research &
                                                         Development)</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
                                                             field if
@@ -2623,7 +2627,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 researchDevelopment">
                                                 <div class="group-input">
-                                                    <label for="Research Development feedback">Research Development
+                                                    <label for="Research Development feedback">Research & Development
                                                         Feedback</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
                                                             field if
@@ -2636,7 +2640,7 @@
                                             <div class="col-md-12 mb-3 researchDevelopment">
                                                 <div class="group-input">
                                                     <label for="Research Development assessment">Impact Assessment (By
-                                                        Research
+                                                        Research &
                                                         Development)</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
                                                             field if
@@ -2647,7 +2651,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 researchDevelopment">
                                                 <div class="group-input">
-                                                    <label for="Research Development feedback">Research Development
+                                                    <label for="Research Development feedback">Research & Development
                                                         Feedback</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
                                                             field if
@@ -2659,7 +2663,7 @@
                                         @endif
                                         <div class="col-12 researchDevelopment">
                                             <div class="group-input">
-                                                <label for="Research Development attachment">Research Development
+                                                <label for="Research Development attachment">Research & Development
                                                     Attachments</label>
                                                 <div><small class="text-primary">Please Attach all relevant or
                                                         supporting
@@ -2698,7 +2702,7 @@
                                         </div>
                                         <div class="col-md-6 mb-3 researchDevelopment">
                                             <div class="group-input">
-                                                <label for="Research Development Completed By">Research Development
+                                                <label for="Research Development Completed By">Research & Development
                                                     Completed
                                                     By</label>
                                                 <input readonly type="text"
@@ -2710,7 +2714,7 @@
                                         </div>
                                         <div class="col-6 researchDevelopment new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="Research Development Completed On">Research Development
+                                                <label for="Research Development Completed On">Research & Development
                                                     Completed On</label>
                                                 <div class="calenderauditee">
                                                     <input type="text" id="ResearchDevelopment_on" readonly
@@ -2727,11 +2731,6 @@
                                             </div>
                                         </div>
                                     @endif
-
-
-
-
-
 
 
                                     <div class="sub-head">
@@ -3609,7 +3608,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 store">
                                             <div class="group-input">
-                                                <label for="store feedback">store Feedback <span id="asteriskPT2"
+                                                <label for="store feedback">Store Feedback <span id="asteriskPT2"
                                                         style="display: {{ $data1->Store_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                                         class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field
@@ -3918,7 +3917,7 @@
                                     @if ($data->stage == 2 || $data->stage == 3)
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Quality Control"> Quality Control Required ? <span
+                                                <label for="Quality Control"> Quality Control Review Required ? <span
                                                         class="text-danger">*</span></label>
                                                 <select name="Quality_review" id="Quality_review_Review"
                                                     @if ($data->stage == 3) disabled @endif>
@@ -4918,7 +4917,7 @@
                                         @endphp
                                         <div class="col-lg-6 productionLiquid">
                                             <div class="group-input">
-                                                <label for="Production Liquid notification">Production Liquid/Externa preparation Person
+                                                <label for="Production Liquid notification">Production Liquid  Person
                                                     <span id="asteriskPT"
                                                         style="display: {{ $data1->ProductionLiquid_Review == 'yes' ? 'inline' : 'none' }}"
                                                         class="text-danger">*</span>
@@ -9022,7 +9021,7 @@
                                     </div>
 
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        In Approval
+                                        Approved
                                     </div>
 
 

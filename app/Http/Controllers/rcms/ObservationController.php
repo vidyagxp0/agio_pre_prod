@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use PDF;
+use Illuminate\Support\Facades\Session;
+
 
 class ObservationController extends Controller
 {
@@ -309,6 +311,25 @@ if(!empty($request->attach_files2)){
         $history->action_name = 'Create';
         $history->save();
     }
+
+    if (!empty($data->initiator_id)) {
+        // dd(Auth::user()->name);
+        $history = new AuditTrialObservation();
+        $history->Observation_id = $data->id;
+        $history->activity_type = 'Initiator';
+        $history->previous = "Null";
+        $history->current = Auth::user()->name;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+        $history->save();
+    }
+
     if (!empty($data->division_code)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -667,7 +688,7 @@ if(!empty($request->attach_files2)){
     if (!empty($data->impact_analysis)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Response Verification Attachements';
+        $history->activity_type = 'Response and Summary Attachment';
         $history->previous = "Null";
         $history->current = $data->impact_analysis;
         $history->comment = "NA";
@@ -1335,7 +1356,7 @@ if(!empty($request->attach_files2)){
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Response Verification Attachements';
+            $history->activity_type = 'Response and Summary Attachment';
             $history->previous = $lastDocument->impact_analysis;
             $history->current = $data->impact_analysis;
             $history->comment = $request->action_taken_comment;
@@ -1392,7 +1413,7 @@ if(!empty($request->attach_files2)){
                 $history->previous = "";
                 $history->current = $changestage->submitted_by;
                 $history->comment = $request->comment;
-                $history->action = 'Report Issue';
+                $history->action = 'Report Issued';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1423,6 +1444,23 @@ if(!empty($request->attach_files2)){
 
             if($capaRequired == "Yes"){
                 if ($changestage->stage == 2) {
+                    if (empty($changestage->response_detail))
+                    {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'Response and CAPA Tab is yet to be filled'
+                        ]);
+    
+                        return redirect()->back();
+                    }
+                     else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for Response Verification state'
+                        ]);
+                    }
                     $changestage->stage = "3";
                     $changestage->status = "Response Verification";
                     $changestage->complete_By = Auth::user()->name;
@@ -1462,6 +1500,23 @@ if(!empty($request->attach_files2)){
                 }
             } else {
                 if ($changestage->stage == 2) {
+                    if (empty($changestage->response_detail))
+                    {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'Response and CAPA Tab is yet to be filled'
+                        ]);
+    
+                        return redirect()->back();
+                    }
+                     else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for Response Verification state'
+                        ]);
+                    }
                     $changestage->stage = "3";
                     $changestage->status = "Response Verification";
                     $changestage->qa_approval_without_capa_by = Auth::user()->name;
@@ -1520,6 +1575,23 @@ if(!empty($request->attach_files2)){
             
             
             if ($changestage->stage == 3) {
+                if (empty($changestage->impact))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Response Verification Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for Closed - Done state'
+                    ]);
+                }
                 $changestage->stage = "4";
                 $changestage->status = "Closed - Done";
                 $changestage->Final_Approval_By = Auth::user()->name;
@@ -1606,6 +1678,7 @@ if(!empty($request->attach_files2)){
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Observation::find($id);
+            $lastDocument = Observation::find($id);
 
 
             if ($changeControl->stage == 2) {
@@ -1618,9 +1691,9 @@ if(!empty($request->attach_files2)){
 
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $changeControl->submitted_by;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
                 $history->comment = $request->comment;
                 $history->action = 'More Info Required';
                 $history->user_id = Auth::user()->id;
@@ -1628,7 +1701,7 @@ if(!empty($request->attach_files2)){
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $changeControl->status;
                 $history->change_to =   "Opened";
-                $history->change_from = $changeControl->status;
+                $history->change_from = $lastDocument->status;
                 $history->stage = '';
                 $history->save();
                 $changeControl->update();

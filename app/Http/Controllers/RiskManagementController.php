@@ -1596,7 +1596,7 @@ class RiskManagementController extends Controller
             if (!empty($data->qa_cqa_comments)) {
                 $history = new RiskAuditTrail();
                 $history->risk_id = $data->id;
-                $history->activity_type = 'CQA/QA Review Comment';
+                $history->activity_type = 'QA/CQA Review Comment';
                 $history->previous = "Null";
                 $history->current = $data->qa_cqa_comments;
                 $history->comment = "Not Applicable";
@@ -1632,7 +1632,7 @@ class RiskManagementController extends Controller
             if (!empty($data->qa_cqa_head_comm)) {
                 $history = new RiskAuditTrail();
                 $history->risk_id = $data->id;
-                $history->activity_type = 'CQA/QA Head Comment';
+                $history->activity_type = 'QA/CQA Head Approval Comment';
                 $history->previous = "Null";
                 $history->current = $data->qa_cqa_head_comm;
                 $history->comment = "Not Applicable";
@@ -1650,7 +1650,7 @@ class RiskManagementController extends Controller
             if (!empty($data->qa_cqa_head_attach)) {
                 $history = new RiskAuditTrail();
                 $history->risk_id = $data->id;
-                $history->activity_type = 'CQA/QA Head Attachments';
+                $history->activity_type = 'QA/CQA Head Attachments';
                 $history->previous = "Null";
                 $history->current = $data->qa_cqa_head_attach;
                 $history->comment = "Not Applicable";
@@ -2931,9 +2931,9 @@ class RiskManagementController extends Controller
 
         if ($data->stage == 2 || $data->stage == 3) {
 
-            if (!$form_progress) {
-                $form_progress = 'cft';
-            }
+            // if (!$form_progress) {
+            //     $form_progress = 'cft';
+            // }
 
 
             $Cft = RiskManagmentCft::withoutTrashed()->where('risk_id', $id)->first();
@@ -3480,7 +3480,8 @@ class RiskManagementController extends Controller
 
 
 
-        $data->form_progress = isset($form_progress) ? $form_progress : null;
+        // $data->form_progress = isset($form_progress) ? $form_progress : null;
+        // dd($data->form_progress);
 
         $data->update();
 
@@ -4283,7 +4284,7 @@ class RiskManagementController extends Controller
         if ($lastDocument->hod_des_rev_comm != $data->hod_des_rev_comm) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
-            $history->activity_type = 'HOD Designee';
+            $history->activity_type = 'HOD Designee Review Comment';
             $history->previous = $lastDocument->hod_des_rev_comm;
             $history->current = $data->hod_des_rev_comm;
             $history->comment = $request->comment;
@@ -6962,7 +6963,7 @@ class RiskManagementController extends Controller
         if ($lastDocument->qa_cqa_comments != $data->qa_cqa_comments || !empty($request->qa_cqa_comments)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'CQA/QA Review Comment';
+            $history->activity_type = 'QA/CQA Review Comment';
             $history->previous = $lastDocument->qa_cqa_comments;
             $history->current = $data->qa_cqa_comments;
             $history->comment = $request->qa_cqa_comments;
@@ -6981,19 +6982,27 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->qa_cqa_attachments != $data->qa_cqa_attachments || !empty($request->qa_cqa_attachments)) {
+        if (
+            (is_array($lastDocument->qa_cqa_attachments) ? json_encode($lastDocument->qa_cqa_attachments) : $lastDocument->qa_cqa_attachments)
+            != (is_array($data->qa_cqa_attachments) ? json_encode($data->qa_cqa_attachments) : $data->qa_cqa_attachments)
+            || !empty($request->qa_cqa_attachments)
+        ) {
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'CQA/QA Review Attachments';
-            $history->previous = $lastDocument->qa_cqa_attachments;
-            $history->current = $data->qa_cqa_attachments;
-            $history->comment = $request->qa_cqa_attachments;
+            $history->activity_type = 'QA/CQA Review Attachments';
+
+            // Convert arrays to JSON strings if necessary
+            $history->previous = is_array($lastDocument->qa_cqa_attachments) ? json_encode($lastDocument->qa_cqa_attachments) : $lastDocument->qa_cqa_attachments;
+            $history->current = is_array($data->qa_cqa_attachments) ? json_encode($data->qa_cqa_attachments) : $data->qa_cqa_attachments;
+            $history->comment = is_array($request->qa_cqa_attachments) ? json_encode($request->qa_cqa_attachments) : $request->qa_cqa_attachments;
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
+
             if (is_null($lastDocument->qa_cqa_attachments) || $lastDocument->qa_cqa_attachments === '') {
                 $history->action_name = "New";
             } else {
@@ -7003,10 +7012,11 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
+
         if ($lastDocument->qa_cqa_head_comm != $data->qa_cqa_head_comm || !empty($request->qa_cqa_head_comm)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'CQA/QA Head Comment';
+            $history->activity_type = 'QA/CQA Head Approval Comment';
             $history->previous = $lastDocument->qa_cqa_head_comm;
             $history->current = $data->qa_cqa_head_comm;
             $history->comment = $request->qa_cqa_head_comm;
@@ -7025,27 +7035,31 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->qa_cqa_head_attach != $data->qa_cqa_head_attach || !empty($request->qa_cqa_head_attach)) {
-            $history = new RiskAuditTrail();
-            $history->risk_id = $id;
-            $history->activity_type = 'CQA/QA Head Attachments';
-            $history->previous = $lastDocument->qa_cqa_head_attach;
-            $history->current = $data->qa_cqa_head_attach;
-            $history->comment = $request->qa_cqa_head_attach;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->qa_cqa_head_attach) || $lastDocument->qa_cqa_head_attach === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
+        if ((is_array($lastDocument->qa_cqa_head_attach) ? json_encode($lastDocument->qa_cqa_head_attach) : $lastDocument->qa_cqa_head_attach)
+                != (is_array($data->qa_cqa_head_attach) ? json_encode($data->qa_cqa_head_attach) : $data->qa_cqa_head_attach)
+                || !empty($request->qa_cqa_head_attach)) {
+
+                $history = new RiskAuditTrail();
+                $history->risk_id = $id;
+                $history->activity_type = 'QA/CQA Head Attachments';
+
+                // Convert arrays to strings if necessary
+                $history->previous = is_array($lastDocument->qa_cqa_head_attach) ? json_encode($lastDocument->qa_cqa_head_attach) : $lastDocument->qa_cqa_head_attach;
+                $history->current = is_array($data->qa_cqa_head_attach) ? json_encode($data->qa_cqa_head_attach) : $data->qa_cqa_head_attach;
+                $history->comment = is_array($request->qa_cqa_head_attach) ? json_encode($request->qa_cqa_head_attach) : $request->qa_cqa_head_attach;
+
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastDocument->status;
+
+                $history->action_name = is_null($lastDocument->qa_cqa_head_attach) || $lastDocument->qa_cqa_head_attach === '' ? "New" : "Update";
+
+                $history->save();
             }
 
-            $history->save();
-        }
 
 
         // if ($lastDocument->open_date != $data->open_date || !empty($request->open_date_comment)) {
@@ -8620,11 +8634,12 @@ class RiskManagementController extends Controller
                 $updateCFT = RiskManagmentCft::where('risk_id', $id)->latest()->first();
                 $lastDocument = RiskManagement::find($id);
                 $cftDetails = RiskAssesmentCftResponce::withoutTrashed()->where(['status' => 'In-progress', 'risk_id' => $id])->distinct('cft_user_id')->count();
+                $Cft = RiskManagmentCft::withoutTrashed()->where('risk_id', $id)->first();
 
                 if ($riskAssement->stage == 1) {
 
                     $riskAssement->stage = "2";
-                    $riskAssement->status = "Risk Analysis & Work Group Assignmet";
+                    $riskAssement->status = "HOD Review";
                     $riskAssement->submitted_by = Auth::user()->name;
                     $riskAssement->submitted_on = Carbon::now()->format('d-M-Y');
                     $riskAssement->submit_comment = $request->comment;
@@ -8685,12 +8700,30 @@ class RiskManagementController extends Controller
                 if ($riskAssement->stage == 2) {
                         //  dd($riskAssement->form_progress !== 'cft');
 
-                      if ($riskAssement->form_progress !== 'cft')
-                    {
+                    //   if ($riskAssement->form_progress !== 'cft')
+                    // {
+                    //     Session::flash('swal', [
+                    //         'type' => 'warning',
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'HOD/Designee Review Comment!/CFT Mandatory Tab is yet to be filled!'
+                    //     ]);
+
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for CFT review state'
+                    //     ]);
+                    // }
+
+                    // Check HOD remark value
+                    if (!$riskAssement->hod_des_rev_comm) {
+
                         Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'HOD/Designee Mandatory Tab is yet to be filled!',
                             'type' => 'warning',
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'HOD/Designee Review Comment!/CFT Mandatory Tab is yet to be filled!'
                         ]);
 
                         return redirect()->back();
@@ -8698,16 +8731,15 @@ class RiskManagementController extends Controller
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for CFT review state'
+                            'message' => 'Sent for CFT Review state'
                         ]);
                     }
 
-                    // Check HOD remark value
-                    // if (!$riskAssement->hod_des_rev_comm) {
+                    // if (!$Cft->Production_Table_Review || $Cft->Production_Injection_Review ) {
 
                     //     Session::flash('swal', [
                     //         'title' => 'Mandatory Fields Required!',
-                    //         'message' => 'HOD/Designee Review Comment!/CFT Mandatory Tab is yet to be filled!',
+                    //         'message' => 'CFT Review Mandatory Tab is yet to be filled!',
                     //         'type' => 'warning',
                     //     ]);
 
@@ -8737,7 +8769,7 @@ class RiskManagementController extends Controller
                     $history->previous = "";
                     $history->current = $riskAssement->evaluated_by. ',' .$riskAssement->evaluated_on;
                     $history->comment = $request->comment;
-                    $history->action = 'Evaluation Complete';
+                    $history->action = 'HOD Review Complete';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -8784,22 +8816,22 @@ class RiskManagementController extends Controller
                 if ($riskAssement->stage == 3) {
 
                     // CFT review state update form_progress
-                    if ($riskAssement->form_progress !== 'cft')
-                    {
-                        Session::flash('swal', [
-                            'type' => 'warning',
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'CFT Tab is yet to be filled'
-                        ]);
+                    // if ($riskAssement->form_progress !== 'cft')
+                    // {
+                    //     Session::flash('swal', [
+                    //         'type' => 'warning',
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'CFT Tab is yet to be filled'
+                    //     ]);
 
-                        return redirect()->back();
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent for In QA/CQA Review!'
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for In QA/CQA Review!'
+                    //     ]);
+                    // }
 
 
                     $IsCFTRequired = RiskAssesmentCftResponce::withoutTrashed()->where(['is_required' => 1, 'risk_id' => $id])->latest()->first();
@@ -9521,7 +9553,7 @@ class RiskManagementController extends Controller
 
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields Required!',
-                            'message' => 'CQA/QA Review Comment yet to be filled!',
+                            'message' => 'QA/CQA Review Comment yet to be filled!',
                             'type' => 'warning',
                         ]);
 

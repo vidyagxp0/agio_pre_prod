@@ -151,6 +151,7 @@ class CCController extends Controller
 
         $openState->type_chnage = $request->type_chnage;
         $openState->qa_comments = $request->qa_comments;
+        $openState->justification = $request->justification;
         // $openState->related_records = implode(',', $request->related_records);
         // $openState->qa_head = json_encode($request->qa_head);
 
@@ -1162,10 +1163,10 @@ class CCController extends Controller
             $history->save();
         }
   
-        if(!empty($request->risk_assessment_required)){            
+        if(!empty($request->justification)){            
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Risk Assessment Required';
+            $history->activity_type = 'Justification';
             $history->previous = "NULL";
             $history->current = $openState->risk_assessment_required;
             $history->comment = "Not Applicable";
@@ -2888,6 +2889,7 @@ class CCController extends Controller
         $openState->other_comment = $request->other_comment;
         $openState->supervisor_comment = $request->supervisor_comment;
         $openState->qa_comments = $request->qa_comments;
+        $openState->justification = $request->justification;
 
        
 
@@ -3998,6 +4000,27 @@ class CCController extends Controller
             $history->activity_type = 'Risk Assessment Required';
             $history->previous = $lastDocument->risk_assessment_required;
             $history->current = $openState->risk_assessment_required;
+            $history->comment = $request->short_desc_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        } 
+
+        
+        if ($lastDocument->justification != $request->justification) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+            ->where('activity_type', 'Justification')
+            ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Justification';
+            $history->previous = $lastDocument->justification;
+            $history->current = $openState->justification;
             $history->comment = $request->short_desc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

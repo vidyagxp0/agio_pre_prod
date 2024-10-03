@@ -784,7 +784,7 @@
             <div class="group-input">
                 <label for="audit-agenda-grid">
                     Instrument details
-                    <button type="button" name="audit-agenda-grid" id="instrument_detail" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
+                    <button type="button" name="audit-agenda-grid" id="instrument_details" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                     <span class="text-primary" data-bs-toggle="modal"
                         data-bs-target="#document-details-field-instruction-modal"
                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">

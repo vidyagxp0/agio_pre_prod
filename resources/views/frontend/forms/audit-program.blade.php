@@ -177,7 +177,7 @@ DATA FIELDS
     <div class="container-fluid">
         <!-- Tab links -->
         <div class="cctab">
-            <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Audit Program</button>
+            <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Self Inspection Circular</button>
             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD/Designee Review</button> -->
             <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA/QA Head Approval</button>
@@ -555,7 +555,7 @@ DATA FIELDS
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Year">Initiated Through </label>
+                                <label for="Year">Initiated through</label>
                                 <select name="year" id="year">
                                     <option value="">-- Select --</option>
                                     <option value="Deviation">Deviation</option>
@@ -568,7 +568,7 @@ DATA FIELDS
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" id="through_req_text" style="display: none;">
-                                <label for="type">Initiated Through(Other)<span class="text-danger">*</span></label>
+                                <label for="type">Initiated through(Other)<span class="text-danger">*</span></label>
                                 <textarea name="yearly_other" id="year_data"></textarea>
                             </div>
                         </div>
@@ -1140,9 +1140,9 @@ DATA FIELDS
             <div id="CCForm3" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
-                    <div class="col-12">
+                    <!-- <div class="col-12">
                                             <div class="sub-head">Submit</div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Submitted_By..">Submit By</label>
@@ -1161,9 +1161,9 @@ DATA FIELDS
                                                 <div class="static"></div>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="sub-head">Approve</div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Approve_By">Approve By</label>
@@ -1183,9 +1183,9 @@ DATA FIELDS
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="sub-head">More Info Required</div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
@@ -1206,9 +1206,9 @@ DATA FIELDS
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="sub-head">Audit Completed</div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
@@ -1229,9 +1229,9 @@ DATA FIELDS
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="sub-head">Cancel</div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-lg-4">
                                             <div class="group-input">

@@ -43,6 +43,21 @@
             {{ Helpers::getDivisionName(session()->get('division')) }}/ Market Complaint
         </div>
     </div>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+        integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    @if (Session::has('swal'))
+        <script>
+            swal("{{ Session::get('swal')['title'] }}", "{{ Session::get('swal')['message'] }}",
+                "{{ Session::get('swal')['type'] }}")
+        </script>
+    @endif
+
 
     {{-- @if (Session::has('swal'))
         <script>
@@ -281,8 +296,10 @@
                                 class="button_theme1"> Audit Trail
                             </button> </a>
                         @if (
-                            $data->stage == 1 && (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 66) || Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
-
+                            $data->stage == 1 &&
+                                (Helpers::check_roles($data->division_id, 'Resampling', 7) ||
+                                    Helpers::check_roles($data->division_id, 'Resampling', 66) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
                                     Submit
@@ -293,7 +310,9 @@
                                 </button></a>
                         @elseif(
                             $data->stage == 2 &&
-                                 (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 65) || Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
+                                (Helpers::check_roles($data->division_id, 'Resampling', 7) ||
+                                    Helpers::check_roles($data->division_id, 'Resampling', 65) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#rejection-modal">
                                     More Information Required
@@ -307,7 +326,10 @@
                                     Cancel
                                 </button></a>
                         @elseif(
-                            $data->stage == 3 && (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 66) || Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
+                            $data->stage == 3 &&
+                                (Helpers::check_roles($data->division_id, 'Resampling', 7) ||
+                                    Helpers::check_roles($data->division_id, 'Resampling', 66) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#rejection-modal">
                                     More Information Required
@@ -339,7 +361,10 @@
                             <!--
     @endif -->
                         @elseif(
-                            $data->stage == 5 && (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 66) || Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
+                            $data->stage == 5 &&
+                                (Helpers::check_roles($data->division_id, 'Resampling', 7) ||
+                                    Helpers::check_roles($data->division_id, 'Resampling', 66) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
                                     QA Verification complete
@@ -349,7 +374,10 @@
                                     More Information Required
                                 </button></a>
                         @elseif(
-                            $data->stage == 6 && (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 65) || Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
+                            $data->stage == 6 &&
+                                (Helpers::check_roles($data->division_id, 'Resampling', 7) ||
+                                    Helpers::check_roles($data->division_id, 'Resampling', 65) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
                                     Approval Complete
@@ -359,7 +387,10 @@
                                     More Information Required
                                 </button></a>
                         @elseif(
-                            $data->stage == 7 && (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 66) || Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
+                            $data->stage == 7 &&
+                                (Helpers::check_roles($data->division_id, 'Resampling', 7) ||
+                                    Helpers::check_roles($data->division_id, 'Resampling', 66) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
                                     Send Letter
@@ -367,7 +398,11 @@
                             {{-- <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="">
                                 Reopen
                             </button></a> --}}
-                        @elseif($data->stage == 8 && (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 66) || Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
+                        @elseif(
+                            $data->stage == 8 &&
+                                (Helpers::check_roles($data->division_id, 'Resampling', 7) ||
+                                    Helpers::check_roles($data->division_id, 'Resampling', 66) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             {{-- <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Send Letter
                             </button></a> --}}
@@ -3626,8 +3661,8 @@
                                             <label for="Production Tablet assessment">Impact Assessment (By Production
                                                 Tablet)
                                                 <!-- <span
-                                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                            id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -3639,8 +3674,8 @@
                                         <div class="group-input">
                                             <label for="Production Tablet feedback">Production Tablet Feedback
                                                 <!-- <span
-                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -3654,8 +3689,8 @@
                                             <label for="Production Tablet assessment">Impact Assessment (By Production
                                                 Tablet)
                                                 <!-- <span
-                                                                                                                                                                                         id="asteriskInvi12" style="display: none"
-                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                             id="asteriskInvi12" style="display: none"
+                                                                                                                                                                            class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -3667,8 +3702,8 @@
                                         <div class="group-input">
                                             <label for="Production Tablet feedback">Production Tablet Feedback
                                                 <!-- <span
-                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -3982,8 +4017,8 @@
                                             <label for="Production Injection assessment">Impact Assessment (By
                                                 Production Injection)
                                                 <!-- <span
-                                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                            id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -3995,8 +4030,8 @@
                                         <div class="group-input">
                                             <label for="Production Injection feedback">Production Injection Feedback
                                                 <!-- <span
-                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -4010,8 +4045,8 @@
                                             <label for="Production Injection assessment">Impact Assessment (By
                                                 Production Injection)
                                                 <!-- <span
-                                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                            id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -4023,8 +4058,8 @@
                                         <div class="group-input">
                                             <label for="Production Injection feedback">Production Injection Feedback
                                                 <!-- <span
-                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -9553,9 +9588,9 @@
                                 </a> --}}
                         @endif
                         <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                                data-bs-target="#effectivenss_extension">
-                                                                                                                                                                Launch Effectiveness Check
-                                                                                                                                                            </a> -->
+                                                                                                                                                                    data-bs-target="#effectivenss_extension">
+                                                                                                                                                                    Launch Effectiveness Check
+                                                                                                                                                                </a> -->
                     </div>
                 </div>
             </div>
@@ -10351,12 +10386,14 @@
 
                             </div>
                         </div>
+
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Comment">Complete Review Comment</label>
                                 <div class="static">{{ $data->complete_review_Comments }}</div>
                             </div>
                         </div>
+
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Initiator Group">Cancel By : </label>
@@ -10446,7 +10483,7 @@
                                 <div class="static">{{ $data->QA_cqa_verif_Comments }}</div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        {{-- <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Initiator Group">Reject By : </label>
                                 <div class="static">{{ $data->reject_by }}</div>
@@ -10467,7 +10504,7 @@
                                 <div class="static">{{ $data->reject_comment }}</div>
                             </div>
                         </div>
-
+ --}}
 
                         <div class="col-lg-4">
                             <div class="group-input">
@@ -10752,9 +10789,9 @@ document.getElementById('initiator_group').addEventListener('change', function()
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                        <button>Close</button>
-                                                    </div> -->
+                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                            <button>Close</button>
+                                                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -10799,9 +10836,9 @@ document.getElementById('initiator_group').addEventListener('change', function()
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                        <button>Close</button>
-                                                    </div> -->
+                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                            <button>Close</button>
+                                                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -10846,9 +10883,9 @@ document.getElementById('initiator_group').addEventListener('change', function()
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                        <button>Close</button>
-                                                    </div> -->
+                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                            <button>Close</button>
+                                                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -10898,9 +10935,9 @@ document.getElementById('initiator_group').addEventListener('change', function()
 
                         <!-- Modal footer -->
                         <!-- <div class="modal-footer">
-                                                        <button type="button" data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit">Continue</button>
-                                                    </div> -->
+                                                            <button type="button" data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit">Continue</button>
+                                                        </div> -->
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
@@ -11080,8 +11117,8 @@ document.getElementById('initiator_group').addEventListener('change', function()
 
 
     <!-- SweetAlert2 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+    {{-- <script>
         @if (Session::has('swal'))
             Swal.fire({
                 title: '{{ Session::get('swal.title') }}',
@@ -11093,8 +11130,8 @@ document.getElementById('initiator_group').addEventListener('change', function()
                 size: '50px',
             });
         @endif
-    </script>
-    <style>
+    </script> --}}
+    {{-- <style>
         .swal2-title {
             font-size: 18px;
             /* Customize title font size */
@@ -11109,6 +11146,6 @@ document.getElementById('initiator_group').addEventListener('change', function()
             font-size: 14px;
             /* Customize confirm button font size */
         }
-    </style>
+    </style> --}}
 
 @endsection
