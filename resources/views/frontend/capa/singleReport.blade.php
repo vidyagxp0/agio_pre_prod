@@ -254,6 +254,8 @@
                         <td class="w-30"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td> -->
                        <th class="w-20">Initiated Through</th>
                         <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Others</th>
                         <td class="w-30">@if($data->initiated_through_req){{ $data->initiated_through_req }}@else Not Applicable @endif</td>
                     </tr>
@@ -273,6 +275,8 @@
                     <td class="w-80"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td> -->
                    <th class="w-20">Repeat</th>
                     <td class="w-30">@if($data->repeat ){{ $data->repeat }}@else Not Applicable @endif</td>
+                </tr>
+                <tr>
                     <th class="w-20">Repeat Nature</th>
                     <td class="w-30">@if($data->repeat_nature){{ $data->repeat_nature }}@else Not Applicable @endif</td>
                 </tr>
@@ -284,6 +288,8 @@
                     <tr>
                         <th class="w-20">Problem Description</th>
                         <td class="w-30">@if($data->problem_description){{ $data->problem_description }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">CAPA Team</th>
                         <td class="w-30">@if($data->capa_team){{  $capa_teamNamesString }}@else Not Applicable @endif</td>
 
@@ -295,6 +301,8 @@
                      <tr>
                             <th class="w-20">Reference Records</th>
                             <td class="w-30">@if($data->capa_related_record){{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif</td>
+                        </tr>
+                        <tr>
                             <th class="w-20"> Initial Observation</th>
                             <td class="w-30"> 
                             @if($data->initial_observation){{ $data->initial_observation}}@else Not Applicable @endif </td>
@@ -306,6 +314,8 @@
                     <tr>  
                         <th class="w-20">Interim Containment</th>
                         <td class="w-30">@if($data->interim_containnment){{ $data->interim_containnment }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
                         <th class="w-20"> Containment Comments </th>
                         <td class="w-30">@if($data->containment_comments){{ $data->containment_comments }}@else Not Applicable @endif </td>
                     </tr>
@@ -457,7 +467,8 @@
                             <tr>
                               <th class="20">Investigation Summary</th>
                               <td class="30">@if($data->investigation){{ $data->investigation }}@else Not Applicable @endif</td>
-
+                            </tr>
+                            <tr>
                                <th class="20">Root Cause</th>
                                <td class="30">@if($data->rcadetails){{ $data->rcadetails }}@else Not Applicable @endif</td>
                              </tr>
@@ -554,7 +565,7 @@
                     </div>
 
                     <div class="block-head">
-                        Other type CAPA Details
+                        Other Type CAPA Details
                         </div>   
                         <table>
                         <tr>

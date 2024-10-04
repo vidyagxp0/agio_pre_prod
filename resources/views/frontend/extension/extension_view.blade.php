@@ -826,7 +826,7 @@
                                 <div class="group-input">
                                     <label for="Assigned To">QA/CQA Approval Comments</label>
                                     <textarea name="approver_remarks" id="approver_remarks" cols="30"
-                                    {{ in_array($extensionNew->stage, [3, 4]) ? '' : 'readonly' }}>{{ $extensionNew->approver_remarks }}</textarea>
+                                    {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'readonly' }}>{{ $extensionNew->approver_remarks }}</textarea>
                                 </div>
                             </div>
 
@@ -865,7 +865,7 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="HOD_Attachments" name="file_attachment_approver[]"
-                                                oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple {{ in_array($extensionNew->stage, [3, 4]) ? '' : 'disabled' }}>
+                                                oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'disabled' }}>
                                         </div>
                                     </div>
                                 </div>
@@ -972,7 +972,7 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected On">Reject On</label>
-                                    <div class="static">{{ $extensionNew->submit_on_approved }}</div>
+                                    <div class="static">{{ $extensionNew->submit_on_inapproved }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">

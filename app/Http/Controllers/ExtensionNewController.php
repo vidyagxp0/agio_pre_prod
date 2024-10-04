@@ -405,7 +405,7 @@ class ExtensionNewController extends Controller
         if (!empty($request->justification_reason)) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'Justification / Reason';
+            $history->activity_type = 'Justification/Reason';
             $history->previous = "Null";
             $history->current = $extensionNew->justification_reason;
             $history->comment = "Not Applicable";
@@ -490,7 +490,7 @@ class ExtensionNewController extends Controller
         if (!empty($request->file_attachment_approver)) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'QA/CQA Approval Attachment';
+            $history->activity_type = 'QA/CQA Approval Attachments';
             $history->previous = "Null";
             $history->current = $extensionNew->file_attachment_approver;
             $history->comment = "Not Applicable";
@@ -977,7 +977,7 @@ class ExtensionNewController extends Controller
         if ($lastDocument->file_attachment_approver != $extensionNew->file_attachment_approver) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'QA/CQA Approval Attachment';
+            $history->activity_type = 'QA/CQA Approval Attachments';
             $history->previous = str_replace(',', ', ', $lastDocument->file_attachment_approver);
             $history->current = str_replace(',', ', ', $extensionNew->file_attachment_approver);
             $history->comment = $request->file_attachment_approver_comment;

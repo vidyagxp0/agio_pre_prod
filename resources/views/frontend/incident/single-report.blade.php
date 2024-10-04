@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Incident Single Report
+                    Incident Report
                 </td>
 
                 <td class="w-30">
@@ -311,6 +311,15 @@
                 </table>
                 <table>
                     <tr>
+                        <th class="w-20">Incident Observed By</th>
+                        <td class="w-30">
+                            @if ($data->Facility)
+                                {{ $data->Facility }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
                         <th class="w-20">Incident Reported On </th>
                         <td class="w-30">
                             @if ($data->incident_reported_date)
@@ -319,14 +328,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Incident Observed by</th>
-                        <td class="w-30">
-                            @if ($data->Facility)
-                                {{ $data->Facility }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+
                         {{--@php
                             $facilityIds = explode(',', $data->Facility);
                             $users = $facilityIds ? DB::table('users')->whereIn('id', $facilityIds)->get() : [];
@@ -354,7 +356,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20"> Others</th>
+                       <th class="w-20"> Others</th>
                         <td class="w-30">
                             @if ($data->others)
                                 {{ $data->others }}
@@ -363,6 +365,17 @@
                             @endif
                         </td>
 
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Delay Justification</th>
+                        <td class="w-30">
+                            @if ($data->Delay_Justification)
+                                {{ $data->Delay_Justification }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
                 </table>
                 <table>
@@ -402,7 +415,7 @@
                 </table>
                 <div class="block">
                     <div class="block-head">
-                        Facility/ Equipment/ Instrument/ System Details
+                        Facility/Equipment/Instrument/System Details
                     </div>
                     <div class="border-table">
                         <table style="margin-top: 20px; width:100%;table-layout:fixed;">
@@ -468,9 +481,9 @@
                             <thead>
                                 <tr class="table_bg">
                                     <th style="width: 4%">Row#</th>
+                                    <th style="width: 16%">Document Name</th>
                                     <th style="width: 12%">Document Number</th>
-                                    <th style="width: 16%"> Reference Document Name</th>
-                                    <th style="width: 16%"> Remarks</th>
+                                    <th style="width: 16%">Remarks</th>
 
                                     {{-- <th style="width: 8%">Action</th> --}}
                                 </tr>
@@ -480,10 +493,10 @@
                                 @foreach (unserialize($grid_data1->ReferenceDocumentName) as $key => $temps)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ unserialize($grid_data1->Number)[$key] ? unserialize($grid_data1->Number)[$key] : '' }}
+                                        <td>{{ unserialize($grid_data1->ReferenceDocumentName)[$key] ? unserialize($grid_data1->ReferenceDocumentName)[$key] : '' }}
 
                                         </td>
-                                        <td>{{ unserialize($grid_data1->ReferenceDocumentName)[$key] ? unserialize($grid_data1->ReferenceDocumentName)[$key] : '' }}
+                                        <td>{{ unserialize($grid_data1->Number)[$key] ? unserialize($grid_data1->Number)[$key] : '' }}
 
                                         </td>
                                         <td>{{ unserialize($grid_data1->Document_Remarks)[$key] ? unserialize($grid_data1->Document_Remarks)[$key] : '' }}
@@ -508,7 +521,7 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Product/Batch Required?</th>
+                        <th class="w-20">Products / Material  Details Required?</th>
                         <td class="w-80">
                             @if ($data->Product_Details_Required)
                                 {{ $data->Product_Details_Required }}
@@ -520,16 +533,16 @@
                 </table>
                 <div class="block">
                     <div class="block-head">
-                        Product/Batch Details
+                        Product / Material Details
                     </div>
                     <div class="border-table">
                         <table style="margin-top: 20px; width:100%;table-layout:fixed;">
                             <thead>
                                 <tr class="table_bg">
                                     <th style="width: 4%">Row#</th>
-                                    <th style="width: 12%">Product</th>
-                                    <th style="width: 16%"> Stage</th>
-                                    <th style="width: 16%">Batch No</th>
+                                    <th style="width: 12%">Product Material</th>
+                                    <th style="width: 16%">Stage</th>
+                                    <th style="width: 16%">A.R.No. / Batch No</th>
 
                                     {{-- <th style="width: 8%">Action</th> --}}
                                 </tr>
@@ -591,7 +604,7 @@
                 </table>
                 <table>
                     <tr>
-                        <th class="w-20">Immediate corrective action</th>
+                        <th class="w-20">Immediate Corrective Action</th>
                         <td class="w-80">
                             @if ($data->immediate_correction)
                                 {{ $data->immediate_correction }}
@@ -607,7 +620,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    Initial Attachments
+                    Initial Attachment
                 </div>
                 <table>
 
@@ -640,7 +653,7 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Review Of Incident And Verfication Of Effectivess Of Correction</th>
+                        <th class="w-20">Review of Incident And Verfication of Effectivess of Correction</th>
                         <td class="w-80">
                             @if ($data->review_of_verific)
                                 {{ $data->review_of_verific }}
@@ -672,7 +685,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-30">HOD Remarks</th>
+                        <th class="w-30">HOD Remark</th>
                         <td class="w-80">
                             @if ($data->HOD_Remarks)
                                 {{ $data->HOD_Remarks }}
@@ -772,7 +785,7 @@
 
                     <tr>
                         <th class="w-20">
-                            If Yes, Then Mention:
+                            If Yes, Then Mention
                         </th>
                         <td class="w-30">
                             @if ($data->any_similar_incident_in_past)
@@ -856,7 +869,7 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">QA Head/Designee approval comment</th>
+                        <th class="w-20">QA Head/Designee Approval Comment</th>
                         <td class="w-30">
                             @if ($data->qa_head_deginee_comment)
                                 {{ $data->qa_head_deginee_comment }}
@@ -871,7 +884,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    QA Head/Designee approval attachement
+                    QA Head/Designee Approval Attachement
                 </div>
                 <table>
 
@@ -1050,7 +1063,7 @@
 
             <br>
 
-            <div class="border-table">
+            {{--<div class="border-table">--}}
                 <div class="block-head">
                     QA Final Review
                 </div>
@@ -1068,7 +1081,7 @@
                         </td>
                     </tr>
                 </table>
-            </div>
+            {{--</div>--}}
 <br>
             <div class="border-table">
                 <div class="block-head">
@@ -1175,7 +1188,7 @@
                         <th class="w-20">Submit Comment</th>
                         <td class="w-80">{{ $data->submit_comment }}</td>
                     </tr>
-                 
+
                     <tr>
                         <th class="w-20">HOD Initial Review Complete By</th>
                         <td class="w-80">{{ $data->HOD_Initial_Review_Complete_By }}</td>
