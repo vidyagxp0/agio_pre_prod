@@ -629,10 +629,10 @@
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
 
-                                                    <option {{ $data->type == 'Business_Risk' ? 'selected' : '' }}
-                                                        value="Business_Risk">Business Risk</option>
-                                                    <option {{ $data->type == 'custumer_Related' ? 'selected' : '' }}
-                                                        value="custumer_Related">Customer-Related Risk(Complaint)
+                                                    <option {{ $data->type == 'Business Risk' ? 'selected' : '' }}
+                                                        value="Business Risk">Business Risk</option>
+                                                    <option {{ $data->type == 'Custumer Related' ? 'selected' : '' }}
+                                                        value="Custumer Related">Customer-Related Risk(Complaint)
                                                     </option>
                                                     <option {{ $data->type == 'Opportunity' ? 'selected' : '' }}
                                                         value="Opportunity">Opportunity
@@ -640,11 +640,11 @@
                                                     <option {{ $data->type == 'Market' ? 'selected' : '' }}
                                                         value="Market">Market</option>
                                                     <option {{ $data->type == 'Operational_Risk' ? 'selected' : '' }}
-                                                        value="Operational_Risk">Operational Risk</option>
-                                                    <option {{ $data->type == 'Strategic_Rick' ? 'selected' : '' }}
-                                                        value="Strategic_Risk">Strategic Risk</option>
-                                                    <option {{ $data->type == 'Other_data' ? 'selected' : '' }}
-                                                        value="Other_data">
+                                                        value="Operational Risk">Operational Risk</option>
+                                                    <option {{ $data->type == 'Strategic Rick' ? 'selected' : '' }}
+                                                        value="Strategic Risk">Strategic Risk</option>
+                                                    <option {{ $data->type == 'Other Data' ? 'selected' : '' }}
+                                                        value="Other Data">
                                                         Other</option>
                                                 </select>
                                             </div>
@@ -884,7 +884,7 @@
                                                                 <option value="Failure Mode and Effect Analysis"
                                                                     @if (in_array('Failure Mode and Effect Analysis', $selectedMethodologies)) selected @endif>Failure Mode and
                                                                     Effect Analysis</option>
-                                                                <option value="Other_Detail" @if (in_array('Other_Detail', $selectedMethodologies)) selected @endif>Other</option>
+                                                                <option value="Other Detail" @if (in_array('Other_Detail', $selectedMethodologies)) selected @endif>Other</option>
                                                             </select>
                                                         </div>
                                                     </div>

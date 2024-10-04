@@ -396,13 +396,13 @@
                                             <label for="Type..">Type</label>
                                             <select name="type" id="type">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="Business_Risk">Business Risk</option>
-                                                <option value="customer_Related">Customer-Related Risk (Complaint)</option>
+                                                <option value="Business Risk">Business Risk</option>
+                                                <option value="Customer Related">Customer-Related Risk (Complaint)</option>
                                                 <option value="Opportunity">Opportunity</option>
                                                 <option value="Market">Market</option>
-                                                <option value="Operational_Risk">Operational Risk</option>
-                                                <option value="Strategic_Risk">Strategic Risk</option>
-                                                <option value="Other_data">Other</option>
+                                                <option value="Operational Risk">Operational Risk</option>
+                                                <option value="Strategic Risk">Strategic Risk</option>
+                                                <option value="Other Data">Other</option>
                                             </select>
                                         </div>
                                     </div>
@@ -611,7 +611,7 @@
                                             <select name="root_cause_methodology[]" multiple data-search="false" data-silent-initial-value-set="true" id="root-cause-methodology">
                                                 <option value="Why-Why Chart">Why-Why Chart</option>
                                                 <option value="Failure Mode and Effect Analysis">Failure Mode and Effect Analysis</option>
-                                                <option value="Other_Detail">Other</option>
+                                                <option value="Other Detail">Other</option>
                                             </select>
                                         </div>
                                     </div>

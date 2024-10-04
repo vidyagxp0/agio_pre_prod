@@ -5377,24 +5377,51 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Engineering_attachment != $request->Engineering_attachment && $request->Engineering_attachment != null) {
-            $history = new RiskAuditTrail;
+        // if ($lastCft->Engineering_attachment != $request->Engineering_attachment && $request->Engineering_attachment != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Engineering Review On';
+        //     $history->previous = $lastCft->Engineering_attachment;
+        //     $history->current = implode(',',$request->Engineering_attachment);
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Engineering_attachment) || $lastCft->Engineering_attachment === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
+
+        if ($lastCft->Engineering_attachment != $data->Engineering_attachment || !empty($request->Engineering_attachment)) {
+
+            $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'Engineering Review On';
-            $history->previous = $lastCft->Engineering_attachment;
-            $history->current = implode(',',$request->Engineering_attachment);
-            $history->comment = "Not Applicable";
+            $history->activity_type = 'Engineering Attachment';
+
+            // Convert arrays to JSON strings if necessary
+            $history->previous = is_array($lastCft->Engineering_attachment) ? json_encode($lastCft->Engineering_attachment) : $lastCft->Engineering_attachment;
+            $history->current = is_array($data->Engineering_attachment) ? json_encode($data->Engineering_attachment) : $data->Engineering_attachment;
+            $history->comment = is_array($request->Engineering_attachment) ? json_encode($request->Engineering_attachment) : $request->Engineering_attachment;
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Engineering_attachment) || $lastCft->Engineering_attachment === '') {
+            $history->origin_state = $lastCft->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastCft->status;
+
+            if (is_null($lastCft->Engineering_attachment) || $lastCft->Engineering_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
 
@@ -5519,24 +5546,51 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Human_Resource_attachment != $request->Human_Resource_attachment && $request->Human_Resource_attachment != null) {
-            $history = new RiskAuditTrail;
+        // if ($lastCft->Human_Resource_attachment != $request->Human_Resource_attachment && $request->Human_Resource_attachment != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Human Resource Review On';
+        //     $history->previous = $lastCft->Human_Resource_attachment;
+        //     $history->current =implode(',', $request->Human_Resource_attachment);
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Human_Resource_attachment) || $lastCft->Human_Resource_attachment === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
+
+        if ($lastCft->Human_Resource_attachment != $data->Human_Resource_attachment || !empty($request->Human_Resource_attachment)) {
+
+            $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'Human Resource Review On';
-            $history->previous = $lastCft->Human_Resource_attachment;
-            $history->current =implode(',', $request->Human_Resource_attachment);
-            $history->comment = "Not Applicable";
+            $history->activity_type = 'Engineering Attachment';
+
+            // Convert arrays to JSON strings if necessary
+            $history->previous = is_array($lastCft->Human_Resource_attachment) ? json_encode($lastCft->Human_Resource_attachment) : $lastCft->Human_Resource_attachment;
+            $history->current = is_array($data->Human_Resource_attachment) ? json_encode($data->Human_Resource_attachment) : $data->Human_Resource_attachment;
+            $history->comment = is_array($request->Human_Resource_attachment) ? json_encode($request->Human_Resource_attachment) : $request->Human_Resource_attachment;
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Human_Resource_attachment) || $lastCft->Human_Resource_attachment === '') {
+            $history->origin_state = $lastCft->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastCft->status;
+
+            if (is_null($lastCft->Human_Resource_attachment) || $lastCft->Human_Resource_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
 
@@ -5661,24 +5715,51 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-         if ($lastCft->Microbiology_attachment != $request->Microbiology_attachment && $request->Microbiology_attachment != null) {
-            $history = new RiskAuditTrail;
+        //  if ($lastCft->Microbiology_attachment != $request->Microbiology_attachment && $request->Microbiology_attachment != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Microbiology Review On';
+        //     $history->previous = $lastCft->Microbiology_attachment;
+        //     $history->current = implode(',',$request->Microbiology_attachment);
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Microbiology_attachment) || $lastCft->Microbiology_attachment === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
+
+        if ($lastCft->Human_Resource_attachment != $data->Human_Resource_attachment || !empty($request->Human_Resource_attachment)) {
+
+            $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'Microbiology Review On';
-            $history->previous = $lastCft->Microbiology_attachment;
-            $history->current = implode(',',$request->Microbiology_attachment);
-            $history->comment = "Not Applicable";
+            $history->activity_type = 'Human Resource Attachment';
+
+            // Convert arrays to JSON strings if necessary
+            $history->previous = is_array($lastCft->Human_Resource_attachment) ? json_encode($lastCft->Human_Resource_attachment) : $lastCft->Human_Resource_attachment;
+            $history->current = is_array($data->Human_Resource_attachment) ? json_encode($data->Human_Resource_attachment) : $data->Human_Resource_attachment;
+            $history->comment = is_array($request->Human_Resource_attachment) ? json_encode($request->Human_Resource_attachment) : $request->Human_Resource_attachment;
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Microbiology_attachment) || $lastCft->Microbiology_attachment === '') {
+            $history->origin_state = $lastCft->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastCft->status;
+
+            if (is_null($lastCft->Human_Resource_attachment) || $lastCft->Human_Resource_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
 
@@ -5803,26 +5884,54 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->RegulatoryAffair_attachment != $request->RegulatoryAffair_attachment  && $request->RegulatoryAffair_attachment != null) {
-            $history = new RiskAuditTrail;
+        // if ($lastCft->RegulatoryAffair_attachment != $request->RegulatoryAffair_attachment  && $request->RegulatoryAffair_attachment != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Regulatory Affair Review On';
+        //     $history->previous = $lastCft->RegulatoryAffair_attachment;
+        //     $history->current =implode(',', $request->RegulatoryAffair_attachment);
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->RegulatoryAffair_attachment) || $lastCft->RegulatoryAffair_attachment === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
+
+        if ($lastCft->RegulatoryAffair_attachment != $data->RegulatoryAffair_attachment || !empty($request->RegulatoryAffair_attachment)) {
+
+            $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'Regulatory Affair Review On';
-            $history->previous = $lastCft->RegulatoryAffair_attachment;
-            $history->current =implode(',', $request->RegulatoryAffair_attachment);
-            $history->comment = "Not Applicable";
+            $history->activity_type = 'Regulatory Affair Attachment';
+
+            // Convert arrays to JSON strings if necessary
+            $history->previous = is_array($lastCft->RegulatoryAffair_attachment) ? json_encode($lastCft->RegulatoryAffair_attachment) : $lastCft->RegulatoryAffair_attachment;
+            $history->current = is_array($data->RegulatoryAffair_attachment) ? json_encode($data->RegulatoryAffair_attachment) : $data->RegulatoryAffair_attachment;
+            $history->comment = is_array($request->RegulatoryAffair_attachment) ? json_encode($request->RegulatoryAffair_attachment) : $request->RegulatoryAffair_attachment;
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->RegulatoryAffair_attachment) || $lastCft->RegulatoryAffair_attachment === '') {
+            $history->origin_state = $lastCft->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastCft->status;
+
+            if (is_null($lastCft->RegulatoryAffair_attachment) || $lastCft->RegulatoryAffair_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
+
 
         /*************** Corporate Quality Assurance ***************/
         if ($lastCft->CorporateQualityAssurance_Review != $request->CorporateQualityAssurance_Review && $request->CorporateQualityAssurance_Review != null) {
@@ -5953,7 +6062,7 @@ class RiskManagementController extends Controller
         if ($lastCft->CorporateQualityAssurance_attachment != $request->CorporateQualityAssurance_attachment && $request->CorporateQualityAssurance_attachment != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Corporate Quality Assurance attachment';
+            $history->activity_type = 'Corporate Quality Assurance Attachment';
             $history->previous = $lastCft->CorporateQualityAssurance_attachment;
             $history->current =implode(',', $request->CorporateQualityAssurance_attachment);
             $history->comment = "Not Applicable";
@@ -6092,24 +6201,51 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Environment_Health_Safety_attachment != $request->Environment_Health_Safety_attachment && $request->Environment_Health_Safety_attachment != null) {
-            $history = new RiskAuditTrail;
+        // if ($lastCft->Environment_Health_Safety_attachment != $request->Environment_Health_Safety_attachment && $request->Environment_Health_Safety_attachment != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Safety Review On';
+        //     $history->previous = $lastCft->Environment_Health_Safety_attachment;
+        //     $history->current =implode(',', $request->Environment_Health_Safety_attachment);
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Environment_Health_Safety_attachment) || $lastCft->Environment_Health_Safety_attachment === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
+
+        if ($lastCft->Environment_Health_Safety_attachment != $data->Environment_Health_Safety_attachment || !empty($request->Environment_Health_Safety_attachment)) {
+
+            $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'Safety Review On';
-            $history->previous = $lastCft->Environment_Health_Safety_attachment;
-            $history->current =implode(',', $request->Environment_Health_Safety_attachment);
-            $history->comment = "Not Applicable";
+            $history->activity_type = 'Environment Health Safety Attachment';
+
+            // Convert arrays to JSON strings if necessary
+            $history->previous = is_array($lastCft->Environment_Health_Safety_attachment) ? json_encode($lastCft->Environment_Health_Safety_attachment) : $lastCft->Environment_Health_Safety_attachment;
+            $history->current = is_array($data->Environment_Health_Safety_attachment) ? json_encode($data->Environment_Health_Safety_attachment) : $data->Environment_Health_Safety_attachment;
+            $history->comment = is_array($request->Environment_Health_Safety_attachment) ? json_encode($request->Environment_Health_Safety_attachment) : $request->Environment_Health_Safety_attachment;
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Environment_Health_Safety_attachment) || $lastCft->Environment_Health_Safety_attachment === '') {
+            $history->origin_state = $lastCft->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastCft->status;
+
+            if (is_null($lastCft->Environment_Health_Safety_attachment) || $lastCft->Environment_Health_Safety_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
 
@@ -6396,24 +6532,51 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Other1_attachment != $request->Other1_attachment && $request->Other1_attachment != null) {
-            $history = new RiskAuditTrail;
+        // if ($lastCft->Other1_attachment != $request->Other1_attachment && $request->Other1_attachment != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Other 1 Attachment';
+        //     $history->previous = $lastCft->Other1_attachment;
+        //     $history->current = implode(',',$request->Other1_attachment);
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Other1_attachment) || $lastCft->Other1_attachment === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
+
+        if ($lastCft->Other1_attachment != $data->Other1_attachment || !empty($request->Other1_attachment)) {
+
+            $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'Other 1 Review On';
-            $history->previous = $lastCft->Other1_attachment;
-            $history->current = implode(',',$request->Other1_attachment);
-            $history->comment = "Not Applicable";
+            $history->activity_type = 'Other 1 Attachment';
+
+            // Convert arrays to JSON strings if necessary
+            $history->previous = is_array($lastCft->Other1_attachment) ? json_encode($lastCft->Other1_attachment) : $lastCft->Other1_attachment;
+            $history->current = is_array($data->Other1_attachment) ? json_encode($data->Other1_attachment) : $data->Other1_attachment;
+            $history->comment = is_array($request->Other1_attachment) ? json_encode($request->Other1_attachment) : $request->Other1_attachment;
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Other1_attachment) || $lastCft->Other1_attachment === '') {
+            $history->origin_state = $lastCft->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastCft->status;
+
+            if (is_null($lastCft->Other1_attachment) || $lastCft->Other1_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
 
@@ -6559,24 +6722,51 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Other2_attachment != $request->Other2_attachment && $request->Other2_attachment != null) {
-            $history = new RiskAuditTrail;
+        // if ($lastCft->Other2_attachment != $request->Other2_attachment && $request->Other2_attachment != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Other 2 Review On';
+        //     $history->previous = $lastCft->Other2_attachment;
+        //     $history->current =implode(',', $request->Other2_attachment);
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Other2_attachment) || $lastCft->Other2_attachment === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
+
+        if ($lastCft->Other2_attachment != $data->Other2_attachment || !empty($request->Other2_attachment)) {
+
+            $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'Other 2 Review On';
-            $history->previous = $lastCft->Other2_attachment;
-            $history->current =implode(',', $request->Other2_attachment);
-            $history->comment = "Not Applicable";
+            $history->activity_type = 'Other 2 Attachment';
+
+            // Convert arrays to JSON strings if necessary
+            $history->previous = is_array($lastCft->Other2_attachment) ? json_encode($lastCft->Other2_attachment) : $lastCft->Other2_attachment;
+            $history->current = is_array($data->Other2_attachment) ? json_encode($data->Other2_attachment) : $data->Other2_attachment;
+            $history->comment = is_array($request->Other2_attachment) ? json_encode($request->Other2_attachment) : $request->Other2_attachment;
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Other2_attachment) || $lastCft->Other2_attachment === '') {
+            $history->origin_state = $lastCft->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastCft->status;
+
+            if (is_null($lastCft->Other2_attachment) || $lastCft->Other2_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
 
@@ -6721,24 +6911,52 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Other3_attachment != $request->Other3_attachment && $request->Other3_attachment != null) {
-            $history = new RiskAuditTrail;
+        // if ($lastCft->Other3_attachment != $request->Other3_attachment && $request->Other3_attachment != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Other 3 Review On';
+        //     $history->previous = $lastCft->Other3_attachment;
+        //     $history->current =implode(',', $request->Other3_attachment);
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Other3_attachment) || $lastCft->Other3_attachment === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
+
+
+        if ($lastCft->Other3_attachment != $data->Other3_attachment || !empty($request->Other3_attachment)) {
+
+            $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'Other 3 Review On';
-            $history->previous = $lastCft->Other3_attachment;
-            $history->current =implode(',', $request->Other3_attachment);
-            $history->comment = "Not Applicable";
+            $history->activity_type = 'Other 3 Attachment';
+
+            // Convert arrays to JSON strings if necessary
+            $history->previous = is_array($lastCft->Other3_attachment) ? json_encode($lastCft->Other3_attachment) : $lastCft->Other3_attachment;
+            $history->current = is_array($data->Other3_attachment) ? json_encode($data->Other3_attachment) : $data->Other3_attachment;
+            $history->comment = is_array($request->Other3_attachment) ? json_encode($request->Other3_attachment) : $request->Other3_attachment;
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Other3_attachment) || $lastCft->Other3_attachment === '') {
+            $history->origin_state = $lastCft->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastCft->status;
+
+            if (is_null($lastCft->Other3_attachment) || $lastCft->Other3_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
 
@@ -6883,27 +7101,53 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Other4_attachment != $request->Other4_attachment && $request->Other4_attachment != null) {
-            $history = new RiskAuditTrail;
+        // if ($lastCft->Other4_attachment != $request->Other4_attachment && $request->Other4_attachment != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Other 4 Review On';
+        //     $history->previous = $lastCft->Other4_attachment;
+        //     $history->current =implode(',', $request->Other4_attachment);
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Other4_attachment) || $lastCft->Other4_attachment === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
+
+        if ($lastCft->Other4_attachment != $data->Other4_attachment || !empty($request->Other4_attachment)) {
+
+            $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'Other 4 Review On';
-            $history->previous = $lastCft->Other4_attachment;
-            $history->current =implode(',', $request->Other4_attachment);
-            $history->comment = "Not Applicable";
+            $history->activity_type = 'Other 4 Attachment';
+
+            // Convert arrays to JSON strings if necessary
+            $history->previous = is_array($lastCft->Other4_attachment) ? json_encode($lastCft->Other4_attachment) : $lastCft->Other4_attachment;
+            $history->current = is_array($data->Other4_attachment) ? json_encode($data->Other4_attachment) : $data->Other4_attachment;
+            $history->comment = is_array($request->Other4_attachment) ? json_encode($request->Other4_attachment) : $request->Other4_attachment;
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Other4_attachment) || $lastCft->Other4_attachment === '') {
+            $history->origin_state = $lastCft->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastCft->status;
+
+            if (is_null($lastCft->Other4_attachment) || $lastCft->Other4_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
-
 
         /*************** Other 5 ***************/
         if ($lastCft->Other5_review != $request->Other5_review && $request->Other5_review != null) {
@@ -7046,24 +7290,51 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Other5_attachment != $request->Other5_attachment && $request->Other5_attachment != null) {
-            $history = new RiskAuditTrail;
+        // if ($lastCft->Other5_attachment != $request->Other5_attachment && $request->Other5_attachment != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Other 5 Review On';
+        //     $history->previous = $lastCft->Other5_attachment;
+        //     $history->current = implode(',',$request->Other5_attachment);
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Other5_attachment) || $lastCft->Other5_attachment === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
+
+        if ($lastCft->Other5_attachment != $data->Other5_attachment || !empty($request->Other5_attachment)) {
+
+            $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'Other 5 Review On';
-            $history->previous = $lastCft->Other5_attachment;
-            $history->current = implode(',',$request->Other5_attachment);
-            $history->comment = "Not Applicable";
+            $history->activity_type = 'Other 5 Attachment';
+
+            // Convert arrays to JSON strings if necessary
+            $history->previous = is_array($lastCft->Other5_attachment) ? json_encode($lastCft->Other5_attachment) : $lastCft->Other5_attachment;
+            $history->current = is_array($data->Other5_attachment) ? json_encode($data->Other5_attachment) : $data->Other5_attachment;
+            $history->comment = is_array($request->Other5_attachment) ? json_encode($request->Other5_attachment) : $request->Other5_attachment;
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Other5_attachment) || $lastCft->Other5_attachment === '') {
+            $history->origin_state = $lastCft->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastCft->status;
+
+            if (is_null($lastCft->Other5_attachment) || $lastCft->Other5_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
 
