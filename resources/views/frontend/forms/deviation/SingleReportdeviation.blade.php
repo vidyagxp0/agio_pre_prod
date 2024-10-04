@@ -789,7 +789,7 @@
 
             <div class="block">
                 <div class="block-head">
-                    QA/CQA Initial Assesmnent
+                    QA/CQA Initial Assessment
                 </div>
                 <table>
                     <tr>

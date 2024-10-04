@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                Effectiveness Check Single Report
+                Effectiveness Check Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -205,25 +205,25 @@
                         <th class="w-20">Date of Initiation</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
-                    
+
                     <tr>
                        <th class="w-20">Assigned To</th>
                         <td class="w-30">@if($data->assign_to){{ $data->assign_to }} @else Not Applicable @endif</td>
                         <th class="w-20">Due Date</th>
                         <td class="w-80"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
-                       
+
                     </tr>
                      <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
                     </tr>
                     </table>
-               
+
                     <div class="block-head">
                        Effectiveness Planning Information
                    </div>
                    <table>
-                    
+
                    <tr>
                         <th class="w-20">Effectiveness check Plan</th>
                         <td class="w-80">@if($data->Effectiveness_check_Plan){{ $data->Effectiveness_check_Plan }}@else Not Applicable @endif</td>
@@ -293,18 +293,11 @@
 
                      </table>
                    </div>
-            
+
             </div>
 
-             <div class="block-head">
-                  Effectiveness Summary
-             </div>
-                 <table>
-                     <tr>
-                        <th class="w-20">Effectiveness Summary</th>
-                        <td class="w-80">@if($data->effect_summary){{ $data->effect_summary }}@else Not Applicable @endif</td>
-                     </tr>
-                  </table>
+
+            <br>
               <div class="block-head">
                      Effectiveness Check Results
                 </div>
@@ -312,11 +305,11 @@
                      <tr>
                         <th class="w-20">Effectiveness Results</th>
                         <td class="w-80">@if($data->Effectiveness_Results){{ $data->Effectiveness_Results }}@else Not Applicable @endif</td>
-                       
+
                       </tr>
                   </table>
                     <div class="block-head">
-                       Attachments
+                        Effectiveness check Attachment
                     </div>
                       <div class="border-table">
                         <table>
@@ -324,8 +317,8 @@
                                 <th class="w-20">S.N.</th>
                                 <th class="w-60">File </th>
                             </tr>
-                                @if($data->Attachments)
-                                @foreach(json_decode($data->Attachments) as $key => $file)
+                                @if($data->Effectiveness_check_Attachment)
+                                @foreach(json_decode($data->Effectiveness_check_Attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
                                         <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
@@ -340,12 +333,25 @@
 
                         </table>
                       </div>
+
+                      <br>
+                      <div class="block-head">
+                           Effectiveness Summary
+                      </div>
+                          <table>
+                              <tr>
+                                 <th class="w-20">Effectiveness Summary</th>
+                                 <td class="w-80">@if($data->effect_summary){{ $data->effect_summary }}@else Not Applicable @endif</td>
+                              </tr>
+                           </table>
+
+
                <br>
                       <div class="block-head">
                         HOD Review
                     </div>
                     <table>
-                     
+
                     <tr>
                          <th class="w-20">HOD Review Comments</th>
                          <td class="w-80">@if($data->Comments){{ $data->Comments }}@else Not Applicable @endif</td>
@@ -373,7 +379,7 @@
                                      <td class="w-20">Not Applicable</td>
                                  </tr>
                              @endif
- 
+
                          </table>
                        </div>
 
@@ -382,7 +388,7 @@
                         QA/CQA Review
                     </div>
                     <table>
-                     
+
                     <tr>
                          <th class="w-20">QA/CQA Review Comment</th>
                          <td class="w-80">@if($data->qa_cqa_review_comment){{ $data->qa_cqa_review_comment }}@else Not Applicable @endif</td>
@@ -410,7 +416,7 @@
                                      <td class="w-20">Not Applicable</td>
                                  </tr>
                              @endif
- 
+
                          </table>
                        </div>
 
@@ -419,7 +425,7 @@
                         QA/CQA Approval
                     </div>
                     <table>
-                     
+
                     <tr>
                          <th class="w-20">QA/CQA Approval Comment</th>
                          <td class="w-80">@if($data->qa_cqa_approval_comment){{ $data->qa_cqa_approval_comment }}@else Not Applicable @endif</td>
@@ -447,7 +453,7 @@
                                      <td class="w-20">Not Applicable</td>
                                  </tr>
                              @endif
- 
+
                          </table>
                        </div><br>
                        <div class="block-head">
@@ -531,7 +537,7 @@
                                Effective Comment</th>
                                <td class="w-30">{{ $data->effective_comment }}</td>
                            </tr>
-                         
+
                            <tr>
                                <th class="w-20">Effective Approval Complete By
                                </th>
@@ -543,9 +549,9 @@
                                Effective Approval Complete Comment</th>
                                <td class="w-30">{{ $data->effective_approval_complete_comment }}</td>
                            </tr>
-       
-                           
-                         
+
+
+
                            <tr>
                                <th class="w-20">Cancel By
                                </th>
@@ -557,14 +563,14 @@
                                Cancel Comment</th>
                                <td class="w-30">{{ $data->closed_cancelled_comment }}</td>
                            </tr>
-                          
+
                        </table>
                  </table>
              </div>
-            
-                    
+
+
             <div class="block">
-                
+
             </div>
         </div>
     </div>

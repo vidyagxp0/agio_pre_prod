@@ -210,7 +210,7 @@
 
 
 
-                            
+
                         <div class="heading">
                             <div style="margin-bottom: 5px; font-weight: bold;">
                                 Site Division/Project :
@@ -231,8 +231,8 @@
                                 </div> --}}
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->short_description }}</div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date :
-                                {{ \Carbon\Carbon::parse($document->due_date)->format('d/M/Y') }}</div>
+                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date :      
+                                {{ \Carbon\Carbon::parse($document->due_date)->format('d-M-Y') }}</div>
 
                         </div>
                     </div>
@@ -272,8 +272,8 @@
                             <input type="date" class="form-control" id="to_date" name="to_date">
                         </div>
                     </div>
-       
-       
+
+
                     <div class="division">
                     </div>
                     <div class="second-table">
@@ -296,9 +296,9 @@
                 </div>
 
 
-        
 
-        @php 
+
+        @php
         $auditCollect = DB::table('audit_reviewers_details')
                             ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id])
                             ->latest()
