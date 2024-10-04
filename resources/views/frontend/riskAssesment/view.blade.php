@@ -241,9 +241,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                            {{-- <a href="#cancel-modal">  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                Cancel
-                            </button> </a> --}}
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
@@ -869,7 +867,7 @@
 
                                                     {{-- TESTING PURPOSE --}}
 
-                                                    <div class="col-6">
+                                                    {{-- <div class="col-6">
                                                         <div class="group-input">
                                                             <label for="root-cause-methodology">Root Cause Methodology</label>
                                                             @php
@@ -889,7 +887,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-6">
-                                                        <div id="rootCause" class="group-input" style="display: none;">
+                                                        <div id="rootCause" class="group-input" style="display:none;">
                                                             <label for="otherFieldsUser">Other (Root Cause Methodology)</label>
                                                             <input type="text" name="other_root_cause_methodology" id="summernote" class="form-control" value="{{ $data->other_root_cause_methodology ?? '' }}"/>
                                                         </div>
@@ -917,7 +915,59 @@
                                                             // Check the current value when the page loads
                                                             toggleOtherField();
                                                         });
+                                                    </script> --}}
+
+                                                    <div class="col-6">
+                                                        <div class="group-input">
+                                                            <label for="root-cause-methodology">Root Cause Methodology</label>
+                                                            @php
+                                                                $selectedMethodologies = explode(',', $data->root_cause_methodology);
+                                                            @endphp
+                                                            <select name="root_cause_methodology[]" multiple
+                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                id="root-cause-methodology">
+                                                                <option value="Why-Why Chart"
+                                                                    @if (in_array('Why-Why Chart', $selectedMethodologies)) selected @endif>Why-Why Chart
+                                                                </option>
+                                                                <option value="Failure Mode and Effect Analysis"
+                                                                    @if (in_array('Failure Mode and Effect Analysis', $selectedMethodologies)) selected @endif>Failure Mode and
+                                                                    Effect Analysis</option>
+                                                                <option value="Other Detail" @if (in_array('Other Detail', $selectedMethodologies)) selected @endif>Other</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div id="rootCause" class="group-input" style="display:none;">
+                                                            <label for="otherFieldsUser">Other (Root Cause Methodology)</label>
+                                                            <input type="text" name="other_root_cause_methodology" id="summernote" class="form-control" value="{{ $data->other_root_cause_methodology ?? '' }}"/>
+                                                        </div>
+                                                    </div>
+
+                                                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+                                                    <script>
+                                                        $(document).ready(function() {
+                                                            // Ye function select field ka value check kar ke input field ko toggle karta hai
+                                                            function toggleOtherField() {
+                                                                const selectedVals = $('#root-cause-methodology').val();
+                                                                console.log("Selected Values:", selectedVals); // Debugging ke liye value check karo
+                                                                if (selectedVals && selectedVals.includes('Other Detail')) {
+                                                                    $('#rootCause').show(); // Agar 'Other Detail' select hai to input field dikhao
+                                                                } else {
+                                                                    $('#rootCause').hide(); // Nahi to input field chhupa do
+                                                                }
+                                                            }
+
+                                                            // Jab select field ka value change ho to toggleOtherField function ko call karo
+                                                            $('#root-cause-methodology').change(function() {
+                                                                toggleOtherField();
+                                                            });
+
+                                                            // Jab page load ho tab bhi current value check karke input field ko set karo
+                                                            toggleOtherField();
+                                                        });
                                                     </script>
+
 
                                                     {{-- Testing purpose --}}
 
@@ -4836,7 +4886,7 @@
 
 
                                     <div class="sub-head">
-                                        Production (Liquid/Externa Preparation)
+                                        Production (Liquid/External Preparation)
                                     </div>
                                     <script>
                                         $(document).ready(function() {
@@ -4865,7 +4915,7 @@
                                     @if ($data->stage == 2 || $data->stage == 3)
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Production Liquid"> Production Liquid/Externa preparation Required ? <span
+                                                <label for="Production Liquid"> Production Liquid/External preparation Required ? <span
                                                         class="text-danger">*</span></label>
                                                 <select name="ProductionLiquid_Review" id="ProductionLiquid_Review"
                                                     @if ($data->stage == 3) disabled @endif>
@@ -4916,7 +4966,7 @@
                                             <div class="group-input">
                                                 <label for="Production Liquid assessment">Impact Assessment (By
                                                     Production
-                                                    Liquid/Externa preparation) <span id="asteriskPT1"
+                                                    Liquid/External preparation) <span id="asteriskPT1"
                                                         style="display: {{ $data1->ProductionLiquid_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                                         class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field
@@ -4930,7 +4980,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 productionLiquid">
                                             <div class="group-input">
-                                                <label for="Production Liquid feedback">Production Liquid/Externa preparation Feedback
+                                                <label for="Production Liquid feedback">Production Liquid/External preparation Feedback
                                                     <span id="asteriskPT2"
                                                         style="display: {{ $data1->ProductionLiquid_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                                         class="text-danger">*</span></label>
@@ -4945,7 +4995,7 @@
                                         </div>
                                         <div class="col-12 productionLiquid">
                                             <div class="group-input">
-                                                <label for="Production Liquid attachment">Production Liquid/Externa preparation
+                                                <label for="Production Liquid attachment">Production Liquid/External preparation
                                                     Attachments</label>
                                                 <div><small class="text-primary">Please Attach all relevant or
                                                         supporting
@@ -4984,7 +5034,7 @@
                                         </div>
                                         <div class="col-md-6 mb-3 productionLiquid">
                                             <div class="group-input">
-                                                <label for="Production Liquid Completed By">Production Liquid/Externa preparation
+                                                <label for="Production Liquid Completed By">Production Liquid/External preparation
                                                     Completed
                                                     By</label>
                                                 <input readonly type="text"
@@ -5007,7 +5057,7 @@
                                 </div> --}}
                                         <div class="col-lg-6 productionLiquid new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="Production Liquid Completed On">Production Liquid/Externa preparation
+                                                <label for="Production Liquid Completed On">Production Liquid/External preparation
                                                     Completed On</label>
                                                 <div class="calenderauditee">
                                                     <input type="text" id="ProductionLiquid_on" readonly
@@ -5060,7 +5110,7 @@
                                     @else
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Production Liquid">Production Liquid/Externa preparation Required ?</label>
+                                                <label for="Production Liquid">Production Liquid/External preparation Required ?</label>
                                                 <select name="ProductionLiquid_Review" disabled
                                                     id="ProductionLiquid_Review">
                                                     <option value="">-- Select --</option>
@@ -5089,7 +5139,7 @@
                                         @endphp
                                         <div class="col-lg-6 productionLiquid">
                                             <div class="group-input">
-                                                <label for="Production Liquid notification">Production Liquid/Externa preparation Person
+                                                <label for="Production Liquid notification">Production Liquid/External preparation Person
                                                     <span id="asteriskInvi11" style="display: none"
                                                         class="text-danger">*</span></label>
                                                 <select name="ProductionLiquid_person" disabled
@@ -5108,7 +5158,7 @@
                                                 <div class="group-input">
                                                     <label for="Production Liquid assessment">Impact Assessment (By
                                                         Production
-                                                        Liquid/Externa preparation)</label>
+                                                        Liquid/External preparation)</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
                                                             field if
                                                             it
@@ -5118,7 +5168,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 productionLiquid">
                                                 <div class="group-input">
-                                                    <label for="Production Liquid feedback">Production Liquid/Externa preparation
+                                                    <label for="Production Liquid feedback">Production Liquid/External preparation
                                                         Feedback</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
                                                             field if
@@ -5132,7 +5182,7 @@
                                                 <div class="group-input">
                                                     <label for="Production Liquid assessment">Impact Assessment (By
                                                         Production
-                                                        Liquid/Externa preparation)</label>
+                                                        Liquid/External preparation)</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
                                                             field if
                                                             it
@@ -5142,7 +5192,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 productionLiquid">
                                                 <div class="group-input">
-                                                    <label for="Production Liquid feedback">Production Liquid/Externa preparation
+                                                    <label for="Production Liquid feedback">Production Liquid/External preparation
                                                         Feedback</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
                                                             field if
@@ -5154,7 +5204,7 @@
                                         @endif
                                         <div class="col-12 productionLiquid">
                                             <div class="group-input">
-                                                <label for="Production Liquid attachment">Production Liquid/Externa preparation
+                                                <label for="Production Liquid attachment">Production Liquid/External preparation
                                                     Attachments</label>
                                                 <div><small class="text-primary">Please Attach all relevant or
                                                         supporting
@@ -5193,7 +5243,7 @@
                                         </div>
                                         <div class="col-md-6 mb-3 productionLiquid">
                                             <div class="group-input">
-                                                <label for="Production Liquid Completed By">Production Liquid/Externa preparation
+                                                <label for="Production Liquid Completed By">Production Liquid/External preparation
                                                     Completed
                                                     By</label>
                                                 <input readonly type="text"
@@ -5203,7 +5253,7 @@
                                         </div>
                                         <div class="col-lg-6 productionLiquid new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="Production Liquid Completed On">Production Liquid/Externa preparation
+                                                <label for="Production Liquid Completed On">Production Liquid/External preparation
                                                     Completed On</label>
                                                 <div class="calenderauditee">
                                                     <input type="text" id="ProductionLiquid_on" readonly
@@ -5220,9 +5270,6 @@
                                             </div>
                                         </div>
                                     @endif
-
-
-
 
 
 
@@ -10747,8 +10794,6 @@
                 document.getElementById(cityName).style.display = "block";
                 evt.currentTarget.className += " active";
             }
-
-
 
             function openCity(evt, cityName) {
                 var i, cctabcontent, cctablinks;

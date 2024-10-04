@@ -2074,7 +2074,7 @@
 
 
                                 <div class="sub-head">
-                                    Production (Liquid/Externa Preparation)
+                                    Production (Liquid/External Preparation)
                                 </div>
                                 <script>
                                     $(document).ready(function() {
@@ -2094,7 +2094,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Liquid"> Production Liquid/Externa Preparation Required ? </label>
+                                        <label for="Production Liquid"> Production Liquid/External Preparation Required ? </label>
                                         <select name="ProductionLiquid_Review" id="ProductionLiquid_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -2132,19 +2132,19 @@
                                 <div class="col-md-12 mb-3 productionLiquid">
                                     <div class="group-input">
                                         <label for="Production Liquid assessment">Impact Assessment (By Production
-                                            Liquid/Externa Preparation)</label>
+                                            Liquid/External Preparation)</label>
                                         <textarea class="summernote ProductionLiquid_assessment" name="ProductionLiquid_assessment" id="summernote-17"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 productionLiquid">
                                     <div class="group-input">
-                                        <label for="Production Liquid feedback">Production Liquid/Externa Preparation Feedback</label>
+                                        <label for="Production Liquid feedback">Production Liquid/External Preparation Feedback</label>
                                         <textarea class="summernote ProductionLiquid_feedback" name="ProductionLiquid_feedback" id="summernote-18"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 productionLiquid">
                                     <div class="group-input">
-                                        <label for="Production Liquid attachment">Production Liquid/Externa Preparation  Attachments</label>
+                                        <label for="Production Liquid attachment">Production Liquid/External Preparation Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div> ProductionLiquid_attachment
                                         <div class="file-attachment-field">
@@ -2161,14 +2161,14 @@
                                 </div>
                                 <div class="col-md-6 mb-3 productionLiquid">
                                     <div class="group-input">
-                                        <label for="Production Liquid Completed By">Production Liquid/Externa preparation Completed By</label>
+                                        <label for="Production Liquid Completed By">Production Liquid/External preparation Completed By</label>
                                         <input readonly type="text" name="ProductionLiquid_by"
                                             id="ProductionLiquid_by">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 productionLiquid">
                                     <div class="group-input ">
-                                        <label for="Production Liquid Completed On">Production Liquid/Externa Preparation Completed On</label>
+                                        <label for="Production Liquid Completed On">Production Liquid/External Preparation Completed On</label>
                                         <input type="date" id="ProductionLiquid_on" name="ProductionLiquid_on">
                                     </div>
                                 </div>
