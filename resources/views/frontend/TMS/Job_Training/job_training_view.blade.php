@@ -211,22 +211,23 @@
         <!-- Tab links -->
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-            <button class="cctablinks " onclick="openCity(event, 'CCForm2')">Job Description</button>
+            <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm2')">Job Description</button> -->
             
 
-            <button class="cctablinks " onclick="openCity(event, 'CCForm3')">QA Review</button>
+            <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm3')">QA Review</button> -->
             <button class="cctablinks " onclick="openCity(event, 'CCForm4')">QA/CQA Approval</button>
 
             <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm5')">Questionaries</button> -->
 
             <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Evaluation</button>
 
-            @if ($jobTraining->stage >= 7)
+            @if ($jobTraining->stage >= 4)
             <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Certificate</button>
             @endif
-            
+
             <button class="cctablinks " onclick="openCity(event, 'CCForm8')">QA/CQA Head Final Review</button>
-            <button class="cctablinks " onclick="openCity(event, 'CCForm9')">Final Approval</button>
+            
+            <button class="cctablinks " onclick="openCity(event, 'CCForm9')">QA Final Approval</button>
 
         </div>
 
@@ -948,7 +949,7 @@
 </script>
 
 
-        <div id="CCForm2" class="inner-block cctabcontent">
+<!-- <div id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
 
@@ -1160,8 +1161,6 @@
     });
 </script>
 
-
-
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="For Revision">Delegate</label>
@@ -1176,22 +1175,7 @@
                                         </select>
                                 </div>
                             </div>
-
-                            
-                            {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="For Revision">Delegate</label>
-                                    <select id="select-state" placeholder="Select..." name="delegate" required>
-                                        <option value="">Select an employee</option>
-                                        @foreach ($users as $user)
-                                        <option value="" data-name="">{{ $user->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div> --}}
-
-
-                
+               
                     <div class="col-12 sub-head">
                         Job Responsibilities
                     </div>
@@ -1263,12 +1247,9 @@
             <div class="button-block">
                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                <!-- <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
-                        Exit </a> </button> -->
-
             </div>
         </div>
-        </div>
+        </div> -->
 
  
 
@@ -1554,7 +1535,7 @@ if (marks >= percentageRequired) {
                     </div>
                 </div>
 
-                @if ($jobTraining->stage >= 7)
+                @if ($jobTraining->stage >= 4)
                     <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">

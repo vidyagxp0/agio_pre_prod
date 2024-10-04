@@ -275,12 +275,20 @@
                             </div>
 
 
+                            {{-- <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="employee_id">Job Description Number</label>
+                                    <input type="text" name="job_description_no" value="{{ old('job_description_no', $jobTraining->job_description_no) }}">
+                                </div>
+                            </div> --}}
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="employee_id">Job Description Number</label>
-                                    <input type="text" name="job_description_no" value="{{ old('job_description_no', $jobTraining->job_description_no) }}" @if($jobTraining->stage != 3) disabled @endif>
+                                    <input type="text" name="job_description_no" value="{{ old('job_description_no', $jobTraining->job_description_no) }}" @if($jobTraining->stage != 6) disabled @endif>
                                 </div>
                             </div>
+
               
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -374,7 +382,6 @@
                                             });
                                         document.getElementById('employee_name').value = employeeName;
                                     } else {
-                                        // Reset fields if no employee is selected
                                         document.getElementById('employee_ids').value = '';
                                         document.getElementById('departments').value = '';
                                         document.getElementById('designees').value = '';
