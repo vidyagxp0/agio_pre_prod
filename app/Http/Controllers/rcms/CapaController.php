@@ -1466,10 +1466,12 @@ if (!empty($capa->qa_attachmentc)) {
       //  $capa->capa_team = $request->capa_team;
         // $capa->capa_team = implode(',', $request->capa_team);
         
+     if($capa->stage == 1){
         $capa->capa_team =  implode(',', $request->capa_team);
         $capa_teamIdsArray = explode(',', $capa->capa_team);
         $capa_teamNames = User::whereIn('id', $capa_teamIdsArray)->pluck('name')->toArray();
         $capa_teamNamesString = implode(', ', $capa_teamNames);
+     }
 
         $capa->capa_type = $request->capa_type;
         $capa->details_new = $request->details_new;
@@ -1499,8 +1501,10 @@ if (!empty($capa->qa_attachmentc)) {
         $capa->Effectiveness_checker = $request->Effectiveness_checker;
         $capa->effective_check_plan = $request->effective_check_plan;
         $capa->due_date_extension = $request->due_date_extension;
-         $capa->capa_related_record=  implode(',', $request->capa_related_record);
-        // $capa->reference_record = $request->reference_record;
+        if($capa->stage == 1)
+        {
+            $capa->capa_related_record=  implode(',', $request->capa_related_record);
+        }        // $capa->reference_record = $request->reference_record;
         $capa->Microbiology_new= $request->Microbiology_new;
         $capa->goup_review = $request->goup_review;
         $capa->initial_observation = $request->initial_observation;
@@ -3104,7 +3108,23 @@ foreach ($pre as $processName => $modelClass) {
             $lastDocument = Capa::find($id);
             
             if ($capa->stage == 1) {
-
+                if (!$capa->short_description) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'Short Description is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for QA/CQA Review state',
+                        'type' => 'success',
+                    ]);
+                }
                 $capa->stage = "2";
                 $capa->status = "HOD Review";
                 $capa->plan_proposed_by = Auth::user()->name;
@@ -3368,7 +3388,7 @@ foreach ($pre as $processName => $modelClass) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'CAPA QA/CQA Review Comment is yet to be filled!',
+                        'message' => 'HOD Final Review Comments is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
             
@@ -3377,7 +3397,7 @@ foreach ($pre as $processName => $modelClass) {
                     // Flash message for success (when the form is filled correctly)
                     Session::flash('swal', [
                         'title' => 'Success!',
-                        'message' => 'Sent for CAPA In progress state',
+                        'message' => 'Sent for QAH/CQA Approval state',
                         'type' => 'success',
                     ]);
                 }
@@ -3423,7 +3443,7 @@ foreach ($pre as $processName => $modelClass) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'CAPA QA/CQA Review Comment is yet to be filled!',
+                        'message' => 'QA/CQA Closure Review Comment is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
             
@@ -3432,7 +3452,7 @@ foreach ($pre as $processName => $modelClass) {
                     // Flash message for success (when the form is filled correctly)
                     Session::flash('swal', [
                         'title' => 'Success!',
-                        'message' => 'Sent for CAPA In progress state',
+                        'message' => 'Sent for QAH/CQA Approval state',
                         'type' => 'success',
                     ]);
                 }
@@ -3479,7 +3499,7 @@ foreach ($pre as $processName => $modelClass) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'CAPA QA/CQA Review Comment is yet to be filled!',
+                        'message' => 'QA/CQA Head Closure Review Comment is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
             
@@ -3488,7 +3508,7 @@ foreach ($pre as $processName => $modelClass) {
                     // Flash message for success (when the form is filled correctly)
                     Session::flash('swal', [
                         'title' => 'Success!',
-                        'message' => 'Sent for CAPA In progress state',
+                        'message' => 'Sent for Closed - Done state',
                         'type' => 'success',
                     ]);
                 }
