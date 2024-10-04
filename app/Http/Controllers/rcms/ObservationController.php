@@ -12,6 +12,7 @@ use App\Models\Capa;
 use Carbon\Carbon;
 use Helpers;
 use App\Models\RoleGroup;
+use App\Models\ObseravtionSingleGrid;
 use App\Models\ObservationGrid;
 use App\Models\InternalAuditGrid;
 use Illuminate\Support\Facades\Auth;
@@ -258,6 +259,32 @@ if(!empty($request->attach_files2)){
             $data1->deadline = serialize($request->deadline);
         }
         $data1->save();
+
+
+        $observation_id = $data->id;
+        $observationSingleGrid = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'observation'])->firstOrCreate();
+        $observationSingleGrid->obs_id = $observation_id;
+        $observationSingleGrid->identifier = 'observation';
+        $observationSingleGrid->data = $request->observation;
+        $observationSingleGrid->save();
+
+        $observationSingleResponse = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'response'])->firstOrCreate();
+        $observationSingleResponse->obs_id = $observation_id;
+        $observationSingleResponse->identifier = 'response';
+        $observationSingleResponse->data = $request->response;
+        $observationSingleResponse->save();
+        
+        $observationSingleCorrect = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'corrective'])->firstOrCreate();
+        $observationSingleCorrect->obs_id = $observation_id;
+        $observationSingleCorrect->identifier = 'corrective';
+        $observationSingleCorrect->data = $request->corrective;
+        $observationSingleCorrect->save();
+
+        $observationSingleCorrect = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'preventive'])->firstOrCreate();
+        $observationSingleCorrect->obs_id = $observation_id;
+        $observationSingleCorrect->identifier = 'preventive';
+        $observationSingleCorrect->data = $request->preventive;
+        $observationSingleCorrect->save();
 
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
@@ -955,6 +982,32 @@ if(!empty($request->attach_files2)){
         }
         $data1->update();
 
+        $observation_id = $data->id;
+        $observationSingleGrid = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'observation'])->firstOrCreate();
+        $observationSingleGrid->obs_id = $observation_id;
+        $observationSingleGrid->identifier = 'observation';
+        $observationSingleGrid->data = $request->observation;
+        $observationSingleGrid->save();
+
+        
+        $observationSingleResponse = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'response'])->firstOrCreate();
+        $observationSingleResponse->obs_id = $observation_id;
+        $observationSingleResponse->identifier = 'response';
+        $observationSingleResponse->data = $request->response;
+        $observationSingleResponse->save();
+
+        $observationSingleCorrect = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'corrective'])->firstOrCreate();
+        $observationSingleCorrect->obs_id = $observation_id;
+        $observationSingleCorrect->identifier = 'corrective';
+        $observationSingleCorrect->data = $request->corrective;
+        $observationSingleCorrect->save();
+
+        $observationSingleCorrect = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'preventive'])->firstOrCreate();
+        $observationSingleCorrect->obs_id = $observation_id;
+        $observationSingleCorrect->identifier = 'preventive';
+        $observationSingleCorrect->data = $request->preventive;
+        $observationSingleCorrect->save();
+
         if ($lastDocument->assign_to != $data->assign_to || !empty($request->assign_to_comment)) {
 
             $history = new AuditTrialObservation();
@@ -1389,8 +1442,16 @@ if(!empty($request->attach_files2)){
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        // return $data;
-        return view('frontend.observation.view', compact('data','griddata','grid_data','due_date'));
+        $observation_id = $id;
+        // $grid_Data = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'observation'])->first();
+        $grid_Data = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'observation'])->firstOrCreate();
+        $grid_Data2 = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'response'])->firstOrCreate();
+        $grid_Data3 = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'corrective'])->firstOrCreate();
+        $grid_Data4 = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'preventive'])->firstOrCreate();
+
+        // dd($grid_Data);
+        // return $grid_Data;
+        return view('frontend.observation.view', compact('data','griddata','grid_data','due_date', 'grid_Data','grid_Data2', 'grid_Data3', 'grid_Data4'));
     }
     public function observation_send_stage(Request $request, $id)
     {

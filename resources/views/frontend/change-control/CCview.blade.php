@@ -7042,6 +7042,8 @@
                                         </div>
                                     </div>
 
+
+                                <div class="col-12 other1_reviews">    
                                     <div class="col-lg-12 Other1_reviews">
 
                                         <div class="group-input">
@@ -7149,14 +7151,7 @@
 
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-6 mb-3 other1_reviews ">
-                                        <div class="group-input">
-                                            <label for="Review Completed On1">Other's 1 Review Completed On</label>
-                                            <input disabled type="date" name="Other1_on" id="Other1_on"
-                                                value="{{ $data1->Other1_on }}">
-
-                                        </div>
-                                    </div> --}}
+                                    
                                     <div class="col-6 other1_reviews new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Others 1 Completed On">Others 1
@@ -7173,6 +7168,7 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
+                                    </div>
                                     </div>
 
                                     <div class="sub-head">
@@ -8816,12 +8812,23 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-3">
-                                        <div class="group-input">
-                                            <label for="Review Completed On5">Other's 5 Review Completed On</label>
-                                            <input disabled type="date" name="Other5_on" id="Other5_on"
-                                                value="{{ $data1->Other5_on }}">
-                                        </div>
+                                    <div class="col-6  new-date-data-field Other5_reviews">
+                                                <div class="group-input input-date">
+                                                    <label for="Others 5 Completed On">Others 5
+                                                        Completed On</label>
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="Other5_on" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Other5_on) }}" />
+                                                        <input readonly type="date" name="Other5_on"
+                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                            value="" class="hide-input"
+                                                            oninput="handleDateInput(this, 'Other5_on')" />
+                                                    </div>
+                                                    @error('Other5_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
                                     </div>
                                 @endif
 

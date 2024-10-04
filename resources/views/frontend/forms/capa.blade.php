@@ -216,9 +216,9 @@
                               
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="initiator-group">Initiator Department  <span
-                                                class="text-danger">*</span></label>
-                                                <select name="initiator_Group" id="initiator_group">
+                                        <label for="initiator-group">Initiator Department<span
+                                            class="text-danger">*</span></label>
+                                                <select name="initiator_Group" id="initiator_group"  required>
                                                         <option value="">--Select Initiation Department--</option>
                                                         <option value="CQA" >Corporate Quality Assurance</option>
                                                         <option value="QA" >Quality Assurance</option>

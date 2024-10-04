@@ -1082,7 +1082,6 @@ dd($pre);
                                     @enderror
                                 </div>
 
-
                                 <div class="col-lg-6 new-time-data-field">
                                     <div class="group-input input-time">
                                         <label for="incident_time">Incident Observed On (Time)</label>
@@ -1092,6 +1091,15 @@ dd($pre);
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                {{--<div class="col-lg-6 new-time-data-field">
+                                    <div class="group-input input-time">
+                                        <label for="incident_time">Incident Observed On (Time)</label>
+                                        <input type="text" name="incident_time" id="incident_time">
+                                    </div>
+                                    @error('incident_date')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>--}}
 
                                 <div class="col-lg-6 new-time-data-field">
                                     <div class="group-input input-time delayJustificationBlock">
@@ -1112,6 +1120,7 @@ dd($pre);
                                         time_24hr: true // Force 24-hour format in the time picker
                                     });
                                 </script>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="facility">Incident Observed By</label>
@@ -1131,7 +1140,7 @@ dd($pre);
                                         </div>
                                     </div>
                                 </div>
-                                <script>
+                                {{--<script>
                                     $('.delayJustificationBlock').hide();
 
                                     function calculateDateDifference() {
@@ -1163,7 +1172,88 @@ dd($pre);
                                     $('input[name=incident_reported_date]').on('change', function() {
                                         calculateDateDifference();
                                     })
+                                </script>--}}
+
+                                {{--<script>
+                                    $(document).ready(function() {
+                                        // Hide the delayJustificationBlock initially
+                                        $('.delayJustificationBlock').hide();
+
+                                        // Check the condition on page load
+                                        checkDateDifference();
+                                    });
+
+                                    function checkDateDifference() {
+                                        let incidentDate = $('input[name=incident_date]').val();
+                                        let incidentTime = $('input[name=incident_time]').val(); // Get incident time
+
+                                        if (!incidentDate || !incidentTime) {
+                                            console.error('Incident date or time is missing.');
+                                            return;
+                                        }
+
+                                        // Combine the incident date and time into a single moment object
+                                        let incidentDateTime = moment(`${incidentDate} ${incidentTime}`, 'YYYY-MM-DD HH:mm');
+                                        let currentDateTime = moment(); // Get current date and time
+
+                                        // Calculate the difference in hours
+                                        let diffInHours = currentDateTime.diff(incidentDateTime, 'hours');
+
+                                        // Show delay justification if the difference is more than 24 hours
+                                        if (diffInHours > 24) {
+                                            $('.delayJustificationBlock').show();
+                                        } else {
+                                            $('.delayJustificationBlock').hide();
+                                        }
+                                    }
+
+                                    // Call checkDateDifference whenever the values are changed
+                                    $('input[name=incident_date], input[name=incident_time]').on('change', function() {
+                                        checkDateDifference();
+                                    });
+                                </script>--}}
+
+                                <script>
+                                    $(document).ready(function() {
+                                        // Hide the delayJustificationBlock initially
+                                        $('.delayJustificationBlock').hide();
+
+                                        // Check the condition on page load or whenever input changes
+                                        checkDateDifference();
+
+                                        // Call checkDateDifference whenever the values are changed
+                                        $('input[name=incident_date], input[name=incident_time]').on('change', function() {
+                                            checkDateDifference();
+                                        });
+                                    });
+
+                                    function checkDateDifference() {
+                                        let incidentDate = $('input[name=incident_date]').val(); // Incident Date
+                                        let incidentTime = $('input[name=incident_time]').val(); // Incident Time
+
+                                        if (!incidentDate || !incidentTime) {
+                                            console.error('Incident date or time is missing.');
+                                            $('.delayJustificationBlock').hide(); // Ensure it's hidden if either is missing
+                                            return;
+                                        }
+
+                                        // Combine the incident date and time into a single moment object
+                                        let incidentDateTime = moment(`${incidentDate} ${incidentTime}`, 'YYYY-MM-DD HH:mm');
+                                        let currentDateTime = moment(); // Get the current date and time
+
+                                        // Calculate the difference in hours
+                                        let diffInHours = currentDateTime.diff(incidentDateTime, 'hours');
+                                        //alert(diffInHours);
+                                        // Show delay justification if the difference is more than 24 hours
+                                        if (diffInHours < 24) {
+                                            $('.delayJustificationBlock').hide();
+
+                                        } else {
+                                            $('.delayJustificationBlock').show();
+                                        }
+                                    }
                                 </script>
+
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -1631,7 +1721,7 @@ dd($pre);
                                         <label for="Description Incident">Description of Incident</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Description_incident[]" id="summernote-1" required> </textarea>
+                                        <textarea class="tiny" name="Description_incident" id="summernote-1" required> </textarea>
                                     </div>
                                     @error('Description_incident[]')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1754,7 +1844,7 @@ dd($pre);
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Comments"> HOD Remark </label>
+                                        <label for="Comments">HOD Remark</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                         <textarea name="HOD_Remarks" disabled> </textarea>
@@ -2537,13 +2627,13 @@ dd($pre);
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="sub-head">Submit</div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="submit by">Submit By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="submit on">Submit On :-</label>
                                     <div class="static"></div>
@@ -2562,13 +2652,13 @@ dd($pre);
                                 </div>
                             </div> --}}
                             <div class="sub-head">HOD Initial Review Complete</div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="HOD Review Complete By">HOD Initial Review Complete By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="HOD Initial Review Complete On">HOD Initial Review Complete On :-</label>
                                     <div class="static"></div>
@@ -2605,14 +2695,14 @@ dd($pre);
 
 
                             <div class="sub-head">QA Initial Review Complete</div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="QA Initial Review Complete By">QA Initial Review Complete By
                                         :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="QA Initial Review Complete On">QA Initial Review Complete On
                                         :-</label>
@@ -2627,36 +2717,38 @@ dd($pre);
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            {{-- <div class="col-lg-6">
+
+
+                            <div class="sub-head">QAH/Designee Approval Complete</div>
+                            <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="submit on">More Information
-                                        Required By :-</label>
+                                    <label for="QA Initial Review Complete By">QAH/Designee Approval Complete By:-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="QA Initial Review Complete On">QAH/Designee Approval Complete On:-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="submit on">More Information
-                                        Required On :-</label>
-                                    <div class="static"></div>
+                                    <label for="QA Initial Review Comments">QAH/Designee Approval Complete Comment:-</label>
+                                    <div class=""></div>
                                 </div>
-                            </div> --}}
+                            </div>
 
-                            {{-- <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="QA Initial Review Comments">QA Initial Review Comments:-</label>
-                                    <div class="static"></div>
-                                </div>
-                            </div> --}}
+
                             <div class="sub-head">Pending Initiator Update Complete</div>
-
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="CFT Review Complete By">Pending Initiator Update Complete By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Pending Initiator Update Complete On">Pending Initiator Update Complete On :-</label>
                                     <div class="static"></div>
@@ -2690,19 +2782,19 @@ dd($pre);
                             </div> --}}
                             <div class="sub-head">HOD Final Review Completed</div>
 
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="CFT Review Complete By">HOD Final Review Complete By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="CFT Review Complete On">HOD Final Review Complete On :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="CFT Review Comments">HOD Final Review Complete Comment :-</label>
                                     <div class="static"></div>
@@ -2723,13 +2815,13 @@ dd($pre);
                                 </div>
                             </div> --}}
                             <div class="sub-head"> QA Final Review Complete</div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="QA Final Review Complete By"> QA Final Review Complete By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="QA Final Review Complete On"> QA Final Review Complete On :-</label>
                                     <div class="static"></div>
@@ -2743,13 +2835,13 @@ dd($pre);
                             </div>
                             <div class="sub-head"> Approved</div>
 
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Approved By"> Approved By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Approved On">Approved On :-</label>
                                     <div class="static"></div>
@@ -2803,13 +2895,13 @@ dd($pre);
                             <div class="sub-head">
                                 cancel
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="submit by">cancel By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled on">cancel On :-</label>
                                     <div class="static"></div>
