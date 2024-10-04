@@ -258,8 +258,10 @@
                                     @if($dataDemo->activity_type == "Activity Log")
                                         <strong>Change From :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
                                     @else
-                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' }}
+                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Null' }}
                                     @endif
+
+                                    
                                 </div>
                                 <br>
                                 <div>

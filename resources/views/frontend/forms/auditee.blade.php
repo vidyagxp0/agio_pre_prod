@@ -1545,7 +1545,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Injection">Production Injection Review Required ? </label>
+                                        <label for="Production Injection">Production Injection Review Comment Required ? </label>
                                         <select name="Production_Injection_Review" id="Production_Injection_Review"
                                             disabled>
                                             <option value="">-- Select --</option>
@@ -2524,7 +2524,7 @@
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Quality Control Person">Quality Control Person</label>
+                                        <label for="Quality Control Person">Quality Control Review Comment Required</label>
                                         <select name="Quality_Control_Person" id="Quality_Control_Person" disabled>
                                             <option value="0">-- Select --</option>
                                             @foreach ($users as $user)
