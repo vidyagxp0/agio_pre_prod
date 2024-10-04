@@ -1086,8 +1086,8 @@
                                             <div class="col-lg-12 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <label for="Audit Schedule Start Date">Due Date</label>
-                                                    <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                        reason in "Due Date Extension Justification" data field.</small></div>
+                                                    {{--<div><small class="text-primary">If revising Due Date, kindly mention revision
+                                                        reason in "Due Date Extension Justification" data field.</small></div>--}}
                                                      <div class="calenderauditee">
                                                         <input type="text" id="due_dateq" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}" {{ $data->stage == 1 ? '' : 'readonly' }}
                                                     />
@@ -1260,7 +1260,7 @@
                                                     <select name="short_description_required"
                                                         id="short_description_required" onchange="checkRecurring(this)"
                                                         value="{{ $data->short_description_required }}" {{ $data->stage == 1 ? '' : 'readonly' }}>
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option value="Recurring"
                                                             @if ($data->short_description_required == 'Recurring' || old('short_description_required') == 'Recurring') selected @endif>Yes</option>
                                                         <option value="Non_Recurring"
@@ -1415,7 +1415,7 @@
                                                 </div>
                                             </div>
 
-                                            <script>
+                                            {{--<script>
                                                 $(document).ready(function() {
                                                     // Hide the delayJustificationBlock initially
                                                     $('.delayJustificationBlock').hide();
@@ -1449,7 +1449,49 @@
                                                 $('input[name=incident_date], input[name=incident_reported_date]').on('change', function() {
                                                     checkDateDifference();
                                                 });
+                                            </script>--}}
+
+                                            <script>
+                                                $(document).ready(function() {
+                                                    // Hide the delayJustificationBlock initially
+                                                    $('.delayJustificationBlock').hide();
+
+                                                    // Check the condition on page load or whenever input changes
+                                                    checkDateDifference();
+
+                                                    // Call checkDateDifference whenever the values are changed
+                                                    $('input[name=incident_date], input[name=incident_time]').on('change', function() {
+                                                        checkDateDifference();
+                                                    });
+                                                });
+
+                                                function checkDateDifference() {
+                                                    let incidentDate = $('input[name=incident_date]').val(); // Incident Date
+                                                    let incidentTime = $('input[name=incident_time]').val(); // Incident Time
+
+                                                    if (!incidentDate || !incidentTime) {
+                                                        console.error('Incident date or time is missing.');
+                                                        $('.delayJustificationBlock').hide(); // Ensure it's hidden if either is missing
+                                                        return;
+                                                    }
+
+                                                    // Combine the incident date and time into a single moment object
+                                                    let incidentDateTime = moment(`${incidentDate} ${incidentTime}`, 'YYYY-MM-DD HH:mm');
+                                                    let currentDateTime = moment(); // Get the current date and time
+
+                                                    // Calculate the difference in hours
+                                                    let diffInHours = currentDateTime.diff(incidentDateTime, 'hours');
+                                                    //alert(diffInHours);
+                                                    // Show delay justification if the difference is more than 24 hours
+                                                    if (diffInHours < 24) {
+                                                        $('.delayJustificationBlock').hide();
+
+                                                    } else {
+                                                        $('.delayJustificationBlock').show();
+                                                    }
+                                                }
                                             </script>
+
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
@@ -2054,7 +2096,7 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="group-input">
-                                                    <label for="Description Incident">Immediate corrective action<span
+                                                    <label for="Description Incident">Immediate Corrective Action<span
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
@@ -2105,7 +2147,7 @@
                                                                     <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                                         <b>{{ $file }}</b>
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                        <a type="button" class="remove-file" data-file-name1="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                         <input type="hidden" name="existing_Audit_file[]" value="{{ $file }}">
                                                                     </h6>
                                                                 @endforeach
@@ -2128,7 +2170,7 @@
 
                                                     removeButtons.forEach(button => {
                                                         button.addEventListener('click', function() {
-                                                            const fileName = this.getAttribute('data-file-name');
+                                                            const fileName = this.getAttribute('data-file-name1');
                                                             const fileContainer = this.closest('.file-container');
 
                                                             // Hide the file container
@@ -2222,7 +2264,7 @@
                                     <div class="col-md-12">
                                         @if ($data->stage == 2)
                                             <div class="group-input">
-                                                <label for="HOD Remarks">HOD Remark<span
+                                                <label for="HOD Remark">HOD Remark<span
                                                         class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
@@ -2230,7 +2272,7 @@
                                             </div>
                                         @else
                                             <div class="group-input">
-                                                <label for="HOD Remarks">HOD Remark</label>
+                                                <label for="HOD Remark">HOD Remark</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                                 <textarea  class="tiny" name="HOD_Remarks" id="summernote-4" {{ $data->stage == 2 ? '' : 'readonly' }}>{{ $data->HOD_Remarks }}</textarea>
@@ -2284,7 +2326,7 @@
                                                                         <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                                             <b>{{ $file }}</b>
                                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                            <a type="button" class="remove-file" data-file-name2="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                             <input type="hidden" name="existing_hod_attachments[]" value="{{ $file }}">
                                                                         </h6>
                                                                     @endforeach
@@ -2306,7 +2348,7 @@
 
                                                             removeButtons.forEach(button => {
                                                                 button.addEventListener('click', function() {
-                                                                    const fileName = this.getAttribute('data-file-name');
+                                                                    const fileName = this.getAttribute('data-file-name2');
                                                                     const fileContainer = this.closest('.file-container');
 
                                                                     // Hide the file container
@@ -2806,7 +2848,7 @@
                                                                     <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                                         <b>{{ $file }}</b>
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                        <a type="button" class="remove-file" data-file-name3="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                         <input type="hidden" name="existing_Initial_attachment[]" value="{{ $file }}">
                                                                     </h6>
                                                                 @endforeach
@@ -2837,7 +2879,7 @@
 
                                                         removeButtons.forEach(button => {
                                                             button.addEventListener('click', function() {
-                                                                const fileName = this.getAttribute('data-file-name');
+                                                                const fileName = this.getAttribute('data-file-name3');
                                                                 const fileContainer = this.closest('.file-container');
 
                                                                 // Hide the file container
@@ -3238,7 +3280,7 @@
                                                                 <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                                     <b>{{ $file }}</b>
                                                                     <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                    <a type="button" class="remove-file" data-file-name6="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     <input type="hidden" name="existing_qa_head_attachments[]" value="{{ $file }}">
                                                                 </h6>
                                                             @endforeach
@@ -3261,7 +3303,7 @@
 
                                                 removeButtons.forEach(button => {
                                                     button.addEventListener('click', function() {
-                                                        const fileName = this.getAttribute('data-file-name');
+                                                        const fileName = this.getAttribute('data-file-name6');
                                                         const fileContainer = this.closest('.file-container');
 
                                                         // Hide the file container
@@ -3539,7 +3581,7 @@
                                                     <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        <a type="button" class="remove-file" data-file-name4="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                         <input type="hidden" name="existing_qa_head_deginee_attachments[]" value="{{ $file }}">
                                                     </h6>
                                                 @endforeach
@@ -3558,7 +3600,7 @@
 
                                                 removeButtons.forEach(button => {
                                                     button.addEventListener('click', function() {
-                                                        const fileName = this.getAttribute('data-file-name');
+                                                        const fileName = this.getAttribute('data-file-name4');
                                                         const fileContainer = this.closest('.file-container');
 
                                                         // Hide the file container
@@ -3733,7 +3775,7 @@
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
                                                                 <a type="button" class="remove-file"
-                                                                    data-file-name="{{ $file }}"><i
+                                                                    data-file-name5="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i></a>
                                                             </h6>
@@ -6612,7 +6654,7 @@
                                                     <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        <a type="button" class="remove-file" data-file-name7="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                         <input type="hidden" name="existing_qa_final_ra_attachments[]" value="{{ $file }}">
                                                     </h6>
                                                 @endforeach
@@ -6635,7 +6677,7 @@
 
                                     removeButtons.forEach(button => {
                                         button.addEventListener('click', function() {
-                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileName = this.getAttribute('data-file-name7');
                                             const fileContainer = this.closest('.file-container');
 
                                             // Hide the file container
@@ -6809,7 +6851,7 @@
                                                     <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        <a type="button" class="remove-file" data-file-name8="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                         <input type="hidden" name="existing_closure_attachment[]" value="{{ $file }}">
                                                     </h6>
                                                 @endforeach
@@ -6832,7 +6874,7 @@
 
                                     removeButtons.forEach(button => {
                                         button.addEventListener('click', function() {
-                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileName = this.getAttribute('data-file-name8');
                                             const fileContainer = this.closest('.file-container');
 
                                             // Hide the file container

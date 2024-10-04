@@ -46,7 +46,7 @@
 
             <!-- Tab links -->
             <div class="cctab">
-                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Observation</button>
+                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Response & CAPA</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Summary</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Response Verification</button>
@@ -177,40 +177,58 @@
                                 </select>
                             </div>
                         </div>
-                                <div class="col-md-6 new-date-data-field">
+                        <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Observation Due Date <span class="text-danger"></span></label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                reason in "Due Date Extension Justification" data field.</small>
-                                        </div>  
+                                        <label for="due-date">Observation Due Date</label>
                                         <div class="calenderauditee">
-                                            <!-- Display the formatted date in a readonly input -->
-                                            <input type="text" name="due_date" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
-                                           
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
+                                            <!-- Display the manually selectable date input -->
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
+                                
+                                            <!-- Editable date input (hidden) -->
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date_display')" />
                                         </div>
                                     </div>
                                 </div>
                                 
                                 <script>
-                                function handleDateInput(dateInput, displayId) {
-                                    const date = new Date(dateInput.value);
-                                    const options = { day: '2-digit', month: 'short', year: 'numeric' };
-                                    document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
-                                }
+                                    function handleDateInput(dateInput, displayId) {
+                                        const date = new Date(dateInput.value);
+                                        
+                                        // If date is valid, format it to 'DD-MMM-YYYY'
+                                        if (!isNaN(date.getTime())) {
+                                            const day = ("0" + date.getDate()).slice(-2); // Add leading 0 if needed
+                                            const month = date.toLocaleString('default', { month: 'short' }); // Get short month (e.g. Jan)
+                                            const year = date.getFullYear();
+                                            const formattedDate = `${day}-${month}-${year}`;
+                                            document.getElementById(displayId).value = formattedDate;
+                                        } else {
+                                            // If no valid date, set placeholder and clear value
+                                            document.getElementById(displayId).placeholder = "DD-MMM-YYYY";
+                                            document.getElementById(displayId).value = ""; // Clear value to avoid NaN issue
+                                        }
+                                    }
                                 
-                                // Call this function initially to ensure the correct format is shown on page load
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    const dateInput = document.querySelector('input[name="due_date"]');
-                                    handleDateInput(dateInput, 'due_date_display');
-                                });
+                                    // Initialize the display field to show placeholder on load
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dateInput = document.querySelector('input[name="due_date"]');
+                                        
+                                        // If there's an initial date, handle it; otherwise, show placeholder
+                                        if (dateInput.value) {
+                                            handleDateInput(dateInput, 'due_date_display');
+                                        } else {
+                                            document.getElementById('due_date_display').placeholder = "DD-MMM-YYYY";
+                                        }
+                                    });
                                 </script>
                                 
+                                
                                 <style>
-                                .hide-input {
-                                    display: none;
-                                }
+                                    .hide-input {
+                                        display: none;
+                                    }
                                 </style>
+                                
                                      
                                 <div class="col-12">
                                     <div class="group-input">
@@ -410,19 +428,57 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="non_compliance">Observation (+)</label>
-                                        <textarea name="non_compliance"></textarea>
+
+                                <div class="group-input">
+                                    <label for="audit-agenda-grid">
+                                        Observation
+                                        <button type="button" name="details" id="Details-add">+</button>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="Details-table">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 8%">Row#</th>
+                                                    <th style="width: 80%">Observation</th>
+                                                    <th style="width: 12%">Action</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <td><input disabled type="text" name="observation[0][serial]"
+                                                        value="1"></td>
+                                                <td><input type="text" name="observation[0][non_compliance]"></td>
+                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                            </tbody>
+
+                                        </table>
                                     </div>
                                 </div>
-                                
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="related_observations">`</label>
-                                        <input type="file" name="related_observations" />
-                                    </div>
-                                </div> --}}
+                                <script>
+                                        $(document).ready(function() {
+                                            $('#Details-add').click(function(e) {
+                                                function generateTableRow(serialNumber) {
+                                                    var html = '';
+                                                    html += '<tr>' +
+                                                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                                                        '"></td>' +
+                                                        '<td><input type="text" name="observation[' + serialNumber +
+                                                        '][non_compliance]"></td>' +
+                                                        '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
+                                                        '</tr>';
+
+                                                    return html;
+                                                }
+
+                                                var tableBody = $('#Details-table tbody');
+                                                var rowCount = tableBody.children('tr').length;
+                                                var newRow = generateTableRow(rowCount + 1);
+                                                tableBody.append(newRow);
+                                            });
+                                        });
+                                    </script>
+
+                    
                             </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -444,62 +500,178 @@
                                         <input type="date" name="date_Response_due2" />
                                     </div>
                                 </div> --}}
-                                <div class="col-md-12 new-date-data-field">
+                                <!-- <div class="col-md-12 new-date-data-field">
                                             <div class="group-input input-date ">
                                                 <label for="date_Response_due1">Response Details (+) </label>
                                                 <textarea name="response_detail" id=""></textarea>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-12 new-date-data-field">
+                                        </div> -->
+
+                                        <div class="group-input">
+                                    <label for="audit-agenda-grid">
+                                    Response Details
+                                        <button type="button" name="details" id="Details-add1">+</button>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="Details-table2">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 8%">Row#</th>
+                                                    <th style="width: 80%">Response</th>
+                                                    <th style="width: 12%">Action</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <td><input disabled type="text" name="response[0][serial]"
+                                                        value="1"></td>
+                                                <td><input type="text" name="response[0][response_detail]"></td>
+                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                                <script>
+                                        $(document).ready(function() {
+                                            $('#Details-add1').click(function(e) {
+                                                function generateTableRow(serialNumber) {
+                                                    var html = '';
+                                                    html += '<tr>' +
+                                                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                                                        '"></td>' +
+                                                        '<td><input type="text" name="response[' + serialNumber +
+                                                        '][response_detail]"></td>' +
+                                                        '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
+                                                        '</tr>';
+
+                                                    return html;
+                                                }
+
+                                                var tableBody = $('#Details-table2 tbody');
+                                                var rowCount = tableBody.children('tr').length;
+                                                var newRow = generateTableRow(rowCount + 1);
+                                                tableBody.append(newRow);
+                                            });
+                                        });
+                                    </script>
+
+                                        <!-- <div class="col-lg-12 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="date_due">Corrective Actions (+)</label>
                                                 <textarea name="corrective_action" id=""></textarea>
                                             </div>
+                                        
                                         </div>
-                                        <div class="col-lg-12">
+                                         -->
+
+                                         <div class="group-input">
+                                    <label for="audit-agenda-grid">
+                                    Corrective Actions
+                                        <button type="button" name="details" id="Details-add3">+</button>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="Details-table3">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 8%">Row#</th>
+                                                    <th style="width: 80%">Corrective Actions</th>
+                                                    <th style="width: 12%">Action</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <td><input disabled type="text" name="corrective[0][serial]"
+                                                        value="1"></td>
+                                                <td><input type="text" name="corrective[0][corrective_action]"></td>
+                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                                <script>
+                                        $(document).ready(function() {
+                                            $('#Details-add3').click(function(e) {
+                                                function generateTableRow(serialNumber) {
+                                                    var html = '';
+                                                    html += '<tr>' +
+                                                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                                                        '"></td>' +
+                                                        '<td><input type="text" name="corrective[' + serialNumber +
+                                                        '][corrective_action]"></td>' +
+                                                        '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
+                                                        '</tr>';
+
+                                                    return html;
+                                                }
+
+                                                var tableBody = $('#Details-table3 tbody');
+                                                var rowCount = tableBody.children('tr').length;
+                                                var newRow = generateTableRow(rowCount + 1);
+                                                tableBody.append(newRow);
+                                            });
+                                        });
+                                    </script>
+
+
+                                        <!-- <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="assign_to2">Preventive Action (+)</label>
                                                     <textarea name="preventive_action"></textarea>
                                             </div>
-                                        </div>
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="cro_vendor">CRO/Vendor</label>
-                                        <select name="cro_vendor">
-                                            <option value="">-- Select --</option>
-                                            <option title="Amit Guru" value="1">
-                                                Amit Guru
-                                            </option>
-                                            <option title="Shaleen Mishra" value="2">
-                                                Shaleen Mishra
-                                            </option>
-                                            <option title="Vikas Prajapati" value="3">
-                                                Vikas Prajapati
-                                            </option>
-                                            <option title="Anshul Patel" value="4">
-                                                Anshul Patel
-                                            </option>
-                                            <option title="Amit Patel" value="5">
-                                                Amit Patel
-                                            </option>
-                                            <option title="Madhulika Mishra" value="6">
-                                                Madhulika Mishra
-                                            </option>
-                                            <option title="Jim Kim" value="7">
-                                                Jim Kim
-                                            </option>
-                                            <option title="Akash Asthana" value="8">
-                                                Akash Asthana
-                                            </option>
-                                            <option title="Not Applicable" value="9">
-                                                Not Applicable
-                                            </option>
-                                            {{-- @foreach ($users as $data)
-                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                        @endforeach
-                                        </select>
+                                        </div> -->
+
+                                        <div class="group-input">
+                                    <label for="audit-agenda-grid">
+                                    Preventive Action
+                                        <button type="button" name="details" id="Details-add4">+</button>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="Details-table4">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 8%">Row#</th>
+                                                    <th style="width: 80%">Preventive Action</th>
+                                                    <th style="width: 12%">Action</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <td><input disabled type="text" name="preventive[0][serial]"
+                                                        value="1"></td>
+                                                <td><input type="text" name="preventive[0][preventive_action]"></td>
+                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                            </tbody>
+
+                                        </table>
                                     </div>
-                                </div> --}}
+                                </div>
+                                <script>
+                                        $(document).ready(function() {
+                                            $('#Details-add4').click(function(e) {
+                                                function generateTableRow(serialNumber) {
+                                                    var html = '';
+                                                    html += '<tr>' +
+                                                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                                                        '"></td>' +
+                                                        '<td><input type="text" name="preventive[' + serialNumber +
+                                                        '][preventive_action]"></td>' +
+                                                        '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
+                                                        '</tr>';
+
+                                                    return html;
+                                                }
+
+                                                var tableBody = $('#Details-table4 tbody');
+                                                var rowCount = tableBody.children('tr').length;
+                                                var newRow = generateTableRow(rowCount + 1);
+                                                tableBody.append(newRow);
+                                            });
+                                        });
+                                    </script>
+
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="action-plan-grid">
@@ -607,7 +779,7 @@
                                         <div class="calenderauditee">
                                             <input type="text" id="actual_start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                            <input type="date"
                                                 id="actual_start_date_checkdate" name="actual_start_date"
                                                 class="hide-input"
                                                 oninput="handleDateInput(this, 'actual_start_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
@@ -619,7 +791,7 @@
                                         <label for="actual_end_date">Actual Action End Date</lable>
                                             <div class="calenderauditee">
                                                 <input type="text" id="actual_end_date" placeholder="DD-MMM-YYYY" />
-                                                <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                <input type="date"
                                                     id="actual_end_date_checkdate" name="actual_end_date"
                                                     class="hide-input"
                                                     oninput="handleDateInput(this, 'actual_end_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
@@ -646,15 +818,15 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="attach_files">Response Verification Attachements</label>
+                                        <label for="attach_files">Response and Summary Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="attach_files2"></div>
+                                            <div class="file-attachment-list" id="impact_analysis"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="attach_files2[]"
-                                                    oninput="addMultipleFiles(this, 'attach_files2')" multiple>
+                                                <input type="file" id="myfile" name="impact_analysis[]"
+                                                    oninput="addMultipleFiles(this, 'impact_analysis')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -662,7 +834,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="related_url">Related URL</label>
-                                        <input type="url" name="related_url">
+                                        <input type="text" name="related_url">
                                     </div>
                                 </div>
                                
@@ -687,15 +859,15 @@
                                         </div>
                                         <div class="col-12">
                                     <div class="group-input">
-                                        <label for="attach_files">Response and Summary Attachment</label>
+                                        <label for="attach_files">Response Verification Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="impact_analysis"></div>
+                                            <div class="file-attachment-list" id="attach_files2"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="impact_analysis[]"
-                                                    oninput="addMultipleFiles(this, 'impact_analysis')" multiple>
+                                                <input type="file" id="myfile" name="attach_files2[]"
+                                                    oninput="addMultipleFiles(this, 'attach_files2')" multiple>
                                             </div>
                                         </div>
                                     </div>

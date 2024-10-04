@@ -173,7 +173,7 @@
     <header>
         <table>
             <tr>
-                <td class="w-70 head">Extension Single Report</td>
+                <td class="w-70 head">Extension Report</td>
                 <td class="w-30">
                     <div class="logo">
                         <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt=""
@@ -469,7 +469,7 @@
 
             </div>
             <div class="block">
-                <div class="block-head">QA/CQA Approval Attachment</div>
+                <div class="block-head">QA/CQA Approval Attachments</div>
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">

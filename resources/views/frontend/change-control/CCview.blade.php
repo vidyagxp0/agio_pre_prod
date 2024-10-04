@@ -501,7 +501,7 @@
 
                             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Evaluation</button> -->
                             <button class="cctablinks" onclick="openCity(event, 'CCForm5')"> Initiator Update</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">HOD Final review</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">HOD Final Review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Implementation Verification by QA/CQA</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Change Closure</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Activity Log</button>
@@ -606,7 +606,7 @@
                                                             // Set formattedDate to an empty string if due_date is not set
                                                             $formattedDate = str_contains('NaN-undefined-NaN', $data->due_date) ? '' : $data->due_date;
                                                         @endphp
-                                                        <input type="text" id="due_date" name="due_date" placeholder="Select Due Date" value="{{ Helpers::getdateFormat($formattedDate) }}" />
+                                                        <input type="text" id="due_date" name="due_date" placeholder="Select Due Date" value="{{ Helpers::getdateFormat($formattedDate) }}" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} />
                                                     </div>
                                                     <script>
                                                         $(document).ready(function() {
@@ -629,7 +629,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="initiator-group">Initiation Department</label>
-                                                    <select name="Initiator_Group" id="initiator_group">
+                                                    <select name="Initiator_Group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option value="CQA"
                                                             @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
@@ -786,17 +786,17 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-12">
+                                            <!-- <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="Risk Assessment Required">Justification </label>
                                                     <textarea name="train_comments" id="">{{ $data->train_comments }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                             <div class="col-lg-6" id="justification_div" style="display:none;">
                                                 <div class="group-input">
                                                     <label for="Justification">Justification</label>
-                                                    <textarea name="risk_identification" id="justification" rows="4" placeholder="Provide justification if risk assessment is not required.">{{ $data->risk_identification ?? '' }}</textarea>
+                                                    <textarea name="risk_identification" id="justification" rows="4" placeholder="Provide justification if risk assessment is not required." {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->risk_identification ?? '' }}</textarea>
                                                     <!-- @error('justification')
                                                         <div class="text-danger">{{ $message }}</div>
                                                     @enderror -->
@@ -1195,7 +1195,7 @@
 
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="migration-action">comments</label>
+                                                    <label for="migration-action">Comments</label>
                                                     <textarea name="migration_action"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->migration_action }}</textarea>
                                                 </div>
                                             </div>
@@ -7042,6 +7042,8 @@
                                         </div>
                                     </div>
 
+
+                                <div class="col-12 other1_reviews">    
                                     <div class="col-lg-12 Other1_reviews">
 
                                         <div class="group-input">
@@ -7149,14 +7151,7 @@
 
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-6 mb-3 other1_reviews ">
-                                        <div class="group-input">
-                                            <label for="Review Completed On1">Other's 1 Review Completed On</label>
-                                            <input disabled type="date" name="Other1_on" id="Other1_on"
-                                                value="{{ $data1->Other1_on }}">
-
-                                        </div>
-                                    </div> --}}
+                                    
                                     <div class="col-6 other1_reviews new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Others 1 Completed On">Others 1
@@ -7173,6 +7168,7 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
+                                    </div>
                                     </div>
 
                                     <div class="sub-head">
@@ -8816,12 +8812,23 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-3">
-                                        <div class="group-input">
-                                            <label for="Review Completed On5">Other's 5 Review Completed On</label>
-                                            <input disabled type="date" name="Other5_on" id="Other5_on"
-                                                value="{{ $data1->Other5_on }}">
-                                        </div>
+                                    <div class="col-6  new-date-data-field Other5_reviews">
+                                                <div class="group-input input-date">
+                                                    <label for="Others 5 Completed On">Others 5
+                                                        Completed On</label>
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="Other5_on" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Other5_on) }}" />
+                                                        <input readonly type="date" name="Other5_on"
+                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                            value="" class="hide-input"
+                                                            oninput="handleDateInput(this, 'Other5_on')" />
+                                                    </div>
+                                                    @error('Other5_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
                                     </div>
                                 @endif
 

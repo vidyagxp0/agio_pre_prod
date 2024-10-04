@@ -273,7 +273,7 @@
                                                 id="select-state" placeholder="Select..." name="assign_to">
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $value)
-                                                    <option {{ $data->assign_to == $value->name ? 'selected' : '' }}
+                                                    <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
                                                         value="{{ $value->id }}">{{ $value->name }}</option>
                                                 @endforeach
                                             </select>
