@@ -1313,7 +1313,7 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-         if (!empty ($request->discb_deviat)){
+         if (!empty ($deviation->discb_deviat)){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Description of Deviation';
@@ -3092,30 +3092,8 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Deviation Reported On';
-             $history->previous = $lastDeviation->Deviation_reported_date;
-            $history->current = $deviation->Deviation_reported_date;
-            $history->comment = $deviation->submit_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
-            $history->save();
-        }
-
-
-
-        if ($lastDeviation->Deviation_reported_date != $deviation->Deviation_reported_date || !empty ($request->comment)) {
-            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'Deviation Reported on')
-                            ->exists();
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Deviation Reported on';
              $history->previous = Helpers::getdateFormat($lastDeviation->Deviation_reported_date);
-            $history->current = Helpers::getdateFormat($deviation->Deviation_reported_date);
+            $history->current =Helpers::getdateFormat ($deviation->Deviation_reported_date);
             $history->comment = $deviation->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3126,6 +3104,28 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
             $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
+
+
+
+        // if ($lastDeviation->Deviation_reported_date != $deviation->Deviation_reported_date || !empty ($request->comment)) {
+        //     $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+        //                     ->where('activity_type', 'Deviation Reported on')
+        //                     ->exists();
+        //     $history = new DeviationAuditTrail;
+        //     $history->deviation_id = $id;
+        //     $history->activity_type = 'Deviation Reported on';
+        //      $history->previous = Helpers::getdateFormat($lastDeviation->Deviation_reported_date);
+        //     $history->current = Helpers::getdateFormat($deviation->Deviation_reported_date);
+        //     $history->comment = $deviation->submit_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDeviation->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDeviation->status;
+        //     $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
+        //     $history->save();
+        // }
 
          if ($lastDeviation->Facility != $deviation->Facility || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
