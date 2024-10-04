@@ -172,7 +172,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Risk Assessment Single Report
+                    Risk Assessment Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -223,11 +223,11 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
 
                     </tr>
-                   
-                       
+
+
                         {{-- <th class="w-20">Assigned To</th> --}}
                         {{-- <td class="w-30">@if ($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td> --}}
-                  
+
 
                     <tr>
                         <th class="w-20">Initiator Department</th>
@@ -251,7 +251,7 @@
                         <th class="w-20">Due Date</th>
                         <td class="w-80"> @if ($data->due_date) {{ \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') }} @else Not Applicable @endif</td>
                     </tr> --}}
-                  
+
 
                     <tr>
                         {{-- <th class="w-20">Department(s)</th> --}}
@@ -390,7 +390,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    Initial Attachments
+                    Initial Attachment
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -616,10 +616,10 @@
                 </table>
 
                 <div class="block-head"> Failure Mode And Effect Analysis </div>
-                
+
                 <table>
 
-                 
+
                     <thead>
                         <tr class="table_bg">
                             <th class="w-20">Row #</th>
@@ -770,7 +770,7 @@
                         @endfor
                     </tbody>
                 </table>
-           
+
 
 
             {{-- <div class="block-head">
@@ -1054,7 +1054,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    Risk Assesment Attachments
+                    Risk Assesment Attachment
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -1222,7 +1222,7 @@
                         <table>
                             <tr>
                                 <th class="w-20">CFT Reviewer Selection</th>
-                                {{-- <td class="w-80">{!! Helpers::checkUserRolesMicrobiology_Person(data->reviewer_person_value) ?? 'Not Applicable' !!}</td> --}}
+                                <td class="w-80">{!! Helpers::getInitiatorName($data->reviewer_person_value) ?? 'Not Applicable' !!}</td>
                             </tr>
                             <tr>
                                 <th class="w-20">HOD/Designee Review Comment</th>
@@ -1232,7 +1232,7 @@
                         </table>
                         <div class="border-table">
                             <div class="block-head">
-                                Hod/Designee Attachments
+                                Hod/Designee Attachment
                             </div>
                             <table>
                                 <tr class="table_bg">
@@ -1506,7 +1506,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                 Corporate Quality Assurance Attachments
+                                 Corporate Quality Assurance Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -1560,7 +1560,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                 Store Attachments
+                                 Store Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -1613,7 +1613,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                 Engineering Attachments
+                                 Engineering Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -1667,7 +1667,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                 Regularory Affair Attachments
+                                 Regularory Affair Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -1721,7 +1721,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                    Quality Assurance Attachments
+                                    Quality Assurance Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -1775,7 +1775,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                    Production Liquid/Externa Preparation Attachments
+                                    Production Liquid/Externa Preparation Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -1829,7 +1829,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                    Quality Control Attachments
+                                    Quality Control Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -1884,7 +1884,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                    Microbiology Attachments
+                                    Microbiology Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -1974,7 +1974,7 @@
 
                             <tr>
                                 <th class="w-20">Other's 1 Department</th>
-                                <td class="w-80">@if($data1->Other1_Department_person){{ strip_tags($data1->Other1_Department_person)  }}@else Not Applicable @endif</td> 
+                                <td class="w-80">@if($data1->Other1_Department_person){{ strip_tags($data1->Other1_Department_person)  }}@else Not Applicable @endif</td>
                             </tr>
 
                             <tr>
@@ -1998,7 +1998,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                    Other's 1 Attachments
+                                    Other's 1 Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -2034,7 +2034,7 @@
 
                             <tr>
                                 <th class="w-20">Other's 2 Department</th>
-                                <td class="w-80">@if($data1->Other2_Department_person){{ strip_tags($data1->Other2_Department_person)  }}@else Not Applicable @endif</td> 
+                                <td class="w-80">@if($data1->Other2_Department_person){{ strip_tags($data1->Other2_Department_person)  }}@else Not Applicable @endif</td>
                             </tr>
 
                             <tr>
@@ -2058,7 +2058,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                    Other's 2 Attachments
+                                    Other's 2 Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -2094,7 +2094,7 @@
 
                             <tr>
                                 <th class="w-20">Other's 3 Department</th>
-                                <td class="w-80">@if($data1->Other3_Department_person){{ strip_tags($data1->Other3_Department_person)  }}@else Not Applicable @endif</td> 
+                                <td class="w-80">@if($data1->Other3_Department_person){{ strip_tags($data1->Other3_Department_person)  }}@else Not Applicable @endif</td>
                             </tr>
 
                             <tr>
@@ -2118,7 +2118,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                    Other's 3 Attachments
+                                    Other's 3 Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -2154,7 +2154,7 @@
 
                             <tr>
                                 <th class="w-20">Other's 4 Department</th>
-                                <td class="w-80">@if($data1->Other4_Department_person){{ strip_tags($data1->Other4_Department_person)  }}@else Not Applicable @endif</td> 
+                                <td class="w-80">@if($data1->Other4_Department_person){{ strip_tags($data1->Other4_Department_person)  }}@else Not Applicable @endif</td>
                             </tr>
 
                             <tr>
@@ -2178,7 +2178,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                    Other's 4 Attachments
+                                    Other's 4 Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -2214,7 +2214,7 @@
 
                             <tr>
                                 <th class="w-20">Other's 5 Department</th>
-                                <td class="w-80">@if($data1->Other5_Department_person){{ strip_tags($data1->Other5_Department_person)  }}@else Not Applicable @endif</td> 
+                                <td class="w-80">@if($data1->Other5_Department_person){{ strip_tags($data1->Other5_Department_person)  }}@else Not Applicable @endif</td>
                             </tr>
 
                             <tr>
@@ -2238,7 +2238,7 @@
                         <table>
                             <div class="border-table">
                                 <div class="block-head">
-                                    Other's 5 Attachments
+                                    Other's 5 Attachment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -2334,7 +2334,7 @@
                         </table>
                         <div class="border-table">
                             <div class="block-head">
-                                QA/CQA REview Attachment
+                                QA/CQA Review Attachment
                             </div>
                             <table>
                                 <tr class="table_bg">
@@ -2404,7 +2404,7 @@
                     {{-- <div class="block-head">
                         Submit
                     </div>
-                        <table>   
+                        <table>
                             <tr>
                                 <th class="w-20">Submit By</th>
                                 <td class="w-30">{{ $data->submit_by }}</td>
@@ -2489,12 +2489,12 @@
                             CFT Review Complete
                         </div>
                         <table>
-        
+
                             <tr>
                                 <th class="w-20">CFT Review Complete By</th>
                                 <td class="w-30">{{ $data->CFT_Review_Complete_By }}</td>
                                 <th class="w-20">
-                                    CFT Review Completed On</th>
+                                    CFT Review Complete On</th>
                                 <td class="w-30">{{ $data->CFT_Review_Complete_On }}</td>
                             </tr>
                             <tr>
@@ -2507,7 +2507,7 @@
                             QA/CQA Review Complete
                         </div>
                         <table>
-        
+
                             <tr>
                                 <th class="w-20">QA/CQA Review Complete By</th>
                                 <td class="w-30">{{ $data->QA_Initial_Review_Complete_By }}</td>
@@ -2538,7 +2538,7 @@
                         </table>
 
                         <div class="block-head">
-                            Cancel 
+                            Cancel
                         </div>
                         <table>
                             <tr>
@@ -2553,12 +2553,12 @@
                                 <td class="w-30">{{ $data->comment }}</td>
                             </tr>
                         </table>
-        
+
 
                 </div>
 
 
-                
+
 
             <footer>
                 <table>

@@ -80,7 +80,7 @@
                             <div class="group-input">
                                 <label for="question-bank">Choose Question Bank</label>
                                 <select name="question_bank" id="question-bank">
-                                    <option value="">---</option>
+                                <option value="" disabled selected>Question Bank Select</option>
                                     @foreach ($questions as $data)
                                     <option data-id="{{ $data->id }}" value="{{ $data->id }}">{{ $data->title }}</option>
                                     @endforeach

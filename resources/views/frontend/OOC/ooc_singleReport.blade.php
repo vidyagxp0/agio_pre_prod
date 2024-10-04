@@ -162,7 +162,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Out Of Calibration Single Report
+                    Out Of Calibration Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -313,7 +313,7 @@
 
                     <tr>
                         <th class="w-20">Short Description</th>
-                        <td class="w-30">
+                        <td class="w-30" colspan="3">
                             @if ($data->description_ooc)
                                 {{ $data->description_ooc }}
                             @else
@@ -323,7 +323,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Initiated Through</th>
-                        <td class="w-30">
+                        <td class="w-30" colspan="3">
                             @if ($data->initiated_through)
                                 {{ $data->initiated_through }}
                             @else
@@ -334,7 +334,7 @@
 
                     <tr>
                         <th class="w-20">If Other</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->initiated_if_other)
                                 {{ $data->initiated_if_other }}
                             @else
@@ -345,7 +345,7 @@
 
                     <tr>
                         <th class="w-20">Is Repeat</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->is_repeat_ooc)
                                 {{ $data->is_repeat_ooc }}
                             @else
@@ -356,7 +356,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Repeat Nature</th>
-                        <td class="w-30">
+                        <td class="w-30" colspan="3">
                             @if ($data->Repeat_Nature)
                                 {!! $data->Repeat_Nature !!}
                             @else
@@ -367,7 +367,7 @@
 
                     <tr>
                         <th class="w-20">Initial Attachment</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->initial_attachment_ooc)
                                 {{ $data->initial_attachment_ooc }}
                             @else
@@ -418,7 +418,7 @@
 
                     <tr>
                         <th class="w-20">Delay Justification for Reporting</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->Delay_Justification_for_Reporting)
                                 {{ $data->Delay_Justification_for_Reporting }}
                             @else
@@ -429,7 +429,7 @@
 
                     <tr>
                         <th class="w-20">Immediate Action</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->Immediate_Action_ooc)
                                 {{ $data->Immediate_Action_ooc }}
                             @else
@@ -494,7 +494,7 @@
                 <table>
                     <tr>
                         <th class="w-20">HOD Primary Review Remarks</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->HOD_Remarks)
                                 {!! $data->HOD_Remarks !!}
                             @else
@@ -504,7 +504,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">HOD Primary Review Attachments</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->attachments_hod_ooc)
                                 {!! $data->attachments_hod_ooc !!}
                             @else
@@ -541,7 +541,7 @@
                 <table>
                     <tr>
                         <th class="w-20">QA Head Primary Review Remarks</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->qaheadremarks)
                                 {!! $data->qaheadremarks !!}
                             @else
@@ -551,7 +551,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">QA Head Primary Review Attachment</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->initial_attachment_capa_ooc)
                                 {!! $data->initial_attachment_capa_ooc !!}
                             @else
@@ -636,7 +636,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Analyst Interview</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->analysis_remarks_stage_ooc)
                                 {!! $data->analysis_remarks_stage_ooc !!}
                             @else
@@ -646,7 +646,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Evaluation Remarks</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->qa_comments_ooc)
                                 {!! $data->qa_comments_ooc !!}
                             @else
@@ -656,7 +656,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Description of Cause for OOC Results (If Identified)</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->qa_comments_description_ooc)
                                 {{ $data->qa_comments_description_ooc }}
                             @else
@@ -674,8 +674,10 @@
                                 Not Applicable
                             @endif
                         </td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Phase IA Investigation Comment</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->rootcausenewfield)
                                 {!! $data->rootcausenewfield !!}
                             @else
@@ -693,7 +695,7 @@
                     <tr>
                         <th class="w-20">Protocol Based Study/Hypothesis Study
                         </th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->protocol_based_study_hypthesis_study_ooc)
                                 {{ $data->protocol_based_study_hypthesis_study_ooc }}
                             @else
@@ -703,7 +705,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Justification for Protocol study/ Hypothesis Study</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->justification_for_protocol_study_hypothesis_study_ooc)
                                 {!! $data->justification_for_protocol_study_hypothesis_study_ooc !!}
                             @else
@@ -713,7 +715,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Plan of Protocol Study/ Hypothesis Study</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->plan_of_protocol_study_hypothesis_study)
                                 {{ $data->plan_of_protocol_study_hypothesis_study }}
                             @else
@@ -723,7 +725,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Hypothesis Attachment</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->attachments_hypothesis_ooc)
                                 {{ $data->attachments_hypothesis_ooc }}
                             @else
@@ -734,7 +736,7 @@
 
                     <tr>
                         <th class="w-20">Conclusion of Protocol based Study/Hypothesis Study</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->conclusion_of_protocol_based_study_hypothesis_study_ooc)
                                 {{ $data->conclusion_of_protocol_based_study_hypothesis_study_ooc }}
                             @else
@@ -745,7 +747,7 @@
                     <tr>
                         <th class="w-20">
                             Calibration Results</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->calibration_results_stage_ooc)
                                 {!! $data->calibration_results_stage_ooc !!}
                             @else
@@ -756,7 +758,7 @@
 
                     <tr>
                         <th class="w-20">Review of Calibration Results of Analyst</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->review_of_calibration_results_of_analyst_ooc)
                                 {!! $data->review_of_calibration_results_of_analyst_ooc !!}
                             @else
@@ -766,7 +768,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Phase IA Attachment</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->attachments_stage_ooc)
                                 {!! $data->attachments_stage_ooc !!}
                             @else
@@ -776,7 +778,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Result Criteria</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->results_criteria_stage_ooc)
                                 {!! $data->results_criteria_stage_ooc !!}
                             @else
@@ -786,7 +788,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Result</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->is_repeat_stae_ooc)
                                 {!! $data->is_repeat_stae_ooc !!}
                             @else
@@ -796,7 +798,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Additional Remarks (if any)</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->additional_remarks_stage_ooc)
                                 {{ $data->additional_remarks_stage_ooc }}
                             @else
@@ -806,7 +808,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Corrective Action</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->initiated_through_capas_ooc)
                                 {{ $data->initiated_through_capas_ooc }}
                             @else
@@ -816,7 +818,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Preventive Action</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->initiated_through_capa_prevent_ooc)
                                 {{ $data->initiated_through_capa_prevent_ooc }}
                             @else
@@ -826,7 +828,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Corrective and Preventive Action</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->initiated_through_capa_corrective_ooc)
                                 {{ $data->initiated_through_capa_corrective_ooc }}
                             @else
@@ -836,7 +838,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Phase IA Summary</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->phase_ia_investigation_summary)
                                 {{ $data->phase_ia_investigation_summary }}
                             @else
@@ -856,7 +858,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Phase IA HOD Remarks</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->phase_IA_HODREMARKS)
                                 {{ $data->phase_IA_HODREMARKS }}
                             @else
@@ -866,7 +868,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Phase IA HOD Attachment</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->attachments_hodIAHODPRIMARYREVIEW_ooc)
                                 {!! $data->attachments_hodIAHODPRIMARYREVIEW_ooc !!}
                             @else
@@ -884,7 +886,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Phase IA QA Remarks</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->qaremarksnewfield)
                                 {!! $data->qaremarksnewfield !!}
                             @else
@@ -894,7 +896,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Phase IA QA Attachment</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->initial_attachment_capa_post_ooc)
                                 {!! $data->initial_attachment_capa_post_ooc !!}
                             @else
@@ -912,7 +914,7 @@
                 <table>
                     <tr>
                         <th class="w-20">P-IA QAH Remarks </th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->qaHremarksnewfield)
                                 {!! $data->qaHremarksnewfield !!}
                             @else
@@ -922,7 +924,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">P-IA QAH Attachment</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->initial_attachment_qah_post_ooc)
                                 {!! $data->initial_attachment_qah_post_ooc !!}
                             @else
@@ -973,16 +975,18 @@
                     </tr>
                     <tr>
                         <th class="w-20">Proposed By</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->is_repeat_proposed_stage_ooc)
                                 {!! $data->is_repeat_proposed_stage_ooc !!}
                             @else
                                 Not Applicable
                             @endif
                         </td>
+                    </tr>
+                    <tr>
 
                         <th class="w-20">Details of Equipment Rectification Attachment</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->initial_attachment_stageii_ooc)
                                 {{ $data->initial_attachment_stageii_ooc }}
                             @else
@@ -992,7 +996,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Compiled by</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->is_repeat_compiled_stageii_ooc)
                                 {!! $data->is_repeat_compiled_stageii_ooc !!}
                             @else
@@ -1000,22 +1004,11 @@
                             @endif
                         </td>
                     </tr>
-
-                    {{-- <th class="w-20">Release of Instrument for usage</th>
-                    <td class="w-80">
-                        @if ($data->is_repeat_realease_stageii_ooc)
-                            {{ $data->is_repeat_realease_stageii_ooc }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr> --}}
-
                     <tr>
                         <th class="w-20">Impact Assessment</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->initiated_throug_stageii_ooc)
-                                {!! $data->initiated_throug_stageii_ooc !!}
+                                {{ $data->initiated_throug_stageii_ooc }}
                             @else
                                 Not Applicable
                             @endif
@@ -1023,7 +1016,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Details of Impact Evaluation</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->initiated_through_stageii_ooc)
                                 {!! $data->initiated_through_stageii_ooc !!}
                             @else
@@ -1033,7 +1026,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Justification for Recalibration</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->justification_for_recalibration)
                                 {!! $data->justification_for_recalibration !!}
                             @else
@@ -1043,7 +1036,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Result of Recalibration</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->is_repeat_reanalysis_stageii_ooc)
                                 {{ $data->is_repeat_reanalysis_stageii_ooc }}
                             @else
@@ -1053,7 +1046,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Cause for failure</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->initiated_through_stageii_cause_failure_ooc)
                                 {!! $data->initiated_through_stageii_cause_failure_ooc !!}
                             @else
@@ -1063,7 +1056,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Corrective action IB Inv.</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->initiated_through_capas_ooc_IB)
                                 {!! $data->initiated_through_capas_ooc_IB !!}
                             @else
@@ -1073,7 +1066,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Preventive action IB Inv.</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->initiated_through_capa_prevent_ooc_IB)
                                 {!! $data->initiated_through_capa_prevent_ooc_IB !!}
                             @else
@@ -1083,7 +1076,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Corrective and preventive action IB Inv.</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->initiated_through_capa_corrective_ooc_IB)
                                 {!! $data->initiated_through_capa_corrective_ooc_IB !!}
                             @else
@@ -1093,7 +1086,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Phase IB Summary</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->phase_ib_investigation_summary)
                                 {!! $data->phase_ib_investigation_summary !!}
                             @else
@@ -1103,7 +1096,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Phase IB Attachment</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->initial_attachment_reanalysisi_ooc)
                                 {!! $data->initial_attachment_reanalysisi_ooc !!}
                             @else
@@ -1122,7 +1115,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Phase IB HOD Primary Remarks </th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if (!empty($data->phase_IB_HODREMARKS))
                                 {!! $data->phase_IB_HODREMARKS !!}
                             @else
@@ -1132,7 +1125,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Phase IB HOD Primary Attachment</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if (!empty($data->attachments_hodIBBBHODPRIMARYREVIEW_ooc))
                                 {!! $data->attachments_hodIBBBHODPRIMARYREVIEW_ooc !!}
                             @else
@@ -1201,7 +1194,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Phase IB QA Remarks</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if (!empty($data->phase_IB_qareviewREMARKS))
                                 {!! $data->phase_IB_qareviewREMARKS !!}
                             @else
@@ -1211,7 +1204,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Phase IB QA Attachment</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if (!empty($data->attachments_QAIBBBREVIEW_ooc))
                                 {{ $data->attachments_QAIBBBREVIEW_ooc }}
                             @else
@@ -1259,16 +1252,17 @@
                 <table>
                     <tr>
                         <th class="w-20">Release of Instrument for usage</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->is_repeat_realease_stageii_ooc)
                                 {!! $data->is_repeat_realease_stageii_ooc !!}
                             @else
                                 Not Applicable
                             @endif
                         </td>
-
+                    </tr>
+                    <tr>
                         <th class="w-20">P-IB QAH Remarks</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->qPIBaHremarksnewfield)
                                 {{ $data->qPIBaHremarksnewfield }}
                             @else
@@ -1278,7 +1272,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">P-IB QAH Attachment</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->Pib_attachements)
                                 {!! $data->Pib_attachements !!}
                             @else
@@ -1322,7 +1316,7 @@
                                 Not Applicable
                             @endif
                         </td>
-    
+
                         <th class="w-20">Submit Comment:</th>
                         <td class="w-30">
                             @if ($data->comment)
@@ -1554,7 +1548,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                  
+
                         <th class="w-20">Phase IB Investigation Comment:</th>
                         <td class="w-30">
                             @if ($data->correction_ooc_comment)
@@ -1583,7 +1577,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                   
+
                         <th class="w-20">Phase IB HOD Review Complete Comment:</th>
                         <td class="w-30">
                             @if ($data->Phase_IB_HOD_Review_Completed_Comment)
@@ -1612,7 +1606,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                    
+
                         <th class="w-20">Phase IB QA Review Complete Comment:</th>
                         <td class="w-30">
                             @if ($data->Phase_IB_QA_Review_Complete_12_comment)
@@ -1641,7 +1635,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                    
+
                         <th class="w-20">Approved Comment:</th>
                         <td class="w-30">
                             @if ($data->P_IB_Assignable_Cause_Found_comment)
@@ -1670,7 +1664,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                    
+
                         <th class="w-20">Cancel Comment:</th>
                         <td class="w-30">
                             @if ($data->cancell_comment)

@@ -2,7 +2,7 @@
 @section('rcms_container')
     @php
         $users = DB::table('users')->select('id', 'name')->get();
-       
+
     @endphp
 
     <style>
@@ -83,7 +83,7 @@
     <script>
         $(document).ready(function() {
             let affectedDocumentDetailIndex = {{ $affetctedDocumnetGrid && is_array($affetctedDocumnetGrid) ? count($affetctedDocumnetGrid) : 1 }};
-    
+
             // Function to generate table row
             function generateTableRow(serialNumber) {
                 var html =
@@ -101,7 +101,7 @@
                 affectedDocumentDetailIndex++;
                 return html;
             }
-    
+
             // Add row on button click
             $('#addAffectedDoc').click(function(e) {
                 var tableBody = $('#afftectedDocTable tbody');
@@ -109,13 +109,13 @@
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
             });
-    
+
             // Remove row on button click
             $(document).on('click', '.removeRowBtn', function() {
                 $(this).closest('tr').remove();
                 updateTableIndexing();
             });
-    
+
             // Update the indexing of the table rows after adding/removing a row
             function updateTableIndexing() {
                 $('#afftectedDocTable tbody tr').each(function(index, element) {
@@ -135,7 +135,7 @@
 
 
                 <div class="slogan">
-                    @php 
+                    @php
                         $name = DB::table('q_m_s_divisions')->where('id', $data->id)->value('name');
                     @endphp
                     <strong>Site Division / Project </strong>:
@@ -205,17 +205,17 @@
                     @endphp
 
 
-                      
+
 
                         <!-- <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button>
                         <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button> -->
 
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/audit-trial', $data->id) }}"> Audit Trail </a> </button>
 
-                           
+
                         @if ($data->stage == 1 && (Helpers::check_roles($data->division_id, 'Change Control', 3)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
-                      
-                     
+
+
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
@@ -223,10 +223,10 @@
                                 Cancel
                             </button>  --}}
 
-                             
+
                         @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Change Control', 4)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
-                         
-                   
+
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
@@ -237,8 +237,8 @@
                                 Cancel
                             </button>
                         @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
-                  
-                      
+
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
@@ -251,7 +251,7 @@
                         {{--  @elseif($data->stage == 4 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CFT Assessment Complete
-                                
+
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
@@ -260,18 +260,20 @@
                             @elseif(
                                 ($data->stage == 4 && Helpers::check_roles($data->division_id, 'Change Control', 5)) ||
                                 in_array(Auth::user()->id, $valuesArray))
-                                @if (!$cftCompleteUser)
+                                 <!-- @if (!$cftCompleteUser)
+    -->
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         CFT Assessment Complete
-                                        
+
                                     </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                         More Information Required
                                     </button>
-                                @endif
+                                  <!--
+    @endif  -->
                              @elseif($data->stage == 5 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
-                  
-                      
+
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 RA Approval Required
                             </button>
@@ -295,7 +297,7 @@
                                 RA Approval Complete
                             </button>
                      @elseif($data->stage == 7 && (Helpers::check_roles($data->division_id, 'Change Control', 39)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
-                          
+
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
@@ -319,8 +321,8 @@
                                 Child
                             </button>
                      @elseif($data->stage == 10 && (Helpers::check_roles($data->division_id, 'Change Control', 4)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
-                         
-                
+
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
                                 HOD Final Review Complete
                             </button>
@@ -328,16 +330,16 @@
                                 More Information Required
                             </button>
 
-                           
 
-                           
+
+
                 @elseif($data->stage == 11 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
                                 Send For Final QA/CQA Head Approval
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
-                            </button>    
+                            </button>
 
                 @elseif($data->stage == 12 && (Helpers::check_roles($data->division_id, 'Change Control', 39)|| Helpers::check_roles($data->division_id, 'Change Control', 42)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
@@ -345,12 +347,12 @@
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
-                            </button> 
-            
+                            </button>
+
                @elseif($data->stage == 13 && (Helpers::check_roles($data->division_id, 'Change Control', 39)|| Helpers::check_roles($data->division_id, 'Change Control', 42)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
-              
-                           
-                           
+
+
+
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child_effective_ness">
                                 Child
                             </button> -->
@@ -358,9 +360,9 @@
                             <button class="button_theme1" id="childButton" data-bs-toggle="modal" data-bs-target="#child_effective_ness" style="display: none;">
                                 Child
                             </button>
-                              
+
                         @else
-                        
+
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
@@ -378,7 +380,7 @@
                             <div class="bg-danger">Closed - Rejected</div>
                         </div>
                     @else
-                      
+
                         <div class="progress-bars" >
                             @if ($data->stage >= 1)
                                 <div class="active">Opened</div>
@@ -408,10 +410,10 @@
                                 <div class="">QA/CQA Final Review</div>
                             @endif
                             @if ($data->stage >= 6)
-                                <div class="active">Pending RA 
+                                <div class="active">Pending RA
                                     Approval</div>
                             @else
-                                <div class="">Pending RA 
+                                <div class="">Pending RA
                                     Approval</div>
                             @endif
                             @if ($data->stage >= 7)
@@ -452,7 +454,7 @@
                                 <div class="" @if($data->stage == 8) style="display: none" @endif>Closed - Done</div>
                             @endif
 
-                            
+
 
                             <!-- @if ($data->stage >= 9)
                                 <div class="active" @if($data->stage == 8) style="display: none" @endif>Post Implementation</div>
@@ -488,18 +490,18 @@
                             <button class="cctablinks" onclick="openCity(event, 'CCForm7')" style="display: none" id="riskAssessmentButton">Risk Assessment</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Change Details</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Initial HOD Review</button>
-                            
-                      
+
+
                             {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm13')" style="display: {{ $data->hod_person == Auth::user()->id ? 'inline' : 'none' }}">HOD Review</button> --}}
                             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA/CQA Review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm11')">CFT</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA/CQA Final Review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm15')"  style="display: none" id="actionButton">RA</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm17')">QA/CQA Designee Approval</button>
-                           
+
                             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Evaluation</button> -->
                             <button class="cctablinks" onclick="openCity(event, 'CCForm5')"> Initiator Update</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">HOD Final review</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">HOD Final Review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Implementation Verification by QA/CQA</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Change Closure</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Activity Log</button>
@@ -588,8 +590,8 @@
                                                 </div>
                                             </div> -->
 
-                                            
-                                            
+
+
 
 
                                             <div class="col-lg-6 new-date-data-field">
@@ -604,7 +606,7 @@
                                                             // Set formattedDate to an empty string if due_date is not set
                                                             $formattedDate = str_contains('NaN-undefined-NaN', $data->due_date) ? '' : $data->due_date;
                                                         @endphp
-                                                        <input type="text" id="due_date" name="due_date" placeholder="Select Due Date" value="{{ Helpers::getdateFormat($formattedDate) }}" />
+                                                        <input type="text" id="due_date" name="due_date" placeholder="Select Due Date" value="{{ Helpers::getdateFormat($formattedDate) }}" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} />
                                                     </div>
                                                     <script>
                                                         $(document).ready(function() {
@@ -623,11 +625,11 @@
                                             </div>
 
 
-                                                
+
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="initiator-group">Initiation Department</label>
-                                                    <select name="Initiator_Group" id="initiator_group">
+                                                    <select name="Initiator_Group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option value="CQA"
                                                             @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
@@ -719,7 +721,7 @@
                                                 $(document).ready(function() {
                                                     function toggleRiskAssessmentAndJustification() {
                                                         var riskAssessmentRequired = $('#risk_assessment_required').val();
-                                                        
+
                                                         // Toggle Risk Assessment Button
                                                         if (riskAssessmentRequired === 'yes') {
                                                             $('#riskAssessmentButton').show();
@@ -732,9 +734,9 @@
                                                             $('#justification_div').hide(); // Hide everything if nothing is selected
                                                         }
                                                     }
-                                                    
+
                                                     toggleRiskAssessmentAndJustification(); // Initial call to set the correct state
-                                                    
+
                                                     // Call the function on dropdown change
                                                     $('#risk_assessment_required').change(function() {
                                                         toggleRiskAssessmentAndJustification();
@@ -746,16 +748,16 @@
                                                 $(document).ready(function() {
                                                     function toggleButtons() {
                                                         var selectedValue = $('#RA_head_required').val();
-                                                        
+
                                                         console.log("Selected value:", selectedValue); // Debugging output
 
                                                         if (selectedValue === 'Yes') {
-                                                            $('#actionButton').show();           
-                                                            $('#pendingRAApproval').show();  
+                                                            $('#actionButton').show();
+                                                            $('#pendingRAApproval').show();
                                                             console.log("show"); // Debugging output
                                                         } else {
-                                                            $('#actionButton').hide();         
-                                                            $('#pendingRAApproval').hide();     
+                                                            $('#actionButton').hide();
+                                                            $('#pendingRAApproval').hide();
                                                             console.log("hide"); // Debugging output
                                                         }
                                                     }
@@ -783,11 +785,18 @@
                                                     @enderror -->
                                                 </div>
                                             </div>
-                                            
+
+                                            <!-- <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="Risk Assessment Required">Justification </label>
+                                                    <textarea name="train_comments" id="">{{ $data->train_comments }}</textarea>
+                                                </div>
+                                            </div> -->
+
                                             <div class="col-lg-6" id="justification_div" style="display:none;">
                                                 <div class="group-input">
                                                     <label for="Justification">Justification</label>
-                                                    <textarea name="risk_identification" id="justification" rows="4" placeholder="Provide justification if risk assessment is not required.">{{ $data->risk_identification ?? '' }}</textarea>
+                                                    <textarea name="risk_identification" id="justification" rows="4" placeholder="Provide justification if risk assessment is not required." {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->risk_identification ?? '' }}</textarea>
                                                     <!-- @error('justification')
                                                         <div class="text-danger">{{ $message }}</div>
                                                     @enderror -->
@@ -840,9 +849,9 @@
                                                 <p id="docnameError" style="color:red">**Short Description is required</p>
 
                                             </div>
-                                            
 
-                                            
+
+
                                              <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="change_related_to">Change Related To
@@ -861,7 +870,7 @@
                                                     @enderror -->
                                                 </div>
                                             </div>
-                                            
+
                                             <!-- Textbox for 'Other' option -->
                                             <div class="col-lg-6" id="other_specify_div" style="display:none;">
                                                 <div class="group-input">
@@ -872,7 +881,7 @@
                                                     @enderror -->
                                                 </div>
                                             </div>
-                                            
+
                                             <script>
                                                 $(document).ready(function() {
                                                     function toggleOtherSpecifyField() {
@@ -883,16 +892,16 @@
                                                             $('#other_specify_div').hide();
                                                         }
                                                     }
-                                            
+
                                                     toggleOtherSpecifyField(); // Initial check
-                                            
+
                                                     // Update field visibility on dropdown change
                                                     $('#change_related_to').change(function() {
                                                         toggleOtherSpecifyField();
                                                     });
                                                 });
                                             </script>
-                                            
+
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
@@ -1041,26 +1050,26 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="in_attachment[]" 
+                                                <input type="file" id="myfile" name="in_attachment[]"
                                                     {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'in_attachment')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Hidden field to keep track of files to be deleted -->
                                 <input type="hidden" id="deleted_in_attachment" name="deleted_in_attachment" value="">
-                                
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -1069,7 +1078,7 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
                                                     const deletedFilesInput = document.getElementById('deleted_in_attachment');
                                                     let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -1079,26 +1088,26 @@
                                             });
                                         });
                                     });
-                                
+
                                     function addMultipleFiles(input, id) {
                                         const fileListContainer = document.getElementById(id);
                                         const files = input.files;
-                                
+
                                         for (let i = 0; i < files.length; i++) {
                                             const file = files[i];
                                             const fileName = file.name;
                                             const fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-                                
+
                                             const fileText = document.createElement('b');
                                             fileText.textContent = fileName;
-                                
+
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
                                             viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-                                
+
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
@@ -1106,11 +1115,11 @@
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
-                                
+
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(viewLink);
                                             fileContainer.appendChild(removeLink);
-                                
+
                                             fileListContainer.appendChild(fileContainer);
                                         }
                                     }
@@ -1125,7 +1134,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
 
                                 <div id="CCForm7" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
@@ -1136,7 +1145,7 @@
                                         <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="risk_assessment_related_record">Related Records</label>
-                                                <select  multiple id="risk_assessment_related_record" name="risk_assessment_related_record[]" placeholder="Select Reference Records" 
+                                                <select  multiple id="risk_assessment_related_record" name="risk_assessment_related_record[]" placeholder="Select Reference Records"
                                                         data-search="false" data-silent-initial-value-set="true"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                     @foreach ($preRiskAssessment as $prix)
                                                         <option value="{{ $prix->id }}"
@@ -1183,10 +1192,10 @@
                                 </div>
 
 
-                                        
+
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="migration-action">comments</label>
+                                                    <label for="migration-action">Comments</label>
                                                     <textarea name="migration_action"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->migration_action }}</textarea>
                                                 </div>
                                             </div>
@@ -1210,7 +1219,7 @@
                                                                     <a href="{{ asset('upload/' . $file) }}"
                                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file"                                                                    
+                                                                    <a type="button" class="remove-file"
                                                                             data-remove-id="riskAssessmentFile-{{ $loop->index }}"
                                                                             data-file-name="{{ $file }}"><i
                                                                             class="fa-solid fa-circle-xmark"
@@ -1239,15 +1248,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div id="CCForm2" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="sub-head">
                                             Change Details
                                         </div>
                                         <div class="row">
-                                            
-                                           
+
+
 
                                             <div class="col-12">
                                                 <div class="group-input">
@@ -1301,12 +1310,12 @@
                                     </div>
                                 </div>
 
-                               
+
 
                                 <div id="CCForm12" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="sub-head">
-                                        HOD Assessment 
+                                        HOD Assessment
                                         </div>
                                         <div class="group-input">
                                             <label for="qa-eval-comments">HOD Assessment Comments  @if($data->stage == 2) <span class="text-danger">*</span>@endif
@@ -1314,7 +1323,7 @@
                                             <textarea name="hod_assessment_comments" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} >{{$cc_cfts->hod_assessment_comments}}</textarea>
                                         </div>
 
-                           
+
                                         <div class="col-12">
                                     <div class="group-input">
                                         <label for="hod_assessment_attachment">HOD Assessment Attachments</label>
@@ -1338,26 +1347,26 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="hod_assessment_attachment[]" 
+                                                <input type="file" id="myfile" name="hod_assessment_attachment[]"
                                                     {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'hod_assessment_attachment')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Hidden field to keep track of files to be deleted -->
                                 <input type="hidden" id="deleted_hod_assessment_attachment" name="deleted_hod_assessment_attachment" value="">
-                                
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -1366,7 +1375,7 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
                                                     const deletedFilesInput = document.getElementById('deleted_hod_assessment_attachment');
                                                     let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -1376,26 +1385,26 @@
                                             });
                                         });
                                     });
-                                
+
                                     function addMultipleFiles(input, id) {
                                         const fileListContainer = document.getElementById(id);
                                         const files = input.files;
-                                
+
                                         for (let i = 0; i < files.length; i++) {
                                             const file = files[i];
                                             const fileName = file.name;
                                             const fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-                                
+
                                             const fileText = document.createElement('b');
                                             fileText.textContent = fileName;
-                                
+
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
                                             viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-                                
+
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
@@ -1403,16 +1412,16 @@
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
-                                
+
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(viewLink);
                                             fileContainer.appendChild(removeLink);
-                                
+
                                             fileListContainer.appendChild(fileContainer);
                                         }
                                     }
                                 </script>
-                                     
+
 
                                         </div>
                                         <div class="button-block">
@@ -1424,7 +1433,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                
+
 
 
                                 {{-- <div id="CCForm13" class="inner-block cctabcontent">
@@ -1558,7 +1567,7 @@
                                                     <span class="sr-only">Loading...</span>
                                                 </div>
                                                 Save
-                                            </button>                                            
+                                            </button>
                                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                 class="nextButton" onclick="nextStep()">Next</button>
@@ -1583,7 +1592,7 @@
                                 <div id="CCForm3" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="row">
-                                           
+
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
@@ -1653,7 +1662,7 @@
                                                 <div class="group-input">
                                                     <label for="qa_comments">QA/CQA Initial Review Comments @if($data->stage == 3) <span class="text-danger">*</span>@endif</label>
                                                     <textarea name="qa_review_comments" {{ $data->stage == 3  ? 'required' : '' }} {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $review->qa_comments }}</textarea>
-                                                </div> 
+                                                </div>
                                             </div>
 
                                             <!-- <div class="col-12">
@@ -1667,7 +1676,7 @@
                                                             <option value="{{ $prix->id }}" {{ in_array($prix->id, explode(',', $data->related_records)) ? 'selected' : '' }}>
                                                                 {{ Helpers::getDivisionName($prix->division_id) }}/Change-Control/{{ Helpers::year($prix->created_at) }}/{{ Helpers::record($prix->record) }}
                                                             </option>
-                                                           
+
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -1676,10 +1685,10 @@
                                             <div class="col-12">
                                         <div class="group-input">
                                             <label for="related_records">Related Records</label>
-    
+
                                             <select multiple name="related_records[]" placeholder="Select Reference Records"
                                                 data-silent-initial-value-set="true" id="related_records"  {{ $data->stage == 0 || $data->stage == 8  ? 'disabled' : '' }}>
-    
+
                                                  @if (!empty($relatedRecords))
                                                         @foreach ($relatedRecords as $records)
                                                             @php
@@ -1696,10 +1705,10 @@
                                                                     date('Y') .
                                                                     '/' .
                                                                     Helpers::recordFormat($records->record);
-    
+
                                                                 $selected = in_array(
                                                                     $recordValue,
-    
+
                                                                     explode(',', $data->related_records),
                                                                 )
                                                                     ? 'selected'
@@ -1738,26 +1747,26 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="qa_head[]" 
+                                                <input type="file" id="myfile" name="qa_head[]"
                                                     {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'qa_head')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Hidden field to keep track of files to be deleted -->
                                 <input type="hidden" id="deleted_qa_head" name="deleted_qa_head" value="">
-                                
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -1766,7 +1775,7 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
                                                     const deletedFilesInput = document.getElementById('deleted_qa_head');
                                                     let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -1776,26 +1785,26 @@
                                             });
                                         });
                                     });
-                                
+
                                     function addMultipleFiles(input, id) {
                                         const fileListContainer = document.getElementById(id);
                                         const files = input.files;
-                                
+
                                         for (let i = 0; i < files.length; i++) {
                                             const file = files[i];
                                             const fileName = file.name;
                                             const fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-                                
+
                                             const fileText = document.createElement('b');
                                             fileText.textContent = fileName;
-                                
+
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
                                             viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-                                
+
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
@@ -1803,11 +1812,11 @@
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
-                                
+
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(viewLink);
                                             fileContainer.appendChild(removeLink);
-                                
+
                                             fileListContainer.appendChild(fileContainer);
                                         }
                                     }
@@ -1830,12 +1839,12 @@
                                 </div>
 
 
-                                
+
                                 <div id="CCForm11" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="row">
 
-                                       
+
                                             @php
                                                 $data1 = DB::table('cc_cfts')
                                                     ->where('cc_id', $data->id)
@@ -1844,14 +1853,14 @@
 
                                                 <script>
                                                 $(document).ready(function() {
-                                         
+
 
                                                    @if($data1->RA_Review!=='yes')
                                                         $('.ra_review').hide();
-            
+
                                                         $('[name="RA_Review"]').change(function() {
                                                             if ($(this).val() === 'yes') {
-            
+
                                                                 $('.ra_review').show();
                                                                 $('.ra_review span').show();
                                                             } else {
@@ -1862,10 +1871,10 @@
                                                      @endif
                                                     });
                                                 </script>
-                                        
 
-                                      
-                                            
+
+
+
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
@@ -1876,18 +1885,18 @@
                                                 $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                                 $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                             @endphp
-                                         
+
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
                                                     var selectField = document.getElementById('RA_Review');
                                                     var inputsToToggle = [];
 
-                                               
+
                                                     var facilityNameInputs = document.getElementsByClassName('RA_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
-                                                  
+
 
                                                     selectField.addEventListener('change', function() {
                                                         var isRequired = this.value === 'yes';
@@ -1903,7 +1912,7 @@
                                                     });
                                                 });
                                             </script>
-                                       
+
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
@@ -1914,11 +1923,11 @@
                                                 $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                                 $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                             @endphp
-                                       
+
                                         <div class="sub-head">
                                             Quality Assurance
                                         </div>
-                                      
+
                                         <script>
                                             $(document).ready(function() {
 
@@ -1996,7 +2005,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif class="summernote QualityAssurance_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->QualityAssurance_person) && Auth::user()->name != $data1->QualityAssurance_person)) readonly @endif 
+                                                    @if ($data->stage == 3 || (isset($data1->QualityAssurance_person) && Auth::user()->name != $data1->QualityAssurance_person)) readonly @endif
                                                         name="QualityAssurance_assessment" id="summernote-17">{{ $data1->QualityAssurance_assessment }}</textarea>
                                                 </div>
                                             </div>
@@ -2061,7 +2070,7 @@
             <input type="text" id="QualityAssurance_on" readonly
                    placeholder="DD-MMM-YYYY"
                    value="{{ Helpers::getdateFormat($data1->QualityAssurance_on) }}" />
-            
+
             <!-- Hidden date input for date selection -->
             <input readonly type="date" name="QualityAssurance_on"
                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
@@ -2234,7 +2243,7 @@
             <input type="text" id="QualityAssurance_on" readonly
                    placeholder="DD-MMM-YYYY"
                    value="{{ Helpers::getdateFormat($data1->QualityAssurance_on) }}" />
-            
+
             <!-- Hidden date input for date selection -->
             <input readonly type="date" name="QualityAssurance_on"
                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
@@ -2721,7 +2730,7 @@
 
                                         </div>
                                     </div>
-                                   
+
                                     <div class="col-lg-6 productionLiquid new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Production Liquid Completed On">Production Liquid/Ointment Completed On</label>
@@ -3048,7 +3057,7 @@
                                             <div class="col-lg-6 productionInjection">
     <div class="group-input">
         <label for="Production_Injection_On">Production Injection Completed On</label>
-        
+
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
             <input type="text" id="Production_Injection_On_display" readonly
@@ -3057,7 +3066,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Production_Injection_On" name="Production_Injection_On"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                    value="{{ \Carbon\Carbon::parse($data1->Production_Injection_On)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -3237,7 +3246,7 @@
                                             <div class="col-lg-6 productionInjection">
     <div class="group-input">
         <label for="Production_Injection_On">Production Injection Completed On</label>
-        
+
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
             <input type="text" id="Production_Injection_On_display" readonly
@@ -3246,7 +3255,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Production_Injection_On" name="Production_Injection_On"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                    value="{{ \Carbon\Carbon::parse($data1->Production_Injection_On)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -3400,7 +3409,7 @@
                                             <div class="col-lg-6 store">
     <div class="group-input">
         <label for="Store_on">Store Completed On</label>
-        
+
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
             <input type="text" id="Store_on_display" readonly
@@ -3409,7 +3418,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Store_on" name="Store_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                    value="{{ \Carbon\Carbon::parse($data1->Store_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -3573,7 +3582,7 @@
                                             <div class="col-lg-6 store">
     <div class="group-input">
         <label for="Store_on">Store Completed On</label>
-        
+
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
             <input type="text" id="Store_on_display" readonly
@@ -3582,7 +3591,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Store_on" name="Store_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                    value="{{ \Carbon\Carbon::parse($data1->Store_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -3739,7 +3748,7 @@
                                             <div class="col-lg-6 qualityControl">
     <div class="group-input">
         <label for="Quality_Control_on">Quality Control Completed On</label>
-        
+
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
             <input type="text" id="Quality_Control_on_display" readonly
@@ -3748,7 +3757,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Quality_Control_on" name="Quality_Control_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                    value="{{ \Carbon\Carbon::parse($data1->Quality_Control_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -3912,7 +3921,7 @@
                                             <div class="col-lg-6 qualityControl">
     <div class="group-input">
         <label for="Quality_Control_on">Quality Control Completed On</label>
-        
+
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
             <input type="text" id="Quality_Control_on_display" readonly
@@ -3921,7 +3930,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Quality_Control_on" name="Quality_Control_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                    value="{{ \Carbon\Carbon::parse($data1->Quality_Control_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -4008,7 +4017,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 researchDevelopment">
                                         <div class="group-input">
-                                            <label for="Research Development assessment">Impact Assessment (By Research & 
+                                            <label for="Research Development assessment">Impact Assessment (By Research &
                                                 Development) <span id="asteriskPT1"
                                                     style="display: {{ $data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -4080,7 +4089,7 @@
                                             <div class="col-lg-6 researchDevelopment">
     <div class="group-input">
         <label for="ResearchDevelopment_on">Research & Development Completed On</label>
-        
+
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
             <input type="text" id="ResearchDevelopment_on_display" readonly
@@ -4089,7 +4098,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="ResearchDevelopment_on" name="ResearchDevelopment_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                    value="{{ \Carbon\Carbon::parse($data1->ResearchDevelopment_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -4253,7 +4262,7 @@
                                             <div class="col-lg-6 researchDevelopment">
     <div class="group-input">
         <label for="ResearchDevelopment_on">Research & Development Completed On</label>
-        
+
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
             <input type="text" id="ResearchDevelopment_on_display" readonly
@@ -4262,7 +4271,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="ResearchDevelopment_on" name="ResearchDevelopment_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                    value="{{ \Carbon\Carbon::parse($data1->ResearchDevelopment_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -4417,7 +4426,7 @@
                                             <div class="col-lg-6 Engineering">
     <div class="group-input">
         <label for="Engineering_on">Engineering Completed On</label>
-        
+
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
             <input type="text" id="Engineering_on_display" readonly
@@ -4426,7 +4435,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Engineering_on" name="Engineering_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                    value="{{ \Carbon\Carbon::parse($data1->Engineering_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -4590,7 +4599,7 @@
                                             <div class="col-lg-6 Engineering">
     <div class="group-input">
         <label for="Engineering_on">Engineering Completed On</label>
-        
+
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
             <input type="text" id="Engineering_on_display" readonly
@@ -4599,7 +4608,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Engineering_on" name="Engineering_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                    value="{{ \Carbon\Carbon::parse($data1->Engineering_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -4755,7 +4764,7 @@
                                             <div class="col-lg-6 Human_Resource">
     <div class="group-input">
         <label for="Human_Resource_on">Human Resource Completed On</label>
-        
+
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
             <input type="text" id="Human_Resource_on_display" readonly
@@ -4764,7 +4773,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Human_Resource_on" name="Human_Resource_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                    value="{{ \Carbon\Carbon::parse($data1->Human_Resource_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -4928,7 +4937,7 @@
                                             <div class="col-lg-6 Human_Resource">
     <div class="group-input">
         <label for="Human_Resource_on">Human Resource Completed On</label>
-        
+
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
             <input type="text" id="Human_Resource_on_display" readonly
@@ -4937,7 +4946,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Human_Resource_on" name="Human_Resource_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                    value="{{ \Carbon\Carbon::parse($data1->Human_Resource_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -5091,7 +5100,7 @@
                                             <div class="col-lg-6 Microbiology">
     <div class="group-input">
         <label for="Microbiology_on">Microbiology Completed On</label>
-        
+
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
             <input type="text" id="Microbiology_on_display" readonly
@@ -5100,7 +5109,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Microbiology_on" name="Microbiology_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                    value="{{ \Carbon\Carbon::parse($data1->Microbiology_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -5264,7 +5273,7 @@
                                             <div class="col-lg-6 Microbiology">
     <div class="group-input">
         <label for="Microbiology_on">Microbiology Completed On</label>
-        
+
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
             <input type="text" id="Microbiology_on_display" readonly
@@ -5273,7 +5282,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Microbiology_on" name="Microbiology_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                    value="{{ \Carbon\Carbon::parse($data1->Microbiology_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -5428,7 +5437,7 @@
                                             <div class="col-lg-6 RegulatoryAffair">
     <div class="group-input">
         <label for="RegulatoryAffair_on">Regulatory Affair Completed On</label>
-        
+
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
             <input type="text" id="RegulatoryAffair_on_display" readonly
@@ -5437,7 +5446,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="RegulatoryAffair_on" name="RegulatoryAffair_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                    value="{{ \Carbon\Carbon::parse($data1->RegulatoryAffair_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -5601,7 +5610,7 @@
                                             <div class="col-lg-6 RegulatoryAffair">
     <div class="group-input">
         <label for="RegulatoryAffair_on">Regulatory Affair Completed On</label>
-        
+
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
             <input type="text" id="RegulatoryAffair_on_display" readonly
@@ -5610,7 +5619,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="RegulatoryAffair_on" name="RegulatoryAffair_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                    value="{{ \Carbon\Carbon::parse($data1->RegulatoryAffair_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -5766,7 +5775,7 @@
                                             <div class="col-lg-6 CQA">
                                             <div class="group-input">
                                                 <label for="CorporateQualityAssurance_on">Corporate Quality Assurance Completed On</label>
-                                                
+
                                                 <div class="calenderauditee">
                                                     <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
                                                     <input type="text" id="CorporateQualityAssurance_on_display" readonly
@@ -5775,7 +5784,7 @@
 
                                                     <!-- Hidden date input for date selection -->
                                                     <input type="date" id="CorporateQualityAssurance_on" name="CorporateQualityAssurance_on"
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         value="{{ \Carbon\Carbon::parse($data1->CorporateQualityAssurance_on)->format('Y-m-d') }}"
                                                         class="hide-input"
                                                         {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -5939,7 +5948,7 @@
                                             <div class="col-lg-6 CQA">
                                             <div class="group-input">
                                                 <label for="CorporateQualityAssurance_on">Corporate Quality Assurance Completed On</label>
-                                                
+
                                                 <div class="calenderauditee">
                                                     <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
                                                     <input type="text" id="CorporateQualityAssurance_on_display" readonly
@@ -5948,7 +5957,7 @@
 
                                                     <!-- Hidden date input for date selection -->
                                                     <input type="date" id="CorporateQualityAssurance_on" name="CorporateQualityAssurance_on"
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         value="{{ \Carbon\Carbon::parse($data1->CorporateQualityAssurance_on)->format('Y-m-d') }}"
                                                         class="hide-input"
                                                         {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -5961,7 +5970,7 @@
                                             </div>
                                         </div>
 
-                                        @endif 
+                                        @endif
 
 
 
@@ -6103,7 +6112,7 @@
                                             <div class="col-lg-6 safety">
     <div class="group-input">
         <label for="Environment_Health_Safety_on">Safety Review Completed On</label>
-        
+
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
             <input type="text" id="Environment_Health_Safety_on_display" readonly
@@ -6112,7 +6121,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Environment_Health_Safety_on" name="Environment_Health_Safety_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                    value="{{ \Carbon\Carbon::parse($data1->Environment_Health_Safety_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -6276,7 +6285,7 @@
                                             <div class="col-lg-6 safety">
     <div class="group-input">
         <label for="Environment_Health_Safety_on">Safety Review Completed On</label>
-        
+
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
             <input type="text" id="Environment_Health_Safety_on_display" readonly
@@ -6285,7 +6294,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Environment_Health_Safety_on" name="Environment_Health_Safety_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                    value="{{ \Carbon\Carbon::parse($data1->Environment_Health_Safety_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -6441,7 +6450,7 @@
                                             <div class="col-lg-6 Information_Technology">
     <div class="group-input">
         <label for="Information_Technology_on">Information Technology Completed On</label>
-        
+
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
             <input type="text" id="Information_Technology_on_display" readonly
@@ -6450,7 +6459,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Information_Technology_on" name="Information_Technology_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                    value="{{ \Carbon\Carbon::parse($data1->Information_Technology_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -6614,7 +6623,7 @@
                                             <div class="col-lg-6 Information_Technology">
     <div class="group-input">
         <label for="Information_Technology_on">Information Technology Completed On</label>
-        
+
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
             <input type="text" id="Information_Technology_on_display" readonly
@@ -6623,7 +6632,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Information_Technology_on" name="Information_Technology_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                    value="{{ \Carbon\Carbon::parse($data1->Information_Technology_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -6772,7 +6781,7 @@
                                         </div>
                                     </div>
 
-                                  
+
                                     <div class="col-6 ContractGiver new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Contract Giver Completed On">Contract Giver
@@ -6941,7 +6950,7 @@
                                         </div>
                                     </div>
 
-                                  
+
                                     <div class="col-6 ContractGiver new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Contract Giver Completed On">Contract Giver
@@ -7036,7 +7045,7 @@
                                     <div class="col-lg-12 Other1_reviews">
 
                                         <div class="group-input">
-                                            <label for="Department1">Other's 1 Department 
+                                            <label for="Department1">Other's 1 Department
                                                 <span id="asteriskod5"
                                                     style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
@@ -7054,8 +7063,8 @@
                                         </div>
                                         </div>
 
-                                    
-                                  
+
+
                                     <div class="col-md-12 mb-3 other1_reviews ">
                                         <div class="group-input">
                                             <label for="Impact Assessment12">Impact Assessment (By Other's 1)
@@ -7235,7 +7244,7 @@
                                     <div class="col-lg-12 Other2_reviews">
 
                                     <div class="group-input">
-                                        <label for="Department2">Other's 2 Department 
+                                        <label for="Department2">Other's 2 Department
                                             <span id="asteriskod5"
                                                 style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span>
@@ -7254,7 +7263,7 @@
                                     </div>
 
 
-                                   
+
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
                                             var selectField = document.getElementById('Other2_review');
@@ -7432,7 +7441,7 @@
                                     <div class="col-lg-12 Other3_reviews">
 
                                     <div class="group-input">
-                                        <label for="Department3">Other's 3 Department 
+                                        <label for="Department3">Other's 3 Department
                                             <span id="asteriskod5"
                                                 style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span>
@@ -7449,7 +7458,7 @@
                                         </select>
                                     </div>
                                     </div>
-                                  
+
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
                                             var selectField = document.getElementById('Other3_review');
@@ -7629,7 +7638,7 @@
                                     <div class="col-lg-12 Other4_reviews">
 
                               <div class="group-input">
-                                  <label for="Department4">Other's 4 Department 
+                                  <label for="Department4">Other's 4 Department
                                         <span id="asteriskod5"
                                             style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
                                             class="text-danger">*</span>
@@ -7926,7 +7935,7 @@
                                     </select>
                                 </div>
                             </div>
-                                  
+
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
                                             var selectField = document.getElementById('Other5_review');
@@ -8090,7 +8099,7 @@
                                     <div class="col-lg-12">
 
                                     <div class="group-input">
-                                        <label for="Department1">Other's 1 Department 
+                                        <label for="Department1">Other's 1 Department
                                             <span id="asteriskod5"
                                                 style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span>
@@ -8109,7 +8118,7 @@
                                     </div>
 
 
-                                   
+
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
                                             <label for="Impact Assessment12">Impact Assessment (By Other's 1)</label>
@@ -8236,7 +8245,7 @@
                                     <div class="col-lg-12 Other2_reviews">
 
                                         <div class="group-input">
-                                            <label for="Department2">Other's 2 Department 
+                                            <label for="Department2">Other's 2 Department
                                                 <span id="asteriskod5"
                                                     style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
@@ -8392,10 +8401,10 @@
                                     <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Department3">Other's 3 Department
-                                            
+
                                             </label>
                                             <select name="Other3_Department_person" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                            
+
                                                 id="Other3_Department_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
@@ -8407,7 +8416,7 @@
                                         </div>
                                     </div>
 
-                                  
+
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
                                             <label for="Impact Assessment14">Impact Assessment (By Other's 3)</label>
@@ -8534,10 +8543,10 @@
                                     <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Department5">Other's 4 Department
-                                            
+
                                             </label>
                                             <select name="Other4_Department_person" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                            
+
                                                 id="Other4_Department_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
@@ -8550,7 +8559,7 @@
                                     </div>
 
 
-                                   
+
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
                                             <label for="Impact Assessment15">Impact Assessment (By Other's 4)</label>
@@ -8686,10 +8695,10 @@
                                     <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Department5">Other's 5 Department
-                                            
+
                                             </label>
                                             <select name="Other5_Department_person" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                            
+
                                                 id="Other5_Department_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
@@ -8815,7 +8824,7 @@
                                         </div>
                                     </div>
                                 @endif
-                                        
+
                                     </div>
                                     <div class="button-block">
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
@@ -8830,12 +8839,12 @@
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                             id="ChangeNextButton" class="nextButton">Next</button>
-                                            
+
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                                 Exit </a> </button>
                                     </div>
                                 </div>
-                                </div>                                
+                                </div>
 
                                 <div id="CCForm14" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
@@ -8846,10 +8855,10 @@
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="RA notification">RA Approval required 
+                                                    <label for="RA notification">RA Approval required
                                                         @if($data->stage==5) <span class="text-danger">*</span>@endif
                                                     </label>
-                                                    <select name="RA_data_person" class="RA_data_person" id="RA_head_required" 
+                                                    <select name="RA_data_person" class="RA_data_person" id="RA_head_required"
                                                             {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">--Select--</option>
                                                         <option @if ($cc_cfts->RA_data_person == 'Yes') selected @endif value="Yes">Yes</option>
@@ -8879,7 +8888,7 @@
                                             <textarea name="qa_final_comments"{{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} >{{ $cc_cfts->qa_final_comments }}</textarea>
                                         </div>
 
-                                        
+
                                         <div class="col-12">
                                     <div class="group-input">
                                         <label for="qa_final_attach">QA/CQA Final Review Attachments</label>
@@ -8903,26 +8912,26 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="qa_final_attach[]" 
+                                                <input type="file" id="myfile" name="qa_final_attach[]"
                                                     {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'qa_final_attach')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Hidden field to keep track of files to be deleted -->
                                 <input type="hidden" id="deleted_qa_final_attach" name="deleted_qa_final_attach" value="">
-                                
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -8931,7 +8940,7 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
                                                     const deletedFilesInput = document.getElementById('deleted_qa_final_attach');
                                                     let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -8941,26 +8950,26 @@
                                             });
                                         });
                                     });
-                                
+
                                     function addMultipleFiles(input, id) {
                                         const fileListContainer = document.getElementById(id);
                                         const files = input.files;
-                                
+
                                         for (let i = 0; i < files.length; i++) {
                                             const file = files[i];
                                             const fileName = file.name;
                                             const fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-                                
+
                                             const fileText = document.createElement('b');
                                             fileText.textContent = fileName;
-                                
+
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
                                             viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-                                
+
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
@@ -8968,11 +8977,11 @@
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
-                                
+
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(viewLink);
                                             fileContainer.appendChild(removeLink);
-                                
+
                                             fileListContainer.appendChild(fileContainer);
                                         }
                                     }
@@ -8987,9 +8996,9 @@
                                             </button>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                             <!-- </div> -->
-                            
+
 
                                 <div id="CCForm15" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
@@ -9029,26 +9038,26 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="RA_attachment_second[]" 
+                                                <input type="file" id="myfile" name="RA_attachment_second[]"
                                                     {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'RA_attachment_second')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Hidden field to keep track of files to be deleted -->
                                 <input type="hidden" id="deleted_RA_attachment_second" name="deleted_RA_attachment_second" value="">
-                                
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -9057,7 +9066,7 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
                                                     const deletedFilesInput = document.getElementById('deleted_RA_attachment_second');
                                                     let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -9067,26 +9076,26 @@
                                             });
                                         });
                                     });
-                                
+
                                     function addMultipleFiles(input, id) {
                                         const fileListContainer = document.getElementById(id);
                                         const files = input.files;
-                                
+
                                         for (let i = 0; i < files.length; i++) {
                                             const file = files[i];
                                             const fileName = file.name;
                                             const fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-                                
+
                                             const fileText = document.createElement('b');
                                             fileText.textContent = fileName;
-                                
+
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
                                             viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-                                
+
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
@@ -9094,11 +9103,11 @@
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
-                                
+
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(viewLink);
                                             fileContainer.appendChild(removeLink);
-                                
+
                                             fileListContainer.appendChild(fileContainer);
                                         }
                                     }
@@ -9127,7 +9136,7 @@
                                             <textarea name="qa_cqa_comments"  {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{$cc_cfts->qa_cqa_comments}}</textarea>
                                         </div>
 
-                              
+
                                         <div class="col-12">
                                     <div class="group-input">
                                         <label for="qa_cqa_attach">QA/CQA Head/Manager Designee Approval Attachments</label>
@@ -9151,26 +9160,26 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="qa_cqa_attach[]" 
+                                                <input type="file" id="myfile" name="qa_cqa_attach[]"
                                                     {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'qa_cqa_attach')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Hidden field to keep track of files to be deleted -->
                                 <input type="hidden" id="deleted_qa_cqa_attach" name="deleted_qa_cqa_attach" value="">
-                                
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -9179,7 +9188,7 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
                                                     const deletedFilesInput = document.getElementById('deleted_qa_cqa_attach');
                                                     let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -9189,26 +9198,26 @@
                                             });
                                         });
                                     });
-                                
+
                                     function addMultipleFiles(input, id) {
                                         const fileListContainer = document.getElementById(id);
                                         const files = input.files;
-                                
+
                                         for (let i = 0; i < files.length; i++) {
                                             const file = files[i];
                                             const fileName = file.name;
                                             const fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-                                
+
                                             const fileText = document.createElement('b');
                                             fileText.textContent = fileName;
-                                
+
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
                                             viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-                                
+
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
@@ -9216,11 +9225,11 @@
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
-                                
+
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(viewLink);
                                             fileContainer.appendChild(removeLink);
-                                
+
                                             fileListContainer.appendChild(fileContainer);
                                         }
                                     }
@@ -9295,7 +9304,7 @@
                                         </div>
                                 </div>                                 -->
 
-                                 
+
 
                                 <div id="CCForm5" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
@@ -9307,7 +9316,7 @@
                                             <textarea name="intial_update_comments" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{$cc_cfts->intial_update_comments}}</textarea>
                                         </div>
 
-                              
+
                                         <div class="col-12">
                                     <div class="group-input">
                                         <label for="intial_update_attach">Initiator Update Attachments</label>
@@ -9331,26 +9340,26 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="intial_update_attach[]" 
+                                                <input type="file" id="myfile" name="intial_update_attach[]"
                                                     {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'intial_update_attach')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Hidden field to keep track of files to be deleted -->
                                 <input type="hidden" id="deleted_intial_update_attach" name="deleted_intial_update_attach" value="">
-                                
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -9359,7 +9368,7 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
                                                     const deletedFilesInput = document.getElementById('deleted_intial_update_attach');
                                                     let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -9369,26 +9378,26 @@
                                             });
                                         });
                                     });
-                                
+
                                     function addMultipleFiles(input, id) {
                                         const fileListContainer = document.getElementById(id);
                                         const files = input.files;
-                                
+
                                         for (let i = 0; i < files.length; i++) {
                                             const file = files[i];
                                             const fileName = file.name;
                                             const fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-                                
+
                                             const fileText = document.createElement('b');
                                             fileText.textContent = fileName;
-                                
+
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
                                             viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-                                
+
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
@@ -9396,17 +9405,17 @@
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
-                                
+
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(viewLink);
                                             fileContainer.appendChild(removeLink);
-                                
+
                                             fileListContainer.appendChild(fileContainer);
                                         }
                                     }
                                 </script>
 
-                                        
+
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
                                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -9416,19 +9425,19 @@
                                             </button>
                                         </div>
                                     </div>
-                                </div>  
+                                </div>
 
                                 <div id="CCForm6" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="sub-head">
-                                        HOD Final Review 
+                                        HOD Final Review
                                         </div>
                                         <div class="group-input">
                                             <label for="qa-eval-comments">HOD Final Review Comments @if($data->stage == 10) <span class="text-danger">*</span>@endif</label>
                                             <textarea name="hod_final_review_comment" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} >{{$cc_cfts->hod_final_review_comment}}</textarea>
                                         </div>
 
-                           
+
                                         <div class="col-12">
                                     <div class="group-input">
                                         <label for="hod_final_review_attach">HOD Final Review Attachments</label>
@@ -9452,26 +9461,26 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="hod_final_review_attach[]" 
+                                                <input type="file" id="myfile" name="hod_final_review_attach[]"
                                                     {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'hod_final_review_attach')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Hidden field to keep track of files to be deleted -->
                                 <input type="hidden" id="deleted_hod_final_review_attach" name="deleted_hod_final_review_attach" value="">
-                                
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -9480,7 +9489,7 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
                                                     const deletedFilesInput = document.getElementById('deleted_hod_final_review_attach');
                                                     let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -9490,26 +9499,26 @@
                                             });
                                         });
                                     });
-                                
+
                                     function addMultipleFiles(input, id) {
                                         const fileListContainer = document.getElementById(id);
                                         const files = input.files;
-                                
+
                                         for (let i = 0; i < files.length; i++) {
                                             const file = files[i];
                                             const fileName = file.name;
                                             const fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-                                
+
                                             const fileText = document.createElement('b');
                                             fileText.textContent = fileName;
-                                
+
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
                                             viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-                                
+
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
@@ -9517,17 +9526,17 @@
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
-                                
+
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(viewLink);
                                             fileContainer.appendChild(removeLink);
-                                
+
                                             fileListContainer.appendChild(fileContainer);
                                         }
                                     }
                                 </script>
 
-                                        
+
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
                                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -9573,26 +9582,26 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="tran_attach[]" 
+                                                <input type="file" id="myfile" name="tran_attach[]"
                                                     {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'tran_attach')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Hidden field to keep track of files to be deleted -->
                                 <input type="hidden" id="deleted_tran_attach" name="deleted_tran_attach" value="">
-                                
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -9601,7 +9610,7 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
                                                     const deletedFilesInput = document.getElementById('deleted_tran_attach');
                                                     let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -9611,26 +9620,26 @@
                                             });
                                         });
                                     });
-                                
+
                                     function addMultipleFiles(input, id) {
                                         const fileListContainer = document.getElementById(id);
                                         const files = input.files;
-                                
+
                                         for (let i = 0; i < files.length; i++) {
                                             const file = files[i];
                                             const fileName = file.name;
                                             const fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-                                
+
                                             const fileText = document.createElement('b');
                                             fileText.textContent = fileName;
-                                
+
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
                                             viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-                                
+
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
@@ -9638,17 +9647,17 @@
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
-                                
+
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(viewLink);
                                             fileContainer.appendChild(removeLink);
-                                
+
                                             fileListContainer.appendChild(fileContainer);
                                         }
                                     }
                                 </script>
 
-                                        
+
 
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
@@ -9663,8 +9672,8 @@
 
                                 <div id="CCForm9" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
-                                      
-                                      
+
+
                                         {{-- <div class="group-input">
                                             <label for="risk-assessment">
                                                 Affected Documents<button type="button" name="ann" id="addAffectedDoc" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>+</button>
@@ -9740,8 +9749,8 @@
                                                 </tbody>
                                             </table>
                                         </div> --}}
-                                        
-                                        
+
+
                                 <div class="group-input">
                                     <label for="qa-closure-comments">QA/CQA Closure Comments @if($data->stage == 12) <span class="text-danger">*</span>@endif</label>
                                     <textarea name="qa_closure_comments" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $closure->qa_closure_comments }}</textarea>
@@ -9752,7 +9761,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="effect_check">Effectiveness check required</label>
-                                        <select name="effect_check" class="effect_check" id="effect_check" 
+                                        <select name="effect_check" class="effect_check" id="effect_check"
                                             {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                             <option value="">--Select--</option>
                                             <option @if ($cc_cfts->effect_check == 'Yes') selected @endif value="Yes">Yes</option>
@@ -9783,26 +9792,26 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="attach_list[]" 
+                                                <input type="file" id="myfile" name="attach_list[]"
                                                     {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'attach_list')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Hidden field to keep track of files to be deleted -->
                                 <input type="hidden" id="deleted_attach_list" name="deleted_attach_list" value="">
-                                
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -9811,7 +9820,7 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
                                                     const deletedFilesInput = document.getElementById('deleted_attach_list');
                                                     let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -9821,26 +9830,26 @@
                                             });
                                         });
                                     });
-                                
+
                                     function addMultipleFiles(input, id) {
                                         const fileListContainer = document.getElementById(id);
                                         const files = input.files;
-                                
+
                                         for (let i = 0; i < files.length; i++) {
                                             const file = files[i];
                                             const fileName = file.name;
                                             const fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-                                
+
                                             const fileText = document.createElement('b');
                                             fileText.textContent = fileName;
-                                
+
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
                                             viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-                                
+
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
@@ -9848,11 +9857,11 @@
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
-                                
+
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(viewLink);
                                             fileContainer.appendChild(removeLink);
-                                
+
                                             fileListContainer.appendChild(fileContainer);
                                         }
                                     }
@@ -9931,7 +9940,7 @@
 
             <div id="CCForm10" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                   
+
                     <div class="row">
                         <div class="sub-head">Submit</div>
                         <div class="col-lg-3">
@@ -10118,9 +10127,9 @@
                             </div>
                         </div>
 
-                   
 
-                        <div class="sub-head"> QA/CQA Final Review Completed</div>
+
+                        <div class="sub-head"> QA/CQA Final Review Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="QA Final Review Complete By"> QA/CQA Final Review Complete By :-</label>
@@ -10166,9 +10175,9 @@
                         @php
                         $commnetData = DB::table('change_control_comments')->where('cc_id', $data->id)->first();
                     @endphp
-                    
+
                     <div class="sub-head">Initiator Updated Completed</div>
-                    
+
                     <div class="col-lg-3">
                         <div class="group-input">
                             <label for="QA Final Review Complete By">Initiator Updated Completed By :-</label>
@@ -10177,7 +10186,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-lg-3">
                         <div class="group-input">
                             <label for="QA Final Review Complete On">Initiator Updated Completed On :-</label>
@@ -10186,7 +10195,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-lg-6">
                         <div class="group-input" style="width:1620px; height:100px; padding:5px;">
                             <label for="QA Final Review Comments">Initiator Updated Completed Comment :-</label>
@@ -10195,7 +10204,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
 
 
                         <div class="sub-head">HOD Final Review Complete
@@ -10266,7 +10275,7 @@
                         </div>
                     </div>
 
-                        
+
                     </div>
                     <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
@@ -10278,7 +10287,7 @@
                 </div>
             </div>
 
-                    
+
 
         </div>
         </form>
@@ -10491,7 +10500,7 @@
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Extension">
                                     Extension
-                                </label>                            
+                                </label>
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Action-Item">
                                     Action Item
@@ -10535,12 +10544,12 @@
                                     RCA
                                 </label>
                             </div>
-                            <div>   
+                            <div>
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Extension">
                                     Extension
-                                </label> 
-                            </div>   
+                                </label>
+                            </div>
 
 
                             @endif
@@ -10550,8 +10559,8 @@
                                     <input type="radio" name="revision" id="minor" value="Capa">
                                     Capa
                                 </label>
-                                                        
-                            </div>  
+
+                            </div>
                             @endif
                         </div>
 
@@ -10573,7 +10582,7 @@
 
 
     <!-- modal for stage 9 child-modal-stage_8 End-->
-    
+
 
 
 
@@ -10598,10 +10607,10 @@
                                     Effectiveness Check
                                 </label>
                             </div>
-                           
+
 
                             @endif
-                            
+
                         </div>
 
                     </div>
@@ -11032,7 +11041,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const currentStage = document.getElementById('stage').value;
-            
+
             if (currentStage > 2)
             {
                 const RA_Review = document.getElementById('RA_Review').value;
@@ -11282,7 +11291,7 @@
         });
     </script>
 
-  
+
     <script>
         const productSelect = document.getElementById('productSelect');
         const productTable = document.getElementById('productTable');
@@ -11315,7 +11324,7 @@
                                             });
                                         });
                                     </script>
-                                    
+
     <script>
 
         document.addEventListener('DOMContentLoaded', function() {

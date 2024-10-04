@@ -162,7 +162,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Market Complaint Single Report
+                    Market Complaint Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -2693,13 +2693,13 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Submitted By</th>
+                        <th class="w-20">Submit By</th>
                         <td class="w-80">{{ $data->submitted_by }}</td>
-                        <th class="w-20">Submitted On</th>
+                        <th class="w-20">Submit On</th>
                         <td class="w-80">{{ $data->submitted_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">Submit Comment</th>
                         <td class="w-80">{{ $data->submitted_comment }}</td>
                     </tr>
                     <tr>
@@ -2709,7 +2709,7 @@
                         <td class="w-80">{{ $data->complete_review_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">QA/CQA Head Review Comment</th>
                         <td class="w-80">{{ $data->complete_review_Comments }}</td>
                     </tr>
                     <tr>
@@ -2719,17 +2719,17 @@
                         <td class="w-80">{{ $data->cft_complate_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">Send To CFT Review Comment</th>
                         <td class="w-80">{{ $data->send_cft_comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">CFT Review Completed By</th>
+                        <th class="w-20">CFT Review Complete By</th>
                         <td class="w-80">{{ $data->cft_complate_by }}</td>
                         <th class="w-20">CFT Review Completed On</th>
                         <td class="w-80">{{ $data->cft_complate_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">CFT Review Completed Comment</th>
                         <td class="w-80">{{ $data->cft_complate_comm }}</td>
                     </tr>
                     <tr>
@@ -2739,7 +2739,7 @@
                         <td class="w-80">{{ $data->qa_cqa_verif_comp_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">QA CQA Verify Complete Comment</th>
                         <td class="w-80">{{ $data->QA_cqa_verif_Comments }}</td>
                     </tr>
                     {{-- <tr>
@@ -2766,7 +2766,7 @@
                         <td class="w-80">{{ $data->send_letter_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">Send Letter Comment</th>
                         <td class="w-80">{{ $data->send_letter_comment }}</td>
                     </tr>
 

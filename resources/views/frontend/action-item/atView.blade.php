@@ -93,19 +93,19 @@
                                     data-bs-target="#cancel-modal">
                                     Cancel
                                 </button></a>
-                        @elseif($data->stage == 2 && $data->assign_to)
-                            <a href="#cancel-modal"> <button class="button_theme1" data-bs-toggle="modal"
+                        @elseif($data->stage == 2 )
+                           @if (Auth::user()->id == $data->assign_to || Helpers::check_roles($data->division_id, 'Action Item', 18))
+                           <a href="#cancel-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#more-info-required-modal">
                                     More Information Required
                                 </button></a>
-                            {{-- <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button></a> --}}
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
                                     Acknowledge Complete
                                 </button></a>
-                        @elseif($data->stage == 3 && $data->assign_to)
+                           @endif
+                        @elseif($data->stage == 3)
+                        @if (Auth::user()->id == $data->assign_to || Helpers::check_roles($data->division_id, 'Action Item', 18))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
                                     Complete
@@ -113,6 +113,7 @@
                             {{-- <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
                             </button></a> --}}
+                            @endif
                         @elseif($data->stage == 4 && (Helpers::check_roles($data->division_id, 'Action Item', 7) || Helpers::check_roles($data->division_id, 'Action Item', 66)))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">

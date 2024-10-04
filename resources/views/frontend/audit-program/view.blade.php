@@ -693,7 +693,7 @@
 
                     <!-- Tab links -->
                     <div class="cctab">
-                        <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Audit Program</button>
+                        <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Self Inspection Circular</button>
                         <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD/Designee Review</button> -->
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA/QA Head Approval</button>
@@ -1003,21 +1003,17 @@
                                                 <select name="year"
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} onchange="toggleTabField(this)">
                                                     <option value="">-- Select --</option>
-                                                    <option value="Deviation"
-                                                        @if ($data->year == 'Deviation') selected @endif>Deviation</option>
-                                                    <option value="CAPA"
-                                                        @if ($data->year == 'CAPA') selected @endif>CAPA</option>
-                                                        <option value="Lab Incident"
-                                                        @if ($data->year == 'Lab Incident') selected @endif>Lab Incident</option>
-                                                        <option value="Internal Audit"
-                                                        @if ($data->year == 'Internal Audit') selected @endif>Internal Audit</option>
+                                                    <option value="Yearly Planner"
+                                                        @if ($data->year == 'Yearly Planner') selected @endif>Yearly Planner</option>
+                                                    <option value="Monthly Planner"
+                                                        @if ($data->year == 'Monthly Planner') selected @endif>Monthly Planner</option>
                                                     <option value="Other"
                                                         @if ($data->year == 'Other') selected @endif>Other</option>
                                                 </select>
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6" id="yearly_container" style="display: none;">
+                                        <div class="col-lg-12" id="yearly_container" style="display: none;">
                                             <div class="group-input">
                                                 <label for="yearly_other">Initiated Through(Others)<span
                                                         class="text-danger">*</span></label>
@@ -1041,7 +1037,7 @@
 
                                             // Call the function on page load to set the initial state
                                             document.addEventListener('DOMContentLoaded', function() {
-                                                var typeSelect = document.querySelector('select[name="type"]');
+                                                var typeSelect = document.querySelector('select[name="year"]');
                                                 toggleTabField(typeSelect);
                                             });
                                         </script>
@@ -2001,9 +1997,9 @@
                             <div id="CCForm3" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
-                                    <div class="col-12">
+                                    <!-- <div class="col-12">
                                             <div class="sub-head">Submit</div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Submitted_By..">Submit By</label>
@@ -2022,9 +2018,9 @@
                                                 <div class="static">{{ $data->Submitted_comment }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="sub-head">Approve</div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Approved_By">Approve By</label>
@@ -2044,9 +2040,9 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="sub-head">More Info Required</div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
@@ -2067,9 +2063,9 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="sub-head">Audit Completed</div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
@@ -2090,9 +2086,9 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="sub-head">Cancel</div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-lg-4">
                                             <div class="group-input">

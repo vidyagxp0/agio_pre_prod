@@ -379,13 +379,21 @@ Route::get('trainingQuestions/{id}/', [JobTrainingController::class, 'trainingQu
 
 
 Route::post('job_trainingcreate', [JobTrainingController::class, 'store'])->name('job_trainingcreate');
+// Route::post('check_answer_otj/{id}', [JobTrainingController::class, 'checkAnswerOtj'])->name('check_answer_otj');
 Route::put('job_trainingupdate/{id}', [JobTrainingController::class, 'update'])->name('job_trainingupdate');
 Route::get('/employees/{id}', [JobTrainingController::class, 'getEmployeeDetail']);
+Route::get('job_training-details/{id}', [JobTrainingController::class, 'viewrendersop']);
+Route::get('question_training/{id}', [JobTrainingController::class, 'questionrendersop']);
+Route::get('on_the_job_question_training/{id}/{job_id}', [JobTrainingController::class, 'questionshow']);
+
+Route::post('/check-answer-otj', [JobTrainingController::class, 'checkAnswerOtj'])->name('check_answer_otj');
 
 
 
 
 
+Route::get('induction_training-details/{id}', [InductionTrainingcontroller::class, 'viewrendersopinduction']);
+Route::get('induction_question_training/{id}/{induction_id}', [InductionTrainingcontroller::class, 'inductionquestionshow']);
 Route::get('induction_training', [InductionTrainingcontroller::class, 'index'])->name('induction_training.index');
 Route::get('induction_training/show/{id}', [InductionTrainingcontroller::class, 'edit'])->name('induction_training_view');
 Route::post('induction_training', [InductionTrainingcontroller::class, 'store'])->name('induction_training.store');

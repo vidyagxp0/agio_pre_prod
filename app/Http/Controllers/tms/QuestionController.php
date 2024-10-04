@@ -17,8 +17,10 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $data = Question::where('trainer_id',Auth::user()->id)->orderByDesc('id')->paginate(10);
-        return view('frontend.TMS.question',compact('data'));
+        // $data = Question::where('trainer_id',Auth::user()->id)->orderByDesc('id','asc')->paginate(10);
+        // return view('frontend.TMS.question',compact('data'));
+        $data = Question::where('trainer_id', Auth::user()->id)->orderBy('id', 'asc')->paginate(10);
+        return view('frontend.TMS.question', compact('data'));
     }
 
     /**
@@ -73,6 +75,7 @@ class QuestionController extends Controller
             $question->trainer_id = Auth::user()->id;
             $question->type = $request->type;
             $question->question = $request->question;
+            $question->document_id = $request->document_id;
             $question->options = serialize($request->options);
             $question->answers = serialize($request->answers);
             // dd($question->answers);
@@ -104,7 +107,8 @@ class QuestionController extends Controller
     public function edit($id)
     {
         $question = Question::find($id);
-        return view('frontend.TMS.edit-question',compact('question'));
+        $savedSop = $question->document_id;
+        return view('frontend.TMS.edit-question',compact('question', 'savedSop'));
 
     }
 
@@ -122,10 +126,11 @@ class QuestionController extends Controller
             $question->trainer_id = Auth::user()->id;
             // $question->type = $request->type;
             $question->question = $request->question;
+            $question->document_id = $request->document_id;
             $question->options = serialize($request->options);
             $question->answers = serialize($request->answers);
             $question->save();
-            toastr()->success('Question Created Successfuly !!');
+            toastr()->success('Question Created Updated !!');
             return redirect()->route('question.index');
 
     }

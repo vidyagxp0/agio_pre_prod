@@ -373,8 +373,24 @@ class QMSRolesSeeder extends Seeder
             ['id' => 63, 'name' => 'CQA Reviewer', 'description' => 'CQA Reviewer', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
             ['id' => 64, 'name' => 'CQA Approver', 'description' => 'CQA Approver', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
             ['id' => 65, 'name' => 'CQA Head', 'description' => 'CQA Head', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
-            ['id' => 66, 'name' => 'CQA', 'description' => 'CQA', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],            
+            ['id' => 66, 'name' => 'CQA', 'description' => 'CQA', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
             ['id' => 67, 'name' => 'QA Approver', 'description' => 'QA Approver', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
+
+            ['id' => 68, 'name' => 'HOD Production Tablet', 'description' => 'HOD Production Tablet', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
+            ['id' => 69, 'name' => 'HOD Production Liquid', 'description' => 'HOD Production Liquid', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
+            ['id' => 70, 'name' => 'HOD Production Injection', 'description' => 'HOD Production Injection', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
+            ['id' => 71, 'name' => 'HOD Stores', 'description' => 'HOD Stores', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
+            ['id' => 72, 'name' => 'HOD Research & Development', 'description' => 'HOD Research & Development', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
+            ['id' => 73, 'name' => 'HOD Microbiology', 'description' => 'HOD Microbiology', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
+            ['id' => 74, 'name' => 'HOD Corporate Quality Assurance', 'description' => 'HOD Corporate Quality Assurance', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
+            ['id' => 75, 'name' => 'HOD Safety', 'description' => 'HOD Safety', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
+            ['id' => 76, 'name' => 'HOD Contract Giver', 'description' => 'HOD Contract Giver', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
+            ['id' => 77, 'name' => 'HOD Human Resource & Administration', 'description' => 'HOD Human Resource & Administration', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
+            ['id' => 78, 'name' => 'HOD Engineering', 'description' => 'HOD Engineering', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
+            ['id' => 79, 'name' => 'HOD Quality Assurance', 'description' => 'HOD Quality Assurance', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
+            ['id' => 80, 'name' => 'HOD Quality Control', 'description' => 'HOD Quality Control', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
+            ['id' => 81, 'name' => 'HOD Regulatory Affair', 'description' => 'HOD Regulatory Affair', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]]
+
         ];
 
 
