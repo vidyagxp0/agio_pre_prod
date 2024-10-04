@@ -10007,7 +10007,7 @@
                                     </div>
                                 @else
                                     <div class="group-input">
-                                        <label for="QA/CQA Head Comment">QA/CQA Head Comment</label>
+                                        <label for="QA/CQA Head Comment">QA/CQA Head Approval Comment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
                                         <textarea readonly class="tiny" name="qa_cqa_head_comm" id="summernote-4">{{ $data->qa_cqa_head_comm }}</textarea>
@@ -10457,7 +10457,7 @@
 
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Initiator Group">Send CFT By :</label>
+                                    <label for="Initiator Group">Send To CFT By :</label>
                                     <div class="static">{{ $data->send_cft_by }}</div>
 
                                 </div>
@@ -10465,13 +10465,13 @@
 
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="OOC Logged On">Send CFT On :</label>
+                                    <label for="OOC Logged On">Send To CFT On :</label>
                                     <div class="static">{{ $data->send_cft_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Comment">Send CFT Comment</label>
+                                    <label for="Comment">Send To CFT Comment</label>
                                     <div class="static">{{ $data->send_cft_comment }}</div>
                                 </div>
                             </div>

@@ -876,7 +876,7 @@ class MarketComplaintController extends Controller
         if (!empty($marketComplaint->in_case_Invalide_com)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'In case of Invalide complain then provision shall  be provided to handle the invalide complaints )';
+            $history->activity_type = 'Comments';
             $history->previous = "Null";
             $history->current = $marketComplaint->in_case_Invalide_com;
             $history->comment = "Not Applicable";
@@ -1350,7 +1350,7 @@ class MarketComplaintController extends Controller
         if (!empty($marketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Review of Raw materials used in batch man';
+            $history->activity_type = 'Review of Raw materials used in batch manufacturing';
             $history->previous = "Null";
             $history->current = $marketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi;
             $history->comment = "Not Applicable";
@@ -2927,7 +2927,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->in_case_Invalide_com != $marketComplaint->in_case_Invalide_com) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'In case of Invalide complain then provision shall  be provided to handle the invalide complaints )';
+            $history->activity_type = 'Comments';
             $history->previous = $lastmarketComplaint->in_case_Invalide_com;
             $history->current = $marketComplaint->in_case_Invalide_com;
             $history->comment = $request->in_case_Invalide_com_comment;
@@ -3166,7 +3166,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi != $marketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Review of Raw materials used in batch man';
+            $history->activity_type = 'Review of Raw materials used in batch manufacturing';
             $history->previous = $lastmarketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi;
             $history->current = $marketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi;
             $history->comment = $request->review_of_raw_materials_used_in_batch_manufacturing_gi_comment;
