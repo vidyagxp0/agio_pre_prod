@@ -7402,7 +7402,16 @@
                                                 $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                                 $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                             @endphp
-                                            <div class="col-lg-6 other1_reviews ">
+                                       
+                                            <!-- <div class="col-md-12 mb-3 other1_reviews ">
+                                                    <div class="group-input">
+                                                        <label for="Feedback1"> Other's 1 Feedback
+                                                        </label>
+                                                        <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 3) required @endif class="tiny" name="Other1_feedback"
+                                                            @if ($data->stage == 2 || Auth::user()->name != $data1->Other1_person) readonly @endif id="summernote-42">{{ $data1->Other1_feedback }}</textarea>
+                                                    </div>
+                                                </div> -->
+                                                <div class="col-lg-6 other1_reviews ">
                                                 <div class="group-input">
                                                     <label for="Person1"> Other's 1 Person <span id="asterisko1"
                                                             style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}"
@@ -7422,6 +7431,38 @@
 
                                                 </div>
                                             </div>
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function() {
+                                                    var selectField = document.getElementById('Other1_review');
+                                                    var inputsToToggle = [];
+
+                                                    var facilityNameInputs = document.getElementsByClassName('Other1_person');
+                                                    for (var i = 0; i < facilityNameInputs.length; i++) {
+                                                        inputsToToggle.push(facilityNameInputs[i]);
+                                                    }
+                                                    var facilityNameInputs = document.getElementsByClassName('Other1_Department_person');
+                                                    for (var i = 0; i < facilityNameInputs.length; i++) {
+                                                        inputsToToggle.push(facilityNameInputs[i]);
+                                                    }
+
+                                                    selectField.addEventListener('change', function() {
+                                                        var isRequired = this.value === 'yes';
+
+                                                        inputsToToggle.forEach(function(input) {
+                                                            input.required = isRequired;
+                                                        });
+
+                                                        var asteriskIcon = document.getElementById('asterisko1');
+                                                        var asteriskIcon1 = document.getElementById('asteriskod1');
+                                                        asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+                                                        asteriskIcon1.style.display = isRequired ? 'inline' : 'none';
+                                                    });
+                                                });
+                                            </script>
+
+
+                                    <div class="col-12 other1_reviews">
+                                           
 
                                             <div class="col-lg-12 Other1_reviews">
 
@@ -7453,43 +7494,6 @@
                                                         @if ($data->stage == 2 || Auth::user()->name != $data1->Other1_person) readonly @endif id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <!-- <div class="col-md-12 mb-3 other1_reviews ">
-                                                    <div class="group-input">
-                                                        <label for="Feedback1"> Other's 1 Feedback
-                                                        </label>
-                                                        <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 3) required @endif class="tiny" name="Other1_feedback"
-                                                            @if ($data->stage == 2 || Auth::user()->name != $data1->Other1_person) readonly @endif id="summernote-42">{{ $data1->Other1_feedback }}</textarea>
-                                                    </div>
-                                                </div> -->
-                                            <script>
-                                                document.addEventListener('DOMContentLoaded', function() {
-                                                    var selectField = document.getElementById('Other1_review');
-                                                    var inputsToToggle = [];
-
-                                                    var facilityNameInputs = document.getElementsByClassName('Other1_person');
-                                                    for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                        inputsToToggle.push(facilityNameInputs[i]);
-                                                    }
-                                                    var facilityNameInputs = document.getElementsByClassName('Other1_Department_person');
-                                                    for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                        inputsToToggle.push(facilityNameInputs[i]);
-                                                    }
-
-                                                    selectField.addEventListener('change', function() {
-                                                        var isRequired = this.value === 'yes';
-
-                                                        inputsToToggle.forEach(function(input) {
-                                                            input.required = isRequired;
-                                                        });
-
-                                                        var asteriskIcon = document.getElementById('asterisko1');
-                                                        var asteriskIcon1 = document.getElementById('asteriskod1');
-                                                        asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                                        asteriskIcon1.style.display = isRequired ? 'inline' : 'none';
-                                                    });
-                                                });
-                                            </script>
-                                            <div class="col-12 other1_reviews ">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 1 Attachments</label>
                                                     <div><small class="text-primary">Please Attach all relevant or
@@ -7536,14 +7540,7 @@
 
                                                 </div>
                                             </div>
-                                            {{-- <div class="col-md-6 mb-3 other1_reviews ">
-                                        <div class="group-input">
-                                            <label for="Review Completed On1">Other's 1 Review Completed On</label>
-                                            <input disabled type="date" name="Other1_on" id="Other1_on"
-                                                value="{{ $data1->Other1_on }}">
-
-                                        </div>
-                                    </div> --}}
+                                            
                                             <div class="col-6 other1_reviews new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <label for="Others 1 Completed On">Others 1
@@ -7562,7 +7559,7 @@
                                                     @enderror
                                                 </div>
                                             </div>
-
+                                        </div>
                                             <div class="sub-head">
                                                 Other's 2 ( Additional Person Review From Departments If Required)
                                             </div>
@@ -8608,7 +8605,7 @@
 
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
+                                            <div class="col-lg-12 Other2_reviews">
                                                 <div class="group-input">
                                                     <label for="Department2">Other's 2 Department
                                                         <span id="asteriskod5"
@@ -8770,7 +8767,7 @@
 
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
+                                            <div class="col-lg-12 Other3_reviews">
 
                                                 <div class="group-input">
                                                     <label for="Department3">Other's 3 Department
@@ -8921,7 +8918,7 @@
 
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
+                                            <div class="col-lg-12 Other4_reviews">
                                                 <div class="group-input">
                                                     <label for="Department4">Other's 4 Department
                                                         <span id="asteriskod5"
@@ -9082,7 +9079,7 @@
 
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
+                                            <div class="col-lg-12 Other5_reviews">
                                                 <div class="group-input">
                                                     <label for="Department5">Other's 5 Department
                                                         <span id="asteriskod5"

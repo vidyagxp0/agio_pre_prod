@@ -273,8 +273,8 @@
 
                     <th class="w-20">Justification</th>
                     <td class="w-30">
-                        @if ($data->justification)
-                            {{ $data->justification }}
+                        @if ($data->risk_identification)
+                            {{ $data->risk_identification }}
                         @else
                             Not Applicable
                         @endif
@@ -459,7 +459,7 @@
     </td>
 </tr> -->
                     <tr>
-                        <th class="w-20">comments</th>
+                        <th class="w-20">Comments</th>
                         <td class="w-80" colspan="3">
                             <div>
                                 {{ $data->migration_action }}
