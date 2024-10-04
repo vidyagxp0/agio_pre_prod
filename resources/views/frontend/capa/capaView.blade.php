@@ -3,6 +3,17 @@
     @php
         $users = DB::table('users')->get();
     @endphp
+     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+         integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+     @if (Session::has('swal'))
+         <script>
+             swal("{{ Session::get('swal')['title'] }}", "{{ Session::get('swal')['message'] }}",
+                 "{{ Session::get('swal')['type'] }}")
+         </script>
+     @endif
     <style>
         textarea.note-codable {
             display: none !important;
@@ -501,7 +512,7 @@
                                                         class="text-danger">*</span></label><span id="rchars">255</span>
                                                 characters remaining
 
-                                                <input name="short_description"   id="docname" type="text" value="{{ $data->short_description }}"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} type="text">
+                                                <input name="short_description"   id="docname" type="text" value="{{ $data->short_description }}"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "readonly" : "" }} type="text">
                                             </div>
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
 

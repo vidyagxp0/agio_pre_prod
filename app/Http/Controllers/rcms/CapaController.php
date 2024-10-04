@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use PDF;
 use Helpers;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -3103,6 +3104,7 @@ foreach ($pre as $processName => $modelClass) {
             $lastDocument = Capa::find($id);
             
             if ($capa->stage == 1) {
+
                 $capa->stage = "2";
                 $capa->status = "HOD Review";
                 $capa->plan_proposed_by = Auth::user()->name;
@@ -3160,6 +3162,23 @@ foreach ($pre as $processName => $modelClass) {
                 return back();
             }
             if ($capa->stage == 2) {
+                if (!$capa->hod_remarks) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'HOD Remarks is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for QA/CQA Approval state',
+                        'type' => 'success',
+                    ]);
+                }
                 $capa->stage = "3";
                 $capa->status = "QA/CQA Review";
                 $capa->hod_review_completed_by = Auth::user()->name;
@@ -3215,6 +3234,23 @@ foreach ($pre as $processName => $modelClass) {
                 return back();
             }
             if ($capa->stage == 3) {
+                if (!$capa->capa_qa_comments) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'CAPA QA/CQA Review Comment is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for CAPA In progress state',
+                        'type' => 'success',
+                    ]);
+                }
                 $capa->stage = "4";
                 $capa->status = "QA/CQA Approval";
                 $capa->qa_review_completed_by = Auth::user()->name;
@@ -3328,7 +3364,24 @@ foreach ($pre as $processName => $modelClass) {
                 return back();
             }
             if ($capa->stage == 6) {
-                $capa->stage = "7";
+                if (!$capa->hod_final_review) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'CAPA QA/CQA Review Comment is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for CAPA In progress state',
+                        'type' => 'success',
+                    ]);
+                }
+                $capa->stage = "7"; 
                 $capa->status = "QA/CQA Closure Review";
                 $capa->hod_final_review_completed_by = Auth::user()->name;
                 $capa->hod_final_review_completed_on = Carbon::now()->format('d-M-Y');
@@ -3366,6 +3419,23 @@ foreach ($pre as $processName => $modelClass) {
                 return back();
             }
             if ($capa->stage == 7) {
+                if (!$capa->qa_cqa_qa_comments) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'CAPA QA/CQA Review Comment is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for CAPA In progress state',
+                        'type' => 'success',
+                    ]);
+                }
                 $capa->stage = "8";
                 $capa->status = "QA/CQA Approval ";
                 $capa->qa_closure_review_completed_by = Auth::user()->name;
@@ -3405,6 +3475,23 @@ foreach ($pre as $processName => $modelClass) {
             }
 
             if ($capa->stage == 8) {
+                if (!$capa->qa_review) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'CAPA QA/CQA Review Comment is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for CAPA In progress state',
+                        'type' => 'success',
+                    ]);
+                }
                 $capa->stage = "9";
                 $capa->status = "Closed - Done";
                 $capa->qah_approval_completed_by = Auth::user()->name;
