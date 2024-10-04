@@ -899,6 +899,29 @@ class EffectivenessCheckController extends Controller
             $history->save();
         }
 
+        if ($lastopenState->acknowledge_comment != $openState->acknowledge_comment || !empty ($request->comment)) {
+            // return 'history';
+            $history = new EffectivenessCheckAuditTrail;
+            $history->extension_id = $id;
+            $history->activity_type = 'Acknowledge Comment';
+             $history->previous = $lastopenState->acknowledge_comment;
+            $history->current = $openState->acknowledge_comment;
+            $history->comment = $openState->short_disp_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastopenState->status;
+            // $history->action_name = "Update";
+            if (is_null($lastopenState->acknowledge_comment) || $lastopenState->acknowledge_comment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
         if ($lastopenState->qa_cqa_review_Attachment != $openState->qa_cqa_review_Attachment || !empty ($request->comment)) {
             // return 'history';
             $history = new EffectivenessCheckAuditTrail;
@@ -1335,7 +1358,26 @@ class EffectivenessCheckController extends Controller
                     return back();
                 // }
             }
+
+
             if ($effective->stage == 2) {
+
+                if (!$effective->acknowledge_comment) {
+
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'Acknowledge Comment is yet to be filled!',
+                        'type' => 'warning',
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for Work Completion state'
+                    ]);
+                }
                 // $rules = [
                 //     'Comments' => 'required|max:255',
 
@@ -1351,22 +1393,7 @@ class EffectivenessCheckController extends Controller
                 //     return back();
                 // } else {
                 // dd(!$effective->acknowledge_comment);
-                    if (!$effective->acknowledge_comment) {
 
-                        Session::flash('swal', [
-                            'title' => 'Mandatory Fields Required!',
-                            'message' => 'HOD Remarks is yet to be filled!',
-                            'type' => 'warning',
-                        ]);
-
-                        return redirect()->back();
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent for QA initial review state'
-                        ]);
-                    }
                     $effective->stage = '3';
                     $effective->status = 'Work Completion';
                     $effective->work_complition_by =  Auth::user()->name;
@@ -1423,7 +1450,6 @@ class EffectivenessCheckController extends Controller
                 //      }
                 //   }
 
-                    $effective->update();
                     $history = new CCStageHistory();
                     $history->type = "Effectiveness-Check";
                     $history->doc_id = $id;
@@ -1432,8 +1458,10 @@ class EffectivenessCheckController extends Controller
                     $history->stage_id = $effective->stage;
                     $history->status = $effective->status;
                     $history->save();
-                    toastr()->success('Document Sent');
 
+
+                    $effective->update();
+                    toastr()->success('Document Sent');
                     return back();
 
                 // }
@@ -1444,7 +1472,7 @@ class EffectivenessCheckController extends Controller
 
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'HOD Remarks is yet to be filled!',
+                        'message' => 'Effectiveness Results is yet to be filled!',
                         'type' => 'warning',
                     ]);
 
@@ -1453,7 +1481,7 @@ class EffectivenessCheckController extends Controller
                     Session::flash('swal', [
                         'type' => 'success',
                         'title' => 'Success',
-                        'message' => 'Sent for QA initial review state'
+                        'message' => 'Sent for HOD Review state'
                     ]);
                 }
                 // $rules = [
@@ -1554,6 +1582,22 @@ class EffectivenessCheckController extends Controller
             }
             if ($effective->stage == 4) {
 
+                if (!$effective->Comments) {
+
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'HOD Review Comments is yet to be filled!',
+                        'type' => 'warning',
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for QA/CQA Review state'
+                    ]);
+                }
 
                 // $rules = [
                 //     'Comments' => 'required|max:255',
@@ -1652,11 +1696,11 @@ class EffectivenessCheckController extends Controller
                 // }
             }
             if ($effective->stage == 5) {
-                if (!$effective->Comments) {
+                if (!$effective->qa_cqa_review_comment) {
 
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'HOD Remarks is yet to be filled!',
+                        'message' => 'QA/CQA Review Comment is yet to be filled!',
                         'type' => 'warning',
                     ]);
 
@@ -1665,7 +1709,7 @@ class EffectivenessCheckController extends Controller
                     Session::flash('swal', [
                         'type' => 'success',
                         'title' => 'Success',
-                        'message' => 'Sent for QA initial review state'
+                        'message' => 'Sent for QA/CQA Approval Effective state'
                     ]);
                 }
                 $effective->stage = '6';
@@ -1712,11 +1756,11 @@ class EffectivenessCheckController extends Controller
             }
 
             if ($effective->stage == 6) {
-                if (!$effective->qa_cqa_review_comment) {
+                if (!$effective->qa_cqa_approval_comment) {
 
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'HOD Remarks is yet to be filled!',
+                        'message' => 'QA/CQA Approval Comment is yet to be filled!',
                         'type' => 'warning',
                     ]);
 
@@ -1725,9 +1769,10 @@ class EffectivenessCheckController extends Controller
                     Session::flash('swal', [
                         'type' => 'success',
                         'title' => 'Success',
-                        'message' => 'Sent for QA initial review state'
+                        'message' => 'Sent for Closed – Effective state'
                     ]);
                 }
+
                 $effective->stage = '7';
                 $effective->status = 'Closed - Effective';
                 $effective->effective_approval_complete_by =  Auth::user()->name;
@@ -1811,7 +1856,26 @@ class EffectivenessCheckController extends Controller
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $effective = EffectivenessCheck::find($id);
             $lastopenState = EffectivenessCheck::find($id);
+
             if ($effective->stage == 5) {
+
+                if (!$effective->qa_cqa_review_comment) {
+
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'QA/CQA Review Comment is yet to be filled!',
+                        'type' => 'warning',
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for QA/CQA Approval-Not Effective state'
+                    ]);
+                }
+
                 $effective->stage = '8';
                 $effective->status = 'QA/CQA Approval Not-Effective';
                 $effective->qa_review_complete_by =  Auth::user()->name;
@@ -1859,16 +1923,16 @@ class EffectivenessCheckController extends Controller
 
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'HOD Remarks is yet to be filled!',
+                        'message' => 'QA/CQA Approval Comment is yet to be filled!',
                         'type' => 'warning',
                     ]);
-
                     return redirect()->back();
+
                 } else {
                     Session::flash('swal', [
                         'type' => 'success',
                         'title' => 'Success',
-                        'message' => 'Sent for QA initial review state'
+                        'message' => 'Sent for Closed - Not Effective state'
                     ]);
                 }
                 $effective->stage = '9';

@@ -1844,7 +1844,7 @@ dd($pre);
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Comments"> HOD Remark </label>
+                                        <label for="Comments">HOD Remark</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                         <textarea name="HOD_Remarks" disabled> </textarea>
@@ -2627,13 +2627,13 @@ dd($pre);
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="sub-head">Submit</div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="submit by">Submit By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="submit on">Submit On :-</label>
                                     <div class="static"></div>
@@ -2652,13 +2652,13 @@ dd($pre);
                                 </div>
                             </div> --}}
                             <div class="sub-head">HOD Initial Review Complete</div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="HOD Review Complete By">HOD Initial Review Complete By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="HOD Initial Review Complete On">HOD Initial Review Complete On :-</label>
                                     <div class="static"></div>
@@ -2695,14 +2695,14 @@ dd($pre);
 
 
                             <div class="sub-head">QA Initial Review Complete</div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="QA Initial Review Complete By">QA Initial Review Complete By
                                         :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="QA Initial Review Complete On">QA Initial Review Complete On
                                         :-</label>
@@ -2717,36 +2717,38 @@ dd($pre);
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            {{-- <div class="col-lg-6">
+
+
+                            <div class="sub-head">QAH/Designee Approval Complete</div>
+                            <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="submit on">More Information
-                                        Required By :-</label>
+                                    <label for="QA Initial Review Complete By">QAH/Designee Approval Complete By:-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="QA Initial Review Complete On">QAH/Designee Approval Complete On:-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="submit on">More Information
-                                        Required On :-</label>
-                                    <div class="static"></div>
+                                    <label for="QA Initial Review Comments">QAH/Designee Approval Complete Comment:-</label>
+                                    <div class=""></div>
                                 </div>
-                            </div> --}}
+                            </div>
 
-                            {{-- <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="QA Initial Review Comments">QA Initial Review Comments:-</label>
-                                    <div class="static"></div>
-                                </div>
-                            </div> --}}
+
                             <div class="sub-head">Pending Initiator Update Complete</div>
-
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="CFT Review Complete By">Pending Initiator Update Complete By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Pending Initiator Update Complete On">Pending Initiator Update Complete On :-</label>
                                     <div class="static"></div>
@@ -2780,19 +2782,19 @@ dd($pre);
                             </div> --}}
                             <div class="sub-head">HOD Final Review Completed</div>
 
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="CFT Review Complete By">HOD Final Review Complete By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="CFT Review Complete On">HOD Final Review Complete On :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="CFT Review Comments">HOD Final Review Complete Comment :-</label>
                                     <div class="static"></div>
@@ -2813,13 +2815,13 @@ dd($pre);
                                 </div>
                             </div> --}}
                             <div class="sub-head"> QA Final Review Complete</div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="QA Final Review Complete By"> QA Final Review Complete By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="QA Final Review Complete On"> QA Final Review Complete On :-</label>
                                     <div class="static"></div>
@@ -2833,13 +2835,13 @@ dd($pre);
                             </div>
                             <div class="sub-head"> Approved</div>
 
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Approved By"> Approved By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Approved On">Approved On :-</label>
                                     <div class="static"></div>
@@ -2893,13 +2895,13 @@ dd($pre);
                             <div class="sub-head">
                                 cancel
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="submit by">cancel By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled on">cancel On :-</label>
                                     <div class="static"></div>

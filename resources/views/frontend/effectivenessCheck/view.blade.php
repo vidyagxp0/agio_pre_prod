@@ -30,7 +30,29 @@
             margin-bottom: 11px;
         }
 
+        .main-danger-block {
+                    display: flex;
+                }
+
+                .swal-modal {
+                    scale: 0.7 !important;
+                }
+
+                .swal-icon {
+                    scale: 0.8 !important;
+                }
+
     </style>
+
+@if (Session::has('swal'))
+<script>
+    swal("{{ Session::get('swal')['title'] }}", "{{ Session::get('swal')['message'] }}",
+        "{{ Session::get('swal')['type'] }}")
+</script>
+@endif
+
+
+
     {{-- ======================================
                 CHANGE CONTROL VIEW
     ======================================= --}}
@@ -637,7 +659,7 @@
                                         <label for="Comments"><b>HOD Review Comments</b> <span style="color: red;">*</span>
                                         </label>
                                         {{-- <textarea name="Comments" {{ $data->stage == 0 || $data->stage == 7 || $data->stage == 8  ||  $data->stage == 9 ? "disabled" : "" }} >{{ $data->Comments }}</textarea> --}}
-                                        <textarea type="text" name="Comments" id="acknowledge_comment" required {{ $data->stage == 4 ? '' : 'readonly' }} required>{{ $data->Comments }}</textarea>
+                                        <textarea type="text" name="Comments" id="acknowledge_comment" {{ $data->stage == 4 ? '' : 'readonly' }} required>{{ $data->Comments }}</textarea>
                                     </div>
                                 </div>
                                 @else
@@ -736,10 +758,10 @@
                                 </div>
 
                                 <div class="col-lg-12">
-                                    @if ($data->stage == 6)
+                                    @if ($data->stage == 5)
                                     <div class="group-input">
                                         <label for="Effectiveness Results">QA/CQA Review Comment <span style="color: red;">*</span></label>
-                                        <textarea type="text" name="qa_cqa_review_comment" required {{ $data->stage == 5 ? '' : 'readonly' }}>{{ $data->qa_cqa_review_comment }}</textarea>
+                                        <textarea type="text" name="qa_cqa_review_comment" {{ $data->stage == 5 ? '' : 'readonly' }} required>{{ $data->qa_cqa_review_comment }}</textarea>
                                     </div>
                                 </div>
                             @else
@@ -794,11 +816,11 @@
                                 QA/CQA Approval
                             </div>
                                 <div class="col-lg-12">
-                                    @if ($data->stage == 8)
+                                    @if ($data->stage == 6 || $data->stage == 8)
                                     <div class="group-input">
-                                        <label for="Effectiveness Results">QA/CQA Approval Comment</label>
+                                        <label for="Effectiveness Results">QA/CQA Approval Comment<span style="color: red;">*</span></label>
                                         <textarea type="text" name="qa_cqa_approval_comment" {{ in_array($data->stage, [6, 8]) ? '' : 'readonly' }}
-                                            required >{{ $data->qa_cqa_approval_comment }} </textarea>
+                                            required>{{ $data->qa_cqa_approval_comment }}</textarea>
                                     </div>
                                 </div>
                                 @else
@@ -806,7 +828,7 @@
                                 <div class="group-input">
                                     <label for="Effectiveness Results">QA/CQA Approval Comment</label>
                                     <textarea type="text" name="qa_cqa_approval_comment" {{ in_array($data->stage, [6, 8]) ? '' : 'readonly' }}
-                                        >{{ $data->qa_cqa_approval_comment }}  </textarea>
+                                        >{{ $data->qa_cqa_approval_comment }}</textarea>
                                 </div>
                             </div>
                             @endif
@@ -1433,7 +1455,11 @@
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
 
-    @if (session()->has('errorMessages'))
+
+
+
+
+    {{--@if (session()->has('errorMessages'))
         <script>
             // Create an array to hold all the error messages
             var errorMessages = @json(session()->get('errorMessages'));
@@ -1455,7 +1481,7 @@
         </script>
 
         @php session()->forget('errorMessages'); @endphp
-    @endif
+    @endif--}}
     <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const removeButtons = document.querySelectorAll('.remove-file');
@@ -1480,4 +1506,67 @@
                 $('#rchars').text(textlen);
             });
         </script>
+
+
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+                integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+            @if (Session::has('swal'))
+                <script>
+                    swal("{{ Session::get('swal')['title'] }}", "{{ Session::get('swal')['message'] }}",
+                        "{{ Session::get('swal')['type'] }}")
+                </script>
+            @endif
+
+
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>--}}
+
+        <!-- SweetAlert2 CDN -->
+        {{--<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}
+        {{--<script>
+            @if (Session::has('swal'))
+                Swal.fire({
+                    title: '{{ Session::get('swal.title') }}',
+                    text: '{{ Session::get('swal.message') }}',
+                    icon: '{{ Session::get('swal.type') }}', // Type can be success, warning, error
+                    confirmButtonText: 'OK',
+                    margin: '',
+                    width: '270px',
+                    height: '10px',
+                    size: '10px',
+                });
+            @endif
+        </script>--}}
+
+        {{--<script>
+            @if (Session::has('swal'))
+                Swal.fire({
+                    title: '{{ Session::get('swal.title') }}',
+                    text: '{{ Session::get('swal.message') }}',
+                    icon: '{{ Session::get('swal.type') }}', // Type can be success, warning, error
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        popup: 'custom-swal-popup'
+                    }
+                });
+            @endif
+        </script>
+
+        <style>
+            .custom-swal-popup {
+                margin-top: 100px;
+                font-size: 12px;
+                width: 270px !important; /* Adjust as needed */
+            }
+
+        </style>--}}
+
+
 @endsection
