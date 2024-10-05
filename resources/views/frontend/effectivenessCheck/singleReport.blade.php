@@ -607,17 +607,6 @@
                 <td class="w-30">{{ $data->qa_review_complete_comment }}</td>
             </tr>
             <tr>
-                <th class="w-20">Not Effective Approval Complete By
-                </th>
-                <td class="w-30">{{ $data->not_effective_approval_complete_by }}</td>
-                <th class="w-20">
-                    Not Effective Approval Complete On</th>
-                <td class="w-30">{{ $data->not_effective_approval_complete_on }}</td>
-                <th class="w-20">
-                    Not Effective Approval Complete Comment</th>
-                <td class="w-30">{{ $data->not_effective_approval_complete_comment }}</td>
-            </tr>
-            <tr>
                 <th class="w-20">Effective by
                 </th>
                 <td class="w-30">{{ $data->effective_by }}</td>
@@ -628,6 +617,18 @@
                     Effective Comment</th>
                 <td class="w-30">{{ $data->effective_comment }}</td>
             </tr>
+            <tr>
+                <th class="w-20">Not Effective Approval Complete By
+                </th>
+                <td class="w-30">{{ $data->not_effective_approval_complete_by }}</td>
+                <th class="w-20">
+                    Not Effective Approval Complete On</th>
+                <td class="w-30">{{ $data->not_effective_approval_complete_on }}</td>
+                <th class="w-20">
+                    Not Effective Approval Complete Comment</th>
+                <td class="w-30">{{ $data->not_effective_approval_complete_comment }}</td>
+            </tr>
+
 
             <tr>
                 <th class="w-20">Effective Approval Complete By

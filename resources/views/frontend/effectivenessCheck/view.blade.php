@@ -23,9 +23,9 @@
         }
 
         /* #change-control-view > div > div > div.status > div.progress-bars > div:nth-child(5){
-                border-radius: 0px 20px 20px 0px;
+                    border-radius: 0px 20px 20px 0px;
 
-            } */
+                } */
 
         .input_width {
             width: 100%;
@@ -62,7 +62,7 @@
     <div class="form-field-head">
         <div class="division-bar">
             <!-- <strong>Site Division/Project</strong> :
-                {{ Helpers::getDivisionName(session()->get('division')) }} / Effectiveness-Check -->
+                    {{ Helpers::getDivisionName(session()->get('division')) }} / Effectiveness-Check -->
             <strong>Site Division/Project :</strong>
             {{ Helpers::getDivisionName(session()->get('division')) }} / Effectiveness-Check
         </div>
@@ -97,11 +97,11 @@
                             </button>
                         @elseif($data->stage == 2 && (in_array(14, $userRoleIds) || in_array(18, $userRoleIds)))
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                        Effective
-                                    </button>
-                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                        Not Effective
-                                    </button>  -->
+                                            Effective
+                                        </button>
+                                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                            Not Effective
+                                        </button>  -->
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledge Complete
                             </button>
@@ -110,11 +110,11 @@
                             </button>
                         @elseif($data->stage == 3 && (in_array(14, $userRoleIds) || in_array(18, $userRoleIds)))
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                       Effective
-                                   </button>
-                                   <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                       Not Effective
-                                   </button>  -->
+                                           Effective
+                                       </button>
+                                       <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                           Not Effective
+                                       </button>  -->
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete
                             </button>
@@ -130,11 +130,11 @@
                             </button>
                         @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                        Effective Approval Completed
-                                    </button>
-                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                        More Information Required
-                                    </button>  -->
+                                            Effective Approval Completed
+                                        </button>
+                                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                            More Information Required
+                                        </button>  -->
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Effective
                             </button>
@@ -411,11 +411,11 @@
 
                                 </div>
                                 <!-- <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="Short Description">Short Description</label>
-                                            <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                        </div>
-                                    </div> -->
+                                            <div class="group-input">
+                                                <label for="Short Description">Short Description</label>
+                                                <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                            </div>
+                                        </div> -->
 
 
 
@@ -560,11 +560,11 @@
                             <!-- Effectiveness check Results -->
 
                             <!-- <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="Short Description">Short Description</label>
-                                            <textarea name="short_description">{{ $data->short_description }}</textarea>
-                                        </div>
-                                    </div> -->
+                                            <div class="group-input">
+                                                <label for="Short Description">Short Description</label>
+                                                <textarea name="short_description">{{ $data->short_description }}</textarea>
+                                            </div>
+                                        </div> -->
                             <div class="col-12 sub-head">
                                 Effectiveness Check Results
                             </div>
@@ -589,13 +589,13 @@
                         @endif
 
                         <!-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Effectiveness check Attachments"><b>Effectiveness check
-                                                    Attachment</b></label>
-                                            <input type="file" id="myfile" name="Effectiveness_check_Attachment"
-                                                value="{{ $data->Effectiveness_check_Attachment }}">
-                                        </div>
-                                    </div> -->
+                                            <div class="group-input">
+                                                <label for="Effectiveness check Attachments"><b>Effectiveness check
+                                                        Attachment</b></label>
+                                                <input type="file" id="myfile" name="Effectiveness_check_Attachment"
+                                                    value="{{ $data->Effectiveness_check_Attachment }}">
+                                            </div>
+                                        </div> -->
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Effectiveness check Attachments">Effectiveness check Attachment</label>
@@ -650,12 +650,12 @@
                                     </div>
                                 </div> --}}
                         <!-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Addendum Attachments"><b>Addendum Attachment</b></label>
-                                            <input type="file" id="myfile" name="Addendum_Attachment"
-                                                value="{{ $data->Addendum_Attachment }}">
-                                        </div>
-                                    </div> -->
+                                            <div class="group-input">
+                                                <label for="Addendum Attachments"><b>Addendum Attachment</b></label>
+                                                <input type="file" id="myfile" name="Addendum_Attachment"
+                                                    value="{{ $data->Addendum_Attachment }}">
+                                            </div>
+                                        </div> -->
                         {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Addendum Attachments">Addendum Attachment</label>
@@ -721,11 +721,11 @@
                     </div>
                     @endif
                     <!-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Attachments"><b>Attachment</b></label>
-                                            <input type="file" id="myfile" name="Attachment">
-                                        </div>
-                                    </div> -->
+                                            <div class="group-input">
+                                                <label for="Attachments"><b>Attachment</b></label>
+                                                <input type="file" id="myfile" name="Attachment">
+                                            </div>
+                                        </div> -->
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Attachments"> HOD Review Attachment</label>
@@ -760,12 +760,12 @@
                     </div>
                 </div>
                 <!-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Reference Records"><b>Reference Records</b></label>
-                                            <input type="file" id="myfile" name="refer_record">
-                                             <div class="static">Ref.Record</div>
-                                        </div>
-                                    </div> -->
+                                            <div class="group-input">
+                                                <label for="Reference Records"><b>Reference Records</b></label>
+                                                <input type="file" id="myfile" name="refer_record">
+                                                 <div class="static">Ref.Record</div>
+                                            </div>
+                                        </div> -->
                 {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Reference Records">Reference Records</label>
@@ -1054,6 +1054,24 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="group-input">
+                        <label for="Effective by"><b>Effective By</b></label>
+                        <div class="static">{{ $data->effective_by }}</div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="group-input">
+                        <label for="Effective On"><b>Effective On</b></label>
+                        <div class="static">{{ $data->effective_on }}</div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="group-input">
+                        <label for="Effective On"><b>Effective Comment</b></label>
+                        <div class="static">{{ $data->effective_comment }}</div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="group-input">
                         <label for="Not Effective Approval Complete By"><b>Not Effective Approval Complete By</b></label>
                         <div class="static">{{ $data->not_effective_approval_complete_by }}</div>
                     </div>
@@ -1071,24 +1089,7 @@
                         <div class="static">{{ $data->not_effective_approval_complete_comment }}</div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="group-input">
-                        <label for="Effective by"><b>Effective By</b></label>
-                        <div class="static">{{ $data->effective_by }}</div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="group-input">
-                        <label for="Effective On"><b>Effective On</b></label>
-                        <div class="static">{{ $data->effective_on }}</div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="group-input">
-                        <label for="Effective On"><b>Effective Comment</b></label>
-                        <div class="static">{{ $data->effective_comment }}</div>
-                    </div>
-                </div>
+
 
                 <div class="col-lg-4">
                     <div class="group-input">
@@ -1165,9 +1166,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                            <button>Close</button>
-                        </div> -->
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1211,9 +1212,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                            <button>Close</button>
-                        </div> -->
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1319,9 +1320,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                            <button>Close</button>
-                        </div> -->
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1404,9 +1405,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                            <button>Close</button>
-                        </div> -->
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>

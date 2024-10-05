@@ -277,12 +277,12 @@
 
 
                                 <!-- <div class="col-lg-6">
-                                                        <div class="group-input">
-                                                            <label for="Effectiveness check Attachments"><b>Effectiveness check
-                                                                    Attachment</b></label>
-                                                            <input type="file" id="myfile" name="Effectiveness_check_Attachment">
-                                                        </div>
-                                                    </div> -->
+                                                                    <div class="group-input">
+                                                                        <label for="Effectiveness check Attachments"><b>Effectiveness check
+                                                                                Attachment</b></label>
+                                                                        <input type="file" id="myfile" name="Effectiveness_check_Attachment">
+                                                                    </div>
+                                                                </div> -->
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Effectiveness check Attachments">Effectiveness check Attachment</label>
@@ -319,11 +319,11 @@
                                     </div>
                                 </div> --}}
                                 <!-- <div class="col-lg-6">
-                                                        <div class="group-input">
-                                                            <label for="Addendum Attachments"><b>Addendum Attachment</b></label>
-                                                            <input type="file" id="myfile" name="Addendum_Attachment">
-                                                        </div>
-                                                    </div> -->
+                                                                    <div class="group-input">
+                                                                        <label for="Addendum Attachments"><b>Addendum Attachment</b></label>
+                                                                        <input type="file" id="myfile" name="Addendum_Attachment">
+                                                                    </div>
+                                                                </div> -->
                                 {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Addendum Attachments">Addendum Attachment</label>
@@ -363,11 +363,11 @@
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
-                                                        <div class="group-input">
-                                                            <label for="Attachments"><b>Attachment</b></label>
-                                                            <input type="file" id="myfile" name="Attachment">
-                                                        </div>
-                                                    </div> -->
+                                                                    <div class="group-input">
+                                                                        <label for="Attachments"><b>Attachment</b></label>
+                                                                        <input type="file" id="myfile" name="Attachment">
+                                                                    </div>
+                                                                </div> -->
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Attachments">HOD Review Attachment </label>
@@ -385,12 +385,12 @@
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
-                                                        <div class="group-input">
-                                                            <label for="Reference Records"><b>Reference Records</b></label>
-                                                              <div class="static"></div>
-                                                            <input type="file" id="myfile" name="refer_record">
-                                                        </div>
-                                                    </div> -->
+                                                                    <div class="group-input">
+                                                                        <label for="Reference Records"><b>Reference Records</b></label>
+                                                                          <div class="static"></div>
+                                                                        <input type="file" id="myfile" name="refer_record">
+                                                                    </div>
+                                                                </div> -->
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Reference Records">Reference Records</label>
@@ -617,6 +617,24 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
+                                        <label for="Effective by"><b>Effective By</b></label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Effective On"><b>Effective On</b></label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="Effective On"><b>Effective Comment</b></label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
                                         <label for="Not Effective Approval Complete By"><b>Not Effective Approval Complete
                                                 By</b></label>
                                         <div class="static"></div>
@@ -636,24 +654,7 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Effective by"><b>Effective By</b></label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Effective On"><b>Effective On</b></label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="Effective On"><b>Effective Comment</b></label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
+
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
