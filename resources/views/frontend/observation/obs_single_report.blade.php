@@ -266,26 +266,10 @@
                         Not Applicable
                     @endif
                 </td>
-                        {{-- @php
-                            $users = DB::table('users')->select('id', 'name')->get();
-                            $matched = false;
-                        @endphp
-                        <th class="w-20">Assigned To</th>
-                        @foreach ($users as $value)
-                            @if ($data->assign_to == $value->id)
-                                <td>{{ $value->name }}</td>
-                                @php $matched = true; @endphp
-                            @break
-                        @endif
-                    @endforeach
 
-                    @if (!$matched)
-                        <td>Not Applicable</td>
-                    @endif --}}
                 </tr>
                 <tr>
-                    {{-- <th class="w-20">Observation Due Date</th>
-                    <td class="w-80">{{ Helpers::getdateFormat($data->due_date)}}</td> --}}
+
                     <th class="w-20">Observation Due Date</th>
                     <td class="w-80">
                         @if ($data->due_date)
@@ -318,14 +302,6 @@
                 </tr>
             </table>
 
-                    <!-- <th class="w-20">Observation (+)</th>
-                    <td class="w-80">
-                        @if ($data->non_compliance)
-                            {{ $data->non_compliance }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td> -->
                
                     <style>
                     .head-number {
@@ -340,55 +316,36 @@
                     }
                 </style>
 
-                <label class="head-number" for="Observation (+)">Observation (+)</label>
-                <div class="div-data">
-                    @if ($data->non_compliance)
-                        {{ $data->non_compliance }}
-                    @else
-                        Not Applicable
-                    @endif
+                <div class="block">
+                    <div class="block-head">
+                    Observation
+                    </div>
+                    <div class="border-table">
+                    <table class="table table-bordered" id="Details-table">
+                        <thead>
+                            <tr class="table_bg">
+                                <th style="width: 8%">Row#</th>
+                                <th style="width: 80%">Observation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        @if ($grid_Data && is_array($grid_Data->data))
+                        @foreach ($grid_Data->data as $datas)
+                            <tr>
+                                <td>{{ $loop->index + 1 }}</td>
+                                <td>{{ isset($datas['non_compliance']) ? $datas['non_compliance'] : '' }}</td>
+                            </tr>
+                        @endforeach
+                        @endif
+                        </tbody>
+
+                    </table>                        
+                    </div>
                 </div>
 
 
 
-
-                {{-- <h5>Non Compliance</h5>
-                <div style="font-size: 12px;">
-                    {{ $data->non_compliance }}
-                </div>
-
-                <h5>Recommended Action</h5>
-                <div style="font-size: 12px;">
-                    {{ str_replace(',', ', ', $data->recommend_action) }}
-                </div> --}}
-
-                    {{-- <th class="w-20">Recommended Action</th>
-                    <td class="w-30">
-                        @if ($data->recommend_action)
-                            {!! $data->recommend_action !!}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td> --}}
-
-
-                {{-- <table>
-                    <tr>
-                    <th class="w-20">Related Obsevations</th>
-                    <td class="w-80">
-                        @if ($data->related_observations)
-                            {{ $data->related_observations }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-
-                </tr>
-            </table> --}}
-
-            {{-- <div class="block"> --}}
-            {{-- <div class="block-head"> --}}
-            {{-- </div> --}}
             <div class="block-head">
                 Attached files
              </div>
@@ -424,83 +381,92 @@
                 Response and CAPA Plan Details
             </div>
 
-            
-            <label class="head-number" for="Observation (+)">Response Details (+)</label>
-                <div class="div-data">
-                    @if ($data->response_detail)
-                        {{ $data->response_detail }}
-                    @else
-                        Not Applicable
-                    @endif
+
+                <div class="block">
+                    <div class="block-head">
+                    Response Details
+                    </div>
+                    <div class="border-table">
+                    <table class="table table-bordered" id="Details-table">
+                        <thead>
+                            <tr class="table_bg">
+                                <th style="width: 8%">Row#</th>
+                                <th style="width: 80%">Response Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @if ($grid_Data2 && is_array($grid_Data2->data))
+                            @foreach ($grid_Data2->data as $datas)
+                                <tr>
+                                    <td>{{ $loop->index + 1 }}</td>
+                                    <td>{{ isset($datas['response_detail']) ? $datas['response_detail'] : '' }}</td>
+                                </tr>
+                            @endforeach
+                            @endif
+                        </tbody>
+
+                    </table>                        
+                    </div>
                 </div>
 
-                
-                <label class="head-number" for="Observation (+)">Corrective Actions (+)</label>
-                <div class="div-data">
-                    @if ($data->corrective_action)
-                        {{ $data->corrective_action }}
-                    @else
-                        Not Applicable
-                    @endif
+                <div class="block">
+                    <div class="block-head">
+                    Corrective Actions
+                    </div>
+                    <div class="border-table">
+                    <table class="table table-bordered" id="Details-table">
+                        <thead>
+                            <tr class="table_bg">
+                                <th style="width: 8%">Row#</th>
+                                <th style="width: 80%">Corrective Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        @if ($grid_Data3 && is_array($grid_Data3->data))
+                        @foreach ($grid_Data3->data as $datas)
+                            <tr>
+                                <td>{{ $loop->index + 1 }}</td>
+                                <td>{{ isset($datas['corrective_action']) ? $datas['corrective_action'] : '' }}</td>
+                            </tr>
+                        @endforeach
+                        @endif
+                        </tbody>
+
+                    </table>                        
+                    </div>
                 </div>
 
-                
-                <label class="head-number" for="Observation (+)">Preventive Action (+)</label>
-                <div class="div-data">
-                    @if ($data->preventive_action)
-                        {{ $data->preventive_action }}
-                    @else
-                        Not Applicable
-                    @endif
+
+
+                <div class="block">
+                    <div class="block-head">
+                    Preventive Action 
+                    </div>
+                    <div class="border-table">
+                    <table class="table table-bordered" id="Details-table">
+                        <thead>
+                            <tr class="table_bg">
+                                <th style="width: 8%">Row#</th>
+                                <th style="width: 80%">Preventive Action </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        @if ($grid_Data4 && is_array($grid_Data4->data))
+                        @foreach ($grid_Data4->data as $datas)
+                            <tr>
+                                <td>{{ $loop->index + 1 }}</td>
+                                <td>{{ isset($datas['preventive_action']) ? $datas['preventive_action'] : '' }}</td>
+                            </tr>
+                        @endforeach
+                        @endif
+                        </tbody>
+
+                    </table>                        
+                    </div>
                 </div>
-
-                
-            <!-- <table>
-                <tr>
-                    <th class="w-20">Response Details (+)</th>
-                    <td class="w-80">
-                        @if ($data->response_detail)
-                            {{ $data->response_detail }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-
-                    <th class="w-20">Corrective Actions (+)</th>
-                    <td class="w-80">
-                        @if ($data->corrective_action)
-                            {{ $data->corrective_action }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-
-                </tr>
-
-
-                <tr>
-                    <th class="w-20">Preventive Action (+)</th>
-                    <td class="w-80">
-                        @if ($data->preventive_action)
-                            {{ $data->preventive_action }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-
-                    <th class="w-20">Comments</th>
-                    <td class="w-80">
-                        @if ($data->comments)
-                            {{ $data->comments }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-
-                </tr>
-            </table> -->
-           
-            {{-- <div style="font-weight: 200">Action Plan</div> --}}
 
             <div class="block">
                 <div class="block-head">
@@ -515,7 +481,6 @@
                             <th class="w-20">Deadline</th>
                             <th class="w-20">Item Status</th>
                         </tr>
-                        {{-- @if ($grid_Data && is_array($grid_Data->data)) --}}
                         @foreach (unserialize($griddata->action) as $key => $temps)
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
@@ -523,10 +488,7 @@
                                 <td>
                                 @foreach ($users as $value)
                                     @if ($griddata && unserialize($griddata->responsible)[$key] == $value->id)
-                                        {{-- {{ unserialize($griddata->responsible)[$key] == $value->id ? 'selected' : '' }} --}}
-                                        <!-- <td> -->
                                             {{ $value->name }}
-                                        <!-- </td> -->
                                     @endif
             
                                 @endforeach
@@ -539,7 +501,7 @@
                 </div>
             </div>
 
-            <label class="head-number" for="Observation (+)">Comments</label>
+            <label class="head-number" for="Comments">Comments</label>
                 <div class="div-data">
                     @if ($data->comments)
                         {{ $data->comments }}
@@ -548,7 +510,6 @@
                     @endif
                 </div>
            
-
             <div class="block-head">
                 Response And CAPA Attachments
              </div>
@@ -613,29 +574,10 @@
                     @endif
                 </div>
 
-                <!-- <tr>
-                    <th class="w-20">Action Taken</th>
-                    <td class="w-80">
-                        @if ($data->action_taken)
-                            {{ $data->action_taken }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr> -->
-
-
             <div class="block-head">
                 Response Summary
             </div>
-            <!-- <th class="w-20">Response Summary</th>
-            <td class="w-80">
-                @if ($data->response_summary)
-                {{ $data->response_summary }}
-                @else
-                Not Applicable
-                @endif
-            </td> -->
+
             <label class="head-number" for="Observation (+)">Response Summary</label>
                 <div class="div-data">
                     @if ($data->response_summary)
@@ -804,38 +746,7 @@
 
             </table>
            
-    
-    
-                {{-- <tr>
-                    <th class="w-20">Complete By</th>
-                    <td class="w-80">
-                        @if ($data->complete_By)
-                            {{ $data->complete_By }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-    
-                    <th class="w-20">Complete On</th>
-                    <td class="w-80">
-                        @if ($data->complete_on)
-                            {{ $data->complete_on }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">Comment</th>
-                    <td class="w-80">
-                        @if ($data->complete_comment)
-                            {{ $data->complete_comment }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-     --}}
+ 
         <div class="block-head">
            More Info Required
         </div>
@@ -973,160 +884,7 @@
                 </td>
             </tr>
        </table>
-       
-       {{-- <table>
 
-    
-                <tr>
-                    <th class="w-20">Reject CAPA Plan By</th>
-                    <td class="w-80">
-                        @if ($data->reject_capa_plan_by)
-                            {{ $data->reject_capa_plan_by }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-    
-                    <th class="w-20">Reject CAPA plan On</th>
-                    <td class="w-80">
-                        @if ($data->reject_capa_plan_on)
-                            {{ $data->reject_capa_plan_on }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">Comment</th>
-                    <td class="w-80">
-                        @if ($data->reject_capa_plan_comment)
-                            {{ $data->reject_capa_plan_comment }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-    
-                <tr>
-                    <th class="w-20">QA Approval Without CAPA By</th>
-                    <td class="w-80">
-                        @if ($data->qa_approval_without_capa_by)
-                            {{ $data->qa_approval_without_capa_by }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-    
-                    <th class="w-20">QA Approval Without CAPA On</th>
-                    <td class="w-80">
-                        @if ($data->qa_approval_without_capa_on)
-                            {{ $data->qa_approval_without_capa_on }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">Comment</th>
-                    <td class="w-80">
-                        @if ($data->qa_approval_without_capa_comment)
-                            {{ $data->qa_approval_without_capa_comment }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-    
-                <tr>
-                    <th class="w-20">QA Approval By</th>
-                    <td class="w-80">
-                        @if ($data->qa_appproval_by)
-                            {{ $data->qa_appproval_by }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-    
-                    <th class="w-20">QA Approval On</th>
-                    <td class="w-80">
-                        @if ($data->qa_appproval_on)
-                            {{ $data->qa_appproval_on }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">Comment</th>
-                    <td class="w-80">
-                        @if ($data->qa_appproval_comment)
-                            {{ $data->qa_appproval_comment }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">All CAPA closed By</th>
-                    <td class="w-80">
-                        @if ($data->all_capa_closed_by)
-                            {{ $data->all_capa_closed_by }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-    
-                    <th class="w-20">All CAPA Closed On</th>
-                    <td class="w-80">
-                        @if ($data->all_capa_closed_on)
-                            {{ $data->all_capa_closed_on }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">Comment</th>
-                    <td class="w-80">
-                        @if ($data->all_capa_closed_comment)
-                            {{ $data->all_capa_closed_comment }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-    
-                <tr>
-                    <th class="w-20">Final Approval By</th>
-                    <td class="w-80">
-                        @if ($data->Final_Approval_by)
-                            {{ $data->Final_Approval_by }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-    
-                    <th class="w-20">Final Approval On</th>
-                    <td class="w-80">
-                        @if ($data->Final_Approval_on)
-                            {{ $data->Final_Approval_on }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">Comment</th>
-                    <td class="w-80">
-                        @if ($data->Final_Approval_comment)
-                            {{ $data->Final_Approval_comment }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-    
-            </table> --}}
 
            </div>
 
