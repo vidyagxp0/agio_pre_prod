@@ -19,6 +19,7 @@ use App\Models\Question;
 use App\Models\Quize;
 use App\Models\RoleGroup;
 use App\Models\JobTraining;
+use App\Models\JobDescription;
 use App\Models\TrainingAudit;
 use App\Models\TrainingHistory;
 use App\Models\TrainingStatus;
@@ -34,7 +35,8 @@ class TMSController extends Controller
     public function index(){
 
         // return dd(Helpers::checkRoles(6));
-        $inductionTraining = Induction_training::get();        
+        $inductionTraining = Induction_training::get();  
+        $jobTraining = JobDescription::get();      
         $jobTrainings = JobTraining::get();
         if(Helpers::checkRoles(6)){
             $documents = DocumentTraining::where('trainer', Auth::user()->id)->with('root_document')->orderByDesc('id')->get();

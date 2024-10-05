@@ -7858,7 +7858,7 @@
                                 }
                             @endphp
                                 <select multiple id="reference_record" name="proposal_for_hypothesis_IB[]">
-                                    <option value="">--Select---</option>
+                                    {{-- <option value="">--Select---</option> --}}
                                     <option value="Re-injection of the original vial" @if (in_array('Re-injection of the original vial', $selectedChecklist)) selected @endif>Re-injection of the original vial</option>
                                     <option value="Re-filtration and Injection from final dilution" @if (in_array('Re-filtration and Injection from final dilution', $selectedChecklist)) selected @endif>Re-filtration and Injection from final dilution</option>
                                     <option value="Re-dilution from the tock solution and injection" @if (in_array('Re-dilution from the tock solution and injection', $selectedChecklist)) selected @endif>Re-dilution from the tock solution and injection</option>
