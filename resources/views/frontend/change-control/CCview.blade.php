@@ -497,7 +497,7 @@
                             <button class="cctablinks" onclick="openCity(event, 'CCForm11')">CFT</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA/CQA Final Review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm15')"  style="display: none" id="actionButton">RA</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm17')">QA/CQA Designee Approval</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm17')">QA/CQA Head/Designee Approval</button>
 
                             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Evaluation</button> -->
                             <button class="cctablinks" onclick="openCity(event, 'CCForm5')"> Initiator Update</button>
