@@ -369,7 +369,8 @@
                         <th class="w-20">Initial Attachment</th>
                         <td class="w-80" colspan="3">
                             @if ($data->initial_attachment_ooc)
-                                {{ $data->initial_attachment_ooc }}
+                                {{-- {{ $data->initial_attachment_ooc }} --}}
+                                {{ str_replace(',', ', ', $data->initial_attachment_ooc) }}
                             @else
                                 Not Applicable
                             @endif
@@ -506,7 +507,8 @@
                         <th class="w-20">HOD Primary Review Attachments</th>
                         <td class="w-80" colspan="3">
                             @if ($data->attachments_hod_ooc)
-                                {!! $data->attachments_hod_ooc !!}
+                                {{-- {!! $data->attachments_hod_ooc !!} --}}
+                                {{ str_replace(',', ', ', $data->attachments_hod_ooc) }}
                             @else
                                 Not Applicable
                             @endif
@@ -553,7 +555,8 @@
                         <th class="w-20">QA Head Primary Review Attachment</th>
                         <td class="w-80" colspan="3">
                             @if ($data->initial_attachment_capa_ooc)
-                                {!! $data->initial_attachment_capa_ooc !!}
+                                {{-- {!! $data->initial_attachment_capa_ooc !!} --}}
+                                {{ str_replace(',', ', ', $data->initial_attachment_capa_ooc) }}
                             @else
                                 Not Applicable
                             @endif
@@ -727,7 +730,8 @@
                         <th class="w-20">Hypothesis Attachment</th>
                         <td class="w-80" colspan="3">
                             @if ($data->attachments_hypothesis_ooc)
-                                {{ $data->attachments_hypothesis_ooc }}
+                                {{-- {{ $data->attachments_hypothesis_ooc }} --}}
+                                {{ str_replace(',', ', ', $data->attachments_hypothesis_ooc) }}
                             @else
                                 Not Applicable
                             @endif
@@ -770,7 +774,8 @@
                         <th class="w-20">Phase IA Attachment</th>
                         <td class="w-80" colspan="3">
                             @if ($data->attachments_stage_ooc)
-                                {!! $data->attachments_stage_ooc !!}
+                                {{-- {!! $data->attachments_stage_ooc !!} --}}
+                                {{ str_replace(',', ', ', $data->attachments_stage_ooc) }}
                             @else
                                 Not Applicable
                             @endif
@@ -870,7 +875,8 @@
                         <th class="w-20">Phase IA HOD Attachment</th>
                         <td class="w-80" colspan="3">
                             @if ($data->attachments_hodIAHODPRIMARYREVIEW_ooc)
-                                {!! $data->attachments_hodIAHODPRIMARYREVIEW_ooc !!}
+                                {{-- {!! $data->attachments_hodIAHODPRIMARYREVIEW_ooc !!} --}}
+                                {{ str_replace(',', ', ', $data->attachments_hodIAHODPRIMARYREVIEW_ooc) }}
                             @else
                                 Not Applicable
                             @endif
@@ -898,7 +904,8 @@
                         <th class="w-20">Phase IA QA Attachment</th>
                         <td class="w-80" colspan="3">
                             @if ($data->initial_attachment_capa_post_ooc)
-                                {!! $data->initial_attachment_capa_post_ooc !!}
+                                {{-- {!! $data->initial_attachment_capa_post_ooc !!} --}}
+                                {{ str_replace(',', ', ', $data->initial_attachment_capa_post_ooc) }}
                             @else
                                 Not Applicable
                             @endif
@@ -926,7 +933,8 @@
                         <th class="w-20">P-IA QAH Attachment</th>
                         <td class="w-80" colspan="3">
                             @if ($data->initial_attachment_qah_post_ooc)
-                                {!! $data->initial_attachment_qah_post_ooc !!}
+                                {{-- {!! $data->initial_attachment_qah_post_ooc !!} --}}
+                                {{ str_replace(',', ', ', $data->initial_attachment_qah_post_ooc) }}
                             @else
                                 Not Applicable
                             @endif
@@ -988,7 +996,8 @@
                         <th class="w-20">Details of Equipment Rectification Attachment</th>
                         <td class="w-80" colspan="3">
                             @if ($data->initial_attachment_stageii_ooc)
-                                {{ $data->initial_attachment_stageii_ooc }}
+                                {{-- {{ $data->initial_attachment_stageii_ooc }} --}}
+                                {{ str_replace(',', ', ', $data->initial_attachment_stageii_ooc) }}
                             @else
                                 Not Applicable
                             @endif
@@ -1098,7 +1107,8 @@
                         <th class="w-20">Phase IB Attachment</th>
                         <td class="w-80" colspan="3">
                             @if ($data->initial_attachment_reanalysisi_ooc)
-                                {!! $data->initial_attachment_reanalysisi_ooc !!}
+                                {{-- {!! $data->initial_attachment_reanalysisi_ooc !!} --}}
+                                {{ str_replace(',', ', ', $data->initial_attachment_reanalysisi_ooc) }}
                             @else
                                 Not Applicable
                             @endif
@@ -1127,7 +1137,8 @@
                         <th class="w-20">Phase IB HOD Primary Attachment</th>
                         <td class="w-80" colspan="3">
                             @if (!empty($data->attachments_hodIBBBHODPRIMARYREVIEW_ooc))
-                                {!! $data->attachments_hodIBBBHODPRIMARYREVIEW_ooc !!}
+                                {{-- {!! $data->attachments_hodIBBBHODPRIMARYREVIEW_ooc !!} --}}
+                                {{ str_replace(',', ', ', $data->attachments_hodIBBBHODPRIMARYREVIEW_ooc) }}
                             @else
                                 Not Applicable
                             @endif
@@ -1206,7 +1217,8 @@
                         <th class="w-20">Phase IB QA Attachment</th>
                         <td class="w-80" colspan="3">
                             @if (!empty($data->attachments_QAIBBBREVIEW_ooc))
-                                {{ $data->attachments_QAIBBBREVIEW_ooc }}
+                                {{-- {{ $data->attachments_QAIBBBREVIEW_ooc }} --}}
+                                {{ str_replace(',', ', ', $data->attachments_QAIBBBREVIEW_ooc) }}
                             @else
                                 Not Applicable
                             @endif
@@ -1274,7 +1286,8 @@
                         <th class="w-20">P-IB QAH Attachment</th>
                         <td class="w-80" colspan="3">
                             @if ($data->Pib_attachements)
-                                {!! $data->Pib_attachements !!}
+                                {{-- {!! $data->Pib_attachements !!} --}}
+                                {{ str_replace(',', ', ', $data->Pib_attachements) }}
                             @else
                                 Not Applicable
                             @endif
