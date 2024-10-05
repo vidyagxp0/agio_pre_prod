@@ -166,7 +166,7 @@ class OOSService
                 $history->previous = "Null";
                 $history->comment = "Not Applicable";
                 $history->activity_type = 'Initiator';
-                $history->current = $request->initiator_id;
+                $history->current = Helpers::getInitiatorName($request->initiator_id);
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -183,7 +183,8 @@ class OOSService
                 $history->previous = "Null";
                 $history->comment = "Not Applicable";
                 $history->activity_type = 'Record Number';
-                $history->current = $request->record;
+                $history->current = Helpers::getDivisionName(session()->get(key: 'division')) . "/OOS/OOT/" . Helpers::year($request->created_at) . "/" . str_pad($request->record, 4, '0', STR_PAD_LEFT);
+                // $history->current = $request->record;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1533,7 +1534,7 @@ class OOSService
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
-                $history->activity_type = 'Others1';
+                $history->activity_type = 'Others';
                 $history->current = $request->Types_of_assignable_others;
                 $history->save();
             }
@@ -4833,12 +4834,12 @@ class OOSService
                 // if ($lastOosRecod->Types_of_assignable_others != $request->Types_of_assignable_others){
                     if ($lastOosRecod->Types_of_assignable_others !=  $request->Types_of_assignable_others || !empty($request->Types_of_assignable_others_comment)) {
                         $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                                ->where('activity_type', 'Others1')
+                                ->where('activity_type', 'Others')
                                 ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->Types_of_assignable_others;
-                    $history->activity_type = 'Others1';
+                    $history->activity_type = 'Others';
                     $history->current = $request->Types_of_assignable_others;
                     $history->comment = "Not Applicable";
                     $history->user_id = Auth::user()->id;
