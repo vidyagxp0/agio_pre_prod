@@ -5941,7 +5941,7 @@
                                             @endphp
                                             <div class="col-lg-6 qualityControl">
                                                 <div class="group-input">
-                                                    <label for="Quality Control notification">Quality Control Person <span
+                                                    <label for="Quality Control notification">Quality Control Review Comment Required <span
                                                             id="asteriskPT"
                                                             style="display: {{ $data1->Quality_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
@@ -6133,7 +6133,7 @@
                                             @endphp
                                             <div class="col-lg-6 qualityControl">
                                                 <div class="group-input">
-                                                    <label for="Quality Control notification">Quality Control Person <span
+                                                    <label for="Quality Control notification">Quality Control Review Comment Required ? <span
                                                             id="asteriskInvi11" style="display: none"
                                                             class="text-danger">*</span></label>
                                                     <select name="Quality_Control_Person" disabled
@@ -7461,7 +7461,7 @@
                                                     </label>
                                                     <select name="Other1_Department_person"
                                                         @if ($data->stage == 4) disabled @endif
-                                                        id="Other1_Department_person">
+                                                        id="Other1_Department_person" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach (Helpers::getDepartments() as $key => $name)
                                                             <option value="{{ $key }}"
@@ -7509,7 +7509,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                 type="file" id="myfile"
                                                                 name="Other1_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'Other1_attachment')"
@@ -7626,7 +7626,7 @@
                                                     </label>
                                                     <select name="Other2_Department_person"
                                                         @if ($data->stage == 4) disabled @endif
-                                                        id="Other2_Department_person">
+                                                        id="Other2_Department_person"  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach (Helpers::getDepartments() as $key => $name)
                                                             <option value="{{ $key }}"
@@ -7710,7 +7710,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                 type="file" id="myfile"
                                                                 name="Other2_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'Other2_attachment')"
@@ -7829,7 +7829,7 @@
                                                     </label>
                                                     <select name="Other3_Department_person"
                                                         @if ($data->stage == 4) disabled @endif
-                                                        id="Other3_Department_person">
+                                                        id="Other3_Department_person"  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach (Helpers::getDepartments() as $key => $name)
                                                             <option value="{{ $key }}"
@@ -7913,7 +7913,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                 type="file" id="myfile"
                                                                 name="Other3_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'Other3_attachment')"
@@ -8034,7 +8034,7 @@
                                                     </label>
                                                     <select name="Other4_Department_person"
                                                         @if ($data->stage == 4) disabled @endif
-                                                        id="Other4_Department_person">
+                                                        id="Other4_Department_person"  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach (Helpers::getDepartments() as $key => $name)
                                                             <option value="{{ $key }}"
@@ -8118,7 +8118,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                 type="file" id="myfile"
                                                                 name="Other4_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'Other4_attachment')"
@@ -8237,7 +8237,7 @@
                                                     </label>
                                                     <select name="Other5_Department_person"
                                                         @if ($data->stage == 4) disabled @endif
-                                                        id="Other5_Department_person">
+                                                        id="Other5_Department_person"  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach (Helpers::getDepartments() as $key => $name)
                                                             <option value="{{ $key }}"
@@ -8322,7 +8322,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                 type="file" id="myfile"
                                                                 name="Other5_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'Other5_attachment')"
@@ -8448,7 +8448,7 @@
                                                     </label>
                                                     <select name="Other1_Department_person"
                                                         @if ($data->stage == 4) disabled @endif
-                                                        id="Other1_Department_person">
+                                                        id="Other1_Department_person"  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach (Helpers::getDepartments() as $key => $name)
                                                             <option value="{{ $key }}"
@@ -8504,7 +8504,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                 type="file" id="myfile"
                                                                 name="Other1_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'Other1_attachment')"
@@ -8601,7 +8601,7 @@
                                                     </label>
                                                     <select name="Other2_Department_person"
                                                         @if ($data->stage == 4) disabled @endif
-                                                        id="Other2_Department_person">
+                                                        id="Other2_Department_person"  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach (Helpers::getDepartments() as $key => $name)
                                                             <option value="{{ $key }}"
@@ -8657,7 +8657,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                 type="file" id="myfile"
                                                                 name="Other2_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'Other2_attachment')"
@@ -8764,7 +8764,7 @@
                                                     </label>
                                                     <select name="Other3_Department_person"
                                                         @if ($data->stage == 4) disabled @endif
-                                                        id="Other3_Department_person">
+                                                        id="Other3_Department_person"  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach (Helpers::getDepartments() as $key => $name)
                                                             <option value="{{ $key }}"
@@ -8819,7 +8819,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                 type="file" id="myfile"
                                                                 name="Other3_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'Other3_attachment')"
@@ -8914,7 +8914,7 @@
                                                     </label>
                                                     <select name="Other4_Department_person"
                                                         @if ($data->stage == 4) disabled @endif
-                                                        id="Other4_Department_person">
+                                                        id="Other4_Department_person"  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach (Helpers::getDepartments() as $key => $name)
                                                             <option value="{{ $key }}"
@@ -8969,7 +8969,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                 type="file" id="myfile"
                                                                 name="Other4_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'Other4_attachment')"
@@ -9075,7 +9075,7 @@
                                                     </label>
                                                     <select name="Other5_Department_person"
                                                         @if ($data->stage == 4) disabled @endif
-                                                        id="Other5_Department_person">
+                                                        id="Other5_Department_person"  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach (Helpers::getDepartments() as $key => $name)
                                                             <option value="{{ $key }}"
@@ -9131,7 +9131,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                 type="file" id="myfile"
                                                                 name="Other5_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'Other5_attachment')"

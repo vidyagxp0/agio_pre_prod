@@ -4815,7 +4815,7 @@ $AuditorShow->save();
         if ($lastCft->Human_Resource_review != $request->Human_Resource_review && $request->Human_Resource_review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'HHuman Resource Review Comment Required';
+            $history->activity_type = 'Human Resource Review Comment Required';
             $history->previous = $lastCft->Human_Resource_review;
             $history->current = $request->Human_Resource_review;
             $history->comment = "Not Applicable";

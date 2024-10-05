@@ -7043,6 +7043,9 @@
                                     </div>
 
 
+
+
+                                    
                                 <div class="col-12 other1_reviews">    
                                     <div class="col-lg-12 Other1_reviews">
 
@@ -7054,7 +7057,7 @@
                                             </label>
                                             <select name="Other1_Department_person"
                                                 @if ($data->stage == 4) disabled @endif
-                                                id="Other1_Department_person">
+                                                id="Other1_Department_person" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
                                                     <option value="{{ $key }}" @if ($data1->Other1_Department_person == $key) selected @endif>
@@ -7247,7 +7250,7 @@
                                         </label>
                                         <select name="Other2_Department_person"
                                             @if ($data->stage == 4) disabled @endif
-                                            id="Other2_Department_person">
+                                            id="Other2_Department_person" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                             <option value="">-- Select --</option>
                                             @foreach (Helpers::getDepartments() as $key => $name)
                                                 <option value="{{ $key }}" @if ($data1->Other2_Department_person == $key) selected @endif>
@@ -7444,7 +7447,7 @@
                                         </label>
                                         <select name="Other3_Department_person"
                                             @if ($data->stage == 4) disabled @endif
-                                            id="Other3_Department_person">
+                                            id="Other3_Department_person" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                             <option value="">-- Select --</option>
                                             @foreach (Helpers::getDepartments() as $key => $name)
                                                 <option value="{{ $key }}" @if ($data1->Other3_Department_person == $key) selected @endif>
@@ -7641,7 +7644,7 @@
                                     </label>
                                     <select name="Other4_Department_person"
                                         @if ($data->stage == 4) disabled @endif
-                                        id="Other4_Department_person">
+                                        id="Other4_Department_person" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                         <option value="">-- Select --</option>
                                         @foreach (Helpers::getDepartments() as $key => $name)
                                             <option value="{{ $key }}" @if ($data1->Other4_Department_person == $key) selected @endif>
@@ -7921,7 +7924,7 @@
                                     </label>
                                     <select name="Other5_Department_person"
                                         @if ($data->stage == 4) disabled @endif
-                                        id="Other5_Department_person">
+                                        id="Other5_Department_person"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                         <option value="">-- Select --</option>
                                         @foreach (Helpers::getDepartments() as $key => $name)
                                             <option value="{{ $key }}" @if ($data1->Other5_Department_person == $key) selected @endif>
@@ -8102,7 +8105,7 @@
                                         </label>
                                         <select name="Other1_Department_person"
                                             @if ($data->stage == 4) disabled @endif
-                                            id="Other1_Department_person">
+                                            id="Other1_Department_person" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                             <option value="">-- Select --</option>
                                             @foreach (Helpers::getDepartments() as $key => $name)
                                                 <option value="{{ $key }}" @if ($data1->Other1_Department_person == $key) selected @endif>
@@ -8248,7 +8251,7 @@
                                             </label>
                                             <select name="Other2_Department_person"
                                                 @if ($data->stage == 4) disabled @endif
-                                                id="Other2_Department_person">
+                                                id="Other2_Department_person" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
                                                     <option value="{{ $key }}" @if ($data1->Other2_Department_person == $key) selected @endif>
