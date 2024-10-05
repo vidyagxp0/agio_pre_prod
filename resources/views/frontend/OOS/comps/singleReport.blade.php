@@ -254,9 +254,9 @@
                     <tr>
                         <th class="w-20">Type</th>
                         <td class="w-30">{{ ($data->Form_type) }}</td>
-                        {{ $data->created_at }} added by {{ $data->originator }}
+                        {{ $data->created_at }} added by {{ $data->initiator_id }}
                         <th class="w-20">Initiator</th>
-                        <td class="w-30">{{ Helpers::getInitiatorName($data->originator) }}</td>
+                        <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
                      </tr>
                     <tr>
                        <th class="w-20">Date of Initiation</th>
