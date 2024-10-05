@@ -194,7 +194,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="related_records">Parent Records Number</label>
                                         <select multiple name="related_records[]" placeholder="Select Parent Record Number"
@@ -227,6 +227,19 @@
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
+                                </div> --}}
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="RLS Record Number"><b>Parent Records Number</b></label>
+                                        @if (!empty($data_record))
+                                            <input readonly type="text" name="related_records"
+                                                value="{{ $data_record }}">
+                                        @else
+                                            <input readonly type="text" name="related_records" value="">
+                                        @endif
+                                    </div>
+
                                 </div>
 
 
@@ -366,7 +379,8 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="myfile" name="file_attachment_reviewer[]"
-                                                oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple disabled>
+                                                oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple
+                                                disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -404,7 +418,8 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="myfile" name="file_attachment_approver[]"
-                                                oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple disabled>
+                                                oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple
+                                                disabled>
                                         </div>
                                     </div>
                                 </div>
