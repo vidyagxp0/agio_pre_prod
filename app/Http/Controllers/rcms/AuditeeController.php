@@ -6734,14 +6734,13 @@ $history->activity_type = 'Quality Control Completed By, Quality Control Complet
 if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
     $history->previous = "";
 } else {
-    $history->previous = $lastDocument->Quality_Control_by . ' , ' . $lastDocument->Quality_Control_on;
+    
+    $history->previous = $lastDocument->Quality_Control_by . ' ,' .Helpers::getdateFormat ($lastDocument->Quality_Control_on);
 }
 
 $history->action = 'CFT Review Complete';
 
-// Make sure you're using the updated $updateCFT object here
-$history->current = $updateCFT->Quality_Control_by . ', ' . $updateCFT->Quality_Control_on;
-
+$history->current = $updateCFT->Quality_Control_by . ',' .Helpers::getdateFormat ($updateCFT->Quality_Control_on);
 $history->comment = $request->comment;
 $history->user_id = Auth::user()->name;
 $history->user_name = Auth::user()->name;
