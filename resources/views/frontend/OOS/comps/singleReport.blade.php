@@ -247,7 +247,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Record Number</th>
-                        <td class="w-30">@if($data->record_number){{  str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <td class="w-30">{{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/OOS/OOT/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }} </td>
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">{{ Helpers::getDivisionName($data->division_id) }}</td>
                     </tr>
@@ -271,15 +271,24 @@
                     <tr>
                         <th class="w-20">Initiation department Group</th>
                         <td class="w-30">
+                            @if(Helpers::getFullDepartmentName($data->initiator_group))
+                                {{ Helpers::getFullDepartmentName($data->initiator_group) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        
+                        
+                        {{-- <td class="w-30">
                         <select>
                         @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
                         <option value="{{ $code }}" @if ($data->initiator_group == $code) selected
                             @endif>{{ $initiator_group }}</option>
                         @endforeach
                         </select>
-                        </td>
+                        </td> --}}
                         <th class="w-20">Initiation department Code</th>
-                        <td class="w-80">{{ $data->initiator_group_code }}</td>
+                        <td class="w-80">@if($data->initiator_group_code){{ $data->initiator_group_code }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                        <th class="w-20">If Others</th>
