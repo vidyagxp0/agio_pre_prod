@@ -56,7 +56,7 @@
 
     <div class="form-field-head">
         <div class="division-bar">
-            <strong>Site Division/Project</strong> : {{ Helpers::getDivisionName(session()->get('division')) }}/Observation
+            <strong>Site Division/Project</strong> : {{ Helpers::getDivisionName($data->division_code) }}/Observation
         </div>
     </div>
 
@@ -284,14 +284,14 @@
                                                 <label for="RLS Record Number"><b>Record Number</b></label>
                                                 <input type="hidden" name="record_number">
                                                 <input disabled type="text"
-                                                    value="{{  Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                                    value="{{  Helpers::getDivisionName($data->division_code) }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Division Code"><b>Site/Location Code</b></label>
                                                 <input readonly type="text" name="division_id"
-                                                    value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                                    value="{{ Helpers::getDivisionName($data->division_code) }}">
                                                 <input type="hidden" name="division_id"
                                                     value="{{ session()->get('division') }}">
                                             </div>
@@ -371,7 +371,7 @@
                                                     <input disabled type="text" id="due_date" readonly placeholder="DD-MMM-YYYY"
                                                         value="{{ $data->due_date ? \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') : '' }}" />
                                                     <input type="date" name="due_date"
-                                                    {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? "disabled" : "" }}
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'due_date')" />
@@ -738,7 +738,7 @@
                                         <div class="group-input">
                                             <label for="audit-agenda-grid">
                                                 <div class="sub-head">Observation
-                                                    <button type="button" name="details" id="Details-add">+</button>
+                                                    <button type="button" name="details" id="Details-add" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
                                                 </div>
                                             </label>
                                             <div class="table-responsive">
@@ -761,11 +761,11 @@
                                                                             value="{{ $loop->index + 1 }}">
                                                                     </td>
                                                                     <td><input type="text"
-                                                                            name="observation[{{ $loop->index }}][non_compliance]"
+                                                                            name="observation[{{ $loop->index }}][non_compliance]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                             value="{{ isset($datas['non_compliance']) ? $datas['non_compliance'] : '' }}">
                                                                     </td>
                                                                     <td><button type="text"
-                                                                            class="removeRowBtn">Remove</button></td>
+                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -904,8 +904,10 @@
 
                                         <div class="group-input">
                                             <label for="audit-agenda-grid">
-                                                <div class="sub-head">Response Details
-                                                    <button type="button" name="details" id="Details-add8">+</button>
+                                                <div class="sub-head">Response Details @if ($data->stage == 2)
+                                                <span class="text-danger">*</span>
+                                                @endif
+                                                    <button type="button" name="details" id="Details-add8" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
                                                 </div>
                                             </label>
                                             <div class="table-responsive">
@@ -928,11 +930,11 @@
                                                                             value="{{ $loop->index + 1 }}">
                                                                     </td>
                                                                     <td><input type="text"
-                                                                            name="response[{{ $loop->index }}][response_detail]"
+                                                                            name="response[{{ $loop->index }}][response_detail]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                             value="{{ isset($datas['response_detail']) ? $datas['response_detail'] : '' }}">
                                                                     </td>
                                                                     <td><button type="text"
-                                                                            class="removeRowBtn">Remove</button></td>
+                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -987,7 +989,7 @@
                                         <div class="group-input">
                                             <label for="audit-agenda-grid">
                                                 <div class="sub-head">Corrective Actions
-                                                    <button type="button" name="details" id="Details-add4">+</button>
+                                                    <button type="button" name="details" id="Details-add4" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
                                                 </div>
                                             </label>
                                             <div class="table-responsive">
@@ -1010,11 +1012,11 @@
                                                                             value="{{ $loop->index + 1 }}">
                                                                     </td>
                                                                     <td><input type="text"
-                                                                            name="corrective[{{ $loop->index }}][corrective_action]"
+                                                                            name="corrective[{{ $loop->index }}][corrective_action]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                             value="{{ isset($datas['corrective_action']) ? $datas['corrective_action'] : '' }}">
                                                                     </td>
                                                                     <td><button type="text"
-                                                                            class="removeRowBtn">Remove</button></td>
+                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -1068,7 +1070,7 @@
                                         <div class="group-input">
                                             <label for="audit-agenda-grid">
                                                 <div class="sub-head">Preventive Action
-                                                    <button type="button" name="details" id="Details-add5">+</button>
+                                                    <button type="button" name="details" id="Details-add5" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
                                                 </div>
                                             </label>
                                             <div class="table-responsive">
@@ -1091,11 +1093,11 @@
                                                                             value="{{ $loop->index + 1 }}">
                                                                     </td>
                                                                     <td><input type="text"
-                                                                            name="preventive[{{ $loop->index }}][preventive_action]"
+                                                                            name="preventive[{{ $loop->index }}][preventive_action]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                             value="{{ isset($datas['preventive_action']) ? $datas['preventive_action'] : '' }}">
                                                                     </td>
                                                                     <td><button type="text"
-                                                                            class="removeRowBtn">Remove</button></td>
+                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -1267,7 +1269,7 @@
     <input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $value }}">
 </td> --}} 
                                     <td><button type="text"
-                                        class="removeRowBtn">Remove</button></td>
+                                        class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
 
                                                             </tr>
                                                         @endforeach

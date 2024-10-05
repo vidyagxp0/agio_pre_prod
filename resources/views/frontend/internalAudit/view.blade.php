@@ -3089,6 +3089,9 @@
                         <div id="CCForm6" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
+                                    <div class="col-12 sub-head" style="font-size: 16px">
+                                        Schedule Audit
+                                    </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Audit Schedule On">Schedule Audit By</label>
@@ -3108,16 +3111,18 @@
                                             <div class="static">{{ $data->sheduled_audit_comment }}</div>
                                         </div>
                                     </div>
-
+                                    <div class="col-12 sub-head" style="font-size: 16px">
+                                        Cancel
+                                    </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Cancelled By">Cancelled By</label>
+                                            <label for="Cancelled By">Cancel By</label>
                                             <div class="static">{{ $data->cancelled_1_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Cancelled On">Cancelled On</label>
+                                            <label for="Cancel On">Cancel On</label>
                                             <div class="static">{{ $data->cancelled_1_on }}</div>
                                         </div>
                                     </div>
@@ -3127,6 +3132,9 @@
                                             <label for="Audit Schedule On"> Cancelled Comment</label>
                                             <div class="static">{{ $data->cancel_1_comment }}</div>
                                         </div>
+                                    </div>
+                                    <div class="col-12 sub-head" style="font-size: 16px">
+                                        Acknowledement
                                     </div>
 
                                     <div class="col-lg-4">
@@ -3189,7 +3197,9 @@
                                             <div class="static">{{ $data->cancel_2_comment }}</div>
                                         </div>
                                     </div> --}}
-
+                                    <div class="col-12 sub-head" style="font-size: 16px">
+                                        Issue Report
+                                    </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Audit Observation Submitted By">Issue Report
@@ -3250,7 +3260,9 @@
                                             <div class="static">{{ $data->cancel_3_comment }}</div>
                                         </div>
                                     </div> --}}
-
+                                    <div class="col-12 sub-head" style="font-size: 16px">
+                                        CAPA Plan Proposed
+                                    </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Audit Lead More Info Reqd By">CAPA Plan Proposed
@@ -3265,7 +3277,9 @@
                                             <div class="static">{{ $data->audit_observation_submitted_on }}</div>
                                         </div>
                                     </div>
-
+                                    <div class="col-12 sub-head" style="font-size: 16px">
+                                        No CAPAs Required
+                                    </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Audit Schedule On"> CAPA Plan Proposed Comment</label>
@@ -3293,6 +3307,9 @@
                                             <label for="Audit Schedule On"> No CAPAs Required Comment</label>
                                             <div class="static">{{ $data->no_capa_plan_required_comment }}</div>
                                         </div>
+                                    </div>
+                                    <div class="col-12 sub-head" style="font-size: 16px">
+                                        Response Reviewed
                                     </div>
 
                                     <div class="col-lg-4">
@@ -11609,10 +11626,10 @@
                                     'Is the pressure differential of RLAF is within acceptance limit? What is the limit? _______',
                                     'Is the pressure differential of the area is within acceptance limit? Check the pressure differential__________',
                                     'Is there any record for room temperature & relative humidity? Check the temperature _____°C & RH _____%',
-                                    'Is status labels displayed on all equipments?',
                                     
                                 ];
                                 $manufdocumentationQuestions = [
+                                    'Is status labels displayed on all equipments?',
                                    'Equipment cleanliness, check few equipments.',
                                     'Are machine surfaces that contact materials or finished goods, non-reactive, non-absorptive and non-additive so as not to affect the product?',
                                     'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? For active ingredients, have these procedures been validated?',
@@ -13906,7 +13923,9 @@
                                     'Status label of area & equipment available?',
                                     'Have you any proper storage area for primary and secondary packing material?',
                                     'Do you have proper segregation system for keeping product/batch separately?',
+                                    'Stereo impression record available? Check the record for any 2 batches.',
                                     'Where you keep the rejected strips / blisters / containers / cartons? ',
+                                    'Is there any standard practice for destruction of printed aluminum foil & printed cartons?',
                                     'Is there a written procedure for clearing the packaging area after one packaging operation, and cleaning before the next operation, especially if the area is used for packaging different materials?',
                                     'Have you any standard procedure for removal of scrap?',
                                 ];

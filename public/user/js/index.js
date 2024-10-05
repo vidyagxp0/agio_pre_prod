@@ -1073,15 +1073,27 @@ function openDivision(evt, cityName) {
 }
 
 
+// function handleDateInput(element, textInputID) {
+//     let textInput = document.getElementById(textInputID)
+//     const date = new Date(element.value);
+//     const months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",];
+//     const month = months[date.getMonth()];
+//     const day = date.getDate();
+//     const year = date.getFullYear();
+//     textInput.setAttribute('value', `${day}-${month}-${year}`)
+//   }
+
+
+
 function handleDateInput(element, textInputID) {
-    let textInput = document.getElementById(textInputID)
+    let textInput = document.getElementById(textInputID);
     const date = new Date(element.value);
-    const months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",];
+    const months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const month = months[date.getMonth()];
-    const day = date.getDate();
+    const day = String(date.getDate()).padStart(2, '0');  // Ensures two digits for the day
     const year = date.getFullYear();
-    textInput.setAttribute('value', `${day}-${month}-${year}`)
-  }
+    textInput.setAttribute('value', `${day}-${month}-${year}`);
+}
 
   function isStartDateLessThanEndDate(startDate, endDate) {
     // Convert date strings to Date objects

@@ -212,8 +212,6 @@ class JobDescriptionController extends Controller
         $jobTraining->start_date = $request->input('start_date');
         $jobTraining->end_date = $request->input('end_date');
 
-        // $jobTraining->sopdocument = $request->input('sopdocument');
-
         $jobTraining->name_employee = $request->input('name_employee');
         $jobTraining->job_description_no = $request->input('job_description_no');
         $jobTraining->effective_date = $request->input('effective_date');
@@ -226,11 +224,53 @@ class JobDescriptionController extends Controller
         $jobTraining->experience_with_agio = $request->input('experience_with_agio');
         $jobTraining->total_experience = $request->input('total_experience');
         $jobTraining->reason_for_revision = $request->input('reason_for_revision');
-        // $jobTraining->jd_type = $request->input('jd_type');
+        $jobTraining->jd_type = $request->input('jd_type');
         $jobTraining->revision_purpose = $request->input('revision_purpose');
         // $jobTraining->remark = $request->input('remark'); 
         $jobTraining->evaluation_required = $request->input('evaluation_required');
-        // $jobTraining->delegate = $request->input('delegate');
+        $jobTraining->delegate = $request->input('delegate');
+
+        $jobTraining->responsible_person_comment = $request->input('responsible_person_comment');
+        $jobTraining->qa_review = $request->input('qa_review');
+        $jobTraining->qa_cqa_comment = $request->input('qa_cqa_comment');
+        $jobTraining->respected_department_comment = $request->input('respected_department_comment');
+        $jobTraining->final_review_comment = $request->input('final_review_comment');
+
+        if ($request->hasFile('qa_review_attachment')) {
+            $file = $request->file('qa_review_attachment');
+            $name = $request->employee_id . 'qa_review_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $jobTraining->qa_review_attachment = $name;
+        }
+
+        if ($request->hasFile('qa_cqa_attachment')) {
+            $file = $request->file('qa_cqa_attachment');
+            $name = $request->employee_id . 'qa_cqa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $jobTraining->qa_cqa_attachment = $name;
+        }
+
+        if ($request->hasFile('responsible_person_attachment')) {
+            $file = $request->file('responsible_person_attachment');
+            $name = $request->employee_id . 'responsible_person_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $jobTraining->responsible_person_attachment = $name;
+        }
+
+        if ($request->hasFile('respected_department_attachment')) {
+            $file = $request->file('respected_department_attachment');
+            $name = $request->employee_id . 'respected_department_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $jobTraining->respected_department_attachment = $name;
+        }
+
+        if ($request->hasFile('final_review_attachment')) {
+            $file = $request->file('final_review_attachment');
+            $name = $request->employee_id . 'final_review_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $jobTraining->final_review_attachment = $name;
+        }
+
 
 
         $jobDescription_id = $jobTraining->id;
