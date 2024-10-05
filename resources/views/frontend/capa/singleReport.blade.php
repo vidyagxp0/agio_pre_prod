@@ -477,17 +477,17 @@
 
                     <div class="border-table tbl-bottum">
                         <div class="block-head">
-                            Product Material Details 
+                            Product / Material Details 
                         </div>
                         <table>
         
                             <tr class="table_bg">
                                 <th class="w-10">Row #</th>
-                                <th class="w-20">Product Material Name</th>
-                                <th class="w-20">Product Batch No./Lot No./AR No.</th>
+                                <th class="w-20">Product / Material Name</th>
+                                <th class="w-20">Product /Material Batch No./Lot No./AR No.</th>
                                 <th class="w-20">Product / Material Manufacturing Date</th>
                                 <th class="w-20">Product / Material Date of Expiry</th>
-                                <th class="w-20">Product Batch Disposition Decision</th>
+                                <th class="w-20">>Product Batch Disposition Decision</th>
                                 <th class="w-20">Product Remark</th>
                                 <th class="w-20">Product Batch Status</th>
                             </tr>
@@ -538,7 +538,7 @@
                                 <tr class="table_bg">
                                     <th class="w-25">Row #</th>
                                     <th class="w-25">Equipment/Instruments Name</th>
-                                    <th class="w-25">Equipment/Instruments ID</th>
+                                    <th class="w-25">Equipment/Instrument ID</th>
                                     <th class="w-25">Equipment/Instruments Comments</th>
                                 </tr>
                                 @if($data->Instruments_Details->equipment)
