@@ -558,8 +558,6 @@
                                         </div>
 
 
-
-
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description<span
@@ -939,7 +937,7 @@
                                                     <div class="col-6">
                                                         <div id="rootCause" class="group-input" style="display:none;">
                                                             <label for="otherFieldsUser">Other (Root Cause Methodology)</label>
-                                                            <input type="text" name="other_root_cause_methodology" id="summernote" class="form-control" value="{{ $data->other_root_cause_methodology ?? '' }}"/>
+                                                            <textarea name="other_root_cause_methodology" id="summernote" class="form-control">{{ $data->other_root_cause_methodology ?? '' }}</textarea>
                                                         </div>
                                                     </div>
 
@@ -1530,16 +1528,25 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
+                                        @if ($data->stage == 2)
                                         <div class="group-input">
                                             <label for="Closure Comment">HOD/Designee Review Comment<span
                                                     class="text-danger">*</span></label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not
-                                                    require completion </small></div>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion </small></div>
                                                     <textarea name="hod_des_rev_comm" id="summernote-1"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}   {{$data->stage == 2 ? 'required' : ''}}>{{ $data->hod_des_rev_comm }}</textarea>
                                         </div>
+                                        @else
+                                        <div class="group-input">
+                                            <label for="Closure Comment">HOD/Designee Review Comment<span
+                                                    class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not  require completion </small></div>
+                                                    <textarea readonly name="hod_des_rev_comm" id="summernote-1"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}   {{$data->stage == 2 ? 'required' : ''}}>{{ $data->hod_des_rev_comm }}</textarea>
+                                        </div>
+                                        @endif
+
                                     </div>
 
+                                    @if ($data->stage == 2)
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Inv Attachments">HOD/Designee Attachments</label>
@@ -1575,6 +1582,45 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @else
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Inv Attachments">HOD/Designee Attachments</label>
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please Attach all relevant or supporting documents
+                                                </small>
+                                            </div>
+                                            <div class="file-attachment-field">
+                                                <div disabled class="file-attachment-list" id="hod_design_attach">
+                                                    @if ($data->hod_design_attach)
+                                                        @foreach (json_decode($data->hod_design_attach) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input disabled {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                        type="file" id="hod_design_attach" name="hod_design_attach[]"
+                                                        oninput="addMultipleFiles(this,'hod_design_attach')" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+
+
 
                                 </div>
                                 <div class="button-block">
@@ -4945,7 +4991,7 @@
                                         @endphp
                                         <div class="col-lg-6 productionLiquid">
                                             <div class="group-input">
-                                                <label for="Production Liquid notification">Production Liquid  Person
+                                                <label for="Production Liquid notification">Production Liquid//External preparation Person
                                                     <span id="asteriskPT"
                                                         style="display: {{ $data1->ProductionLiquid_Review == 'yes' ? 'inline' : 'none' }}"
                                                         class="text-danger">*</span>
@@ -5041,8 +5087,6 @@
                                                     value="{{ $data1->ProductionLiquid_by }}"
                                                     name="ProductionLiquid_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
                                                     id="ProductionLiquid_by">
-
-
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-6 productionLiquid">
@@ -5426,15 +5470,15 @@
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-6 Microbiology">
-                                    <div class="group-input ">
+                                         <div class="group-input ">
                                         <label for="Microbiology Completed On">Microbiology Completed
                                             On</label>
                                         <!-- <div><small class="text-primary">Please select related information</small></div> -->
                                         <input type="date"id="Microbiology_on"
                                             name="Microbiology_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                             value="{{ $data1->Microbiology_on }}">
-                                    </div>
-                                </div> --}}
+                                         </div>
+                                      </div> --}}
                                         <div class="col-lg-6 Microbiology new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Microbiology Completed On">Microbiology
@@ -8813,6 +8857,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
+                                        @if ($data->stage == 4)
                                         <div class="group-input">
                                             <label for="Closure Comment">QA/CQA Review Comment <span
                                                     class="text-danger">*</span></label>
@@ -8822,8 +8867,58 @@
                                             <textarea class="summernote" name="qa_cqa_comments"
                                                 id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_cqa_comments }}</textarea>
                                         </div>
+                                        @else
+                                        <div class="group-input">
+                                            <label for="Closure Comment">QA/CQA Review Comment <span
+                                                    class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not
+                                                    require completion </small></div>
+                                            <textarea readonly class="summernote" name="qa_cqa_comments"
+                                                id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_cqa_comments }}</textarea>
+                                        </div>
+                                        @endif
+
                                     </div>
 
+                                    @if ($data->stage == 4)
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Inv Attachments">QA/CQA Review Attachment</label>
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please Attach all relevant or supporting documents
+                                                </small>
+                                            </div>
+                                            <div class="file-attachment-field">
+                                                <div disabled class="file-attachment-list" id="qa_cqa_attachments">
+                                                    @if ($data->qa_cqa_attachments)
+                                                        @foreach (json_decode($data->qa_cqa_attachments) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                        type="file" id="qa_cqa_attachments"
+                                                        name="qa_cqa_attachments[]"
+                                                        oninput="addMultipleFiles(this,'qa_cqa_attachments')" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @else
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Inv Attachments">QA/CQA Review Attachment</label>
@@ -8852,7 +8947,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                    <input disabled {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                         type="file" id="qa_cqa_attachments"
                                                         name="qa_cqa_attachments[]"
                                                         oninput="addMultipleFiles(this,'qa_cqa_attachments')" multiple>
@@ -8860,6 +8955,9 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
+
+
 
                                 </div>
                                 <div class="button-block">
@@ -8885,6 +8983,7 @@
                                  </div>
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
+                                        @if ($data->stage == 5)
                                         <div class="group-input">
                                             <label for="Closure Comment">QA/CQA Head Approval Comment <span
                                                     class="text-danger">*</span></label>
@@ -8893,8 +8992,20 @@
                                             <textarea class="summernote" name="qa_cqa_head_comm"
                                                 id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_cqa_head_comm }}</textarea>
                                         </div>
+                                        @else
+                                        <div class="group-input">
+                                            <label for="Closure Comment">QA/CQA Head Approval Comment <span
+                                                    class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                            <textarea readonly  class="summernote" name="qa_cqa_head_comm"
+                                                id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_cqa_head_comm }}</textarea>
+                                        </div>
+                                        @endif
+
                                     </div>
 
+                                    @if ($data->stage == 5)
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Inv Attachments">QA/CQA Head Attachment</label>
@@ -8932,6 +9043,47 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @else
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Inv Attachments">QA/CQA Head Attachment</label>
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please Attach all relevant or supporting documents
+                                                </small>
+                                            </div>
+                                            <div class="file-attachment-field">
+                                                <div disabled class="file-attachment-list" id="qa_cqa_head_attach">
+
+                                                    @if ($data->qa_cqa_head_attach)
+                                                        @foreach (json_decode($data->qa_cqa_head_attach) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input disabled {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                        type="file" id="qa_cqa_head_attach"
+                                                        name="qa_cqa_head_attach[]"
+                                                        oninput="addMultipleFiles(this,'qa_cqa_head_attach')" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+
+
 
                                 </div>
                                 <div class="button-block">
@@ -10333,12 +10485,6 @@
 
 
 
-
-
-
-
-
-
         <div class="modal fade" id="cancel-modal">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -11170,5 +11316,11 @@
                 // initializeRiskAcceptance();
             }
         </script>
+
+         <!-- Correct Order -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js"></script>
+
 
     @endsection
