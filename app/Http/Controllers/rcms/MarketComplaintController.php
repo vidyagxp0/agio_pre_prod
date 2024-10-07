@@ -8476,9 +8476,11 @@ class MarketComplaintController extends Controller
             return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'cft','relatedRecords'));
         } elseif ($request->revision == "Action-Item") {
             // return "test";
+              $p_record = MarketComplaint::find($id);
+              $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
             $parentRecord = MarketComplaint::where('id', $id)->value('record');
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.action-item.action-item', compact('record','parentRecord', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id'));
+            return view('frontend.action-item.action-item', compact('record','parentRecord', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'data_record'));
         } elseif ($request->revision == "rca") {
             // return "test";
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -8535,11 +8537,13 @@ class MarketComplaintController extends Controller
         } elseif ($request->child_type == "Action_Item") {
             $parent_name = "CAPA";
             $actionchild = MarketComplaint::find($id);
+            // $p_record = OutOfCalibration::find($id);
+            $data_record = Helpers::getDivisionName($actionchild->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($actionchild->record, 4, '0', STR_PAD_LEFT);
             $actionchild->actionchild = $record_number;
             $parent_id = $id;
             $actionchild->save();
 
-            return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.action-item.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type', 'data_record'));
         } elseif ($request->child_type == "effectiveness_check") {
             $parent_name = "CAPA";
             $effectivenesschild = MarketComplaint::find($id);

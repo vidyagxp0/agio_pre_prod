@@ -10655,7 +10655,10 @@ $history->activity_type = 'HOD Others 4 Completed By,HOD Others 4 Completed On';
         $old_record = ManagementReview::select('id', 'division_id', 'record')->get();
         $record=$record_number;
         $parentRecord = ManagementReview::where('id', $id)->value('record');
-        return view('frontend.action-item.action-item', compact('parent_intiation_date', 'parentRecord', 'parent_initiator_id','parent_record', 'record', 'due_date', 'parent_id', 'parent_type','old_record'));
+        $p_record = ManagementReview::find($id);
+        $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'MR' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
+           
+        return view('frontend.action-item.action-item', compact('parent_intiation_date', 'parentRecord', 'parent_initiator_id','parent_record', 'record', 'due_date', 'parent_id', 'parent_type','old_record', 'data_record'));
     }
 
     public static function managementReviewReport($id)
