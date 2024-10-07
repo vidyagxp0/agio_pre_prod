@@ -708,7 +708,7 @@
                                                 <label for="Interim Containnment">Interim Containment</label>
                                                 <select name="interim_containnment"
                                                     onchange="otherController(this.value, 'required', 'containment_comments')"
-                                                    {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 9 ? 'disabled' : '' }}>
+                                                    {{ $data->stage == 0|| $data->stage == 2 ||$data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option
                                                         {{ $data->interim_containnment == 'required' ? 'selected' : '' }}
