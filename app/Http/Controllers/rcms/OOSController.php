@@ -2273,9 +2273,12 @@ class OOSController extends Controller
            $actionchild->actionchild = $record_number;
            $parent_id = $id;
            $relatedRecords = Helpers::getAllRelatedRecords();
+           $data=OOS::find($id);
+           $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'OOS/OOT' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+
            $actionchild->save();
 
-           return view('frontend.extension.extension_new', compact('relatedRecords','parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
+           return view('frontend.extension.extension_new', compact('relatedRecords','extension_record', 'parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
        }
 
         else {
