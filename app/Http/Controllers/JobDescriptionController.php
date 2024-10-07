@@ -54,15 +54,15 @@ class JobDescriptionController extends Controller
 
         $jobTraining->stage = '1';
         $jobTraining->status = 'Opened';
-        $jobTraining->name = $request->input('name');
-        $jobTraining->department = $request->input('department');
-        $jobTraining->location = $request->input('location');
+        // $jobTraining->name = $request->input('name');
+        // $jobTraining->department = $request->input('department');
+        // $jobTraining->location = $request->input('location');
 
-        $jobTraining->hod = $request->input('hod');
-        $jobTraining->empcode = $request->input('empcode');
-        $jobTraining->type_of_training = $request->input('type_of_training');
-        $jobTraining->start_date = $request->input('start_date');
-        $jobTraining->end_date = $request->input('end_date');
+        // $jobTraining->hod = $request->input('hod');
+        // $jobTraining->empcode = $request->input('empcode');
+        // $jobTraining->type_of_training = $request->input('type_of_training');
+        // $jobTraining->start_date = $request->input('start_date');
+        // $jobTraining->end_date = $request->input('end_date');
 
         // $jobTraining->sopdocument = $request->input('sopdocument');
 
@@ -78,9 +78,9 @@ class JobDescriptionController extends Controller
         $jobTraining->experience_with_agio = $request->input('experience_with_agio');
         $jobTraining->total_experience = $request->input('total_experience');
         $jobTraining->reason_for_revision = $request->input('reason_for_revision');
-        // $jobTraining->jd_type = $request->input('jd_type');
+        $jobTraining->jd_type = $request->input('jd_type');
         $jobTraining->revision_purpose = $request->input('revision_purpose');
-        // $jobTraining->remark = $request->input('remark'); 
+        $jobTraining->remark = $request->input('remark'); 
         $jobTraining->evaluation_required = $request->input('evaluation_required');
         // $jobTraining->delegate = $request->input('delegate');
         // $jobTraining->selected_document_id = $request->input('selected_document_id');
@@ -202,7 +202,7 @@ class JobDescriptionController extends Controller
         $jobTraining = JobDescription::findOrFail($id);
         $lastDocument = JobDescription::findOrFail($id);
  
-        $jobTraining->name = $request->input('name');
+        // $jobTraining->name = $request->input('name');
         $jobTraining->department = $request->input('department');
         $jobTraining->location = $request->input('location');
 
