@@ -51,17 +51,37 @@
                                            <td>{{ $phase_two_inv_question }}</td>
                                            <td>
                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                   <select {{Helpers::isOOSChemical($data->stage)}}  name="phase_two_inv1[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                <select {{Helpers::isOOSChemical($data->stage)}} name="phase_two_inv1[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    <option value="">Select an Option</option>
+
+                                                    @php
+                                                        $dataItem = $phase_two_invss->data[$loop->index] ?? null;
+                                                    @endphp
+
+                                                    <option value="Yes" {{ isset($dataItem) && Helpers::getArrayKey($dataItem, 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                    <option value="No" {{ isset($dataItem) && Helpers::getArrayKey($dataItem, 'response') == 'No' ? 'selected' : '' }}>No</option>
+                                                    <option value="N/A" {{ isset($dataItem) && Helpers::getArrayKey($dataItem, 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                </select>
+
+                                                   {{--<select {{Helpers::isOOSChemical($data->stage)}}  name="phase_two_inv1[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                        <option value="">Select an Option</option>
                                                        <option value="Yes" {{ Helpers::getArrayKey($phase_two_invss->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                        <option value="No" {{ Helpers::getArrayKey($phase_two_invss->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
                                                        <option value="N/A" {{ Helpers::getArrayKey($phase_two_invss->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
-                                                   </select>
+                                                   </select>--}}
                                                </div>
                                            </td>
                                            <td>
+                                            @php
+                                                $dataItem = $phase_two_invss->data[$loop->index] ?? null;
+                                                $remarks = isset($dataItem) ? Helpers::getArrayKey($dataItem, 'remarks') : '';
+                                            @endphp
+
+                                            <textarea {{Helpers::isOOSChemical($data->stage)}} name="phase_two_inv1[{{ $loop->index }}][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $remarks }}</textarea>
+                                        </td>
+                                           {{--<td>
                                                <textarea {{Helpers::isOOSChemical($data->stage)}} name="phase_two_inv1[{{ $loop->index }}][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getArrayKey($phase_two_invss->data[$loop->index], 'remarks') }}</textarea>
-                                           </td>
+                                           </td>--}}
                                        </tr>
                                    @endforeach
                                @endif
@@ -146,7 +166,7 @@
                             @endif
 
                         </div>
-                        
+
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="file_attachments_pII[]"
@@ -360,7 +380,7 @@
 
             <div class="button-block">
                 @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                
+
                 @else
                 <button type="submit" class="saveButton">Save</button>
                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
