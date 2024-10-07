@@ -367,10 +367,16 @@
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
                                         <input type="hidden" name="initiator_id">
-                                        {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
+                                        {{-- <div class="static">{{ Auth::user()->name }} </div> --}}
                                         <input disabled type="text" value="{{ $data->initiator_name }}">
                                     </div>
                                 </div>
+                                {{-- <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="originator">Initiator</label>
+                                        <input disabled type="text" name="initiator" value="{{ Auth::user()->name }}" />
+                                    </div>
+                                </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
@@ -1089,7 +1095,7 @@
                                     </div>
                                 @else
                                     <div class="group-input">
-                                        <label for="QA review comment">QA review comment</label>
+                                        <label for="QA review comment">QA Head Review comment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
                                         <textarea readonly class="tiny" name="Operations" id="summernote-4">{{ $data->Operations }}</textarea>
@@ -1438,7 +1444,7 @@
                                                 value="{{ Helpers::getdateFormat($data->external_supplier_performance) }}" />
                                             <input type="date" id="external_supplier_performance_checkdate"
                                                 name="external_supplier_performance"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                    max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 value="{{ $data->external_supplier_performance }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'external_supplier_performance'); checkStartDate(this)" />
 
@@ -1569,6 +1575,113 @@
                                     </table>
                                 </div>
                             </div>
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="meeting_and_summary_attachment">Meetings and Summary Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="meeting_and_summary_attachment">
+                                            @if ($data->meeting_and_summary_attachment)
+                                                @foreach (json_decode($data->meeting_and_summary_attachment) as $file)
+                                                    <h6 type="button" class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file"
+                                                            data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark"
+                                                                style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_meeting_and_summary_attachment[]"
+                                                            value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="meeting_and_summary_attachment[]"
+                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                oninput="addMultipleFiles(this, 'meeting_and_summary_attachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to keep track of files to be deleted -->
+                            <input type="hidden" id="deleted_meeting_and_summary_attachment" name="deleted_meeting_and_summary_attachment"
+                                value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const removeButtons = document.querySelectorAll('.remove-file');
+
+                                    removeButtons.forEach(button => {
+                                        button.addEventListener('click', function() {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            // Hide the file container
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                // Remove hidden input associated with this file
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                // Add the file name to the deleted files list
+                                                const deletedFilesInput = document.getElementById(
+                                                    'deleted_meeting_and_summary_attachment');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(
+                                                    ',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, id) {
+                                    const fileListContainer = document.getElementById(id);
+                                    const files = input.files;
+
+                                    for (let i = 0; i < files.length; i++) {
+                                        const file = files[i];
+                                        const fileName = file.name;
+                                        const fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        const fileText = document.createElement('b');
+                                        fileText.textContent = fileName;
+
+                                        const viewLink = document.createElement('a');
+                                        viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                        viewLink.target = '_blank';
+                                        viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+
+                                        const removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = fileName;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function() {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(viewLink);
+                                        fileContainer.appendChild(removeLink);
+
+                                        fileListContainer.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
                             {{-- <div class="group-input">
                                 <label for="risk_opportunities">Risk & Opportunities</label>
                                 <textarea name="risk_opportunities" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->risk_opportunities }}</textarea>
@@ -1729,7 +1842,7 @@
                                                     style="display: {{ $data1->Production_Table_Review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
-                                            <select @if ($data->stage == 5) disabled @endif
+                                            <select @if ($data->stage == 4) disabled @endif
                                                 name="hod_Production_Table_Person" class="hod_Production_Table_Person"
                                                 id="hod_Production_Table_Person">
                                                 <option value="">-- Select --</option>
@@ -13261,7 +13374,7 @@
                         </div> --}}
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="qa_verification_file">Action Item Status Attachment</label>
+                                <label for="qa_verification_file">QA Verification Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                         documents</small></div>
                                 <div class="file-attachment-field">

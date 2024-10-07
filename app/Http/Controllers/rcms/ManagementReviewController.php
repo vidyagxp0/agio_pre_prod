@@ -179,6 +179,19 @@ class ManagementReviewController extends Controller
             $management->closure_attachments= json_encode($files);
         }
 
+        if (!empty($request->meeting_and_summary_attachment)) {
+            $files = [];
+            if ($request->hasfile('meeting_and_summary_attachment')) {
+                foreach ($request->file('meeting_and_summary_attachment') as $file) {
+                    $name = $request->name . 'meeting_and_summary_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $management->meeting_and_summary_attachment= json_encode($files);
+        }
+
 
 
          if (!empty($request->cft_hod_attach)) {
@@ -1376,6 +1389,21 @@ class ManagementReviewController extends Controller
             $history->action_name="Create";
             $history->save();
         }
+        if (!empty($management->meeting_and_summary_attachment)) {
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $management->id;
+            $history->activity_type = 'Meetings and Summary Attachments';
+            $history->previous = "Null";
+            $history->current = $management->meeting_and_summary_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
 
   if (!empty($management->description)) {
         $history = new ManagementAuditTrial();
@@ -1413,7 +1441,7 @@ class ManagementReviewController extends Controller
          if (!empty($management->Operations)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'QA review comment ';
+            $history->activity_type = 'QA Head Review comment ';
             $history->previous = "Null";
             $history->current = $management->Operations;
             $history->comment = "Not Applicable";
@@ -1428,7 +1456,7 @@ class ManagementReviewController extends Controller
         if (!empty($management->file_attchment_if_any)) {
         $history = new ManagementAuditTrial();
         $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'QA review Attachment';
+        $history->activity_type = 'QA Head Review Attachment';
         $history->previous = "Null";
         $history->current = $management->file_attchment_if_any;
         $history->comment = "NA";
@@ -1521,7 +1549,7 @@ class ManagementReviewController extends Controller
         if (!empty($management->qa_verification_file)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Action Item Status Attachment';
+            $history->activity_type = 'QA Verification Attachment';
             $history->previous = "Null";
             $history->current = $management->qa_verification_file;
             $history->comment = "Not Applicable";
@@ -1578,6 +1606,8 @@ class ManagementReviewController extends Controller
             $history->action_name="Create";
             $history->save();
         }
+
+
 
 
 
@@ -2902,6 +2932,34 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
     $allFiles = array_merge($existingFiles, $newFiles);
     $management->closure_attachments = json_encode($allFiles);
 }
+if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted_meeting_and_summary_attachment)) {
+    $existingFiles = json_decode($management->meeting_and_summary_attachment, true) ?? [];
+
+    // Handle deleted files
+    if (!empty($request->deleted_meeting_and_summary_attachment)) {
+        $filesToDelete = explode(',', $request->deleted_meeting_and_summary_attachment);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('meeting_and_summary_attachment')) {
+        foreach ($request->file('meeting_and_summary_attachment') as $file) {
+            $name = $request->name . 'meeting_and_summary_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
+        }
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $management->meeting_and_summary_attachment = json_encode($allFiles);
+}
+
+
+
              if (!empty($request->cft_hod_attach)) {
             $files = [];
             if ($request->hasfile('cft_hod_attach')) {
@@ -3151,11 +3209,11 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         }
             if($lastDocument->Operations !=$management->Operations || !empty($request->Operations_comment)) {
                  $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'QA review comment ')
+                            ->where('activity_type', 'QA Head Review comment ')
                             ->exists();
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'QA review comment ';
+            $history->activity_type = 'QA Head Review comment ';
             $history->previous =  $lastDocument->Operations;
             $history->current = $management->Operations;
             $history->comment = $request->Operations_comment;
@@ -7999,11 +8057,11 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         }
            if($lastDocument->qa_verification_file !=$management->qa_verification_file || !empty($request->qa_verification_file_comment)) {
                  $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Action Item Status Attachment')
+                            ->where('activity_type', 'QA Verification Attachment')
                             ->exists();
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Action Item Status Attachment';
+            $history->activity_type = 'QA Verification Attachment';
             $history->previous =  $lastDocument->qa_verification_file;
             $history->current = $management->qa_verification_file;
             $history->comment = $request->qa_verification_file_comment;
@@ -8075,6 +8133,27 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
             $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
+
+        if ($lastDocument->meeting_and_summary_attachment != $management->meeting_and_summary_attachment || !empty($request->meeting_and_summary_attachment_comment)) {
+            $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
+                           ->where('activity_type', 'Meetings and Summary Attachment')
+                           ->exists();
+
+           $history = new ManagementAuditTrial();
+           $history->ManagementReview_id = $id;
+           $history->activity_type = 'Meetings and Summary Attachment';
+           $history->previous = $lastDocument->meeting_and_summary_attachment;
+           $history->current = $management->meeting_and_summary_attachment;
+           $history->comment = $request->meeting_and_summary_attachment_comment;
+           $history->user_id = Auth::user()->id;
+           $history->user_name = Auth::user()->name;
+           $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+           $history->origin_state = $lastDocument->status;
+                      $history->change_to= "Not Applicable";
+           $history->change_from= $lastDocument->status;
+           $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
+           $history->save();
+       }
 
 
 
@@ -8395,7 +8474,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
 
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields Required!',
-                            'message' => 'Invite Person Notify and QA review comment is yet to be filled!',
+                            'message' => 'QA Head Review Tab is yet to be filled!',
                             'type' => 'warning',
                         ]);
 
@@ -10657,7 +10736,7 @@ $history->activity_type = 'HOD Others 4 Completed By,HOD Others 4 Completed On';
         $parentRecord = ManagementReview::where('id', $id)->value('record');
         $p_record = ManagementReview::find($id);
         $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'MR' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
-           
+
         return view('frontend.action-item.action-item', compact('parent_intiation_date', 'parentRecord', 'parent_initiator_id','parent_record', 'record', 'due_date', 'parent_id', 'parent_type','old_record', 'data_record'));
     }
 
