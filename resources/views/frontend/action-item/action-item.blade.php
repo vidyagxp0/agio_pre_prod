@@ -65,7 +65,7 @@
                                 <div class="col-lg-6">  
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>
-                                        <input disabled type="text" name="division_code"
+                                        <input readonly type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                         {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
@@ -94,9 +94,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input"> 
                                         <label for="RLS Record Number"><b>Parent Record Number</b></label>
-                                        <input disabled type="text" name="parent_record_number"
-                                            value="{{ $expectedParenRecord ?? 'Not Applicable' }}">
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                        @if (!empty($data_record))
+                                        <input readonly type="text" name="parent_record_number"
+                                            value="{{ $data_record }}">
+                                        @else
+                                        <input readonly type="text" name="parent_record_number"
+                                        value="">
+                                        @endif
                                     </div>
                                 </div>
 

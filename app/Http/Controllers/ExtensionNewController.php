@@ -120,7 +120,8 @@ class ExtensionNewController extends Controller
         $extensionNew->parent_record = $request->parent_record;
 
         $extensionNew->initiation_date = $request->initiation_date;
-        $extensionNew->related_records = implode(',', $request->related_records);
+        $extensionNew->related_records = $request->related_records;
+        // $extensionNew->related_records = implode(',', $request->related_records);
         $extensionNew->short_description = $request->short_description;
 
         $extensionNew->Extension = $request->Extension;
@@ -599,7 +600,9 @@ class ExtensionNewController extends Controller
 
         // dd($request->initiator);
         $extensionNew->initiation_date = $request->initiation_date;
-        $extensionNew->related_records = implode(',', $request->related_records);
+        // $extensionNew->related_records = implode(',', $request->related_records);
+        $extensionNew->related_records = $request->related_records;
+
         $extensionNew->short_description = $request->short_description;
 
         $extensionNew->Extension = $request->Extension;

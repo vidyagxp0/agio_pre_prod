@@ -488,12 +488,12 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Parent Records Number</b></label>
-                                        @if ($data->related_records)
+                                        @if ($extensionNew->related_records)
                                             <input readonly type="text" name="related_records"
-                                                value="{{ $data->related_records }}">
+                                                value="{{ $extensionNew->related_records }}">
                                         @else
                                             <input type="text" name="related_records"
-                                                value="{{ $data->related_records }}">
+                                                value="{{ $extensionNew->related_records }}">
                                         @endif
                                     </div>
                                 </div>
