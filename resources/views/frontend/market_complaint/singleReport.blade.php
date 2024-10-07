@@ -358,7 +358,7 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Information Attechment
+                            Information Attachment
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -833,7 +833,7 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Acknowledgment Attechment
+                            Acknowledgment Attachment
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -984,7 +984,7 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">QA/CQA Comment</th>
+                        <th class="w-20">QA/CQA Head Comment</th>
                         <td class="w-80">{!! $data->qa_head_comment ?? 'Not Applicable' !!}</td>
                         <!-- Add more rows for the remaining fields in the same format -->
                     </tr>
@@ -994,7 +994,7 @@
 
                     <div class="border-table">
                         <div class="block-head">
-                            QA/CQA Attechment
+                            QA/CQA Head Attachment
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -1125,6 +1125,10 @@
                     <tr>
                         <th class="w-20">Other Methodology</th>
                         <td class="w-80">{!! $data->root_cause_analysis_hodsr ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Root Cause Analysis</th>
+                        <td class="w-80">{!! $data->conclusion_hodsr ?? 'Not Applicable' !!}</td>
                     </tr>
                     <tr>
                         <th class="w-20">The Probable Root Causes or Root Cause</th>
@@ -1272,7 +1276,7 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Production Table Attechment
+                            Production Table Attachment
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -1364,7 +1368,7 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Production Injection Attechment
+                            Production Injection Attachment
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -1456,7 +1460,7 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Reasearch & Development Attechment
+                            Reasearch & Development Attachment
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -1547,7 +1551,7 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Human Resource Attechment
+                            Human Resource Attachment
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -1918,8 +1922,8 @@
                                 <th class="w-20">S.N.</th>
                                 <th class="w-60">Batch No</th>
                             </tr>
-                            @if ($data1->RegulatoryAffair_attechment)
-                                @foreach (json_decode($data1->RegulatoryAffair_attechment) as $key => $file)
+                            @if ($data1->RegulatoryAffair_Attachment)
+                                @foreach (json_decode($data1->RegulatoryAffair_Attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
                                         <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
@@ -2494,7 +2498,7 @@
                 <table>
 
                     <tr>
-                        <th class="w-20">QA/CQA By Comment</th>
+                        <th class="w-20">QA/CQA Comment</th>
                         <td class="w-80">{!! $data->qa_cqa_comments ?? 'Not Applicable' !!}</td>
                         <!-- Add more rows for the remaining fields in the same format -->
                     </tr>
@@ -2531,7 +2535,7 @@
 
                     <div class="border-table">
                         <div class="block-head">
-                            QA/CQA Verification Attechment
+                            QA/CQA Attachment
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -2565,7 +2569,7 @@
                 <table>
 
                     <tr>
-                        <th class="w-20">QA/CQA Approval Comment</th>
+                        <th class="w-20">QA/CQA Head Approval Comment</th>
                         <td class="w-80">{!! $data->qa_cqa_head_comm ?? 'Not Applicable' !!}</td>
                         <!-- Add more rows for the remaining fields in the same format -->
                     </tr>
@@ -2575,7 +2579,7 @@
 
                     <div class="border-table">
                         <div class="block-head">
-                            QA/CQA Head Approval Attechment
+                            QA/CQA Head Head Approval Attachment
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -2660,7 +2664,7 @@
 
                     <div class="border-table">
                         <div class="block-head">
-                            Closure Attechment
+                            Closure Attachment
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -2703,14 +2707,24 @@
                         <td class="w-80">{{ $data->submitted_comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">QA/CQA Head Review By :</th>
+                        <th class="w-20">Complete Review By :</th>
                         <td class="w-80">{{ $data->complete_review_by }}</td>
-                        <th class="w-20">QA/CQA Head Review On :</th>
+                        <th class="w-20">Complete Review On :</th>
                         <td class="w-80">{{ $data->complete_review_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">QA/CQA Head Review Comment</th>
+                        <th class="w-20">Complete Review Comment</th>
                         <td class="w-80">{{ $data->complete_review_Comments }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Cancel By</th>
+                        <td class="w-80">{{ $data->cancelled_by }}</td>
+                        <th class="w-20">Cancel On</th>
+                        <td class="w-80">{{ $data->cancelled_on }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Cancel Comment</th>
+                        <td class="w-80">{{ $data->cancelled_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Send To CFT Review By</th>
@@ -2749,13 +2763,13 @@
                         <td class="w-80">{{ $data->qA_head_approval_completed_on }}</td>
                     </tr> --}}
                     <tr>
-                        <th class="w-20">Approve Complete Plan By</th>
+                        <th class="w-20">Approval Complete Plan By</th>
                         <td class="w-80">{{ $data->approve_plan_by }}</td>
-                        <th class="w-20">Approve Complete On</th>
+                        <th class="w-20">Approval Complete On</th>
                         <td class="w-80">{{ $data->approve_plan_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">Approval Comment</th>
                         <td class="w-80">{{ $data->approve_plan_comment }}</td>
                     </tr>
 
@@ -2780,16 +2794,7 @@
                          <th class="w-20">Comment</th>
                         <td class="w-80">{{ $data->submitted_comment }}</td>
                     </tr> --}}
-                    <tr>
-                        <th class="w-20">Cancelled By</th>
-                        <td class="w-80">{{ $data->cancelled_by }}</td>
-                        <th class="w-20">Cancelled On</th>
-                        <td class="w-80">{{ $data->cancelled_on }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Comment</th>
-                        <td class="w-80">{{ $data->cancelled_comment }}</td>
-                    </tr>
+
                 </table>
             </div>
         </div>

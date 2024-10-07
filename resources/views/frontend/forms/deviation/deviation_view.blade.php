@@ -1068,7 +1068,7 @@
                 <div class="cctab">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA/CQA Initial assesmnent</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA/CQA Initial assessment</button>
                     <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT</button>
                     <button class="cctablinks " id="Investigation_button" onclick="openCity(event, 'CCForm9')"
                         style="display: none">Investigation</button>
@@ -8436,26 +8436,30 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 Other1_reviews">
-                                        <div class="group-input">
-                                            <label for="Department1">Other's 1 Department
-                                                <span id="asteriskod1"
-                                                    style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span>
-                                            </label>
-                                            <select name="Other1_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
-                                                id="Other1_Department_person">
-                                                <option value="">-- Select --</option>
-                                                @foreach (Helpers::getDepartments() as $key => $name)
-                                                    <option value="{{ $key }}"
-                                                        @if ($data1->Other1_Department_person == $key) selected @endif>
-                                                        {{ $name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
+                                    <div class="col-12 other1_reviews">
+
+
+                                            <div class="col-lg-12 Other1_reviews">
+
+                                                <div class="group-input">
+                                                    <label for="Department1">Other's 1 Department
+                                                        <span id="asteriskod5"
+                                                            style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                                            class="text-danger">*</span>
+                                                    </label>
+                                                    <select name="Other1_Department_person"
+                                                        @if ($data->stage == 4) disabled @endif
+                                                        id="Other1_Department_person">
+                                                        <option value="">-- Select --</option>
+                                                        @foreach (Helpers::getDepartments() as $key => $name)
+                                                            <option value="{{ $key }}"
+                                                                @if ($data1->Other1_Department_person == $key) selected @endif>
+                                                                {{ $name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
                                     <div class="col-md-12 mb-3 other1_reviews ">
                                         <div class="group-input">
                                             <label for="Impact Assessment12">Impact Assessment (By Other's 1)
@@ -8565,6 +8569,7 @@
                                             @enderror
                                         </div>
                                     </div>
+                                      </div>
 
                                     <div class="sub-head">
                                         Other's 2 ( Additional Person Review From Departments If Required)

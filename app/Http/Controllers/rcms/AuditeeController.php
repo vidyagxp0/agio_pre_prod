@@ -3678,7 +3678,7 @@ $AuditorShow->save();
           if ($lastCft->Quality_Assurance_Review != $request->Quality_Assurance_Review && $request->Quality_Assurance_Review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Quality Assurance Review Required';
+            $history->activity_type = 'Quality Assurance Review Comment Required';
             $history->previous = $lastCft->Quality_Assurance_Review;
             $history->current = $request->Quality_Assurance_Review;
             $history->comment = "Not Applicable";
@@ -3758,7 +3758,7 @@ $AuditorShow->save();
          if ($lastCft->Quality_Assurance_attachment != $request->Quality_Assurance_attachment && $request->Quality_Assurance_attachment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Quality Assurance Attachment';
+            $history->activity_type = 'Quality Assurance Attachments';
             $history->previous = $lastCft->Quality_Assurance_attachment;
             $history->current =implode(',', $request->Quality_Assurance_attachment);
             $history->comment = "Not Applicable";
@@ -3821,7 +3821,7 @@ $AuditorShow->save();
         if ($lastCft->Production_Table_Review != $request->Production_Table_Review && $request->Production_Table_Review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule/Powder Review Required';
+            $history->activity_type = 'Production Tablet/Capsule Powder Review Comment Required';
             $history->previous = $lastCft->Production_Table_Review;
             $history->current = $request->Production_Table_Review;
             $history->comment = "Not Applicable";
@@ -3901,7 +3901,7 @@ $AuditorShow->save();
         if ($lastCft->Production_Table_Attachment != $request->Production_Table_Attachment && $request->Production_Table_Attachment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule/Powder Attachment';
+            $history->activity_type = 'Production Tablet/Capsule Powder Attachments';
             $history->previous = $lastCft->Production_Table_Attachment;
             $history->current = implode(',',$request->Production_Table_Attachment);
             $history->comment = "Not Applicable";
@@ -3963,7 +3963,7 @@ $AuditorShow->save();
          if ($lastCft->ProductionLiquid_Review != $request->ProductionLiquid_Review && $request->ProductionLiquid_Review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Production Liquid/Ointment Review Required';
+            $history->activity_type = 'Production Liquid/ointment Review Comment Required';
             $history->previous = $lastCft->ProductionLiquid_Review;
             $history->current = $request->ProductionLiquid_Review;
             $history->comment = "Not Applicable";
@@ -4043,7 +4043,7 @@ $AuditorShow->save();
         if ($lastCft->ProductionLiquid_attachment != $request->ProductionLiquid_attachment && $request->ProductionLiquid_attachment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Production Liquid/Ointment Feedback';
+            $history->activity_type = 'Production Liquid/ointment Attachments';
             $history->previous = $lastCft->ProductionLiquid_attachment;
             $history->current = implode(',',$request->ProductionLiquid_attachment);
             $history->comment = "Not Applicable";
@@ -4105,7 +4105,7 @@ $AuditorShow->save();
         if ($lastCft->Production_Injection_Review != $request->Production_Injection_Review && $request->Production_Injection_Review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Production Injection Review Required';
+            $history->activity_type = 'Production Injection Review Comment Required';
             $history->previous = $lastCft->Production_Injection_Review;
             $history->current = $request->Production_Injection_Review;
             $history->comment = "Not Applicable";
@@ -4185,7 +4185,7 @@ $AuditorShow->save();
         if ($lastCft->Production_Injection_Attachment != $request->Production_Injection_Attachment && $request->Production_Injection_Attachment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Production Injection On';
+            $history->activity_type = 'Production Injection Attachments';
             $history->previous = $lastCft->Production_Injection_Attachment;
             $history->current =implode(',', $request->Production_Injection_Attachment);
             $history->comment = "Not Applicable";
@@ -4247,7 +4247,7 @@ $AuditorShow->save();
         if ($lastCft->Store_Review != $request->Store_Review && $request->Store_Review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Store Review Required';
+            $history->activity_type = 'Store Review Comment Required';
             $history->previous = $lastCft->Store_Review;
             $history->current = $request->Store_Review;
             $history->comment = "Not Applicable";
@@ -4327,7 +4327,7 @@ $AuditorShow->save();
          if ($lastCft->Store_attachment != $request->Store_attachment && $request->Store_attachment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Store Review On';
+            $history->activity_type = 'Store Attachments';
             $history->previous = $lastCft->Store_attachment;
             $history->current =implode(',', $request->Store_attachment);
             $history->comment = "Not Applicable";
@@ -4389,7 +4389,7 @@ $AuditorShow->save();
         if ($lastCft->Quality_review != $request->Quality_review && $request->Quality_review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Quality Control Required';
+            $history->activity_type = 'Quality Control Review Comment Required';
             $history->previous = $lastCft->Quality_review;
             $history->current = $request->Quality_review;
             $history->comment = "Not Applicable";
@@ -4509,7 +4509,7 @@ $AuditorShow->save();
         if ($lastCft->Quality_Control_attachment != $request->Quality_Control_attachment && $request->Quality_Control_attachment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Quality Control On';
+            $history->activity_type = 'Quality Control Attachments';
             $history->previous = $lastCft->Quality_Control_attachment;
             $history->current =implode(',', $request->Quality_Control_attachment);
             $history->comment = "Not Applicable";
@@ -4531,7 +4531,7 @@ $AuditorShow->save();
         if ($lastCft->ResearchDevelopment_Review != $request->ResearchDevelopment_Review && $request->ResearchDevelopment_Review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Research & Development Required';
+            $history->activity_type = 'Research Development Review Comment Required ';
             $history->previous = $lastCft->ResearchDevelopment_Review;
             $history->current = $request->ResearchDevelopment_Review;
             $history->comment = "Not Applicable";
@@ -4651,7 +4651,7 @@ $AuditorShow->save();
         if ($lastCft->ResearchDevelopment_attachment != $request->ResearchDevelopment_attachment && $request->ResearchDevelopment_attachment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Research & Development On';
+            $history->activity_type = 'Research Development Attachments';
             $history->previous = $lastCft->ResearchDevelopment_attachment;
             $history->current =implode(',', $request->ResearchDevelopment_attachment);
             $history->comment = "Not Applicable";
@@ -4673,7 +4673,7 @@ $AuditorShow->save();
         if ($lastCft->Engineering_review != $request->Engineering_review && $request->Engineering_review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Engineering Review Required';
+            $history->activity_type = 'Engineering Review Comment Required';
             $history->previous = $lastCft->Engineering_review;
             $history->current = $request->Engineering_review;
             $history->comment = "Not Applicable";
@@ -4793,7 +4793,7 @@ $AuditorShow->save();
         if ($lastCft->Engineering_attachment != $request->Engineering_attachment && $request->Engineering_attachment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Engineering Review On';
+            $history->activity_type = 'Engineering Attachments';
             $history->previous = $lastCft->Engineering_attachment;
             $history->current = implode(',',$request->Engineering_attachment);
             $history->comment = "Not Applicable";
@@ -4815,7 +4815,7 @@ $AuditorShow->save();
         if ($lastCft->Human_Resource_review != $request->Human_Resource_review && $request->Human_Resource_review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Human Resource Review Required';
+            $history->activity_type = 'Human Resource Review Comment Required';
             $history->previous = $lastCft->Human_Resource_review;
             $history->current = $request->Human_Resource_review;
             $history->comment = "Not Applicable";
@@ -4935,7 +4935,7 @@ $AuditorShow->save();
         if ($lastCft->Human_Resource_attachment != $request->Human_Resource_attachment && $request->Human_Resource_attachment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Human Resource Review On';
+            $history->activity_type = 'Human Resource Attachments';
             $history->previous = $lastCft->Human_Resource_attachment;
             $history->current =implode(',', $request->Human_Resource_attachment);
             $history->comment = "Not Applicable";
@@ -4957,7 +4957,7 @@ $AuditorShow->save();
         if ($lastCft->Microbiology_Review != $request->Microbiology_Review && $request->Microbiology_Review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Microbiology Review Required';
+            $history->activity_type = 'Microbiology Review Comment Required';
             $history->previous = $lastCft->Microbiology_Review;
             $history->current = $request->Microbiology_Review;
             $history->comment = "Not Applicable";
@@ -5077,7 +5077,7 @@ $AuditorShow->save();
          if ($lastCft->Microbiology_attachment != $request->Microbiology_attachment && $request->Microbiology_attachment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Microbiology Review On';
+            $history->activity_type = 'Microbiology Attachments';
             $history->previous = $lastCft->Microbiology_attachment;
             $history->current = implode(',',$request->Microbiology_attachment);
             $history->comment = "Not Applicable";
@@ -5099,7 +5099,7 @@ $AuditorShow->save();
         if ($lastCft->RegulatoryAffair_Review != $request->RegulatoryAffair_Review && $request->RegulatoryAffair_Review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Regulatory Affair Review Required';
+            $history->activity_type = 'Regulatory Affair Review Comment Required';
             $history->previous = $lastCft->RegulatoryAffair_Review;
             $history->current = $request->RegulatoryAffair_Review;
             $history->comment = "Not Applicable";
@@ -5219,7 +5219,7 @@ $AuditorShow->save();
         if ($lastCft->RegulatoryAffair_attachment != $request->RegulatoryAffair_attachment  && $request->RegulatoryAffair_attachment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Regulatory Affair Review On';
+            $history->activity_type = 'Regulatory Affair Attachments';
             $history->previous = $lastCft->RegulatoryAffair_attachment;
             $history->current =implode(',', $request->RegulatoryAffair_attachment);
             $history->comment = "Not Applicable";
@@ -5241,7 +5241,7 @@ $AuditorShow->save();
         if ($lastCft->CorporateQualityAssurance_Review != $request->CorporateQualityAssurance_Review && $request->CorporateQualityAssurance_Review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Corporate Quality Assurance Review Required';
+            $history->activity_type = 'Corporate Quality Assurance Review Comment Required';
             $history->previous = $lastCft->CorporateQualityAssurance_Review;
             $history->current = $request->CorporateQualityAssurance_Review;
             $history->comment = "Not Applicable";
@@ -5341,7 +5341,7 @@ $AuditorShow->save();
         if ($lastCft->CorporateQualityAssurance_on != $request->CorporateQualityAssurance_on && $request->CorporateQualityAssurance_on != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Corporate Quality Assurance Review On';
+            $history->activity_type = 'Quality Control Attachments';
             $history->previous = $lastCft->CorporateQualityAssurance_on;
             $history->current = $request->CorporateQualityAssurance_on;
             $history->comment = "Not Applicable";
@@ -5361,7 +5361,7 @@ $AuditorShow->save();
         if ($lastCft->CorporateQualityAssurance_attachment != $request->CorporateQualityAssurance_attachment && $request->CorporateQualityAssurance_attachment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Corporate Quality Assurance Review On';
+            $history->activity_type = 'Corporate Quality Assurance Attachments';
             $history->previous = $lastCft->CorporateQualityAssurance_attachment;
             $history->current =implode(',', $request->CorporateQualityAssurance_attachment);
             $history->comment = "Not Applicable";
@@ -5383,7 +5383,7 @@ $AuditorShow->save();
         if ($lastCft->Environment_Health_review != $request->Environment_Health_review && $request->Environment_Health_review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Safety Review Required';
+            $history->activity_type = 'Safety Review Comment Required';
             $history->previous = $lastCft->Environment_Health_review;
             $history->current = $request->Environment_Health_review;
             $history->comment = "Not Applicable";
@@ -5503,7 +5503,7 @@ $AuditorShow->save();
         if ($lastCft->Environment_Health_Safety_attachment != $request->Environment_Health_Safety_attachment && $request->Environment_Health_Safety_attachment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Safety Review On';
+            $history->activity_type = 'Safety Attachments';
             $history->previous = $lastCft->Environment_Health_Safety_attachment;
             $history->current =implode(',', $request->Environment_Health_Safety_attachment);
             $history->comment = "Not Applicable";
@@ -5667,7 +5667,7 @@ $AuditorShow->save();
         if ($lastCft->Other1_review != $request->Other1_review && $request->Other1_review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Other 1 Review Required';
+            $history->activity_type = "Other's 1 Review Comment Required ";
             $history->previous = $lastCft->Other1_review;
             $history->current = $request->Other1_review;
             $history->comment = "Not Applicable";
@@ -5707,9 +5707,9 @@ $AuditorShow->save();
         if ($lastCft->Other1_Department_person != $request->Other1_Department_person && $request->Other1_Department_person != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Other 1 Review Required';
-            $history->previous = $lastCft->Other1_Department_person;
-            $history->current = $request->Other1_Department_person;
+            $history->activity_type = 'Other s 1 Department';
+            $history->previous = Helpers::getFullDepartmentName($lastCft->Other1_Department_person);
+            $history->current =Helpers::getFullDepartmentName( $request->Other1_Department_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5807,7 +5807,7 @@ $AuditorShow->save();
         if ($lastCft->Other1_attachment != $request->Other1_attachment && $request->Other1_attachment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Other 1 Review On';
+            $history->activity_type = 'Other s 1 Attachments';
             $history->previous = $lastCft->Other1_attachment;
             $history->current = implode(',',$request->Other1_attachment);
             $history->comment = "Not Applicable";
@@ -5830,7 +5830,7 @@ $AuditorShow->save();
         if ($lastCft->Other2_review != $request->Other2_review && $request->Other2_review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Other 2 Review Required';
+            $history->activity_type = 'Other s 2 Review Comment Required';
             $history->previous = $lastCft->Other2_review;
             $history->current = $request->Other2_review;
             $history->comment = "Not Applicable";
@@ -5870,9 +5870,9 @@ $AuditorShow->save();
         if ($lastCft->Other2_Department_person != $request->Other2_Department_person && $request->Other2_Department_person != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Other 2 Review Required';
-            $history->previous = $lastCft->Other2_Department_person;
-            $history->current = $request->Other2_Department_person;
+            $history->activity_type = 'Other s 2 Department';
+            $history->previous = Helpers::getFullDepartmentName($lastCft->Other2_Department_person);
+            $history->current = Helpers::getFullDepartmentName($request->Other2_Department_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5970,7 +5970,7 @@ $AuditorShow->save();
         if ($lastCft->Other2_attachment != $request->Other2_attachment && $request->Other2_attachment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Other 2 Review On';
+            $history->activity_type = 'Other s 2 Attachments';
             $history->previous = $lastCft->Other2_attachment;
             $history->current =implode(',', $request->Other2_attachment);
             $history->comment = "Not Applicable";
@@ -5992,7 +5992,7 @@ $AuditorShow->save();
         if ($lastCft->Other3_review != $request->Other3_review && $request->Other3_review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Other 3 Review Required';
+            $history->activity_type = 'Other s 3 Review Comment Required';
             $history->previous = $lastCft->Other3_review;
             $history->current = $request->Other3_review;
             $history->comment = "Not Applicable";
@@ -6032,9 +6032,9 @@ $AuditorShow->save();
         if ($lastCft->Other3_Department_person != $request->Other3_Department_person && $request->Other3_Department_person != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Other 3 Review Required';
-            $history->previous = $lastCft->Other3_Department_person;
-            $history->current = $request->Other3_Department_person;
+            $history->activity_type = 'Other s 3 Department';
+            $history->previous = Helpers::getFullDepartmentName($lastCft->Other3_Department_person);
+            $history->current = Helpers::getFullDepartmentName($request->Other3_Department_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6132,7 +6132,7 @@ $AuditorShow->save();
         if ($lastCft->Other3_attachment != $request->Other3_attachment && $request->Other3_attachment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Other 3 Review On';
+            $history->activity_type = 'Other s 3 Attachments';
             $history->previous = $lastCft->Other3_attachment;
             $history->current =implode(',', $request->Other3_attachment);
             $history->comment = "Not Applicable";
@@ -6154,7 +6154,7 @@ $AuditorShow->save();
         if ($lastCft->Other4_review != $request->Other4_review && $request->Other4_review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Other 4 Review Required';
+            $history->activity_type = 'Other s 4 Review Comment Required';
             $history->previous = $lastCft->Other4_review;
             $history->current = $request->Other4_review;
             $history->comment = "Not Applicable";
@@ -6194,9 +6194,9 @@ $AuditorShow->save();
         if ($lastCft->Other4_Department_person != $request->Other4_Department_person && $request->Other4_Department_person != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Other 4 Review Required';
-            $history->previous = $lastCft->Other4_Department_person;
-            $history->current = $request->Other4_Department_person;
+            $history->activity_type = 'Other s 4 Department';
+            $history->previous = Helpers::getFullDepartmentName($lastCft->Other4_Department_person);
+            $history->current = Helpers::getFullDepartmentName($request->Other4_Department_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6294,7 +6294,7 @@ $AuditorShow->save();
         if ($lastCft->Other4_attachment != $request->Other4_attachment && $request->Other4_attachment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Other 4 Review On';
+            $history->activity_type = 'Other s 4 Attachments';
             $history->previous = $lastCft->Other4_attachment;
             $history->current =implode(',', $request->Other4_attachment);
             $history->comment = "Not Applicable";
@@ -6317,7 +6317,7 @@ $AuditorShow->save();
         if ($lastCft->Other5_review != $request->Other5_review && $request->Other5_review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Other 5 Review Required';
+            $history->activity_type = 'Other s 5 Review Comment Required';
             $history->previous = $lastCft->Other5_review;
             $history->current = $request->Other5_review;
             $history->comment = "Not Applicable";
@@ -6357,9 +6357,9 @@ $AuditorShow->save();
         if ($lastCft->Other5_Department_person != $request->Other5_Department_person && $request->Other5_Department_person != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Other 5 Review Required';
-            $history->previous = $lastCft->Other5_Department_person;
-            $history->current = $request->Other5_Department_person;
+            $history->activity_type = 'Other s 5 Department';
+            $history->previous = Helpers::getFullDepartmentName($lastCft->Other5_Department_person);
+            $history->current = Helpers::getFullDepartmentName($request->Other5_Department_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6457,7 +6457,7 @@ $AuditorShow->save();
         if ($lastCft->Other5_attachment != $request->Other5_attachment && $request->Other5_attachment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Other 5 Review On';
+            $history->activity_type = 'Other s 5 Attachments';
             $history->previous = $lastCft->Other5_attachment;
             $history->current = implode(',',$request->Other5_attachment);
             $history->comment = "Not Applicable";
@@ -6734,14 +6734,13 @@ $history->activity_type = 'Quality Control Completed By, Quality Control Complet
 if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
     $history->previous = "";
 } else {
-    $history->previous = $lastDocument->Quality_Control_by . ' , ' . $lastDocument->Quality_Control_on;
+    
+    $history->previous = $lastDocument->Quality_Control_by . ' ,' .Helpers::getdateFormat ($lastDocument->Quality_Control_on);
 }
 
 $history->action = 'CFT Review Complete';
 
-// Make sure you're using the updated $updateCFT object here
-$history->current = $updateCFT->Quality_Control_by . ', ' . $updateCFT->Quality_Control_on;
-
+$history->current = $updateCFT->Quality_Control_by . ',' .Helpers::getdateFormat ($updateCFT->Quality_Control_on);
 $history->comment = $request->comment;
 $history->user_id = Auth::user()->name;
 $history->user_name = Auth::user()->name;

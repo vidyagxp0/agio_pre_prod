@@ -497,7 +497,7 @@
                             <button class="cctablinks" onclick="openCity(event, 'CCForm11')">CFT</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA/CQA Final Review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm15')"  style="display: none" id="actionButton">RA</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm17')">QA/CQA Designee Approval</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm17')">QA/CQA Head/Designee Approval</button>
 
                             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Evaluation</button> -->
                             <button class="cctablinks" onclick="openCity(event, 'CCForm5')"> Initiator Update</button>
@@ -7042,6 +7042,11 @@
                                         </div>
                                     </div>
 
+
+
+
+                                    
+                                <div class="col-12 other1_reviews">    
                                     <div class="col-lg-12 Other1_reviews">
 
                                         <div class="group-input">
@@ -7052,7 +7057,7 @@
                                             </label>
                                             <select name="Other1_Department_person"
                                                 @if ($data->stage == 4) disabled @endif
-                                                id="Other1_Department_person">
+                                                id="Other1_Department_person" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
                                                     <option value="{{ $key }}" @if ($data1->Other1_Department_person == $key) selected @endif>
@@ -7149,14 +7154,7 @@
 
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-6 mb-3 other1_reviews ">
-                                        <div class="group-input">
-                                            <label for="Review Completed On1">Other's 1 Review Completed On</label>
-                                            <input disabled type="date" name="Other1_on" id="Other1_on"
-                                                value="{{ $data1->Other1_on }}">
-
-                                        </div>
-                                    </div> --}}
+                                    
                                     <div class="col-6 other1_reviews new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Others 1 Completed On">Others 1
@@ -7173,6 +7171,7 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
+                                    </div>
                                     </div>
 
                                     <div class="sub-head">
@@ -7251,7 +7250,7 @@
                                         </label>
                                         <select name="Other2_Department_person"
                                             @if ($data->stage == 4) disabled @endif
-                                            id="Other2_Department_person">
+                                            id="Other2_Department_person" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                             <option value="">-- Select --</option>
                                             @foreach (Helpers::getDepartments() as $key => $name)
                                                 <option value="{{ $key }}" @if ($data1->Other2_Department_person == $key) selected @endif>
@@ -7448,7 +7447,7 @@
                                         </label>
                                         <select name="Other3_Department_person"
                                             @if ($data->stage == 4) disabled @endif
-                                            id="Other3_Department_person">
+                                            id="Other3_Department_person" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                             <option value="">-- Select --</option>
                                             @foreach (Helpers::getDepartments() as $key => $name)
                                                 <option value="{{ $key }}" @if ($data1->Other3_Department_person == $key) selected @endif>
@@ -7645,7 +7644,7 @@
                                     </label>
                                     <select name="Other4_Department_person"
                                         @if ($data->stage == 4) disabled @endif
-                                        id="Other4_Department_person">
+                                        id="Other4_Department_person" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                         <option value="">-- Select --</option>
                                         @foreach (Helpers::getDepartments() as $key => $name)
                                             <option value="{{ $key }}" @if ($data1->Other4_Department_person == $key) selected @endif>
@@ -7925,7 +7924,7 @@
                                     </label>
                                     <select name="Other5_Department_person"
                                         @if ($data->stage == 4) disabled @endif
-                                        id="Other5_Department_person">
+                                        id="Other5_Department_person"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                         <option value="">-- Select --</option>
                                         @foreach (Helpers::getDepartments() as $key => $name)
                                             <option value="{{ $key }}" @if ($data1->Other5_Department_person == $key) selected @endif>
@@ -8106,7 +8105,7 @@
                                         </label>
                                         <select name="Other1_Department_person"
                                             @if ($data->stage == 4) disabled @endif
-                                            id="Other1_Department_person">
+                                            id="Other1_Department_person" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                             <option value="">-- Select --</option>
                                             @foreach (Helpers::getDepartments() as $key => $name)
                                                 <option value="{{ $key }}" @if ($data1->Other1_Department_person == $key) selected @endif>
@@ -8252,7 +8251,7 @@
                                             </label>
                                             <select name="Other2_Department_person"
                                                 @if ($data->stage == 4) disabled @endif
-                                                id="Other2_Department_person">
+                                                id="Other2_Department_person" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
                                                     <option value="{{ $key }}" @if ($data1->Other2_Department_person == $key) selected @endif>
@@ -8816,12 +8815,23 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-3">
-                                        <div class="group-input">
-                                            <label for="Review Completed On5">Other's 5 Review Completed On</label>
-                                            <input disabled type="date" name="Other5_on" id="Other5_on"
-                                                value="{{ $data1->Other5_on }}">
-                                        </div>
+                                    <div class="col-6  new-date-data-field Other5_reviews">
+                                                <div class="group-input input-date">
+                                                    <label for="Others 5 Completed On">Others 5
+                                                        Completed On</label>
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="Other5_on" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Other5_on) }}" />
+                                                        <input readonly type="date" name="Other5_on"
+                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                            value="" class="hide-input"
+                                                            oninput="handleDateInput(this, 'Other5_on')" />
+                                                    </div>
+                                                    @error('Other5_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
                                     </div>
                                 @endif
 

@@ -216,9 +216,9 @@
                               
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="initiator-group">Initiator Department  <span
-                                                class="text-danger">*</span></label>
-                                                <select name="initiator_Group" id="initiator_group">
+                                        <label for="initiator-group">Initiator Department<span
+                                            class="text-danger">*</span></label>
+                                                <select name="initiator_Group" id="initiator_group"  required>
                                                         <option value="">--Select Initiation Department--</option>
                                                         <option value="CQA" >Corporate Quality Assurance</option>
                                                         <option value="QA" >Quality Assurance</option>
@@ -490,27 +490,26 @@
                                     </div>
                                 </div>
                         <div class="col-12 sub-head">
-                                Product Material Details
+                            Product / Material Details
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Material Details">
-                                        Product Material Details
+                                        Product / Material Details
                                         <button type="button" name="ann" id="material">+</button>
                                     </label>
                                     <table class="table table-bordered" id="productmaterial">
                                         <thead>
                                             <tr>
                                                 <th>Row #</th>
-                                                <th>Product Material Name</th>
-                                                <th>Product Batch No./Lot No./AR No.</th>
+                                                <th>Product / Material Name</th>
+                                                <th>Product /Material Batch No./Lot No./AR No.</th>
                                                 <th>Product / Material Manufacturing Date</th>
-                                                <th>Product / Material Date Of Expiry</th>
+                                                <th>Product / Material Date of Expiry</th>
                                                 <th>Product Batch Disposition Decision</th>
                                                 <th>Product Remark</th>
                                                 <th>Product Batch Status</th>
                                                 <th>Action</th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -537,10 +536,10 @@
                                                 <td><input type="text" name="material_name[]"></td>
                                                 <td><input type="text" name="material_batch_no[]"></td>
                                                 <td>
-                                                    <input type="month" name="material_mfg_date[]" class="material_mfg_date" />
+                                                    <input type="date" name="material_mfg_date[]" id="material_mfg_date" class="material_mfg_date" />
                                                 </td>
                                                 <td>
-                                                    <input type="month" name="material_expiry_date[]" class="material_expiry_date" />
+                                                    <input type="date" name="material_expiry_date[]" class="material_expiry_date" />
                                                 </td>
                                                
                                                 <td><input type="text" name="material_batch_desposition[]"></td>
@@ -564,6 +563,20 @@
                                     $(this).closest('tr').remove();
                                 })
                             </script> --}}
+
+                            {{-- <script>
+                                function handleDateInput(dateInput, displayId) {
+                                    const date = new Date(dateInput.value);
+                                    const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                    document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                }
+                                
+                                // Call this function initially to ensure the correct format is shown on page load
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const dateInput = document.querySelector('input[name="material_mfg_date"]');
+                                    handleDateInput(dateInput, 'material_mfg_date');
+                                });
+                                </script> --}}
                             
                             <script>
                                 $(document).ready(function () {
@@ -666,7 +679,7 @@
                                                 <tr>
                                                     <th>Row #</th>
                                                     <th>Equipment/Instruments Name</th>
-                                                    <th>Equipment/Instruments ID</th>
+                                                    <th>Equipment/Instrument ID</th>
                                                     <th>Equipment/Instruments Comments</th>
                                                     <th>Action</th>
                                                 </tr>

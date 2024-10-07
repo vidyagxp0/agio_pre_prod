@@ -247,17 +247,16 @@
                 <table>
                     <tr>
                         <th class="w-20">Record Number</th>
-                        <td class="w-30">@if($data->record_number){{  str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <td class="w-30">{{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/OOS/OOT/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }} </td>
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">{{ Helpers::getDivisionName($data->division_id) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Type</th>
                         <td class="w-30">{{ ($data->Form_type) }}</td>
-                        {{ $data->created_at }} added by {{ $data->originator }}
+                        {{ $data->created_at }} added by {{ $data->initiator_id }}
                         <th class="w-20">Initiator</th>
-                        <td class="w-30">{{ $data->originator }}</td>
-                       
+                        <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
                      </tr>
                     <tr>
                        <th class="w-20">Date of Initiation</th>
@@ -272,15 +271,24 @@
                     <tr>
                         <th class="w-20">Initiation department Group</th>
                         <td class="w-30">
+                            @if(Helpers::getFullDepartmentName($data->initiator_group))
+                                {{ Helpers::getFullDepartmentName($data->initiator_group) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        
+                        
+                        {{-- <td class="w-30">
                         <select>
                         @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
                         <option value="{{ $code }}" @if ($data->initiator_group == $code) selected
                             @endif>{{ $initiator_group }}</option>
                         @endforeach
                         </select>
-                        </td>
+                        </td> --}}
                         <th class="w-20">Initiation department Code</th>
-                        <td class="w-80">{{ $data->initiator_group_code }}</td>
+                        <td class="w-80">@if($data->initiator_group_code){{ $data->initiator_group_code }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                        <th class="w-20">If Others</th>
@@ -298,7 +306,7 @@
                         <th class="w-20">Reference System Document</th>
                         <td class="w-80">@if($data->reference_system_document_gi){{ $data->reference_system_document_gi }}@else Not Applicable @endif</td>
                         <th class="w-20">Reference Document</th>
-                        <td class="w-80">@if($data->reference_document_gi){{ $data->reference_document_gi }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->reference_document){{ $data->reference_document }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">OOS Occurred On</th>
@@ -536,8 +544,7 @@
                             <td class="w-15">{{ $datagridIII['oos_test_name'] ?  $datagridIII['oos_test_name']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridIII['oos_results_obtained'] ?  $datagridIII['oos_results_obtained']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridIII['oos_specification_limit'] ?  $datagridIII['oos_specification_limit']: "Not Applicable"}}</td>
-                            <td class="w-15">
-                            {{ $datagridIII['oos_submit_on'] ?  Helpers::getdateFormat($datagridIII['oos_submit_on'] ?? ''): "Not Applicable" }}
+                            <td class="w-15">{{ $datagridIII['oos_submit_on'] ?  Helpers::getdateFormat($datagridIII['oos_submit_on'] ?? ''): "Not Applicable" }}
                             </td>
                         </tr>
                         @endforeach
@@ -616,8 +623,8 @@
                             <td class="w-15">{{ $instrument_detail ? $key + 1  : "Not Applicable" }}</td>
                             <td class="w-15">{{ $instrument_detail['instrument_name'] ?  $instrument_detail['instrument_name']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $instrument_detail['instrument_id_number'] ?  $instrument_detail['instrument_id_number']: "Not Applicable"}}</td>
-                            <td class="w-15">{{ $instrument_detail['calibrated_on'] ?  $instrument_detail['calibrated_on']: "Not Applicable"}}</td>
-                            <td class="w-15">{{ $instrument_detail['calibratedduedate_on'] ?  $instrument_detail['calibratedduedate_on']: "Not Applicable"}}</td>
+                            <td class="w-15">{{ $instrument_detail['calibrated_on'] ?  Helpers::getdateFormat($instrument_detail['calibrated_on']): "Not Applicable"}}</td>
+                            <td class="w-15">{{ $instrument_detail['calibratedduedate_on'] ?  Helpers::getdateFormat($instrument_detail['calibratedduedate_on']): "Not Applicable"}}</td>
                         </tr>
                         @endforeach
                         @else
@@ -670,7 +677,7 @@
 
           {{-- <!-- CQA/QA Head --> ~Aditya Rajput --}}
 
-           <div class="block">
+           {{-- <div class="block">
             <div class="block-head">CQA/QA Head</div>
             <table> 
                <tr>
@@ -702,7 +709,7 @@
                   @endif
               </table>
             </div>
-           </div>
+           </div> --}}
 
             {{-- <!-- CQA/QA Head --> ~Aditya Rajput --}}
 
@@ -1183,7 +1190,7 @@
                   </tr>
                   <tr>
                     <th class="w-20">Production Person</th>
-                    <td class="w-80">{{ $data->production_person_ib ? $data->production_person_ib : 'Not Applicable' }}</td>
+                    <td class="w-80">{{ Helpers::getInitiatorName($data->production_person_ib) ? Helpers::getInitiatorName($data->production_person_ib) : 'Not Applicable' }}</td>
                     <th class="w-20">Repeat analysis method/resampling</th>
                     <td class="w-80">{{ $data->Repeat_analysis_method ? $data->Repeat_analysis_method : 'Not Applicable' }}</td>
                   </tr>
@@ -1282,11 +1289,11 @@
                         <td class="w-80">{{ $data->escalation_required ? $data->escalation_required : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Notification details</th>
+                        <th class="w-20">If Yes, Notification</th>
                         <td class="w-80">{{ $data->notification_ib ? $data->notification_ib : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Justification details</th>
+                        <th class="w-20">If No, Justification</th>
                         <td class="w-80">{{ $data->justification_ib ? $data->justification_ib : 'Not Applicable' }}</td>
                     </tr>
                    <tr>
@@ -1331,7 +1338,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Production Head Person</th>
-                        <td class="w-30">{{ $data->production_head_person ? $data->production_head_person : 'Not Applicable' }}</td>
+                        <td class="w-30">{{ Helpers::getInitiatorName($data->production_head_person) ? Helpers::getInitiatorName($data->production_head_person) : 'Not Applicable' }}</td>
                     </tr>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Immediate Action Taken</th>
