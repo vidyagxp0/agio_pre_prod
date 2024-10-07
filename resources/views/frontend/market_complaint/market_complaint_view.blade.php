@@ -2430,8 +2430,7 @@
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Interpretation on compalint sample">Interpretation On Compalint Sample(If
-                                        Recieved)</label>
+                                    <label for="Interpretation on compalint sample">Interpretation on Complaint sample(if recieved)</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="" name="interpretation_on_complaint_sample_ifrecieved_ca" id=""
