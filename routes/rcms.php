@@ -67,7 +67,10 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('job_training_report/{id}', [JobTrainingController::class, 'jobReport'])->name('job_training_report');
             // Route::get('auditDetailsTrainer/{id}', [TrainerController::class, 'auditDetailstrainer'])->name('trainerauditDetails');
             Route::get('employeeaudittrail/{id}', [EmployeeController::class, 'AuditTrial'])->name('audittrail');
-            Route::get('report/{id}', [EmployeeController::class, 'report'])->name('report');
+            Route::get('jobdescriptionaudittrail/{id}', [JobDescriptionController::class, 'AuditTrial'])->name('auditTrail');
+
+            Route::get('reports/{id}', [EmployeeController::class, 'report'])->name('reports');
+            Route::get('report/{id}', [JobDescriptionController::class, 'report'])->name('report');
             // Route::get('auditDetailsEmployee/{id}', [EmployeeController::class, 'auditDetailsEmployee'])->name('employeeauditDetails');
             Route::get('job_traineeaudittrail/{id}', [JobTrainingController::class, 'jobAuditTrial'])->name('job_audittrail');
             // Route::get('auditDetailsEmployee/{id}', [JobTrainingController::class, 'auditDetailsJobTrainee'])->name('jobTraineeauditDetails');
