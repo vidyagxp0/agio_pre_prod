@@ -4868,8 +4868,10 @@ if ($areIniAttachmentsSame2 != true) {
             $formattedDate = $currentDate->addDays(30);
             $due_date = $formattedDate->format('d-M-Y');
             if($request->child_type == 'action_item'){
+                $p_record = InternalAudit::find($id);
+                $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'IA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);        
             $parent_type = "action_item";
-                return view('frontend.action-item.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','record'));
+                return view('frontend.action-item.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','record', 'data_record'));
             }
             if($request->child_type == 'r_c_a'){
                 $parent_type = "r_c_a";
