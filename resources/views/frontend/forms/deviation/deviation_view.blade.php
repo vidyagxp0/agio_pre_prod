@@ -1131,8 +1131,8 @@
                                         </div>
                                     </div>
                                     <?php
-                                    // Calculate the due date (30 days from the initiation date)
-                                    $initiationDate = date('Y-m-d'); // Current date as initiation date
+
+                                    $initiationDate = date('Y-m-d');
                                     $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
                                     ?>
 

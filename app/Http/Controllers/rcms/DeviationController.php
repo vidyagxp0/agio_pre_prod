@@ -1219,7 +1219,7 @@ class DeviationController extends Controller
           if (is_array($request->Facility) && array_key_exists(0, $request->Facility) && $request->Facility[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
-            $history->activity_type = 'Deviation Related To';
+            $history->activity_type = 'Deviation Observed By';
             $history->previous = "Null";
             $history->current = $deviation->Facility;
             $history->comment = "Not Applicable";
@@ -3127,13 +3127,33 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         //     $history->save();
         // }
 
-         if ($lastDeviation->Facility != $deviation->Facility || !empty ($request->comment)) {
+        if ($lastDeviation->audit_type != $deviation->audit_type || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
                             ->where('activity_type', 'Deviation Related To')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Deviation Related To';
+             $history->previous = $lastDeviation->audit_type;
+            $history->current = $deviation->audit_type;
+            $history->comment = $deviation->submit_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+
+         if ($lastDeviation->Facility != $deviation->Facility || !empty ($request->comment)) {
+            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                            ->where('activity_type', 'Deviation Observed By')
+                            ->exists();
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'Deviation Observed By';
              $history->previous = $lastDeviation->Facility;
             $history->current = $deviation->Facility;
             $history->comment = $deviation->submit_comment;
@@ -3361,11 +3381,11 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         }
         if ($lastDeviation->Preliminary_Impact != $deviation->Preliminary_Impact || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'Preliminary Impact')
+                            ->where('activity_type', 'Preliminary Impact of Deviation')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Preliminary Impact';
+            $history->activity_type = 'Preliminary Impact of Deviation';
              $history->previous = $lastDeviation->Preliminary_Impact;
             $history->current = $deviation->Preliminary_Impact;
             $history->comment = $deviation->submit_comment;
@@ -7018,7 +7038,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "HOD Review";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
@@ -7045,7 +7065,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "QA/CQA Initial Assessment";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
@@ -7072,7 +7092,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "CFT Review";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
@@ -7100,7 +7120,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "QA/CQA Final Assessment";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
@@ -7127,7 +7147,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Opened";
+                    $history->change_to =   "Pending Initiator Update";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();

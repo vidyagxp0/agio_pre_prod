@@ -1444,7 +1444,7 @@
                                                 value="{{ Helpers::getdateFormat($data->external_supplier_performance) }}" />
                                             <input type="date" id="external_supplier_performance_checkdate"
                                                 name="external_supplier_performance"
-                                                    max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                    {{-- max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --}}
                                                 value="{{ $data->external_supplier_performance }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'external_supplier_performance'); checkStartDate(this)" />
 
