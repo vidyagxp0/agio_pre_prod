@@ -1068,7 +1068,7 @@
                 <div class="cctab">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA/CQA Initial assessment</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA/CQA Initial Assessment</button>
                     <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT</button>
                     <button class="cctablinks " id="Investigation_button" onclick="openCity(event, 'CCForm9')"
                         style="display: none">Investigation</button>

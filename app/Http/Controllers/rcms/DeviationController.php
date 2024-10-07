@@ -3518,11 +3518,11 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
         if ($lastDeviation->Deviation_category != $deviation->Deviation_category || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'Deviation category')
+                            ->where('activity_type', 'Initial Deviation category')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Deviation category';
+            $history->activity_type = 'Initial Deviation category';
              $history->previous = $lastDeviation->Deviation_category;
             $history->current = $deviation->Deviation_category;
             $history->comment = $deviation->submit_comment;

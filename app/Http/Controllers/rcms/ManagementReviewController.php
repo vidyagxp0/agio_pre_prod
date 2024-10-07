@@ -1668,7 +1668,7 @@ class ManagementReviewController extends Controller
         $Cft = managementCft::where('ManagementReview_id', $id)->first();
         $hodCft = hodmanagementCft::where('ManagementReview_id', $id)->first();
 
-        $management->initiator_id = Auth::user()->id;
+        // $management->initiator_id = Auth::user()->id;
         // $changeControl->form_progress = isset($form_progress) ? $form_progress : null;
 
         $management->division_code = $request->division_code;

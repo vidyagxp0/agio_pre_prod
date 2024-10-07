@@ -367,7 +367,6 @@
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
                                         <input type="hidden" name="initiator_id">
-                                        {{-- <div class="static">{{ Auth::user()->name }} </div> --}}
                                         <input disabled type="text" value="{{ $data->initiator_name }}">
                                     </div>
                                 </div>
