@@ -7917,6 +7917,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
+                    $history->previous = 'Not Applicable';
                     $history->activity_type = 'Not Applicable';
 
                     $history->action='Send to HOD';
@@ -7959,6 +7960,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
+                    $history->previous = 'Not Applicable';
                     $history->activity_type = 'Not Applicable';
                     // if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == ''){
                     //     $history->previous = "";
@@ -8006,6 +8008,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
+                    $history->previous = 'Not Applicable';
                     $history->activity_type = 'Not Applicable';
 
                     $history->action='Send to Pending Initiator Update';
@@ -8018,12 +8021,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                     $history->change_to =   "Pending Initiator Update";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
-                    if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == '')
-                    {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+
                     $history->save();
                     $deviation->update();
                     return back();
@@ -8041,6 +8039,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
+                    $history->previous = 'Not Applicable';
                     $history->activity_type = 'Not Applicable';
 
                     $history->action='Send to Pending Initiator Update';
@@ -8053,12 +8052,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                     $history->change_to =   "Pending Initiator Update";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
-                    if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == '')
-                    {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+
                     $history->save();
                     $deviation->update();
                     return back();
