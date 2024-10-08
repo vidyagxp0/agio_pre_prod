@@ -2738,7 +2738,7 @@
                         <div id="CCForm2" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 @if ($data->stage == 3)
-                                    <div class="row">
+                                    <!-- <div class="row">
 
                                         <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
                                             <div class="group-input input-date">
@@ -2763,6 +2763,51 @@
                                                     <select id="Deviation_category"
                                                         name="Deviation_category"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
                                                         onchange="handleDeviationCategoryChange()"
+                                                        value="{{ $data->Deviation_category }}">
+                                                        <option value="0">-- Select --</option>
+                                                        <option @if ($data->Deviation_category == 'minor') selected @endif
+                                                            value="minor">Minor</option>
+                                                        <option @if ($data->Deviation_category == 'major') selected @endif
+                                                            value="major">Major</option>
+                                                        <option @if ($data->Deviation_category == 'critical') selected @endif
+                                                            value="critical">Critical</option>
+                                                    </select>
+                                                @endif
+
+                                                @error('Deviation_category')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div> -->
+
+
+
+
+                                        <div class="row">
+
+                                        <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
+                                            <div class="group-input input-date">
+
+                                                @if ($data->stage == 3)
+                                                    <label for="Deviation category">Initial Deviation category <span
+                                                            class="text-danger">*</span></label>
+                                                    <select id="Deviation_category1"
+                                                        name="Deviation_category"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                        value="{{ $data->Deviation_category }}"
+                                                        onchange="handleDeviationCategoryChange1()" required>
+                                                        <option value="0">-- Select --</option>
+                                                        <option @if ($data->Deviation_category == 'minor') selected @endif
+                                                            value="minor">Minor</option>
+                                                        <option @if ($data->Deviation_category == 'major') selected @endif
+                                                            value="major">Major</option>
+                                                        <option @if ($data->Deviation_category == 'critical') selected @endif
+                                                            value="critical">Critical</option>
+                                                    </select>
+                                                @else
+                                                    <label for="Deviation category">Initial Deviation category</label>
+                                                    <select id="Deviation_category1"
+                                                        name="Deviation_category"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                        onchange="handleDeviationCategoryChange1()"
                                                         value="{{ $data->Deviation_category }}">
                                                         <option value="0">-- Select --</option>
                                                         <option @if ($data->Deviation_category == 'minor') selected @endif
@@ -2937,7 +2982,7 @@
 
                                     <div class="col-md-12">
                                         <div class="group-input">
-                                            <label for="QAInitialRemark">QA/CQA Initial Remarks <span
+                                            <label for="QAInitialRemark">QA/CQA Initial Remark<span
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
@@ -2950,7 +2995,7 @@
                                     </div>
                                     {{-- <div class="col-12">
                                         <div class="group-input">
-                                            <label for="QA Initial Attachments">QA Initial Attachments</label>
+                                            <label for="QA Initial Attachments">QA/CQA initial Attachments</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
                                             <div class="file-attachment-field">
@@ -2983,7 +3028,7 @@
                                     </div> --}}
                                         <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Initial_attachment">QA Initial Attachments</label>
+                                        <label for="Initial_attachment">QA/CQA initial Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="Initial_attachment">
@@ -8100,7 +8145,7 @@
                                 @if ($data->stage == 3 || $data->stage == 4)
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Contract Giver">Contract Required ? <span
+                                            <label for="Contract Giver">Contract Giver Required <span
                                                     class="text-danger">*</span></label>
                                             <select name="ContractGiver_Review" id="ContractGiver_Review">
                                                 <option value="">-- Select --</option>
@@ -8238,7 +8283,7 @@
                                 @else
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Contract Giver">Contract Giver Required ?</label>
+                                            <label for="Contract Giver">Contract Giver Required</label>
                                             <select name="ContractGiver_Review" disabled id="ContractGiver_Review">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->ContractGiver_Review == 'yes') selected @endif
@@ -10227,9 +10272,9 @@
                                     <option value="Why-Why Chart"
                                         {{ strpos($data->investigation_approach, 'Why-Why Chart') !== false ? 'selected' : '' }}>
                                         Why-Why Chart</option>
-                                    <option value="Failure Mode and Efect Analysis"
-                                        {{ strpos($data->investigation_approach, 'Failure Mode and Efect Analysis') !== false ? 'selected' : '' }}>
-                                        Failure Mode and Efect Analysis</option>
+                                    <option value="Failure Mode and Effect Analysis"
+                                        {{ strpos($data->investigation_approach, 'Failure Mode and Effect Analysis') !== false ? 'selected' : '' }}>
+                                        Failure Mode and Effect Analysis</option>
                                     <option value="Fishbone or Ishikawa Diagram"
                                         {{ strpos($data->investigation_approach, 'Fishbone or Ishikawa Diagram') !== false ? 'selected' : '' }}>
                                         Fishbone or Ishikawa Diagram</option>
@@ -10484,11 +10529,14 @@
                                     } else {
                                         $('.Is-not').hide();
                                     }
-                                    if ($('#investigation_approach').val().includes('Failure Mode and Efect Analysis')) {
+                                    if ($('#investigation_approach').val().includes('Failure Mode and Effect Analysis')) {
                                         $('.Category-human').show();
                                     } else {
                                         $('.Category-human').hide();
                                     }
+
+
+                                    
                                 }
 
                                 // Initial check on page load

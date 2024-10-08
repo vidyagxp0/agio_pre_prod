@@ -1850,7 +1850,7 @@
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="QAInitialRemark">QA/CQA Initial Remarks</label>
+                                        <label for="QAInitialRemark">QA/CQA Initial Remark</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="tiny" name="QAInitialRemark" id="summernote-7"></textarea>
@@ -1858,7 +1858,7 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="QA Initial Attachments">QA Initial Attachments</label>
+                                        <label for="QA Initial Attachments">QA/CQA initial Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">

@@ -3657,11 +3657,11 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         }
         if ($lastDeviation->Initial_attachment != $deviation->Initial_attachment || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'QA Initial Attachments')
+                            ->where('activity_type', 'QA/CQA initial Attachments')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'QA Initial Attachments';
+            $history->activity_type = 'QA/CQA initial Attachments';
              $history->previous = $lastDeviation->Initial_attachment;
             $history->current = $deviation->Initial_attachment;
             $history->comment = $deviation->submit_comment;

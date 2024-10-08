@@ -871,7 +871,7 @@
                 <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline; width:5%">QA/CQA
                         Initial
-                        Remarks </label>
+                        Remark </label>
                     <span style="font-size: 0.8rem; margin-left: 60px;">
                         @if ($data->QAInitialRemark)
                             {{ $data->QAInitialRemark }}
@@ -886,7 +886,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    QA Initial Attachments
+                QA/CQA initial Attachments
                 </div>
                 <table>
 
@@ -2347,7 +2347,7 @@
 
                                 <tr>
 
-                                    <th class="w-20">Contract Giver Review Required ?
+                                    <th class="w-20">Contract Giver Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
