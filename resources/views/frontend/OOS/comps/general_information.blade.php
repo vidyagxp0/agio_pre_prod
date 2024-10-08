@@ -424,7 +424,7 @@
                     </div>
                 </div>
             </div>
-            <div class="sub-head pt-3">OOS Information</div>
+            <div class="sub-head pt-3">OOS/OOT Information</div>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Tnitiaror Grouo">Sample Type</label>
