@@ -166,13 +166,16 @@
                                         <label for="Extension Number">
                                             Extension Number
                                         </label>
-                                        <select id="Extension" placeholder="Select..." name="Extension">
-                                            <option value="">Select Extension Number</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-
-                                        </select>
+                                        @if(!empty($countData))
+                                        <input id="docname" type="text" value="{{ $countData }}" readonly>
+                                        @else
+                                        <select name="count" id="">
+                                                <option value="">--Select Extension Number--</option>
+                                                <option value="number1">1</option>
+                                                <option value="number2">2</option>
+                                                <option value="number">3</option>
+                                                </select>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -232,9 +235,9 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Parent Records Number</b></label>
-                                        @if (!empty($data_record))
+                                        @if (!empty($extension_record))
                                             <input readonly type="text" name="related_records"
-                                                value="{{ $data_record }}">
+                                                value="{{ $extension_record }}">
                                         @else
                                             <input readonly type="text" name="related_records" value="">
                                         @endif

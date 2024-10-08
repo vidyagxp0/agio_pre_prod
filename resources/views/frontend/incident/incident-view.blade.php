@@ -1115,7 +1115,7 @@
                                                         <label for="Initiator Group"><b>Initiation Department
                                                         </b> <span
                                                                 class="text-danger">*</span></label>
-                                                        <select name="Initiator_Group" id="initiator_group" {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                        <select name="Initiator_Group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}                                                            >
                                                             {{-- <option value="CQA" @if ($data->Initiator_Group == 'CQA') selected @endif> Corporate  Quality Assurance</option>
                                                             <option value="QAB" @if ($data->Initiator_Group == 'QAB') selected @endif> Quality  Assurance Biopharma</option>
                                                             <option value="QAB" @if ($data->Initiator_Group == 'QC') selected @endif> Quality  Control</option>
@@ -1255,16 +1255,16 @@
                                             </div>
                                             <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
-                                                    <label for="Short Description required">Repeat Incident? <span
+                                                    <label for="Short Description required">Repeat Incident?<span
                                                             class="text-danger">*</span></label>
                                                     <select name="short_description_required"
                                                         id="short_description_required" onchange="checkRecurring(this)"
-                                                        value="{{ $data->short_description_required }}" {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                        value="{{ $data->short_description_required }}" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option value="Recurring"
                                                             @if ($data->short_description_required == 'Recurring' || old('short_description_required') == 'Recurring') selected @endif>Yes</option>
-                                                        <option value="Non_Recurring"
-                                                            @if ($data->short_description_required == 'Non_Recurring' || old('short_description_required') == 'Non_Recurring') selected @endif>No</option>
+                                                        <option value="Non-Recurring"
+                                                            @if ($data->short_description_required == 'Non-Recurring' || old('short_description_required') == 'Non-Recurring') selected @endif>No</option>
                                                     </select>
                                                 </div>
                                                 @error('short_description_required')
@@ -1497,7 +1497,7 @@
                                                 <div class="group-input">
                                                     <label for="audit type">Incident Related To <span
                                                             class="text-danger">*</span></label>
-                                                    <select multiple name="audit_type[]" id="audit_type" {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                    <select multiple name="audit_type[]" id="audit_type" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
 
                                                         <option value="Equipment/Instrument"
                                                             {{ strpos($data->audit_type, 'Equipment/Instrument') !== false ? 'selected' : '' }}>
@@ -1609,7 +1609,7 @@
                                                     <label for="search">Department Head<span class="text-danger"></span>
                                                     </label>
 
-                                                    <select id="select-state" placeholder="Select..." name="department_head" {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                    <select id="select-state" placeholder="Select..." name="department_head" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                                         <option value="">--Select--</option>
                                                         @foreach ($users as $key => $value)
                                                             <option @if ($data->department_head == $value->id) selected @endif
@@ -1622,7 +1622,7 @@
                                                 <div class="group-input">
                                                     <label for="search"> QA Reviewer <span class="text-danger"></span> </label>
 
-                                                    <select id="select-state" placeholder="Select..." name="qa_reviewer" {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                    <select id="select-state" placeholder="Select..." name="qa_reviewer" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                                         <option value="">--Select--</option>
                                                         @foreach ($users as $key => $value)
                                                             <option @if ($data->qa_reviewer == $value->id) selected @endif
@@ -1636,7 +1636,7 @@
                                                     <label for="Facility/Equipment"> Facility/ Equipment/ Instrument/ System
                                                         Details Required? <span class="text-danger">*</span></label>
                                                     <select name="Facility_Equipment"
-                                                        id="Facility_Equipment" value="{{ $data->Facility_Equipment }}" {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                        id="Facility_Equipment" value="{{ $data->Facility_Equipment }}" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data->Facility_Equipment == 'yes' || old('Facility_Equipment') == 'yes') selected @endif value="yes">
                                                             Yes</option>
@@ -1823,7 +1823,7 @@
                                                     <select
                                                         name="Document_Details_Required"
                                                         id="Document_Details_Required"
-                                                        value="{{ $data->Document_Details_Required }}" {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                        value="{{ $data->Document_Details_Required }}" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data->Document_Details_Required == 'yes' || old('Document_Details_Required') == 'yes') selected @endif value="yes">
                                                             Yes</option>
@@ -1945,7 +1945,7 @@
                                                     <select
                                                         name="Product_Details_Required"
                                                         id="Product_Details_Required"
-                                                        value="{{ $data->Product_Details_Required }}" {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                        value="{{ $data->Product_Details_Required }}" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data->Product_Details_Required == 'yes' || old('Product_Details_Required') == 'yes') selected @endif value="yes">
                                                             Yes</option>
@@ -2198,7 +2198,7 @@
                                             <button
                                                 type="submit"
                                                 id="ChangesaveButton01" class="saveButton saveAuditFormBtn d-flex"
-                                                style="align-items: center;">
+                                                style="align-items: center;" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                                 <div class="spinner-border spinner-border-sm auditFormSpinner"
                                                     style="display: none">
                                                     <span class="sr-only">Loading...</span>
@@ -2220,7 +2220,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                     <div class="group-input">
-                                                        <label for="HOD Remarks">Review of Incident And Verfication of Effectivess of Correction </label>
+                                                        <label for="HOD Remarks">Review Of Incident And Verification Of Effectiveness Of Corrcetion</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="review_of_verific" {{ $data->stage == 2 ? '' : 'readonly' }}>{{ $data->review_of_verific }}</textarea>
@@ -2420,7 +2420,7 @@
                                         <div class="button-block">
 
                                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
-                                                type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
+                                                type="submit"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                 class="saveButton saveAuditFormBtn d-flex" style="align-items: center;"
                                                 id="ChangesaveButton02">
                                                 <div class="spinner-border spinner-border-sm auditFormSpinner"
@@ -3373,7 +3373,7 @@
 
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton">Save</button>
+                                        <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
                                          <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -3571,7 +3571,7 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Audit Attachments">QA Head/Designee Approval Attachement</label>
+                                        <label for="Audit Attachments">QA Head/Designee Approval Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -3628,7 +3628,7 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
-                                    class="saveButton">Save </button>
+                                    class="saveButton" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save </button>
 
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="backButton" onclick="previousStep()">Back</button>
@@ -3838,7 +3838,7 @@
 
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton">Save</button>
+                                        <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
                                          <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -5557,7 +5557,7 @@
 
                         <div class="button-block">
                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="submit"
-                                class="saveButton" {{ $data->stage == 9 ? 'disabled' : '' }}>Save</button>
+                                class="saveButton" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"
                                 class="nextButton" onclick="nextStep()">Next</button>
                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a
@@ -6184,7 +6184,7 @@
 
                         <div class="button-block">
                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="submit"
-                                class="saveButton" {{ $data->stage == 9 ? 'disabled' : '' }}>Save</button>
+                                class="saveButton" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
                             <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
                                 <button type="button" class="backButton">Back</button>
                             </a>
@@ -6543,7 +6543,7 @@
 
                             <div class="button-block">
                                 <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
-                                    type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
+                                    type="submit"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                     id="ChangesaveButton04" class=" saveAuditFormBtn d-flex" style="align-items: center;">
                                     <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
                                         role="status">
@@ -6712,6 +6712,8 @@
                                 </div>
                                 Save
                             </button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+
                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
                                 type="button"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                 class="nextButton" onclick="nextStep()">Next</button>
@@ -6910,7 +6912,7 @@
                                 Save
                             </button>
                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
-                                type="button"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                type="button"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                 class="nextButton" onclick="nextStep()">Next</button>
                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a
                                     href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -7842,11 +7844,11 @@
                             Save
                         </button> --}}
                         <a href="/rcms/qms-dashboard">
-                            <button type="button"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                            <button type="button"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                 class="backButton">Back</button>
                         </a>
                         {{-- <button type="submit"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Submit</button> --}}
-                        <button type="button"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> <a
+                        <button type="button"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}> <a
                                 href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                 Exit </a> </button>
                     </div>
