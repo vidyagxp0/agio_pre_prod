@@ -317,7 +317,7 @@
                                             Assigned To
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="assign_to"
-                                            {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                        {{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}>
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
                                                 <option {{ $data->assign_to == $value->name ? 'selected' : '' }}

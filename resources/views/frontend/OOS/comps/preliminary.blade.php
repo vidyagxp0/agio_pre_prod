@@ -18,14 +18,14 @@
                     <label for="checklists">Checklists</label>
                     @php
                     $ChecklistData = $data->checklists;
-                
+
                     if (is_array($ChecklistData) && array_key_exists('0', $ChecklistData) && is_string($ChecklistData[0]) && !empty($ChecklistData[0])) {
                         $selectedChecklist = explode(',', $ChecklistData[0]);
                     } else {
                         $selectedChecklist = is_array($ChecklistData) ? $ChecklistData : [];
                     }
                 @endphp
-                
+
                     <select multiple id="checklists" class="abc" name="checklists[]">
                         <option value="pH-Viscometer-MP" @if (in_array('pH-Viscometer-MP', $selectedChecklist)) selected @endif>CheckList - pH-Viscometer-MP</option>
                         <option value="Dissolution" @if (in_array('Dissolution', $selectedChecklist)) selected @endif>CheckList - Dissolution</option>
@@ -56,7 +56,7 @@
                     <textarea name="root_comment" id="rootCauseTextarea" rows="4" placeholder="Describe the root cause here" {{ $data->stage == 5 ? '' : 'readonly' }}> {{ $data->root_comment }}</textarea>
                 </div>
             </div>
-            
+
             <div class="col-lg-12 mb-4">
                 <div class="group-input">
                     <label for="Audit Schedule Start Date">Delay justification for investigation</label>
@@ -76,7 +76,7 @@
 
                 </div>
             </div>
-           
+
             <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Initiator Group">Analyst interview Attachment</label>
@@ -103,7 +103,7 @@
                         </div>
                         <div class="add-btn">
                             <div>Add</div>
-                            <input type="file" id="myfile" name="file_attachments_pli[]" 
+                            <input type="file" id="myfile" name="file_attachments_pli[]"
                             oninput="addMultipleFiles(this, 'file_attachments_pli')"
                             {{ $data->stage == 5 ? '' : 'readonly' }}   multiple {{Helpers::isOOSChemical($data->stage)}}>
                         </div>
@@ -171,19 +171,19 @@
                         <option value="" {{ $data->root_cause_identified_plic == '' ? 'selected' : '' }}>Enter Your Selection Here</option>
                         <option value="yes" {{ $data->root_cause_identified_plic == 'yes' ? 'selected' : '' }}>Analyst</option>
                         <option value="no" {{ $data->root_cause_identified_plic == 'no' ? 'selected' : '' }}>Instrument</option>
-                    </select>   
+                    </select>
                 </div>
             </div> --}}
-            
+
             <script>
             document.addEventListener("DOMContentLoaded", function() {
                 toggleRootCauseInput(); // Call this on page load to ensure correct display
-            
+
                 function toggleRootCauseInput() {
                     var selectValue = document.getElementById("assignableSelect1").value.toLowerCase(); // Convert to lowercase for consistency
                     var rootCauseGroup1 = document.getElementById("rootCauseGroup1");
                     var rootCauseTextarea = document.getElementById("rootCauseTextarea");
-            
+
                     if (selectValue === "yes") {
                         rootCauseGroup1.style.display = "block";  // Show the textarea if "yes" is selected
                         rootCauseTextarea.setAttribute('', '');  // Make textarea required
@@ -192,15 +192,15 @@
                         rootCauseTextarea.removeAttribute('');  // Remove required attribute
                     }
                 }
-            
+
                 // Attach the event listener
                 document.getElementById("assignableSelect1").addEventListener("change", toggleRootCauseInput);
             });
             </script>
-     
+
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Audit Team"> OOS Category</label>
+                    <label for="Audit Team"> OOS/OOT Category</label>
                     <select name="oos_category_root_cause_ident_plic"  {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'readonly' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Analyst Error"{{ $data->oos_category_root_cause_ident_plic ==
@@ -211,13 +211,13 @@
                             'Product/Material Related Error' ? 'selected' : '' }}>Product/Material Related Error</option>
                         <option value="Other Error"{{ $data->oos_category_root_cause_ident_plic ==
                             'Other Error' ? 'selected' : '' }}>Other Error</option>
-                        
+
                     </select>
                 </div>
             </div>
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">OOS Category(if Others)</label>
+                    <label for="Description Deviation">OOS/OOT Category(if Others)</label>
                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                             require completion</small></div>
                     <textarea class="summernote" name="oos_category_others_plic" id="summernote-1"
@@ -225,7 +225,7 @@
                     </textarea>
                 </div>
             </div>
-            
+
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Product/Material Name">CAPA Required</label>
@@ -304,7 +304,7 @@
             </div> --}}
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">OOS review for Similar Nature</label>
+                    <label for="Description Deviation">OOS/OOT review for Similar Nature</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="review_comments_plir" id="summernote-1"
                         value="" {{Helpers::isOOSChemical($data->stage)}}>{{  $data->review_comments_plir ?  $data->review_comments_plir : '' }}
@@ -353,7 +353,7 @@
                                                 <div class="calenderauditee">
                                                     <input disabled {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_capa[{{ $loop->index }}][info_oos_reported_date]" value="{{ Helpers::getdateFormat($oos_capa['info_oos_reported_date'] ?? '') }}"
                                                      id="info_oos_reported_date_{{ $loop->index }}" placeholder="DD-MM-YYYY" />
-                                                    <input type="date" name="oos_capa[{{ $loop->index }}][info_oos_reported_date]" value="{{ $oos_capa['info_oos_reported_date'] ?? '' }}" 
+                                                    <input type="date" name="oos_capa[{{ $loop->index }}][info_oos_reported_date]" value="{{ $oos_capa['info_oos_reported_date'] ?? '' }}"
                                                     class="hide-input" oninput="handleDateInput(this, 'info_oos_reported_date_{{ $loop->index }}')">
                                                 </div>
                                             </div>
@@ -368,7 +368,7 @@
                                                 <div class="calenderauditee">
                                                     <input disabled  {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_capa[{{ $loop->index }}][info_oos_closure_date]" value="{{ Helpers::getdateFormat($oos_capa['info_oos_closure_date'] ?? '') }}"
                                                        id="info_oos_closure_date_{{ $loop->index }}"  placeholder="DD-MM-YYYY" />
-                                                    <input type="date" name="oos_capa[{{ $loop->index }}][info_oos_closure_date]" value="{{ $oos_capa['info_oos_closure_date'] ?? '' }}" 
+                                                    <input type="date" name="oos_capa[{{ $loop->index }}][info_oos_closure_date]" value="{{ $oos_capa['info_oos_closure_date'] ?? '' }}"
                                                     class="hide-input" oninput="handleDateInput(this, 'info_oos_closure_date_{{ $loop->index }}')">
                                                 </div>
                                             </div>
@@ -381,7 +381,7 @@
                                                 <option value="No" {{ Helpers::getArrayKey($oos_capa, 'info_oos_capa_requirement') == 'No' ? 'selected' : '' }}>No</option>
                                             </select>
                                         </td>
-                                        <td><input type="text" name="oos_capa[{{ $loop->index }}][info_oos_capa_reference_number]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_capa_reference_number') }}" {{Helpers::isOOSChemical($data->stage)}}></td> 
+                                        <td><input type="text" name="oos_capa[{{ $loop->index }}][info_oos_capa_reference_number]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_capa_reference_number') }}" {{Helpers::isOOSChemical($data->stage)}}></td>
                                         <td><button type="text" class="removeRowBtn" {{Helpers::isOOSChemical($data->stage)}}>Remove</button></td>
                                     </tr>
                                @endforeach
@@ -414,7 +414,7 @@
                     </select>
                 </div>
             </div>
-            
+
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Start Date">Retest/Re-measurement required</label>
@@ -506,10 +506,10 @@
 
                 </div>
             </div>
-            
+
             <div class="button-block">
                 @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                
+
                 @else
                 <button type="submit" class="saveButton">Save</button>
                 <button type="button" class="backButton" onclick="previousStep()">Back</button>

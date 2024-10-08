@@ -1820,7 +1820,7 @@ dd($pre);
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="HOD Remarks">Review of Incident And Verfication of Effectivess of Correction</label>
+                                        <label for="HOD Remarks">Review Of Incident And Verification Of Effectiveness Of Corrcetion</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="tiny" name="review_of_verific" disabled>  </textarea>
@@ -2115,7 +2115,7 @@ dd($pre);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Audit Attachments">QA Head/Designee Approval Attachement</label>
+                                        <label for="Audit Attachments">QA Head/Designee Approval Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
