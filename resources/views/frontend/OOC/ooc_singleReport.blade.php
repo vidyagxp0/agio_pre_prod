@@ -416,31 +416,7 @@
                             @endif
                         </td>
                     </tr>
-
-                    <tr>
-                        <th class="w-20">Delay Justification for Reporting</th>
-                        <td class="w-80" colspan="3">
-                            @if ($data->Delay_Justification_for_Reporting)
-                                {{ $data->Delay_Justification_for_Reporting }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th class="w-20">Immediate Action</th>
-                        <td class="w-80" colspan="3">
-                            @if ($data->Immediate_Action_ooc)
-                                {{ $data->Immediate_Action_ooc }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-
                 </table>
-
                 <div class="block">
                     <div class="block-head">
                         Instrument Details
@@ -486,6 +462,35 @@
                         </table>
                     </div>
                 </div>
+            </div>
+            <div class="block">
+                <div class="block-head">
+                    Delay Justification for Reporting
+                </div>
+
+                <table>
+                    <tr>
+                        <th class="w-20">Delay Justification for Reporting</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->Delay_Justification_for_Reporting)
+                                {{ $data->Delay_Justification_for_Reporting }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Immediate Action</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->Immediate_Action_ooc)
+                                {{ $data->Immediate_Action_ooc }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
             </div>
 
             <div class="block">
@@ -586,7 +591,7 @@
 
             <div class="block">
                 <div class="block-head">
-                    Checklist
+                    Phase IA Inv. Checklist
                 </div>
 
 
@@ -920,6 +925,16 @@
                 </div>
                 <table>
                     <tr>
+                        <th class="w-20">Assignable cause identified </th>
+                        <td class="w-80">
+                            @if ($data->assignable_cause_identified)
+                                {!! $data->assignable_cause_identified !!}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
                         <th class="w-20">P-IA QAH Remarks </th>
                         <td class="w-80" colspan="3">
                             @if ($data->qaHremarksnewfield)
@@ -973,7 +988,7 @@
                     <tr>
                         <th class="w-20">
                             Details of instrument out of order</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->details_of_instrument_out_of_order)
                                 {{ $data->details_of_instrument_out_of_order }}
                             @else
