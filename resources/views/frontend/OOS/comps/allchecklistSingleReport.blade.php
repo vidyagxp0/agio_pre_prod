@@ -1,8 +1,8 @@
    <!--Start Checklist - Investigation of Bacterial Endotoxin Test CCForm18 -->
- 
-        <div class="inner-block"> 
+
+        <div class="inner-block">
             <div class="content-table">
-                    
+
                 <div class="block">
                     <div class="block-head"> Checklist for Analyst Training and Procedure : </div>
                         <div class="border-table">
@@ -55,14 +55,14 @@
                                         ]
                                         ];
 
-                            @endphp                  
+                            @endphp
                             <table>
                                 <tr class="table_bg">
                                     <th style="width: 5%;">Sr.No.</th>
                                     <th style="width: 40%;">Question</th>
                                     <th style="width: 20%;">Response</th>
                                     <th>Remarks</th>
-                                </tr> 
+                                </tr>
                                 @php
                                     $main_question_index = 2.0;
                                     $sub_question_index = 0;
@@ -126,7 +126,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -293,14 +293,14 @@
                                 'input_type' => 'text'
                                 ],
                                 ]
-                                @endphp      
+                                @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -416,14 +416,14 @@
                             'input_type' => 'text'
                             ],
                             ]
-                            @endphp      
+                            @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -470,14 +470,14 @@
                             ],
                             ];
 
-                    @endphp      
+                    @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -539,14 +539,14 @@
                             ]
                             ];
 
-                        @endphp      
+                        @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -608,14 +608,14 @@
                         ]
                         ];
 
-                        @endphp              
+                        @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -672,14 +672,14 @@
                             ]
                             ];
 
-                        @endphp            
+                        @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -766,14 +766,14 @@
                                         ]
                                         ];
 
-                                        @endphp      
+                                        @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -840,14 +840,14 @@
                             ]
                             ];
 
-                        @endphp    
+                        @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -924,14 +924,14 @@
                             ]
                             ];
 
-                            @endphp      
+                            @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1003,14 +1003,14 @@
                                 ]
                                 ];
 
-                                @endphp      
+                                @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1089,7 +1089,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1197,7 +1197,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1294,14 +1294,14 @@
                         ]
                     ];
 
-                    @endphp      
+                    @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1468,14 +1468,14 @@
                                             ]
                                         ];
 
-                                    @endphp      
+                                    @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1489,12 +1489,25 @@
                                     $main_question_index += 0.1;
                                 }
                             @endphp
-                                <tr>
+                                {{--<tr>
                                     <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
                                     <td>{{$review_item['question']}}</td>
                                     <td>{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index) ?? '' }}</td>
                                     <td>{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'remark', true, $index) ?? '' }}</td>
+                                </tr>--}}
+                                <tr>
+                                    <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                    <td>{{ $review_item['question'] }}</td>
+
+                                    @php
+                                        $response = Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index);
+                                        $remark = Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'remark', true, $index);
+                                    @endphp
+
+                                    <td>{{ is_array($response) ? json_encode($response) : ($response ?? '') }}</td>
+                                    <td>{{ is_array($remark) ? json_encode($remark) : ($remark ?? '') }}</td>
                                 </tr>
+
                                 @endforeach
                         </table>
                     </div>
@@ -1544,7 +1557,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1651,14 +1664,14 @@
                         ]
                         ];
 
-                    @endphp      
+                    @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1710,14 +1723,14 @@
                                 ]
                             ];
 
-                                @endphp   
+                                @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1763,15 +1776,15 @@
                                     'input_type' => 'date'
                                 ]
                                 ];
-            
-                                @endphp   
+
+                                @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1828,14 +1841,14 @@
                             ]
                         ];
 
-                        @endphp   
+                        @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1907,14 +1920,14 @@
                                 ]
                             ];
 
-                            @endphp  
+                            @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2075,7 +2088,7 @@
                                                     'input_type' => 'date'
                                                 ],
                                                 ];
-                            
+
                                             @endphp
                         <table>
                             <tr class="table_bg">
@@ -2083,7 +2096,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2144,15 +2157,15 @@
                                         'input_type' => 'text'
                                     ]
                                     ];
-                                
-                        @endphp  
+
+                        @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2210,7 +2223,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2319,7 +2332,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2373,7 +2386,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2451,7 +2464,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2515,7 +2528,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2594,7 +2607,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2658,7 +2671,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2737,7 +2750,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2791,7 +2804,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2850,7 +2863,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2909,7 +2922,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2938,7 +2951,7 @@
                     <div class="block-head"> Checklist for review of Test Method & procedure: </div>
                     <div class="border-table">
                         @php
-                        
+
                                 $CR_of_test_method_CIEMs = [
                                         [
                                             'question' => "Was the test method, monitoring SOP followed correctly?",
@@ -2951,7 +2964,7 @@
                                             'input_type' => 'number'
                                         ]
                                     ];
-            
+
                                 @endphp
                         <table>
                             <tr class="table_bg">
@@ -2959,7 +2972,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -3028,7 +3041,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -3139,7 +3152,7 @@
                                                 'input_type' => 'date'
                                             ]
                                         ];
-            
+
                                 @endphp
                         <table>
                             <tr class="table_bg">
@@ -3147,7 +3160,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -3188,7 +3201,7 @@
                                             'input_type' => 'text'
                                         ]
                                     ];
-            
+
                                     @endphp
                         <table>
                             <tr class="table_bg">
@@ -3196,7 +3209,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -3265,7 +3278,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -3339,7 +3352,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -3412,7 +3425,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -3471,7 +3484,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -3595,7 +3608,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -3654,7 +3667,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -3707,7 +3720,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -3732,7 +3745,7 @@
                     </div>
                 </div>
             </div>
-        </div>   
+        </div>
 
                         @php
                         $ph_meter_questions = array(
@@ -3825,7 +3838,7 @@
                             "Was temperature of the instrument as per STP?",
                             "Was temperature acquired during analysis?",
                         );
-                        @endphp           
+                        @endphp
                         <div class="block">
                         <div class="block-head"> CheckList - Melting Point</div>
                         <div class="border-table">
@@ -3855,7 +3868,7 @@
                             @endif
                         </table>
                         </div>
-                        </div>             
+                        </div>
                         @php
 
                         $Dis_solution_questions = array(
@@ -3907,7 +3920,7 @@
                         @endif
                         </table>
                         </div>
-                        </div> 
+                        </div>
                         @php
                         $HPLC_GC_questions = array(
                         "Was analyst used correct column as per mentioned in STP?",
@@ -4002,7 +4015,7 @@
                             @endif
                         </table>
                         </div>
-                        </div> 
+                        </div>
 
                         @php
                         $General_Checklist_questions = array(
@@ -4078,7 +4091,7 @@
                                     @endif
                                 </table>
                             </div>
-                        </div> 
+                        </div>
                         @php
                         $kF_Potentionmeter_questions = array(
                         "Was Correct Reagent used for analysis?",
@@ -4099,7 +4112,7 @@
                         "Is RSD of KF within limit as per SOP/STP?",
                         "Was activated desiccant used?",
                         "Was tip of nozzle correctly attached with delivery tube of volumetric solution reservior?",
-                        
+
                         );
                         @endphp
                         <div class="block">
@@ -4131,7 +4144,7 @@
                         @endif
                         </table>
                         </div>
-                        </div> 
+                        </div>
                         @php
                         $RM_PM_questions = array(
                         "Was analyst Varified the GRN as per received samples?",
@@ -4179,4 +4192,4 @@
                         @endif
                         </table>
                         </div>
-                        </div> 
+                        </div>

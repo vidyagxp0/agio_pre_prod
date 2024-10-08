@@ -397,7 +397,7 @@
                                         @if ($dataDemo->change_from)
                                             {{-- Check if the change_from is a date --}}
                                             @if (strtotime($dataDemo->change_from))
-                                                {{ \Carbon\Carbon::parse($dataDemo->change_from)->format('d/M/Y') }}
+                                                {{ \Carbon\Carbon::parse($dataDemo->change_from)->format('d-M-Y') }}
                                             @else
                                                 {{ str_replace(',', ', ', $dataDemo->change_from) }}
                                             @endif
@@ -414,7 +414,7 @@
                                         @if (!empty(strip_tags($dataDemo->previous)))
                                             {{-- Check if the previous is a date --}}
                                             @if (strtotime($dataDemo->previous))
-                                                {{ \Carbon\Carbon::parse($dataDemo->previous)->format('d/M/Y') }}
+                                                {{ \Carbon\Carbon::parse($dataDemo->previous)->format('d-M-Y') }}
                                             @else
                                                 {!! $dataDemo->previous !!}
                                             @endif
