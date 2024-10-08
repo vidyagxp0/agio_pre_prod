@@ -2319,7 +2319,7 @@
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Brief Description of complaint">Brief Description Of Complaint:</label>
+                                    <label for="Brief Description of complaint">Brief Description Of Complaint</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="" name="brief_description_of_complaint_ca" id=""
