@@ -10272,9 +10272,9 @@
                                     <option value="Why-Why Chart"
                                         {{ strpos($data->investigation_approach, 'Why-Why Chart') !== false ? 'selected' : '' }}>
                                         Why-Why Chart</option>
-                                    <option value="Failure Mode and Effect Analysis"
-                                        {{ strpos($data->investigation_approach, 'Failure Mode and Effect Analysis') !== false ? 'selected' : '' }}>
-                                        Failure Mode and Effect Analysis</option>
+                                    <option value="Category Of Human Error"
+                                        {{ strpos($data->investigation_approach, 'Category Of Human Error') !== false ? 'selected' : '' }}>
+                                        Category Of Human Error </option>
                                     <option value="Fishbone or Ishikawa Diagram"
                                         {{ strpos($data->investigation_approach, 'Fishbone or Ishikawa Diagram') !== false ? 'selected' : '' }}>
                                         Fishbone or Ishikawa Diagram</option>
@@ -10529,7 +10529,7 @@
                                     } else {
                                         $('.Is-not').hide();
                                     }
-                                    if ($('#investigation_approach').val().includes('Failure Mode and Effect Analysis')) {
+                                    if ($('#investigation_approach').val().includes('Category Of Human Error')) {
                                         $('.Category-human').show();
                                     } else {
                                         $('.Category-human').hide();
