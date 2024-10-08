@@ -1125,7 +1125,7 @@
                                                 placeholder="DD-MMM-YYYY" />
                                             <input type="date" id="external_supplier_performance_checkdate"
                                                 name="external_supplier_performance"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'external_supplier_performance');checkDate('external_supplier_performance_checkdate','customer_satisfaction_level_checkdate')" />
                                         </div>
                                     </div>
@@ -1210,6 +1210,21 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Inv Attachments">Meetings and Summary Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="meeting_and_summary_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="meeting_and_summary_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'meeting_and_summary_attachment')" multiple>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -4714,7 +4729,7 @@
                                         </div>
                                     </div>
                                 </div>
-                              
+
                                 <script>
                                     $(document).ready(function() {
                                         $('.other1_reviews').hide();
@@ -5403,7 +5418,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Inv Attachments">Action Item Status Attachment</label>
+                                    <label for="Inv Attachments">QA Verification Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">

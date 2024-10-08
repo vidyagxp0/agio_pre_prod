@@ -1273,43 +1273,44 @@
                                         e.preventDefault();
 
                                         function generateTableRow(serialNumber) {
-                                            var html =
-                                                '<tr>' +
-                                                '<td>' + (serialNumber + 1) + '</td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_product_name]"></td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_batch_no]"></td>' +
-                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
-                                                indexDetail + '_info_mfg_date" type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_mfg_date]" placeholder="DD-MMM-YYYY" readonly/> <input type="date" name="serial_number_gi[' +
-                                                indexDetail +
-                                                '][info_mfg_date]" min="{{ today()->subDays(1000)->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
-                                                indexDetail +
-                                                '_info_mfg_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                                indexDetail + '_info_mfg_date\')" /> </div></div></div> </td>' +
-                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
-                                                indexDetail + '_info_expiry_date" type="text" name="serial_number_gi[' +
-                                                indexDetail +
-                                                '][info_expiry_date]" placeholder="DD-MMM-YYYY" readonly/> <input type="date" name="serial_number_gi[' +
-                                                indexDetail +
-                                                '][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
-                                                indexDetail +
-                                                '_info_expiry_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                                indexDetail + '_info_expiry_date\')" /> </div></div></div> </td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_batch_size]"></td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_pack_size]"></td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_dispatch_quantity]"></td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_remarks]"></td>' +
-                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                                                '</tr>';
-                                            indexDetail++;
-                                            return html;
-                                        }
+    var html =
+        '<tr>' +
+        '<td>' + (serialNumber + 1) + '</td>' +
+        '<td><input type="text" name="serial_number_gi[' + indexDetail +
+        '][info_product_name]"></td>' +
+        '<td><input type="text" name="serial_number_gi[' + indexDetail +
+        '][info_batch_no]"></td>' +
+        '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="text_date_' +
+        indexDetail + '_info_mfg_date" type="text" name="serial_number_gi[' + indexDetail +
+        '][info_mfg_date]" placeholder="DD-MMM-YYYY" readonly/> <input type="date" name="serial_number_gi[' +
+        indexDetail +
+        '][info_mfg_date]" min="{{ today()->subDays(1000)->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
+        indexDetail +
+        '_info_mfg_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'text_date_' +
+        indexDetail + '_info_mfg_date\')" onchange="handleStartDateChange(this, \'date_' + indexDetail +
+        '_info_expiry_date\')" /> </div></div></div> </td>' +
+        '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="text_date_' +
+        indexDetail + '_info_expiry_date" type="text" name="serial_number_gi[' +
+        indexDetail +
+        '][info_expiry_date]" placeholder="DD-MMM-YYYY" readonly/> <input type="date" name="serial_number_gi[' +
+        indexDetail +
+        '][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
+        indexDetail +
+        '_info_expiry_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'text_date_' +
+        indexDetail + '_info_expiry_date\')" /> </div></div></div> </td>' +
+        '<td><input type="text" name="serial_number_gi[' + indexDetail +
+        '][info_batch_size]"></td>' +
+        '<td><input type="text" name="serial_number_gi[' + indexDetail +
+        '][info_pack_size]"></td>' +
+        '<td><input type="text" name="serial_number_gi[' + indexDetail +
+        '][info_dispatch_quantity]"></td>' +
+        '<td><input type="text" name="serial_number_gi[' + indexDetail +
+        '][info_remarks]"></td>' +
+        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+        '</tr>';
+    indexDetail++;
+    return html;
+}
 
                                         var tableBody = $('#ProductsDetails tbody');
                                         var rowCount = tableBody.children('tr').length;
@@ -1326,71 +1327,34 @@
 
 
                             <script>
-                                function handleDateInput(dateInput, textInputId) {
-                                    const selectedDate = new Date(dateInput.value);
-                                    const today = new Date();
+                                 function handleStartDateChange(startDateInput, endDateInputId) {
+        const selectedStartDate = new Date(startDateInput.value);  // Get the selected start date
+        const endDateInput = document.getElementById(endDateInputId);
 
-                                    // Remove the time portion of today's date for comparison
-                                    today.setHours(0, 0, 0, 0);
+        // Set the minimum date of end date to be one day after the start date
+        if (startDateInput.value) {
+            selectedStartDate.setDate(selectedStartDate.getDate() + 1); // Increment the date by one day
+            const minDate = selectedStartDate.toISOString().split('T')[0]; // Format date as YYYY-MM-DD
+            endDateInput.min = minDate; // Set min attribute of end date input
 
-                                    if (selectedDate < today) {
-                                        alert("Selected date is in the past. Please choose a current or future date.");
-                                        dateInput.value = "";
-                                        document.getElementById(textInputId).value = "";
-                                    } else {
-                                        const formattedDate = selectedDate.toLocaleDateString('en-GB', {
-                                            day: '2-digit',
-                                            month: 'short',
-                                            year: 'numeric'
-                                        }).replace(/ /g, '-');
-                                        document.getElementById(textInputId).value = formattedDate;
-                                    }
-                                }
+            // If end date is before the new min date, reset it
+            if (endDateInput.value && new Date(endDateInput.value) < selectedStartDate) {
+                endDateInput.value = '';
+            }
+        } else {
+            endDateInput.min = "";  // Reset the min value if no start date is selected
+        }
+    }
 
-                                // Set minimum date for date inputs to today
-                                document.querySelectorAll('input[type="date"]').forEach(input => {
-                                    // input.setAttribute('min', new Date().toISOString().split('T')[0]);
-                                });
+    // Attach the event to existing start date inputs (optional depending on your initialization)
+    document.querySelectorAll('input[name*="[info_mfg_date]"]').forEach(startDateInput => {
+        const index = startDateInput.id.split('_')[1];  // Extract index from the ID
+        const endDateInputId = `date_${index}_info_expiry_date`;
+        startDateInput.addEventListener('change', () => handleStartDateChange(startDateInput, endDateInputId));
+    });
                             </script>
 
-                            <script>
-                                function handleDateInput(inputElement, hiddenInputId) {
-                                    const hiddenInput = document.getElementById(hiddenInputId);
-                                    const displayElement = document.getElementById(`display_${hiddenInputId}`);
-
-                                    hiddenInput.value = inputElement.value;
-
-                                    // Update the displayed date
-                                    if (inputElement.value) {
-                                        const date = new Date(inputElement.value);
-                                        const formattedDate = date.toLocaleDateString('en-GB', {
-                                            day: '2-digit',
-                                            month: 'short',
-                                            year: 'numeric'
-                                        }).toUpperCase();
-                                        displayElement.textContent = formattedDate;
-                                    }
-                                }
-                            </script>
-
-                            <script>
-                                function handleDateInput(dateInput, displayInputId) {
-                                    const displayInput = document.getElementById(displayInputId);
-
-                                    if (dateInput.value) {
-                                        const date = new Date(dateInput.value);
-                                        const formattedDate = date.toLocaleDateString('en-GB', {
-                                            day: '2-digit',
-                                            month: 'short',
-                                            year: 'numeric'
-                                        }).toUpperCase();
-                                        displayInput.value = formattedDate;
-                                    } else {
-                                        displayInput.value = '';
-                                    }
-                                }
-                            </script>
-
+                           
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="root_cause">
@@ -2355,7 +2319,7 @@
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Brief Description of complaint">Brief Description Of Complaint:</label>
+                                    <label for="Brief Description of complaint">Brief Description Of Complaint</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="" name="brief_description_of_complaint_ca" id=""
@@ -2430,8 +2394,7 @@
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Interpretation on compalint sample">Interpretation On Compalint Sample(If
-                                        Recieved)</label>
+                                    <label for="Interpretation on compalint sample">Interpretation on Complaint sample(if recieved)</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="" name="interpretation_on_complaint_sample_ifrecieved_ca" id=""
