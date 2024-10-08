@@ -90,7 +90,7 @@
                         @endphp
 
                         <button class="button_theme1">
-                            <a class="text-white" href="{{ route('job_audittrail', $jobTraining->id) }}"> Audit Trail
+                            <a class="text-white" href="{{ route('auditTrail', $jobTraining->id) }}"> Audit Trail
                             </a>
                         </button>
 

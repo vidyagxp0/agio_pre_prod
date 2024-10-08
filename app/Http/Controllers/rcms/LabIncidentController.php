@@ -5959,8 +5959,10 @@ $suitabilityReport->save();
                $old_record = Capa::select('id', 'division_id', 'record')->get();
                    
                     $data=LabIncident::find($id);
+                    // $p_record = OutOfCalibration::find($id);
+                    $data_record = Helpers::getDivisionName($data->division_id ) . '/' . 'LI' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
                    $expectedParenRecord = Helpers::getDivisionName(session()->get('division')) . "/CAPA/" . date('Y') . "/" .$data->record."";
-                   return view('frontend.action-item.action-item', compact('expectedParenRecord','record','record_number',  'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record'));
+                   return view('frontend.action-item.action-item', compact('expectedParenRecord','record','record_number',  'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record', 'data_record'));
 
                }
 
@@ -6021,7 +6023,11 @@ $suitabilityReport->save();
                if ($request->revision == "Extension") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                    $relatedRecords = Helpers::getAllRelatedRecords();
-                   return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                   $data=LabIncident::find($id);
+                   $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'LI' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+                    $count = Helpers::getChildData($id, $parent_type);
+                    $countData = $count + 1; 
+                   return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'countData', 'extension_record'));
 
                }
 

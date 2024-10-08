@@ -746,7 +746,7 @@ if(!empty($request->attach_files2)){
         $data->parent_type = $request->parent_type;
         // $data->division_code = $request->division_code;
         // $data->intiation_date = $request->intiation_date;
-        // $data->due_date = $request->due_date;
+        $data->due_date = $request->due_date;
         $data->short_description = $request->short_description;
         $data->assign_to = $request->assign_to;
         $data->grading = $request->grading;
@@ -1045,6 +1045,28 @@ if(!empty($request->attach_files2)){
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->auditee_department) || $lastDocument->auditee_department === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastDocument->due_date != $data->due_date || !empty($request->auditee_department_comment)) {
+
+            $history = new AuditTrialObservation();
+            $history->Observation_id = $id;
+            $history->activity_type = 'Observation Due Date';
+            $history->previous = Helpers::getdateFormat($lastDocument->due_date);
+            $history->current = Helpers::getdateFormat($data->due_date);
+            $history->comment = $request->auditee_department_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->due_date) || $lastDocument->due_date === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -1460,6 +1482,8 @@ if(!empty($request->attach_files2)){
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changestage = Observation::find($id);
             $lastDocument = Observation::find($id);
+            $observation_id = $id;
+            $grid_Data2 = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'response'])->firstOrCreate();
             $capaRequired = $request->capaNotReq;
             // dd($capaRequired);
             if ($changestage->stage == 1) {
@@ -1505,7 +1529,7 @@ if(!empty($request->attach_files2)){
 
             if($capaRequired == "Yes"){
                 if ($changestage->stage == 2) {
-                    if (empty($changestage->response_detail))
+                    if (empty($grid_Data2->data) || !is_array($grid_Data2->data) || empty($grid_Data2->data[0]['response_detail']))
                     {
                         Session::flash('swal', [
                             'type' => 'warning',
@@ -1561,7 +1585,7 @@ if(!empty($request->attach_files2)){
                 }
             } else {
                 if ($changestage->stage == 2) {
-                    if (empty($changestage->response_detail))
+                    if (empty($grid_Data2->data) || !is_array($grid_Data2->data) || empty($grid_Data2->data[0]['response_detail']))
                     {
                         Session::flash('swal', [
                             'type' => 'warning',
@@ -1973,14 +1997,19 @@ if(!empty($request->attach_files2)){
 
     public function ObservationSingleReport($id){
         $data = Observation::find($id);
+        $observation_id = $id;
         $griddata = ObservationGrid::where('observation_id',$data->id)->first();
+        $grid_Data = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'observation'])->firstOrCreate();
+        $grid_Data2 = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'response'])->firstOrCreate();
+        $grid_Data3 = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'corrective'])->firstOrCreate();
+        $grid_Data4 = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'preventive'])->firstOrCreate();
         if (!empty($data)) {
             // $data->data = ObservationGrid::where('e_id', $id)->where('identifier', "details")->first();
             // dd($data->all());
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.observation.obs_single_report', compact('data','griddata'))
+            $pdf = PDF::loadview('frontend.observation.obs_single_report', compact('data','griddata', 'grid_Data', 'grid_Data2', 'grid_Data3', 'grid_Data4'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

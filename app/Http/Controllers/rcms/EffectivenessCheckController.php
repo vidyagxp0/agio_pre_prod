@@ -547,7 +547,7 @@ class EffectivenessCheckController extends Controller
         if (!empty ($request->Comments)){
             $history = new EffectivenessCheckAuditTrail();
             $history->extension_id = $openState->id;
-            $history->activity_type = 'HOD Review Comments';
+            $history->activity_type = 'HOD Review Comment';
             $history->previous = "Null";
             $history->current = $openState->Comments;
             $history->comment = "Not Applicable";
@@ -948,7 +948,7 @@ class EffectivenessCheckController extends Controller
         if ($lastopenState->Comments != $openState->Comments || !empty ($request->comment)) {
             $history = new EffectivenessCheckAuditTrail;
             $history->extension_id = $id;
-            $history->activity_type = 'HOD Review Comments';
+            $history->activity_type = 'HOD Review Comment';
              $history->previous = $lastopenState->Comments;
             $history->current = $openState->Comments;
             $history->comment = $openState->short_disp_comment;
@@ -1586,7 +1586,7 @@ class EffectivenessCheckController extends Controller
 
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'HOD Review Comments is yet to be filled!',
+                        'message' => 'HOD Review Comment is yet to be filled!',
                         'type' => 'warning',
                     ]);
 

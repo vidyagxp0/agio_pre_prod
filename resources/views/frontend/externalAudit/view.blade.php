@@ -2215,9 +2215,7 @@
                                                         <option @if ($data1->Production_Table_Review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->Production_Table_Review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->Production_Table_Review == 'no' || empty($data1->Production_Table_Review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->Production_Table_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -2419,9 +2417,7 @@
                                                         <option @if ($data1->Production_Table_Review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->Production_Table_Review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->Production_Table_Review == 'no' || empty($data1->Production_Table_Review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->Production_Table_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -2622,9 +2618,8 @@
                                                         <option @if ($data1->Production_Injection_Review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->Production_Injection_Review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                        
+                                                        <option @if ($data1->Production_Injection_Review == 'no' || empty($data1->Production_Injection_Review)) selected @endif value='no'>No</option>    
                                                         <option @if ($data1->Production_Injection_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -2809,9 +2804,7 @@
                                                         <option @if ($data1->Production_Injection_Review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->Production_Injection_Review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->Production_Injection_Review == 'no' || empty($data1->Production_Injection_Review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->Production_Injection_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -3017,9 +3010,8 @@
                                                         <option @if ($data1->ResearchDevelopment_Review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->ResearchDevelopment_Review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                       
+                                                        <option @if ($data1->ResearchDevelopment_Review == 'no' || empty($data1->ResearchDevelopment_Review)) selected @endif value='no'>No</option>    
                                                         <option @if ($data1->ResearchDevelopment_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -3206,9 +3198,7 @@
                                                         <option @if ($data1->ResearchDevelopment_Review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->ResearchDevelopment_Review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->ResearchDevelopment_Review == 'no' || empty($data1->ResearchDevelopment_Review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->ResearchDevelopment_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -3404,9 +3394,7 @@
                                                         <option @if ($data1->Human_Resource_review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->Human_Resource_review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                        <option @if ($data1->Human_Resource_review == 'no' || empty($data1->Human_Resource_review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->Human_Resource_review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -3585,9 +3573,7 @@
                                                         <option @if ($data1->Human_Resource_review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->Human_Resource_review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->Human_Resource_review == 'no' || empty($data1->Human_Resource_review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->Human_Resource_review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -3780,9 +3766,7 @@
                                                         <option @if ($data1->CorporateQualityAssurance_Review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->CorporateQualityAssurance_Review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->CorporateQualityAssurance_Review == 'no' || empty($data1->CorporateQualityAssurance_Review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->CorporateQualityAssurance_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -3988,9 +3972,7 @@
                                                         <option @if ($data1->CorporateQualityAssurance_Review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->CorporateQualityAssurance_Review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->CorporateQualityAssurance_Review == 'no' || empty($data1->CorporateQualityAssurance_Review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->CorporateQualityAssurance_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -4198,9 +4180,7 @@
                                                         <option @if ($data1->Store_Review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->Store_Review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->Store_Review == 'no' || empty($data1->Store_Review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->Store_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -4380,9 +4360,7 @@
                                                         <option @if ($data1->Store_Review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->Store_Review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->Store_Review == 'no' || empty($data1->Store_Review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->Store_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -4572,9 +4550,7 @@
                                                         <option @if ($data1->Engineering_review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->Engineering_review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->Engineering_review == 'no' || empty($data1->Engineering_review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->Engineering_review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -4758,9 +4734,7 @@
                                                         <option @if ($data1->Engineering_review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->Engineering_review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->Engineering_review == 'no' || empty($data1->Engineering_review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->Engineering_review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -4945,9 +4919,7 @@
                                                         <option @if ($data1->RegulatoryAffair_Review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->RegulatoryAffair_Review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->RegulatoryAffair_Review == 'no' || empty($data1->RegulatoryAffair_Review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->RegulatoryAffair_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -5139,9 +5111,7 @@
                                                         <option @if ($data1->RegulatoryAffair_Review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->RegulatoryAffair_Review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->RegulatoryAffair_Review == 'no' || empty($data1->RegulatoryAffair_Review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->RegulatoryAffair_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -5336,10 +5306,7 @@
                                                     <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif
                                                         value="yes">
                                                         Yes</option>
-                                                    <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif
-                                                        value="no">
-                                                        No
-                                                    </option>
+                                                        <option @if ($data1->Quality_Assurance_Review == 'no' || empty($data1->Quality_Assurance_Review)) selected @endif value='no'>No</option>
                                                     <option @if ($data1->Quality_Assurance_Review == 'na') selected @endif
                                                         value="na">
                                                         NA
@@ -5533,9 +5500,7 @@
                                                         <option @if ($data1->ProductionLiquid_Review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->ProductionLiquid_Review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->ProductionLiquid_Review == 'no' || empty($data1->ProductionLiquid_Review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->ProductionLiquid_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -5726,9 +5691,7 @@
                                                         <option @if ($data1->ProductionLiquid_Review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->ProductionLiquid_Review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->ProductionLiquid_Review == 'no' || empty($data1->ProductionLiquid_Review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->ProductionLiquid_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -5919,9 +5882,7 @@
                                                         <option @if ($data1->Quality_review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->Quality_review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->Quality_review == 'no' || empty($data1->Quality_review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->Quality_review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -5941,7 +5902,7 @@
                                             @endphp
                                             <div class="col-lg-6 qualityControl">
                                                 <div class="group-input">
-                                                    <label for="Quality Control notification">Quality Control Person <span
+                                                    <label for="Quality Control notification">Quality Control Review Comment Required <span
                                                             id="asteriskPT"
                                                             style="display: {{ $data1->Quality_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
@@ -6111,9 +6072,7 @@
                                                         <option @if ($data1->Quality_review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->Quality_review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->Quality_review == 'no' || empty($data1->Quality_review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->Quality_review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -6133,7 +6092,7 @@
                                             @endphp
                                             <div class="col-lg-6 qualityControl">
                                                 <div class="group-input">
-                                                    <label for="Quality Control notification">Quality Control Person <span
+                                                    <label for="Quality Control notification">Quality Control Review Comment Required ? <span
                                                             id="asteriskInvi11" style="display: none"
                                                             class="text-danger">*</span></label>
                                                     <select name="Quality_Control_Person" disabled
@@ -6301,9 +6260,7 @@
                                                         <option @if ($data1->Microbiology_Review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->Microbiology_Review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->Microbiology_Review == 'no' || empty($data1->Microbiology_Review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->Microbiology_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -6488,9 +6445,7 @@
                                                         <option @if ($data1->Microbiology_Review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->Microbiology_Review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->Microbiology_Review == 'no' || empty($data1->Microbiology_Review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->Microbiology_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -6679,9 +6634,7 @@
                                                         <option @if ($data1->Environment_Health_review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->Environment_Health_review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->Environment_Health_review == 'no' || empty($data1->Environment_Health_review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->Environment_Health_review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -6872,9 +6825,7 @@
                                                         <option @if ($data1->Environment_Health_review == 'yes') selected @endif
                                                             value='yes'>
                                                             Yes</option>
-                                                        <option @if ($data1->Environment_Health_review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>
+                                                            <option @if ($data1->Environment_Health_review == 'no' || empty($data1->Environment_Health_review)) selected @endif value='no'>No</option>
                                                         <option @if ($data1->Environment_Health_review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -7461,7 +7412,7 @@
                                                     </label>
                                                     <select name="Other1_Department_person"
                                                         @if ($data->stage == 4) disabled @endif
-                                                        id="Other1_Department_person">
+                                                        id="Other1_Department_person" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach (Helpers::getDepartments() as $key => $name)
                                                             <option value="{{ $key }}"
@@ -7509,7 +7460,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                 type="file" id="myfile"
                                                                 name="Other1_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'Other1_attachment')"
@@ -7626,7 +7577,7 @@
                                                     </label>
                                                     <select name="Other2_Department_person"
                                                         @if ($data->stage == 4) disabled @endif
-                                                        id="Other2_Department_person">
+                                                        id="Other2_Department_person"  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach (Helpers::getDepartments() as $key => $name)
                                                             <option value="{{ $key }}"
@@ -7710,7 +7661,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                 type="file" id="myfile"
                                                                 name="Other2_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'Other2_attachment')"
@@ -7829,7 +7780,7 @@
                                                     </label>
                                                     <select name="Other3_Department_person"
                                                         @if ($data->stage == 4) disabled @endif
-                                                        id="Other3_Department_person">
+                                                        id="Other3_Department_person"  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach (Helpers::getDepartments() as $key => $name)
                                                             <option value="{{ $key }}"
@@ -7913,7 +7864,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                 type="file" id="myfile"
                                                                 name="Other3_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'Other3_attachment')"
@@ -8034,7 +7985,7 @@
                                                     </label>
                                                     <select name="Other4_Department_person"
                                                         @if ($data->stage == 4) disabled @endif
-                                                        id="Other4_Department_person">
+                                                        id="Other4_Department_person"  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach (Helpers::getDepartments() as $key => $name)
                                                             <option value="{{ $key }}"
@@ -8118,7 +8069,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                 type="file" id="myfile"
                                                                 name="Other4_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'Other4_attachment')"
@@ -8237,7 +8188,7 @@
                                                     </label>
                                                     <select name="Other5_Department_person"
                                                         @if ($data->stage == 4) disabled @endif
-                                                        id="Other5_Department_person">
+                                                        id="Other5_Department_person"  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach (Helpers::getDepartments() as $key => $name)
                                                             <option value="{{ $key }}"
@@ -8322,7 +8273,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                 type="file" id="myfile"
                                                                 name="Other5_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'Other5_attachment')"
@@ -8448,7 +8399,7 @@
                                                     </label>
                                                     <select name="Other1_Department_person"
                                                         @if ($data->stage == 4) disabled @endif
-                                                        id="Other1_Department_person">
+                                                        id="Other1_Department_person"  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach (Helpers::getDepartments() as $key => $name)
                                                             <option value="{{ $key }}"
@@ -8504,7 +8455,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                 type="file" id="myfile"
                                                                 name="Other1_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'Other1_attachment')"
@@ -8601,7 +8552,7 @@
                                                     </label>
                                                     <select name="Other2_Department_person"
                                                         @if ($data->stage == 4) disabled @endif
-                                                        id="Other2_Department_person">
+                                                        id="Other2_Department_person"  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach (Helpers::getDepartments() as $key => $name)
                                                             <option value="{{ $key }}"
@@ -8657,7 +8608,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                 type="file" id="myfile"
                                                                 name="Other2_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'Other2_attachment')"
@@ -8764,7 +8715,7 @@
                                                     </label>
                                                     <select name="Other3_Department_person"
                                                         @if ($data->stage == 4) disabled @endif
-                                                        id="Other3_Department_person">
+                                                        id="Other3_Department_person"  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach (Helpers::getDepartments() as $key => $name)
                                                             <option value="{{ $key }}"
@@ -8819,7 +8770,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                 type="file" id="myfile"
                                                                 name="Other3_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'Other3_attachment')"
@@ -8914,7 +8865,7 @@
                                                     </label>
                                                     <select name="Other4_Department_person"
                                                         @if ($data->stage == 4) disabled @endif
-                                                        id="Other4_Department_person">
+                                                        id="Other4_Department_person"  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach (Helpers::getDepartments() as $key => $name)
                                                             <option value="{{ $key }}"
@@ -8969,7 +8920,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                 type="file" id="myfile"
                                                                 name="Other4_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'Other4_attachment')"
@@ -9075,7 +9026,7 @@
                                                     </label>
                                                     <select name="Other5_Department_person"
                                                         @if ($data->stage == 4) disabled @endif
-                                                        id="Other5_Department_person">
+                                                        id="Other5_Department_person"  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach (Helpers::getDepartments() as $key => $name)
                                                             <option value="{{ $key }}"
@@ -9131,7 +9082,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                 type="file" id="myfile"
                                                                 name="Other5_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'Other5_attachment')"

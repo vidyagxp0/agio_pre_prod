@@ -4815,7 +4815,7 @@ $AuditorShow->save();
         if ($lastCft->Human_Resource_review != $request->Human_Resource_review && $request->Human_Resource_review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'HHuman Resource Review Comment Required';
+            $history->activity_type = 'Human Resource Review Comment Required';
             $history->previous = $lastCft->Human_Resource_review;
             $history->current = $request->Human_Resource_review;
             $history->comment = "Not Applicable";
@@ -6734,14 +6734,13 @@ $history->activity_type = 'Quality Control Completed By, Quality Control Complet
 if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
     $history->previous = "";
 } else {
-    $history->previous = $lastDocument->Quality_Control_by . ' , ' . $lastDocument->Quality_Control_on;
+    
+    $history->previous = $lastDocument->Quality_Control_by . ' ,' .Helpers::getdateFormat ($lastDocument->Quality_Control_on);
 }
 
 $history->action = 'CFT Review Complete';
 
-// Make sure you're using the updated $updateCFT object here
-$history->current = $updateCFT->Quality_Control_by . ', ' . $updateCFT->Quality_Control_on;
-
+$history->current = $updateCFT->Quality_Control_by . ',' .Helpers::getdateFormat ($updateCFT->Quality_Control_on);
 $history->comment = $request->comment;
 $history->user_id = Auth::user()->name;
 $history->user_name = Auth::user()->name;
@@ -8156,9 +8155,11 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             $record = ((RecordNumber::first()->value('counter')) + 1);
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $currentDate = Carbon::now();
+            $p_record = Auditee::find($id);
+            $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'EA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
             $formattedDate = $currentDate->addDays(30);
             $due_date = $formattedDate->format('d-M-Y');
-            return view('frontend.action-item.action-item', compact('record','parentRecord', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.action-item.action-item', compact('record','parentRecord', 'due_date', 'parent_id', 'parent_type', 'data_record'));
         }
         if ($request->child_type == "Observations")
         $parent_id = $id;

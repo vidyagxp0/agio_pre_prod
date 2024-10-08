@@ -37,7 +37,7 @@
             border-radius: 20px 0px 0px 20px;
         }
 
-/*        
+/*
         #change-control-fields > div > div.inner-block.state-block > div.status > div.progress-bars.d-flex > div:nth-child(16){
             border-radius: 0px 20px 20px 0px;
 
@@ -66,7 +66,7 @@
                         '<div class="calenderauditee">' +
                         '<input type="text" readonly id="info_mfg_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
                         '<input type="date" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_mfg_date' + serialNumber + '\')">' +
-                        '</div>' +  
+                        '</div>' +
                         '</div>' +
                         '</div>' +
                         '</td>' +
@@ -76,7 +76,7 @@
                         '<div class="calenderauditee">' +
                         '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
                         '<input type="date" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_expiry_date' + serialNumber + '\')">' +
-                        '</div>' +    
+                        '</div>' +
                         '</div>' +
                         '</div>' +
                         '</td>' +
@@ -92,7 +92,7 @@
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
                     return html;
                 }
 
@@ -109,7 +109,7 @@
                 function generateTableRow(serialNumber) {
                     var currentDate = new Date();
                     var formattedCurrentDate = currentDate.toISOString().split('T')[0].slice(0, 7); // Format as YYYY-MM
-    
+
                     var html =
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
@@ -150,10 +150,10 @@
                         '<td><select name="info_product_material[' + serialNumber + '][info_stability_for]"><option value="">--Select--</option><option value="Submission">Submission</option><option value="Commercial">Commercial</option><option value="Pack Evaluation">Pack Evaluation</option><option value="Not Applicable">Not Applicable</option></select></td>' +
                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
-    
+
                     return html;
                 }
-    
+
                 var tableBody = $('#info_product_material_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
@@ -161,7 +161,7 @@
             });
         });
     </script>
-    
+
     <!-- --------------------------------grid-2--------------------------->
     <script>
         $(document).ready(function() {
@@ -189,7 +189,7 @@
         });
     </script>
     <!-- ------------------------------grid-3-------------------------script -->
-    
+
 
 <script>
         $(document).ready(function() {
@@ -222,7 +222,7 @@
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
                     return html;
                 }
 
@@ -238,7 +238,7 @@
         $(document).ready(function() {
             $('#products_details').click(function(e) {
                 function generateTableRow(serialNumber) {
-                    var currentDate = new Date().toISOString().split('T')[0]; 
+                    var currentDate = new Date().toISOString().split('T')[0];
 
                     var html =
                         '<tr>' +
@@ -279,7 +279,7 @@
                             '</td>' +
                             '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
 
-                        '</tr>'; 
+                        '</tr>';
                     return html;
                 }
 
@@ -295,7 +295,7 @@
         $(document).ready(function() {
             $('#instrument_details').click(function(e) {
                 function generateTableRow(serialNumber) {
-                    var currentDate = new Date().toISOString().split('T')[0]; 
+                    var currentDate = new Date().toISOString().split('T')[0];
                     var html =
                         '<tr>' +
                             '<td><input disabled type="text" name="instrument_detail['+ serialNumber +'][serial]" value="' + serialNumber +
@@ -323,7 +323,7 @@
                                 '</div>' +
                             '</td>' +
                             '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
-                        '</tr>'; 
+                        '</tr>';
                     return html;
                 }
 
@@ -468,33 +468,44 @@
                     @if ($data->stage == 3)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
                     @endif
-                    
+
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
+                    @if ($data->stage == 5  || $data->stage == 6 || $data->stage == 7 || $data->stage == 8)
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
+                    @endif
                     <button class="cctablinks button1" style="display:none;" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
                     <button class="cctablinks button2" style="display:none;" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
                     <button class="cctablinks button3" style="display:none;" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
                     <button class="cctablinks button4" style="display:none;" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
                     <button class="cctablinks button5" style="display:none;" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
                     <button class="cctablinks button6" style="display:none;" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
-                   
+
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm42')">Phase IB Investigation</button>
+                    @if ($data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12)
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
+                    @endif
                     <button class="cctablinks" onclick="openCity(event, 'CCForm33')">Phase IB HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm34')">Phase IB CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm35')">Phase IB CQAH/QAH Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II A Investigation</button>
+                    @if ($data->stage == 13 || $data->stage == 14 || $data->stage == 15 || $data->stage == 16)
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
+                    @endif
                     <button class="cctablinks" onclick="openCity(event, 'CCForm36')">Phase II A HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm37')">Phase II A CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm38')">Phase II A QAH/CQAH Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm43')">Phase II B Investigation</button>
+                    @if ($data->stage == 17 )
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
+                    @endif
                     <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH Review</button>
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button> --}}
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
                 </div>
                  <!-- OOS Micro Buttons -->
@@ -506,6 +517,9 @@
                     @endif
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
+                    @if ($data->stage == 5  || $data->stage == 6 || $data->stage == 7 || $data->stage == 8)
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
+                    @endif  
                     <button class="cctablinks button7" style="display:none;" onclick="openCity(event, 'CCForm50')">Checklist - Bacterial Endotoxin Test</button>
                     <button class="cctablinks button8" style="display:none;" onclick="openCity(event, 'CCForm51')">Checklist - Sterility</button>
                     <button class="cctablinks button9" style="display:none;" onclick="openCity(event, 'CCForm52')">Checklist - Microbial limit test/Bioburden and Water Test</button>
@@ -516,53 +530,83 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm42')">Phase IB Investigation</button>
+                    @if ($data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12)
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
+                    @endif  
                     <button class="cctablinks" onclick="openCity(event, 'CCForm33')">Phase IB HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm34')">Phase IB CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm35')">Phase IB CQAH/QAH Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II A Investigation</button>
+                    @if ($data->stage == 13 || $data->stage == 14 || $data->stage == 15 || $data->stage == 16)
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
+                    @endif  
                     <button class="cctablinks" onclick="openCity(event, 'CCForm36')">Phase II A HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm37')">Phase II A CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm38')">Phase II A QAH/CQAH Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm43')">Phase II B Investigation</button>
+                    @if ($data->stage == 17 )
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
+                    @endif  
                     <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH Review</button>
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal</button> --}}
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
-                </div> 
+                </div>
                 <div id="OOT_Buttons" style="display: none;">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm27')">HOD Primary Review</button>
                     @if ($data->stage == 3)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
-                    @endif                    
+                    @endif
+
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
-                    <button class="cctablinks button1" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
-                    <button class="cctablinks button2" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
-                    <button class="cctablinks button3" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
-                    <button class="cctablinks button4" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
-                    <button class="cctablinks button5" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
-                    <button class="cctablinks button6" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
+                    @if ($data->stage == 5  || $data->stage == 6 || $data->stage == 7 || $data->stage == 8)
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
+                    @endif
+                    <button class="cctablinks button1" style="display:none;" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
+                    <button class="cctablinks button2" style="display:none;" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
+                    <button class="cctablinks button3" style="display:none;" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
+                    <button class="cctablinks button4" style="display:none;" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
+                    <button class="cctablinks button5" style="display:none;" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
+                    <button class="cctablinks button6" style="display:none;" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
+
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm42')">Phase IB Investigation</button>
+                    @if ($data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12)
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
+                    @endif
                     <button class="cctablinks" onclick="openCity(event, 'CCForm33')">Phase IB HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm34')">Phase IB CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm35')">Phase IB CQAH/QAH Review</button>
-              
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II A Investigation</button>
+                    @if ($data->stage == 13 || $data->stage == 14 || $data->stage == 15 || $data->stage == 16)
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
+                    @endif
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm36')">Phase II A HOD Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm37')">Phase II A CQA/QA Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm38')">Phase II A QAH/CQAH Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm43')">Phase II B Investigation</button>
+                    @if ($data->stage == 17 )
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
+                    @endif
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH Review</button>
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
-                </div> 
-                
+                </div>
+
                 <style>
                     #OOS_Micro_Buttons {
                         display: flex;
                         flex-wrap: wrap; /* Allow buttons to wrap onto the next line */
                         gap: 10px; /* Space between buttons */
                     }
-                
+
                     .cctablinks {
                         flex: 1 1 auto; /* Allow the button to grow and shrink */
                         min-width: 200px; /* Minimum width for each button */
@@ -575,16 +619,16 @@
                         cursor: pointer; /* Pointer cursor on hover */
                         text-align: center; /* Center button text */
                     }
-                
+
                     .cctablinks:hover {
                         background-color: #0056b3; /* Darker background on hover */
                     }
-                
+
                     .cctablinks.active {
                         background-color: #0056b3; /* Darker background for the active button */
                     }
                 </style>
-                
+
                 {{-- <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm27')">HOD Primary Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
@@ -614,7 +658,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm22')">Checklist - Residual solvent (RS)</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Dissolution </button>--}}
                 <!-- checklist closed -->
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase IIA Investigation</button> 
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase IIA Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm36')">Phase II A HOD Primary</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm37')">Phase II A CQA/QA</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm38')">Phase II A QAH/CQAH</button>
@@ -630,10 +674,10 @@
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS QA Review</button> --}}
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button> -->
-                
+
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Extension</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button> --}}
-               
+
             </div>
         <form action="{{ route('oos.oosupdate', $data->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -643,7 +687,7 @@
                 <input type="hidden" name="parent_type" value="{{ $parent_type }}">
                 @endif
             <!-- Tab content -->
-            
+
             <!-- General Information -->
             <!-- Tab content -->
 
@@ -662,8 +706,8 @@
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
-                                <textarea name="hod_remark1" 
-                                    class="form-control {{$errors->has('hod_remark1') ? 'is-invalid' : ''}}" 
+                                <textarea name="hod_remark1"
+                                    class="form-control {{$errors->has('hod_remark1') ? 'is-invalid' : ''}}"
                                     {{ $data->stage == 2 ? 'required' : 'readonly' }}>{{$data->hod_remark1}}</textarea>
                                 @if($errors->has('hod_remark1'))
                                     <div class="invalid-feedback">
@@ -672,7 +716,7 @@
                                 @endif
                             </div>
                         </div>
-                    
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">HOD Primary Attachment</label>
@@ -681,7 +725,7 @@
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="hod_attachment1">
-                    
+
                                         @if ($data->hod_attachment1)
                                             @foreach ($data->hod_attachment1 as $file)
                                                 <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
@@ -695,12 +739,12 @@
                                                 </h6>
                                             @endforeach
                                         @endif
-                    
+
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="hod_attachment1[]" 
-                                            oninput="addMultipleFiles(this, 'hod_attachment1')" 
+                                        <input type="file" id="myfile" name="hod_attachment1[]"
+                                            oninput="addMultipleFiles(this, 'hod_attachment1')"
                                             {{ $data->stage == 2 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
@@ -708,7 +752,7 @@
                         </div>
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                            
+
                             @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -717,9 +761,9 @@
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
-                    
+
                 </div>
-            
+
             </div>
             <div id="CCForm28" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -728,16 +772,16 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                        
+
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Initiator Group">CQA/QA Head Remark <span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
-                                <textarea 
-                                    name="QA_Head_remark1" 
-                                    class="form-control {{$errors->has('QA_Head_remark1') ? 'is-invalid' : ''}}" 
+                                <textarea
+                                    name="QA_Head_remark1"
+                                    class="form-control {{$errors->has('QA_Head_remark1') ? 'is-invalid' : ''}}"
                                     {{ $data->stage == 3 ? '' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark1}}</textarea>
                                     @if($errors->has('QA_Head_remark1'))
                                     <div class="invalid-feedback">
@@ -746,7 +790,7 @@
                                 @endif
                             </div>
                         </div>
-            
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">CQA/QA Head Attachment</label>
@@ -755,7 +799,7 @@
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="QA_Head_attachment1">
-            
+
                                         @if ($data->QA_Head_attachment1)
                                         @foreach ($data->QA_Head_attachment1 as $file)
                                         <h6 type="button" class="file-container text-dark"
@@ -769,7 +813,7 @@
                                         </h6>
                                         @endforeach
                                         @endif
-            
+
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
@@ -780,10 +824,10 @@
                             </div>
                         </div>
 
-            
+
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                            
+
                             @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -793,7 +837,7 @@
                         </div>
                     </div>
                 </div>
-            
+
             </div>
             <div id="CCForm29" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -802,16 +846,16 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                        
+
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Initiator Group">CQA/QA Head Remark <span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
-                                <textarea 
-                                    name="QA_Head_primary_remark1" 
-                                    class="form-control {{$errors->has('QA_Head_primary_remark1') ? 'is-invalid' : ''}}" 
+                                <textarea
+                                    name="QA_Head_primary_remark1"
+                                    class="form-control {{$errors->has('QA_Head_primary_remark1') ? 'is-invalid' : ''}}"
                                     {{ $data->stage == 4 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark1}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark1'))
                                     <div class="invalid-feedback">
@@ -820,7 +864,7 @@
                                 @endif
                             </div>
                         </div>
-            
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">CQA/QA Head Attachment</label>
@@ -829,7 +873,7 @@
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="QA_Head_primary_attachment1">
-            
+
                                         @if ($data->QA_Head_primary_attachment1)
                                         @foreach ($data->QA_Head_primary_attachment1 as $file)
                                         <h6 type="button" class="file-container text-dark"
@@ -843,7 +887,7 @@
                                         </h6>
                                         @endforeach
                                         @endif
-            
+
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
@@ -853,11 +897,11 @@
                                 </div>
                             </div>
                         </div>
-                    
-            
+
+
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                            
+
                             @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -867,7 +911,7 @@
                         </div>
                     </div>
                 </div>
-            
+
             </div>
 
             @include('frontend.OOS.comps.preliminary')
@@ -879,9 +923,9 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                        
-                       
-            
+
+
+
                          @php
                                     $ph_meter_questions = array(
                                             "Was instrument calibrated before start of analysis?",
@@ -983,7 +1027,7 @@
                                  </tbody>
                              </table>
                          </div>
-                         
+
                      </div>
                  </div>
 
@@ -1038,14 +1082,14 @@
                                  </tbody>
                              </table>
                          </div>
-                         
+
                      </div>
                  </div>
-                    
-            
+
+
                  <div class="button-block">
                     @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                    
+
                     @else
                     <button type="submit" class="saveButton">Save</button>
                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1055,7 +1099,7 @@
                 </div>
                     </div>
                 </div>
-            
+
             </div>
 
             <div id="CCForm45" class="inner-block cctabcontent">
@@ -1087,7 +1131,7 @@
                                     "Is method validation/verification available ?",
                                 );
                         @endphp
-    
+
                      <div class="col-12">
                              <label style="font-weight: bold; for="Audit Attachments">Dissolution Tester</label>
                          <div class="group-input">
@@ -1129,16 +1173,16 @@
                                      </tbody>
                                  </table>
                              </div>
-                             
+
                          </div>
                      </div>
 
-                    
-                    
-            
+
+
+
                      <div class="button-block">
                         @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                        
+
                         @else
                         <button type="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1148,7 +1192,7 @@
                     </div>
                     </div>
                 </div>
-            
+
             </div>
             <div id="CCForm46" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -1157,9 +1201,9 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                        
-                       
-            
+
+
+
                          @php
                          $HPLC_GC_questions = array(
                                  "Was analyst used correct column as per mentioned in STP?",
@@ -1270,16 +1314,16 @@
                                      </tbody>
                                  </table>
                              </div>
-                             
+
                          </div>
                      </div>
 
-                    
-                    
-            
+
+
+
                      <div class="button-block">
                         @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                        
+
                         @else
                         <button type="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1289,7 +1333,7 @@
                     </div>
                     </div>
                 </div>
-            
+
             </div>
             <div id="CCForm47" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -1298,9 +1342,9 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                        
-                       
-            
+
+
+
                          @php
                          $General_Checklist_questions = array(
                                  "Was solid/Liquid Chemical used as per STP?",
@@ -1386,16 +1430,16 @@
                                      </tbody>
                                  </table>
                              </div>
-                             
+
                          </div>
                      </div>
 
-                    
-                    
-            
+
+
+
                      <div class="button-block">
                         @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                        
+
                         @else
                         <button type="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1405,7 +1449,7 @@
                     </div>
                     </div>
                 </div>
-            
+
             </div>
             <div id="CCForm48" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -1414,9 +1458,9 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                        
-                       
-            
+
+
+
                          @php
                          $kF_Potentionmeter_questions = array(
                                  "Was Correct Reagent used for analysis?",
@@ -1437,7 +1481,7 @@
                                  "Is RSD of KF within limit as per SOP/STP?",
                                  "Was activated desiccant used?",
                                  "Was tip of nozzle correctly attached with delivery tube of volumetric solution reservior?",
-                                
+
                              );
                      @endphp
                      <div class="col-12">
@@ -1481,16 +1525,16 @@
                                      </tbody>
                                  </table>
                              </div>
-                             
+
                          </div>
                      </div>
 
-                    
-                    
-            
+
+
+
                      <div class="button-block">
                         @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                        
+
                         @else
                         <button type="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1500,7 +1544,7 @@
                     </div>
                     </div>
                 </div>
-            
+
             </div>
             <div id="CCForm49" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -1509,9 +1553,9 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                        
-                       
-            
+
+
+
                          @php
                          $RM_PM_questions = array(
                                  "Was analyst Varified the GRN as per received samples?",
@@ -1571,16 +1615,16 @@
                                      </tbody>
                                  </table>
                              </div>
-                             
+
                          </div>
                      </div>
 
-                    
-                    
-            
+
+
+
                      <div class="button-block">
                         @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                        
+
                         @else
                         <button type="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1590,7 +1634,7 @@
                     </div>
                     </div>
                 </div>
-            
+
             </div>
             <div id="CCForm50" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -1956,8 +2000,8 @@
                                 ],
                                 ]
                                 @endphp
-                                
-                               
+
+
                     <div class="row">
                         <div class="col-12">
                             <div class="group-input">
@@ -2275,7 +2319,7 @@
                         </div>
                             <div class="button-block">
                                 @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                                
+
                                 @else
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -2286,7 +2330,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div id="CCForm51" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head"> Checklist for Review of Training records Analyst Involved in Testing </div>
@@ -3105,7 +3149,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Audit Attachments">If Yes, Provide attachment details</label>
@@ -3114,7 +3158,7 @@
                             </small>
                             <div class="file-attachment-field">
                                 <div class="file-attachment-list" id="provide_attachment1">
-        
+
                                     @if ($data->provide_attachment1)
                                     @foreach ($data->provide_attachment1 as $file)
                                     <h6 type="button" class="file-container text-dark"
@@ -3128,7 +3172,7 @@
                                     </h6>
                                     @endforeach
                                     @endif
-        
+
                                 </div>
                                 <div class="add-btn">
                                     <div>Add</div>
@@ -3140,7 +3184,7 @@
                     </div>
                     <div class="button-block">
                         @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                        
+
                         @else
                         <button type="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3923,7 +3967,42 @@
                                                 $main_question_index += 0.1;
                                             }
                                         @endphp
-                                        <tr>
+                                            <tr>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                        @if ($review_item['input_type'] == 'date')
+                                                            <input type="date" name="Checklist_for_Review_Media_prepara_RTU_medias1[{{ $index }}][response]"
+                                                                value="{{ is_string($value = Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index)) ? $value : '' }}"
+                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @elseif ($review_item['input_type'] == 'number')
+                                                            <input type="number" name="Checklist_for_Review_Media_prepara_RTU_medias1[{{ $index }}][response]"
+                                                                value="{{ is_string($value = Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index)) ? $value : '' }}"
+                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @else
+                                                            <select name="Checklist_for_Review_Media_prepara_RTU_medias1[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
+                                                        @endif
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="Checklist_for_Review_Media_prepara_RTU_medias1[{{ $index }}][remark]"
+                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ is_string($value = Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'remark', true, $index)) ? $value : '' }}</textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        {{--<tr>
                                             <td class="flex text-center">
                                                 {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
                                             </td>
@@ -3951,12 +4030,13 @@
                                                 </div>
                                             </td>
                                             <td>
+
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="Checklist_for_Review_Media_prepara_RTU_medias1[{{ $index }}][remark]"
                                                               style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
-                                        </tr>
+                                        </tr>--}}
                                         @endforeach
                                     </tbody>
                                     </table>
@@ -3965,7 +4045,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <div class="inner-block-content">
                     <div class="sub-head">
@@ -4339,7 +4418,7 @@
                         </small>
                         <div class="file-attachment-field">
                             <div class="file-attachment-list" id="provide_attachment2">
-    
+
                                 @if ($data->provide_attachment2)
                                 @foreach ($data->provide_attachment2 as $file)
                                 <h6 type="button" class="file-container text-dark"
@@ -4353,7 +4432,7 @@
                                 </h6>
                                 @endforeach
                                 @endif
-    
+
                             </div>
                             <div class="add-btn">
                                 <div>Add</div>
@@ -4365,7 +4444,7 @@
                 </div>
                 <div class="button-block">
                     @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                    
+
                     @else
                     <button type="submit" class="saveButton">Save</button>
                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -4379,11 +4458,11 @@
             <div id="CCForm53" class="inner-block cctabcontent">
 
                 <div class="inner-block-content">
-    
+
                     <div class="sub-head">
-    
+
                         Checklist for Review of Training records Analyst Involved in Testing
-    
+
                     </div>
                         @php
                         $training_records_analyst_involvedIn_testing_microbial_asssays = [
@@ -4403,7 +4482,7 @@
                             'input_type' => 'date'
                         ]
                         ];
-    
+
                         @endphp
                         <div class="row">
                             <div class="col-12">
@@ -4424,7 +4503,7 @@
                                                         $main_question_index = 1.0;
                                                         $sub_question_index = 0;
                                                     @endphp
-                
+
                                                     @foreach ($training_records_analyst_involvedIn_testing_microbial_asssays as $index => $review_item)
                                                     @php
                                                         if ($review_item['is_sub_question']) {
@@ -4470,21 +4549,21 @@
                                                     </tr>
                                                     @endforeach
                                                 </tbody>
-                
-                
+
+
                                         </table>
-                
+
                                     </div>
-                
+
                                 </div>
-                
+
                             </div>
-                
+
                         </div>
-                
+
                     </div>
                         <div class="inner-block-content">
-                    
+
                                     <div class="sub-head">Checklist for Review of sample intactness before analysis ? </div>
                                         @php
                                         $sample_intactness_before_analysis2 = [
@@ -4514,41 +4593,41 @@
                                                 'input_type' => 'text'
                                             ]
                                         ];
-                    
+
                                         @endphp
-                    
+
                                     <div class="row">
-                    
+
                                         <div class="col-12">
-                    
+
                                             <div class="group-input">
-                    
+
                                                 <div class="why-why-chart">
-                    
+
                                                     <table class="table table-bordered">
-                    
+
                                                         <thead>
-                    
+
                                                             <tr>
-                    
+
                                                                 <th style="width: 5%;">Sr.No.</th>
-                    
+
                                                                 <th style="width: 40%;">Question</th>
-                    
+
                                                                 <th style="width: 20%;">Response</th>
-                    
+
                                                                 <th>Remarks</th>
-                    
+
                                                             </tr>
-                    
+
                                                         </thead>
-                    
+
                                                         <tbody>
                                                             @php
                                                                 $main_question_index = 2.0;
                                                                 $sub_question_index = 0;
                                                             @endphp
-                    
+
                                                             @foreach ($sample_intactness_before_analysis2 as $review_item)
                                                             @php
                                                                 if ($review_item['is_sub_question']) {
@@ -4594,20 +4673,20 @@
                                                         </tr>
                                                             @endforeach
                                                         </tbody>
-                    
+
                                                         </table>
-                    
+
                                                 </div>
-                    
+
                                             </div>
-                    
+
                                         </div>
-                    
+
                                     </div>
-                    
+
                                 </div>
                                 <div class="inner-block-content">
-                    
+
                                     <div class="sub-head">Checklist for Review of test methods & Procedures</div>
                                             @php
                                         $checklist_for_review_of_test_method_IMAs = [
@@ -4652,41 +4731,41 @@
                                                     'input_type' => 'text'
                                                 ]
                                             ];
-                    
+
                                             @endphp
-                    
+
                                         <div class="row">
-                    
+
                                         <div class="col-12">
-                    
+
                                             <div class="group-input">
-                    
+
                                                 <div class="why-why-chart">
-                    
+
                                                     <table class="table table-bordered">
-                    
+
                                                         <thead>
-                    
+
                                                             <tr>
-                    
+
                                                                 <th style="width: 5%;">Sr.No.</th>
-                    
+
                                                                 <th style="width: 40%;">Question</th>
-                    
+
                                                                 <th style="width: 20%;">Response</th>
-                    
+
                                                                 <th>Remarks</th>
-                    
+
                                                             </tr>
-                    
+
                                                         </thead>
-                    
+
                                                         <tbody>
                                                             @php
                                                                 $main_question_index = 3.0;
                                                                 $sub_question_index = 0;
                                                             @endphp
-                    
+
                                                             @foreach ($checklist_for_review_of_test_method_IMAs as $index => $review_item)
                                                             @php
                                                                 if ($review_item['is_sub_question']) {
@@ -4739,9 +4818,9 @@
                                     </div>
                                 </div>
                                 <div class="inner-block-content">
-                    
+
                                     <div class="sub-head">
-                    
+
                                         Checklist for Review of Media, Buffer, Standards preparation & test accessories </div>
                                     @php
                                         $cr_of_media_buffer_st_IMAs = [
@@ -4876,40 +4955,40 @@
                                             'input_type' => 'date'
                                         ],
                                         ];
-                    
+
                                     @endphp
                                     <div class="row">
-                    
+
                                         <div class="col-12">
-                    
+
                                             <div class="group-input">
-                    
+
                                                 <div class="why-why-chart">
-                    
+
                                                     <table class="table table-bordered">
-                    
+
                                                         <thead>
-                    
+
                                                             <tr>
-                    
+
                                                                 <th style="width: 5%;">Sr.No.</th>
-                    
+
                                                                 <th style="width: 40%;">Question</th>
-                    
+
                                                                 <th style="width: 20%;">Response</th>
-                    
+
                                                                 <th>Remarks</th>
-                    
+
                                                             </tr>
-                    
+
                                                         </thead>
-                    
+
                                                         <tbody>
                                                             @php
                                                                 $main_question_index = 4.0;
                                                                 $sub_question_index = 0;
                                                             @endphp
-                    
+
                                                             @foreach ($cr_of_media_buffer_st_IMAs as $index => $review_item)
                                                             @php
                                                                 if ($review_item['is_sub_question']) {
@@ -4955,26 +5034,26 @@
                                                             </tr>
                                                             @endforeach
                                                         </tbody>
-                    
-                    
+
+
                                                     </table>
-                    
+
                                                 </div>
-                    
+
                                             </div>
-                    
+
                                         </div>
-                    
+
                                     </div>
-                    
+
                                 </div>
-                    
-                    
-                    
+
+
+
                                 <div class="inner-block-content">
-                    
+
                                     <div class="sub-head">
-                    
+
                                         Checklist for Review of Microbial cultures/Inoculation (Test organism) </div>
                                         @php
                                         $CR_of_microbial_cultures_inoculation_IMAs = [
@@ -5009,41 +5088,41 @@
                             'input_type' => 'text'
                         ]
                         ];
-                    
+
                                         @endphp
-                    
+
                                     <div class="row">
-                    
+
                                         <div class="col-12">
-                    
+
                                             <div class="group-input">
-                    
+
                                                 <div class="why-why-chart">
-                    
+
                                                     <table class="table table-bordered">
-                    
+
                                                         <thead>
-                    
+
                                                             <tr>
-                    
+
                                                                 <th style="width: 5%;">Sr.No.</th>
-                    
+
                                                                 <th style="width: 40%;">Question</th>
-                    
+
                                                                 <th style="width: 20%;">Response</th>
-                    
+
                                                                 <th>Remarks</th>
-                    
+
                                                             </tr>
-                    
+
                                                     </thead>
-                    
+
                                                         <tbody>
                                                             @php
                                                                 $main_question_index = 5.0;
                                                                 $sub_question_index = 0;
                                                             @endphp
-                    
+
                                                             @foreach ($CR_of_microbial_cultures_inoculation_IMAs as $index => $review_item)
                                                             @php
                                                                 if ($review_item['is_sub_question']) {
@@ -5091,23 +5170,23 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
-                    
+
                                             </div>
-                    
+
                                         </div>
-                    
+
                                     </div>
-                    
-                    
-                    
+
+
+
                                 </div>
-                    
-                    
-                    
+
+
+
                                 <div class="inner-block-content">
-                    
+
                                     <div class="sub-head">
-                    
+
                                         Checklist for Review of Environmental conditions in the testing area </div>
                                         @php
                                         $CR_of_Environmental_condition_in_testing_IMAs = [
@@ -5133,38 +5212,38 @@
                         ]
                         ];
                                         @endphp
-                    
+
                                     <div class="row">
-                    
+
                                         <div class="col-12">
-                    
+
                                             <div class="group-input">
-                    
+
                                                 <div class="why-why-chart">
-                    
+
                                                     <table class="table table-bordered">
-                    
+
                                                         <thead>
-                    
+
                                                             <tr>
-                    
+
                                                                 <th style="width: 5%;">Sr.No.</th>
-                    
+
                                                                 <th style="width: 40%;">Question</th>
-                    
+
                                                                 <th style="width: 20%;">Response</th>
-                    
+
                                                                 <th>Remarks</th>
-                    
+
                                                             </tr>
-                    
+
                                                         </thead>
                                                         <tbody>
                                                             @php
                                                                 $main_question_index = 6.0;
                                                                 $sub_question_index = 0;
                                                             @endphp
-                    
+
                                                             @foreach ($CR_of_Environmental_condition_in_testing_IMAs as $index => $review_item)
                                                             @php
                                                                 if ($review_item['is_sub_question']) {
@@ -5210,28 +5289,28 @@
                                                             </tr>
                                                             @endforeach
                                                         </tbody>
-                    
-                    
+
+
                                                     </table>
-                    
+
                                                 </div>
-                    
+
                                             </div>
-                    
+
                                         </div>
-                    
+
                                     </div>
-                    
-                    
-                    
-                    
-                    
+
+
+
+
+
                                 </div>
-                    
+
                                 <div class="inner-block-content">
-                    
+
                                     <div class="sub-head">
-                    
+
                                         Checklist for Review of instrument/equipment </div>
                                                 @php
                                                 $CR_of_instru_equipment_IMAs = [
@@ -5306,41 +5385,41 @@
                                                                 'input_type' => 'text'
                                                             ]
                                                         ];
-                    
+
                                                 @endphp
-                    
+
                                     <div class="row">
-                    
+
                                         <div class="col-12">
-                    
+
                                             <div class="group-input">
-                    
+
                                                 <div class="why-why-chart">
-                    
+
                                                     <table class="table table-bordered">
-                    
+
                                                         <thead>
-                    
+
                                                             <tr>
-                    
+
                                                                 <th style="width: 5%;">Sr.No.</th>
-                    
+
                                                                 <th style="width: 40%;">Question</th>
-                    
+
                                                                 <th style="width: 20%;">Response</th>
-                    
+
                                                                 <th>Remarks</th>
-                    
+
                                                             </tr>
-                    
+
                                                         </thead>
-                    
+
                                                         <tbody>
                                                             @php
                                                                 $main_question_index = 7.0;
                                                                 $sub_question_index = 0;
                                                             @endphp
-                    
+
                                                             @foreach ($CR_of_instru_equipment_IMAs as $index => $review_item)
                                                             @php
                                                                 if ($review_item['is_sub_question']) {
@@ -5386,18 +5465,18 @@
                                                             </tr>
                                                             @endforeach
                                                         </tbody>
-                    
+
                                                     </table>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                             </div>
-                    
+
                                 <div class="inner-block-content">
-                    
+
                                     <div class="sub-head">
-                    
+
                                         Disinfectant Details: </div>
                                         @php
                                         $disinfectant_details_IMAs = [
@@ -5417,40 +5496,40 @@
                                                 'input_type' => 'text'
                                             ]
                                         ];
-                    
+
                                         @endphp
-                    
+
                                     <div class="row">
-                    
+
                                         <div class="col-12">
-                    
+
                                             <div class="group-input">
-                    
+
                                                 <div class="why-why-chart">
-                    
+
                                                     <table class="table table-bordered">
-                    
+
                                                         <thead>
-                    
+
                                                             <tr>
-                    
+
                                                                 <th style="width: 5%;">Sr.No.</th>
-                    
+
                                                                 <th style="width: 40%;">Question</th>
-                    
+
                                                                 <th style="width: 20%;">Response</th>
-                    
+
                                                                 <th>Remarks</th>
-                    
+
                                                             </tr>
-                    
+
                                                         </thead>
                                                         <tbody>
                                                             @php
                                                                 $main_question_index = 8.0;
                                                                 $sub_question_index = 0;
                                                             @endphp
-                    
+
                                                             @foreach ($disinfectant_details_IMAs as $index => $review_item)
                                                             @php
                                                                 if ($review_item['is_sub_question']) {
@@ -5496,18 +5575,18 @@
                                                         </tr>
                                                             @endforeach
                                                         </tbody>
-                    
-                    
+
+
                                                     </table>
-                    
+
                                                 </div>
-                    
+
                                             </div>
-                    
+
                                         </div>
-                    
+
                                     </div>
-                    
+
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Audit Attachments">If Yes, Provide attachment details</label>
@@ -5516,7 +5595,7 @@
                                             </small>
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="provide_attachment3">
-                        
+
                                                     @if ($data->provide_attachment3)
                                                     @foreach ($data->provide_attachment3 as $file)
                                                     <h6 type="button" class="file-container text-dark"
@@ -5530,7 +5609,7 @@
                                                     </h6>
                                                     @endforeach
                                                     @endif
-                        
+
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
@@ -5542,7 +5621,7 @@
                                     </div>
                                <div class="button-block">
                                     @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                                    
+
                                     @else
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -5552,7 +5631,7 @@
                              </div>
                 </div>
             </div>
-          
+
             <div id="CCForm54" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
@@ -5620,7 +5699,7 @@
                                                 $main_question_index = 1.0;
                                                 $sub_question_index = 0;
                                             @endphp
-    
+
                                             @foreach ($CR_of_training_rec_anaylst_in_monitoring_CIEMs as $index => $review_item)
                                             @php
                                                 if ($review_item['is_sub_question']) {
@@ -5666,7 +5745,7 @@
                                             </tr>
                                             @endforeach
                                         </tbody>
-    
+
                                     </table>
                                 </div>
                             </div>
@@ -5703,7 +5782,7 @@
                                         'input_type' => 'text'
                                     ]
                                 ];
-    
+
                         @endphp
                     <div class="row">
                         <div class="col-12">
@@ -5723,7 +5802,7 @@
                                                 $main_question_index = 2.0;
                                                 $sub_question_index = 0;
                                             @endphp
-    
+
                                             @foreach ($Check_for_Sample_details_CIEMs as $index => $review_item)
                                             @php
                                                 if ($review_item['is_sub_question']) {
@@ -5820,7 +5899,7 @@
                                             'input_type' => 'text'
                                         ]
                                     ];
-    
+
                             @endphp
                     <div class="row">
                         <div class="col-12">
@@ -5840,7 +5919,7 @@
                                                 $main_question_index = 3.0;
                                                 $sub_question_index = 0;
                                             @endphp
-    
+
                                             @foreach ($Check_for_comparision_of_results_CIEMs as $index => $review_item)
                                             @php
                                                 if ($review_item['is_sub_question']) {
@@ -5886,7 +5965,7 @@
                                             </tr>
                                             @endforeach
                                         </tbody>
-    
+
                                     </table>
                                 </div>
                             </div>
@@ -5923,7 +6002,7 @@
                                                 'input_type' => 'date'
                                             ]
                                         ];
-    
+
                             @endphp
                     <div class="row">
                         <div class="col-12">
@@ -5943,7 +6022,7 @@
                                                 $main_question_index = 3.0;
                                                 $sub_question_index = 0;
                                             @endphp
-    
+
                                             @foreach ($checklist_for_media_dehydrated_CIEMs as $index => $review_item)
                                             @php
                                                 if ($review_item['is_sub_question']) {
@@ -5989,7 +6068,7 @@
                                             </tr>
                                             @endforeach
                                         </tbody>
-    
+
                                     </table>
                                 </div>
                             </div>
@@ -6041,7 +6120,7 @@
                                         'input_type' => 'text'
                                     ]
                                 ];
-    
+
                             @endphp
                     <div class="row">
                         <div class="col-12">
@@ -6061,7 +6140,7 @@
                                                 $main_question_index = 5.1;
                                                 $sub_question_index = 0;
                                             @endphp
-    
+
                                             @foreach ($checklist_for_media_prepara_sterilization_CIEMs as $index => $review_item)
                                             @php
                                                 if ($review_item['is_sub_question']) {
@@ -6107,7 +6186,7 @@
                                             </tr>
                                             @endforeach
                                         </tbody>
-    
+
                                     </table>
                                 </div>
                             </div>
@@ -6134,7 +6213,7 @@
                                             'input_type' => 'text'
                                         ]
                                     ];
-    
+
                         @endphp
                     <div class="row">
                         <div class="col-12">
@@ -6154,7 +6233,7 @@
                                                 $main_question_index = 6.0;
                                                 $sub_question_index = 0;
                                             @endphp
-    
+
                                             @foreach ($CR_of_En_condition_in_testing_CIEMs as $index => $review_item)
                                             @php
                                                 if ($review_item['is_sub_question']) {
@@ -6231,7 +6310,7 @@
                                     'input_type' => 'text'
                                 ]
                             ];
-    
+
                         @endphp
                     <div class="row">
                         <div class="col-12">
@@ -6251,7 +6330,7 @@
                                                 $main_question_index = 7.1;
                                                 $sub_question_index = 0;
                                             @endphp
-    
+
                                             @foreach ($check_for_disinfectant_CIEMs as $index => $review_item)
                                             @php
                                                 if ($review_item['is_sub_question']) {
@@ -6297,7 +6376,7 @@
                                         </tr>
                                             @endforeach
                                         </tbody>
-    
+
                                     </table>
                                 </div>
                             </div>
@@ -6329,7 +6408,7 @@
                                             'input_type' => 'text'
                                         ]
                                     ];
-    
+
                             @endphp
                     <div class="row">
                         <div class="col-12">
@@ -6349,7 +6428,7 @@
                                                 $main_question_index = 8.1;
                                                 $sub_question_index = 0;
                                             @endphp
-    
+
                                             @foreach ($checklist_for_fogging_CIEMs as $index => $review_item)
                                             @php
                                                 if ($review_item['is_sub_question']) {
@@ -6416,7 +6495,7 @@
                                     'input_type' => 'number'
                                 ]
                             ];
-    
+
                         @endphp
                     <div class="row">
                         <div class="col-12">
@@ -6436,7 +6515,7 @@
                                                 $main_question_index = 9.1;
                                                 $sub_question_index = 0;
                                             @endphp
-    
+
                                             @foreach ($CR_of_test_method_CIEMs as $index => $review_item)
                                             @php
                                                 if ($review_item['is_sub_question']) {
@@ -6523,7 +6602,7 @@
                                         'input_type' => 'number'
                                     ]
                                 ];
-    
+
                             @endphp
                     <div class="row">
                         <div class="col-12">
@@ -6542,7 +6621,7 @@
                                                 $main_question_index = 10.1;
                                                 $sub_question_index = 0;
                                             @endphp
-    
+
                                             @foreach ($CR_microbial_isolates_contamination_CIEMs as $index => $review_item)
                                             @php
                                                 if ($review_item['is_sub_question']) {
@@ -6588,7 +6667,7 @@
                                             </tr>
                                             @endforeach
                                         </tbody>
-    
+
                                     </table>
                                 </div>
                             </div>
@@ -6680,7 +6759,7 @@
                                         'input_type' => 'date'
                                     ]
                                 ];
-    
+
                         @endphp
                     <div class="row">
                         <div class="col-12">
@@ -6700,7 +6779,7 @@
                                                 $main_question_index = 11.0;
                                                 $sub_question_index = 0;
                                             @endphp
-    
+
                                             @foreach ($CR_of_instru_equip_CIEMs as $index => $review_item)
                                             @php
                                                 if ($review_item['is_sub_question']) {
@@ -6746,7 +6825,7 @@
                                             </tr>
                                             @endforeach
                                         </tbody>
-    
+
                                     </table>
                                 </div>
                             </div>
@@ -6768,7 +6847,7 @@
                                     'input_type' => 'text'
                                 ]
                             ];
-    
+
                             @endphp
                     <div class="row">
                         <div class="col-12">
@@ -6787,7 +6866,7 @@
                                                 $main_question_index = 12.0;
                                                 $sub_question_index = 0;
                                             @endphp
-    
+
                                             @foreach ($Ch_Trend_analysis_CIEMs as $index => $review_item)
                                             @php
                                                 if ($review_item['is_sub_question']) {
@@ -6833,9 +6912,9 @@
                                         </tr>
                                             @endforeach
                                         </tbody>
-    
+
                                     </table>
-    
+
                                 </div>
                             </div>
                         </div>
@@ -6847,7 +6926,7 @@
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="provide_attachment4">
-            
+
                                         @if ($data->provide_attachment4)
                                         @foreach ($data->provide_attachment4 as $file)
                                         <h6 type="button" class="file-container text-dark"
@@ -6861,7 +6940,7 @@
                                         </h6>
                                         @endforeach
                                         @endif
-            
+
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
@@ -6873,7 +6952,7 @@
                         </div>
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                            
+
                             @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -6882,10 +6961,10 @@
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                 </div>
-            
+
                 </div>
             </div>
-        
+
 
             <div id="CCForm55" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -7700,7 +7779,7 @@
                                             </small>
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="provide_attachment5">
-                        
+
                                                     @if ($data->provide_attachment5)
                                                     @foreach ($data->provide_attachment5 as $file)
                                                     <h6 type="button" class="file-container text-dark"
@@ -7714,7 +7793,7 @@
                                                     </h6>
                                                     @endforeach
                                                     @endif
-                        
+
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
@@ -7729,7 +7808,7 @@
                         </div>
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                            
+
                             @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -7738,8 +7817,8 @@
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                   </div>
-                </div>  
-            </div>    
+                </div>
+            </div>
 
             <div id="CCForm42" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -7798,17 +7877,37 @@
                                                         </td>
                                                         <td>
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="checklist_IB_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"  {{Helpers::isOOSChemical($data->stage)}}>
+
+                                                            @php
+                                                                $dataItem = $checklist_IB_invs->data[$loop->index] ?? null;
+                                                            @endphp
+
+                                                            <select name="checklist_IB_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;" {{Helpers::isOOSChemical($data->stage)}}>
+                                                                <option value="">Select an Option</option>
+
+                                                                <option value="Yes" {{ isset($dataItem) && Helpers::getArrayKey($dataItem, 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ isset($dataItem) && Helpers::getArrayKey($dataItem, 'response') == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ isset($dataItem) && Helpers::getArrayKey($dataItem, 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
+
+                                                                {{--<select name="checklist_IB_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"  {{Helpers::isOOSChemical($data->stage)}}>
                                                                     <option value="">Select an Option</option>
                                                                     <option value="Yes" {{ Helpers::getArrayKey($checklist_IB_invs->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                     <option value="No" {{ Helpers::getArrayKey($checklist_IB_invs->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
                                                                     <option value="N/A" {{ Helpers::getArrayKey($checklist_IB_invs->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
-                                                                </select>
+                                                                </select>--}}
                                                             </div>
                                                         </td>
                                                         <td style="vertical-align: middle;">
                                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="checklist_IB_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSChemical($data->stage)}}>{{ Helpers::getArrayKey($checklist_IB_invs->data[$loop->index], 'remark') }}</textarea>
+                                                                @php
+                                                                $dataItem = $checklist_IB_invs->data[$loop->index] ?? null;
+                                                                $remark = isset($dataItem) ? Helpers::getArrayKey($dataItem, 'remark') : '';
+                                                            @endphp
+
+                                                            <textarea name="checklist_IB_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;" {{Helpers::isOOSChemical($data->stage)}}>{{ $remark }}</textarea>
+
+                                                                {{--<textarea name="checklist_IB_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSChemical($data->stage)}}>{{ Helpers::getArrayKey($checklist_IB_invs->data[$loop->index], 'remark') }}</textarea>--}}
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -7817,7 +7916,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                
+
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
@@ -7850,7 +7949,7 @@
                                 <label for="checklists">Proposal for Phase IB hypothesis</label>
                                 @php
                                 $ChecklistData = $data->proposal_for_hypothesis_IB;
-                            
+
                                 if (is_array($ChecklistData) && array_key_exists('0', $ChecklistData) && is_string($ChecklistData[0]) && !empty($ChecklistData[0])) {
                                     $selectedChecklist = explode(',', $ChecklistData[0]);
                                 } else {
@@ -7858,13 +7957,13 @@
                                 }
                             @endphp
                                 <select multiple id="reference_record" name="proposal_for_hypothesis_IB[]">
-                                    <option value="">--Select---</option>
+                                    {{-- <option value="">--Select---</option> --}}
                                     <option value="Re-injection of the original vial" @if (in_array('Re-injection of the original vial', $selectedChecklist)) selected @endif>Re-injection of the original vial</option>
                                     <option value="Re-filtration and Injection from final dilution" @if (in_array('Re-filtration and Injection from final dilution', $selectedChecklist)) selected @endif>Re-filtration and Injection from final dilution</option>
                                     <option value="Re-dilution from the tock solution and injection" @if (in_array('Re-dilution from the tock solution and injection', $selectedChecklist)) selected @endif>Re-dilution from the tock solution and injection</option>
                                     <option value="Re-sonication / re-shaking due to probable incomplete solubility and analyze" @if (in_array('Re-sonication / re-shaking due to probable incomplete solubility and analyze', $selectedChecklist)) selected @endif>Re-sonication / re-shaking due to probable incomplete solubility and analyze</option>
                                     <option value="Other" @if (in_array('Other', $selectedChecklist)) selected @endif>Other</option>
-                                   
+
                                 </select>
                             </div>
                         </div>
@@ -7876,7 +7975,7 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Details of results (Including original OOS results for side by side comparison)</label>
+                                <label for="If Others">Details of results (Including original OOS/OOT results for side by side comparison)</label>
                                 <textarea id="details_of_result" name="details_of_result" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->details_of_result }}</textarea>
                             </div>
                         </div>
@@ -7928,6 +8027,8 @@
                                     <option value="Method error" {{ $data->Types_of_assignable == 'Method error' ? 'selected' : '' }}>Method error</option>
                                     <option value="Environment" {{ $data->Types_of_assignable == 'Environment' ? 'selected' : '' }}>Environment</option>
                                     <option value="Other" {{ $data->Types_of_assignable == 'Other' ? 'selected' : '' }}>Other</option>
+                                    <option value="NA" {{ $data->Types_of_assignable == 'NA' ? 'selected' : '' }}>NA</option>
+
                                 </select>
                             </div>
                         </div>
@@ -8055,7 +8156,7 @@
 
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                            
+
                             @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -8065,7 +8166,7 @@
                         </div>
                     </div>
                 </div>
-            
+
             </div>
 
             <div id="CCForm30" class="inner-block cctabcontent">
@@ -8075,16 +8176,16 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                        
+
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase IA HOD Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
-                                <textarea 
-                                    name="hod_remark2" 
-                                    class="form-control {{$errors->has('hod_remark2') ? 'is-invalid' : ''}}" 
+                                <textarea
+                                    name="hod_remark2"
+                                    class="form-control {{$errors->has('hod_remark2') ? 'is-invalid' : ''}}"
                                     {{ $data->stage == 6 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark2}}</textarea>
                                     @if($errors->has('hod_remark2'))
                                     <div class="invalid-feedback">
@@ -8093,7 +8194,7 @@
                                 @endif
                             </div>
                         </div>
-            
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">Phase IA HOD Attachment</label>
@@ -8102,7 +8203,7 @@
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="hod_attachment2">
-            
+
                                         @if ($data->hod_attachment2)
                                         @foreach ($data->hod_attachment2 as $file)
                                         <h6 type="button" class="file-container text-dark"
@@ -8116,7 +8217,7 @@
                                         </h6>
                                         @endforeach
                                         @endif
-            
+
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
@@ -8126,11 +8227,11 @@
                                 </div>
                             </div>
                         </div>
-                    
-            
+
+
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                            
+
                             @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -8140,7 +8241,7 @@
                         </div>
                     </div>
                 </div>
-            
+
             </div>
             <div id="CCForm31" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -8149,16 +8250,16 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                        
+
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase IA CQA/QA Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
-                                <textarea 
-                                    name="QA_Head_remark2" 
-                                    class="form-control {{$errors->has('QA_Head_remark2') ? 'is-invalid' : ''}}" 
+                                <textarea
+                                    name="QA_Head_remark2"
+                                    class="form-control {{$errors->has('QA_Head_remark2') ? 'is-invalid' : ''}}"
                                     {{ $data->stage == 7 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark2}}</textarea>
                                     @if($errors->has('QA_Head_remark2'))
                                     <div class="invalid-feedback">
@@ -8167,7 +8268,7 @@
                                 @endif
                             </div>
                         </div>
-            
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">Phase IA CQA/QA Attachment</label>
@@ -8176,7 +8277,7 @@
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="QA_Head_attachment2">
-            
+
                                         @if ($data->QA_Head_attachment2)
                                         @foreach ($data->QA_Head_attachment2 as $file)
                                         <h6 type="button" class="file-container text-dark"
@@ -8190,7 +8291,7 @@
                                         </h6>
                                         @endforeach
                                         @endif
-            
+
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
@@ -8200,11 +8301,11 @@
                                 </div>
                             </div>
                         </div>
-                    
-            
+
+
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                            
+
                             @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -8214,7 +8315,7 @@
                         </div>
                     </div>
                 </div>
-            
+
             </div>
             <div id="CCForm32" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -8223,16 +8324,16 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                       
+
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase IA CQAH/QAH Remark<span class="text-danger">*</span></label>
+                                <label for="Initiator Group">Phase IA CQAH/QAH Remark <span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
-                                <textarea 
-                                    name="QA_Head_primary_remark2" 
-                                    class="form-control {{$errors->has('QA_Head_primary_remark2') ? 'is-invalid' : ''}}" 
+                                <textarea
+                                    name="QA_Head_primary_remark2"
+                                    class="form-control {{$errors->has('QA_Head_primary_remark2') ? 'is-invalid' : ''}}"
                                     {{ $data->stage == 8 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark2}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark2'))
                                     <div class="invalid-feedback">
@@ -8241,7 +8342,20 @@
                                 @endif
                             </div>
                         </div>
-            
+
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Assignable cause found">Phase IA Assignable cause found</label>
+                                <select name="assign_cause_found" id="assign_cause_found">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="Yes" {{ $data->assign_cause_found == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->assign_cause_found == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">Phase IA CQAH/QAH Attachment</label>
@@ -8250,7 +8364,7 @@
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="QA_Head_primary_attachment2">
-            
+
                                         @if ($data->QA_Head_primary_attachment2)
                                         @foreach ($data->QA_Head_primary_attachment2 as $file)
                                         <h6 type="button" class="file-container text-dark"
@@ -8264,7 +8378,7 @@
                                         </h6>
                                         @endforeach
                                         @endif
-            
+
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
@@ -8274,11 +8388,11 @@
                                 </div>
                             </div>
                         </div>
-                    
-            
+
+
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                            
+
                             @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -8288,7 +8402,7 @@
                         </div>
                     </div>
                 </div>
-            
+
             </div>
             <div id="CCForm33" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -8297,16 +8411,16 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                         
+
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase IB HOD Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
-                                <textarea 
-                                    name="hod_remark3" 
-                                    class="form-control {{$errors->has('hod_remark3') ? 'is-invalid' : ''}}" 
+                                <textarea
+                                    name="hod_remark3"
+                                    class="form-control {{$errors->has('hod_remark3') ? 'is-invalid' : ''}}"
                                     {{ $data->stage == 10 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark3}}</textarea>
                                     @if($errors->has('hod_remark3'))
                                     <div class="invalid-feedback">
@@ -8315,7 +8429,7 @@
                                 @endif
                             </div>
                         </div>
-            
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">Phase IB HOD Attachment</label>
@@ -8324,7 +8438,7 @@
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="hod_attachment3">
-            
+
                                         @if ($data->hod_attachment3)
                                         @foreach ($data->hod_attachment3 as $file)
                                         <h6 type="button" class="file-container text-dark"
@@ -8338,7 +8452,7 @@
                                         </h6>
                                         @endforeach
                                         @endif
-            
+
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
@@ -8348,11 +8462,11 @@
                                 </div>
                             </div>
                         </div>
-                    
-            
+
+
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                            
+
                             @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -8362,7 +8476,7 @@
                         </div>
                     </div>
                 </div>
-            
+
             </div>
             <div id="CCForm34" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -8371,16 +8485,16 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                        
+
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase IB CQA/QA Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
-                                <textarea 
-                                    name="QA_Head_remark3" 
-                                    class="form-control {{$errors->has('QA_Head_remark3') ? 'is-invalid' : ''}}" 
+                                <textarea
+                                    name="QA_Head_remark3"
+                                    class="form-control {{$errors->has('QA_Head_remark3') ? 'is-invalid' : ''}}"
                                     {{ $data->stage == 11 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark3}}</textarea>
                                     @if($errors->has('QA_Head_remark3'))
                                     <div class="invalid-feedback">
@@ -8389,7 +8503,7 @@
                                 @endif
                             </div>
                         </div>
-            
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">Phase IB CQA/QA Attachment</label>
@@ -8398,7 +8512,7 @@
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="QA_Head_attachment3">
-            
+
                                         @if ($data->QA_Head_attachment3)
                                         @foreach ($data->QA_Head_attachment3 as $file)
                                         <h6 type="button" class="file-container text-dark"
@@ -8412,7 +8526,7 @@
                                         </h6>
                                         @endforeach
                                         @endif
-            
+
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
@@ -8422,11 +8536,11 @@
                                 </div>
                             </div>
                         </div>
-                    
-            
+
+
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                            
+
                             @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -8436,7 +8550,7 @@
                         </div>
                     </div>
                 </div>
-            
+
             </div>
             <div id="CCForm35" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -8455,27 +8569,27 @@
                                 </select>
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-6 new-time-data-field" id="notification_field" style="display: none;">
                             <div class="group-input input-time">
                                 <label for="If Others">If Yes, Notification</label>
                                 <textarea id="notification_ib" name="notification_ib" {{ $data->stage == 12 ? '' : 'readonly' }}>{{ $data->notification_ib }}</textarea>
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-6 new-time-data-field" id="justification_field" style="display: none;">
                             <div class="group-input input-time">
                                 <label for="If Others">If No, Justification</label>
                                 <textarea id="justification_ib" name="justification_ib" {{ $data->stage == 12 ? '' : 'readonly' }}>{{ $data->justification_ib }}</textarea>
                             </div>
                         </div>
-                        
+
                         <script>
                             $(document).ready(function() {
                                 // Function to show or hide the fields based on the selected value
                                 function toggleFields() {
                                     var selectedValue = $('#escalation_required').val();
-                        
+
                                     if (selectedValue === 'Yes') {
                                         $('#notification_field').show();  // Show notification field
                                         $('#justification_field').hide(); // Hide justification field
@@ -8488,26 +8602,37 @@
                                         $('#justification_field').hide();
                                     }
                                 }
-                        
+
                                 // On page load, toggle the fields based on the selected value
                                 toggleFields();
-                        
+
                                 // Event listener for the dropdown change event
                                 $('#escalation_required').change(function() {
                                     toggleFields();
                                 });
                             });
                         </script>
-                        
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Assignable cause found">Phase IB Assignable Cause Found</label>
+                                    <select name="phase_ib_assi_cause" id="phase_ib_assi_cause">
+                                        <option value="">Enter Your Selection Here</option>
+                                        <option value="Yes" {{ $data->phase_ib_assi_cause == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                        <option value="No" {{ $data->phase_ib_assi_cause == 'No' ? 'selected' : '' }}>No</option>
+                                    </select>
+                                </div>
+                            </div>
+
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase IB CQAH/QAH Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
-                                <textarea 
-                                    name="QA_Head_primary_remark3" 
-                                    class="form-control {{$errors->has('QA_Head_primary_remark3') ? 'is-invalid' : ''}}" 
+                                <textarea
+                                    name="QA_Head_primary_remark3"
+                                    class="form-control {{$errors->has('QA_Head_primary_remark3') ? 'is-invalid' : ''}}"
                                     {{ $data->stage == 12 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark3}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark3'))
                                     <div class="invalid-feedback">
@@ -8516,7 +8641,7 @@
                                 @endif
                             </div>
                         </div>
-            
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">Phase IB CQAH/QAH Attachment</label>
@@ -8525,7 +8650,7 @@
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="QA_Head_primary_attachment3">
-            
+
                                         @if ($data->QA_Head_primary_attachment3)
                                         @foreach ($data->QA_Head_primary_attachment3 as $file)
                                         <h6 type="button" class="file-container text-dark"
@@ -8539,7 +8664,7 @@
                                         </h6>
                                         @endforeach
                                         @endif
-            
+
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
@@ -8549,11 +8674,11 @@
                                 </div>
                             </div>
                         </div>
-                
-            
+
+
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                            
+
                             @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -8563,7 +8688,7 @@
                         </div>
                     </div>
                 </div>
-            
+
             </div>
             @include('frontend.OOS.comps.phase_two_investigation')
 
@@ -8574,16 +8699,16 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                         
+
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase II A HOD Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
-                                <textarea 
-                                    name="hod_remark4" 
-                                    class="form-control {{$errors->has('hod_remark4') ? 'is-invalid' : ''}}" 
+                                <textarea
+                                    name="hod_remark4"
+                                    class="form-control {{$errors->has('hod_remark4') ? 'is-invalid' : ''}}"
                                     {{ $data->stage == 14 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark4}}</textarea>
                                     @if($errors->has('hod_remark4'))
                                     <div class="invalid-feedback">
@@ -8592,7 +8717,7 @@
                                 @endif
                             </div>
                         </div>
-            
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">Phase II A HOD Attachment</label>
@@ -8601,7 +8726,7 @@
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="hod_attachment4">
-            
+
                                         @if ($data->hod_attachment4)
                                         @foreach ($data->hod_attachment4 as $file)
                                         <h6 type="button" class="file-container text-dark"
@@ -8615,7 +8740,7 @@
                                         </h6>
                                         @endforeach
                                         @endif
-            
+
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
@@ -8625,11 +8750,11 @@
                                 </div>
                             </div>
                         </div>
-                    
-            
+
+
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                            
+
                             @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -8639,7 +8764,7 @@
                         </div>
                     </div>
                 </div>
-            
+
             </div>
             <div id="CCForm37" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -8648,17 +8773,28 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                        
-                         
+                         <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Report Attachments">Phase II A Assinable Cause Found</label>
+                                <select name="phase_ii_a_assi_cause" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'readonly' }}>
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="Yes" {{ $data->phase_ii_a_assi_cause === 'Yes' ? 'selected' :
+                                            '' }}>Yes</option>
+                                    <option value="No" {{ $data->phase_ii_a_assi_cause === 'No' ? 'selected' : ''
+                                            }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase II A CQA/QA Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
-                                <textarea 
-                                    name="QA_Head_remark4" 
-                                    class="form-control {{$errors->has('QA_Head_remark4') ? 'is-invalid' : ''}}" 
+                                <textarea
+                                    name="QA_Head_remark4"
+                                    class="form-control {{$errors->has('QA_Head_remark4') ? 'is-invalid' : ''}}"
                                     {{ $data->stage == 15 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark4}}</textarea>
                                     @if($errors->has('QA_Head_remark4'))
                                     <div class="invalid-feedback">
@@ -8667,7 +8803,7 @@
                                 @endif
                             </div>
                         </div>
-            
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">Phase II A CQA/QA Attachment</label>
@@ -8676,7 +8812,7 @@
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="QA_Head_attachment4">
-            
+
                                         @if ($data->QA_Head_attachment4)
                                         @foreach ($data->QA_Head_attachment4 as $file)
                                         <h6 type="button" class="file-container text-dark"
@@ -8690,7 +8826,7 @@
                                         </h6>
                                         @endforeach
                                         @endif
-            
+
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
@@ -8700,11 +8836,11 @@
                                 </div>
                             </div>
                         </div>
-                    
-            
+
+
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                            
+
                             @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -8714,7 +8850,7 @@
                         </div>
                     </div>
                 </div>
-            
+
             </div>
             <div id="CCForm38" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -8723,16 +8859,16 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                        
+
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase II A QAH/CQAH Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
-                                <textarea 
-                                    name="QA_Head_primary_remark4" 
-                                    class="form-control {{$errors->has('QA_Head_primary_remark4') ? 'is-invalid' : ''}}" 
+                                <textarea
+                                    name="QA_Head_primary_remark4"
+                                    class="form-control {{$errors->has('QA_Head_primary_remark4') ? 'is-invalid' : ''}}"
                                     {{ $data->stage == 16 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark4}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark4'))
                                     <div class="invalid-feedback">
@@ -8741,7 +8877,7 @@
                                 @endif
                             </div>
                         </div>
-            
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">Phase II A QAH/CQAH Attachment</label>
@@ -8750,7 +8886,7 @@
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="QA_Head_primary_attachment4">
-            
+
                                         @if ($data->QA_Head_primary_attachment4)
                                         @foreach ($data->QA_Head_primary_attachment4 as $file)
                                         <h6 type="button" class="file-container text-dark"
@@ -8764,7 +8900,7 @@
                                         </h6>
                                         @endforeach
                                         @endif
-            
+
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
@@ -8774,11 +8910,11 @@
                                 </div>
                             </div>
                         </div>
-                    
-            
+
+
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                            
+
                             @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -8788,7 +8924,7 @@
                         </div>
                     </div>
                 </div>
-            
+
             </div>
             <div id="CCForm43" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -8822,7 +8958,7 @@
                                 <input  {{Helpers::isOOSChemical($data->stage)}} type="text" value="{{$data->reference_capa_IIB}}" name="reference_capa_IIB" {{ $data->stage == 17 ? '' : 'readonly' }}>
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Report Attachments">Resampling required IIB Inv.</label>
@@ -8866,7 +9002,7 @@
                                 <textarea id="Outcome_of_Laboratory" name="Outcome_of_Laboratory" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->Outcome_of_Laboratory }}</textarea>
                             </div>
                         </div>
-            
+
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Evaluation</label>
@@ -8891,7 +9027,7 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">If assignable error is not identified proceed as per Phase III investigation</label>
+                                <label for="If Others">If Assignable Cause Is Not Identified Proceed As Per Phase III Investigation</label>
                                 <textarea id="If_assignable_error" name="If_assignable_error" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->If_assignable_error }}</textarea>
                             </div>
                         </div>
@@ -8903,7 +9039,7 @@
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="phase_IIB_attachment">
-            
+
                                         @if ($data->phase_IIB_attachment)
                                         @foreach ($data->phase_IIB_attachment as $file)
                                         <h6 type="button" class="file-container text-dark"
@@ -8917,7 +9053,7 @@
                                         </h6>
                                         @endforeach
                                         @endif
-            
+
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
@@ -8929,7 +9065,7 @@
                         </div>
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                            
+
                             @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -8939,7 +9075,7 @@
                         </div>
                     </div>
                 </div>
-            
+
             </div>
             <div id="CCForm39" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -8948,16 +9084,16 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                        
+
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase II B HOD Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
-                                <textarea 
-                                    name="hod_remark5" 
-                                    class="form-control {{$errors->has('hod_remark5') ? 'is-invalid' : ''}}" 
+                                <textarea
+                                    name="hod_remark5"
+                                    class="form-control {{$errors->has('hod_remark5') ? 'is-invalid' : ''}}"
                                     {{ $data->stage == 18 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark5}}</textarea>
                                     @if($errors->has('hod_remark5'))
                                     <div class="invalid-feedback">
@@ -8966,7 +9102,7 @@
                                 @endif
                             </div>
                         </div>
-            
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">Phase II B HOD Attachment</label>
@@ -8975,7 +9111,7 @@
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="hod_attachment5">
-            
+
                                         @if ($data->hod_attachment5)
                                         @foreach ($data->hod_attachment5 as $file)
                                         <h6 type="button" class="file-container text-dark"
@@ -8989,7 +9125,7 @@
                                         </h6>
                                         @endforeach
                                         @endif
-            
+
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
@@ -8999,11 +9135,11 @@
                                 </div>
                             </div>
                         </div>
-                    
-            
+
+
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                            
+
                             @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -9013,7 +9149,7 @@
                         </div>
                     </div>
                 </div>
-            
+
             </div>
             <div id="CCForm40" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -9022,16 +9158,16 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                        
+
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase II B CQA/QA Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
-                                <textarea 
-                                    name="QA_Head_remark5" 
-                                    class="form-control {{$errors->has('QA_Head_remark5') ? 'is-invalid' : ''}}" 
+                                <textarea
+                                    name="QA_Head_remark5"
+                                    class="form-control {{$errors->has('QA_Head_remark5') ? 'is-invalid' : ''}}"
                                     {{ $data->stage == 19 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark5}}</textarea>
                                     @if($errors->has('QA_Head_remark5'))
                                     <div class="invalid-feedback">
@@ -9040,7 +9176,7 @@
                                 @endif
                             </div>
                         </div>
-            
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">Phase II B CQA/QA Attachment</label>
@@ -9049,7 +9185,7 @@
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="QA_Head_attachment5">
-            
+
                                         @if ($data->QA_Head_attachment5)
                                         @foreach ($data->QA_Head_attachment5 as $file)
                                         <h6 type="button" class="file-container text-dark"
@@ -9063,7 +9199,7 @@
                                         </h6>
                                         @endforeach
                                         @endif
-            
+
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
@@ -9073,11 +9209,11 @@
                                 </div>
                             </div>
                         </div>
-                    
-            
+
+
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                            
+
                             @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -9087,7 +9223,7 @@
                         </div>
                     </div>
                 </div>
-            
+
             </div>
 
             @include('frontend.OOS.comps.under_approval')
@@ -9097,11 +9233,11 @@
             @include('frontend.OOS.comps.oos_conclusion')
 
             @include('frontend.OOS.comps.signature')
-          
 
-           
-           
-           
+
+
+
+
 
             <!-- Phase IA Investigation -->
             {{-- @include('frontend.OOS.comps.preliminary') --}}
@@ -9124,7 +9260,7 @@
             @include('frontend.OOS.comps.checklist_phase_two')
 
             <!-- Phase II QC Review -->
-            @include('frontend.OOS.comps.phase_two_qc')    
+            @include('frontend.OOS.comps.phase_two_qc')
 
             <!--Additional Testing Proposal  -->
             {{-- @include('frontend.OOS.comps.additional_testing') --}}
@@ -9142,11 +9278,11 @@
             {{-- @include('frontend.OOS.comps.batch_disposition') --}}
 
             <!-- Re-Open -->
-           {{--  @include('frontend.OOS.comps.oos_reopen')  --}}  
+           {{--  @include('frontend.OOS.comps.oos_reopen')  --}}
 
             <!-- Under Addendum Approval -->
             {{-- @include('frontend.OOS.comps.under_approval') --}}
-            
+
             {{-- @include('frontend.OOS.comps.oos_extension')  --}}
 
             <!--Under Addendum Execution -->
@@ -9156,7 +9292,7 @@
             {{--  @include('frontend.OOS.comps.under_review') --}}
 
             <!-- Under Addendum Verification -->
-            {{-- @include('frontend.OOS.comps.under_verification')  --}}   
+            {{-- @include('frontend.OOS.comps.under_verification')  --}}
 
             <!----- Signature ----->
             {{-- @include('frontend.OOS.comps.signature') --}}
@@ -9179,13 +9315,13 @@
         const virtualSelectInstance = VirtualSelect.init({
                     ele: '#checklists'
                 });
-    
+
         document.querySelector('.abc').addEventListener('change', function() {
         const selectedOptions = $('#checklists').val();
         console.log(selectedOptions);
         console.log('selectedOptions', selectedOptions);
-    
-    
+
+
         const button1 = $('.button1')
         if (selectedOptions.includes('pH-Viscometer-MP')) {
             button1.show()
@@ -9194,8 +9330,8 @@
             button1.hide()
             console.log('Hide button1');
         }
-    
-    
+
+
         const button2 = $('.button2')
         if (selectedOptions.includes('Dissolution')) {
             button2.show()
@@ -9204,8 +9340,8 @@
             button2.hide()
             console.log('Hide button2');
         }
-    
-    
+
+
         const button3 = $('.button3');
         if (selectedOptions.includes('HPLC-GC')) {
             button3.show()
@@ -9214,8 +9350,8 @@
             button3.hide()
             console.log('Hide button3');
         }
-    
-    
+
+
         const button4 = $('.button4');
         if (selectedOptions.includes('General-checklist')) {
             button4.show()
@@ -9224,8 +9360,8 @@
             button4.hide()
             console.log('Hide button4');
         }
-    
-    
+
+
         const button5 = $('.button5');
         if (selectedOptions.includes('KF-Potentiometer')) {
             button5.show()
@@ -9234,8 +9370,8 @@
             button5.hide()
             console.log('Hide button5');
         }
-    
-    
+
+
         const button6 = $('.button6');
         if (selectedOptions.includes('RM-PM')) {
             button6.show()
@@ -9244,7 +9380,7 @@
             button6.hide()
             console.log('Hide button6');
         }
-    
+
         const button7 = $('.button7');
         if (selectedOptions.includes('Bacterial-Endotoxin-Test')) {
             button7.show()
@@ -9253,7 +9389,7 @@
             button7.hide()
             console.log('Hide button7');
         }
-    
+
         const button8 = $('.button8');
         if (selectedOptions.includes('Sterility')) {
             button8.show()
@@ -9262,7 +9398,7 @@
             button8.hide()
             console.log('Hide button8');
         }
-    
+
         const button9 = $('.button9');
         if (selectedOptions.includes('Water-Test')) {
             button9.show()
@@ -9271,7 +9407,7 @@
             button9.hide()
             console.log('Hide button9');
         }
-    
+
         const button10 = $('.button10');
         if (selectedOptions.includes('Microbial-assay')) {
             button10.show()
@@ -9280,7 +9416,7 @@
             button10.hide()
             console.log('Hide button10');
         }
-    
+
         const button11 = $('.button11');
         if (selectedOptions.includes('Environmental-Monitoring')) {
             button11.show()
@@ -9289,7 +9425,7 @@
             button11.hide()
             console.log('Hide button11');
         }
-    
+
         const button12 = $('.button12');
         if (selectedOptions.includes('Media-Suitability-Test')) {
             button12.show()
@@ -9298,16 +9434,16 @@
             button12.hide()
             console.log('Hide button12');
         }
-    
-      
+
+
             });
-    
+
             function openCity(evt, cityName) {
                 console.log('Open city:', cityName);
             }
-    
-    
-    
+
+
+
        </script>
 <script>
     @if(Session::has('swal'))
@@ -9318,7 +9454,7 @@
             confirmButtonText: 'OK',
             width: '300px',
             height: '200px',
-            size: '50px', 
+            size: '50px',
         });
     @endif
 </script>
@@ -9339,7 +9475,7 @@
             var selectedValue = this.value;
             document.getElementById('initiator_group_code').value = selectedValue;
         });
-        
+
         function setCurrentDate(item){
             if(item == 'yes'){
                 $('#effect_check_date').val('{{ date('d-M-Y')}}');
@@ -9348,9 +9484,9 @@
                 $('#effect_check_date').val('');
             }
         }
-        
+
     </script>
-    
+
     <script>
         VirtualSelect.init({
             ele: '#reference_record, #notify_to ,#action_plan_ref_oosc, #capa_ref_no_oosc '

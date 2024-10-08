@@ -591,7 +591,8 @@
 
                         <tr>
 
-                            <th class="w-20">Review comment (By Production Tablet/Capsule/Powder)</th>
+                            <th class="w-20">Review comment (By Production Tablet/Capsule Powder)
+                            </th>
                             <td class="w-80" colspan="3">
                                 <div>
                                     @if ($data1->Production_Table_Assessment)
@@ -745,7 +746,7 @@ Not Applicable
 
                     <div class="border-table">
                         <div class="block-head">
-                            Production Injection Attachments 2
+                            Production Injection Attachments 
                         </div>
                         <table>
 
@@ -1382,8 +1383,8 @@ Not Applicable
                                 </th>
                                 <td class="w-30">
                                     <div>
-                                        @if ($data1->Quality_Assurance)
-                                            {{ $data1->Quality_Assurance }}
+                                        @if ($data1->Quality_Assurance_Review)
+                                            {{ $data1->Quality_Assurance_Review }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1619,8 +1620,8 @@ Not Applicable
                                 <th class="w-20">Quality Control Review Completed By</th>
                                 <td class="w-30">
                                     <div>
-                                        @if ($data1->Quality_Control_on)
-                                            {{ $data1->Quality_Control_on }}
+                                        @if ($data1->Quality_Control_by)
+                                            {{ $data1->Quality_Control_by }}
                                         @else
                                             Not Applicable
                                         @endif

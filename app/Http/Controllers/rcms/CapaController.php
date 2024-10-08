@@ -1462,7 +1462,11 @@ if (!empty($capa->qa_attachmentc)) {
         $capa->short_description = $request->short_description;
         $capa->problem_description = $request->problem_description;
         $capa->due_date= $request->due_date;
-        $capa->assign_to = $request->assign_to;
+        if($capa->stage == 1)
+        {
+            $capa->assign_to=  implode(',',(array) $request->assign_to);
+        } 
+        // $capa->assign_to = $request->assign_to;
       //  $capa->capa_team = $request->capa_team;
         // $capa->capa_team = implode(',', $request->capa_team);
         
@@ -1472,13 +1476,27 @@ if (!empty($capa->qa_attachmentc)) {
         $capa_teamNames = User::whereIn('id', $capa_teamIdsArray)->pluck('name')->toArray();
         $capa_teamNamesString = implode(', ', $capa_teamNames);
      }
-
-        $capa->capa_type = $request->capa_type;
+     if($capa->stage == 1)
+     {
+         $capa->capa_type=  implode(',',(array) $request->capa_type);
+     } 
+        // $capa->capa_type = $request->capa_type;
         $capa->details_new = $request->details_new;
-        $capa->initiated_through = $request->initiated_through;
+        if($capa->stage == 1)
+        {
+            $capa->initiated_through=  implode(',',(array) $request->initiated_through);
+        } 
+        // $capa->initiated_through = $request->initiated_through;
         $capa->initiated_through_req = $request->initiated_through_req;
-        $capa->repeat = $request->repeat;
-        $capa->initiator_Group= $request->initiator_Group;
+        // $capa->repeat = $request->repeat;
+        if ($capa->stage == 1) {
+            $capa->repeat = implode(',', (array) $request->repeat); // Cast to array and implode
+        }        
+        if($capa->stage == 1)
+        {
+            $capa->initiator_Group=  implode(',',(array) $request->initiator_Group);
+        } 
+        // $capa->initiator_Group= $request->initiator_Group;
       
         
         $capa->initiator_group_code= $request->initiator_group_code;
@@ -1508,8 +1526,10 @@ if (!empty($capa->qa_attachmentc)) {
         $capa->Microbiology_new= $request->Microbiology_new;
         $capa->goup_review = $request->goup_review;
         $capa->initial_observation = $request->initial_observation;
-
-        $capa->interim_containnment = $request->interim_containnment;
+        if ($capa->stage == 1) {
+            $capa->interim_containnment = implode(',', (array) $request->interim_containnment);
+        }         
+        // $capa->interim_containnment = $request->interim_containnment;
         $capa->containment_comments = $request->containment_comments;
 
         $capa->capa_qa_comments= $request->capa_qa_comments;
@@ -1710,10 +1730,13 @@ if (!empty($capa->qa_attachmentc)) {
             if (!empty($request->material_remark)) {
                 $data2->material_remark = serialize($request->material_remark);
             }
-            if (!empty($request->material_batch_status)) {
-                $data2->material_batch_status = serialize($request->material_batch_status);
-            }
-
+            
+            if($capa->stage == 1)
+            {
+                if (!empty($request->material_batch_status)) {
+                    $data2->material_batch_status = serialize($request->material_batch_status);
+                }
+            }  
 
             $data2->update();
         }
@@ -2978,7 +3001,6 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             }
             $history->save();
         }
-        
         if ($lastDocument->initiated_through_req != $capa->initiated_through_req) {
         
             $history = new CapaAuditTrial();
@@ -4167,8 +4189,10 @@ foreach ($pre as $processName => $modelClass) {
             $parentRecord = Capa::where('id', $id)->value('record');
             $parent_name = "CAPA";
             $data=Capa::find($id);
+            // $p_record = OutOfCalibration::find($id);
+                   $data_record = Helpers::getDivisionName($data->division_id ) . '/' . 'CAPA' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
             $expectedParenRecord = Helpers::getDivisionName(session()->get('division')) . "/CAPA/" . date('Y') . "/" .$data->record."";
-            return view('frontend.action-item.action-item', compact('expectedParenRecord','old_record','parentRecord','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.action-item.action-item', compact('expectedParenRecord','old_record','parentRecord','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'data_record'));
         } 
         // else {
         //     return view('frontend.forms.effectiveness-checkkjkjk', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
@@ -4191,8 +4215,10 @@ foreach ($pre as $processName => $modelClass) {
             $record = ((RecordNumber::first()->value('counter')) + 1);
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $record_number = $record;
+            $data = Capa::find($id);
+            $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'CAPA' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
             $relatedRecords= Helpers::getAllRelatedRecords();            
-            return view('frontend.extension.extension_new', compact('parent_id', 'parent_name','relatedRecords', 'record_number', 'parent_due_date','parent_type'));
+            return view('frontend.extension.extension_new', compact('parent_id', 'parent_name','relatedRecords', 'record_number', 'parent_due_date','parent_type', 'extension_record'));
         }
     }
 

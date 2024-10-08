@@ -199,20 +199,18 @@
                         @endif
                         <div class="buttons-new">
                             @if ($document->stage < 7 && !(count($userRoleIds) === 1 && in_array(3, $userRoleIds)))
-                                {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
+                                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
                                     Review
-                                </button>  --}}
+                                </button>  
                             @endif
-                            {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
+                          <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
                                 View
-                            </button>  --}}
+                            </button> 
                             <button class="button_theme1"><a class="text-white"
                                     href="{{ url('show/' . $document->id) }}"> Back
                                 </a>
                             </button>
-                            <button class="button_theme1" onclick="window.print();">
-                                Print
-                            </button>
+                            <a class="button_theme1 text-white"  href="{{ url('rcms/qms-dashboard') }}">Exit </a>
                         </div>
                     </div>
                     <div class="modal fade" id="auditViewers">
