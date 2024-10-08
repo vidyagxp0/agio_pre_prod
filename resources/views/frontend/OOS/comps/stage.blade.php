@@ -73,7 +73,7 @@
              @elseif($data->stage == 12 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Done-modal1">Phase IB Assignable Cause Found</button>
-             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-I B Assignable Cause Not Found</button> --}}
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-I B Assignable Cause Not Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
 
              @elseif($data->stage == 24 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -118,7 +118,7 @@
              @elseif($data->stage == 21 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
              {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button> --}}
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">PIhase II Investigation Applicable/Not Applicable</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis-Action-item">Child</button>
+             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis-Action-item">Child</button> --}}
              @elseif($data->stage == 22 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 
              <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/action-items-create') }}"> Action Item
@@ -232,7 +232,7 @@
              @elseif($data->stage == 21 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
              {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button> --}}
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase III Investigation Applicable/Not Applicable</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis-Action-item">Child</button>
+             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis-Action-item">Child</button> --}}
              @elseif($data->stage == 22 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 
              <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/action-items-create') }}"> Action Item
@@ -761,83 +761,6 @@
                     <div style=" display: flex; justify-content: center; padding: 6px;"  class="bg-danger">Closed-Done</div>
                 </div>
             @else
-            @if ($data->Form_type == 'OOT')
-            <div class="progress-bars d-flex">
-                @if ($data->stage >= 1)
-                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark rounded-start p-2 active">Opened</div>
-                @else
-                <div class="d-flex justify-items-center align-items-center border border-1 border-dark rounded-start p-2">Opened</div>
-                @endif
-
-                @if ($data->stage >= 2)
-                    <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">HOD Primary Review</div>
-                @else
-                <div class="  d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">HOD Primary Review</div>
-                @endif
-               
-               
-                @if ($data->stage == 3)
-                    <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">CQA/QA Head Approval</div>
-                @else
-                {{-- <div class="  d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">CQA/QA Head Approval</div> --}}
-                @endif
-
-
-                @if ($data->stage >= 4)
-                <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">CQA/QA Head Primary Review</div>
-                @else
-                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">CQA/QA Head Primary Review</div>
-                @endif
-
-                @if ($data->stage >= 5)
-                    <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase IA Investigation </div>
-                @else
-                    <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase IA Investigation</div>
-                @endif
-
-                @if ($data->stage >= 6)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA HOD Primary Review</div>
-                @else
-                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA HOD Primary Review</div>
-                @endif
-
-                @if ($data->stage >= 7)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA CQA/QA Review</div>
-                @else
-                <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA CQA/QA Review</div>
-                @endif
-                @if ($data->stage >= 8)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA CQAH/QAH Review</div>
-                @else
-                <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA CQAH/QAH Review</div>
-                @endif
-                @if ($data->stage >= 9)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase IB Investigation</div>
-                @else
-                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase IB Investigation</div>
-                @endif
-                @if ($data->stage >= 10)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IB HOD Primary Review</div>
-                @else
-                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IB HOD Primary Review</div>
-                @endif
-                @if ($data->stage >= 11)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Phase IB CQA/QA Review </div>
-                @else
-                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IB CQA/QA Review </div>
-                @endif
-                @if ($data->stage >= 12)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Phase IB CQAH/QAH Review</div>
-                @else
-                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IB CQAH/QAH Review</div>
-                @endif
-                @if ($data->stage >= 21)
-                <div class="bg-danger d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Closed - Done</div>
-                @else
-                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Closed - Done</div>
-                @endif
-            </div> 
-            @else
                 <div class="progress-bars d-flex">
                     @if ($data->stage >= 1)
                         <div class="d-flex justify-items-center align-items-center border border-1 border-dark rounded-start p-2 active">Opened</div>
@@ -964,7 +887,6 @@
                         <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Closed - Done</div>
                     @endif
                 </div>
-            @endif
             @endif
     </div>
 </div>

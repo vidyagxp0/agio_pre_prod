@@ -192,7 +192,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Report Attachments">OOS Cause Identified II A</label>
+                    <label for="Report Attachments">OOS/OOT Cause Identified II A</label>
                     <select name="manufact_invest_required_piii" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'readonly' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Yes" {{ $data->manufact_invest_required_piii === 'Yes' ? 'selected' :
@@ -204,20 +204,25 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Audit Attachments">OOS Category II A</label>
+                    <label for="Audit Attachments">OOS/OOT Category II A</label>
                     <select name="hypo_exp_required_piii" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'readonly' }}>
-                       <option value="" {{ $data->hypo_exp_required_piii == '0' ? 'selected' : ''
-                            }}>Enter Your Selection Here</option>
-                        <option value="yes" {{ $data->hypo_exp_required_piii == 'yes' ?
-                            'selected' : '' }}>yes</option>
-                        <option value="no" {{ $data->hypo_exp_required_piii == 'no' ?
-                            'selected' : '' }}>no</option>
+                        <option value="">Enter Your Selection Here</option>
+                        <option value="Analyst Error"{{ $data->hypo_exp_required_piii ==
+                            'Analyst Error' ? 'selected' : '' }}>Analyst Error</option>
+                        <option value="Instrument Error"{{ $data->hypo_exp_required_piii ==
+                            'Instrument Error' ? 'selected' : '' }}>Instrument Error</option>
+                        <option value="Product/Material Related Error"{{ $data->hypo_exp_required_piii ==
+                            'Product/Material Related Error' ? 'selected' : '' }}>Product/Material Related Error</option>
+                        <option value="Other Error"{{ $data->hypo_exp_required_piii ==
+                            'Other Error' ? 'selected' : '' }}>Other Error</option>
+                            <option value="NA"{{ $data->hypo_exp_required_piii ==
+                            'NA' ? 'selected' : '' }}>NA</option>
                     </select>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Audit Preparation Completed On">OOS Category If Others</label>
+                    <label for="Audit Preparation Completed On">OOS/OOT Category If Others</label>
                     <input type="text" name="if_others_oos_category"
                         value="{{$data->if_others_oos_category}}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'readonly' }}>
                 </div>
@@ -243,7 +248,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Details of Obvious Error">OOS Review For Similar Nature II A</label>
+                    <label for="Details of Obvious Error">OOS/OOT Review For Similar Nature II A</label>
                     <input  {{Helpers::isOOSChemical($data->stage)}} type="text" name="OOS_review_similar" value="{{ $data->OOS_review_similar }}" {{ $data->stage == 13 ? '' : 'readonly' }}>
                 </div>
             </div>

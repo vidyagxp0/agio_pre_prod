@@ -433,7 +433,7 @@ $users = DB::table('users')
                     <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH Review</button>
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button> --}}
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
                 </div>
                  <!-- OOS Micro Buttons -->
@@ -465,7 +465,7 @@ $users = DB::table('users')
                     <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH Review</button>
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal</button> --}}
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
                   </div>
                 <div id="OOT_Buttons" style="display: none;">
@@ -474,20 +474,29 @@ $users = DB::table('users')
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
-                    <button class="cctablinks button1" style="display:none;"  onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
-                    <button class="cctablinks button2" style="display:none;"  onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
-                    <button class="cctablinks button3" style="display:none;"  onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
-                    <button class="cctablinks button4" style="display:none;"  onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
-                    <button class="cctablinks button5" style="display:none;"  onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
-                    <button class="cctablinks button6" style="display:none;"  onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
+                    <button class="cctablinks button1" style="display:none;" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
+                    <button class="cctablinks button2" style="display:none;" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
+                    <button class="cctablinks button3" style="display:none;" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
+                    <button class="cctablinks button4" style="display:none;" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
+                    <button class="cctablinks button5" style="display:none;" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
+                    <button class="cctablinks button6" style="display:none;" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH Review</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm42')">Phase IB Investigation Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm42')">Phase IB Investigation</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm33')">Phase IB HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm34')">Phase IB CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm35')">Phase IB CQAH/QAH Review</button>
-
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II A Investigation</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm36')">Phase II A HOD Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm37')">Phase II A CQA/QA Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm38')">Phase II A QAH/CQAH Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm43')">Phase II B Investigation</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH Review</button>
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button> --}}
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
                 </div>
 
@@ -827,7 +836,7 @@ $users = DB::table('users')
                                 <div class="calenderauditee">
                                     <input type="text" id="oos_observed_on" readonly placeholder="DD-MMM-YYYY" />
                                     {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
-                                    <input type="date" name="oos_observed_on" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                    <input type="date" name="oos_observed_on" class="hide-input"
                                         oninput="handleDateInput(this, 'oos_observed_on')" />
                                 </div>
                             </div>
@@ -920,7 +929,7 @@ $users = DB::table('users')
                                 </div>
                             </div>
                         </div>
-                        <div class="sub-head pt-3">OOS Information</div>
+                        <div class="sub-head pt-3">OOS/OOT Information</div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Sample Type</label>
@@ -1424,7 +1433,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Product/Material Name">OOS cause identified</label>
+                                <label for="Product/Material Name">OOS/OOT cause identified</label>
                                 <select name="phase_i_investigation_pli">
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="Yes">Yes</option>
@@ -2196,6 +2205,7 @@ $users = DB::table('users')
                                     <option value="Method error">Method error</option>
                                     <option value="Environment">Environment</option>
                                     <option value="Other">Other</option>
+                                    <option value="NA">NA</option>
                                 </select>
                             </div>
                         </div>
@@ -2432,7 +2442,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">If assignable error is not identified proceed as per Phase III investigation</label>
+                                <label for="If Others">If Assignable Cause Is Not Identified Proceed As Per Phase III Investigation</label>
                                 <textarea id="If_assignable_error"  name="If_assignable_error" ></textarea>
                             </div>
                         </div>
@@ -9140,7 +9150,16 @@ $users = DB::table('users')
                                 });
                             });
                         </script>
-
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="If Others">Phase IB Assignable Cause Found</label>
+                                        <select id="phase_ib_assi_cause" name="phase_ib_assi_cause">
+                                            <option value="">--Select---</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                </div>
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase IB CQAH/QAH Remark</label>
@@ -9260,7 +9279,16 @@ $users = DB::table('users')
                 <div class="inner-block-content">
                     <div class="sub-head">Phase II A QAH/CQAH Review</div>
                     <div class="row">
-
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="If Others">Phase II A Assignable Cause Found</label>
+                                <select id="phase_ii_a_assi_cause" name="phase_ii_a_assi_cause">
+                                    <option value="">--Select---</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase II A QAH/CQAH Remark</label>
@@ -9534,7 +9562,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Audit Team"> OOS Category-Root Cause Ident.</label>
+                                <label for="Audit Team"> OOS/OOT Category-Root Cause Ident.</label>
                                 <select name="oos_category_root_cause_ident_plic">
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="Analyst Error">Analyst Error</option>
@@ -9546,7 +9574,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="Description Deviation">OOS Category (Others)</label>
+                                <label for="Description Deviation">OOS/OOT Category (Others)</label>
                                <textarea class="summernote" name="oos_category_others_plic" id="summernote-1">
                                     </textarea>
                             </div>
@@ -9561,7 +9589,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="Description Deviation">OOS Category-Root Cause Ident.</label>
+                                <label for="Description Deviation">OOS/OOT Category-Root Cause Ident.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                 <textarea class="summernote" name="Description_Deviation" id="summernote-1">
                                     </textarea>
@@ -9639,7 +9667,7 @@ $users = DB::table('users')
                             </div>
                         </div>
 
-                        <div class="sub-head">OOS Review for Similar Nature</div>
+                        <div class="sub-head">OOS/OOT Review for Similar Nature</div>
 
                         <!-- ---------------------------grid-1 ---Preliminary Lab Invst. Review----------------------------- -->
                         <div class="group-input">
@@ -9906,7 +9934,7 @@ $users = DB::table('users')
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Report Attachments">OOS Cause Identified II A</label>
+                            <label for="Report Attachments">OOS/OOT Cause Identified II A</label>
                             <select name="manufact_invest_required_piii">
                                 <option value="">Enter Your Selection Here</option>
                                 <option value="Yes">Yes</option>
@@ -9916,18 +9944,20 @@ $users = DB::table('users')
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Audit Attachments">OOS Category II A</label>
+                            <label for="Audit Attachments">OOS/OOT Category II A</label>
                             <select name="hypo_exp_required_piii">
                                 <option value="">Enter Your Selection Here</option>
-                                <option value="yes">Yes</option>
-                                <option value="no">No</option>
-
+                                <option value="Analyst Error">Analyst Error</option>
+                                <option value="Instrument Error">Instrument Error</option>
+                                <option value="Product/Material Related Error">Product/Material Related Error</option>
+                                <option value="Other Error">Other Error</option>
+                                <option value="NA">NA</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Audit Preparation Completed On">OOS Category If Others </label>
+                            <label for="Audit Preparation Completed On">OOS/OOT Category If Others </label>
                             <input type="text" name="if_others_oos_category">
                         </div>
                     </div>
@@ -9949,7 +9979,7 @@ $users = DB::table('users')
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Details of Obvious Error">OOS Review For Similar Nature II A</label>
+                            <label for="Details of Obvious Error">OOS/OOT Review For Similar Nature II A</label>
                             <input type="text" name="OOS_review_similar">
                         </div>
                     </div>
@@ -10326,7 +10356,7 @@ $users = DB::table('users')
         <div id="CCForm8" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
-                OOS Conclusion
+                OOS/OOT Conclusion
                 </div>
                 <div class="row">
                     <div class="col-md-12 mb-4">
@@ -10406,7 +10436,7 @@ $users = DB::table('users')
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Reference Recores">OOS Stands </label>
+                            <label for="Reference Recores">OOS/OOT Stands </label>
                             <select name="oos_stands_oosc">
                                 <option value="">Select an Option</option>
                                 <option value="Valid">Valid</option>
@@ -10910,7 +10940,7 @@ $users = DB::table('users')
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Audit Attachments">OOS Category</label>
+                            <label for="Audit Attachments">OOS/OOT Category</label>
                              <select name="oos_category_bd">
                                 <option value="">Enter Your Selection Here</option>
                                 <option value="default">Enter Your Selection Here</option>
@@ -11294,7 +11324,7 @@ $users = DB::table('users')
         <div id="CCForm20" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="row">
-                    <div class="sub-head"> OOS Extension </div>
+                    <div class="sub-head"> OOS/OOT Extension </div>
                     <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="Audit Schedule End Date">Proposed Due Date (OOS)</label>
