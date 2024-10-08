@@ -152,6 +152,11 @@ class DeviationController extends Controller
         $deviation->Investigation_Details = $request->Investigation_Details;
         $deviation->Customer_notification = $request->Customer_notification;
         $deviation->customers = $request->customers;
+
+        $deviation->qa_final_assement = $request->qa_final_assement;
+        $deviation->qa_head_designe_comment = $request->qa_head_designe_comment;
+        
+
         $deviation->QAInitialRemark = $request->QAInitialRemark;
 
         $deviation->Investigation_Summary = $request->Investigation_Summary;
@@ -460,6 +465,36 @@ class DeviationController extends Controller
             $deviation->closure_attachment = json_encode($files);
         }
 
+
+
+        if (!empty ($request->qa_final_assement_attach)) {
+            $files = [];
+            if ($request->hasfile('qa_final_assement_attach')) {
+                foreach ($request->file('qa_final_assement_attach') as $file) {
+                    $name = $request->name . 'qa_final_assement_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $deviation->qa_final_assement_attach = json_encode($files);
+        }
+
+
+        if (!empty ($request->qa_head_designee_attach)) {
+            $files = [];
+            if ($request->hasfile('qa_head_designee_attach')) {
+                foreach ($request->file('qa_head_designee_attach') as $file) {
+                    $name = $request->name . 'qa_head_designee_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $deviation->qa_head_designee_attach = json_encode($files);
+        }
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
@@ -1874,8 +1909,15 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
 
         $deviation->HOD_Remarks = $request->HOD_Remarks;
-                $deviation->Pending_initiator_update = $request->Pending_initiator_update;
-                $deviation->hod_final_review = $request->hod_final_review;
+        $deviation->Pending_initiator_update = $request->Pending_initiator_update;
+
+         $deviation->hod_final_review = $request->hod_final_review;
+
+
+         $deviation->qa_final_assement = $request->qa_final_assement;
+         $deviation->qa_head_designe_comment = $request->qa_head_designe_comment;
+         
+
         $deviation->Justification_for_categorization = !empty($request->Justification_for_categorization) ? $request->Justification_for_categorization : $deviation->Justification_for_categorization;
 
         $deviation->Investigation_Details = !empty($request->Investigation_Details) ? $request->Investigation_Details : $deviation->Investigation_Details;
@@ -2572,7 +2614,9 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
             }
             $deviation->pending_attachment = json_encode($files);
         }
-            if (!empty($request->hod_final_attachment) || !empty($request->deleted_hod_final_attachment)) {
+    
+    
+        if (!empty($request->hod_final_attachment) || !empty($request->deleted_hod_final_attachment)) {
        $existingFiles = json_decode($deviation->hod_final_attachment, true) ?? [];
 
     // Handle deleted files
@@ -2596,6 +2640,75 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
     // Merge existing and new files
     $allFiles = array_merge($existingFiles, $newFiles);
     $deviation->hod_final_attachment = json_encode($allFiles);
+
+    
+}
+
+
+
+
+
+
+
+
+if (!empty($request->qa_final_assement_attach) || !empty($request->deleted_qa_final_assement_attach)) {
+    $existingFiles = json_decode($deviation->qa_final_assement_attach, true) ?? [];
+
+ // Handle deleted files
+ if (!empty($request->deleted_qa_final_assement_attach)) {
+     $filesToDelete = explode(',', $request->deleted_qa_final_assement_attach);
+     $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+         return !in_array($file, $filesToDelete);
+     });
+ }
+
+ // Handle new files
+ $newFiles = [];
+ if ($request->hasFile('qa_final_assement_attach')) {
+     foreach ($request->file('qa_final_assement_attach') as $file) {
+         $name = $request->name . 'qa_final_assement_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+         $file->move(public_path('upload/'), $name);
+         $newFiles[] = $name;
+     }
+ }
+
+ // Merge existing and new files
+ $allFiles = array_merge($existingFiles, $newFiles);
+ $deviation->qa_final_assement_attach = json_encode($allFiles);
+
+ 
+}
+
+
+
+
+
+if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_head_designee_attach)) {
+    $existingFiles = json_decode($deviation->qa_head_designee_attach, true) ?? [];
+
+ // Handle deleted files
+ if (!empty($request->deleted_qa_head_designee_attach)) {
+     $filesToDelete = explode(',', $request->deleted_qa_head_designee_attach);
+     $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+         return !in_array($file, $filesToDelete);
+     });
+ }
+
+ // Handle new files
+ $newFiles = [];
+ if ($request->hasFile('qa_head_designee_attach')) {
+     foreach ($request->file('qa_head_designee_attach') as $file) {
+         $name = $request->name . 'qa_head_designee_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+         $file->move(public_path('upload/'), $name);
+         $newFiles[] = $name;
+     }
+ }
+
+ // Merge existing and new files
+ $allFiles = array_merge($existingFiles, $newFiles);
+ $deviation->qa_head_designee_attach = json_encode($allFiles);
+
+ 
 }
         // if (!empty($request->initial_file) || $request->removed_files) {
         //     $files = [];
@@ -4358,11 +4471,11 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
         if ($lastDeviation->Closure_Comments != $deviation->Closure_Comments || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'QAH/Designee Closure Comments')
+                            ->where('activity_type', 'Head QA/CQA / Designee Closure Approval Comments')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'QAH/Designee Closure Comments';
+            $history->activity_type = 'Head QA/CQA / Designee Closure Approval Comments';
              $history->previous = $lastDeviation->Closure_Comments;
             $history->current = $deviation->Closure_Comments;
             $history->comment = $deviation->submit_comment;
@@ -4377,11 +4490,11 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         }
          if ($lastDeviation->closure_attachment != $deviation->closure_attachment || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'QAH/Designee Closure Attachments')
+                            ->where('activity_type', 'Head QA/CQA / Designee Closure Approval Attachments')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'QAH/Designee Closure Attachments';
+            $history->activity_type = 'Head QA/CQA / Designee Closure Approval Attachments';
              $history->previous = $lastDeviation->closure_attachment;
             $history->current = $deviation->closure_attachment;
             $history->comment = $deviation->submit_comment;
@@ -9165,23 +9278,23 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
                 if ($deviation->stage == 5) {
 
-                    // if ($deviation->form_progress === 'capa' && !empty($deviation->QA_Feedbacks))
-                    // {
-                    //     Session::flash('swal', [
-                    //         'type' => 'success',
-                    //         'title' => 'Success',
-                    //         'message' => 'Sent for QA/CQA Head/Manager Designee Approval'
-                    //     ]);
+                      // return "PAUSE";
+                      if (!$deviation->qa_final_assement) {
 
-                    // } else {
-                    //     Session::flash('swal', [
-                    //         'type' => 'warning',
-                    //         'title' => 'Mandatory Fields!',
-                    //         'message' => 'Investigation and CAPA / QA/CQA Final review Tab is yet to be filled!'
-                    //     ]);
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'QA/CQA Final Assessment',
+                            'type' => 'warning',
+                        ]);
 
-                    //     return redirect()->back();
-                    // }
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for HOD Final Review state'
+                        ]);
+                    }
 
 
                     $deviation->stage = "6";
@@ -9242,7 +9355,23 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 if ($deviation->stage == 6) {
 
 
+            // return "PAUSE";
+            if (!$deviation->qa_head_designe_comment) {
 
+                Session::flash('swal', [
+                    'title' => 'Mandatory Fields Required!',
+                    'message' => 'QA/CQA Head/ Designee Approval',
+                    'type' => 'warning',
+                ]);
+
+                return redirect()->back();
+            } else {
+                Session::flash('swal', [
+                    'type' => 'success',
+                    'title' => 'Success',
+                    'message' => 'Sent for HOD Final Review state'
+                ]);
+                 }
 
 
 
