@@ -8,8 +8,8 @@
                     <label for="Initiator Group">Type</label>
                     <select disabled name="Form_type" {{Helpers::isOOSChemical($data->stage)}}>
                         <option value="">--Select---</option>
-                        <option value="OOS-Chemical" {{ $data->Form_type == 'OOS-Chemical' ? 'selected' : '' }}>OOS Chemical</option>
-                        <option value="OOS-Micro" {{ $data->Form_type == 'OOS-Micro' ? 'selected' : '' }}>OOS Micro</option>
+                        <option value="OOS_Chemical" {{ $data->Form_type == 'OOS_Chemical' ? 'selected' : '' }}>OOS Chemical</option>
+                        <option value="OOS_Micro" {{ $data->Form_type == 'OOS_Micro' ? 'selected' : '' }}>OOS Micro</option>
                         <option value="OOT" {{ $data->Form_type == 'OOT' ? 'selected' : '' }}>OOT</option>
                     </select>
                 </div>
@@ -34,9 +34,9 @@
                 var recordText = divisionName + '/' + formType + '/' + year + '/' + recordNumber;
 
                 // Display the correct button group
-                if (formType === 'OOS-Chemical') {
+                if (formType === 'OOS_Chemical') {
                     document.getElementById('OOS_Chemical_Buttons').style.display = 'block';
-                } else if (formType === 'OOS-Micro') {
+                } else if (formType === 'OOS_Micro') {
                     document.getElementById('OOS_Micro_Buttons').style.display = 'block';
                 } else if (formType === 'OOT') {
                     document.getElementById('OOT_Buttons').style.display = 'block';
@@ -49,7 +49,7 @@
 
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label disabled for="Short Description">Division Code<span
+                    <label disabled for="Short Description">Site/Location Code<span
                             class="text-danger"></span></label>
                     <input disabled type="text" name="division_code"
                         value="{{ Helpers::getDivisionName($data->division_id) }}">
@@ -299,7 +299,7 @@
             </div>
             <div class="col-lg-6 new-date-data-field">
                 <div class="group-input input-date">
-                    <label for="oos Occurred On"> OOS occurred On </label>
+                    <label for="oos Occurred On"> OOS/OOT Occurred On </label>
                     <div><small class="text-primary"></small></div>
                     <div class="calenderauditee">
                         <input type="text" id="deviation_occured_on_gi" readonly value="{{ Helpers::getdateFormat($data->deviation_occured_on_gi ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY"/>
@@ -309,7 +309,7 @@
             </div>
             <div class="col-lg-6 new-date-data-field">
                 <div class="group-input input-date">
-                    <label for="Deviation Occurred On"> OOS Observed On </label>
+                    <label for="Deviation Occurred On"> OOS/OOT Observed On </label>
                     <div><small class="text-primary"></small></div>
                     <div class="calenderauditee">
                         <input type="text" id="oos_observed_on" readonly value="{{ Helpers::getdateFormat($data['oos_observed_on'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" />
@@ -339,7 +339,7 @@
 
             <div class="col-lg-6 new-date-data-field">
                 <div class="group-input input-date">
-                    <label for="Deviation Occurred On"> OOS Reported On </label>
+                    <label for="Deviation Occurred On"> OOS/OOT Reported on </label>
                     <div><small class="text-primary"></small></div>
                     <div class="calenderauditee">
                         <input type="text" id="oos_reported_date" readonly  value="{{ Helpers::getdateFormat($data['oos_reported_date'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" />
@@ -631,7 +631,7 @@
 
             <div class="group-input">
                 <label for="audit-agenda-grid">
-                    OOS Details
+                    OOS/OOT Details
                     <button type="button" name="audit-agenda-grid" id="oos_details" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                     <span class="text-primary" data-bs-toggle="modal"
                         data-bs-target="#document-details-field-instruction-modal"
@@ -645,7 +645,7 @@
                             <tr>
                                 <th style="width: 4%">Row#</th>
                                 <th style="width: 8%">AR Number.</th>
-                                <th style="width: 8%">Test Name of OOS</th>
+                                <th style="width: 8%">Test Name of OOS/OOT</th>
                                 <th style="width: 12%">Results Obtained</th>
                                 <th style="width: 16%">Specification Limit</th>
                                 <th style="width: 14%">File Attachment</th>
@@ -784,7 +784,7 @@
             <div class="group-input">
                 <label for="audit-agenda-grid">
                     Instrument details
-                    <button type="button" name="audit-agenda-grid" id="instrument_details" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
+                    <button type="button" name="audit-agenda-grid" id="instrument_detail" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                     <span class="text-primary" data-bs-toggle="modal"
                         data-bs-target="#document-details-field-instruction-modal"
                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -826,7 +826,7 @@
                                                 <div class="col-lg-6 new-date-data-field">
                                                     <div class="group-input input-date">
                                                         <div class="calenderauditee">
-                                                            <input type="text" id="calibratedduedate_on_{{ $loop->index }}" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat($instrument_detail['calibratedduedate_on'] ?? '') }}"
+                                                            <input type="text" id="calibratedduedate_on_{{ $loop->index }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat($instrument_detail['calibratedduedate_on'] ?? '') }}"
                                                              readonly placeholder="DD-MM-YYYY" {{Helpers::isOOSChemical($data->stage)}} />
                                                             <input type="date" name="instrument_detail[{{ $loop->index }}][calibratedduedate_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="{{ $instrument_detail['calibratedduedate_on'] ?? '' }}"  class="hide-input"
                                                             oninput="handleDateInput(this, 'calibratedduedate_on_{{ $loop->index }}')"   {{Helpers::isOOSChemical($data->stage)}} >
@@ -854,3 +854,51 @@
         </div>
     </div>
 </div>
+
+
+  <!-- ------------------------------grid-5 instrument_detail-------------------------script -->
+  <script>
+    $(document).ready(function() {
+        $('#instrument_detail').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var currentDate = new Date().toISOString().split('T')[0];
+
+                var html =
+                    '<tr>' +
+                        '<td><input disabled type="text" name="instrument_detail['+ serialNumber +'][serial]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="instrument_detail['+ serialNumber +'][instrument_name]"></td>'+
+                        '<td><input type="text" name="instrument_detail['+ serialNumber +'][instrument_id_number]"></td>' +
+                        '<td>' +
+                            '<div class="col-lg-6 new-date-data-field">' +
+                            '<div class="group-input input-date">' +
+                            '<div class="calenderauditee">' +
+                            '<input type="text" readonly id="calibrated_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                            '<input type="date" name="instrument_detail[' + serialNumber + '][calibrated_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibrated_on' + serialNumber + '\')" max="' + currentDate + '">' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                        '</td>' +
+                        '<td>' +
+                            '<div class="col-lg-6 new-date-data-field">' +
+                            '<div class="group-input input-date">' +
+                            '<div class="calenderauditee">' +
+                            '<input type="text" readonly id="calibratedduedate_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                            '<input type="date" name="instrument_detail[' + serialNumber + '][calibratedduedate_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibratedduedate_on' + serialNumber + '\')" min="' + currentDate + '">' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                        '</td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+
+                    '</tr>';
+                return html;
+            }
+
+            var tableBody = $('#instrument_details_details tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+        });
+    });
+</script>

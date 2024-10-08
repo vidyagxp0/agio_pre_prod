@@ -88,6 +88,8 @@ class OOS extends Model
           'QA_Head_remark5',
           'QA_Head_primary_remark1',
           'QA_Head_primary_remark2',
+          'assign_cause_found',
+          'phase_Ib_assign_cause_found',
           'QA_Head_primary_remark3',
           'QA_Head_primary_remark4',
           'QA_Head_primary_remark5',

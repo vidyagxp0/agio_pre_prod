@@ -7931,7 +7931,7 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Details of results (Including original OOS results for side by side comparison)</label>
+                                <label for="If Others">Details of results (Including original OOS/OOT results for side by side comparison)</label>
                                 <textarea id="details_of_result" name="details_of_result" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->details_of_result }}</textarea>
                             </div>
                         </div>
@@ -8281,7 +8281,7 @@
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase IA CQAH/QAH Remark<span class="text-danger">*</span></label>
+                                <label for="Initiator Group">Phase IA CQAH/QAH Remark <span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
@@ -8296,6 +8296,19 @@
                                 @endif
                             </div>
                         </div>
+
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Assignable cause found">Phase IA Assignable cause found</label>
+                                <select name="assign_cause_found" id="assign_cause_found">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="Yes" {{ $data->assign_cause_found == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->assign_cause_found == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+
 
                         <div class="col-12">
                             <div class="group-input">
@@ -8553,6 +8566,8 @@
                                 });
                             });
                         </script>
+
+
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">

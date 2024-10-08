@@ -246,7 +246,7 @@ $users = DB::table('users')
                                 '<div class="group-input input-date">' +
                                 '<div class="calenderauditee">' +
                                 '<input type="text" readonly id="calibratedduedate_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                                '<input type="date" name="instrument_detail[' + serialNumber + '][calibratedduedate_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibratedduedate_on' + serialNumber + '\')" max="' + currentDate + '">' +
+                                '<input type="date" name="instrument_detail[' + serialNumber + '][calibratedduedate_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibratedduedate_on' + serialNumber + '\')" min="' + currentDate + '">' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -570,8 +570,8 @@ $users = DB::table('users')
                                 <label for="Initiator Group">Type<span class="text-danger">*</span></label>
                                 <select required id="Form_type" name="Form_type" onchange="showChecklist()">
                                     <option value="">--select--</option>
-                                    <option value="OOS-Chemical">OOS Chemical</option>
-                                    <option value="OOS-Micro">OOS Micro</option>
+                                    <option value="OOS_Chemical">OOS Chemical</option>
+                                    <option value="OOS_Micro">OOS Micro</option>
                                     <option value="OOT">OOT</option>
                                 </select>
                             </div>
@@ -600,14 +600,14 @@ $users = DB::table('users')
                             var recordNumber = "{{ $record_number }}";
 
                             // Default to "OOS Chemical" if no option is selected
-                            var recordText = divisionName + '/OOS-Chemical/' + year + '/' + recordNumber;
+                            var recordText = divisionName + '/OOS_Chemical/' + year + '/' + recordNumber;
 
-                            if (formType === 'OOS-Chemical') {
+                            if (formType === 'OOS_Chemical') {
                                 document.getElementById('OOS_Chemical_Buttons').style.display = 'block';
-                                recordText = divisionName + '/OOS-Chemical/' + year + '/' + recordNumber;
+                                recordText = divisionName + '/OOS_Chemical/' + year + '/' + recordNumber;
                             } else if (formType === 'OOS_Micro') {
                                 document.getElementById('OOS_Micro_Buttons').style.display = 'block';
-                                recordText = divisionName + '/OOS-Micro/' + year + '/' + recordNumber;
+                                recordText = divisionName + '/OOS_Micro/' + year + '/' + recordNumber;
                             } else if (formType === 'OOT') {
                                 document.getElementById('OOT_Buttons').style.display = 'block';
                                 recordText = divisionName + '/OOT/' + year + '/' + recordNumber;
@@ -620,7 +620,7 @@ $users = DB::table('users')
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label disabled for="Division Code">Division Code<span class="text-danger"></span></label>
+                                <label disabled for="Division Code">Site/Location Code<span class="text-danger"></span></label>
                                 <input disabled type="text" name="division_code"
                                         value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                     <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
@@ -812,7 +812,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-md-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="due-date">OOS occurred On</label>
+                                <label for="due-date">OOS/OOT Occurred On</label>
                                 <div class="calenderauditee">
                                     <input type="text"  id="deviation_occured_on_gi" readonly placeholder="DD-MM-YYYY" />
                                     <input type="date" name="deviation_occured_on_gi"   value=""
@@ -823,7 +823,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOS Observed On">OOS Observed On</label>
+                                <label for="OOS Observed On">OOS/OOT Observed On</label>
                                 <div class="calenderauditee">
                                     <input type="text" id="oos_observed_on" readonly placeholder="DD-MMM-YYYY" />
                                     {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
@@ -856,7 +856,7 @@ $users = DB::table('users')
 
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="Audit Schedule End Date">OOS Reported on</label>
+                                <label for="Audit Schedule End Date">OOS/OOT Reported on</label>
                                 <div class="calenderauditee">
                                     <input type="text" id="oos_reported_date" readonly placeholder="DD-MMM-YYYY" />
                                     <input type="date" name="oos_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
@@ -1118,7 +1118,7 @@ $users = DB::table('users')
 
                         <div class="group-input">
                             <label for="audit-agenda-grid">
-                                OOS Details
+                                OOS/OOT Details
                                 <button type="button" name="audit-agenda-grid" id="oos_details">+</button>
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#document-details-field-instruction-modal"
@@ -1132,7 +1132,7 @@ $users = DB::table('users')
                                         <tr>
                                             <th style="width: 4%">Row#</th>
                                             <th style="width: 8%">AR Number.</th>
-                                            <th style="width: 8%">Test Name of OOS</th>
+                                            <th style="width: 8%">Test Name of OOS/OOT</th>
                                             <th style="width: 8%">Results Obtained</th>
                                             <th style="width: 8%">Specification Limit</th>
                                             <th style="width: 16%">File Attachment</th>
@@ -1509,7 +1509,7 @@ $users = DB::table('users')
                         </script> --}}
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Audit Team">OOS Category</label>
+                                <label for="Audit Team">OOS/OOT Category</label>
                                 <select name="oos_category_root_cause_ident_plic">
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="Analyst Error">Analyst Error</option>
@@ -1521,7 +1521,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="Description Deviation">OOS Category (if Others)</label>
+                                <label for="Description Deviation">OOS/OOT Category (if Others)</label>
                                <textarea class="summernote" name="oos_category_others_plic" id="summernote-1">
                                     </textarea>
                             </div>
@@ -1577,7 +1577,7 @@ $users = DB::table('users')
                         </div> --}}
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="Description Deviation">OOS review for Similar Nature</label>
+                                <label for="Description Deviation">OOS/OOT review for Similar Nature</label>
                                 <textarea class="summernote" name="review_comments_plir" id="summernote-1">
                                     </textarea>
                             </div>
@@ -1966,6 +1966,19 @@ $users = DB::table('users')
                                 <input type="text" name="QA_Head_primary_remark2" placeholder="Enter your Remark">
                             </div>
                         </div>
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Assignable cause found">Phase IA Assignable cause found</label>
+                                <select name="assign_cause_found" id="assign_cause_found">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+
+
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">Phase-IA CQAH/QAH Attachment</label>
@@ -2121,7 +2134,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Details of results (Including original OOS results for side by side comparison)</label>
+                                <label for="If Others">Details of results (Including original OOS/OOT results for side by side comparison)</label>
                                 <textarea id="details_of_result"  name="details_of_result" ></textarea>
                             </div>
                         </div>
