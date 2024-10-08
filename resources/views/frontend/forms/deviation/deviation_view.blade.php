@@ -12056,6 +12056,15 @@
                                     <table class="table table-bordered" style="width: 200%"
                                         id="risk-assessment-risk-management">
                                         <thead>
+                                        <tr>
+                                                            <th colspan="1"style="text-align:center;"></th>
+                                                            <th colspan="2"style="text-align:center;">Risk Identification</th>
+                                                            <th colspan="1"style="text-align:center;">Risk Analysis</th>
+                                                            <th colspan="4"style="text-align:center;">Risk Evaluation</th>
+                                                            <th colspan="1"style="text-align:center;">Risk Control</th>
+                                                            <th colspan="6"style="text-align:center;">Risk Evaluation</th>
+                                                            <th colspan="2"style="text-align:center;"></th>
+                                                        </tr> 
                                             <tr>
                                                 <th>Row #</th>
                                                 <th>Activity</th>
