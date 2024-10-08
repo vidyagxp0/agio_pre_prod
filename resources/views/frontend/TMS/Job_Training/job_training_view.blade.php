@@ -1541,37 +1541,28 @@ if (marks >= percentageRequired) {
                             <div class="row">
                                 <div class="col-lg-12">
                                 <div class="button-block">
-                                        <button type="button" class="printButton" onclick="printCertificate()">
-                                            <i class="fas fa-print"></i> Print
-                                        </button>
-                                    </div>
-                                    <div class="certificate-container">
-                                        <div class="certificate-title">TRAINING CERTIFICATE</div>
-
-                                        <div class="certificate-description"><br><br>
-                                            This is to certify that Mr./Ms./Mrs. <strong>{{$jobTraining->name}}</strong>.
-                                            has undergone On Job training including the requirement of cGMP and has shown a good attitude and thorough understanding in the subject.
-                                        </div>
-
-                                        <div class="certificate-description">
-                                            Therefore we certify that Mr. Ms. / Mrs. <strong>{{$jobTraining->name}}</strong>.
-                                            is capable of performing his/her assigned duties in the <strong>{{$jobTraining->department}}</strong> Department independently.
-                                        </div>
-
-                                        <div class="date-container">
-                                        <div class="signature-block">
-                                            <strong>Sign/Date:</strong>_________
-                                            <div>HR Department</div>
-                                        </div>
-
-                                        <div>
-                                                <strong>Sign/Date:</strong>_________
-                                                <div class="signature">Head QA/CQA<div></div></div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <button type="button" class="printButton" onclick="printCertificate()">
+                                        <i class="fas fa-print"></i>Print
+                                    </button>
                                 </div>
 
+                                <div class="certificate-container">
+                                <h1 class="certificate-title">TRAINER CERTIFICATE</h1>
+                                <p class="certificate-content">
+                                    This is to certify that Mr. / Ms. / Mrs. <strong>{{($jobTraining->name) }}</strong> has appropriate Qualification / skill / thorough knowledge/ and experience in the <strong>{{ Helpers::getFullDepartmentName($jobTraining->department ) }}</strong> section/Department for more than <strong>{{$jobTraining->experience_if_any}}</strong> years, and hence is declared as the trainer of <strong>{{ Helpers::getFullDepartmentName($jobTraining->department ) }}</strong> Department.
+                                </p>
+                                <div class="signature-section">
+                                    <div class="signature">
+                                        <div class="signature-line"></div>
+                                        Sign / Date: _______________ <br>Head of Department 
+                                    </div>
+                                    <div class="signature">
+                                        <div class="signature-line"></div>
+                                        Sign / Date: _______________ <br>  Head QA/CQA
+                                    </div>
+                                </div>
+                            </div>
+                
                                 <div style="margin-top: 40px;" class="button-block">
                                 <button type="submit" class=" btn btn saveButton">Save</button>
                                 <button type="button" id="ChangeNextButton" class=" btn btn nextButton">Next</button>
@@ -1580,128 +1571,174 @@ if (marks >= percentageRequired) {
                         </div>
                     </div>
                 @endif
+                <style>
 
-    <style>
-                .certificate-container {
-                width: 685px;
-                height: 500px;
-                border: 4px solid #3d6186;
-                padding: 18px;
-                background-color: white;
-                position: relative;
-                margin: auto;
-                box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
-            }
-            .certificate-title {
-                font-size: 30px;
-                font-weight: bold;
-                color: #677078;
-                display: flex;
-                justify-content: center;
-            }
-            .certificate-subtitle {
-                font-size: 18px;
-                color: #555;
-            } 
-            .certificate-description {
-                margin-top: 30px;
-                font-size: 18px;
-                color: #333;
-            }
-            .date-container {
-                display: flex;
-                justify-content: space-between;
-                margin-top: 60px;
-                font-size: 18px;
-            }
-            .signature-container {
-                position: absolute;
-                bottom: 40px;
-                right: 50px;
-                text-align: center;
-                font-size: 18px;
-                color: #333;
-            }
+           .certificate-container {
+            width: 800px;
+            height: 425px;
+            border: 4px solid #0c0d0d;
+            padding: 18px;
+            background-color: white;
+            position: relative;
+            margin: auto;
+            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
 
-            @media print {
-                .button-block {
-                    display: none !important;
-                }
-
-                body * {
-                    visibility: hidden;
-                }
-
-                #CCForm6, #CCForm6 * {
-                    visibility: visible;
-                }
-
-                #CCForm6 {
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    width: 100%;
-                }
-            }
-
-            .button-block {
-                display: flex;
-                justify-content: flex-end;
-                margin-top: 50px;
-            }
-
-            .printButton {
-                background-color: #2c3e50;
-                color: white;
-                border: none;
-                padding: 12px 24px;
-                font-size: 16px;
-                cursor: pointer;
-                border-radius: 5px;
-                transition: background-color 0.3s ease;
-                float: right;
-            }
-
-            .printButton:hover {
-                background-color: #1a252f;
-            }
-
-            .printButton i {
-                margin-right: 8px;
-            }
-
-            @media print {
-                .button-block {
-                    display: none !important;
-                }
-
-                body * {
-                    visibility: hidden;
-                }
-
-                #CCForm6, #CCForm6 * {
-                    visibility: visible;
-                }
-
-                #CCForm6 {
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    width: 100%;
-                }
-            }
-
-    </style>
-      <script>
-        function printCertificate() {
-            var buttons = document.querySelectorAll(".button-block");
-            buttons.forEach(button => button.style.display = 'none');
-
-            window.print();
-
-            buttons.forEach(button => button.style.display = 'flex');
+        
         }
-    </script>
+        .certificate-container h1, .certificate-container h2, .certificate-container p {
+            text-align: center;
+        }
+        .certificate-title {
+            /* font-size: 30px;
+            font-weight: bold;
+            color: #677078;
+            display: flex;
+            justify-content: center; */
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .certificate-subtitle {
+            /* font-size: 18px;
+            color: #555; */
+            font-size: 24px;
+            margin-bottom: 40px;
+        }
+        .certificate-description {
+            margin-top: 30px;
+            font-size: 18px;
+            color: #333;
+        }
+       
+        .certificate-content {
+            /* font-size: 18px; */
+            line-height: 1.5;
+            margin: 0 20px;
+            text-align: left;
+        }
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            margin-left: 50px;
+            margin-right: 50px;
+        }
+        .signature {
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .signature-line {
+            margin-top: 40px;
+            /* border-top: 1px solid #000; */
+            width: 200px;
+            height: 0;
+        }
+          
+        @media print {
+            .button-block {
+                display: none !important; 
+            }
+
+            body * {
+                visibility: hidden;
+            }
+
+            #CCForm4, #CCForm4 * {
+                visibility: visible;
+            }
+
+            #CCForm4 {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+        }
+        .button-block {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 50px;
+        }
+
+        .printButton {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            float: right; 
+        }
+
+        .printButton:hover {
+            background-color: #1a252f;
+        }
+
+        .printButton i {
+            margin-right: 8px; 
+        }
+
+        @media print {
+    .button-block {
+        display: none !important; 
+    }
+
+    body * {
+        visibility: hidden;
+    }
+
+    .certificate-container, .certificate-container * {
+        visibility: visible;
+    }
+
+    .certificate-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+}
+
+            </style>
+
+
+                <script>
+                        function printCertificate() {
+                        var buttons = document.querySelector(".button-block");
+                        buttons.style.display = 'none';
+                        window.print();
+                        buttons.style.display = 'block';
+                    }
+
+                </script>
+                <script>
+                    document.getElementById("saveForm").addEventListener("click", function(event) {
+                        let questionInputs = document.querySelectorAll(".question-input");
+                        let answerInputs = document.querySelectorAll(".answer-input");
+                        let allFilled = true;
+
+                        questionInputs.forEach(function(input) {
+                            if (input.value.trim() === "") {
+                                allFilled = false;
+                            }
+                        });
+
+                        answerInputs.forEach(function(input) {
+                            if (input.value.trim() === "") {
+                                allFilled = false;
+                            }
+                        });
+
+                        if (!allFilled) {
+                            event.preventDefault();
+                            alert("Please fill required field before submitting.");
+                        }
+                    });
+                </script>
+
 
 
                 <div id="CCForm8" class="inner-block cctabcontent">

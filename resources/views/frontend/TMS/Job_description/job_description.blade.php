@@ -351,7 +351,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="employee_id">Job Description Number</label>
-                                    <input type="text" name="job_description_no" id=""  >
+                                    <input type="text" name="job_description_no" id="" disabled >
                                 </div>
                             </div>
                             <div class="col-lg-6">

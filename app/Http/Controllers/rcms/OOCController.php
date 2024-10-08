@@ -75,6 +75,7 @@ class OOCController extends Controller
         $data->last_calibration_date = $request->last_calibration_date;
         $data->phase_ib_investigation_summary = $request->phase_ib_investigation_summary;
         $data->phase_ia_investigation_summary = $request->phase_ia_investigation_summary;
+        $data->assignable_cause_identified = $request->assignable_cause_identified;
 
 
         // dd($data->last_calibration_date);
@@ -161,7 +162,7 @@ class OOCController extends Controller
         $files = [];
         if ($request->hasfile('attachments_hodIAHODPRIMARYREVIEW_ooc')) {
             foreach ($request->file('attachments_hodIAHODPRIMARYREVIEW_ooc') as $file) {
-                $name = $request->name . 'HOD_Primary_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'PhaseIA_HOD_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] = $name;
             }
@@ -173,7 +174,7 @@ class OOCController extends Controller
         $files = [];
         if ($request->hasfile('initial_attachment_qah_post_ooc')) {
             foreach ($request->file('initial_attachment_qah_post_ooc') as $file) {
-                $name = $request->name . '_initial_attachment_qah_post_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'P_IA_QAH_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] = $name;
             }
@@ -185,7 +186,7 @@ class OOCController extends Controller
         $files = [];
         if ($request->hasfile('attachments_hodIBBBHODPRIMARYREVIEW_ooc')) {
             foreach ($request->file('attachments_hodIBBBHODPRIMARYREVIEW_ooc') as $file) {
-                $name = $request->name . '_attachments_hodIBBBHODPRIMARYREVIEW_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'Phase_IB_HOD_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] = $name;
             }
@@ -197,7 +198,7 @@ class OOCController extends Controller
         $files = [];
         if ($request->hasfile('attachments_QAIBBBREVIEW_ooc')) {
             foreach ($request->file('attachments_QAIBBBREVIEW_ooc') as $file) {
-                $name = $request->name . '_attachments_QAIBBBREVIEW_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'Phase_IB_QA_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] = $name;
             }
@@ -209,7 +210,7 @@ class OOCController extends Controller
         $files = [];
         if ($request->hasfile('Pib_attachements')) {
             foreach ($request->file('Pib_attachements') as $file) {
-                $name = $request->name . '_Pib_attachements' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'P_IB_QAH_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] = $name;
             }
@@ -257,7 +258,7 @@ class OOCController extends Controller
             $files = [];
             if ($request->hasfile('attachments_stage_ooc')) {
                 foreach ($request->file('attachments_stage_ooc') as $file) {
-                    $name = $request->name . 'attachments_stage_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Phase_IA_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -305,7 +306,7 @@ class OOCController extends Controller
             $files = [];
             if ($request->hasfile('initial_attachment_capa_post_ooc')) {
                 foreach ($request->file('initial_attachment_capa_post_ooc') as $file) {
-                    $name = $request->name . 'initial_attachment_capa_post_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Phase_IA_QA_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -330,7 +331,7 @@ class OOCController extends Controller
             $files = [];
             if ($request->hasfile('initial_attachment_capa_ooc')) {
                 foreach ($request->file('initial_attachment_capa_ooc') as $file) {
-                    $name = $request->name . 'initial_attachment_capa_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'QA_Head_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1191,6 +1192,23 @@ class OOCController extends Controller
                 $history->activity_type = 'Phase IA QA Attachment';
                 $history->previous = "Null";
                 $history->current = $data->initial_attachment_capa_post_ooc;
+                $history->comment = "Null";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $data->status;
+                $history->change_to = "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = "Create";
+                $history->save();
+            }
+
+            if (!empty($data->assignable_cause_identified)) {
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $data->id;
+                $history->activity_type = 'Assignable cause identified';
+                $history->previous = "Null";
+                $history->current = $data->assignable_cause_identified;
                 $history->comment = "Null";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2093,6 +2111,7 @@ class OOCController extends Controller
         $ooc->is_repeat_realease_stageii_ooc = $request->is_repeat_realease_stageii_ooc;
         $ooc->details_of_instrument_out_of_order = $request->details_of_instrument_out_of_order;
 
+        $ooc->assignable_cause_identified = $request->assignable_cause_identified;
         
         
         $ooc->initiated_throug_stageii_ooc = $request->initiated_throug_stageii_ooc;
@@ -2245,7 +2264,7 @@ class OOCController extends Controller
             $files = [];
             if ($request->hasfile('attachments_stage_ooc')) {
                 foreach ($request->file('attachments_stage_ooc') as $file) {
-                    $name = $request->name . 'Stage_I_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Phase_IA_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2257,7 +2276,7 @@ class OOCController extends Controller
             $files = [];
             if ($request->hasfile('attachments_hypothesis_ooc')) {
                 foreach ($request->file('attachments_hypothesis_ooc') as $file) {
-                    $name = $request->name . 'attachments_hypothesis_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Hypothesis_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -3339,6 +3358,23 @@ if ($lastDocumentOoc->initial_attachment_capa_post_ooc != $ooc->initial_attachme
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocumentOoc->status;
     $history->action_name = is_null($lastDocumentOoc->initial_attachment_capa_post_ooc) ? "New" : "Update";
+    $history->save();
+}
+
+if ($lastDocumentOoc->assignable_cause_identified != $ooc->assignable_cause_identified) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $id;
+    $history->activity_type = 'Assignable cause identified';
+    $history->previous = $lastDocumentOoc->assignable_cause_identified;
+    $history->current = $ooc->assignable_cause_identified;
+    $history->comment = $request->assignable_cause_identified;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocumentOoc->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocumentOoc->status;
+    $history->action_name = is_null($lastDocumentOoc->assignable_cause_identified) ? "New" : "Update";
     $history->save();
 }
 

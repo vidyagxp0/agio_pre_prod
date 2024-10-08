@@ -1883,15 +1883,11 @@ if (marks >= percentageRequired) {
                                     </button>
                                 </div>
 
-
-
-
-
                                 <div class="certificate-container">
                                 <h1 class="certificate-title">TRAINER CERTIFICATE</h1>
-                                <h2 class="certificate-subtitle">Certificate of Trainer</h2>
+                                <!-- <h2 class="certificate-subtitle">Certificate of Trainer</h2> -->
                                 <p class="certificate-content">
-                                    This is to certify that Mr. / Ms. / Mrs. <strong>{{$inductionTraining->name_employee}}</strong> has appropriate Qualification / skill / thorough knowledge/ and experience in the <strong>{{$inductionTraining->department}}</strong> section/Department for more than <strong>_________________</strong> years, and hence is declared as the trainer of <strong>_________________</strong> Department.
+                                    This is to certify that Mr. / Ms. / Mrs. <strong>{{ \App\Models\Employee::find($inductionTraining->name_employee)?->employee_name ?? 'Employee not found' }}</strong> has appropriate Qualification / skill / thorough knowledge/ and experience in the <strong>{{ Helpers::getFullDepartmentName($inductionTraining->department ) }}</strong> section/Department for more than <strong>{{$inductionTraining->experience_if_any}}</strong> years, and hence is declared as the trainer of <strong>{{ Helpers::getFullDepartmentName($inductionTraining->department ) }}</strong> Department.
                                 </p>
                                 <div class="signature-section">
                                     <div class="signature">
