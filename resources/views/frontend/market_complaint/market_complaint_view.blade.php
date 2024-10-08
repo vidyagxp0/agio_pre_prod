@@ -2124,7 +2124,6 @@
                                                                     </div>
                                                                 </div>
                                                             </td>
-                                                            
                                                             <td>
                                                                 <div class="new-date-data-field">
                                                                     <div class="group-input input-date">
