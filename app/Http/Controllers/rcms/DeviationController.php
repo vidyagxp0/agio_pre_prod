@@ -579,6 +579,14 @@ class DeviationController extends Controller
 
         $data8->deviation_grid_id = $deviation->id;
         $data8->type = "effect_analysis";
+        $data8->save();
+
+        $data9 = new DeviationGrid();
+
+
+        $data9->deviation_grid_id = $deviation->id;
+        $data9->type = "andeffect_analysis";
+        $data9->save();
         // if (!empty($request->risk_factor)) {
         //     $data8->risk_factor = serialize($request->risk_factor);
         // }
@@ -1546,6 +1554,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->latest()->first();
+        $andriskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "andeffect_analysis")->latest()->first();
         $grid_data = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Deviation")->first();
         $grid_data1 = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Document")->first();
         $grid_data2 = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Product")->first();
@@ -1576,7 +1585,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $deviationExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "Deviation"])->first();
 
         // return $riskEffectAnalysis;
-        return view('frontend.forms.deviation.deviation_view', compact('riskEffectAnalysis','data','userData', 'grid_data_qrms','grid_data_matrix_qrms', 'capaExtension','qrmExtension','investigationExtension','deviationExtension', 'old_record', 'pre', 'data1', 'divisionName','grid_data','grid_data1', 'deviationNewGrid','grid_data2','investigationTeamData','rootCauseData', 'why_data', 'fishbone_data'));
+        return view('frontend.forms.deviation.deviation_view', compact('andriskEffectAnalysis','riskEffectAnalysis','data','userData', 'grid_data_qrms','grid_data_matrix_qrms', 'capaExtension','qrmExtension','investigationExtension','deviationExtension', 'old_record', 'pre', 'data1', 'divisionName','grid_data','grid_data1', 'deviationNewGrid','grid_data2','investigationTeamData','rootCauseData', 'why_data', 'fishbone_data'));
     }
 
 
@@ -1963,6 +1972,34 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $data8->mitigation_proposal = serialize($request->mitigation_proposal ?? []);
 
         $data8->save();
+
+        $data9 = DeviationGrid::where('deviation_grid_id', $deviation->id)->where('type', 'andeffect_analysis')->first();
+
+        $data9 = new DeviationGrid();
+
+
+       $data9->deviation_grid_id = $deviation->id;
+       $data9->type = "andeffect_analysis";
+       // Serialize and update the data, ensuring that we always update the fields
+       $data9->andrisk_factor = serialize($request->andrisk_factor ?? []);
+       $data9->andrisk_element = serialize($request->andrisk_element ?? []);
+       $data9->andproblem_cause = serialize($request->andproblem_cause ?? []);
+       $data9->andexisting_risk_control = serialize($request->andexisting_risk_control ?? []);
+       $data9->andinitial_severity = serialize($request->andinitial_severity ?? []);
+       $data9->andinitial_detectability = serialize($request->andinitial_detectability ?? []);
+       $data9->andinitial_probability = serialize($request->andinitial_probability ?? []);
+       $data9->andinitial_rpn = serialize($request->andinitial_rpn ?? []);
+       $data9->andrisk_control_measure = serialize($request->andrisk_control_measure ?? []);
+       $data9->andresidual_severity = serialize($request->andresidual_severity ?? []);
+       $data9->andresidual_probability = serialize($request->andresidual_probability ?? []);
+       $data9->andresidual_detectability = serialize($request->andresidual_detectability ?? []);
+       $data9->andresidual_rpn = serialize($request->andresidual_rpn ?? []);
+       $data9->andrisk_acceptance = serialize($request->andrisk_acceptance ?? []);
+       $data9->andrisk_acceptance2 = serialize($request->andrisk_acceptance2 ?? []);
+       $data9->andmitigation_proposal = serialize($request->andmitigation_proposal ?? []);
+
+       $data9->save();
+
 
 
 

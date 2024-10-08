@@ -2742,7 +2742,7 @@
                         <div id="CCForm2" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 @if ($data->stage == 3)
-                                    <!-- <div class="row">
+                                     <div class="row">
 
                                         <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
                                             <div class="group-input input-date">
@@ -2782,12 +2782,12 @@
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                        </div> -->
+                                        </div> 
 
 
 
 
-                                        <div class="row">
+                                        <!-- <div class="row">
 
                                         <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
                                             <div class="group-input input-date">
@@ -2827,7 +2827,7 @@
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                        </div>
+                                        </div> -->
                                 @endif
                                 <!-- <div class="col-lg-6">
                                                                                                                                                                                                                                                                                                 <div class="group-input">
@@ -11384,6 +11384,409 @@
                             </div>
                         </div>
                     </div>
+
+
+
+                            
+                        <div class="col-12 mb-4" id="fmea-section">
+                            <div class="group-input">
+                                <label for="agenda">
+                                    Failure Mode and Effect Analysis
+                                    <button type="button" name="agenda"
+                                        onclick="addRiskAssessmentdata('risk-assessment-risk-management')"
+                                        {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>+</button>
+                                </label>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" style="width: 200%"
+                                        id="risk-assessment-risk-management">
+                                        <thead>
+                                        <tr>
+                                                            <th colspan="1"style="text-align:center;"></th>
+                                                            <th colspan="2"style="text-align:center;">Risk Identification</th>
+                                                            <th colspan="1"style="text-align:center;">Risk Analysis</th>
+                                                            <th colspan="4"style="text-align:center;">Risk Evaluation</th>
+                                                            <th colspan="1"style="text-align:center;">Risk Control</th>
+                                                            <th colspan="6"style="text-align:center;">Risk Evaluation</th>
+                                                            <th colspan="2"style="text-align:center;"></th>
+                                                        </tr> 
+                                            <tr>
+                                                <th>Row #</th>
+                                                <th>Activity</th>
+                                                <th>Possible Risk/Failure (Identified Risk)</th>
+                                                <th>Consequences of Risk/Potential Causes</th>
+                                                <th>Severity (S)</th>
+                                                <th>Probability (P)</th>
+                                                <th>Detection (D)</th>
+                                                <th>RPN</th>
+                                                <th>Control Measures recommended/ Risk mitigation proposed</th>
+                                                <th>Severity (S)</th>
+                                                <th>Probability (P)</th>
+                                                <th>Detection (D)</th>
+                                                <th>Risk Level (RPN)</th>
+                                                <th>Category of Risk Level (Low, Medium and High)</th>
+                                                <th>Risk Acceptance (Y/N)</th>
+                                                <th>Traceability document</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (!empty($andriskEffectAnalysis->andandrisk_factor))
+                                                @foreach (unserialize($andriskEffectAnalysis->andrisk_factor) as $key => $andandriskFactor)
+                                                    <tr>
+                                                        <td>{{ $key + 1 }}</td>
+                                                        <td><input name="andrisk_factor[]" type="text"
+                                                                value="{{ $andriskFactor }}"
+                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                        </td>
+                                                        <td><input name="andproblem_cause[]" type="text"
+                                                                value="{{ unserialize($andriskEffectAnalysis->andproblem_cause)[$key] ?? null }}"
+                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                        </td>
+                                                        <td><input name="andexisting_risk_control[]" type="text"
+                                                                value="{{ unserialize($andriskEffectAnalysis->andexisting_risk_control)[$key] ?? null }}"
+                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                        </td>
+                                                        <td>
+                                                            <select onchange="andcalculateInitialResult(this)"
+                                                                class="fieldR" name="andinitial_severity[]"
+                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                                <option value="">-- Select --</option>
+                                                                <option value="1"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andinitial_severity)[$key] ?? null) == 1 ? 'selected' : '' }}>
+                                                                    1-Insignificant</option>
+                                                                <option value="2"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andinitial_severity)[$key] ?? null) == 2 ? 'selected' : '' }}>
+                                                                    2-Minor</option>
+                                                                <option value="3"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andinitial_severity)[$key] ?? null) == 3 ? 'selected' : '' }}>
+                                                                    3-Major</option>
+                                                                <option value="4"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andinitial_severity)[$key] ?? null) == 4 ? 'selected' : '' }}>
+                                                                    4-Critical</option>
+                                                                <option value="5"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andinitial_severity)[$key] ?? null) == 5 ? 'selected' : '' }}>
+                                                                    5-Catastrophic</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <select onchange="andcalculateInitialResult(this)"
+                                                                class="fieldP" name="andinitial_detectability[]"
+                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                                <option value="">-- Select --</option>
+                                                                <option value="1"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andinitial_detectability)[$key] ?? null) == 1 ? 'selected' : '' }}>
+                                                                    1-Very rare</option>
+                                                                <option value="2"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andinitial_detectability)[$key] ?? null) == 2 ? 'selected' : '' }}>
+                                                                    2-Unlikely</option>
+                                                                <option value="3"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andinitial_detectability)[$key] ?? null) == 3 ? 'selected' : '' }}>
+                                                                    3-Possibly</option>
+                                                                <option value="4"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andinitial_detectability)[$key] ?? null) == 4 ? 'selected' : '' }}>
+                                                                    4-Likely</option>
+                                                                <option value="5"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andinitial_detectability)[$key] ?? null) == 5 ? 'selected' : '' }}>
+                                                                    5-Almost certain (every time)</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <select onchange="andcalculateInitialResult(this)"
+                                                                class="fieldN" name="andinitial_probability[]"
+                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                                <option value="">-- Select --</option>
+                                                                <option value="1"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andinitial_probability)[$key] ?? null) == 1 ? 'selected' : '' }}>
+                                                                    1-Always detected</option>
+                                                                <option value="2"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andinitial_probability)[$key] ?? null) == 2 ? 'selected' : '' }}>
+                                                                    2-Likely to detect</option>
+                                                                <option value="3"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andinitial_probability)[$key] ?? null) == 3 ? 'selected' : '' }}>
+                                                                    3-Possible to detect</option>
+                                                                <option value="4"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andinitial_probability)[$key] ?? null) == 4 ? 'selected' : '' }}>
+                                                                    4-Unlikely to detect</option>
+                                                                <option value="5"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andinitial_probability)[$key] ?? null) == 5 ? 'selected' : '' }}>
+                                                                    5-Not detectable</option>
+                                                            </select>
+                                                        </td>
+                                                        <td><input name="andinitial_rpn[]" type="text"
+                                                                class='initial-rpn'
+                                                                value="{{ unserialize($andriskEffectAnalysis->andinitial_rpn)[$key] ?? null }}"
+                                                                readonly
+                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                        </td>
+                                                        <td><input name="andrisk_control_measure[]" type="text"
+                                                                value="{{ unserialize($andriskEffectAnalysis->andrisk_control_measure)[$key] ?? null }}"
+                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                        </td>
+                                                        <td>
+                                                            <select onchange="andcalculateResidualResult(this)"
+                                                                class="residual-fieldR" name="andresidual_severity[]"
+                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                                <option value="">-- Select --</option>
+                                                                <option value="1"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andresidual_severity)[$key] ?? null) == 1 ? 'selected' : '' }}>
+                                                                    1-Insignificant</option>
+                                                                <option value="2"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andresidual_severity)[$key] ?? null) == 2 ? 'selected' : '' }}>
+                                                                    2-Minor</option>
+                                                                <option value="3"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andresidual_severity)[$key] ?? null) == 3 ? 'selected' : '' }}>
+                                                                    3-Major</option>
+                                                                <option value="4"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andresidual_severity)[$key] ?? null) == 4 ? 'selected' : '' }}>
+                                                                    4-Critical</option>
+                                                                <option value="5"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andresidual_severity)[$key] ?? null) == 5 ? 'selected' : '' }}>
+                                                                    5-Catastrophic</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <select onchange="andcalculateResidualResult(this)"
+                                                                class="residual-fieldP" name="andresidual_probability[]"
+                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                                <option value="">-- Select --</option>
+                                                                <option value="1"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andresidual_probability)[$key] ?? null) == 1 ? 'selected' : '' }}>
+                                                                    1-Very rare</option>
+                                                                <option value="2"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andresidual_probability)[$key] ?? null) == 2 ? 'selected' : '' }}>
+                                                                    2-Unlikely</option>
+                                                                <option value="3"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andresidual_probability)[$key] ?? null) == 3 ? 'selected' : '' }}>
+                                                                    3-Possibly</option>
+                                                                <option value="4"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andresidual_probability)[$key] ?? null) == 4 ? 'selected' : '' }}>
+                                                                    4-Likely</option>
+                                                                <option value="5"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andresidual_probability)[$key] ?? null) == 5 ? 'selected' : '' }}>
+                                                                    5-Almost certain (every time)</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <select onchange="andcalculateResidualResult(this)"
+                                                                class="residual-fieldN" name="andresidual_detectability[]"
+                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                                <option value="">-- Select --</option>
+                                                                <option value="1"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andresidual_detectability)[$key] ?? null) == 1 ? 'selected' : '' }}>
+                                                                    1-Always detected</option>
+                                                                <option value="2"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andresidual_detectability)[$key] ?? null) == 2 ? 'selected' : '' }}>
+                                                                    2-Likely to detect</option>
+                                                                <option value="3"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andresidual_detectability)[$key] ?? null) == 3 ? 'selected' : '' }}>
+                                                                    3-Possible to detect</option>
+                                                                <option value="4"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andresidual_detectability)[$key] ?? null) == 4 ? 'selected' : '' }}>
+                                                                    4-Unlikely to detect</option>
+                                                                <option value="5"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andresidual_detectability)[$key] ?? null) == 5 ? 'selected' : '' }}>
+                                                                    5-Not detectable</option>
+                                                            </select>
+                                                        </td>
+                                                        <td><input name="andresidual_rpn[]" type="text"
+                                                                class='residual-rpn'
+                                                                value="{{ unserialize($andriskEffectAnalysis->andresidual_rpn)[$key] ?? null }}"
+                                                                readonly></td>
+                                                        <td>
+                                                            <input name="andrisk_acceptance[]" class="risk-acceptance"
+                                                                value="{{ unserialize($andriskEffectAnalysis->andrisk_acceptance)[$key] ?? '' }}"
+                                                                readonly
+                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                        </td>
+                                                        <td>
+                                                            <select name="andrisk_acceptance2[]"
+                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                                <option value="">-- Select --</option>
+                                                                <option value="N"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andrisk_acceptance2)[$key] ?? null) == 'N' ? 'selected' : '' }}>
+                                                                    N</option>
+                                                                <option value="Y"
+                                                                    {{ (unserialize($andriskEffectAnalysis->andrisk_acceptance2)[$key] ?? null) == 'Y' ? 'selected' : '' }}>
+                                                                    Y</option>
+                                                            </select>
+                                                        </td>
+                                                        <td><input name="andmitigation_proposal[]" type="text"
+                                                                value="{{ unserialize($andriskEffectAnalysis->andmitigation_proposal)[$key] ?? null }}"
+                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                        </td>
+                                                        <td> <button class="btn btn-dark andremoveBtn"
+                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>Remove</button>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            function andcalculateInitialResult(selectElement) {
+                                let row = selectElement.closest('tr');
+                                let R = parseFloat(row.querySelector('.fieldR').value) || 0;
+                                let P = parseFloat(row.querySelector('.fieldP').value) || 0;
+                                let N = parseFloat(row.querySelector('.fieldN').value) || 0;
+                                let result = R * P * N;
+
+                                // Update the result field within the row
+                                row.querySelector('.initial-rpn').value = result;
+                            }
+                        </script>
+
+
+                        <script>
+                            function andcalculateRiskAnalysis2(selectElement) {
+                                let andresidualRiskImpact = parseFloat(document.getElementById('analysisR2').value) || 0;
+                                let andresidualRiskProbability = parseFloat(document.getElementById('analysisP2').value) || 0;
+                                let andresidualDetection = parseFloat(document.getElementById('analysisN2').value) || 0;
+
+                                let andresidualRPN = andresidualRiskImpact * andresidualRiskProbability * andresidualDetection;
+
+                                document.getElementById('andanalysisRPN2').value = andresidualRPN;
+
+                                let residualRiskLevel = '';
+                                if (andresidualRPN >= 1 && andresidualRPN <= 24) {
+                                    residualRiskLevel = 'Low';
+                                } else if (andresidualRPN >= 25 && andresidualRPN <= 74) {
+                                    residualRiskLevel = 'Medium';
+                                } else if (andresidualRPN >= 75 && andresidualRPN <= 125) {
+                                    residualRiskLevel = 'High';
+                                }
+
+                                document.getElementById('riskLevel_2').value = residualRiskLevel;
+                            }
+                        </script>
+                        <script>
+                            function addRiskAssessmentdata(tableId) {
+                                var table = document.getElementById(tableId);
+                                var currentRowCount = table.rows.length;
+                                var newRow = table.insertRow(currentRowCount);
+                                newRow.setAttribute("id", "row" + currentRowCount);
+
+                                var cell1 = newRow.insertCell(0);
+                                cell1.innerHTML = currentRowCount;
+
+                                var cell2 = newRow.insertCell(1);
+                                cell2.innerHTML = "<input name='andrisk_factor[]' type='text'>";
+
+                                var cell4 = newRow.insertCell(2);
+                                cell4.innerHTML = "<input name='andproblem_cause[]' type='text'>";
+
+                                var cell5 = newRow.insertCell(3);
+                                cell5.innerHTML = "<input name='andexisting_risk_control[]' type='text'>";
+
+                                var cell6 = newRow.insertCell(4);
+                                cell6.innerHTML =
+                                    "<select onchange='andcalculateInitialResult(this)' class='fieldR' name='andinitial_severity[]'>" +
+                                    "<option value=''>-- Select --</option>" +
+                                    "<option value='1'>1-Insignificant</option>" +
+                                    "<option value='2'>2-Minor</option>" +
+                                    "<option value='3'>3-Major</option>" +
+                                    "<option value='4'>4-Critical</option>" +
+                                    "<option value='5'>5-Catastrophic</option>" +
+                                    "</select>";
+
+                                var cell7 = newRow.insertCell(5);
+                                cell7.innerHTML =
+                                    "<select onchange='andcalculateInitialResult(this)' class='fieldP' name='andinitial_probability[]'>" +
+                                    "<option value=''>-- Select --</option>" +
+                                    "<option value='1'>1-Very rare</option>" +
+                                    "<option value='2'>2-Unlikely</option>" +
+                                    "<option value='3'>3-Possibly</option>" +
+                                    "<option value='4'>4-Likely</option>" +
+                                    "<option value='5'>5-Almost certain (every time)</option>" +
+                                    "</select>";
+
+                                var cell8 = newRow.insertCell(6);
+                                cell8.innerHTML =
+                                    "<select onchange='andcalculateInitialResult(this)' class='fieldN' name='andinitial_detectability[]'>" +
+                                    "<option value=''>-- Select --</option>" +
+                                    "<option value='1'>1-Always detected</option>" +
+                                    "<option value='2'>2-Likely to detect</option>" +
+                                    "<option value='3'>3-Possible to detect</option>" +
+                                    "<option value='4'>4-Unlikely to detect</option>" +
+                                    "<option value='5'>5-Not detectable</option>" +
+                                    "</select>";
+
+                                var cell9 = newRow.insertCell(7);
+                                cell9.innerHTML = "<input name='andinitial_rpn[]' type='text' class='initial-rpn' readonly>";
+
+                                var cell11 = newRow.insertCell(8);
+                                cell11.innerHTML = "<input name='andrisk_control_measure[]' type='text'>";
+
+                                var cell12 = newRow.insertCell(9);
+                                cell12.innerHTML =
+                                    "<select onchange='andcalculateResidualResult(this)' class='residual-fieldR' name='andresidual_severity[]'>" +
+                                    "<option value=''>-- Select --</option>" +
+                                    "<option value='1'>1-Insignificant</option>" +
+                                    "<option value='2'>2-Minor</option>" +
+                                    "<option value='3'>3-Major</option>" +
+                                    "<option value='4'>4-Critical</option>" +
+                                    "<option value='5'>5-Catastrophic</option>" +
+                                    "</select>";
+
+                                var cell13 = newRow.insertCell(10);
+                                cell13.innerHTML =
+                                    "<select onchange='andcalculateResidualResult(this)' class='residual-fieldP' name='andresidual_probability[]'>" +
+                                    "<option value=''>-- Select --</option>" +
+                                    "<option value='1'>1-Very rare</option>" +
+                                    "<option value='2'>2-Unlikely</option>" +
+                                    "<option value='3'>3-Possibly</option>" +
+                                    "<option value='4'>4-Likely</option>" +
+                                    "<option value='5'>5-Almost certain (every time)</option>" +
+                                    "</select>";
+
+                                var cell14 = newRow.insertCell(11);
+                                cell14.innerHTML =
+                                    "<select onchange='andcalculateResidualResult(this)' class='residual-fieldN' name='andresidual_detectability[]'>" +
+                                    "<option value=''>-- Select --</option>" +
+                                    "<option value='1'>1-Always detected</option>" +
+                                    "<option value='2'>2-Likely to detect</option>" +
+                                    "<option value='3'>3-Possible to detect</option>" +
+                                    "<option value='4'>4-Unlikely to detect</option>" +
+                                    "<option value='5'>5-Not detectable</option>" +
+                                    "</select>";
+
+                                var cell15 = newRow.insertCell(12);
+                                cell15.innerHTML = "<input name='andresidual_rpn[]' type='text' class='residual-rpn' readonly>";
+
+                                var cell10 = newRow.insertCell(13);
+                                cell10.innerHTML =
+                                    "<select name='andrisk_acceptance[]' class='risk-acceptance' readonly>" +
+                                    "<option value=''>-- Select --</option>" +
+                                    "<option value='Low'>Low</option>" +
+                                    "<option value='Medium'>Medium</option>" +
+                                    "<option value='High'>High</option>" +
+                                    "</select>";
+
+                                var cell16 = newRow.insertCell(14);
+                                cell16.innerHTML =
+                                    "<select name='andrisk_acceptance2[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
+
+                                var cell17 = newRow.insertCell(15);
+                                cell17.innerHTML = "<input name='andmitigation_proposal[]' type='text'>";
+
+                                var cell18 = newRow.insertCell(16);
+                                cell18.innerHTML = "<button class='btn btn-dark andremoveBtn' onclick='removeRow(this)'>Remove</button>";
+
+                                // Update row numbers
+                                for (var i = 1; i <= currentRowCount; i++) {
+                                    var row = table.rows[i];
+                                    row.cells[0].innerHTML = i;
+                                }
+
+                                initializeRiskAcceptance();
+                            }
+                        </script>
+
+
+
+
 
                     <div class="sub-head">
                         Root Cause
