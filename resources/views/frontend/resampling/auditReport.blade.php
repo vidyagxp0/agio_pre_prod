@@ -253,7 +253,7 @@
                                 <strong>Change From :</strong>
                                 @if (!empty(strip_tags($dataDemo->previous)))
                                     {{-- Check if the previous is a date --}}
-                                    @if (strtotime($dataDemo->previous))
+                                @if (strtotime($dataDemo->previous))    
                                         {{ \Carbon\Carbon::parse($dataDemo->previous)->format('d/M/Y') }}
                                     @else
                                         {!! $dataDemo->previous !!}
@@ -304,7 +304,7 @@
                             {{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}
                         </div>
                     </td>
-                </tr>
+                 </tr>
             @endforeach
         </tbody>
     </table>
