@@ -728,11 +728,11 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($jobTrainings as $job_training)
+                            @foreach ( $jobTrainings ->sortbyDesc('id') as $job_training)
                             <tr>
                                 <td>{{ DB::table('job_trainings')->where('id', $job_training->id)->value('name') }}</td>
                                 {{-- <td>{{ DB::table('departments')->where('id', $job_training->department)->value('name') }}</td> --}}
-                                <td>{{ Helpers::getFullDepartmentName($job_training->department) ? Helpers::getFullDepartmentName($job_training->department) : 'NA' }}</td>
+                                <td>{{ $job_training->department}}</td>
                                 <!-- <td>{{ $job_training->location}}</td> -->
                                 <!-- @for ($i = 1; $i <= 1; $i++)  -->
                                 <td>{{ \Carbon\Carbon::parse($job_training->{"start_date"})->format('d-M-Y') }}</td>
@@ -811,7 +811,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                     {{ \App\Models\Employee::find($induction->name_employee)?->employee_name ?? 'Employee not found' }}
                 </td>
 
-                <td>{{ Helpers::getFullDepartmentName($induction->department ) }}</td>
+                <td>{{ $induction->department }}</td>
                 <!-- <td>{{ $induction->location }}</td> -->
                 <td>{{ $induction->qualification }}</td>
                 <td>{{ \Carbon\Carbon::parse($induction->date_joining)->format('d-M-Y') }}</td>
@@ -900,10 +900,10 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                     {{ $induction->employee_id }}
                 </td>
                 <td>
-                    {{ \App\Models\Employee::find($induction->name_employee)?->employee_name ?? 'Employee not found' }}
+                    {{$induction->name_employee }}
                 </td>
 
-                <td>{{ Helpers::getFullDepartmentName($induction->new_department ) }}</td>
+                <td>{{ $induction->new_department }}</td>
                 <!-- <td>{{ \Carbon\Carbon::parse($induction->date_joining)->format('d-M-Y') }}</td> -->
                 <td>
                     <!-- <a href="{{ route('induction_training_view', $induction->id) }}">
