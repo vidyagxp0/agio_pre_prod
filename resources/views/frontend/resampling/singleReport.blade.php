@@ -247,8 +247,8 @@
                         </td>
                         <th class="w-20">Due Date</th>
                         <td class="w-80">
-                            @if ($data->due_dateq)
-                                {{ Helpers::getdateFormat($data->due_dateq) }}
+                            @if ($data->due_date)
+                                {{ Helpers::getdateFormat($data->due_date) }}
                             @else
                                 Not Applicable
                             @endif
