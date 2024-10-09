@@ -975,8 +975,10 @@ class InductionTrainingcontroller extends Controller
         $sopidsArray = explode(',', $sopids);
 
         $sopidsArray = array_map('trim', $sopidsArray);
-        $questions = Question::where('document_id', $sopidsArray)
-            ->get();
+        $questions = Question::whereIn('document_id', $sopidsArray)
+                     ->inRandomOrder()
+                     ->take(10)
+                     ->get();
         return view('frontend.TMS.induction_training.Induction_training_question_Answer', compact('questions', 'inductiontrainingid'));
 
     }
@@ -985,7 +987,7 @@ class InductionTrainingcontroller extends Controller
     {
         // Fetch all questions in a random order
 
-        $allQuestions = Question::inRandomOrder()->get();
+        $allQuestions = Question::get();
 
         // Filter questions to include only Single and Multi Selection Questions
         $filteredQuestions = $allQuestions->filter(function ($question) {
@@ -993,7 +995,7 @@ class InductionTrainingcontroller extends Controller
         });
 
         // Take the first 10 questions from the filtered list
-        $questions = $filteredQuestions->take(10);
+        $questions = $filteredQuestions;
 
         $correctCount = 0; // Initialize correct answer count
         $totalQuestions = count($questions); // Total number of selected questions (should be 10)

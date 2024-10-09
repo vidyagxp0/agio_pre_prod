@@ -311,7 +311,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                             }
                                         }
                                     }
-                                    $inductionResult = DB::table('emp_training_quiz_results')->where(['training_id' => $temp->id, 'training_type' => "Induction Training", 'emp_id' => 'PW2', 'result' => 'Pass'])->latest()->first();
+                                    $inductionResult = DB::table('emp_training_quiz_results')->where(['training_id' => $temp->id, 'training_type' => "Induction Training", 'emp_id' => 'PW1', 'result' => 'Pass'])->latest()->first();
                                     // Join the non-null start dates into a comma-separated string
                                     $commaSeparatedStartDates = implode(', ', $dateValue);
                                 @endphp
@@ -324,7 +324,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                         <td>{{  Helpers::getdateFormat($temp->start_date) }}</td>
                                         <td>{{  Helpers::getdateFormat($temp->end_date) }}</td>
                                         <td>{{ $temp->attempt_count == -1 ? 0 : $temp->attempt_count }}</td>
-                                        <td>-</td>
+                                        <td>{{ $inductionResult ? Helpers::getdateFormat1($inductionResult->created_at) : '-'}}</td>
                                         <td><a href="{{ url("induction_training-details/$commaSeparatedStartDates") }}"><i class="fa-solid fa-eye"></i></a></td>
                                         <td>
                                                 @if ($inductionResult && $inductionResult->result == "Pass")
@@ -425,7 +425,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                         
                                         
                                 @endphp
-                                @if($temp->stage >= 5)
+                                @if($temp->stage >= 3)
                                 <tr>
                                     <td>{{ $temp->empcode }}</td>
                                     <td>{{ $temp->name_employee }}</td>
