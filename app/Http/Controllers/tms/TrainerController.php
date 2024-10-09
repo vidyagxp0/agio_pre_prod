@@ -877,9 +877,9 @@ class TrainerController extends Controller
                 if ($trainer->stage == 2) {
                     $trainer->stage = "3";
                     $trainer->status = "Trainer Answer";
-                    $trainer->sbmitted_by = Auth::user()->name;
-                    $trainer->sbmitted_on = Carbon::now()->format('d-m-Y');
-                    $trainer->sbmitted_comment = $request->comment;
+                    $trainer->update_complete_by = Auth::user()->name;
+                    $trainer->update_complete_on = Carbon::now()->format('d-m-Y');
+                    $trainer->update_complete_comment = $request->comment;
 
                     $history = new TrainerQualificationAuditTrial();
                     $history->trainer_id = $id;
@@ -903,9 +903,9 @@ class TrainerController extends Controller
                 if ($trainer->stage == 3) {
                     $trainer->stage = "4";
                     $trainer->status = "HOD Evaluation";
-                    $trainer->sbmitted_by = Auth::user()->name;
-                    $trainer->sbmitted_on = Carbon::now()->format('d-m-Y');
-                    $trainer->sbmitted_comment = $request->comment;
+                    $trainer->answer_complete_by= Auth::user()->name;
+                    $trainer->answer_complete_on = Carbon::now()->format('d-m-Y');
+                    $trainer->answer_complete_comment = $request->comment;
 
                     $history = new TrainerQualificationAuditTrial();
                     $history->trainer_id = $id;
@@ -929,9 +929,9 @@ class TrainerController extends Controller
                 if ($trainer->stage == 4) {
                     $trainer->stage = "5";
                     $trainer->status = "QA/CQA Head Approval";
-                    $trainer->sbmitted_by = Auth::user()->name;
-                    $trainer->sbmitted_on = Carbon::now()->format('d-m-Y');
-                    $trainer->sbmitted_comment = $request->comment;
+                    $trainer->evaluation_complete_by = Auth::user()->name;
+                    $trainer->evaluation_complete_on = Carbon::now()->format('d-m-Y');
+                    $trainer->evaluation_complete_comment = $request->comment;
 
                     $history = new TrainerQualificationAuditTrial();
                     $history->trainer_id = $id;
@@ -1111,9 +1111,11 @@ class TrainerController extends Controller
         $data = TrainerQualification::find($id);
         if (!empty($data)) {
             $data->originator_id = User::where('id', $data->initiator_id)->value('name');
+            $trainer_list = TrainerGrid::where(['trainer_qualification_id' => $id, 'identifier' => 'listOfAttachment'])->first();
+            $employee_grid_data = QuestionariesTrainingGrid::where(['trainer_qualification_id' => $id, 'identifier' => 'Questionaries'])->first();
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.TMS.Trainer_qualification.trainer_report', compact('data'))
+            $pdf = PDF::loadview('frontend.TMS.Trainer_qualification.trainer_report', compact('data','trainer_list','employee_grid_data'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

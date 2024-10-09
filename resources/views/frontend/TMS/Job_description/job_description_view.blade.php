@@ -216,7 +216,7 @@
             <button class="cctablinks " onclick="openCity(event, 'CCForm3')">Employee Remarks</button>
 
             <button class="cctablinks " onclick="openCity(event, 'CCForm4')">QA/CQA Approval</button>
-            <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Responsible Person Accept Renarks</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Responsible Person Accept Remarks</button>
 
             {{-- <button class="cctablinks " onclick="openCity(event, 'CCForm5')">Questionaries</button> --}}
 
@@ -226,6 +226,8 @@
             @endif
             <button class="cctablinks " onclick="openCity(event, 'CCForm8')">Respected Department Remarks</button>
             <button class="cctablinks " onclick="openCity(event, 'CCForm9')">QA JD Number Remarks</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm10')">Activity Log</button>
+
 
         </div>
 
@@ -254,7 +256,7 @@
                     <div class="inner-block-content">
                         <div class="row">
 
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="select-state">Name of Employee</label>
                                     <select id="select-state" name="name_employee_disabled" disabled>
@@ -272,15 +274,15 @@
                                         <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
-                            </div>
-
-
-                            {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="employee_id">Job Description Number</label>
-                                    <input type="text" name="job_description_no" value="{{ old('job_description_no', $jobTraining->job_description_no) }}">
-                                </div>
                             </div> --}}
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="RLS Record Number">Employee Name </label>
+                                        <input type="text" name="name_employee" id="name_employee"
+                                            value="{{ $jobTraining->name_employee }}" readonly>
+                                    </div>
+                                </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -310,9 +312,9 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="department_location">Department</label>
-                                    <select  name="new_department">
+                                    <input type="text" name="new_department" id="department" value="{{ $jobTraining->new_department }}" readonly>
+                                    {{-- <select  name="new_department">
                                             <option value="">-- Select Dept --</option>
-                                
                                             @php
                                                 $savedDepartmentId = old('new_department', $jobTraining->new_department);
                                             @endphp
@@ -322,7 +324,7 @@
                                                     @if ($savedDepartmentId == $code) selected @endif>{{ $department }}
                                                 </option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
                                 </div>
                             </div>
 
@@ -885,6 +887,175 @@
                         </div>
                     </div>
                 </div>
+
+                <div id="CCForm10" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Activated By">Submit By</label>
+                                <div class="static">{{ $jobTraining->submit_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Activated On">Submit On</label>
+                                <div class="static">
+                                    {{ $jobTraining->submit_on }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Activated On">Submit Comment</label>
+                                <div class="static">
+                                    {{ $jobTraining->submit_comment }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for=" Rejected By">Accept JD Complete By</label>
+                                <div class="static">{{ $jobTraining->accept_JD_Complete_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Accept JD Complete On</label>
+                                <div class="static">{{ $jobTraining->accept_JD_Complete_on }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Accept JD Complete Comment</label>
+                                <div class="static">{{ $jobTraining->accept_JD_Complete_comment }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Accept By</label>
+                                <div class="static">{{ $jobTraining->accept_by }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Accept On</label>
+                                <div class="static">{{ $jobTraining->accept_on }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Accept Comment</label>
+                                <div class="static">{{ $jobTraining->accept_comment }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Approval Complete By</label>
+                                <div class="static">{{ $jobTraining->approval_Complete_by }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Approval Complete On</label>
+                                <div class="static">{{ $jobTraining->approval_Complete_on }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Approval Complete Comment</label>
+                                <div class="static">{{ $jobTraining->approval_Complete_comment }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Send To QA By</label>
+                                <div class="static">{{ $jobTraining->send_to_QA_by }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Send To QA On</label>
+                                <div class="static">{{ $jobTraining->send_to_QA_on }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Send To QA Comment</label>
+                                <div class="static">{{ $jobTraining->send_to_QA_comment }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Closure By</label>
+                                <div class="static">{{ $jobTraining->closure_by }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Closure On</label>
+                                <div class="static">{{ $jobTraining->closure_on }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Closure Comment</label>
+                                <div class="static">{{ $jobTraining->closure_comment }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Reject By</label>
+                                <div class="static">{{ $jobTraining->reject_by }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Reject On</label>
+                                <div class="static">{{ $jobTraining->reject_on }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Reject Comment</label>
+                                <div class="static">{{ $jobTraining->reject_comment }}
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" class="saveButton"> <a href="{{ url('TMS') }}" class="text-white">
+                                Save </a></button>
+                        <!-- <a href="/rcms/qms-dashboard"> -->
+                        {{-- <button type="button" class="backButton">Back</button> --}}
+                        </a>
+                        {{-- <button type="submit">Submit</button> --}}
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
+                                Exit </a> </button>
+                    </div>
+                </div>
+              </div>
+
+           </div>
         </form>
 
     </div>

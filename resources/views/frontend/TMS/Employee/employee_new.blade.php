@@ -228,7 +228,7 @@
                                         <input type="text" name="qualification" required>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Department">Department Name<span class="text-danger">*</span></label>
                                         <select name="department" required>
@@ -239,10 +239,22 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
-
+                                </div> -->
 
                                 <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Department">Department Name<span class="text-danger">*</span></label>
+                                        <select name="department" id="department" required onchange="toggleOtherDepartment()">
+                                            <option value="">-- Select --</option>
+
+                                            @foreach (Helpers::getDepartments() as $code => $department)
+                                                <option value="{{ $code }}">{{ $department }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Job Title">Designation<span class="text-danger">*</span></label>
                                         <select name="job_title" required>
@@ -261,24 +273,77 @@
                                             <option value="Head quality">Head quality</option>
                                             <option value="VP quality">VP quality</option>
                                             <option value="Plant head ">Plant head </option>
-                                            {{-- <option value="HR Manager">HR Manager</option>
-                     <option value="IT Manager">IT Manager</option>
-                     <option value="Purchase Manager">Purchase Manager</option> --}}
+                                            <option value="other designation ">Other Designation </option>                             
+                                        </select>
+                                    </div>
+                                </div> -->
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="job_title">Designation<span class="text-danger">*</span></label>
+                                        <select name="job_title" id="job_title" required onchange="toggleOtherDesignation()">
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="Trainee">Trainee</option>
+                                            <option value="Officer">Officer</option>
+                                            <option value="Sr. Officer">Sr. Officer</option>
+                                            <option value="Executive">Executive</option>
+                                            <option value="Sr.executive">Sr. Executive</option>
+                                            <option value="Asst. manager">Asst. Manager </option>
+                                            <option value="Manager">Manager</option>
+                                            <option value="Sr. GM">Sr. GM</option>
+                                            <option value="Sr. manager">Sr. Manager</option>
+                                            <option value="Deputy GM">Deputy GM</option>
+                                            <option value="AGM and GM">AGM and GM</option>
+                                            <option value="Head quality">Head quality</option>
+                                            <option value="VP quality">VP quality</option>
+                                            <option value="Plant head">Plant head</option>
+                                            <option value="other designation">Other Designation</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+
+                                <div class="col-lg-6" id="other_department_container" style="display: none;">
                                     <div class="group-input">
-                                        <label for="employee_name">Other Department</label>
-                                        <input type="text" name="other_department">
+                                        <label for="other_department">Other Department</label>
+                                        <input type="text" name="other_department" id="other_department">
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6" id="other_designation_container" style="display: none;">
                                     <div class="group-input">
-                                        <label for="employee_name">Other Designation<label>
-                                                <input type="text" name="other_designation">
+                                        <label for="other_designation">Other Designation</label>
+                                        <input type="text" name="other_designation" id="other_designation">
                                     </div>
                                 </div>
+
+                                <script>
+                                    function toggleOtherDepartment() {
+                                        const departmentSelect = document.getElementById('department');
+                                        const otherDepartmentContainer = document.getElementById('other_department_container');
+                                        // Check if the selected department is "Other"
+                                        if (departmentSelect.value === "Other") {
+                                            otherDepartmentContainer.style.display = 'block';
+                                        } else {
+                                            otherDepartmentContainer.style.display = 'none';
+                                        }
+                                    }
+
+                                    // Call the function on page load to set the initial state of the Other Department input
+                                    window.onload = function() {
+                                        toggleOtherDepartment();
+                                    };
+                                </script>
+
+                                <script>
+                                    function toggleOtherDesignation() {
+                                        const jobTitleSelect = document.getElementById('job_title');
+                                        const otherDesignationContainer = document.getElementById('other_designation_container');
+                                        if (jobTitleSelect.value === "other designation") {
+                                            otherDesignationContainer.style.display = 'block';
+                                        } else {
+                                            otherDesignationContainer.style.display = 'none';
+                                        }
+                                    }
+                                </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Experience">Experience (No. of Years)<span

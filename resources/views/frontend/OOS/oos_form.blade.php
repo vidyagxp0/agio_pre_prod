@@ -433,7 +433,7 @@ $users = DB::table('users')
                     <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH Review</button>
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button> --}}
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
                 </div>
                  <!-- OOS Micro Buttons -->
@@ -465,7 +465,7 @@ $users = DB::table('users')
                     <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH Review</button>
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal</button> --}}
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
                   </div>
                 <div id="OOT_Buttons" style="display: none;">
@@ -474,20 +474,29 @@ $users = DB::table('users')
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
-                    <button class="cctablinks button1" style="display:none;"  onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
-                    <button class="cctablinks button2" style="display:none;"  onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
-                    <button class="cctablinks button3" style="display:none;"  onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
-                    <button class="cctablinks button4" style="display:none;"  onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
-                    <button class="cctablinks button5" style="display:none;"  onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
-                    <button class="cctablinks button6" style="display:none;"  onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
+                    <button class="cctablinks button1" style="display:none;" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
+                    <button class="cctablinks button2" style="display:none;" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
+                    <button class="cctablinks button3" style="display:none;" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
+                    <button class="cctablinks button4" style="display:none;" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
+                    <button class="cctablinks button5" style="display:none;" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
+                    <button class="cctablinks button6" style="display:none;" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH Review</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm42')">Phase IB Investigation Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm42')">Phase IB Investigation</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm33')">Phase IB HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm34')">Phase IB CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm35')">Phase IB CQAH/QAH Review</button>
-
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II A Investigation</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm36')">Phase II A HOD Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm37')">Phase II A CQA/QA Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm38')">Phase II A QAH/CQAH Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm43')">Phase II B Investigation</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH Review</button>
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button> --}}
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
                 </div>
 
@@ -682,7 +691,7 @@ $users = DB::table('users')
                         <p id="docnameError" style="color:red">**Short Description is required</p>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Short Description">Initiation department Group  <span class="text-danger"></span></label>
+                                <label for="Short Description">Initiation Department Group  <span class="text-danger"></span></label>
 
                                 <select name="initiator_group" id="initiator_group">
                                         <option value="">Select Initiation Department</option>
@@ -701,7 +710,7 @@ $users = DB::table('users')
                                         <option value="ST" >Store</option>
                                         <option value="IT" >Electronic Data Processing</option>
                                         <option value="FD" >Formulation  Development</option>
-                                        <option value="AL" >Analytical research and Development Laboratory</option>
+                                        <option value="AL" >Analytical Research And Development Laboratory</option>
                                         <option value="PD">Packaging Development</option>
                                         <option value="PU">Purchase Department</option>
                                         <option value="DC">Document Cell</option>
@@ -712,7 +721,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group Code">Initiation department Code <span class="text-danger"></span></label>
+                                <label for="Initiator Group Code">Initiation Department Code <span class="text-danger"></span></label>
                                 <input type="text" name="initiator_group_code" id="initiator_group_code" value="">
                             </div>
                         </div>
@@ -806,7 +815,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Reference Document">Reference document</label>
+                                <label for="Reference Document">Reference Document</label>
                                 <input type="text" name="reference_document"  id="reference_document" value="">
                             </div>
                         </div>
@@ -827,7 +836,7 @@ $users = DB::table('users')
                                 <div class="calenderauditee">
                                     <input type="text" id="oos_observed_on" readonly placeholder="DD-MMM-YYYY" />
                                     {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
-                                    <input type="date" name="oos_observed_on" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                    <input type="date" name="oos_observed_on" class="hide-input"
                                         oninput="handleDateInput(this, 'oos_observed_on')" />
                                 </div>
                             </div>
@@ -856,7 +865,7 @@ $users = DB::table('users')
 
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="Audit Schedule End Date">OOS/OOT Reported on</label>
+                                <label for="Audit Schedule End Date">OOS/OOT Reported On</label>
                                 <div class="calenderauditee">
                                     <input type="text" id="oos_reported_date" readonly placeholder="DD-MMM-YYYY" />
                                     <input type="date" name="oos_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
@@ -900,7 +909,7 @@ $users = DB::table('users')
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="immediate_action">Immediate action</label>
+                                    <label for="immediate_action">Immediate Action</label>
                                     <textarea name="immediate_action" id="immediate_action" placeholder="Enter immediate action here"></textarea>
                                 </div>
                         </div>
@@ -920,7 +929,7 @@ $users = DB::table('users')
                                 </div>
                             </div>
                         </div>
-                        <div class="sub-head pt-3">OOS Information</div>
+                        <div class="sub-head pt-3">OOS/OOT Information</div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Sample Type</label>
@@ -1074,7 +1083,7 @@ $users = DB::table('users')
                         <!-- -------------------------------grid-2  ----------------------------------   -->
                         <div class="group-input">
                             <label for="audit-agenda-grid">
-                                Details of Stability Study
+                                Details Of Stability Study
                                 <button type="button" name="audit-agenda-grid" id="details_stability">+</button>
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#document-details-field-instruction-modal"
@@ -1091,7 +1100,7 @@ $users = DB::table('users')
                                             <th style="width: 12%">Condition: Temperature & RH</th>
                                             <th style="width: 12%">Interval</th>
                                             <th style="width: 16%">Orientation</th>
-                                            <th style="width: 16%">Pack Details (if any)</th>
+                                            <th style="width: 16%">Pack Details (if Any)</th>
                                             <th style="width: 16%">Specification No.</th>
                                             <th style="width: 16%">Sample Description</th>
                                             <th style="width: 15%">Action</th>
@@ -1116,7 +1125,7 @@ $users = DB::table('users')
                         </div>
                     <!----------------grid-3----------------------------------- -->
 
-                        <div class="group-input">
+                        {{-- <div class="group-input">
                             <label for="audit-agenda-grid">
                                 OOS/OOT Details
                                 <button type="button" name="audit-agenda-grid" id="oos_details">+</button>
@@ -1167,12 +1176,66 @@ $users = DB::table('users')
                                     </tbody>
                                 </table>
                             </div>
+                        </div> --}}
+                        <div class="group-input">
+                            <label for="audit-agenda-grid">
+                                OOS/OOT Details
+                                <button type="button" name="audit-agenda-grid" id="oos_details">+</button>
+                                <span class="text-primary" data-bs-toggle="modal"
+                                    data-bs-target="#document-details-field-instruction-modal"
+                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                    (Launch Instruction)
+                                </span>
+                            </label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="oos_details_details" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 4%">Row#</th>
+                                            <th style="width: 8%">AR Number.</th>
+                                            <th style="width: 8%">Test Name of OOS/OOT</th>
+                                            <th style="width: 8%">Results Obtained</th>
+                                            <th style="width: 8%">Specification Limit</th>
+                                            <th style="width: 16%">File Attachment</th>
+                                            <th style="width: 8%">Submit By</th>
+                                            <th style="width: 16%">Submit On</th>
+                                            <th style="width: 15%">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input disabled type="text" name="oos_detail[0][serial]" value="1"></td>
+                                            <td><input type="text" name="oos_detail[0][oos_arnumber]"></td>
+                                            <td><input type="text" name="oos_detail[0][oos_test_name]"></td>
+                                            <td><input type="text" name="oos_detail[0][oos_results_obtained]"></td>
+                                            <td><input type="text" name="oos_detail[0][oos_specification_limit]"></td>
+                                            <td>
+                                                <input type="file" name="oos_detail[0][oos_file_attachment][]" multiple>
+                                            </td>
+                                            <td><input type="text" name="oos_detail[0][oos_submit_by]"></td>
+                                            <td>
+                                                <div class="col-lg-6 new-date-data-field">
+                                                    <div class="group-input input-date">
+                                                        <div class="calenderauditee">
+                                                            <input type="text" id="oos_submit_on" readonly placeholder="DD-MM-YYYY" />
+                                                            <input type="date" name="oos_detail[0][oos_submit_on]"
+                                                                class="hide-input" oninput="handleDateInput(this, 'oos_submit_on')">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
+                        
                         <!---------------- grid-4 Products_details----------------------------------- -->
 
                         <div class="group-input">
                             <label for="audit-agenda-grid">
-                            Products details
+                            Products Details
                                 <button type="button" name="audit-agenda-grid" id="products_details">+</button>
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#document-details-field-instruction-modal"
@@ -1312,7 +1375,7 @@ $users = DB::table('users')
                     <div class="row">
                         <div class="col-lg-12 mb-4">
                             <div class="group-input">
-                                <label for="Audit Schedule Start Date">Workbench evaluation</label>
+                                <label for="Audit Schedule Start Date">Workbench Evaluation</label>
                                 <div class="col-md-12 4">
                                     <div class="group-input">
                                         <textarea class="summernote" name="Comments_plidata" id="summernote-1">
@@ -1333,8 +1396,8 @@ $users = DB::table('users')
                                     <option value="RM-PM">CheckList - RM-PM Sampling</option>
                                     <option value="Bacterial-Endotoxin-Test">Checklist - Bacterial Endotoxin Test</option>
                                     <option value="Sterility">Checklist - Sterility</option>
-                                    <option value="Water-Test">Checklist - Microbial limit test/Bioburden and Water Test</option>
-                                    <option value="Microbial-assay">Checklist - Microbial assay</option>
+                                    <option value="Water-Test">Checklist - Microbial Limit Test/Bioburden And Water Test</option>
+                                    <option value="Microbial-assay">Checklist - Microbial Assay</option>
                                     <option value="Environmental-Monitoring">Checklist - Environmental Monitoring</option>
                                     <option value="Media-Suitability-Test">Checklist - Media Suitability Test</option>
                                 </select>
@@ -1344,7 +1407,7 @@ $users = DB::table('users')
 
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="Description Deviation">Checklist outcome</label>
+                                <label for="Description Deviation">Checklist Outcome</label>
                                 <textarea class="summernote" name="justify_if_no_field_alert_pli" id="summernote-1">
                                     </textarea>
                             </div>
@@ -1352,14 +1415,14 @@ $users = DB::table('users')
 
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="RootCause">Immediate action taken</label>
+                                <label for="RootCause">Immediate Action Taken</label>
                                 <textarea name="root_comment" id="rootCauseTextarea" rows="4" placeholder="Describe the root cause here"></textarea>
                             </div>
                         </div>
 
                         <div class="col-lg-12 mb-4">
                             <div class="group-input">
-                                <label for="Audit Schedule Start Date">Delay justification for investigation</label>
+                                <label for="Audit Schedule Start Date">Delay Justification For Investigation</label>
                                     <textarea class="summernote" name="justify_if_no_analyst_int_pli" id="summernote-1">
                                     </textarea>
 
@@ -1368,7 +1431,7 @@ $users = DB::table('users')
 
                         <div class="col-lg-12 mb-4">
                             <div class="group-input">
-                                <label for="Audit Schedule Start Date">Analyst interview details</label>
+                                <label for="Audit Schedule Start Date">Analyst Interview Details</label>
                                     <textarea class="summernote" name="analyst_interview_pli" id="summernote-1">
                                     </textarea>
                             </div>
@@ -1376,7 +1439,7 @@ $users = DB::table('users')
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Audit Attachments">Analyst interview Attachments</label>
+                                <label for="Audit Attachments">Analyst Interview Attachments</label>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
                                 </small>
@@ -1394,37 +1457,37 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="deviation_time">Any other cause/suspected cause</label>
+                                <label for="deviation_time">Any Other Cause/Suspected Cause</label>
                                 <textarea id="Any_other_cause" name="Any_other_cause"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="deviation_time">Any other batches analyzed</label>
+                                <label for="deviation_time">Any Other Batches Analyzed</label>
                                 <textarea id="Any_other_batches" name="Any_other_batches"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="deviation_time">Details of trend</label>
+                                <label for="deviation_time">Details Of Trend</label>
                                 <textarea id="details_of_trend" name="details_of_trend"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="deviation_time">Assignable cause and rational for assignable cause</label>
+                                <label for="deviation_time">Assignable Cause And Rational For Assignable Cause</label>
                                 <textarea id="rational_for_assingnable" name="rational_for_assingnable"></textarea>
                             </div>
                         </div>
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="Description Deviation">Summary of investigation</label>
+                                <label for="Description Deviation">Summary Of Investigation</label>
                                 <textarea class="summernote" name="summary_of_prelim_investiga_plic" id="summernote-1"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Product/Material Name">OOS cause identified</label>
+                                <label for="Product/Material Name">OOS/OOT Cause Identified</label>
                                 <select name="phase_i_investigation_pli">
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="Yes">Yes</option>
@@ -1516,12 +1579,13 @@ $users = DB::table('users')
                                     <option value="Instrument Error">Instrument Error</option>
                                     <option value="Product/Material Related Error">Product/Material Related Error</option>
                                     <option value="Other Error">Other Error</option>
+                                    <option value="NA">NA</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="Description Deviation">OOS/OOT Category (if Others)</label>
+                                <label for="Description Deviation">OOS/OOT Category (If Others)</label>
                                <textarea class="summernote" name="oos_category_others_plic" id="summernote-1">
                                     </textarea>
                             </div>
@@ -1577,7 +1641,7 @@ $users = DB::table('users')
                         </div> --}}
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="Description Deviation">OOS/OOT review for Similar Nature</label>
+                                <label for="Description Deviation">OOS/OOT Review For Similar Nature</label>
                                 <textarea class="summernote" name="review_comments_plir" id="summernote-1">
                                     </textarea>
                             </div>
@@ -1678,7 +1742,7 @@ $users = DB::table('users')
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Lead Auditor">Retest/Re-measurement required</label>
+                                <label for="Lead Auditor">Retest/Re-measurement Required</label>
                                 <select name="root_cause_identified_plic">
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
@@ -1688,7 +1752,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group">Resampling required</label>
+                                <label for="Initiator Group">Resampling Required</label>
                                 <select name="is_repeat_assingable_pia">
                                     <option value="">Select</option>
                                     <option value="YES">YES</option>
@@ -1698,7 +1762,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group">Repeat testing required </label>
+                                <label for="Initiator Group">Repeat Testing Required </label>
                                 <select name="repeat_testing_pia">
                                     <option value="">Select</option>
                                     <option value="YES">YES</option>
@@ -1708,20 +1772,20 @@ $users = DB::table('users')
                         </div>
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="Description Deviation">Results of Retest/re-measurement</label>
+                                <label for="Description Deviation">Results of Retest/Re-measurement</label>
                                 <textarea class="summernote" name="Description_Deviation" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="deviation_time">Results of Repeat testing</label>
+                                <label for="deviation_time">Results Of Repeat Testing</label>
                                 <textarea id="result_of_repeat" name="result_of_repeat"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="deviation_time">Impact assessment</label>
+                                <label for="deviation_time">Impact Assessment</label>
                                 <textarea id="impact_assesment_pia" name="impact_assesment_pia"></textarea>
                             </div>
                         </div>
@@ -1969,7 +2033,7 @@ $users = DB::table('users')
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Assignable cause found">Phase IA Assignable cause found</label>
+                                <label for="Assignable cause found">Phase IA Assignable Cause Found</label>
                                 <select name="assign_cause_found" id="assign_cause_found">
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="Yes">Yes</option>
@@ -2014,19 +2078,19 @@ $users = DB::table('users')
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Outcome of Phase IA investigation</label>
+                                <label for="If Others">Outcome of Phase IA Investigation</label>
                                 <textarea id="outcome_phase_IA"  name="outcome_phase_IA" ></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Reason for proceeding to Phase IB investigation</label>
+                                <label for="If Others">Reason for proceeding to Phase IB Investigation</label>
                                 <textarea id="reason_for_proceeding"  name="reason_for_proceeding" ></textarea>
                             </div>
                         </div>
                         <div class="col-12">
 
-                                <label style="font-weight: bold; for="Audit Attachments">Phase IB investigation Checklist</label>
+                                <label style="font-weight: bold; for="Audit Attachments">Phase IB Investigation Checklist</label>
 
                                     @php
                                         $IIB_inv_questions = array(
@@ -2086,7 +2150,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Summary of Review</label>
+                                <label for="If Others">Summary Of Review</label>
                                 <textarea id="summaryy_of_review"  name="summaryy_of_review" ></textarea>
                             </div>
                         </div>
@@ -2098,7 +2162,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="checklists">Proposal for Phase IB hypothesis</label>
+                                <label for="checklists">Proposal For Phase IB hypothesis</label>
                                 <select multiple id="reference_record" name="proposal_for_hypothesis_IB[]">
                                     <option value="">--Select---</option>
                                     <option value="Re-injection of the original vial"
@@ -2134,13 +2198,13 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Details of results (Including original OOS/OOT results for side by side comparison)</label>
+                                <label for="If Others">Details of Results (Including original OOS/OOT results for side by side comparison)</label>
                                 <textarea id="details_of_result"  name="details_of_result" ></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Probable Cause Identified in Phase IB investigation</label>
+                                <label for="If Others">Probable Cause Identified In Phase IB investigation</label>
                                 <select id="Probable_Cause_Identified" name="Probable_Cause_Identified">
                                     <option value="">--Select---</option>
                                     <option value="Yes">Yes</option>
@@ -2150,19 +2214,19 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Any other Comments/ Probable Cause Evidence</label>
+                                <label for="If Others">Any Other Comments/ Probable Cause Evidence</label>
                                 <textarea id="Any_other_Comments"  name="Any_other_Comments" ></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Proposal for Hypothesis testing to confirm Probable Cause identified</label>
+                                <label for="If Others">Proposal For Hypothesis Testing To Confirm Probable Cause Identified</label>
                                 <textarea id="Proposal_for_Hypothesis"  name="Proposal_for_Hypothesis" ></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Summary of Hypothesis</label>
+                                <label for="If Others">Summary Of Hypothesis</label>
                                 <textarea id="Summary_of_Hypothesis"  name="Summary_of_Hypothesis" ></textarea>
                             </div>
                         </div>
@@ -2188,7 +2252,7 @@ $users = DB::table('users')
                         </div> --}}
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Types of assignable cause</label>
+                                <label for="If Others">Types Of Assignable Cause</label>
                                 <select id="Types_of_assignable" name="Types_of_assignable">
                                     <option value="">--Select---</option>
                                     <option value="Analyst error">Analyst error</option>
@@ -2196,6 +2260,7 @@ $users = DB::table('users')
                                     <option value="Method error">Method error</option>
                                     <option value="Environment">Environment</option>
                                     <option value="Other">Other</option>
+                                    <option value="NA">NA</option>
                                 </select>
                             </div>
                         </div>
@@ -2213,7 +2278,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Is Phase IB investigation timeline met</label>
+                                <label for="If Others">Is Phase IB investigation Timeline Met</label>
                                 <select id="timeline_met" name="timeline_met">
                                     <option value="">--Select---</option>
                                     <option value="Yes">Yes</option>
@@ -2223,19 +2288,19 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">If No, Justify for timeline extension</label>
+                                <label for="If Others">If No, Justify For Timeline Extension</label>
                                 <textarea id="timeline_extension"  name="timeline_extension" ></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">CAPA applicable</label>
+                                <label for="If Others">CAPA Applicable</label>
                                 <textarea id="CAPA_applicable"  name="CAPA_applicable" ></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Resampling required </label>
+                                <label for="If Others">Resampling Required </label>
                                 <select id="resampling_required_ib" name="resampling_required_ib">
                                     <option value="">--Select---</option>
                                     <option value="Yes">Yes</option>
@@ -2245,7 +2310,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Repeat testing required</label>
+                                <label for="If Others">Repeat Testing Required</label>
                                 <select id="repeat_testing_ib" name="repeat_testing_ib">
                                     <option value="">--Select---</option>
                                     <option value="Yes">Yes</option>
@@ -2255,13 +2320,13 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Repeat testing plan</label>
+                                <label for="If Others">Repeat Testing Plan</label>
                                 <textarea id="Repeat_testing_plan"  name="Repeat_testing_plan" ></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Phase II investigation required</label>
+                                <label for="If Others">Phase II Investigation Required</label>
                                 <select id="phase_ii_inv_req_ib" name="phase_ii_inv_req_ib">
                                     <option value="">--Select---</option>
                                     <option value="Yes">Yes</option>
@@ -2299,19 +2364,19 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Repeat analysis method/resampling</label>
+                                <label for="If Others">Repeat Analysis Method/Resampling</label>
                                 <textarea id="Repeat_analysis_method"  name="Repeat_analysis_method" ></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Details of repeat analysis</label>
+                                <label for="If Others">Details Of Repeat Analysis</label>
                                 <textarea id="Details_repeat_analysis"  name="Details_repeat_analysis" ></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Impact assessment</label>
+                                <label for="If Others">Impact Assessment</label>
                                 <textarea id="Impact_assessment1"  name="Impact_assessment1" ></textarea>
                             </div>
                         </div>
@@ -2361,7 +2426,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Report Attachments">Resampling required IIB Inv.</label>
+                                <label for="Report Attachments">Resampling Required IIB Inv.</label>
                                 <select name="resampling_req_IIB">
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="Yes">Yes</option>
@@ -2371,7 +2436,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Audit Attachments">Repeat testing required IIB Inv.</label>
+                                <label for="Audit Attachments">Repeat Testing Required IIB Inv.</label>
                                 <select name="Repeat_testing_IIB">
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
@@ -2382,19 +2447,19 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Results Of Repeat testing IIB Inv.</label>
+                                <label for="If Others">Results Of Repeat Testing IIB Inv.</label>
                                 <textarea id="result_of_rep_test_IIB"  name="result_of_rep_test_IIB" ></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Laboratory Investigation Hypothesis details</label>
+                                <label for="If Others">Laboratory Investigation Hypothesis Details</label>
                                 <textarea id="Laboratory_Investigation_Hypothesis"  name="Laboratory_Investigation_Hypothesis" ></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Outcome of Laboratory Investigation</label>
+                                <label for="If Others">Outcome Of Laboratory Investigation</label>
                                 <textarea id="Outcome_of_Laboratory"  name="Outcome_of_Laboratory" ></textarea>
                             </div>
                         </div>
@@ -2426,13 +2491,13 @@ $users = DB::table('users')
                         </div> --}}
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">If assignable cause identified perform re-testing</label>
+                                <label for="If Others">If assignable Cause Identified Perform Re-testing</label>
                                 <textarea id="If_assignable_cause"  name="If_assignable_cause" ></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">If assignable error is not identified proceed as per Phase III investigation</label>
+                                <label for="If Others">If Assignable Cause Is Not Identified Proceed As Per Phase III Investigation</label>
                                 <textarea id="If_assignable_error"  name="If_assignable_error" ></textarea>
                             </div>
                         </div>
@@ -3336,7 +3401,7 @@ $users = DB::table('users')
                                 </div>
                             </div>
 
-                            <div class="sub-head">Method /procedure used during analysis</div>
+                            <div class="sub-head">Method /Procedure Used During Analysis</div>
 
                             @php
                             $check_method_procedure_during_analysis = [
@@ -3704,7 +3769,7 @@ $users = DB::table('users')
                                 </div>
                             </div>
 
-                            <div class="sub-head">Results and Calculation</div>
+                            <div class="sub-head">Results And Calculation</div>
                             @php
                             $Results_and_Calculation = [
                                 [
@@ -3805,7 +3870,7 @@ $users = DB::table('users')
             </div>
             <div id="CCForm51" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head"> Checklist for Review of Training records Analyst Involved in Testing </div>
+                    <div class="sub-head"> Checklist For Review Of Training Records Analyst Involved In Testing </div>
                                 @php
                                 $Training_records_Analyst_Involveds = [
                                     [
@@ -3911,7 +3976,7 @@ $users = DB::table('users')
 
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Review of sample intactness before analysis ? </div>
+                        Checklist For Review Of Sample Intactness Before Analysis ? </div>
                         @php
                         $sample_intactness_before_analysis = [
                         [
@@ -4017,7 +4082,7 @@ $users = DB::table('users')
 
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Review of test methods & Procedures </div>
+                        Review Of Test Methods & Procedures </div>
                                     @php
                                     $test_methods_Procedures = [
                                         [
@@ -4118,7 +4183,7 @@ $users = DB::table('users')
 
                 <div class="inner-block-content">
                     <div class="sub-head">
-                       Checklist For Review of Media, Buffer, Standards preparation & test accessories </div>
+                       Checklist For Review Of Media, Buffer, Standards Preparation & Test Accessories </div>
                                 @php
                                 $Review_of_Media_Buffer_Standards_prepar = [
                                 [
@@ -4247,7 +4312,7 @@ $users = DB::table('users')
                 </div>
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Review of Media, Buffer, Standards preparation & test accessories </div>
+                        Checklist For Review Of Media, Buffer, Standards Preparation & Test Accessories </div>
                                     @php
                                     $Checklist_for_Revi_of_Media_Buffer_Stand_preps = [
                                         [
@@ -4357,7 +4422,7 @@ $users = DB::table('users')
                 </div>
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Disinfectant Details: </div>
+                        Checklist For Disinfectant Details: </div>
                         @php
                         $check_for_disinfectant_details = [
                         [
@@ -4481,7 +4546,7 @@ $users = DB::table('users')
                 </div>
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Review of instrument/equipment </div>
+                        Checklist For Review Of Instrument/Equipment </div>
                         @php
                         $Checklist_for_Review_of_instrument_equips = [
                         [
@@ -4595,7 +4660,7 @@ $users = DB::table('users')
                     </div>
                     <div class="col-lg-12">
                         <div class="group-input">
-                            <label for="Audit Attachments">If Yes, Provide attachment details</label>
+                            <label for="Audit Attachments">If Yes, Provide Attachment Details</label>
                             <small class="text-primary">
                                 Please Attach all relevant or supporting documents
                             </small>
@@ -4625,7 +4690,7 @@ $users = DB::table('users')
             <div id="CCForm52" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                    Checklist for Review of Training records Analyst Involved in Testing
+                    Checklist For Review Of Training Records Analyst Involved In Testing
                     </div>
                         @php
                             $Checklist_for_Review_of_Training_records_Analysts = [
@@ -4743,7 +4808,7 @@ $users = DB::table('users')
 
                 <div class="inner-block-content">
                     <div class="sub-head">
-                    Checklist for Review of sampling and Transportation procedures </div>
+                    Checklist For Review Of Sampling And Transportation Procedures </div>
                         @php
                         $Checklist_for_Review_of_sampling_and_Transports = [
                         [
@@ -4889,7 +4954,7 @@ $users = DB::table('users')
 
                 <div class="inner-block-content">
                     <div class="sub-head">
-                    Checklist for Review of Test Method & procedure: </div>
+                    Checklist For Review Of Test Method & Procedure: </div>
                         @php
                             $Checklist_Review_of_Test_Method_proceds = [
                             [
@@ -5031,7 +5096,7 @@ $users = DB::table('users')
 
                 <div class="inner-block-content">
                     <div class="sub-head">
-                    Checklist for Review of microbial isolates /Contamination </div>
+                    Checklist For Review Of Microbial Isolates / Contamination </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="group-input">
@@ -5215,7 +5280,7 @@ $users = DB::table('users')
 
                 <div class="inner-block-content">
                     <div class="sub-head">
-                    Checklist for Review of Media preparation, RTU media and Test Accessories </div>
+                    Checklist For Review Of Media Preparation, RTU Media And Test Accessories </div>
                             @php
                                 $Checklist_for_Review_Media_prepara_RTU_medias = [
                                     [
@@ -5427,7 +5492,7 @@ $users = DB::table('users')
 
                 <div class="inner-block-content">
                     <div class="sub-head">
-                    Checklist for Review of Environmental condition in the testing area :</div>
+                    Checklist For Review Of Environmental Condition In The Testing Area :</div>
                         @php
                         $Checklist_Review_Environment_condition_in_tests = [
                                                     [
@@ -5532,7 +5597,7 @@ $users = DB::table('users')
 
                     <div class="inner-block-content">
                     <div class="sub-head">
-                    Checklist for Review of Instrument/Equipment:</div>
+                    Checklist For Review Of Instrument/Equipment:</div>
                         @php
                             $review_of_instrument_bioburden_and_waters = [
                             [
@@ -5686,7 +5751,7 @@ $users = DB::table('users')
                 </div>
                 <div class="inner-block-content">
                     <div class="sub-head">
-                    Checklist for Disinfectant Details:</div>
+                    Checklist For Disinfectant Details:</div>
                         @php
                         $disinfectant_details_of_bioburden_and_water_tests = [
                         [
@@ -5780,7 +5845,7 @@ $users = DB::table('users')
                 </div>
                 <div class="col-lg-12">
                     <div class="group-input">
-                        <label for="Audit Attachments">If Yes, Provide attachment details</label>
+                        <label for="Audit Attachments">If Yes, Provide Attachment Details</label>
                         <small class="text-primary">
                             Please Attach all relevant or supporting documents
                         </small>
@@ -5812,7 +5877,7 @@ $users = DB::table('users')
 
                     <div class="sub-head">
 
-                        Checklist for Review of Training records Analyst Involved in Testing
+                        Checklist For Review Of Training Records Analyst Involved In Testing
 
                     </div>
                         @php
@@ -5911,7 +5976,7 @@ $users = DB::table('users')
                     </div>
                         <div class="inner-block-content">
 
-                                    <div class="sub-head">Checklist for Review of sample intactness before analysis ? </div>
+                                    <div class="sub-head">Checklist For Review Of Sample Intactness Before Analysis ? </div>
                                         @php
                                         $sample_intactness_before_analysis2 = [
                                             [
@@ -6030,7 +6095,7 @@ $users = DB::table('users')
                                 </div>
                                 <div class="inner-block-content">
 
-                                    <div class="sub-head">Checklist for Review of test methods & Procedures</div>
+                                    <div class="sub-head">Checklist For Review Of Test Methods & Procedures</div>
                                             @php
                                         $checklist_for_review_of_test_method_IMAs = [
                                                 [
@@ -6160,7 +6225,7 @@ $users = DB::table('users')
 
                                     <div class="sub-head">
 
-                                        Checklist for Review of Media, Buffer, Standards preparation & test accessories </div>
+                                        Checklist For Review oF Media, Buffer, Standards Preparation & Test Accessories </div>
                                     @php
                                         $cr_of_media_buffe_rst_IMAs = [
                                         [
@@ -6389,7 +6454,7 @@ $users = DB::table('users')
 
                                     <div class="sub-head">
 
-                                        Checklist for Review of Microbial cultures/Inoculation (Test organism) </div>
+                                        Checklist For Review Of Microbial Cultures/Inoculation (Test Organism) </div>
                                         @php
                                         $CR_of_microbial_cultures_inoculation_IMAs = [
                                                     [
@@ -6518,7 +6583,7 @@ $users = DB::table('users')
 
                                     <div class="sub-head">
 
-                                        Checklist for Review of Environmental conditions in the testing area </div>
+                                        Checklist For Review Of Environmental Conditions In The TEsting Area </div>
                                         @php
                                         $CR_of_Environmental_condition_in_testing_IMAs = [
                                                 [
@@ -6638,7 +6703,7 @@ $users = DB::table('users')
 
                                     <div class="sub-head">
 
-                                        Checklist for Review of instrument/equipment </div>
+                                        Checklist For Review Of Instrument/Equipment </div>
                                                 @php
                                                 $CR_of_instru_equipment_IMAs = [
                                                             [
@@ -6908,7 +6973,7 @@ $users = DB::table('users')
 
                                     <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="Audit Attachments">If Yes, Provide attachment details</label>
+                                            <label for="Audit Attachments">If Yes, Provide Attachment Details</label>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents
                                             </small>
@@ -6936,7 +7001,7 @@ $users = DB::table('users')
             <div id="CCForm54" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for review of Training records Analyst Involved in monitoring
+                        Checklist For Review Of Training Records Analyst Involved In Monitoring
                     </div>
                         @php
                             $CR_of_training_rec_anaylst_in_monitoring_CIEMs = [
@@ -7147,7 +7212,7 @@ $users = DB::table('users')
                         </div>
                     </div>
                     <div class="sub-head">
-                        Checklist for comparison of results with other parameters:
+                        Checklist For Comparison Of Results With Other Parameters:
                     </div>
                             @php
                                 $Check_for_comparision_of_results_CIEMs = [
@@ -7261,7 +7326,7 @@ $users = DB::table('users')
                         </div>
                     </div>
                     <div class="sub-head">
-                    Checklist for details of media dehydrated media used:
+                    Checklist For Details Of Media Dehydrated Media Used:
                     </div>
                             @php
                                $checklist_for_media_dehydrated_CIEMs = [
@@ -7360,7 +7425,7 @@ $users = DB::table('users')
                         </div>
                     </div>
                     <div class="sub-head">
-                    Checklist for media preparation details and sterilization :
+                    Checklist For Media Preparation Details And Sterilization :
                     </div>
                             @php
                                $checklist_for_media_prepara_sterilization_CIEMs = [
@@ -7474,7 +7539,7 @@ $users = DB::table('users')
                         </div>
                     </div>
                     <div class="sub-head">
-                    Checklist for review of environmental conditions in the testing area
+                    Checklist For Review Of Environmental Conditions In The Testing Area
                     </div>
                         @php
                            $CR_of_En_condition_in_testing_CIEMs = [
@@ -7562,7 +7627,7 @@ $users = DB::table('users')
                         </div>
                     </div>
                     <div class="sub-head">
-                    Checklist for disinfectant Details:
+                    Checklist For Disinfectant Details:
                     </div>
                         @php
                            $check_for_disinfectant_CIEMs = [
@@ -7656,7 +7721,7 @@ $users = DB::table('users')
                         </div>
                     </div>
                     <div class="sub-head">
-                    Checklist for fogging details :
+                    Checklist For Fogging Details :
                     </div>
                             @php
                               $checklist_for_fogging_CIEMs = [
@@ -7749,7 +7814,7 @@ $users = DB::table('users')
                         </div>
                     </div>
                     <div class="sub-head">
-                    Checklist for review of Test Method & procedure:
+                    Checklist For Review Of Test Method & Procedure:
                     </div>
                         @php
                           $CR_of_test_method_CIEMs = [
@@ -7832,7 +7897,7 @@ $users = DB::table('users')
                         </div>
                     </div>
                     <div class="sub-head">
-                    Checklist for review of microbial isolates /Contamination (If completed at the time of filling of checklist, if not then this details shall be updated upon completion of identification)
+                    Checklist For Review Of Microbial Isolates /Contamination (If completed at the time of filling of checklist, if not then this details shall be updated upon completion of identification)
                     </div>
                             @php
                               $CR_microbial_isolates_contamination_CIEMs = [
@@ -7935,7 +8000,7 @@ $users = DB::table('users')
                         </div>
                     </div>
                     <div class="sub-head">
-                    Checklist for review of Instrument/Equipment:
+                    Checklist For Review Of Instrument/Equipment:
                     </div>
                         @php
                             $CR_of_instru_equip_CIEMs = [
@@ -8089,7 +8154,7 @@ $users = DB::table('users')
                         </div>
                     </div>
                     <div class="sub-head">
-                    Checklist for trend Analysis:
+                    Checklist For Trend Analysis:
                     </div>
                             @php
                               $Ch_Trend_analysis_CIEMs = [
@@ -8173,7 +8238,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Audit Attachments">If Yes, Provide attachment details</label>
+                                <label for="Audit Attachments">If Yes, Provide Attachment Details</label>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
                                 </small>
@@ -8202,7 +8267,7 @@ $users = DB::table('users')
             <div id="CCForm55" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Analyst training & Procedure
+                        Checklist For Analyst Training & Procedure
                     </div>
                         @php
                             $checklist_for_analyst_training_CIMTs = [
@@ -8310,7 +8375,7 @@ $users = DB::table('users')
                 </div>
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Comparison of results (With same & Previous Day Media GPT) :
+                        Checklist For Comparison Of Results (With Same & Previous Day Media GPT) :
                     </div>
                         @php
                         $checklist_for_comp_results_CIMTs = [
@@ -8424,7 +8489,7 @@ $users = DB::table('users')
                 </div>
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Culture verification ?
+                        Checklist For Culture Verification ?
                     </div>
 
                     @php
@@ -8538,7 +8603,7 @@ $users = DB::table('users')
 
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Sterilize Accessories :
+                        Checklist For Sterilize Accessories :
                     </div>
                             @php
                                 $sterilize_accessories_CIMTs = [
@@ -8636,7 +8701,7 @@ $users = DB::table('users')
                 </div>
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Instrument/Equipment Details:
+                        Checklist For Instrument/Equipment Details:
                     </div>
                         @php
                         $checklist_for_intrument_equip_last_CIMTs = [
@@ -8796,7 +8861,7 @@ $users = DB::table('users')
                 </div>
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Disinfectant Details:
+                        Checklist For Disinfectant Details:
                     </div>
                         @php
                         $disinfectant_details_last_CIMTs = [
@@ -8894,7 +8959,7 @@ $users = DB::table('users')
                 </div>
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Results and Calculation :
+                        Checklist For Results And Calculation :
                     </div>
 
                     @php
@@ -8983,7 +9048,7 @@ $users = DB::table('users')
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Audit Attachments">If Yes, Provide attachment details</label>
+                                        <label for="Audit Attachments">If Yes, Provide Attachment Details</label>
                                         <small class="text-primary">
                                             Please Attach all relevant or supporting documents
                                         </small>
@@ -9098,7 +9163,7 @@ $users = DB::table('users')
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">Escalation required</label>
+                                <label for="If Others">Escalation Required</label>
                                 <select id="escalation_required" name="escalation_required">
                                     <option value="">--Select---</option>
                                     <option value="Yes">Yes</option>
@@ -9140,7 +9205,16 @@ $users = DB::table('users')
                                 });
                             });
                         </script>
-
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="If Others">Phase IB Assignable Cause Found</label>
+                                        <select id="phase_ib_assi_cause" name="phase_ib_assi_cause">
+                                            <option value="">--Select---</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                </div>
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase IB CQAH/QAH Remark</label>
@@ -9260,7 +9334,16 @@ $users = DB::table('users')
                 <div class="inner-block-content">
                     <div class="sub-head">Phase II A QAH/CQAH Review</div>
                     <div class="row">
-
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="If Others">Phase II A Assignable Cause Found</label>
+                                <select id="phase_ii_a_assi_cause" name="phase_ii_a_assi_cause">
+                                    <option value="">--Select---</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase II A QAH/CQAH Remark</label>
@@ -9534,7 +9617,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Audit Team"> OOS Category-Root Cause Ident.</label>
+                                <label for="Audit Team"> OOS/OOT Category-Root Cause Ident.</label>
                                 <select name="oos_category_root_cause_ident_plic">
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="Analyst Error">Analyst Error</option>
@@ -9546,7 +9629,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="Description Deviation">OOS Category (Others)</label>
+                                <label for="Description Deviation">OOS/OOT Category (Others)</label>
                                <textarea class="summernote" name="oos_category_others_plic" id="summernote-1">
                                     </textarea>
                             </div>
@@ -9561,7 +9644,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="Description Deviation">OOS Category-Root Cause Ident.</label>
+                                <label for="Description Deviation">OOS/OOT Category-Root Cause Ident.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                 <textarea class="summernote" name="Description_Deviation" id="summernote-1">
                                     </textarea>
@@ -9639,7 +9722,7 @@ $users = DB::table('users')
                             </div>
                         </div>
 
-                        <div class="sub-head">OOS Review for Similar Nature</div>
+                        <div class="sub-head">OOS/OOT Review for Similar Nature</div>
 
                         <!-- ---------------------------grid-1 ---Preliminary Lab Invst. Review----------------------------- -->
                         <div class="group-input">
@@ -9906,7 +9989,7 @@ $users = DB::table('users')
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Report Attachments">OOS Cause Identified II A</label>
+                            <label for="Report Attachments">OOS/OOT Cause Identified II A</label>
                             <select name="manufact_invest_required_piii">
                                 <option value="">Enter Your Selection Here</option>
                                 <option value="Yes">Yes</option>
@@ -9916,18 +9999,20 @@ $users = DB::table('users')
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Audit Attachments">OOS Category II A</label>
+                            <label for="Audit Attachments">OOS/OOT Category II A</label>
                             <select name="hypo_exp_required_piii">
                                 <option value="">Enter Your Selection Here</option>
-                                <option value="yes">Yes</option>
-                                <option value="no">No</option>
-
+                                <option value="Analyst Error">Analyst Error</option>
+                                <option value="Instrument Error">Instrument Error</option>
+                                <option value="Product/Material Related Error">Product/Material Related Error</option>
+                                <option value="Other Error">Other Error</option>
+                                <option value="NA">NA</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Audit Preparation Completed On">OOS Category If Others </label>
+                            <label for="Audit Preparation Completed On">OOS/OOT Category If Others </label>
                             <input type="text" name="if_others_oos_category">
                         </div>
                     </div>
@@ -9949,7 +10034,7 @@ $users = DB::table('users')
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Details of Obvious Error">OOS Review For Similar Nature II A</label>
+                            <label for="Details of Obvious Error">OOS/OOT Review For Similar Nature II A</label>
                             <input type="text" name="OOS_review_similar">
                         </div>
                     </div>
@@ -10326,7 +10411,7 @@ $users = DB::table('users')
         <div id="CCForm8" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
-                OOS Conclusion
+                OOS/OOT Conclusion
                 </div>
                 <div class="row">
                     <div class="col-md-12 mb-4">
@@ -10384,7 +10469,7 @@ $users = DB::table('users')
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Audit Attachments">Results to be Reported</label>
+                            <label for="Audit Attachments">Results To Be Reported</label>
                             <select name="results_to_be_reported_oosc">
                                 <option value="">Select an Option</option>
                                 <option value="Intial">Initial</option>
@@ -10400,13 +10485,13 @@ $users = DB::table('users')
                     </div>
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
-                            <label for="Description Deviation">Justifi. for Averaging Results</label>
+                            <label for="Description Deviation">Justifi. For Averaging Results</label>
                             <textarea class="summernote" name="justifi_for_averaging_results_oosc" id="summernote-1"></textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Reference Recores">OOS Stands </label>
+                            <label for="Reference Recores">OOS/OOT Stands </label>
                             <select name="oos_stands_oosc">
                                 <option value="">Select an Option</option>
                                 <option value="Valid">Valid</option>
@@ -10440,7 +10525,7 @@ $users = DB::table('users')
                     </div>
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
-                            <label for="Description Deviation">Justify if CAPA not required</label>
+                            <label for="Description Deviation">Justify If CAPA Not Required</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="justify_if_capa_not_required_oosc" id="summernote-1">
                                     </textarea>
@@ -10910,7 +10995,7 @@ $users = DB::table('users')
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Audit Attachments">OOS Category</label>
+                            <label for="Audit Attachments">OOS/OOT Category</label>
                              <select name="oos_category_bd">
                                 <option value="">Enter Your Selection Here</option>
                                 <option value="default">Enter Your Selection Here</option>
@@ -11025,7 +11110,7 @@ $users = DB::table('users')
                     </div> --}}
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
-                            <label for="Description Deviation">Justify for Delay in Activity</label>
+                            <label for="Description Deviation">Justify For Delay In Activity</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="justify_for_delay_in_activity_bd" id="summernote-1">
                                     </textarea>
@@ -11294,7 +11379,7 @@ $users = DB::table('users')
         <div id="CCForm20" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="row">
-                    <div class="sub-head"> OOS Extension </div>
+                    <div class="sub-head"> OOS/OOT Extension </div>
                     <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="Audit Schedule End Date">Proposed Due Date (OOS)</label>
