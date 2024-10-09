@@ -1025,13 +1025,25 @@
                                 </div> --}}
 
 
-                                <div class="col-lg-6" id="others_block" style="display: none;">
+                                <!-- <div class="col-lg-6" id="others_block" style="display: none;">
                                     <div class="group-input">
                                         <label for="others">Others <span id="asteriskInviothers" style="display: none"
                                                 class="text-danger">*</span></label>
                                         <input type="text" id="others" name="others" class="others">
                                     </div>
-                                </div>
+                                </div> -->
+
+
+                                <div class="col-md-6">
+                                            <div class="group-input">
+                                            <label for="others">Others <span id="asteriskInviothers" style="display: none"
+                                            class="text-danger">*</span></label>
+
+                                                <textarea class="tiny" name="others" 
+                                                    id="summernote-2"></textarea>
+                                            </div>
+
+                                        </div>
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         var selectField = document.getElementById('audit_type');

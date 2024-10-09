@@ -1069,7 +1069,7 @@ class DeviationController extends Controller
             $history->save();
 
            }
-           if (!empty ($request->initiator_name)){
+           if (!empty ($request->division_id)){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Initiator';
@@ -1087,12 +1087,12 @@ class DeviationController extends Controller
 
            }
 
-            if (!empty ($request->initiation_date)){
+            if (!empty ($request->intiation_date)){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Date of Initiation';
             $history->previous = "Null";
-            $history->current =  Helpers::getdateFormat($deviation->initiation_date);
+            $history->current =  Helpers::getdateFormat($deviation->intiation_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1962,6 +1962,28 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $data8->risk_acceptance2 = serialize($request->risk_acceptance2 ?? []);
         $data8->mitigation_proposal = serialize($request->mitigation_proposal ?? []);
 
+
+
+
+
+        $data8->risk_factor_1 = serialize($request->risk_factor_1 ?? []);
+        $data8->risk_factor_1 = serialize($request->input('risk_factor_1', []));
+        $data8->problem_cause_1 = serialize($request->input('problem_cause_1', []));
+        $data8->existing_risk_control_1 = serialize($request->input('existing_risk_control_1', []));
+        $data8->initial_severity_1 = serialize($request->input('initial_severity_1', []));
+        $data8->initial_detectability_1 = serialize($request->input('initial_detectability_1', []));
+        $data8->initial_probability_1 = serialize($request->input('initial_probability_1', []));
+        $data8->initial_rpn_1 = serialize($request->input('initial_rpn_1', []));
+        $data8->risk_control_measure_1 = serialize($request->input('risk_control_measure_1', []));
+        $data8->residual_severity_1 = serialize($request->input('residual_severity_1', []));
+        $data8->residual_probability_1 = serialize($request->input('residual_probability_1', []));
+        $data8->residual_detectability_1 = serialize($request->input('residual_detectability_1', []));
+        $data8->residual_rpn_1 = serialize($request->input('residual_rpn_1', []));
+        $data8->risk_acceptance_1 = serialize($request->input('risk_acceptance_1', []));
+        $data8->risk_acceptance3 = serialize($request->input('risk_acceptance3', []));
+        $data8->mitigation_proposal_1 = serialize($request->input('mitigation_proposal_1', []));
+    
+        //dd($data8) ;
         $data8->save();
 
 
@@ -3091,6 +3113,29 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
              $history->previous = $lastDeviation->short_description;
             $history->current = $deviation->short_description;
             $history->comment = $deviation->submit_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+
+
+
+
+        if ($lastDeviation->due_date != $deviation->due_date || !empty ($request->comment)) {
+            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                            ->where('activity_type', 'Due Date')
+                            ->exists();
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'Due Date';
+            $history->previous = Helpers::getdateFormat($lastDeviation->due_date);
+            $history->current = Helpers::getdateFormat($deviation->due_date);
+             $history->comment = $deviation->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -8293,7 +8338,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
 
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields Required!',
-                            'message' => 'HOD Remarks is yet to be filled!',
+                            'message' => 'Pls fill HOD Review tab !',
                             'type' => 'warning',
                         ]);
 
@@ -8302,7 +8347,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for QA/CQA initial review state'
+                            'message' => 'Sent for QA/CQA initial  Assessment Tab'
                         ]);
                     }
 
@@ -9292,7 +9337,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for HOD Final Review state'
+                            'message' => 'Sent for QA/CQA Head/Manager Designee Approval'
                         ]);
                     }
 
@@ -9360,7 +9405,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
                 Session::flash('swal', [
                     'title' => 'Mandatory Fields Required!',
-                    'message' => 'QA/CQA Head/ Designee Approval',
+                    'message' => 'QA/CQA Head/ Designee Approval Tab',
                     'type' => 'warning',
                 ]);
 
@@ -9369,7 +9414,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 Session::flash('swal', [
                     'type' => 'success',
                     'title' => 'Success',
-                    'message' => 'Sent for HOD Final Review state'
+                    'message' => 'Sent for Pending Initiator Update state'
                 ]);
                  }
 
@@ -9553,7 +9598,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for Implementation verification by QA/CQA initial review state'
+                            'message' => 'Sent for Implementation verification by QA/CQA state'
                         ]);
                     }
 
@@ -10152,6 +10197,8 @@ public function audit_trail_filter(Request $request, $id)
             $grid_data1 = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Document")->first();
             $grid_data2 = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Product")->first();
 
+            // $data8 = DeviationGrid::where('deviation_grid_id', $id)->where('type', 'effect_analysis')->first();
+          
             $investigationTeam = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'TeamInvestigation'])->first();
             $investigation_data = json_decode($investigationTeam->data, true);
 
@@ -10160,7 +10207,8 @@ public function audit_trail_filter(Request $request, $id)
 
             $whyData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'why'])->first();
             $why_data = json_decode($whyData->data, true);
-        $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->first();
+        // $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->first();
+        $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->latest()->first();
 
 
             $capaExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "Capa"])->first();
@@ -10172,7 +10220,8 @@ public function audit_trail_filter(Request $request, $id)
 
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            // dd($investigation_data);
+
+           //   dd($riskEffectAnalysis);
             // foreach($investigation_data as $invest)
             // {
             //     return $invest;
