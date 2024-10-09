@@ -871,7 +871,7 @@
                 <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline; width:5%">QA/CQA
                         Initial
-                        Remarks </label>
+                        Remark </label>
                     <span style="font-size: 0.8rem; margin-left: 60px;">
                         @if ($data->QAInitialRemark)
                             {{ $data->QAInitialRemark }}
@@ -886,7 +886,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    QA Initial Attachments
+                QA/CQA initial Attachments
                 </div>
                 <table>
 
@@ -2347,7 +2347,7 @@
 
                                 <tr>
 
-                                    <th class="w-20">Contract Giver Review Required ?
+                                    <th class="w-20">Contract Giver Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -3039,6 +3039,130 @@
                         </div>
                     </div>
 
+
+
+                    <div class="block">
+                        <div class="block-head">
+                        QA/CQA Final Assessment
+                        </div>
+                        <table>
+
+                            <tr>
+                                <th class="w-20">QA/CQA Final Assessment Comment </th>
+                                <td class="w-30">
+                                    @if ($data->qa_final_assement)
+                                        {{ strip_tags($data->qa_final_assement) }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+
+                        </table>
+                    </div>
+
+                    <div class="border-table">
+                            <div class="block-head">
+                            QA/CQA Final Assessment attachment
+                            </div>
+                            <table>
+
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-60">Attachment</th>
+                                </tr>
+                                @if ($data->qa_final_assement_attach)
+                                    @foreach (json_decode($data->qa_final_assement_attach) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-20">Not Applicable</td>
+                                    </tr>
+                                @endif
+
+                            </table>
+                        </div>
+
+
+
+
+                        <div class="block">
+                        <div class="block-head">
+                        QA/CQA Head/Designee Approval comment
+                        </div>
+                        <table>
+
+                            <tr>
+                                <th class="w-20">QA/CQA Head/Designee Approval comment </th>
+                                <td class="w-30">
+                                    @if ($data->qa_head_designe_comment)
+                                        {{ strip_tags($data->qa_head_designe_comment) }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+
+                        </table>
+                    </div>
+
+                    <div class="border-table">
+                            <div class="block-head">
+                           
+                        QA/CQA Head/ Designee Approval attachment
+                            </div>
+                            <table>
+
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-60">Attachment</th>
+                                </tr>
+                                @if ($data->qa_head_designee_attach)
+                                    @foreach (json_decode($data->qa_head_designee_attach) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-20">Not Applicable</td>
+                                    </tr>
+                                @endif
+
+                            </table>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <!-- **************************INVESTIGATION TAB START******************************* -->
 
                     <div class="block">
@@ -3650,7 +3774,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td>Coverage</td>
+                                            <td>Why</td>
                                             <td>{{ $data->coverage_will_be }}</td>
                                             <td>{{ $data->coverage_will_not_be }}</td>
                                             <td>{{ $data->coverage_rationable }}</td>
@@ -4020,7 +4144,7 @@
                                             @endif
                                         </div>
                                     </td> --}}
-                                    <th class="w-20">Name of the Department</th>
+                                    <!-- <th class="w-20">Name of the Department</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data->department_capa)
@@ -4052,7 +4176,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> -->
 
                                 <tr>
                                     <th class="w-20">Root Cause</th>
@@ -4101,7 +4225,7 @@
                                     </td>
                                 </tr>
 
-                                <tr>
+                                <!-- <tr>
                                     <th class="w-20">Target Completion Date</th>
                                     <td class="w-80">
                                         <div>
@@ -4159,9 +4283,9 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> -->
 
-                                    <th class="w-20">CAPA Closure Attachment</th>
+                                    <th class="w-20">CAPA  Attachment</th>
                                     <td class="w-80">
                                         <div>
                                             @if ($data->CAPA_Closure_attachment)
@@ -4535,7 +4659,7 @@
                     </div>
                     <div class="block">
                         <div class="block-head">
-                            QAH/Designee Approval
+                        Head QA/CQA / Designee Closure Approval
                         </div>
 
                         <div class="inner-block">
@@ -4568,7 +4692,7 @@
                         <div class="inner-block">
                             <label class="Summer"
                                 style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
-                                QAH/Designee Closure Comments </label>
+                                Head QA/CQA / Designee Closure Approval Comments </label>
                             <span style="font-size: 0.8rem; margin-left: 60px;">
                                 @if ($data->Closure_Comments)
                                     {{ $data->Closure_Comments }}
@@ -4594,7 +4718,7 @@
                     </div>
                     <div class="border-table">
                         <div class="block-head">
-                            QAH/Designee Closure Attachments
+                        Head QA/CQA / Designee Closure Approval Attachments
                         </div>
                         <table>
 
@@ -4672,17 +4796,7 @@
                         <th class="w-20">QA/CQA Initial Review Comment</th>
                         <td class="w-30">{{ $data->QA_Initial_Review_Comments }}</td>
                     </tr>
-                    <tr>
-                        <th class="w-20">CFT Review Not Required By</th>
-                        <td class="w-30">{{ $data->cft_review_not_req_by}}</td>
-                        <th class="w-20">CFT Review Not Required On</th>
-                        <td class="w-30">{{ $data->cft_review_not_req_on }}</td>
 
-                    </tr>
-                    <tr>
-                        <th class="w-20">CFT Review Not Required Comment</th>
-                        <td class="w-30">{{ $data->cft_review_not_req_comment }}</td>
-                    </tr>
                     <tr>
                         <th class="w-20">CFT Review Complete By</th>
                         <td class="w-30">{{ $data->CFT_Review_Complete_By }}</td>
@@ -4695,17 +4809,29 @@
                         <td class="w-30">{{ $data->CFT_Review_Comments }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">QA/CQA Final Review Complete By</th>
+                        <th class="w-20">CFT Review Not Required By</th>
+                        <td class="w-30">{{ $data->cft_review_not_req_by}}</td>
+                        <th class="w-20">CFT Review Not Required On</th>
+                        <td class="w-30">{{ $data->cft_review_not_req_on }}</td>
+
+                    </tr>
+                    <tr>
+                        <th class="w-20">CFT Review Not Required Comment</th>
+                        <td class="w-30">{{ $data->cft_review_not_req_comment }}</td>
+                    </tr>
+                  
+                    <tr>
+                        <th class="w-20">QA/CQA Final Assessement Complete By</th>
                         <td class="w-30">{{ $data->QA_Final_Review_Complete_By }}</td>
-                        <th class="w-20">QA/CQA Final Review Complete On</th>
+                        <th class="w-20">QA/CQA Final Assessement Complete On</th>
                         <td class="w-30">{{ $data->QA_Final_Review_Complete_On }}</td>
 
                     </tr>
                     <tr>
-                        <th class="w-20">QA/CQA Final Review Comment</th>
+                        <th class="w-20">QA/CQA Final Assessement Complete Comment</th>
                         <td class="w-30">{{ $data->QA_Final_Review_Comments }}</td>
                     </tr>
-                    {{-- <tr>
+                    <tr>
                         <th class="w-20">Approved By</th>
                         <td class="w-30">{{ $data->Approved_By }}</td>
                         <th class="w-20">Approved ON</th>
@@ -4715,8 +4841,8 @@
                     <tr>
                         <th class="w-20">Approved Comments</th>
                         <td class="w-30">{{ $data->Approved_Comments }}</td>
-                    </tr> --}}
-                    <tr>
+                    </tr> 
+                    <!-- <tr>
                         <th class="w-20">QA/CQA Head/Manager Designee Approva By</th>
                         <td class="w-30">{{ $data->QA_head_approved_by }}</td>
                         <th class="w-20">QA/CQA Head/Manager Designee Approva ON</th>
@@ -4726,16 +4852,16 @@
                     <tr>
                         <th class="w-20">QA/CQA Head/Manager Designee Approva Comment</th>
                         <td class="w-30">{{ $data->QA_head_approved_comment }}</td>
-                    </tr>
+                    </tr> -->
                     <tr>
-                        <th class="w-20">Initiator Update By</th>
+                        <th class="w-20">Initiator Update Completed By</th>
                         <td class="w-30">{{ $data->pending_initiator_approved_by }}</td>
-                        <th class="w-20">Initiator Update ON</th>
+                        <th class="w-20">Initiator Update Completed ON</th>
                         <td class="w-30">{{ $data->pending_initiator_approved_on }}</td>
 
                     </tr>
                     <tr>
-                        <th class="w-20">Initiator Update Comment</th>
+                        <th class="w-20">Initiator Update Completed Comment</th>
                         <td class="w-30">{{ $data->pending_initiator_approved_comment }}</td>
                     </tr>
                     <tr>

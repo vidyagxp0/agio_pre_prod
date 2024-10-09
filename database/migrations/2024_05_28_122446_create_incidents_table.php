@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('Initiator_Group')->nullable();
             $table->longText('short_description')->nullable();
             $table->string('short_description_required')->nullable();
-            $table->string('nature_of_repeat')->nullable();
+            $table->longText('nature_of_repeat')->nullable();
             $table->text('incident_date')->nullable();
             $table->text('incident_reported_date')->nullable();
             $table->string('Facility')->nullable();
@@ -58,7 +58,7 @@ return new class extends Migration
             $table->string('customers')->nullable();
             $table->string('incident_id')->nullable();
             $table->longText('QAInitialRemark')->nullable();
-           
+
             $table->longText('Investigation_Summary')->nullable();
             $table->longText('Impact_assessment')->nullable();
             $table->longText('Root_cause')->nullable();
@@ -93,11 +93,11 @@ return new class extends Migration
             $table->string('QA_Final_Review_Complete_By')->nullable();
             $table->string('QA_Final_Review_Complete_On')->nullable();
             $table->longText('QA_Final_Review_Comments')->nullable();
-            
+
             $table->string('CFT_Review_Complete_By')->nullable();
             $table->string('CFT_Review_Complete_On')->nullable();
             $table->longText('CFT_Review_Comments')->nullable();
-             
+
             $table->string('qa_more_info_required_by')->nullable();
             $table->string('qa_more_info_required_on')->nullable();
             $table->string('Approved_By')->nullable();
@@ -107,11 +107,11 @@ return new class extends Migration
             $table->text('QA_head_approved_by')->nullable();
             $table->text('QA_head_approved_on')->nullable();
             $table->longText('QA_head_approved_comment')->nullable();
-            
+
             $table->text('pending_initiator_approved_by')->nullable();
             $table->text('pending_initiator_approved_on')->nullable();
             $table->longText('pending_initiator_approved_comment')->nullable();
-            
+
             $table->text('QA_final_approved_by')->nullable();
             $table->text('QA_final_approved_on')->nullable();
             $table->longText('QA_final_approved_comment')->nullable();

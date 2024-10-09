@@ -120,7 +120,8 @@ class ExtensionNewController extends Controller
         $extensionNew->parent_record = $request->parent_record;
 
         $extensionNew->initiation_date = $request->initiation_date;
-        $extensionNew->related_records = implode(',', $request->related_records);
+        $extensionNew->related_records = $request->related_records;
+        // $extensionNew->related_records = implode(',', $request->related_records);
         $extensionNew->short_description = $request->short_description;
 
         $extensionNew->Extension = $request->Extension;
@@ -203,10 +204,10 @@ class ExtensionNewController extends Controller
         $existingRecord = extension_new::where(['parent_id' => $request->parent_id, 'parent_type' => $request->parent_type])->latest()->first();
         // dd($existingRecord);
         if($existingRecord){
-            $extensionNew->count = $existingRecord->count + 1;
+            $extensionNew->count = str_replace('number',1,$existingRecord->count) + 1;
         } else {
             $extensionNew->count = $count;
-        }
+        }   
 
         $extensionNew->save();
 
@@ -585,6 +586,8 @@ class ExtensionNewController extends Controller
             ->where('user_roles.q_m_s_roles_id', 1)
             ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the group by clause
             ->get();
+
+            // return $extensionNew;
         return view('frontend.extension.extension_view', compact('extensionNew', 'reviewers', 'approvers', 'relatedRecords'));
     }
 
@@ -599,10 +602,17 @@ class ExtensionNewController extends Controller
 
         // dd($request->initiator);
         $extensionNew->initiation_date = $request->initiation_date;
-        $extensionNew->related_records = implode(',', $request->related_records);
+        // $extensionNew->related_records = implode(',', $request->related_records);
+        $extensionNew->related_records = $request->related_records;
+
         $extensionNew->short_description = $request->short_description;
 
         $extensionNew->Extension = $request->Extension;
+        if($extensionNew->stage == 1){
+            $extensionNew->count = $request->count;
+            $extensionNew->parent_type = $request->count;
+            // dd($request->count);
+        }
 
         $extensionNew->reviewers = $request->reviewers;
         $extensionNew->approvers = $request->approvers;
@@ -1246,7 +1256,7 @@ class ExtensionNewController extends Controller
                     return back();
                 }
                 if(($extensionNew->parent_type == 'LabIncident' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'OOC' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Deviation' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'OOT' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Management Review' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'CAPA' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Action Item' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Resampling' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Observation' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'RCA' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Risk Assesment' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'External Audit' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Audit Program' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'CC' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'New Documnet' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'Effectiveness Check' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'OOS Micro' && $extensionNew->count == 3)
-                || ($extensionNew->parent_type == 'OOS Chemical' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Market Complaint' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'Failure Investigation' && $extensionNew->count == 3)
+                || ($extensionNew->parent_type == 'OOS Chemical' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Market Complaint' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'Failure Investigation' && $extensionNew->count == 3 || $extensionNew->count == 'number')
                 ){
                 if ($extensionNew->stage == 2) {
                     $extensionNew->stage = "5";

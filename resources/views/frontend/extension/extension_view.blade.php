@@ -208,6 +208,10 @@
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
                                     Send for CQA
                                 </button>
+                                @elseif($extensionNew->count == 'number')
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                    Send for CQA
+                                </button>    
                             @endif
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Reject
@@ -386,8 +390,21 @@
                                         <label for="Extension Number">
                                             Extension Number<span class="text-danger"></span>
                                         </label>
-                                        <input type="text" readonly name="count"
-                                            value="{{ $extensionNew->count }}">
+                                            @if (empty($extensionNew->parent_type) || $extensionNew->parent_type == 'number' || $extensionNew->parent_type == 'number1' || $extensionNew->parent_type == 'number2')
+                                            <select name="count" id="" {{$extensionNew->stage == 1 ? '' : 'disabled'}}>
+                                                <option value="">--Select Extension Number--</option>
+                                                <option value="number1" @if ($extensionNew->count == 'number1') selected @endif>1</option>
+                                                <option value="number2" @if ($extensionNew->count == 'number2') selected @endif>2</option>
+                                                <option value="number" @if ($extensionNew->count == 'number') selected @endif>3</option>
+                                                </select>
+                                            @else
+                                                <select name="count" id="" disabled {{$extensionNew->stage == 1 ? '' : 'disabled'}}>
+                                                <option value="" >--Select Extension Number--</option>
+                                                <option value="1" @if ($extensionNew->count == '1') selected @endif>1</option>
+                                                <option value="2" @if ($extensionNew->count == '2') selected @endif>2</option>
+                                                <option value="3" @if ($extensionNew->count == '3' || $extensionNew->count == 'number') selected @endif>3</option>
+                                                </select>
+                                            @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -488,12 +505,12 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Parent Records Number</b></label>
-                                        @if ($data->related_records)
+                                        @if ($extensionNew->related_records)
                                             <input readonly type="text" name="related_records"
-                                                value="{{ $data->related_records }}">
+                                                value="{{ $extensionNew->related_records }}">
                                         @else
                                             <input type="text" name="related_records"
-                                                value="{{ $data->related_records }}">
+                                                value="{{ $extensionNew->related_records }}">
                                         @endif
                                     </div>
                                 </div>

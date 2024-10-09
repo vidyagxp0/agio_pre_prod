@@ -10451,10 +10451,12 @@ class RiskManagementController extends Controller
             $parent_name = "Risk Assesment";
             $actionchild = RiskManagement::find($id);
             $actionchild->actionchild = $record_number;
-         $parent_id = $id;
+            // $p_record = RiskManagement::find($id);
+            $data_record = Helpers::getDivisionName($actionchild->division_id ) . '/' . 'RA' .'/' . date('Y') .'/' . str_pad($actionchild->record, 4, '0', STR_PAD_LEFT);
+            $parent_id = $id;
             $actionchild->save();
             $parentRecord = RiskManagement::where('id', $id)->value('record');
-            return view('frontend.action-item.action-item', compact('old_record','parentRecord','record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.action-item.action-item', compact('old_record','parentRecord','record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type','data_record'));
         }
 
         elseif ($request->child_type == "effectiveness_check")

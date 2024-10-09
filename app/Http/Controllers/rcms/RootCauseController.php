@@ -1053,7 +1053,7 @@ class RootCauseController extends Controller
         if (!empty($request->qa_final_comments)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
-            $history->activity_type = 'QA Final Review Comments';
+            $history->activity_type = 'QA/CQA Final Review Comments';
             $history->previous = "Null";
             $history->current =  $root->qa_final_comments;
             $history->comment = "Not Applicable";
@@ -1070,7 +1070,7 @@ class RootCauseController extends Controller
         if (!empty($request->qa_final_attachments)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
-            $history->activity_type = 'QA Final Review Attachment';
+            $history->activity_type = 'QA/CQA Final Review Comments';
             $history->previous = "Null";
             $history->current =  $root->qa_final_attachments;
             $history->comment = "Not Applicable";
@@ -1087,7 +1087,7 @@ class RootCauseController extends Controller
         if (!empty($request->qah_final_comments)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
-            $history->activity_type = 'QAH/CQAH Final Approval Comment ';
+            $history->activity_type = 'QAH/CQAH/designee Final Approval Comment ';
             $history->previous = "Null";
             $history->current =  $root->qah_final_comments;
             $history->comment = "Not Applicable";
@@ -1119,7 +1119,7 @@ class RootCauseController extends Controller
         if (!empty($request->qah_final_attachments)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
-            $history->activity_type = 'QAH/CQAH Final Approval Attachments';
+            $history->activity_type = 'QAH/CQAH/designee Final Approval Attachments';
             $history->previous = "Null";
             $history->current =  $root->qah_final_attachments;
             $history->comment = "Not Applicable";
@@ -2200,7 +2200,7 @@ class RootCauseController extends Controller
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'Initial Attachment';
+            $history->activity_type = 'Attachment';
             $history->previous = $lastDocument->investigation_attachment;
             $history->current = $root->investigation_attachment;
             $history->comment = $request->comment;
@@ -2708,7 +2708,7 @@ class RootCauseController extends Controller
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'QA Final Review Comments';
+            $history->activity_type = 'QA/CQA Final Review Comments';
             $history->previous = $lastDocument->qa_final_comments;
             $history->current = $root->qa_final_comments;
             $history->comment = $request->comment;
@@ -2730,7 +2730,7 @@ class RootCauseController extends Controller
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'QA Final Review Attachment';
+            $history->activity_type = 'QA/CQA Final Review Comments';
             $history->previous = $lastDocument->qa_final_attachments;
             $history->current = $root->qa_final_attachments;
             $history->comment = $request->comment;
@@ -2752,7 +2752,7 @@ class RootCauseController extends Controller
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'QAH/CQAH Final Approval Comment';
+            $history->activity_type = 'QAH/CQAH/designee Final Approval Comment';
             $history->previous = $lastDocument->qah_final_comments;
             $history->current = $root->qah_final_comments;
             $history->comment = $request->comment;
@@ -2794,7 +2794,7 @@ class RootCauseController extends Controller
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'QAH/CQAH Final Approval Attachments';
+            $history->activity_type = 'QAH/CQAH/designee Final Approval Attachments';
             $history->previous = $lastDocument->qah_final_attachments;
             $history->current = $root->qah_final_attachments;
             $history->comment = $request->comment;
@@ -3503,7 +3503,7 @@ class RootCauseController extends Controller
                 return back();
             }
             if ($root->stage == 4) {
-                if (!$root->root_cause) {
+                if (!$root->objective) {
 
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
@@ -3747,7 +3747,7 @@ class RootCauseController extends Controller
                     Session::flash('swal', [
                         'type' => 'success',
                         'title' => 'Success',
-                        'message' => 'Sent for QAH/CQAH Final Review state'
+                        'message' => 'Sent for QAH/CQAH/designee Final Review state'
                     ]);
                 }
                 $root->stage = "7";
@@ -3830,7 +3830,7 @@ class RootCauseController extends Controller
 
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'QAH/CQAH Final Approval Comment  is yet to be filled!',
+                        'message' => 'QAH/CQAH/designee Final Approval Comment  is yet to be filled!',
                         'type' => 'warning',
                     ]);
 
@@ -4520,8 +4520,10 @@ class RootCauseController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $old_record = RootCauseAnalysis::select('id', 'division_id', 'record')->get();
+        $p_record = RootCauseAnalysis::find($id);
+        $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
         $record = $record_number;
-        return view('frontend.action-item.action-item', compact('parent_intiation_date', 'parent_initiator_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'old_record'));
+        return view('frontend.action-item.action-item', compact('parent_intiation_date', 'parent_initiator_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'old_record', 'data_record'));
     }
     public function RCAChildRoot(Request $request, $id)
     {
@@ -4556,9 +4558,11 @@ class RootCauseController extends Controller
         if ($request->revision == "Action-Item") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             $record = $record_number;
+            $p_record = RootCauseAnalysis::find($id);
+            $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);    
             $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
             $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
-            return view('frontend.action-item.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id','record'));
+            return view('frontend.action-item.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id','record', 'data_record'));
         }
     }
 

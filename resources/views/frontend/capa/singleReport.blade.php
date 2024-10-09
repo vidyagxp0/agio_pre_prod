@@ -487,7 +487,7 @@
                                 <th class="w-20">Product /Material Batch No./Lot No./AR No.</th>
                                 <th class="w-20">Product / Material Manufacturing Date</th>
                                 <th class="w-20">Product / Material Date of Expiry</th>
-                                <th class="w-20">>Product Batch Disposition Decision</th>
+                                <th class="w-20">Product Batch Disposition Decision</th>
                                 <th class="w-20">Product Remark</th>
                                 <th class="w-20">Product Batch Status</th>
                             </tr>
@@ -763,7 +763,7 @@
                     </table>
 
                     <div class="block-head">
-                        Initiator CAPA update
+                        Initiator CAPA update Attachment
                      </div>
                        <div class="border-table">
                          <table>
@@ -886,7 +886,9 @@
                         </th>
                        <td class="w-80">
                           @if($data->effectivness_check){{ $data->effectivness_check }}@else Not Applicable @endif      
-                        </td>     
+                        </td>  
+                       </tr>   
+                     <tr>
                       <th class="w-20">QA/CQA Head Closure Review Comment</th>
                       <td class="w-80">@if($data->qa_review){{ $data->qa_review }}@else Not Applicable @endif</td>
                      </tr>
@@ -929,10 +931,9 @@
 
                             <table>
                                 <tr>
-                                    <th>Due Date Extension Justification</th>
-                                        <td>
-                                            {{ $data->due_date_extension }}
-                                        </td>
+                                    <th class="w-20">Due Date Extension Justification</th>
+                                        <td class="w-80">
+                                            {{ $data->due_date_extension }}</td>
                                 </tr>
                             </table>
 

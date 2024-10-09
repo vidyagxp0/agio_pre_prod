@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('capas', function (Blueprint $table) {
-            $table->longText('hod_final_attachment')->nullable();
-            $table->longText('qa_closure_attachment')->nullable();
-            $table->longText('qah_cq_attachment')->nullable();
+        Schema::table('deviations', function (Blueprint $table) {
+            $table->longText('qa_head_designe_comment')->nullable();
+            $table->longText('qa_head_designee_attach')->nullable();
+            $table->longText('qa_final_assement_attach')->nullable();
+            $table->longText('qa_final_assement')->nullable();
         });
     }
 
@@ -27,7 +28,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('capas', function (Blueprint $table) {
+        Schema::table('deviations', function (Blueprint $table) {
             //
         });
     }

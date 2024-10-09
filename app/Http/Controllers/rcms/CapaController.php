@@ -3001,7 +3001,6 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             }
             $history->save();
         }
-        
         if ($lastDocument->initiated_through_req != $capa->initiated_through_req) {
         
             $history = new CapaAuditTrial();
@@ -4190,8 +4189,10 @@ foreach ($pre as $processName => $modelClass) {
             $parentRecord = Capa::where('id', $id)->value('record');
             $parent_name = "CAPA";
             $data=Capa::find($id);
+            // $p_record = OutOfCalibration::find($id);
+                   $data_record = Helpers::getDivisionName($data->division_id ) . '/' . 'CAPA' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
             $expectedParenRecord = Helpers::getDivisionName(session()->get('division')) . "/CAPA/" . date('Y') . "/" .$data->record."";
-            return view('frontend.action-item.action-item', compact('expectedParenRecord','old_record','parentRecord','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.action-item.action-item', compact('expectedParenRecord','old_record','parentRecord','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'data_record'));
         } 
         // else {
         //     return view('frontend.forms.effectiveness-checkkjkjk', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
@@ -4214,8 +4215,10 @@ foreach ($pre as $processName => $modelClass) {
             $record = ((RecordNumber::first()->value('counter')) + 1);
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $record_number = $record;
+            $data = Capa::find($id);
+            $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'CAPA' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
             $relatedRecords= Helpers::getAllRelatedRecords();            
-            return view('frontend.extension.extension_new', compact('parent_id', 'parent_name','relatedRecords', 'record_number', 'parent_due_date','parent_type'));
+            return view('frontend.extension.extension_new', compact('parent_id', 'parent_name','relatedRecords', 'record_number', 'parent_due_date','parent_type', 'extension_record'));
         }
     }
 

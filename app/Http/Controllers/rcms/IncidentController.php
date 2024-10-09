@@ -971,6 +971,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
 
+         if (!empty($request->due_date)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Due Date';
@@ -985,6 +986,7 @@ class IncidentController extends Controller
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
+         }
 
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
@@ -1023,7 +1025,7 @@ class IncidentController extends Controller
                 $history->incident_id = $incident->id;
                 $history->activity_type = 'Site/Location Code';
                 $history->previous = "Null";
-                $history->current = $incident->division_id;
+                $history->current = Helpers::getDivisionName(session()->get('division'));
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2035,7 +2037,7 @@ class IncidentController extends Controller
             $validator = Validator::make($request->all(), [
                 'Initiator_Group' => 'required',
                 'short_description' => 'required',
-                'short_description_required' => 'required|in:Recurring,Non_Recurring',
+                'short_description_required' => 'required|in:Recurring,Non-Recurring',
                 'nature_of_repeat' => 'required_if:short_description_required,Recurring',
                 'incident_date' => 'required',
                 'incident_time' => 'required',
@@ -6416,7 +6418,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for QA Final Review'
+                            'message' => 'Sent for QA Final Review state'
                         ]);
 
                     } else {
@@ -6504,7 +6506,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => ' Sent For QAH Approval state'
+                            'message' => ' Sent For QAH Closure Approval state'
                         ]);
                     }
 
@@ -7256,10 +7258,11 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             $Extensionchild = Incident::find($id);
             $Extensionchild->Extensionchild = $record_number;
             $old_records = Incident::select('id', 'division_id', 'record')->get();
+            $extension_record = Helpers::getDivisionName($Extensionchild->division_id ) . '/' . 'Incident' .'/' . date('Y') .'/' . str_pad($Extensionchild->record, 4, '0', STR_PAD_LEFT);
             $relatedRecords = Helpers::getAllRelatedRecords();
 
             $Extensionchild->save();
-            return view('frontend.extension.extension_new', compact('parent_id','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date','old_records', 'parent_type','parent_created_at','relatedRecords'));
+            return view('frontend.extension.extension_new', compact('parent_id','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date','old_records', 'parent_type','parent_created_at','relatedRecords', 'extension_record'));
 
         }
         $old_record = Incident::select('id', 'division_id', 'record')->get();
@@ -7280,12 +7283,18 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
         } elseif ($request->child_type == "Action_Item")
          {
             $parent_name = "CAPA";
+            $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $actionchild = Incident::find($id);
             $actionchild->actionchild = $record_number;
             $parent_id = $id;
+            //$p_record = OutOfCalibration::find($id);
+            $data_record = Helpers::getDivisionName($actionchild->division_id ) . '/' . 'Incident' .'/' . date('Y') .'/' . str_pad($actionchild->record, 4, '0', STR_PAD_LEFT);
             $actionchild->save();
 
-            return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+            //return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.action-item.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type', 'record', 'data_record'));
+
         }
         elseif ($request->child_type == "effectiveness_check")
          {
@@ -7293,6 +7302,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             $effectivenesschild = Incident::find($id);
             $effectivenesschild->effectivenesschild = $record_number;
             $effectivenesschild->save();
+
         return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
         elseif ($request->child_type == "Change_control") {

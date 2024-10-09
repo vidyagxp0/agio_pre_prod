@@ -214,7 +214,7 @@
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input type="hidden" name="record_number">
                                         <input disabled type="text"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                            value="{{ Helpers::getDivisionName($data->division_id) }}/AI/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
 
                                     </div>
                                 </div>
@@ -258,9 +258,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Parent Record Number</b></label>
+                                        @if($data->parent_record_number)
                                         <input readonly type="text" name="parent_record_number"
                                             value="{{ $data->parent_record_number }}">
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                        @else
+                                        <input type="text" name="parent_record_number_edit"
+                                        value="{{ $data->parent_record_number_edit }}">
+                                        @endif
                                     </div>
                                 </div>
 
