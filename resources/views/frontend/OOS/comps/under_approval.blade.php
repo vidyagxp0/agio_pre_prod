@@ -196,7 +196,7 @@
             </div> --}}
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">Justify for Delay in Activity</label>
+                    <label for="Description Deviation">Justify For Delay In Activity</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="justify_for_delay_in_activity_bd" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                                     {{ $data->justify_for_delay_in_activity_bd ?? '' }}
