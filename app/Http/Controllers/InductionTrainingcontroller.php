@@ -972,22 +972,24 @@ class InductionTrainingcontroller extends Controller
         $inductiontrainingid = Induction_training::find($inductiontrainingid);
         $inductiontrainingid->attempt_count = $inductiontrainingid->attempt_count == -1 ? 0 : ( $inductiontrainingid->attempt_count == 0 ? 0 : $inductiontrainingid->attempt_count - 1);
         $inductiontrainingid->save();
-        $sopidsArray = explode(',', $sopids);
+        
+        // Convert the sopids string to an array and trim any extra whitespace
+        $sopids = array_map('trim', explode(',', $sopids));
 
-        $sopidsArray = array_map('trim', $sopidsArray);
-        $questions = Question::whereIn('document_id', $sopidsArray)
-                     ->inRandomOrder()
-                     ->take(10)
-                     ->get();
-        return view('frontend.TMS.induction_training.Induction_training_question_Answer', compact('questions', 'inductiontrainingid'));
-
+        // Fetch all questions based on cleaned sopids
+        $questions = Question::whereIn('document_id', $sopids)
+        ->inRandomOrder() // Randomize the order
+        ->take(10)        // Limit to 10 records
+        ->get();
+        // Dump the questions for debugging
+            return view('frontend.TMS.Induction_training.Induction_training_question_Answer', compact('questions', 'inductiontrainingid'));
     }
 
     public function checkAnswerInduction(Request $request)
     {
         // Fetch all questions in a random order
 
-        $allQuestions = Question::get();
+        $allQuestions = Question::inRandomOrder()->get();
 
         // Filter questions to include only Single and Multi Selection Questions
         $filteredQuestions = $allQuestions->filter(function ($question) {
@@ -995,7 +997,7 @@ class InductionTrainingcontroller extends Controller
         });
 
         // Take the first 10 questions from the filtered list
-        $questions = $filteredQuestions;
+        $questions = $filteredQuestions->take(10);
 
         $correctCount = 0; // Initialize correct answer count
         $totalQuestions = count($questions); // Total number of selected questions (should be 10)
