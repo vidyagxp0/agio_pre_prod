@@ -493,7 +493,7 @@ class ErrataController extends Controller
             $history->errata_id = $data->id;
             $history->activity_type = 'Department Head';
             $history->previous = "Null";
-            $history->current = $data->department_head_to;
+            $history->current = Helpers::getInitiatorName($data->department_head_to);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -510,7 +510,7 @@ class ErrataController extends Controller
             $history->errata_id = $data->id;
             $history->activity_type = 'QA reviewer';
             $history->previous = "Null";
-            $history->current = $data->qa_reviewer;
+            $history->current = Helpers::getInitiatorName($data->qa_reviewer);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -559,7 +559,7 @@ class ErrataController extends Controller
         if (!empty($data->QA_Feedbacks)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'QA Initial Comment';
+            $history->activity_type = 'QA/CQA Initial Comment';
             $history->previous = "Null";
             $history->current = $data->QA_Feedbacks;
             $history->comment = "Not Applicable";
@@ -576,7 +576,7 @@ class ErrataController extends Controller
         if (!empty($data->QA_Attachments)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'QA Initial Attachments';
+            $history->activity_type = 'QA/CQA Initial Attachments';
             $history->previous = "Null";
             $history->current = $data->QA_Attachments;
             $history->comment = "Not Applicable";
@@ -694,7 +694,7 @@ class ErrataController extends Controller
         if (!empty($data->HOD_Comment1)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'HOD final review Comment';
+            $history->activity_type = 'HOD final Review Comment';
             $history->previous = "Null";
             $history->current = $data->HOD_Comment1;
             $history->comment = "Not Applicable";
@@ -1245,7 +1245,7 @@ class ErrataController extends Controller
                         'type' => 'warning',
                     ]);
 
-               
+
                     return redirect()->back();
                 } else {
                     Session::flash('swal', [
@@ -1646,7 +1646,7 @@ class ErrataController extends Controller
         // }
         if (!empty($request->QA_Attachments) || !empty($request->deleted_QA_Attachments)) {
             $existingFiles = json_decode($data->QA_Attachments, true) ?? [];
-        
+
             // Handle deleted files
             if (!empty($request->deleted_QA_Attachments)) {
                 $filesToDelete = explode(',', $request->deleted_QA_Attachments);
@@ -1654,7 +1654,7 @@ class ErrataController extends Controller
                     return !in_array($file, $filesToDelete);
                 });
             }
-        
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('QA_Attachments')) {
@@ -1664,12 +1664,12 @@ class ErrataController extends Controller
                     $newFiles[] = $name;
                 }
             }
-        
+
             // Merge existing and new files
             $allFiles = array_merge($existingFiles, $newFiles);
             $data->QA_Attachments = json_encode($allFiles);
         }
-        
+
 
         // $data->HOD_Remarks = $request->HOD_Remarks;
 
@@ -1769,7 +1769,7 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
         // }
         if (!empty($request->Initiator_Attachments) || !empty($request->deleted_Initiator_Attachments)) {
             $existingFiles = json_decode($data->Initiator_Attachments, true) ?? [];
-        
+
             // Handle deleted files
             if (!empty($request->deleted_Initiator_Attachments)) {
                 $filesToDelete = explode(',', $request->deleted_Initiator_Attachments);
@@ -1777,7 +1777,7 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
                     return !in_array($file, $filesToDelete);
                 });
             }
-        
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('Initiator_Attachments')) {
@@ -1787,14 +1787,14 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
                     $newFiles[] = $name;
                 }
             }
-        
+
             // Merge existing and new files
             $allFiles = array_merge($existingFiles, $newFiles);
             $data->Initiator_Attachments = json_encode($allFiles);
         }
-        
 
-        
+
+
         if (!empty($request->QA_Attachments1)) {
             $files = [];
             if ($request->hasFile('QA_Attachments1')) {
@@ -1821,7 +1821,7 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
 
         if (!empty($request->Approval_Attachments) || !empty($request->deleted_Approval_Attachments)) {
             $existingFiles = json_decode($data->Approval_Attachments, true) ?? [];
-        
+
             // Handle deleted files
             if (!empty($request->deleted_Approval_Attachments)) {
                 $filesToDelete = explode(',', $request->deleted_Approval_Attachments);
@@ -1829,7 +1829,7 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
                     return !in_array($file, $filesToDelete);
                 });
             }
-        
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('Approval_Attachments')) {
@@ -1839,12 +1839,12 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
                     $newFiles[] = $name;
                 }
             }
-        
+
             // Merge existing and new files
             $allFiles = array_merge($existingFiles, $newFiles);
             $data->Approval_Attachments = json_encode($allFiles);
         }
-        
+
         // if (!empty($request->HOD_Attachments1)) {
         //     $files = [];
         //     if ($request->hasFile('HOD_Attachments1')) {
@@ -1858,7 +1858,7 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
         // }
         if (!empty($request->HOD_Attachments1) || !empty($request->deleted_HOD_Attachments1)) {
             $existingFiles = json_decode($data->HOD_Attachments1, true) ?? [];
-        
+
             // Handle deleted files
             if (!empty($request->deleted_HOD_Attachments1)) {
                 $filesToDelete = explode(',', $request->deleted_HOD_Attachments1);
@@ -1866,7 +1866,7 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
                     return !in_array($file, $filesToDelete);
                 });
             }
-        
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('HOD_Attachments1')) {
@@ -1876,12 +1876,12 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
                     $newFiles[] = $name;
                 }
             }
-        
+
             // Merge existing and new files
             $allFiles = array_merge($existingFiles, $newFiles);
             $data->HOD_Attachments1 = json_encode($allFiles);
         }
-        
+
 
         $data->update();
         // if($lastData->initiated_by !=$data->initiated_by || !empty($request->initiated_by_comment)) {
@@ -2164,11 +2164,11 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
 
         if ($lastData->HOD_Remarks != $data->HOD_Remarks || !empty($request->HOD_Remarks_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'HOD final Initial Comment')
+                ->where('activity_type', 'HOD Initial Comment')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'HOD final Initial Comment';
+            $history->activity_type = 'HOD Initial Comment';
             $history->previous =  $lastData->HOD_Remarks;
             $history->current = $data->HOD_Remarks;
             $history->comment = $request->HOD_Remarks_comment;
@@ -2183,11 +2183,11 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
         }
         if ($lastData->HOD_Attachments != $data->HOD_Attachments || !empty($request->HOD_Attachments_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'HOD final Initial Attachments')
+                ->where('activity_type', 'HOD Initial Attachments')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'HOD final Initial Attachments';
+            $history->activity_type = 'HOD Initial Attachments';
             $history->previous =  str_replace(',', ', ', $lastData->HOD_Attachments);
             $history->current = str_replace(',', ', ', $data->HOD_Attachments);
             $history->comment = $request->HOD_Attachments_comment;
@@ -2363,11 +2363,11 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
 
         if ($lastData->HOD_Comment1 != $data->HOD_Comment1 || !empty($request->HOD_Comment1_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'HOD final review Comment')
+                ->where('activity_type', 'HOD final Review Comment')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'HOD final review Comment';
+            $history->activity_type = 'HOD final Review Comment';
             $history->previous =  $lastData->HOD_Comment1;
             $history->current = $data->HOD_Comment1;
             $history->comment = $request->HOD_Comment1_comment;

@@ -371,7 +371,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Department">Department Name</label>
                                     <select name="department">
@@ -385,10 +385,24 @@
                                                 @if ($savedDepartmentId == $code) selected @endif>{{ $department }}
                                             </option>
                                         @endforeach
+                                    </select>
+                                </div>
+                            </div> --}}
 
-                                        {{-- @foreach ($departments as $department)
-                                        <option value="{{ $department->id }}" @if ($department->id == $employee->department) selected @endif>{{ $department->name }}</option>
-                                @endforeach --}}
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Department">Department Name</label>
+                                    <select name="department" id="department" onchange="toggleOtherDepartment()">
+                                        <option value="">-- Select --</option>
+                                        @php
+                                            $savedDepartmentId = old('department', $employee->department);
+                                        @endphp
+
+                                        @foreach (Helpers::getDepartments() as $code => $department)
+                                            <option value="{{ $code }}"
+                                                @if ($savedDepartmentId == $code) selected @endif>{{ $department }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -420,54 +434,81 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Job Title">Designation<span class="text-danger">*</span></label>
-                                    <select name="job_title" required>
+                                    <label for="job_title">Designation<span class="text-danger">*</span></label>
+                                    <select name="job_title" id="job_title" required onchange="toggleOtherDesignation()">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="Trainee" @if ($savedJobTitle == 'Trainee') selected @endif>Trainee
-                                        </option>
-                                        <option value="Officer" @if ($savedJobTitle == 'Officer') selected @endif>Officer
-                                        </option>
-                                        <option value="Sr. Officer" @if ($savedJobTitle == 'Sr. Officer') selected @endif>Sr.
-                                            Officer</option>
-                                        <option value="Executive" @if ($savedJobTitle == 'Executive') selected @endif>
-                                            Executive</option>
-                                        <option value="Sr.executive" @if ($savedJobTitle == 'Sr.executive') selected @endif>
-                                            Sr.executive</option>
-                                        <option value="Asst. manager" @if ($savedJobTitle == 'Asst. manager') selected @endif>
-                                            Asst. manager</option>
-                                        <option value="Manager" @if ($savedJobTitle == 'Manager') selected @endif>Manager
-                                        </option>
-                                        <option value="Sr.GM" @if ($savedJobTitle == 'Sr.GM') selected @endif>Sr.GM
-                                        </option>
-                                        <option value="Sr. manager" @if ($savedJobTitle == 'Sr. manager') selected @endif>Sr.
-                                            manager</option>
-                                        <option value="Deputy GM" @if ($savedJobTitle == 'Deputy GM') selected @endif>
-                                            Deputy GM</option>
-                                        <option value="AGM and GM" @if ($savedJobTitle == 'AGM and GM') selected @endif>AGM
-                                            and GM</option>
-                                        <option value="Head quality" @if ($savedJobTitle == 'Head quality') selected @endif>
-                                            Head quality</option>
-                                        <option value="VP quality" @if ($savedJobTitle == 'VP quality') selected @endif>VP
-                                            quality</option>
-                                        <option value="Plant head" @if ($savedJobTitle == 'Plant head') selected @endif>
-                                            Plant head</option>
+                                        <option value="Trainee" @if ($savedJobTitle == 'Trainee') selected @endif>Trainee</option>
+                                        <option value="Officer" @if ($savedJobTitle == 'Officer') selected @endif>Officer</option>
+                                        <option value="Sr. Officer" @if ($savedJobTitle == 'Sr. Officer') selected @endif>Sr. Officer</option>
+                                        <option value="Executive" @if ($savedJobTitle == 'Executive') selected @endif>Executive</option>
+                                        <option value="Sr.executive" @if ($savedJobTitle == 'Sr.executive') selected @endif>Sr. Executive</option>
+                                        <option value="Asst. manager" @if ($savedJobTitle == 'Asst. manager') selected @endif>Asst. Manager</option>
+                                        <option value="Manager" @if ($savedJobTitle == 'Manager') selected @endif>Manager</option>
+                                        <option value="Sr.GM" @if ($savedJobTitle == 'Sr.GM') selected @endif>Sr. GM</option>
+                                        <option value="Sr. manager" @if ($savedJobTitle == 'Sr. manager') selected @endif>Sr. Manager</option>
+                                        <option value="Deputy GM" @if ($savedJobTitle == 'Deputy GM') selected @endif>Deputy GM</option>
+                                        <option value="AGM and GM" @if ($savedJobTitle == 'AGM and GM') selected @endif>AGM and GM</option>
+                                        <option value="Head quality" @if ($savedJobTitle == 'Head quality') selected @endif>Head Quality</option>
+                                        <option value="VP quality" @if ($savedJobTitle == 'VP quality') selected @endif>VP Quality</option>
+                                        <option value="Plant head" @if ($savedJobTitle == 'Plant head') selected @endif>Plant Head</option>
+                                        <option value="Other designation" @if ($savedJobTitle == 'Other designation') selected @endif>Other Designation</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="other_department">Other Department</label>
                                     <input type="text" name="other_department"
                                         value="{{ $employee->other_department }}">
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
+                            </div> --}}
+
+                            <div class="col-lg-6" id="other_department_container" style="display: none;">
                                 <div class="group-input">
-                                    <label for="other_designation">Other Designation<label>
-                                            <input type="text" name="other_designation"
-                                                value="{{ $employee->other_designation }}">
+                                    <label for="other_department">Other Department</label>
+                                    <input type="text" name="other_department" id="other_department" value="{{ old('other_department', $employee->other_department) }}">
                                 </div>
                             </div>
+                            <div class="col-lg-6" id="other_designation_container" style="display: none;">
+                                <div class="group-input">
+                                    <label for="other_designation">Other Designation</label>
+                                    <input type="text" name="other_designation" id="other_designation" value="{{ $employee->other_designation }}">
+                                </div>
+                            </div>
+
+                            <script>
+                                function toggleOtherDesignation() {
+                                    const jobTitleSelect = document.getElementById('job_title');
+                                    const otherDesignationContainer = document.getElementById('other_designation_container');
+                                    // Check if the selected job title is "Other designation"
+                                    if (jobTitleSelect.value === "Other designation") {
+                                        otherDesignationContainer.style.display = 'block';
+                                    } else {
+                                        otherDesignationContainer.style.display = 'none';
+                                    }
+                                }
+
+                                window.onload = function() {
+                                    toggleOtherDesignation();
+                                };
+                            </script>
+                            <script>
+                                function toggleOtherDepartment() {
+                                    const departmentSelect = document.getElementById('department');
+                                    const otherDepartmentContainer = document.getElementById('other_department_container');
+                                    // Check if the selected department is "Other Department"
+                                    if (departmentSelect.value === "Other") {
+                                        otherDepartmentContainer.style.display = 'block';
+                                    } else {
+                                        otherDepartmentContainer.style.display = 'none';
+                                    }
+                                }
+
+                                window.onload = function() {
+                                    toggleOtherDepartment();
+                                };
+                            </script>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -1036,7 +1077,7 @@
                             <div class="group-input">
                                 <label for="Activated On">Activate On</label>
                                 <div class="static">
-                                    {{ Carbon\Carbon::parse($employee->activated_on)->format('d-M-Y') }}
+                                    {{ $employee->activated_on}}
                                 </div>
                             </div>
                         </div>

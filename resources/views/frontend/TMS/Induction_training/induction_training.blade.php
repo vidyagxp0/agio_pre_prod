@@ -58,7 +58,10 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
         <!-- Tab links -->
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-
+            <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Evaluation</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm3')">HR Head Approval</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">In HR Final Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA/CQA Head Approval</button>
         </div>
 
         <form action="{{ route('induction_training.store') }}" method="post" enctype="multipart/form-data">
@@ -93,8 +96,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="select-state">Name of Employee</label>
-                                    <select id="select-state" placeholder="Select..." name="name_employee">
+                                    <label for="select-state">Name of Employee<span class="text-danger d-none">*</span></label>
+                                    <select id="select-state" placeholder="Select..." name="name_employee" required>
                                         @if(isset($employee))
                                             <option value="{{ $employee->id }}" selected>{{ $employee->employee_name }}</option>
                                         @else 
@@ -119,7 +122,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="department_location">Department</label>
-                                    <input type="text" name="department" value ="{{ isset($employee) ? $employee->department ?? 'NA' : '' }}" id="department" readonly>
+                                    <input type="text" name="department" value ="{{ isset($employee) ? Helpers::getDepartments()[$employee->department] ?? 'NA' : '' }}" id="department" readonly>
                                 </div>
                             </div>
 
@@ -258,7 +261,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>1</td>
                                                     <td style="background: #DCD8D8">Introduction of Agio Plant</td>
                                                     <td>
-                                                        <select name="document_number_1" id="document_number_select" onchange="fetchSopLink(this)">
+                                                        <select name="document_number_1" id="document_number_1" onchange="fetchSopLink(this)">
                                                             <option value="">----Select---</option>
                                                             @foreach ($data as $item)
                                                             <option value="{{ $item->id }}" 
@@ -302,12 +305,13 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td style="background: #DCD8D8">Personnel Hygiene</td>
                                                     <td>
                                                         <!-- <textarea name="document_number_2"></textarea> -->
-                                                        <select name="document_number_1">
-                                                        @foreach ($data as $item)
+                                                        <select name="document_number_2" id="document_number_2" onchange="fetchSopLink2(this)">
                                                         <option value="">----Select---</option>
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
-                                                        </option>
+                                                        @foreach ($data as $item)
+                                                            <option value="{{ $item->id }}" 
+                                                                    data-sop-link="{{ $item->id }}">
+                                                                {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                     </td>
@@ -328,19 +332,22 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>
                                                         <textarea name="remark_2"></textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="#" id="view_sop_link2" target="_blank" style="display: none;">View SOP</a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>3</td>
                                                     <td style="background: #DCD8D8">Entry Exit Procedure in Factory premises</td>
                                                     <td>
                                                         <!-- <textarea name="document_number_3"></textarea> -->
-                                                        <select name="document_number_1">
-                                                        @foreach ($data as $item)
+                                                        <select name="document_number_3" id="document_number_3" onchange="fetchSopLink3(this)">
                                                         <option value="">----Select---</option>
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
-                                                        </option>
+                                                        @foreach ($data as $item)
+                                                            <option value="{{ $item->id }}" 
+                                                                    data-sop-link="{{ $item->id }}">
+                                                                {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                     </td>
@@ -362,19 +369,22 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>
                                                         <textarea name="remark_3"></textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="#" id="view_sop_link3" target="_blank" style="display: none;">View SOP</a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>4</td>
                                                     <td style="background: #DCD8D8">Good Documentation Practices</td>
                                                     <td>
                                                         <!-- <textarea name="document_number_4"></textarea> -->
-                                                        <select name="document_number_1">
-                                                        @foreach ($data as $item)
+                                                        <select name="document_number_4" id="document_number_4" onchange="fetchSopLink4(this)">
                                                         <option value="">----Select---</option>
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
-                                                        </option>
+                                                        @foreach ($data as $item)
+                                                            <option value="{{ $item->id }}" 
+                                                                    data-sop-link="{{ $item->id }}">
+                                                                {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                     </td>
@@ -396,6 +406,9 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>
                                                         <textarea name="remark_4"></textarea>
                                                     </td>
+                                                    <td>
+                                                        <a href="#" id="view_sop_link4" target="_blank" style="display: none;">View SOP</a>
+                                                    </td>
 
                                                 </tr>
                                                 <tr>
@@ -403,12 +416,13 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td style="background: #DCD8D8">Data Integrity</td>
                                                     <td>
                                                         <!-- <textarea name="document_number_5"></textarea> -->
-                                                        <select name="document_number_1">
-                                                        @foreach ($data as $item)
+                                                        <select name="document_number_5" id="document_number_5" onchange="fetchSopLink5(this)">
                                                         <option value="">----Select---</option>
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
-                                                        </option>
+                                                        @foreach ($data as $item)
+                                                            <option value="{{ $item->id }}" 
+                                                                    data-sop-link="{{ $item->id }}">
+                                                                {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                     </td>
@@ -429,7 +443,9 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>
                                                         <textarea name="remark_5"></textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="#" id="view_sop_link5" target="_blank" style="display: none;">View SOP</a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>6</td>
@@ -442,12 +458,13 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td style="background: #DCD8D8"> GMP</td>
                                                     <td>
                                                         <!-- <textarea name="document_number_6"></textarea> -->
-                                                        <select name="document_number_1">
-                                                        @foreach ($data as $item)
+                                                        <select name="document_number_6" id="document_number_6" onchange="fetchSopLink6(this)">
                                                         <option value="">----Select---</option>
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
-                                                        </option>
+                                                        @foreach ($data as $item)
+                                                            <option value="{{ $item->id }}" 
+                                                                    data-sop-link="{{ $item->id }}">
+                                                                {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                     </td>
@@ -469,19 +486,22 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>
                                                         <textarea name="remark_6"></textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="#" id="view_sop_link6" target="_blank" style="display: none;">View SOP</a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>6 . b</td>
                                                     <td style="background: #DCD8D8"> Documentation</td>
                                                     <td>
                                                         <!-- <textarea name="document_number_7"></textarea> -->
-                                                        <select name="document_number_1">
-                                                        @foreach ($data as $item)
+                                                        <select name="document_number_7" id="document_number_7" onchange="fetchSopLink7(this)">
                                                         <option value="">----Select---</option>
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
-                                                        </option>
+                                                        @foreach ($data as $item)
+                                                            <option value="{{ $item->id }}" 
+                                                                    data-sop-link="{{ $item->id }}">
+                                                                {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                     </td>
@@ -502,19 +522,22 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>
                                                         <textarea name="remark_7"></textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="#" id="view_sop_link7" target="_blank" style="display: none;">View SOP</a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>6 .c</td>
                                                     <td style="background: #DCD8D8"> Process Control</td>
                                                     <td>
                                                         <!-- <textarea name="document_number_8"></textarea> -->
-                                                        <select name="document_number_1">
-                                                        @foreach ($data as $item)
+                                                        <select name="document_number_8" id="document_number_8" onchange="fetchSopLink8(this)">
                                                         <option value="">----Select---</option>
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
-                                                        </option>
+                                                        @foreach ($data as $item)
+                                                            <option value="{{ $item->id }}" 
+                                                                    data-sop-link="{{ $item->id }}">
+                                                                {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                     </td>
@@ -536,19 +559,22 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>
                                                         <textarea name="remark_8"></textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="#" id="view_sop_link8" target="_blank" style="display: none;">View SOP</a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>6 . d</td>
                                                     <td style="background: #DCD8D8">d. Cross Contamination</td>
                                                     <td>
                                                         <!-- <textarea name="document_number_9"></textarea> -->
-                                                        <select name="document_number_1">
-                                                        @foreach ($data as $item)
+                                                        <select name="document_number_9" id="document_number_9" onchange="fetchSopLink9(this)">
                                                         <option value="">----Select---</option>
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
-                                                        </option>
+                                                        @foreach ($data as $item)
+                                                            <option value="{{ $item->id }}" 
+                                                                    data-sop-link="{{ $item->id }}">
+                                                                {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                     </td>
@@ -570,19 +596,22 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>
                                                         <textarea name="remark_9"></textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="#" id="view_sop_link9" target="_blank" style="display: none;">View SOP</a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>6 . e</td>
                                                     <td style="background: #DCD8D8"> Sanitization and Hygiene</td>
                                                     <td>
                                                         <!-- <textarea name="document_number_10"></textarea> -->
-                                                        <select name="document_number_1">
-                                                        @foreach ($data as $item)
+                                                        <select name="document_number_10" id="document_number_10" onchange="fetchSopLink10(this)">
                                                         <option value="">----Select---</option>
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
-                                                        </option>
+                                                        @foreach ($data as $item)
+                                                            <option value="{{ $item->id }}" 
+                                                                    data-sop-link="{{ $item->id }}">
+                                                                {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                     </td>
@@ -603,6 +632,9 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>
                                                         <textarea name="remark_10"></textarea>
                                                     </td>
+                                                    <td>
+                                                        <a href="#" id="view_sop_link10" target="_blank" style="display: none;">View SOP</a>
+                                                    </td>
 
                                                 </tr>
                                                 <tr>
@@ -610,12 +642,13 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td style="background: #DCD8D8"> Warehousing</td>
                                                     <td>
                                                         <!-- <textarea name="document_number_11"></textarea> -->
-                                                        <select name="document_number_1">
-                                                        @foreach ($data as $item)
+                                                        <select name="document_number_11" id="document_number_11" onchange="fetchSopLink11(this)">
                                                         <option value="">----Select---</option>
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
-                                                        </option>
+                                                        @foreach ($data as $item)
+                                                            <option value="{{ $item->id }}" 
+                                                                    data-sop-link="{{ $item->id }}">
+                                                                {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                     </td>
@@ -636,19 +669,22 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>
                                                         <textarea name="remark_11"></textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="#" id="view_sop_link11" target="_blank" style="display: none;">View SOP</a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>6 . g</td>
                                                     <td style="background: #DCD8D8"> Complaint and Recall</td>
                                                     <td>
                                                         <!-- <textarea name="document_number_12"></textarea> -->
-                                                        <select name="document_number_1">
-                                                        @foreach ($data as $item)
+                                                        <select name="document_number_12" id="document_number_12" onchange="fetchSopLink12(this)">
                                                         <option value="">----Select---</option>
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
-                                                        </option>
+                                                        @foreach ($data as $item)
+                                                            <option value="{{ $item->id }}" 
+                                                                    data-sop-link="{{ $item->id }}">
+                                                                {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                     </td>
@@ -669,17 +705,21 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>
                                                         <textarea name="remark_12"></textarea>
                                                     </td>
+                                                    <td>
+                                                        <a href="#" id="view_sop_link12" target="_blank" style="display: none;">View SOP</a>
+                                                    </td>
                                                 <tr>
                                                     <td>6 . h</td>
                                                     <td style="background: #DCD8D8"> Utilities</td>
                                                     <td>
                                                         <!-- <textarea name="document_number_13"></textarea> -->
-                                                        <select name="document_number_1">
-                                                        @foreach ($data as $item)
+                                                        <select name="document_number_13" id="document_number_13" onchange="fetchSopLink13(this)">
                                                         <option value="">----Select---</option>
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
-                                                        </option>
+                                                        @foreach ($data as $item)
+                                                            <option value="{{ $item->id }}" 
+                                                                    data-sop-link="{{ $item->id }}">
+                                                                {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                     </td>
@@ -700,19 +740,22 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>
                                                         <textarea name="remark_13"></textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="#" id="view_sop_link13" target="_blank" style="display: none;">View SOP</a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>6 . i</td>
                                                     <td style="background: #DCD8D8"> Water</td>
                                                     <td>
                                                         <!-- <textarea name="document_number_14"></textarea> -->
-                                                        <select name="document_number_1">
-                                                        @foreach ($data as $item)
+                                                        <select name="document_number_14" id="document_number_14" onchange="fetchSopLink14(this)">
                                                         <option value="">----Select---</option>
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
-                                                        </option>
+                                                        @foreach ($data as $item)
+                                                            <option value="{{ $item->id }}" 
+                                                                    data-sop-link="{{ $item->id }}">
+                                                                {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                     </td>
@@ -734,19 +777,22 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>
                                                         <textarea name="remark_14"></textarea>
                                                     </td>
-
+                                                    <td>
+                                                        <a href="#" id="view_sop_link14" target="_blank" style="display: none;">View SOP</a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td> 6 . j</td>
                                                     <td style="background: #DCD8D8"> Safety Module</td>
                                                     <td>
                                                         <!-- <textarea name="document_number_15"></textarea> -->
-                                                        <select name="document_number_1">
-                                                        @foreach ($data as $item)
+                                                        <select name="document_number_15" id="document_number_15" onchange="fetchSopLink15(this)">
                                                         <option value="">----Select---</option>
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
-                                                        </option>
+                                                        @foreach ($data as $item)
+                                                            <option value="{{ $item->id }}" 
+                                                                    data-sop-link="{{ $item->id }}">
+                                                                {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                     </td>
@@ -767,6 +813,9 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>
                                                         <textarea name="remark_15"></textarea>
                                                     </td>
+                                                    <td>
+                                                        <a href="#" id="view_sop_link15" target="_blank" style="display: none;">View SOP</a>
+                                                    </td>
                                                 </tr>
                                                 </tr>
                                             </tbody>
@@ -780,8 +829,6 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                 function fetchSopLink(selectElement) {
                                     var selectedOption = selectElement.options[selectElement.selectedIndex];
                                     var documentId = selectedOption.getAttribute('data-sop-link');
-
-                                    // Update the SOP link visibility
                                     var sopLink = document.getElementById('view_sop_link');
                                     
                                     if (documentId) {
@@ -790,18 +837,241 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     } else {
                                         sopLink.style.display = 'none';
                                     }
-
                                     console.log('Selected Document ID: ', documentId); // For debugging to check selected ID
                                 }
-                                </script>
-                            <div class="col-6">
+                            </script>
+
+                            <script>
+                                function fetchSopLink2(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+                                    var sopLink = document.getElementById('view_sop_link2');
+                                    
+                                    if (documentId) {
+                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.style.display = 'inline';
+                                    } else {
+                                        sopLink.style.display = 'none';
+                                    }
+                                    console.log('Selected Document ID: ', documentId); // For debugging to check selected ID
+                                }
+                            </script>
+
+                            <script>
+                                function fetchSopLink3(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+                                    var sopLink = document.getElementById('view_sop_link3');
+                                    
+                                    if (documentId) {
+                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.style.display = 'inline';
+                                    } else {
+                                        sopLink.style.display = 'none';
+                                    }
+                                    console.log('Selected Document ID: ', documentId); // For debugging to check selected ID
+                                }
+                            </script>
+
+                            <script>
+                                function fetchSopLink4(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+                                    var sopLink = document.getElementById('view_sop_link4');
+                                    
+                                    if (documentId) {
+                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.style.display = 'inline';
+                                    } else {
+                                        sopLink.style.display = 'none';
+                                    }
+                                    console.log('Selected Document ID: ', documentId); // For debugging to check selected ID
+                                }
+                            </script>
+
+                            <script>
+                                function fetchSopLink5(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+                                    var sopLink = document.getElementById('view_sop_link5');
+                                    
+                                    if (documentId) {
+                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.style.display = 'inline';
+                                    } else {
+                                        sopLink.style.display = 'none';
+                                    }
+                                    console.log('Selected Document ID: ', documentId); // For debugging to check selected ID
+                                }
+                            </script>
+
+                            <script>
+                                function fetchSopLink6(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+                                    var sopLink = document.getElementById('view_sop_link6');
+                                    
+                                    if (documentId) {
+                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.style.display = 'inline';
+                                    } else {
+                                        sopLink.style.display = 'none';
+                                    }
+                                    console.log('Selected Document ID: ', documentId); // For debugging to check selected ID
+                                }
+                            </script>
+
+                            <script>
+                                function fetchSopLink7(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+                                    var sopLink = document.getElementById('view_sop_link7');
+                                    
+                                    if (documentId) {
+                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.style.display = 'inline';
+                                    } else {
+                                        sopLink.style.display = 'none';
+                                    }
+                                    console.log('Selected Document ID: ', documentId); // For debugging to check selected ID
+                                }
+                            </script>
+
+                            <script>
+                                function fetchSopLink8(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+                                    var sopLink = document.getElementById('view_sop_link8');
+                                    
+                                    if (documentId) {
+                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.style.display = 'inline';
+                                    } else {
+                                        sopLink.style.display = 'none';
+                                    }
+                                    console.log('Selected Document ID: ', documentId); // For debugging to check selected ID
+                                }
+                            </script>
+
+                            <script>
+                                function fetchSopLink9(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+                                    var sopLink = document.getElementById('view_sop_link9');
+                                    
+                                    if (documentId) {
+                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.style.display = 'inline';
+                                    } else {
+                                        sopLink.style.display = 'none';
+                                    }
+                                    console.log('Selected Document ID: ', documentId); // For debugging to check selected ID
+                                }
+                            </script>
+
+                            <script>
+                                function fetchSopLink10(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+                                    var sopLink = document.getElementById('view_sop_link10');
+                                    
+                                    if (documentId) {
+                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.style.display = 'inline';
+                                    } else {
+                                        sopLink.style.display = 'none';
+                                    }
+                                    console.log('Selected Document ID: ', documentId); // For debugging to check selected ID
+                                }
+                            </script>
+
+                            <script>
+                                function fetchSopLink11(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+                                    var sopLink = document.getElementById('view_sop_link11');
+                                    
+                                    if (documentId) {
+                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.style.display = 'inline';
+                                    } else {
+                                        sopLink.style.display = 'none';
+                                    }
+                                    console.log('Selected Document ID: ', documentId); // For debugging to check selected ID
+                                }
+                            </script>
+
+                            <script>
+                                function fetchSopLink12(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+                                    var sopLink = document.getElementById('view_sop_link12');
+                                    
+                                    if (documentId) {
+                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.style.display = 'inline';
+                                    } else {
+                                        sopLink.style.display = 'none';
+                                    }
+                                    console.log('Selected Document ID: ', documentId); // For debugging to check selected ID
+                                }
+                            </script>
+
+                            <script>
+                                function fetchSopLink13(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+                                    var sopLink = document.getElementById('view_sop_link13');
+                                    
+                                    if (documentId) {
+                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.style.display = 'inline';
+                                    } else {
+                                        sopLink.style.display = 'none';
+                                    }
+                                    console.log('Selected Document ID: ', documentId); // For debugging to check selected ID
+                                }
+                            </script>
+
+                            <script>
+                                function fetchSopLink14(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+                                    var sopLink = document.getElementById('view_sop_link14');
+                                    
+                                    if (documentId) {
+                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.style.display = 'inline';
+                                    } else {
+                                        sopLink.style.display = 'none';
+                                    }
+                                    console.log('Selected Document ID: ', documentId); // For debugging to check selected ID
+                                }
+                            </script>
+
+                            <script>
+                                function fetchSopLink15(selectElement) {
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                    var documentId = selectedOption.getAttribute('data-sop-link');
+                                    var sopLink = document.getElementById('view_sop_link15');
+                                    
+                                    if (documentId) {
+                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.style.display = 'inline';
+                                    } else {
+                                        sopLink.style.display = 'none';
+                                    }
+                                    console.log('Selected Document ID: ', documentId); // For debugging to check selected ID
+                                }
+                            </script>
+                            {{-- <div class="col-6">
                                 <div class="group-input">
                                     <label for="severity-level">HR Department</label>
                                     <select name="hr_name">
                                         <option value="hr" selected>HR</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
 
                          
                             <div class="col-6">
@@ -817,7 +1087,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="trainer_name">Trainer Name</label>
                                     <select id="trainer_name" name="trainee_name">
@@ -828,13 +1098,27 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                         <option value="trainer_4">Trainer 4</option>
                                         <option value="trainer_5">Trainer 5</option>
                                     </select>
+                                </div> 
+                            </div> --}}
+
+                            <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="hods">Trainer Name</label>
+                                    <select class="choices-single-reviewer" name="trainee_name" placeholder="Select Trainer">
+                                        <option value="">Select Trainer</option>
+                                        @foreach ($hods as $hod)
+                                            <option value="{{ $hod->id }}" {{ old('hod') == $hod->id ? 'selected' : '' }}>
+                                                {{ $hod->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
                         </div>
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                            {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                     Exit </a> </button>
 
@@ -842,7 +1126,112 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                     </div>
                 </div>
 
+                <div id="CCForm2" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                        <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Activated On">Remarks</label>
+                                    <textarea name="evaluation_comment"></textarea>
+                                </div>
+                            </div>
+                        <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="External Attachment">Final Attachment</label>
+                                        <input type="file" id="myfile" name="evaluation_attachment" value="">
+                                        {{-- <a href="{{ asset('upload/' . evaluation_attachment) }}" target="_blank"></a> --}}
+                                    </div>
+                                </div>
 
+                        </div>
+                        <div class="button-block">
+                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        <button type="button" class="backButton">Back</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm3" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                        <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Activated On">Remarks</label>
+                                    <textarea name="evaluation_comment"></textarea>
+                                </div>
+                            </div>
+                        <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="External Attachment">Final Attachment</label>
+                                        <input type="file" id="myfile" name="evaluation_attachment" value="">
+                                        {{-- <a href="{{ asset('upload/' . evaluation_attachment) }}" target="_blank"></a> --}}
+                                    </div>
+                                </div>
+
+                        </div>
+                        <div class="button-block">
+                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        <button type="button" class="backButton">Back</button>
+                                 
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm4" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                        <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Activated On">Remarks</label>
+                                    <textarea name="evaluation_comment"></textarea>
+                                </div>
+                            </div>
+                        <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="External Attachment">Final Attachment</label>
+                                        <input type="file" id="myfile" name="evaluation_attachment" value="">
+                                        {{-- <a href="{{ asset('upload/' . evaluation_attachment) }}" target="_blank"></a> --}}
+                                    </div>
+                                </div>
+
+                        </div>
+                        <div class="button-block">
+                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        <button type="button" class="backButton">Back</button>
+                                 
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm5" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                        <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Activated On">Remarks</label>
+                                    <textarea name="evaluation_comment"></textarea>
+                                </div>
+                            </div>
+                        <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="External Attachment">Final Attachment</label>
+                                        <input type="file" id="myfile" name="evaluation_attachment" value="">
+                                        {{-- <a href="{{ asset('upload/' . evaluation_attachment) }}" target="_blank"></a> --}}
+                                    </div>
+                                </div>
+
+                        </div>
+                        <div class="button-block">
+                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        <button type="button" class="backButton">Back</button>
+                                 
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </form>
