@@ -370,7 +370,7 @@
                         <th class="w-20"> Department Head</th>
                         <td class="w-30">
                             @if ($data->department_head)
-                                {{ $data->department_head }}
+                                {{ Helpers::getInitiatorName($data->department_head) }}
                             @else
                                 Not Applicable
                             @endif
@@ -378,7 +378,7 @@
                         <th class="w-20"> QA Reviewer</th>
                         <td class="w-30">
                             @if ($data->qa_reviewer)
-                                {{ $data->qa_reviewer }}
+                                {{ Helpers::getInitiatorName($data->qa_reviewer) }}
                             @else
                                 Not Applicable
                             @endif
@@ -602,6 +602,9 @@
                     </tr>
                 </table>
             </div>
+
+            <br>
+
             <div class="border-table">
                 <div class="block-head">
                     Initial Attachments
@@ -630,6 +633,7 @@
                 </table>
             </div>
 
+            <br>
             <div class="block">
                 <div class="block-head">
                     HOD Review
@@ -707,6 +711,7 @@
                 </table>
             </div>
 
+            <br>
             <div class="block">
                 <div class="block-head">
                     QA Initial Review
@@ -893,6 +898,7 @@
             </div>
 
 
+            <br>
 
             <div class="block">
                 <div class="block-head">
@@ -994,6 +1000,7 @@
                 </table>
             </div>
 
+            <br>
             <div class="block">
                 <div class="block-head">
                     HOD Final Review
@@ -1012,6 +1019,7 @@
                     </tr>
                 </table>
             </div>
+
             <div class="border-table">
                 <div class="block-head">
                     HOD Final Review Attachments
@@ -1039,6 +1047,9 @@
 
                 </table>
             </div>
+
+            <br>
+
             <div class="border-table">
                 <div class="block-head">
                     QA Final Review
@@ -1058,7 +1069,7 @@
                     </tr>
                 </table>
             </div>
-
+<br>
             <div class="border-table">
                 <div class="block-head">
                     QA Final Review Attachments
@@ -1089,7 +1100,12 @@
 
 
 
-            <div class="border-table">
+            <br>
+{{--@php
+    dd($data->Disposition_Batch);
+@endphp--}}
+
+            {{--<div class="border-table">--}}
                 <div class="block-head">
                     QAH/Designee Closure Approval
                 </div>
@@ -1098,8 +1114,8 @@
                         <th class="w-20">
                             Closure Comments</th>
                         <td class="w-30">
-                            @if ($data->CAPA_Closure_Comments)
-                                {{ $data->CAPA_Closure_Comments }}
+                            @if ($data->Closure_Comments)
+                                {{ $data->Closure_Comments }}
                             @else
                                 Not Applicable
                             @endif
@@ -1117,8 +1133,8 @@
                         </td>
                     </tr>
                 </table>
-            </div>
-
+            {{--</div>--}}
+<br>
             <div class="border-table">
                 <div class="block-head">
                     Closure Attachments
@@ -1147,6 +1163,85 @@
                 </table>
             </div>
 
+            <br>
+            <div class="block">
+                <div class="block-head">Activity Log</div>
+                <table>
+                    <tr>
+                        <th class="w-20">Submit By</th>
+                        <td class="w-80">{{ $data->submit_by }}</td>
+                        <th class="w-20">Submit On</th>
+                        <td class="w-80">{{ $data->submit_on }}</td>
+                        <th class="w-20">Submit Comment</th>
+                        <td class="w-80">{{ $data->submit_comment }}</td>
+                    </tr>
+                 
+                    <tr>
+                        <th class="w-20">HOD Initial Review Complete By</th>
+                        <td class="w-80">{{ $data->HOD_Initial_Review_Complete_By }}</td>
+                        <th class="w-20">HOD Initial Review Complete On</th>
+                        <td class="w-80">{{ $data->HOD_Initial_Review_Complete_On }}</td>
+                        <th class="w-20">HOD Initial Review Complete Comment</th>
+                        <td class="w-80">{{ $data->HOD_Initial_Review_Comments }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">QA Initial Review Complete By</th>
+                        <td class="w-80">{{ $data->QA_Initial_Review_Complete_By }}</td>
+                        <th class="w-20">QA Initial Review Complete On</th>
+                        <td class="w-80">{{ $data->QA_Initial_Review_Complete_On }}</td>
+                        <th class="w-20">QA Initial Review Complete Comment</th>
+                        <td class="w-80">{{ $data->QA_Initial_Review_Comments }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">QAH/Designee Approval Complete By</th>
+                        <td class="w-80">{{ $data->QAH_Designee_Approval_Complete_By }}</td>
+                        <th class="w-20">QAH/Designee Approval Complete On</th>
+                        <td class="w-80">{{ $data->QAH_Designee_Approval_Complete_On }}</td>
+                        <th class="w-20">QAH/Designee Approval Complete Comment</th>
+                        <td class="w-80">{{ $data->QAH_Designee_Approval_Complete_Comments }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Pending Initiator Update Complete By</th>
+                        <td class="w-80">{{ $data->Pending_Review_Complete_By }}</td>
+                        <th class="w-20">Pending Initiator Update Complete On</th>
+                        <td class="w-80">{{ $data->Pending_Review_Complete_On }}</td>
+                        <th class="w-20">Pending Initiator Update Complete Comment</th>
+                        <td class="w-80">{{ $data->Pending_Review_Comments }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">HOD Final Review Complete By</th>
+                        <td class="w-80">{{ $data->Hod_Final_Review_Complete_By }}</td>
+                        <th class="w-20">HOD Final Review Complete On</th>
+                        <td class="w-80">{{ $data->Hod_Final_Review_Complete_On }}</td>
+                        <th class="w-20">HOD Final Review Complete Comment</th>
+                        <td class="w-80">{{ $data->Hod_Final_Review_Comments }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">QA Final Review Complete By</th>
+                        <td class="w-80">{{ $data->QA_Final_Review_Complete_By }}</td>
+                        <th class="w-20">QA Final Review Complete On</th>
+                        <td class="w-80">{{ $data->QA_Final_Review_Complete_On }}</td>
+                        <th class="w-20">QA Final Review Complete Comment</th>
+                        <td class="w-80">{{ $data->QA_Final_Review_Comments }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Approved By</th>
+                        <td class="w-80">{{ $data->QA_head_approved_by }}</td>
+                        <th class="w-20">Approved On</th>
+                        <td class="w-80">{{ $data->QA_head_approved_on }}</td>
+                        <th class="w-20">Approved Comment</th>
+                        <td class="w-80">{{ $data->QA_head_approved_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Cancel By</th>
+                        <td class="w-80">{{ $data->Cancelled_by }}</td>
+                        <th class="w-20">Cancel On</th>
+                        <td class="w-80">{{ $data->Cancelled_on }}</td>
+                        <th class="w-20">Cancel Comment</th>
+                        <td class="w-80">{{ $data->Cancelled_cmt }}</td>
+                    </tr>
+                </table>
+            </div>
 
         </div>
     </div>

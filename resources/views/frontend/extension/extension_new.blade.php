@@ -352,7 +352,7 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Assigned To">HOD Remarks</label>
-                                    <textarea name="reviewer_remarks" id="reviewer_remarks" cols="30"></textarea>
+                                    <textarea name="reviewer_remarks" id="reviewer_remarks" cols="30" disabled></textarea>
                                 </div>
                             </div>
 
@@ -366,7 +366,7 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="myfile" name="file_attachment_reviewer[]"
-                                                oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple>
+                                                oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -390,13 +390,13 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Assigned To">QA/CQA Approval Comments</label>
-                                    <textarea name="approver_remarks" id="approver_remarks" cols="30"></textarea>
+                                    <textarea name="approver_remarks" id="approver_remarks" cols="30" disabled></textarea>
                                 </div>
                             </div>
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Guideline Attachment">QA/CQA Approval Attachment</label>
+                                    <label for="Guideline Attachment">QA/CQA Approval Attachments</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -404,7 +404,7 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="myfile" name="file_attachment_approver[]"
-                                                oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple>
+                                                oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple disabled>
                                         </div>
                                     </div>
                                 </div>

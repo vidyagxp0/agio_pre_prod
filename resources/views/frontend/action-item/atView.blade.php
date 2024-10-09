@@ -84,7 +84,7 @@
                         {{-- {{ dd($data->stage);}} --}}
                         <a class="button_theme1 text-white" href="{{ url('rcms/action-item-audittrialshow', $data->id) }}">
                             Audit Trail </a>
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Action Item', 3))
                             <a href="#signature-modal"><button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
                                     Submit
@@ -93,19 +93,19 @@
                                     data-bs-target="#cancel-modal">
                                     Cancel
                                 </button></a>
-                        @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <a href="#cancel-modal"> <button class="button_theme1" data-bs-toggle="modal"
+                        @elseif($data->stage == 2 )
+                           @if (Auth::user()->id == $data->assign_to || Helpers::check_roles($data->division_id, 'Action Item', 18))
+                           <a href="#cancel-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#more-info-required-modal">
                                     More Information Required
                                 </button></a>
-                            {{-- <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button></a> --}}
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
                                     Acknowledge Complete
                                 </button></a>
-                        @elseif($data->stage == 3 && (in_array(8, $userRoleIds) || in_array(18, $userRoleIds)))
+                           @endif
+                        @elseif($data->stage == 3)
+                        @if (Auth::user()->id == $data->assign_to || Helpers::check_roles($data->division_id, 'Action Item', 18))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
                                     Complete
@@ -113,7 +113,8 @@
                             {{-- <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
                             </button></a> --}}
-                        @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            @endif
+                        @elseif($data->stage == 4 && (Helpers::check_roles($data->division_id, 'Action Item', 7) || Helpers::check_roles($data->division_id, 'Action Item', 66)))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
                                     Verification Complete
@@ -273,7 +274,7 @@
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $value)
                                                     <option {{ $data->assign_to == $value->name ? 'selected' : '' }}
-                                                        value="{{ $value->name }}">{{ $value->name }}</option>
+                                                        value="{{ $value->id }}">{{ $value->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -478,7 +479,7 @@
                                         <div class="group-input">
                                             <label for="HOD Persons">HOD Persons</label>
                                             <select name="hod_preson[]" placeholder="Select HOD Persons"
-                                                data-search="false" data-silent-initial-value-set="true" id="hod"
+                                                data-search="false" data-silent-initial-value-set="true"
                                                 {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}>
                                                 <option value="">Select Person</option>
                                                 @foreach ($users as $value)
@@ -934,7 +935,7 @@
                         @if ($data->stage == 2 || $data->stage == 3)
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="file_attach">Completion Attachments</label>
+                                    <label for="file_attach">Completion Attachment</label>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="Support_doc">
                                             @if ($data->Support_doc)
@@ -1033,7 +1034,7 @@
                         @else
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="file_attach">Completion Attachments</label>
+                                    <label for="file_attach">Completion Attachment</label>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="Support_doc">
                                             @if ($data->Support_doc)
@@ -1088,7 +1089,7 @@
                             @if ($data->stage == 4)
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="qa_comments">QA Review Comments @if ($data->stage == 4)
+                                        <label for="qa_comments">QA/CQA Review Comments @if ($data->stage == 4)
                                                 <span class="text-danger">*</span>
                                             @endif
                                         </label>
@@ -1098,7 +1099,7 @@
                             @else
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="qa_comments">QA Review Comments @if ($data->stage == 4)
+                                        <label for="qa_comments">QA/CQA Review Comments @if ($data->stage == 4)
                                                 <span class="text-danger">*</span>
                                             @endif </label>
                                         <textarea class="tiny" readonly {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="qa_comments">{{ $data->qa_comments }}</textarea>
@@ -1122,7 +1123,7 @@
                             @if ($data->stage == 4)
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="file_attach">Action Approval Attachments</label>
+                                        <label for="file_attach">Action Approval Attachment</label>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="final_attach">
                                                 @if ($data->final_attach)
@@ -1272,9 +1273,9 @@
 
                 <div id="CCForm5" class="inner-block cctabcontent">
                     <div class="inner-block-content">
-                        <div class="sub-head">
+                        <!-- <div class="sub-head">
                             Submit
-                        </div>
+                        </div> -->
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="group-input">
@@ -1294,9 +1295,9 @@
                                     <div class="static">{{ $data->submitted_comment }}</div>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <!-- <div class="col-12">
                                             <div class="sub-head">Cancel</div>
-                                        </div>
+                                        </div> -->
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled by">Cancel By</label>
@@ -1316,32 +1317,32 @@
                                 </div>
                             </div>
 
-                            <div class="col-12">
-                                            <div class="sub-head">Acknowledge</div>
-                                        </div>
+                            <!-- <div class="col-12">
+                                            <div class="sub-head">Acknowledge Complete</div>
+                                        </div> -->
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="cancelled by">Acknowledge By</label>
+                                    <label for="cancelled by">Acknowledge Complete By</label>
                                     <div class="static">{{ $data->acknowledgement_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="cancelled on">Acknowledge On</label>
+                                    <label for="cancelled on">Acknowledge Complete On</label>
                                     <div class="Date">{{ $data->acknowledgement_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="submitted on">Acknowledge Comment</label>
+                                    <label for="submitted on">Acknowledge Complete Comment</label>
                                     <div class="static">{{ $data->acknowledgement_comment }}</div>
                                 </div>
                             </div>
 
-                            <div class="col-12">
+                            <!-- <div class="col-12">
                                             <div class="sub-head">Complete</div>
-                                        </div>
+                                        </div> -->
 
                             <div class="col-lg-3">
                                 <div class="group-input">
@@ -1361,9 +1362,9 @@
                                     <div class="static">{{ $data->work_completion_comment }}</div>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <!-- <div class="col-12">
                                             <div class="sub-head">Verification Complete</div>
-                                        </div>
+                                        </div> -->
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled by">Verification Complete By</label>

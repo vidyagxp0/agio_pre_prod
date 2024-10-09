@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Action-Item Single Report
+                    Action-Item Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -440,7 +440,7 @@
             </div>
 
             <div class="block-head">
-                Completion Attachments
+                Completion Attachment
             </div>
             <div class="border-table">
                 <table>
@@ -479,7 +479,7 @@
             </div>
             <table>
                 <tr>
-                    <th class="w-20">QA Review Comments</th>
+                    <th class="w-20">QA/CQA Review Comments</th>
                     <td class="w-80">
                         @if ($data->qa_comments)
                             {{ $data->qa_comments }}
@@ -552,9 +552,9 @@
                     Activity Log
                 </div>
 
-                    <div class="block-head">
+                    <!-- <div class="block-head">
                         Submit
-                    </div>
+                    </div> -->
 
                 <table>
                     <tr>
@@ -566,11 +566,11 @@
                         <td class="w-30">{{ $data->submitted_comment }}</td>
                     </tr>
 
-                    </table>
+                    <!-- </table>
                     <div class="block-head">
                         Cancel
                     </div>
-                    <table>
+                    <table> -->
 
                     <tr>
                         <th class="w-10">Cancel By</th>
@@ -581,25 +581,25 @@
                         <td class="w-30">{{ $data->cancelled_comment }}</td>
                     </tr>
 
-                    </table>
+                    <!-- </table>
                     <div class="block-head">
-                        Acknowledge
+                        Acknowledge Complete
                     </div>
-                    <table>
+                    <table> -->
 
                     <tr>
-                        <th class="w-10">Acknowledge By</th>
+                        <th class="w-10">Acknowledge Complete By</th>
                         <td class="w-20">{{ $data->acknowledgement_by }}</td>
-                        <th class="w-10">Acknowledge On</th>
+                        <th class="w-10">Acknowledge Complete On</th>
                         <td class="w-20">{{ $data->acknowledgement_on }}</td>
-                        <th class="w-10">Acknowledge Comment</th>
+                        <th class="w-10">Acknowledge Complete Comment</th>
                         <td class="w-30">{{ $data->acknowledgement_comment }}</td>
                     </tr>
-                    </table>
+                    <!-- </table>
                     <div class="block-head">
                         Complete
                     </div>
-                    <table>
+                    <table> -->
                     <tr>
                         <th class="w-10">Complete By</th>
                         <td class="w-20">{{ $data->work_completion_by }}</td>
@@ -608,11 +608,11 @@
                         <th class="w-10">Complete Comment</th>
                         <td class="w-30">{{ $data->work_completion_comment }}</td>
                     </tr>
-                    </table>
+                    <!-- </table>
                     <div class="block-head">
                     Verification Complete
                     </div>
-                    <table>
+                    <table> -->
                     <tr>
                         <th class="w-10">Verification Complete By</th>
                         <td class="w-20">{{ $data->qa_varification_by }}</td>

@@ -398,7 +398,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input" id="repeat_nature">
                                     <label for="repeat_nature">Experience (if any)</label>
-                                    <input type="number" name="experience_if_any" value =""  id="experience" required >
+                                    <input type="number" name="experience" value ="" min="1" id="experience" >
                                 </div>
                             </div>
 
@@ -509,7 +509,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="site_name">Site Division/Project<span class="text-danger">*</span></label>
+                                    <label for="site_name">Site Division/Project</label>
                                     <select name="site_code">
                                        <option value="">-- Select --</option>
                                        <option value="Corporate">Corporate</option>

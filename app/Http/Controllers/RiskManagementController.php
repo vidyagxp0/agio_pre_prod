@@ -51,6 +51,7 @@ class RiskManagementController extends Controller
     {
         // return dd($request);
         // return $request;
+        $form_progress = null;
 
         if (!$request->short_description) {
             toastr()->info("Short Description is required");
@@ -61,6 +62,7 @@ class RiskManagementController extends Controller
         $data->form_type = "risk-assesment";
         $data->division_id = $request->division_id;
         $data->division_code = $request->division_code;
+        $data->form_progress = isset($form_progress) ? $form_progress : null;
         //$data->record_number = $request->record_number;
         $data->record = ((RecordNumber::first()->value('counter')) + 1);
         $data->initiator_id = Auth::user()->id;
@@ -1594,7 +1596,7 @@ class RiskManagementController extends Controller
             if (!empty($data->qa_cqa_comments)) {
                 $history = new RiskAuditTrail();
                 $history->risk_id = $data->id;
-                $history->activity_type = 'CQA/QA Review Comment';
+                $history->activity_type = 'QA/CQA Review Comment';
                 $history->previous = "Null";
                 $history->current = $data->qa_cqa_comments;
                 $history->comment = "Not Applicable";
@@ -1630,7 +1632,7 @@ class RiskManagementController extends Controller
             if (!empty($data->qa_cqa_head_comm)) {
                 $history = new RiskAuditTrail();
                 $history->risk_id = $data->id;
-                $history->activity_type = 'CQA/QA Head Comment';
+                $history->activity_type = 'QA/CQA Head Approval Comment';
                 $history->previous = "Null";
                 $history->current = $data->qa_cqa_head_comm;
                 $history->comment = "Not Applicable";
@@ -1648,7 +1650,7 @@ class RiskManagementController extends Controller
             if (!empty($data->qa_cqa_head_attach)) {
                 $history = new RiskAuditTrail();
                 $history->risk_id = $data->id;
-                $history->activity_type = 'CQA/QA Head Attachments';
+                $history->activity_type = 'QA/CQA Head Attachments';
                 $history->previous = "Null";
                 $history->current = $data->qa_cqa_head_attach;
                 $history->comment = "Not Applicable";
@@ -2707,11 +2709,11 @@ class RiskManagementController extends Controller
     }
     public function riskUpdate(Request $request, $id)
     {
+        $form_progress = null;
 
         $lastDocument =  RiskManagement::find($id);
         $data =  RiskManagement::find($id);
         $lastCft = RiskManagmentCft::where('risk_id', $data->id)->first();
-        $form_progress = null;
         if (!$request->short_description) {
             toastr()->info("Short Description is required");
             return redirect()->back()->withInput();
@@ -2920,7 +2922,7 @@ class RiskManagementController extends Controller
         }
         $data->fill($request->except('qa_cqa_head_attach'));
         // return $data;
-        $data->update();
+
         // -----------grid=------
         //  $data1 = new RiskAssesmentGrid();
         //  $data1->risk_id = $data->id;
@@ -2929,11 +2931,9 @@ class RiskManagementController extends Controller
 
         if ($data->stage == 2 || $data->stage == 3) {
 
-
-            if (!$form_progress) {
-                $form_progress = 'cft';
-            }
-
+            // if (!$form_progress) {
+            //     $form_progress = 'cft';
+            // }
 
 
             $Cft = RiskManagmentCft::withoutTrashed()->where('risk_id', $id)->first();
@@ -3421,7 +3421,9 @@ class RiskManagementController extends Controller
             $IsCFTRequired = RiskAssesmentCftResponce::withoutTrashed()->where(['is_required' => 1, 'risk_id' => $id])->latest()->first();
             $cftUsers = DB::table('risk_managment_cfts')->where(['risk_id' => $id])->first();
             // Define the column names
-            $columns = ['Production_person', 'Production_Table_Person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person'];
+            $columns = ['Production_person', 'Production_Table_Person', 'Production_Injection_Person', 'ResearchDevelopment_person', 'Human_Resource_person', 'CorporateQualityAssurance_person', 'Store_person', 'Quality_Control_Person', 'QualityAssurance_person', 'RegulatoryAffair_person', 'ProductionLiquid_person', 'Microbiology_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Analytical_Development_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Information_Technology_person', 'Project_management_person'];
+
+            // $columns = ['Production_person', 'Production_Table_Person', 'Production_Injection_Person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person'];
 
             // Initialize an array to store the values
             $valuesArray = [];
@@ -3475,6 +3477,13 @@ class RiskManagementController extends Controller
             }
         }
 
+
+
+
+        // $data->form_progress = isset($form_progress) ? $form_progress : null;
+        // dd($data->form_progress);
+
+        $data->update();
 
         $data1 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'effect_analysis')->first();
 
@@ -4230,8 +4239,8 @@ class RiskManagementController extends Controller
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
             $history->activity_type = 'CFT Reviewer Selection';
-            $history->previous = $lastDocument->reviewer_person_value;
-            $history->current = $data->reviewer_person_value;
+            $history->previous = Helpers::getInitiatorName($data->reviewer_person_value);
+            $history->current =  Helpers::getInitiatorName($data->reviewer_person_value);
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4275,7 +4284,7 @@ class RiskManagementController extends Controller
         if ($lastDocument->hod_des_rev_comm != $data->hod_des_rev_comm) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
-            $history->activity_type = 'HOD Designee';
+            $history->activity_type = 'HOD Designee Review Comment';
             $history->previous = $lastDocument->hod_des_rev_comm;
             $history->current = $data->hod_des_rev_comm;
             $history->comment = $request->comment;
@@ -5790,49 +5799,6 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        // if ($lastCft->CorporateQualityAssurance_by != $request->CorporateQualityAssurance_by && $request->CorporateQualityAssurance_by != null) {
-        //     $history = new RiskAuditTrail;
-        //     $history->risk_id = $id;
-        //     $history->activity_type = 'Corporate Quality Assurance Review By';
-        //     $history->previous = $lastCft->CorporateQualityAssurance_by;
-        //     $history->current = $request->CorporateQualityAssurance_by;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to =   "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //      if (is_null($lastCft->CorporateQualityAssurance_by) || $lastCft->CorporateQualityAssurance_by === '') {
-        //         $history->action_name = "New";
-        //     } else {
-        //         $history->action_name = "Update";
-        //     }
-        //     $history->save();
-        // }
-        // if ($lastCft->CorporateQualityAssurance_on != $request->CorporateQualityAssurance_on && $request->CorporateQualityAssurance_on != null) {
-        //     $history = new RiskAuditTrail;
-        //     $history->risk_id = $id;
-        //     $history->activity_type = 'Corporate Quality Assurance Review On';
-        //     $history->previous = $lastCft->CorporateQualityAssurance_on;
-        //     $history->current = $request->CorporateQualityAssurance_on;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to =   "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //      if (is_null($lastCft->CorporateQualityAssurance_on) || $lastCft->CorporateQualityAssurance_on === '') {
-        //         $history->action_name = "New";
-        //     } else {
-        //         $history->action_name = "Update";
-        //     }
-        //     $history->save();
-        // }
-
-
-        // {{------------------------------------------------------------}}
 
         if ($lastCft->CorporateQualityAssurance_by != $request->CorporateQualityAssurance_by && $request->CorporateQualityAssurance_by != null) {
             $history = new RiskAuditTrail;
@@ -5875,7 +5841,7 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        // {{testing \\\\\\\\===========================================purpose}}
+
 
         if ($lastCft->CorporateQualityAssurance_attachment != $request->CorporateQualityAssurance_attachment && $request->CorporateQualityAssurance_attachment != null) {
             $history = new RiskAuditTrail;
@@ -6997,7 +6963,7 @@ class RiskManagementController extends Controller
         if ($lastDocument->qa_cqa_comments != $data->qa_cqa_comments || !empty($request->qa_cqa_comments)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'CQA/QA Review Comment';
+            $history->activity_type = 'QA/CQA Review Comment';
             $history->previous = $lastDocument->qa_cqa_comments;
             $history->current = $data->qa_cqa_comments;
             $history->comment = $request->qa_cqa_comments;
@@ -7016,19 +6982,27 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->qa_cqa_attachments != $data->qa_cqa_attachments || !empty($request->qa_cqa_attachments)) {
+        if (
+            (is_array($lastDocument->qa_cqa_attachments) ? json_encode($lastDocument->qa_cqa_attachments) : $lastDocument->qa_cqa_attachments)
+            != (is_array($data->qa_cqa_attachments) ? json_encode($data->qa_cqa_attachments) : $data->qa_cqa_attachments)
+            || !empty($request->qa_cqa_attachments)
+        ) {
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'CQA/QA Review Attachments';
-            $history->previous = $lastDocument->qa_cqa_attachments;
-            $history->current = $data->qa_cqa_attachments;
-            $history->comment = $request->qa_cqa_attachments;
+            $history->activity_type = 'QA/CQA Review Attachments';
+
+            // Convert arrays to JSON strings if necessary
+            $history->previous = is_array($lastDocument->qa_cqa_attachments) ? json_encode($lastDocument->qa_cqa_attachments) : $lastDocument->qa_cqa_attachments;
+            $history->current = is_array($data->qa_cqa_attachments) ? json_encode($data->qa_cqa_attachments) : $data->qa_cqa_attachments;
+            $history->comment = is_array($request->qa_cqa_attachments) ? json_encode($request->qa_cqa_attachments) : $request->qa_cqa_attachments;
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
+
             if (is_null($lastDocument->qa_cqa_attachments) || $lastDocument->qa_cqa_attachments === '') {
                 $history->action_name = "New";
             } else {
@@ -7038,10 +7012,11 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
+
         if ($lastDocument->qa_cqa_head_comm != $data->qa_cqa_head_comm || !empty($request->qa_cqa_head_comm)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'CQA/QA Head Comment';
+            $history->activity_type = 'QA/CQA Head Approval Comment';
             $history->previous = $lastDocument->qa_cqa_head_comm;
             $history->current = $data->qa_cqa_head_comm;
             $history->comment = $request->qa_cqa_head_comm;
@@ -7060,27 +7035,31 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->qa_cqa_head_attach != $data->qa_cqa_head_attach || !empty($request->qa_cqa_head_attach)) {
-            $history = new RiskAuditTrail();
-            $history->risk_id = $id;
-            $history->activity_type = 'CQA/QA Head Attachments';
-            $history->previous = $lastDocument->qa_cqa_head_attach;
-            $history->current = $data->qa_cqa_head_attach;
-            $history->comment = $request->qa_cqa_head_attach;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->qa_cqa_head_attach) || $lastDocument->qa_cqa_head_attach === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
+        if ((is_array($lastDocument->qa_cqa_head_attach) ? json_encode($lastDocument->qa_cqa_head_attach) : $lastDocument->qa_cqa_head_attach)
+                != (is_array($data->qa_cqa_head_attach) ? json_encode($data->qa_cqa_head_attach) : $data->qa_cqa_head_attach)
+                || !empty($request->qa_cqa_head_attach)) {
+
+                $history = new RiskAuditTrail();
+                $history->risk_id = $id;
+                $history->activity_type = 'QA/CQA Head Attachments';
+
+                // Convert arrays to strings if necessary
+                $history->previous = is_array($lastDocument->qa_cqa_head_attach) ? json_encode($lastDocument->qa_cqa_head_attach) : $lastDocument->qa_cqa_head_attach;
+                $history->current = is_array($data->qa_cqa_head_attach) ? json_encode($data->qa_cqa_head_attach) : $data->qa_cqa_head_attach;
+                $history->comment = is_array($request->qa_cqa_head_attach) ? json_encode($request->qa_cqa_head_attach) : $request->qa_cqa_head_attach;
+
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastDocument->status;
+
+                $history->action_name = is_null($lastDocument->qa_cqa_head_attach) || $lastDocument->qa_cqa_head_attach === '' ? "New" : "Update";
+
+                $history->save();
             }
 
-            $history->save();
-        }
 
 
         // if ($lastDocument->open_date != $data->open_date || !empty($request->open_date_comment)) {
@@ -8655,11 +8634,12 @@ class RiskManagementController extends Controller
                 $updateCFT = RiskManagmentCft::where('risk_id', $id)->latest()->first();
                 $lastDocument = RiskManagement::find($id);
                 $cftDetails = RiskAssesmentCftResponce::withoutTrashed()->where(['status' => 'In-progress', 'risk_id' => $id])->distinct('cft_user_id')->count();
+                $Cft = RiskManagmentCft::withoutTrashed()->where('risk_id', $id)->first();
 
                 if ($riskAssement->stage == 1) {
 
                     $riskAssement->stage = "2";
-                    $riskAssement->status = "Risk Analysis & Work Group Assignmet";
+                    $riskAssement->status = "HOD Review";
                     $riskAssement->submitted_by = Auth::user()->name;
                     $riskAssement->submitted_on = Carbon::now()->format('d-M-Y');
                     $riskAssement->submit_comment = $request->comment;
@@ -8718,13 +8698,31 @@ class RiskManagementController extends Controller
                     return back();
                 }
                 if ($riskAssement->stage == 2) {
+                        //  dd($riskAssement->form_progress !== 'cft');
+
+                    //   if ($riskAssement->form_progress !== 'cft')
+                    // {
+                    //     Session::flash('swal', [
+                    //         'type' => 'warning',
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'HOD/Designee Review Comment!/CFT Mandatory Tab is yet to be filled!'
+                    //     ]);
+
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for CFT review state'
+                    //     ]);
+                    // }
 
                     // Check HOD remark value
                     if (!$riskAssement->hod_des_rev_comm) {
 
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields Required!',
-                            'message' => 'HOD/Designee Review Comment!',
+                            'message' => 'HOD/Designee Mandatory Tab is yet to be filled!',
                             'type' => 'warning',
                         ]);
 
@@ -8736,6 +8734,23 @@ class RiskManagementController extends Controller
                             'message' => 'Sent for CFT Review state'
                         ]);
                     }
+
+                    // if (!$Cft->Production_Table_Review || $Cft->Production_Injection_Review ) {
+
+                    //     Session::flash('swal', [
+                    //         'title' => 'Mandatory Fields Required!',
+                    //         'message' => 'CFT Review Mandatory Tab is yet to be filled!',
+                    //         'type' => 'warning',
+                    //     ]);
+
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for CFT Review state'
+                    //     ]);
+                    // }
 
                     $riskAssement->stage = "3";
                     $riskAssement->status = "CFT Review";
@@ -8754,7 +8769,7 @@ class RiskManagementController extends Controller
                     $history->previous = "";
                     $history->current = $riskAssement->evaluated_by. ',' .$riskAssement->evaluated_on;
                     $history->comment = $request->comment;
-                    $history->action = 'Evaluation Complete';
+                    $history->action = 'HOD Review Complete';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -8814,7 +8829,7 @@ class RiskManagementController extends Controller
                     //     Session::flash('swal', [
                     //         'type' => 'success',
                     //         'title' => 'Success',
-                    //         'message' => 'Sent for Investigation and CAPA review state'
+                    //         'message' => 'Sent for In QA/CQA Review!'
                     //     ]);
                     // }
 
@@ -8822,16 +8837,16 @@ class RiskManagementController extends Controller
                     $IsCFTRequired = RiskAssesmentCftResponce::withoutTrashed()->where(['is_required' => 1, 'risk_id' => $id])->latest()->first();
                     $cftUsers = DB::table('risk_managment_cfts')->where(['risk_id' => $id])->first();
                     // Define the column names
-                    $columns = ['Production_person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person'];
+                    $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person','RA_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
                     // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
 
                     // Initialize an array to store the values
                     $valuesArray = [];
 
-                    // dd($valuesArray, count(array_unique($valuesArray)), ($cftDetails+1));
+                    // Iterate over the columns and retrieve the values
                     foreach ($columns as $index => $column) {
                         $value = $cftUsers->$column;
-                        if ($index == 0 && $cftUsers->$column == Auth::user()->name) {
+                       if ($index == 0 && $cftUsers->$column == Auth::user()->name) {
                             $updateCFT->Quality_Control_by = Auth::user()->name;
                             $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
 
@@ -8845,7 +8860,7 @@ class RiskManagementController extends Controller
                                 $history->previous = $lastDocument->Quality_Control_by . ' , ' . $lastDocument->Quality_Control_on;
                             }
 
-                            $history->action = 'Not Applicable';
+                            $history->action = 'CFT Review Complete';
 
                             // Make sure you're using the updated $updateCFT object here
                             $history->current = $updateCFT->Quality_Control_by . ', ' . $updateCFT->Quality_Control_on;
@@ -8866,49 +8881,55 @@ class RiskManagementController extends Controller
                             }
 
                             $history->save();
-                        }
+                            }
 
-                        if ($index == 1 && $cftUsers->$column == Auth::user()->name) {
+                                            if ($index == 1 && $cftUsers->$column == Auth::user()->name) {
                             $updateCFT->QualityAssurance_by = Auth::user()->name;
-                            $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d');
+                            $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d'); // Corrected line
+
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
                             $history->activity_type = 'Quality Assurance Completed By, Quality Assurance Completed On';
+
                             if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
                                 $history->previous = "";
                             } else {
-                                $history->previous = $lastDocument->QualityAssurance_by . ' ,' . $lastDocument->QualityAssurance_on;
+                                $history->previous = $lastDocument->QualityAssurance_by . ' ,' .Helpers::getdateFormat ($lastDocument->QualityAssurance_on);
                             }
-                            $history->action = 'Not Applicable';
-                            $history->current = $updateCFT->QualityAssurance_by . ',' . $updateCFT->QualityAssurance_on;
+
+                            $history->action = 'CFT Review Complete';
+                            $history->current = $updateCFT->QualityAssurance_by . ',' .Helpers::getdateFormat ($updateCFT->QualityAssurance_on);
                             $history->comment = $request->comment;
-                            $history->user_id = Auth::user()->name;
+                            $history->user_id = Auth::user()->id; // Use `id` instead of `name` for `user_id`
                             $history->user_name = Auth::user()->name;
-                            $history->change_to =   "Not Applicable";
+                            $history->change_to = "Not Applicable";
                             $history->change_from = $lastDocument->status;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
+
                             if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
                                 $history->action_name = 'New';
                             } else {
                                 $history->action_name = 'Update';
                             }
+
                             $history->save();
-                        }
-                        if ($index == 2 && $cftUsers->$column == Auth::user()->name) {
+                            }
+
+                        if($index == 2 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Engineering_by = Auth::user()->name;
                             $updateCFT->Engineering_on = Carbon::now()->format('Y-m-d');
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
                             $history->activity_type = 'Engineering Completed By, Engineering Completed On';
-                            if (is_null($lastDocument->Engineering_by) || $lastDocument->Engineering_on == '') {
-                                $history->previous = "";
-                            } else {
-                                $history->previous = $lastDocument->Engineering_by . ' ,' . $lastDocument->Engineering_on;
-                            }
-                            $history->action = 'Not Applicable';
-                            $history->current = $updateCFT->Engineering_by . ',' . $updateCFT->Engineering_on;
+                    if(is_null($lastDocument->Engineering_by) || $lastDocument->Engineering_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->Engineering_by. ' ,' .Helpers::getdateFormat ($lastDocument->Engineering_on);
+                    }
+                    $history->action='CFT Review Complete';
+                    $history->current = $updateCFT->Engineering_by. ',' . Helpers::getdateFormat($updateCFT->Engineering_on);
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
@@ -8917,26 +8938,27 @@ class RiskManagementController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
-                            if (is_null($lastDocument->Engineering_by) || $lastDocument->Engineering_on == '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
+                            if(is_null($lastDocument->Engineering_by) || $lastDocument->Engineering_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                             $history->save();
                         }
-                        if ($index == 3 && $cftUsers->$column == Auth::user()->name) {
+                        if($index == 3 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Environment_Health_Safety_by = Auth::user()->name;
                             $updateCFT->Environment_Health_Safety_on = Carbon::now()->format('Y-m-d');
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
                             $history->activity_type = 'Safety Completed By, Safety Completed On';
-                            if (is_null($lastDocument->Environment_Health_Safety_by) || $lastDocument->Environment_Health_Safety_on == '') {
-                                $history->previous = "";
-                            } else {
-                                $history->previous = $lastDocument->Environment_Health_Safety_by . ' ,' . $lastDocument->Environment_Health_Safety_on;
-                            }
-                            $history->action = 'Not Applicable';
-                            $history->current = $updateCFT->Environment_Health_Safety_by . ',' . $updateCFT->Environment_Health_Safety_on;
+                    if(is_null($lastDocument->Environment_Health_Safety_by) || $lastDocument->Environment_Health_Safety_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->Environment_Health_Safety_by. ' ,' . Helpers::getdateFormat($lastDocument->Environment_Health_Safety_on);
+                    }
+                    $history->action='CFT Review Complete';
+                    $history->current = $updateCFT->Environment_Health_Safety_by. ',' . Helpers::getdateFormat($updateCFT->Environment_Health_Safety_on);
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
@@ -8945,26 +8967,27 @@ class RiskManagementController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
-                            if (is_null($lastDocument->Environment_Health_Safety_by) || $lastDocument->Environment_Health_Safety_on == '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
+                            if(is_null($lastDocument->Environment_Health_Safety_by) || $lastDocument->Environment_Health_Safety_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                             $history->save();
                         }
-                        if ($index == 4 && $cftUsers->$column == Auth::user()->name) {
+                        if($index == 4 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Human_Resource_by = Auth::user()->name;
                             $updateCFT->Human_Resource_on = Carbon::now()->format('Y-m-d');
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
                             $history->activity_type = 'Human Resource Completed By, Human Resource Completed On';
-                            if (is_null($lastDocument->Human_Resource_by) || $lastDocument->Human_Resource_on == '') {
-                                $history->previous = "";
-                            } else {
-                                $history->previous = $lastDocument->Human_Resource_by . ' ,' . $lastDocument->Human_Resource_on;
-                            }
-                            $history->action = 'Not Applicable';
-                            $history->current = $updateCFT->Human_Resource_by . ',' . $updateCFT->Human_Resource_on;
+                    if(is_null($lastDocument->Human_Resource_by) || $lastDocument->Human_Resource_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->Human_Resource_by. ' ,' .Helpers::getdateFormat ($lastDocument->Human_Resource_on);
+                    }
+                    $history->action='CFT Review Complete';
+                    $history->current = $updateCFT->Human_Resource_by. ',' . Helpers::getdateFormat($updateCFT->Human_Resource_on);
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
@@ -8973,26 +8996,27 @@ class RiskManagementController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
-                            if (is_null($lastDocument->Human_Resource_by) || $lastDocument->Human_Resource_on == '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
+                            if(is_null($lastDocument->Human_Resource_by) || $lastDocument->Human_Resource_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                             $history->save();
                         }
-                        if ($index == 5 && $cftUsers->$column == Auth::user()->name) {
+                        if($index == 5 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Information_Technology_by = Auth::user()->name;
                             $updateCFT->Information_Technology_on = Carbon::now()->format('Y-m-d');
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
                             $history->activity_type = 'CFT Review Completed By, CFT Review Completed On';
-                            if (is_null($lastDocument->Information_Technology_by) || $lastDocument->Information_Technology_on == '') {
-                                $history->previous = "";
-                            } else {
-                                $history->previous = $lastDocument->Information_Technology_by . ' ,' . $lastDocument->Information_Technology_on;
-                            }
-                            $history->action = 'Not Applicable';
-                            $history->current = $updateCFT->Information_Technology_by . ',' . $updateCFT->Information_Technology_on;
+                    if(is_null($lastDocument->Information_Technology_by) || $lastDocument->Information_Technology_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->Information_Technology_by. ' ,' . Helpers::getdateFormat($lastDocument->Information_Technology_on);
+                    }
+                    $history->action='CFT Review Complete';
+                    $history->current = $updateCFT->Information_Technology_by. ',' . Helpers::getdateFormat($updateCFT->Information_Technology_on);
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
@@ -9000,26 +9024,27 @@ class RiskManagementController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
-                            if (is_null($lastDocument->Information_Technology_by) || $lastDocument->Information_Technology_on == '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
+                            if(is_null($lastDocument->Information_Technology_by) || $lastDocument->Information_Technology_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                             $history->save();
                         }
-                        if ($index == 6 && $cftUsers->$column == Auth::user()->name) {
+                        if($index == 6 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Other1_by = Auth::user()->name;
                             $updateCFT->Other1_on = Carbon::now()->format('Y-m-d');
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
                             $history->activity_type = 'Others 1 Completed By, Others 1 Completed On';
-                            if (is_null($lastDocument->Other1_by) || $lastDocument->Other1_on == '') {
-                                $history->previous = "";
-                            } else {
-                                $history->previous = $lastDocument->Other1_by . ' ,' . $lastDocument->Other1_on;
-                            }
-                            $history->action = 'Not Applicable';
-                            $history->current = $updateCFT->Other1_by . ',' . $updateCFT->Other1_on;
+                    if(is_null($lastDocument->Other1_by) || $lastDocument->Other1_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->Other1_by. ' ,' .Helpers::getdateFormat ($lastDocument->Other1_on);
+                    }
+                    $history->action='CFT Review Complete';
+                    $history->current = $updateCFT->Other1_by. ',' . Helpers::getdateFormat($updateCFT->Other1_on);
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
@@ -9028,26 +9053,27 @@ class RiskManagementController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
-                            if (is_null($lastDocument->Other1_by) || $lastDocument->Other1_on == '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
+                            if(is_null($lastDocument->Other1_by) || $lastDocument->Other1_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                             $history->save();
                         }
-                        if ($index == 7 && $cftUsers->$column == Auth::user()->name) {
+                        if($index == 7 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Other2_by = Auth::user()->name;
                             $updateCFT->Other2_on = Carbon::now()->format('Y-m-d');
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
                             $history->activity_type = 'Others 2 Completed By, Others 2 Completed On';
-                            if (is_null($lastDocument->Other2_by) || $lastDocument->Other2_on == '') {
-                                $history->previous = "";
-                            } else {
-                                $history->previous = $lastDocument->Other2_by . ' ,' . $lastDocument->Other2_on;
-                            }
-                            $history->action = 'Not Applicable';
-                            $history->current = $updateCFT->Other2_by . ',' . $updateCFT->Other2_on;
+                    if(is_null($lastDocument->Other2_by) || $lastDocument->Other2_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->Other2_by. ' ,' . Helpers::getdateFormat($lastDocument->Other2_on);
+                    }
+                    $history->action='CFT Review Complete';
+                    $history->current = $updateCFT->Other2_by. ',' .Helpers::getdateFormat($updateCFT->Other2_on);
                             $history->current = $updateCFT->Other2_by;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
@@ -9057,26 +9083,27 @@ class RiskManagementController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
-                            if (is_null($lastDocument->Other2_by) || $lastDocument->Other2_on == '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
+                            if(is_null($lastDocument->Other2_by) || $lastDocument->Other2_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                             $history->save();
                         }
-                        if ($index == 8 && $cftUsers->$column == Auth::user()->name) {
+                        if($index == 8 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Other3_by = Auth::user()->name;
                             $updateCFT->Other3_on = Carbon::now()->format('Y-m-d');
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
                             $history->activity_type = 'Others 3 Completed By, Others 3 Completed On';
-                            if (is_null($lastDocument->Other3_by) || $lastDocument->Other3_on == '') {
-                                $history->previous = "";
-                            } else {
-                                $history->previous = $lastDocument->Other3_by . ' ,' . $lastDocument->Other3_on;
-                            }
-                            $history->action = 'Not Applicable';
-                            $history->current = $updateCFT->Other3_by . ',' . $updateCFT->Other3_on;
+                    if(is_null($lastDocument->Other3_by) || $lastDocument->Other3_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->Other3_by. ' ,' . Helpers::getdateFormat($lastDocument->Other3_on);
+                    }
+                    $history->action='CFT Review Complete';
+                    $history->current = $updateCFT->Other3_by. ',' . Helpers::getdateFormat($updateCFT->Other3_on);
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
@@ -9085,26 +9112,27 @@ class RiskManagementController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
-                            if (is_null($lastDocument->Other3_by) || $lastDocument->Other3_on == '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
+                            if(is_null($lastDocument->Other3_by) || $lastDocument->Other3_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                             $history->save();
                         }
-                        if ($index == 9 && $cftUsers->$column == Auth::user()->name) {
+                        if($index == 9 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Other4_by = Auth::user()->name;
                             $updateCFT->Other4_on = Carbon::now()->format('Y-m-d');
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
-                            $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
-                            if (is_null($lastDocument->Other4_by) || $lastDocument->Other4_on == '') {
-                                $history->previous = "";
-                            } else {
-                                $history->previous = $lastDocument->Other4_by . ' ,' . $lastDocument->Other4_on;
-                            }
-                            $history->action = 'Not Applicable';
-                            $history->current = $updateCFT->Other4_by . ',' . $updateCFT->Other4_on;
+    $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
+                    if(is_null($lastDocument->Other4_by) || $lastDocument->Other4_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->Other4_by. ' ,' . Helpers::getdateFormat($lastDocument->Other4_on);
+                    }
+                    $history->action='CFT Review Complete';
+                    $history->current = $updateCFT->Other4_by. ',' . Helpers::getdateFormat($updateCFT->Other4_on);
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
@@ -9112,26 +9140,27 @@ class RiskManagementController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
-                            if (is_null($lastDocument->Other4_by) || $lastDocument->Other4_on == '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
+                            if(is_null($lastDocument->Other4_by) || $lastDocument->Other4_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                             $history->save();
                         }
-                        if ($index == 10 && $cftUsers->$column == Auth::user()->name) {
+                        if($index == 10 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Other5_by = Auth::user()->name;
                             $updateCFT->Other5_on = Carbon::now()->format('Y-m-d');
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
                             $history->activity_type = 'Others 5 Completed By, Others 5 Completed On';
-                            if (is_null($lastDocument->Other5_by) || $lastDocument->Other5_on == '') {
-                                $history->previous = "";
-                            } else {
-                                $history->previous = $lastDocument->Other5_by . ' ,' . $lastDocument->Other5_on;
-                            }
-                            $history->action = 'Not Applicable';
-                            $history->current = $updateCFT->Other5_by . ',' . $updateCFT->Other5_on;
+                    if(is_null($lastDocument->Other5_by) || $lastDocument->Other5_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->Other5_by. ' ,' . Helpers::getdateFormat($lastDocument->Other5_on);
+                    }
+                    $history->action='CFT Review Complete';
+                    $history->current = $updateCFT->Other5_by. ',' . Helpers::getdateFormat($updateCFT->Other5_on);
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
@@ -9139,21 +9168,22 @@ class RiskManagementController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
-                            if (is_null($lastDocument->Other5_by) || $lastDocument->Other5_on == '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
+                           if(is_null($lastDocument->Other5_by) || $lastDocument->Other5_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                             $history->save();
                         }
-                        if ($index == 11 && $cftUsers->$column == Auth::user()->name) {
+                        if($index == 11 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->RA_by = Auth::user()->name;
                             $updateCFT->RA_on = Carbon::now()->format('Y-m-d');
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
                             $history->activity_type = 'Activity Log';
                             $history->previous = "";
-                            $history->action = 'CFT Review';
+                            $history->action= 'CFT Review';
                             $history->current = $updateCFT->RA_by;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
@@ -9166,19 +9196,19 @@ class RiskManagementController extends Controller
                             $history->action_name = "Update";
                             $history->save();
                         }
-                        if ($index == 12 && $cftUsers->$column == Auth::user()->name) {
+                        if($index == 12 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Production_Table_By = Auth::user()->name;
                             $updateCFT->Production_Table_On = Carbon::now()->format('Y-m-d');
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
-                            $history->activity_type = 'Production Table Completed By, Production Table Completed On';
-                            if (is_null($lastDocument->Production_Table_By) || $lastDocument->Production_Table_On == '') {
-                                $history->previous = "";
-                            } else {
-                                $history->previous = $lastDocument->Production_Table_By . ' ,' . $lastDocument->Production_Table_On;
-                            }
-                            $history->action = 'Not Applicable';
-                            $history->current = $updateCFT->Production_Table_By . ',' . $updateCFT->Production_Table_On;
+                           $history->activity_type = 'Production Table Completed By, Production Table Completed On';
+                    if(is_null($lastDocument->Production_Table_By) || $lastDocument->Production_Table_On == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->Production_Table_By. ' ,' . Helpers::getdateFormat($lastDocument->Production_Table_On);
+                    }
+                   $history->action='CFT Review Complete';
+                    $history->current = $updateCFT->Production_Table_By. ',' .Helpers::getdateFormat ($updateCFT->Production_Table_On);
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
@@ -9186,27 +9216,27 @@ class RiskManagementController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
-                            if (is_null($lastDocument->Production_Table_By) || $lastDocument->Production_Table_On == '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
-                            // dd($history);
+                            if(is_null($lastDocument->Production_Table_By) || $lastDocument->Production_Table_On == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                             $history->save();
                         }
-                        if ($index == 13 && $cftUsers->$column == Auth::user()->name) {
+                        if($index == 13 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->ProductionLiquid_by = Auth::user()->name;
                             $updateCFT->ProductionLiquid_on = Carbon::now()->format('Y-m-d');
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
                             $history->activity_type = 'Production Liquid Completed By, Production Liquid Completed On';
-                            if (is_null($lastDocument->ProductionLiquid_by) || $lastDocument->ProductionLiquid_on == '') {
-                                $history->previous = "";
-                            } else {
-                                $history->previous = $lastDocument->ProductionLiquid_by . ' ,' . $lastDocument->ProductionLiquid_on;
-                            }
-                            $history->action = 'Not Applicable';
-                            $history->current = $updateCFT->ProductionLiquid_by . ',' . $updateCFT->ProductionLiquid_on;
+                    if(is_null($lastDocument->ProductionLiquid_by) || $lastDocument->ProductionLiquid_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->ProductionLiquid_by. ' ,' . Helpers::getdateFormat($lastDocument->ProductionLiquid_on);
+                    }
+                    $history->action='CFT Review Complete';
+                    $history->current = $updateCFT->ProductionLiquid_by. ',' . Helpers::getdateFormat($updateCFT->ProductionLiquid_on);
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
@@ -9215,26 +9245,27 @@ class RiskManagementController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
-                            if (is_null($lastDocument->ProductionLiquid_by) || $lastDocument->ProductionLiquid_on == '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
+                            if(is_null($lastDocument->ProductionLiquid_by) || $lastDocument->ProductionLiquid_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                             $history->save();
                         }
-                        if ($index == 14 && $cftUsers->$column == Auth::user()->name) {
+                        if($index == 14 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Production_Injection_By = Auth::user()->name;
                             $updateCFT->Production_Injection_On = Carbon::now()->format('Y-m-d');
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
                             $history->activity_type = 'Production Injection Completed By, Production Injection Completed On';
-                            if (is_null($lastDocument->Production_Injection_By) || $lastDocument->Production_Injection_On == '') {
-                                $history->previous = "";
-                            } else {
-                                $history->previous = $lastDocument->Production_Injection_By . ' ,' . $lastDocument->Production_Injection_On;
-                            }
-                            $history->action = 'Not Applicable';
-                            $history->current = $updateCFT->Production_Injection_By . ',' . $updateCFT->Production_Injection_On;
+                    if(is_null($lastDocument->Production_Injection_By) || $lastDocument->Production_Injection_On == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->Production_Injection_By. ' ,' .Helpers::getdateFormat( $lastDocument->Production_Injection_On);
+                    }
+                    $history->action='CFT Review Complete';
+                    $history->current = $updateCFT->Production_Injection_By. ',' . Helpers::getdateFormat($updateCFT->Production_Injection_On);
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
@@ -9243,26 +9274,27 @@ class RiskManagementController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
-                            if (is_null($lastDocument->Production_Injection_By) || $lastDocument->Production_Injection_On == '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
+                            if(is_null($lastDocument->Production_Injection_By) || $lastDocument->Production_Injection_On == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                             $history->save();
                         }
-                        if ($index == 15 && $cftUsers->$column == Auth::user()->name) {
+                        if($index == 15 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Store_by = Auth::user()->name;
                             $updateCFT->Store_on = Carbon::now()->format('Y-m-d');
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
-                            $history->activity_type = 'Stores Completed By, Stores Completed On';
-                            if (is_null($lastDocument->Store_by) || $lastDocument->Store_on == '') {
-                                $history->previous = "";
-                            } else {
-                                $history->previous = $lastDocument->Store_by . ' ,' . $lastDocument->Store_on;
-                            }
-                            $history->action = 'Not Applicable';
-                            $history->current = $updateCFT->Store_by . ',' . $updateCFT->Store_on;
+                           $history->activity_type = 'Stores Completed By, Stores Completed On';
+                    if(is_null($lastDocument->Store_by) || $lastDocument->Store_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->Store_by. ' ,' .Helpers::getdateFormat( $lastDocument->Store_on);
+                    }
+                    $history->action='CFT Review Complete';
+                    $history->current = $updateCFT->Store_by. ',' .Helpers::getdateFormat( $updateCFT->Store_on);
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
@@ -9271,26 +9303,27 @@ class RiskManagementController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
-                            if (is_null($lastDocument->Store_by) || $lastDocument->Store_on == '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
+                            if(is_null($lastDocument->Store_by) || $lastDocument->Store_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                             $history->save();
                         }
-                        if ($index == 16 && $cftUsers->$column == Auth::user()->name) {
+                        if($index == 16 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->ResearchDevelopment_by = Auth::user()->name;
                             $updateCFT->ResearchDevelopment_on = Carbon::now()->format('Y-m-d');
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
                             $history->activity_type = 'Research & Development Completed By, Research & Development Completed On';
-                            if (is_null($lastDocument->ResearchDevelopment_by) || $lastDocument->ResearchDevelopment_on == '') {
-                                $history->previous = "";
-                            } else {
-                                $history->previous = $lastDocument->ResearchDevelopment_by . ' ,' . $lastDocument->ResearchDevelopment_on;
-                            }
-                            $history->action = 'Not Applicable';
-                            $history->current = $updateCFT->ResearchDevelopment_by . ',' . $updateCFT->ResearchDevelopment_on;
+                    if(is_null($lastDocument->ResearchDevelopment_by) || $lastDocument->ResearchDevelopment_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->ResearchDevelopment_by. ' ,' . Helpers::getdateFormat($lastDocument->ResearchDevelopment_on);
+                    }
+                    $history->action='CFT Review Complete';
+                    $history->current = $updateCFT->ResearchDevelopment_by. ',' . Helpers::getdateFormat($updateCFT->ResearchDevelopment_on);
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
@@ -9299,26 +9332,27 @@ class RiskManagementController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
-                            if (is_null($lastDocument->ResearchDevelopment_by) || $lastDocument->ResearchDevelopment_on == '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
+                            if(is_null($lastDocument->ResearchDevelopment_by) || $lastDocument->ResearchDevelopment_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                             $history->save();
                         }
-                        if ($index == 17 && $cftUsers->$column == Auth::user()->name) {
+                        if($index == 17 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Microbiology_by = Auth::user()->name;
                             $updateCFT->Microbiology_on = Carbon::now()->format('Y-m-d');
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
                             $history->activity_type = 'Microbiology Completed By, Microbiology Completed On';
-                            if (is_null($lastDocument->Microbiology_by) || $lastDocument->Microbiology_on == '') {
-                                $history->previous = "";
-                            } else {
-                                $history->previous = $lastDocument->Microbiology_by . ' ,' . $lastDocument->Microbiology_on;
-                            }
-                            $history->action = 'Not Applicable';
-                            $history->current = $updateCFT->Microbiology_by . ',' . $updateCFT->Microbiology_on;
+                    if(is_null($lastDocument->Microbiology_by) || $lastDocument->Microbiology_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->Microbiology_by. ' ,' . Helpers::getdateFormat($lastDocument->Microbiology_on);
+                    }
+                    $history->action='CFT Review Complete';
+                    $history->current = $updateCFT->Microbiology_by. ',' . Helpers::getdateFormat($updateCFT->Microbiology_on);
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
@@ -9327,26 +9361,27 @@ class RiskManagementController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
-                            if (is_null($lastDocument->Microbiology_by) || $lastDocument->Microbiology_on == '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
+                            if(is_null($lastDocument->Microbiology_by) || $lastDocument->Microbiology_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                             $history->save();
                         }
-                        if ($index == 18 && $cftUsers->$column == Auth::user()->name) {
+                        if($index == 18 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->RegulatoryAffair_by = Auth::user()->name;
                             $updateCFT->RegulatoryAffair_on = Carbon::now()->format('Y-m-d');
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
                             $history->activity_type = 'Regulatory Affair Completed By, Regulatory Affair Completed On';
-                            if (is_null($lastDocument->RegulatoryAffair_by) || $lastDocument->RegulatoryAffair_on == '') {
-                                $history->previous = "";
-                            } else {
-                                $history->previous = $lastDocument->RegulatoryAffair_by . ' ,' . $lastDocument->RegulatoryAffair_on;
-                            }
-                            $history->action = 'Not Applicable';
-                            $history->current = $updateCFT->RegulatoryAffair_by . ',' . $updateCFT->RegulatoryAffair_on;
+                    if(is_null($lastDocument->RegulatoryAffair_by) || $lastDocument->RegulatoryAffair_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->RegulatoryAffair_by. ' ,' .Helpers::getdateFormat( $lastDocument->RegulatoryAffair_on);
+                    }
+                   $history->action='CFT Review Complete';
+                    $history->current = $updateCFT->RegulatoryAffair_by. ',' . Helpers::getdateFormat($updateCFT->RegulatoryAffair_on);
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
@@ -9355,27 +9390,28 @@ class RiskManagementController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
-                            if (is_null($lastDocument->RegulatoryAffair_by) || $lastDocument->RegulatoryAffair_on == '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
+                            if(is_null($lastDocument->RegulatoryAffair_by) || $lastDocument->RegulatoryAffair_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                             $history->save();
                         }
 
-                        if ($index == 19 && $cftUsers->$column == Auth::user()->name) {
+                        if($index == 19 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->CorporateQualityAssurance_by = Auth::user()->name;
                             $updateCFT->CorporateQualityAssurance_on = Carbon::now()->format('Y-m-d');
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
                             $history->activity_type = 'Corporate Quality Assurance Completed By, Corporate Quality Assurance Completed On';
-                            if (is_null($lastDocument->CorporateQualityAssurance_by) || $lastDocument->CorporateQualityAssurance_on == '') {
-                                $history->previous = "";
-                            } else {
-                                $history->previous = $lastDocument->CorporateQualityAssurance_by . ' ,' . $lastDocument->CorporateQualityAssurance_on;
-                            }
-                            $history->action = 'Not Applicable';
-                            $history->current = $updateCFT->CorporateQualityAssurance_by . ',' . $updateCFT->CorporateQualityAssurance_on;
+                    if(is_null($lastDocument->CorporateQualityAssurance_by) || $lastDocument->CorporateQualityAssurance_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->CorporateQualityAssurance_by. ' ,' . Helpers::getdateFormat($lastDocument->CorporateQualityAssurance_on);
+                    }
+                    $history->action='CFT Review Complete';
+                    $history->current = $updateCFT->CorporateQualityAssurance_by. ',' . Helpers::getdateFormat($updateCFT->CorporateQualityAssurance_on);
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
@@ -9384,26 +9420,27 @@ class RiskManagementController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
-                            if (is_null($lastDocument->CorporateQualityAssurance_by) || $lastDocument->CorporateQualityAssurance_on == '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
+                            if(is_null($lastDocument->CorporateQualityAssurance_by) || $lastDocument->CorporateQualityAssurance_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                             $history->save();
                         }
-                        if ($index == 20 && $cftUsers->$column == Auth::user()->name) {
+                        if($index == 20 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->ContractGiver_by = Auth::user()->name;
                             $updateCFT->ContractGiver_on = Carbon::now()->format('Y-m-d');
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
                             $history->activity_type = 'Contract Giver Completed By, Contract Giver Completed On';
-                            if (is_null($lastDocument->ContractGiver_by) || $lastDocument->ContractGiver_on == '') {
-                                $history->previous = "";
-                            } else {
-                                $history->previous = $lastDocument->ContractGiver_by . ' ,' . $lastDocument->ContractGiver_on;
-                            }
-                            $history->action = 'Not Applicable';
-                            $history->current = $updateCFT->ContractGiver_by . ',' . $updateCFT->ContractGiver_on;
+                    if(is_null($lastDocument->ContractGiver_by) || $lastDocument->ContractGiver_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->ContractGiver_by. ' ,' . Helpers::getdateFormat($lastDocument->ContractGiver_on);
+                    }
+                    $history->action='CFT Review Complete';
+                    $history->current = $updateCFT->ContractGiver_by. ',' . Helpers::getdateFormat($updateCFT->ContractGiver_on);
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
@@ -9412,14 +9449,16 @@ class RiskManagementController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
-                            if (is_null($lastDocument->ContractGiver_by) || $lastDocument->ContractGiver_on == '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
+                            if(is_null($lastDocument->ContractGiver_by) || $lastDocument->ContractGiver_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                             $history->save();
                         }
                         $updateCFT->update();
+
 
                         // Check if the value is not null and not equal to 0
                         if ($value != null && $value != 0) {
@@ -9447,7 +9486,7 @@ class RiskManagementController extends Controller
                     }
 
                     $checkCFTCount = RiskAssesmentCftResponce::withoutTrashed()->where(['status' => 'Completed', 'risk_id' => $id])->count();
-                    // dd(count(array_unique($valuesArray)), $checkCFTCount);
+                    //  dd(count(array_unique($valuesArray)), $checkCFTCount);
 
 
                     if (!$IsCFTRequired || $checkCFTCount) {
@@ -9514,7 +9553,7 @@ class RiskManagementController extends Controller
 
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields Required!',
-                            'message' => 'CQA/QA Review Comment yet to be filled!',
+                            'message' => 'QA/CQA Review Comment yet to be filled!',
                             'type' => 'warning',
                         ]);
 

@@ -387,6 +387,13 @@
                                     </div>
                                 </div>
 
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Risk Assessment Required">Justification </label>
+                                        <textarea name="train_comments" id=""></textarea>
+                                    </div>
+                                </div>
+
 
 
                                 <div class="col-lg-6" id="justification_div" style="display:none;">
@@ -916,7 +923,7 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="qa head">QA/CQA Attachments</label>
+                                        <label for="qa head">QA/CQA Initial Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -1064,7 +1071,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Quality Assurance"> Quality Assurance</label>
+                                        <label for="Quality Assurance">Quality Assurance Review Required </label>
                                         <select name="Quality_Assurance_Review" id="Quality_Assurance_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>Yes</option>
@@ -1159,7 +1166,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Tablet"> Production Tablet</label>
+                                        <label for="Production Tablet"> Production Tablet/Capsule/Powder Required ?</label>
                                         <select name="Production_Table_Review" id="Production_Table_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -1257,7 +1264,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Liquid"> Production Liquid </label>
+                                        <label for="Production Liquid">Production Liquid/Ointment Required?</label>
                                         <select name="ProductionLiquid_Review" id="ProductionLiquid_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -1354,7 +1361,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Injection"> Production Injection </label>
+                                        <label for="Production Injection">Production Injection Required ? </label>
                                         <select name="Production_Injection_Review" id="Production_Injection_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -1453,7 +1460,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Store"> Store</label>
+                                        <label for="Store"> Store Required ?</label>
                                         <select name="Store_Review" id="Store_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -1572,7 +1579,7 @@
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Quality Control Person">Quality Control Person</label>
+                                        <label for="Quality Control Person">Quality Control Required ?</label>
                                         <select name="Quality_Control_Person" id="Quality_Control_Person" disabled>
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $user)
@@ -1654,7 +1661,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Research Development"> Research Development Required ?</label>
+                                        <label for="Research Development">Research & Development Required ?</label>
                                         <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -1749,7 +1756,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Engineering Review Required">Engineering Review Required ?</label>
+                                        <label for="Engineering Review Required">Engineering Required ?</label>
                                         <select name="Engineering_review" id="Engineering_review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -2361,8 +2368,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Information Technology Review Required"> Information Technology Review
-                                            Required ?</label>
+                                        <label for="Information Technology Review Required"> Information Technology Required ?</label>
                                         <select name=" Information_Technology_review" id=" Information_Technology_review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -3380,7 +3386,7 @@
                                 <textarea name="feedback" disabled></textarea>
                             </div>
                             <div class="group-input">
-                                <label for="tran-attach">Training Attachments</label>
+                                <label for="tran-attach">Implementation Verification Attachments</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
                                 </div>
                                 <div class="file-attachment-field">
@@ -4008,7 +4014,7 @@
         <div class="inner-block-content">
                    
                    <div class="row">
-                       <div class="sub-head">Submission</div>
+                       <div class="sub-head">Submit</div>
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="submit by">Submit By :-</label>
@@ -4195,7 +4201,7 @@
 
                   
 
-                       <div class="sub-head"> QA/CQA Final Review Completed</div>
+                       <div class="sub-head"> QA/CQA Final Review Complete</div>
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="QA Final Review Complete By"> QA/CQA Final Review Complete By :-</label>

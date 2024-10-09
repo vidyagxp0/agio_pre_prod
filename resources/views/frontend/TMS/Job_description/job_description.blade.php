@@ -317,7 +317,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
 
         <!-- Tab links -->
         <div class="cctab">
-            <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
+            <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Job Description</button>
 
             <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
         </div>
@@ -327,23 +327,12 @@ $departments = DB::table('departments')->select('id', 'name')->get();
             <div id="step-form">
 
                 <!-- General information content -->
-                <div id="CCForm1" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
+                <!-- <div id="CCForm1" class="inner-block cctabcontent"> -->
 
-                            @if (!empty($parent_id))
-                            <input type="hidden" name="parent_id" value="{{ $parent_id }}">
-                            <input type="hidden" name="parent_type" value="{{ $parent_type }}">
-                            @endif
-
-            <div class="sub-head">
-                Job Description
-            </div>
 
             <div id="CCForm1" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            <!-- Employee Name -->
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="select-state">Name of Employee</label>
@@ -385,13 +374,6 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                                     <input type="text" name="new_department" id="departments" readonly>
                                 </div>
                             </div>
-
-                            {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="department_location">Location <span class="text-danger">*</span></label>
-                                    <input type="text" name="location" id="city" readonly>
-                                </div>
-                            </div> --}}
 
                             <div class="col-lg-6">
                                 <div class="group-input">

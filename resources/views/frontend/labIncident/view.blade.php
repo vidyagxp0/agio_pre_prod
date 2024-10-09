@@ -58,14 +58,14 @@
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('audittrialLabincident', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Lab Incident', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Lab Incident', 45) || Helpers::check_roles($data->division_id, 'Lab Incident', 4)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             QC Head/HOD Initial Review Complete
                             </button>
@@ -80,7 +80,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Lab Incident', 48))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Initial Review Complete
                             </button>
@@ -92,7 +92,7 @@
                                 Child
                             </button>
                             @endif
-                        @elseif($data->stage == 4 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Lab Incident', 3))
 
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                             More Information Required
@@ -107,7 +107,7 @@
                         {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All Activities Completed
                             </button> --}}
-                        @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 5 && (Helpers::check_roles($data->division_id, 'Lab Incident', 45) || Helpers::check_roles($data->division_id, 'Lab Incident', 4)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QC Head/HOD Secondary Review Complete
                             </button>
@@ -119,7 +119,7 @@
                                 Child
                             </button>
                             @endif
-                        @elseif($data->stage == 6 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Lab Incident', 48))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             QA Secondary Review Complete
                         </button>
@@ -131,7 +131,7 @@
                             Child
                         </button>
                         @endif
-                        @elseif($data->stage == 7 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                        @elseif($data->stage == 7 && Helpers::check_roles($data->division_id, 'Lab Incident', 42))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#root-modal">
                                 Approved
                             </button>
@@ -143,7 +143,7 @@
                                 Child
                             </button>
                             @endif
-                         @elseif($data->stage == 8 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                         @elseif($data->stage == 8 && Helpers::check_roles($data->division_id, 'Lab Incident', 3))
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Pending Approval
                             </button> --}}
@@ -289,7 +289,7 @@
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Extension</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Incident Details</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QC Initial Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QC Head Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QA Initial Review</button>
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Pending Initiator Update</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation Details</button>

@@ -151,6 +151,7 @@ class CCController extends Controller
 
         $openState->type_chnage = $request->type_chnage;
         $openState->qa_comments = $request->qa_comments;
+        $openState->justification = $request->justification;
         // $openState->related_records = implode(',', $request->related_records);
         // $openState->qa_head = json_encode($request->qa_head);
 
@@ -1000,7 +1001,7 @@ class CCController extends Controller
         if (!empty($openState->division_id)) {
             $history = new RcmDocHistory();
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Division Code';
+            $history->activity_type = 'Site/Location Code';
             $history->previous = "Null";
             $history->current = Helpers::getDivisionName($openState->division_id);
             $history->comment = "NA";
@@ -1162,10 +1163,10 @@ class CCController extends Controller
             $history->save();
         }
   
-        if(!empty($request->risk_assessment_required)){            
+        if(!empty($request->justification)){            
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Risk Assessment Required';
+            $history->activity_type = 'Justification';
             $history->previous = "NULL";
             $history->current = $openState->risk_assessment_required;
             $history->comment = "Not Applicable";
@@ -1250,7 +1251,7 @@ class CCController extends Controller
         if(!empty($review->qa_head)){    
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'QA Attachments';
+            $history->activity_type = 'QA/CQA Initial Attachments';
             $history->previous = "NULL";
             $history->current = $review->qa_head;
             $history->comment = "Not Applicable";
@@ -1421,7 +1422,7 @@ class CCController extends Controller
         if(!empty($Cft->Human_Resource_attachment)){    
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Human Resource Attachments';
+            $history->activity_type = 'Human Resource Attachment';
             $history->previous = "NULL";
             $history->current = $Cft->Human_Resource_attachment;
             $history->comment = "Not Applicable";
@@ -2888,6 +2889,7 @@ class CCController extends Controller
         $openState->other_comment = $request->other_comment;
         $openState->supervisor_comment = $request->supervisor_comment;
         $openState->qa_comments = $request->qa_comments;
+        $openState->justification = $request->justification;
 
        
 
@@ -4009,6 +4011,27 @@ class CCController extends Controller
             $history->save();
         } 
 
+        
+        if ($lastDocument->justification != $request->justification) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+            ->where('activity_type', 'Justification')
+            ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Justification';
+            $history->previous = $lastDocument->justification;
+            $history->current = $openState->justification;
+            $history->comment = $request->short_desc_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        } 
+
         if ($lastDocument->hod_person != $request->hod_person) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
             ->where('activity_type', 'HOD Person')
@@ -4224,11 +4247,11 @@ class CCController extends Controller
         
         if ($areQaHeadAttachSame != true) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'QA/CQA Attachments')
+                ->where('activity_type', 'QA/CQA Initial Attachments')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA/CQA Attachments';
+            $history->activity_type = 'QA/CQA Initial Attachments';
             $history->previous = $lastDocCft->qa_head;
             $history->current = $Cft->qa_head;
             $history->comment = "";
@@ -4716,11 +4739,11 @@ class CCController extends Controller
         
         if ($areQaHeadAttachSame != true) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'QA/CQA Attachments')
+                ->where('activity_type', 'QA/CQA Initial Attachments')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA/CQA Attachments';
+            $history->activity_type = 'QA/CQA Initial Attachments';
             $history->previous = $lastDocument->qa_head;
             $history->current = $openState->qa_head;
             $history->comment = "";
@@ -4966,8 +4989,8 @@ class CCController extends Controller
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Related Records';
-            $history->previous = $lastDocument->risk_assessment_related_record;
-            $history->current = $openState->risk_assessment_related_record;
+            $history->previous =  str_replace(',', ', ', $lastDocument->risk_assessment_related_record); 
+            $history->current =  str_replace(',', ', ',  $openState->risk_assessment_related_record);
             $history->comment = "";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

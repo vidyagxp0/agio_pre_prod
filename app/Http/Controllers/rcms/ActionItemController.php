@@ -274,6 +274,23 @@ class ActionItemController extends Controller
                 $history->save();
                 }
 
+                if (!empty($openState->parent_record_number)) {
+                    $history = new ActionItemHistory();
+                    $history->cc_id =  $openState->id;
+                    $history->activity_type = 'Parent record number';
+                    $history->previous = "Null";
+                    $history->current = $openState->parent_record_number;
+                    $history->comment = "Not Applicable";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $openState->status;
+                    $history->change_to = "Opened";
+                    $history->change_from = "Initiation";
+                    $history->action_name = "Create";
+                    $history->save();
+                    }
+
                 if (!empty($openState->record)) {
                     $history = new ActionItemHistory();
                     $history->cc_id =  $openState->id;
@@ -489,7 +506,7 @@ class ActionItemController extends Controller
         if (!empty($openState->qa_comments)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
-            $history->activity_type = 'QA Review Comments';
+            $history->activity_type = 'QA/CQA Review Comments';
             $history->previous = "Null";
             $history->current =  $openState->qa_comments;
             $history->comment = "Not Applicable";
@@ -559,7 +576,7 @@ class ActionItemController extends Controller
         if (!empty($openState->final_attach)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
-            $history->activity_type = 'Action Approval Attachments';
+            $history->activity_type = 'Action Approval Attachment';
             $history->previous = "Null";
             $history->current =  $openState->final_attach;
             $history->comment = "Not Applicable";
@@ -830,7 +847,7 @@ class ActionItemController extends Controller
             $history->save();
         }
 
-        if ($lastopenState->related_records != $openState->related_records) {
+        if ($lastopenState->related_records != $openState->related_records ) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Action Item Related Records';
@@ -843,7 +860,7 @@ class ActionItemController extends Controller
             $history->origin_state = $lastopenState->status;
             $history->change_to = "Not Applicable";
            $history->change_from = $lastopenState->status;
-             if (is_null($lastopenState->related_records)) {
+             if (is_null($lastopenState->related_records) || $lastopenState->related_records == "") {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -1004,7 +1021,8 @@ class ActionItemController extends Controller
    
             $history->save();
         }
-        if ($lastopenState->hod_preson != $openState->hod_preson || !empty($request->hod_preson_comment)) {
+        if ($lastopenState->hod_preson != $openState->hod_preson || !empty($request->hod_preson_comment )) {
+            // dd($lastopenState->hod_preson);
             $history = new ActionItemHistory;
             $history->cc_id = $id;
             $history->activity_type = 'HOD Persons';
@@ -1017,7 +1035,7 @@ class ActionItemController extends Controller
             $history->origin_state = $lastopenState->status;
             $history->change_to = "Not Applicable";
            $history->change_from = $lastopenState->status;
-             if (is_null($lastopenState->hod_preson)) {
+             if (is_null($lastopenState->hod_preson) || $lastopenState->hod_preson = " ") {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -1133,7 +1151,7 @@ class ActionItemController extends Controller
         if ($lastopenState->qa_comments != $openState->qa_comments || !empty($request->qa_comments_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA Review Comments';
+            $history->activity_type = 'QA/CQA Review Comments';
             $history->previous = $lastopenState->qa_comments;
             $history->current = $openState->qa_comments;
             $history->comment = $request->qa_comments_comment;
@@ -1194,7 +1212,7 @@ class ActionItemController extends Controller
         if ($lastopenState->final_attach != $openState->final_attach || !empty($request->final_attach_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Action Approval Attachments';
+            $history->activity_type = 'Action Approval Attachment';
             $history->previous = $lastopenState->final_attach;
             $history->current =  str_replace(',', ', ',$openState->final_attach);
             $history->comment = $request->final_attach_comment;
@@ -1352,7 +1370,7 @@ class ActionItemController extends Controller
                 $history->origin_state = $lastopenState->status;
                 $history->action_name = 'Not Applicable';
                 $history->stage = '3';
-                $history->activity_type = 'Acknowledge By,  Acknowledge On';
+                $history->activity_type = 'Acknowledge Complete By,  Acknowledge Complete On';
                 if (is_null($lastopenState->acknowledgement_by) || $lastopenState->acknowledgement_by === '') {
                     $history->previous = "";
                 } else {
@@ -1446,7 +1464,7 @@ class ActionItemController extends Controller
                 $history->stage = "5";
                 $history->action_name = 'Not Applicable';
                 $history->stage = '2';
-                $history->activity_type = 'Varification Complete by, Varification Complete On';
+                $history->activity_type = 'Verification Complete by, Verification Complete On';
                 if (is_null($lastopenState->completed_by) || $lastopenState->completed_by === '') {
                     $history->previous = "";
                 } else {

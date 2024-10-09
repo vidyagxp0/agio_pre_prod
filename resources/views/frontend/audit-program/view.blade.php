@@ -596,7 +596,7 @@
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('showAuditProgramTrial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && (Helpers::check_roles($data->division_id, 'Audit Program', 7) || Helpers::check_roles($data->division_id, 'Audit Program', 66)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
@@ -606,7 +606,7 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds) || in_array(13, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Audit Program', 4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approve
                             </button>
@@ -617,7 +617,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 3 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds) || in_array(13, $userRoleIds)))
+                        @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Audit Program', 9) || Helpers::check_roles($data->division_id, 'Audit Program', 65)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
@@ -693,7 +693,7 @@
 
                     <!-- Tab links -->
                     <div class="cctab">
-                        <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Audit Program</button>
+                        <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Self Inspection Circular</button>
                         <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD/Designee Review</button> -->
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA/QA Head Approval</button>
@@ -2001,9 +2001,9 @@
                             <div id="CCForm3" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
-                                    <div class="col-12">
+                                    <!-- <div class="col-12">
                                             <div class="sub-head">Submit</div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Submitted_By..">Submit By</label>
@@ -2022,9 +2022,9 @@
                                                 <div class="static">{{ $data->Submitted_comment }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="sub-head">Approve</div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Approved_By">Approve By</label>
@@ -2044,9 +2044,9 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="sub-head">More Info Required</div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
@@ -2067,9 +2067,9 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="sub-head">Audit Completed</div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
@@ -2090,9 +2090,9 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="sub-head">Cancel</div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-lg-4">
                                             <div class="group-input">

@@ -36,6 +36,8 @@
         </script>
     @endif
 
+
+
     <script>
         function otherController(value, checkValue, blockID) {
             let block = document.getElementById(blockID)
@@ -272,11 +274,11 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Head review </button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Meetings and summary</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Head Review </button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Meetings and Summary</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">CFT</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">CFT HOD Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA verification</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA Verification</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity log</button>
             </div>
@@ -1047,9 +1049,9 @@
                           <div class="col-lg-12">
                               <div class="group-input">
                                 <label for="assign_to">Invite Person Notify <span class="text-danger">*</span></label>
-                                @if ($data->stage == 0 || $data->stage == 2)
+
                                     <!-- Disabled select for stages 0 or 2 -->
-                                    <select id="assign_to" name="assign_to[]" multiple disabled>
+                                    <select id="assign_to" name="assign_to[]" multiple >
                                         <option value="">Select a value</option>
                                         @foreach ($users as $user)
                                             <option value="{{ $user->name }}" {{ in_array($user->name, explode(',', $data->assign_to ?? '')) ? 'selected' : '' }}>
@@ -1057,27 +1059,12 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                @else
-                                    <!-- Editable select for other stages -->
-                                    <select id="assign_to" name="assign_to[]" multiple required>
-                                        <option value="">Select a value</option>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->name }}" {{ in_array($user->name, explode(',', $data->assign_to ?? '')) ? 'selected' : '' }}>
-                                                {{ $user->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                @endif
+
                                 @error('assign_to')
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror
 
-                                @if ($data->stage == 2)
-                                    <!-- Show Spam only for stage 2 -->
-                                    <div class="alert alert-warning mt-2">
-                                        <strong>Spam</strong>
-                                    </div>
-                                @endif
+
                             </div>
 
                             </div>
@@ -1389,7 +1376,7 @@
                 <!-- Disabled state for stage 0 or 8 -->
                 <input type="text" id="external_supplier_performance" readonly placeholder="DD-MMM-YYYY" required
                     value="{{ Helpers::getdateFormat($data->external_supplier_performance) }}" />
-                <input type="date" id="external_supplier_performance_checkdate" disabled
+                <input type="date" id="external_supplier_performance_checkdate"
                     name="external_supplier_performance"
                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->external_supplier_performance }}"
                     class="hide-input" oninput="handleDateInput(this, 'external_supplier_performance'); checkStartDate(this)" />
@@ -1414,7 +1401,7 @@
                 <!-- Disabled state for stage 0 or 8 -->
                 <input type="text" id="customer_satisfaction_level" readonly placeholder="DD-MMM-YYYY" required
                     value="{{ Helpers::getdateFormat($data->customer_satisfaction_level) }}" />
-                <input type="date" id="customer_satisfaction_level_checkdate" disabled
+                <input type="date" id="customer_satisfaction_level_checkdate"
                     name="customer_satisfaction_level"
                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->customer_satisfaction_level }}"
                     class="hide-input" oninput="handleDateInput(this, 'customer_satisfaction_level')" />
@@ -9730,7 +9717,7 @@
                                             By</label>
                                         <input readonly type="text"
                                             value="{{ $data5->hod_ResearchDevelopment_by }}"
-                                            name="hod_ResearchDevelopment_by" id="Storhod_ResearchDevelopment_by">
+                                            name="hod_ResearchDevelopment_by" id="hod_ResearchDevelopment_by">
 
 
                                     </div>
@@ -13692,7 +13679,7 @@
                      <div class="col-md-12">
                                         @if ($data->stage == 6)
                                             <div class="group-input">
-                                                <label for="HOD Remarks">QA verification Comment <span
+                                                <label for="HOD Remarks">QA Verification Comment <span
                                                         class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
@@ -13700,7 +13687,7 @@
                                             </div>
                                         @else
                                             <div class="group-input">
-                                                <label for="HOD Remarks">QA verification Comment</label>
+                                                <label for="HOD Remarks">QA Verification Comment</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                                 <textarea readonly class="tiny" name="additional_suport_required" id="summernote-4">{{ $data->additional_suport_required }}</textarea>
@@ -14748,6 +14735,116 @@
             });
         });
     </script>
+      <script>
+            console.log('Script working')
+
+            $(document).ready(function() {
+
+
+                function submitForm() {
+
+                    let auditForm = document.getElementById('auditForm');
+
+
+                    console.log('sumitting form')
+
+                    document.querySelectorAll('.saveAuditFormBtn').forEach(function(button) {
+                        button.disabled = true;
+                    })
+
+                    document.querySelectorAll('.auditFormSpinner').forEach(function(spinner) {
+                        spinner.style.display = 'flex';
+                    })
+
+                    auditForm.submit();
+                }
+
+                $('#ChangesaveButton01').click(function() {
+                    document.getElementById('formNameField').value = 'general-open';
+                    submitForm();
+                });
+
+                $('#ChangesaveButton02').click(function() {
+                    document.getElementById('formNameField').value = 'hod';
+                    submitForm();
+                });
+                $('#ChangesaveButton02221').click(function() {
+                    document.getElementById('formNameField').value = 'pending';
+                    submitForm();
+                });
+                $('#ChangesaveButton02222').click(function() {
+                    document.getElementById('formNameField').value = 'hod final';
+                    submitForm();
+                });
+
+                $('#ChangesaveButton03').click(function() {
+                    document.getElementById('formNameField').value = 'qa';
+                    submitForm();
+                });
+
+                $('#ChangesaveButton04').click(function() {
+                    document.getElementById('formNameField').value = 'capa';
+                    submitForm();
+                });
+                $('#ChangesaveButton022').click(function() {
+                    document.getElementById('formNameField').value = 'qrm';
+                    submitForm();
+                });
+                $('#ChangesaveButton023').click(function() {
+                    document.getElementById('formNameField').value = 'inv';
+                    submitForm();
+                });
+
+                $('#ChangesaveButton05').click(function() {
+                    document.getElementById('formNameField').value = 'qa-final';
+                    submitForm();
+                });
+
+                $('#ChangesaveButton06').click(function() {
+                    document.getElementById('formNameField').value = 'qah';
+                    submitForm();
+                });
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var signatureForm = document.getElementById('signatureModalForm');
+
+                signatureForm.addEventListener('submit', function(e) {
+
+                    var submitButton = signatureForm.querySelector('.signatureModalButton');
+                    var spinner = signatureForm.querySelector('.signatureModalSpinner');
+
+                    submitButton.disabled = true;
+
+                    spinner.style.display = 'inline-block';
+                });
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var signatureForm = document.getElementById('pendingInitiatorForm');
+
+                signatureForm.addEventListener('submit', function(e) {
+
+                    var submitButton = signatureForm.querySelector('.pendingInitiatorModalButton');
+                    var spinner = signatureForm.querySelector('.pendingInitiatorModalSpinner');
+
+                    submitButton.disabled = true;
+
+                    spinner.style.display = 'inline-block';
+                });
+            });
+
+
+            // =========================
+            wow = new WOW({
+                boxClass: 'wow', // default
+                animateClass: 'animated', // default
+                offset: 0, // default
+                mobile: true, // default
+                live: true // default
+            })
+            wow.init();
+        </script>
     <script>
         var maxLength = 255;
         $('#docname').keyup(function() {
