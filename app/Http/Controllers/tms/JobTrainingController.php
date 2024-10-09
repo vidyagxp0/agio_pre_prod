@@ -5,6 +5,7 @@ namespace App\Http\Controllers\tms;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\JobTraining;
+use App\Models\EmpTrainingQuizResult;
 use App\Models\DocumentTraining;
 use App\Models\Training;
 use App\Models\Quize;
@@ -1190,8 +1191,10 @@ public function trainingQuestions($id){
 
 
 public function checkAnswerOTJ(Request $request)
+
 {
     // Fetch all questions in a random order
+
     $allQuestions = Question::inRandomOrder()->get();
 
     // Filter questions to include only Single and Multi Selection Questions
@@ -1232,6 +1235,19 @@ public function checkAnswerOTJ(Request $request)
 
    
     $result = $score >= 80 ? 'Pass' : 'Fail';
+
+    if($result == 'Pass'){
+        $storeResult = new EmpTrainingQuizResult();
+        $storeResult->emp_id = "PW1";
+        $storeResult->employee_name = "PW1";
+        $storeResult->training_type = "PW1";
+        $storeResult->correct_answers = "PW1";
+        $storeResult->incorrect_answers = "PW1";
+        $storeResult->total_questions = "PW1";
+        $storeResult->score = "PW1";
+        $storeResult->result = "PW1";
+        $storeResult->attempt_number = "PW1";
+    }
 
     return view('frontend.TMS.Job_Training.job_quiz_result', [
         'totalQuestions' => $totalQuestions, // Total questions shown

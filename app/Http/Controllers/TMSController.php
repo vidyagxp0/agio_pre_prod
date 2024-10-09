@@ -32,7 +32,6 @@ use Helpers;
 class TMSController extends Controller
 {
     public function index(){
-
         // return dd(Helpers::checkRoles(6));
         $inductionTraining = Induction_training::get();        
         $jobTrainings = JobTraining::get();
@@ -107,8 +106,8 @@ class TMSController extends Controller
             if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
             {
                 $train = [];
-                $useDocFromJobTraining = JobTraining::where('empcode' , 'PS2')->get();
-                $useDocFromInductionTraining = Induction_training::where('employee_id' , 'PS4')->get();
+                $useDocFromJobTraining = JobTraining::where('empcode' , 'PW1')->get();
+                $useDocFromInductionTraining = Induction_training::where('employee_id' , 'PW1')->get();
                     $training = Training::all();
                     foreach($training as $temp){
                     $data = explode(',',$temp->trainees);

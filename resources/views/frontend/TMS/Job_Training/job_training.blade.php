@@ -706,7 +706,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="select-state">Name of Employee</label>
-                                    <select id="select-state" placeholder="Select..." name="name_employee" required>
+                                    <select id="select-state" placeholder="Select..." name="name_employee">
                                         <option value="">Select an employee</option>
                                         @foreach ($employees as $employee)
                                         <option value="{{ $employee->id }}" data-name="{{ $employee->employee_name }}">{{ $employee->employee_name }}</option>

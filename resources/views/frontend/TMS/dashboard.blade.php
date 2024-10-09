@@ -296,51 +296,52 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             </thead>
                             <tbody id="searchTable">
                             @foreach ($paginatedData as $temp)
-                            @php
-                                $getSOPNo = ['document_number_1', 'document_number_2', 'document_number_3', 'document_number_4', 'document_number_5','document_number_6', 'document_number_7', 'document_number_8', 'document_number_9', 'document_number_10', 'document_number_11', 'document_number_12', 'document_number_13', 'document_number_14', 'document_number_15','document_number_16'];
-                                $dateValue = []; // Initialize an empty array to store dates
+                                @php
+                                    $getSOPNo = ['document_number_1', 'document_number_2', 'document_number_3', 'document_number_4', 'document_number_5','document_number_6', 'document_number_7', 'document_number_8', 'document_number_9', 'document_number_10', 'document_number_11', 'document_number_12', 'document_number_13', 'document_number_14', 'document_number_15','document_number_16'];
+                                    $dateValue = []; // Initialize an empty array to store dates
 
-                                if ($temp) {
-                                    foreach ($getSOPNo as $key => $document) {
-                                        // Construct the corresponding startdate column name
-                                        $startDateColumn = 'document_number_' .($key + 1); // This will create document_number_1, document_number_2, etc.
+                                    if ($temp) {
+                                        foreach ($getSOPNo as $key => $document) {
+                                            // Construct the corresponding startdate column name
+                                            $startDateColumn = 'document_number_' .($key + 1); // This will create document_number_1, document_number_2, etc.
 
-                                        // Check if the start date exists and is not null
-                                        if (isset($temp->$startDateColumn) && !is_null($temp->$startDateColumn)) {
-                                            $dateValue[] = $temp->$startDateColumn; // Add the date to the array
+                                            // Check if the start date exists and is not null
+                                            if (isset($temp->$startDateColumn) && !is_null($temp->$startDateColumn)) {
+                                                $dateValue[] = $temp->$startDateColumn; // Add the date to the array
+                                            }
                                         }
                                     }
-                                }
-
-                                // Join the non-null start dates into a comma-separated string
-                                $commaSeparatedStartDates = implode(', ', $dateValue);
-                            @endphp
-                            
-                            <!-- You can output the commaSeparatedStartDates here if needed -->
-                            
-                     
-                                       
-                                <tr>
-                                <td>{{ $temp->employee_id }}</td>
-                                    <td>{{ $temp->name_employee }}</td>
-                                    <td>{{ $temp->designation }}</td>
-                                    <td>{{ $commaSeparatedStartDates }}</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>{{ $temp->attempt_count }}</td>
-                                 
-                                    <td><a href="{{ url('induction_training-details', $commaSeparatedStartDates) }}"><i class="fa-solid fa-eye"></i></a></td> 
+                                    $inductionResult = DB::table('emp_training_quiz_results')->where(['training_id' => $temp->id, 'training_type' => "Induction Training", 'emp_id' => 'PW2', 'result' => 'Pass'])->latest()->first();
+                                    // Join the non-null start dates into a comma-separated string
+                                    $commaSeparatedStartDates = implode(', ', $dateValue);
+                                @endphp
+                                @if($temp->stage >= 2)
+                                    <tr>
+                                        <td>{{ $temp->employee_id }}</td>
+                                        <td>{{ Helpers::getInitiatorName($temp->name_employee) }}</td>
+                                        <td>{{ $temp->designation }}</td>
+                                        <td>{{ $commaSeparatedStartDates }}</td>
+                                        <td>{{  Helpers::getdateFormat($temp->start_date) }}</td>
+                                        <td>{{  Helpers::getdateFormat($temp->end_date) }}</td>
+                                        <td>{{ $temp->attempt_count == -1 ? 0 : $temp->attempt_count }}</td>
+                                        <td>-</td>
+                                        <td><a href="{{ url("induction_training-details/$commaSeparatedStartDates") }}"><i class="fa-solid fa-eye"></i></a></td>
+                                        <td>
+                                                @if ($inductionResult && $inductionResult->result == "Pass")
+                                                    Pass
+                                                @elseif($temp->attempt_count <= 0)
+                                                    Attempts completed (Failed)
+                                                @else
+                                                    <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" onclick="window.location.href='/induction_question_training/{{$commaSeparatedStartDates}}/{{$temp->id}}';">
+                                                        Attempt Quiz
+                                                    </button>
+                                                @endif
+                                        </td>
                                     
-                                    <td>
-                                        <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" onclick="window.location.href='/induction_question_training/{{$commaSeparatedStartDates}}/{{$temp->id}}';">
-                                            Attempt Quiz
-                                        </button>
-                                    </td>
-                                  
+                                        
                                     
-                                  
-                                </tr>
+                                    </tr>
+                                @endif
                                 @endforeach
                             </tbody>
                         </table>
@@ -424,13 +425,14 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                         
                                         
                                 @endphp
+                                @if($temp->stage >= 5)
                                 <tr>
                                     <td>{{ $temp->empcode }}</td>
                                     <td>{{ $temp->name_employee }}</td>
                                     <td>{{ $commaSeparatedStartDates }}</td>
                                     <td>{{ $temp->start_date }}</td>
                                     <td>{{ $temp->enddate_1 }}</td>
-                                    <td>{{ $temp->attempt_count }}</td>
+                                    <td>{{ $temp->attempt_count == -1 ? 0 : $temp->attempt_count }}</td>
                                     <td>{{$temp->start_date}} </td>
                                            
                                     
@@ -444,6 +446,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                     </td>
                                                              
                                 </tr>
+                                @endif
                                 @endforeach
                             </tbody>
                         </table>
