@@ -166,7 +166,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    ERRATA Single Report
+                    ERRATA Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -856,7 +856,7 @@
 
                 <table>
                     <tr>
-                        <th class="w-20">HOD final review Comment</th>
+                        <th class="w-20">HOD final Review Comment</th>
                         <td class="w-80">
                             @if ($data->HOD_Comment1)
                                 {{ $data->HOD_Comment1 }}
@@ -945,7 +945,7 @@
 
             <div class="block">
                 <div class="block-head">
-                    QA Head Designee Closure Approval
+                    QA/CQA Head Designee Closure Approval
                 </div>
                 <table>
                     <tr>
@@ -998,7 +998,7 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Submit  By</th>
+                        <th class="w-20">Submit By</th>
                         <td class="w-30">
                             @if ($data->submitted_by)
                                 {{ $data->submitted_by }}
@@ -1007,7 +1007,7 @@
                             @endif
                         </td>
 
-                        <th class="w-20">Submit  On</th>
+                        <th class="w-20">Submit On</th>
                         <td class="w-30">
                             @if ($data->submitted_on)
                                 {{ $data->submitted_on }}

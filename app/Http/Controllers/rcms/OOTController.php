@@ -3548,7 +3548,9 @@ public function OOTChildRoot(Request $request ,$id)
 
            if ($request->revision == "Action-Item") {
                $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-               return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','record'));
+               $p_record = Ootc::find($id);
+               $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'OOT' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);       
+               return view('frontend.forms.action-item', compact('record_number', 'data_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','record'));
            }
            if ($request->revision == "Root-Cause-Analysis") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -3635,7 +3637,9 @@ public function oo_t_capa_child(Request $request ,$id)
                     if ($request->due_date) {
                    $parent_due_date = $request->due_date;
                                              }
-
+                    $p_record = Ootc::find($id);
+                    $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'OOT' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
+                                             
 
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 return view('frontend.action-item.action-item', compact('record','parentRecord', 'record_number' ,'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));

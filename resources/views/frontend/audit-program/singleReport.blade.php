@@ -180,7 +180,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Audit Program Single Report
+                    Audit Program Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -292,21 +292,23 @@
                 <table>
                     <tr>
                         <th class="w-20">Type</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->type)
                                 {{ $data->type }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Type(Others)</th>
-                        <td class="w-30">
+                      @if ($data->through_req == 'Other')
+                      <th class="w-20">Type(Others)</th>
+                        <td class="w-80">
                             @if ($data->through_req)
                                 {{ $data->through_req }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
+                      @endif
                     </tr>
                 </table>
                 <!-- <div class="inner-block">
@@ -322,22 +324,24 @@
                 </div> -->
                 <table>
                     <tr>
-                        <th class="w-20">Initiated Through</th>
-                        <td class="w-30">
+                        <th class="w-20">Initiated through</th>
+                        <td class="w-80">
                             @if ($data->year)
                                 {{ $data->year }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Initiated Through(Others)</th>
-                        <td class="w-30">
+                        @if ($data->yearly_other == 'Other')
+                        <th class="w-20">Initiated through(Others)</th>
+                        <td class="w-80">
                             @if ($data->yearly_other)
                                 {{ $data->yearly_other }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
+                        @endif
                     </tr>
                     <tr>
                         <th class="w-20">Comments</th>
@@ -684,9 +688,9 @@
                     Activity Log
                 </div>
                 
-                <div class="block-head">
+                <!-- <div class="block-head">
                     Submit
-                </div>
+                </div> -->
                 <table>
                     <tr>
                         <th class="w-20">Submit By</th>
@@ -700,11 +704,11 @@
                             Submit Comment</th>
                         <td class="w-30">{{ $data->Submitted_comment }}</td>
                     </tr>
-                    </table>
+                    <!-- </table>
                     <div class="block-head">
                         Approve
                     </div>
-                    <table>
+                    <table> -->
                     <tr>
                         <th class="w-20">Approve By</th>
                         <td class="w-30">{{ $data->approved_by }}</td>
@@ -716,12 +720,12 @@
                             Approve Comment</th>
                         <td class="w-30">{{ $data->approved_comment }}</td>
                     </tr>
-                    </table>
+                    <!-- </table>
 
                     <div class="block-head">
                         More Info Required 
                     </div>
-                    <table>
+                    <table> -->
                     <tr>
                         <th class="w-20">More Info Required By</th>
                         <td class="w-30">{{ $data->rejected_by }}</td>
@@ -733,11 +737,11 @@
                             More Info Required Comment</th>
                         <td class="w-30">{{ $data->reject_comment }}</td>
                     </tr>
-                    </table>
+                    <!-- </table>
                     <div class="block-head">
                         Audit Completed
                     </div>
-                    <table>
+                    <table> -->
 
                     <tr>
                         <th class="w-20">Audit Completed By</th>
@@ -751,12 +755,12 @@
                             Audit Completed Comment</th>
                         <td class="w-30">{{ $data->Audit_Completed_comment }}</td>
                     </tr>
-                    </table>
+                    <!-- </table>
                     
                     <div class="block-head">
                         Cancel
                     </div>
-                    <table>
+                    <table> -->
                     <tr>
                         <th class="w-20">Cancel By</th>
                         <td class="w-30">{{ $data->cancelled_by }}</td>

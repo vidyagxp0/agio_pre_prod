@@ -246,7 +246,7 @@
                                         @if ($dataDemo->change_from)
                                             {{-- Check if the change_from is a date --}}
                                             @if (strtotime($dataDemo->change_from))
-                                                {{ \Carbon\Carbon::parse($dataDemo->change_from)->format('d/M/Y') }}
+                                                {{ \Carbon\Carbon::parse($dataDemo->change_from)->format('d-M-Y') }}
                                             @else
                                                 {{ str_replace(',', ', ', $dataDemo->change_from) }}
                                             @endif
@@ -260,7 +260,7 @@
                                         @if (!empty(strip_tags($dataDemo->previous)))
                                             {{-- Check if the previous is a date --}}
                                             @if (strtotime($dataDemo->previous))
-                                                {{ \Carbon\Carbon::parse($dataDemo->previous)->format('d/M/Y') }}
+                                                {{ \Carbon\Carbon::parse($dataDemo->previous)->format('d-M-Y') }}
                                             @else
                                                 {!! $dataDemo->previous !!}
                                             @endif
@@ -276,14 +276,14 @@
                                     @if ($dataDemo->activity_type == 'Activity Log')
                                         <strong>Change To :</strong>
                                         @if (strtotime($dataDemo->change_to))
-                                            {{ \Carbon\Carbon::parse($dataDemo->change_to)->format('d/M/Y') }}
+                                            {{ \Carbon\Carbon::parse($dataDemo->change_to)->format('d-M-Y') }}
                                         @else
                                             {!! str_replace(',', ', ', $dataDemo->change_to) ?: 'Not Applicable' !!}
                                         @endif
                                     @else
                                         <strong>Change To :</strong>
                                         @if (strtotime($dataDemo->current))
-                                            {{ \Carbon\Carbon::parse($dataDemo->current)->format('d/M/Y') }}
+                                            {{ \Carbon\Carbon::parse($dataDemo->current)->format('d-M-Y') }}
                                         @else
                                             {!! !empty(strip_tags($dataDemo->current)) ? $dataDemo->current : 'Not Applicable' !!}
                                         @endif
@@ -303,7 +303,7 @@
                                     {{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}</div>
                                 <div style="margin-top: 5px;">
                                     <strong>Performed On :</strong>
-                                    {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d/M/Y') : 'Not Applicable' }}
+                                    {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y') : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;">
                                     <strong>Comments :</strong>

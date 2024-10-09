@@ -138,7 +138,7 @@
                 <button class="cctablinks " onclick="openCity(event, 'CCForm12')">CFT</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA/CQA Final Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm15')">RA</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm16')">QA/CQA Designee Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm16')">QA/CQA Head/Designee Approval</button>
 
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Evaluation</button> -->
 
@@ -386,6 +386,13 @@
 
                                     </div>
                                 </div>
+
+                                <!-- <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Risk Assessment Required">Justification </label>
+                                        <textarea name="train_comments" id=""></textarea>
+                                    </div>
+                                </div> -->
 
 
 
@@ -654,7 +661,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="migration-action">comments</label>
+                                        <label for="migration-action">Comments</label>
                                         <textarea name="migration_action" disabled></textarea>
                                     </div>
                                 </div>
@@ -4194,7 +4201,7 @@
 
                   
 
-                       <div class="sub-head"> QA/CQA Final Review Completed</div>
+                       <div class="sub-head"> QA/CQA Final Review Complete</div>
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="QA Final Review Complete By"> QA/CQA Final Review Complete By :-</label>

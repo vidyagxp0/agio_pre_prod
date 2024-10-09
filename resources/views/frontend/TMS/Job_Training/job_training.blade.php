@@ -51,7 +51,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
         <!-- Tab links -->
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Job Description</button>
+            <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Job Description</button> -->
             <button class="cctablinks " onclick="openCity(event, 'CCForm3')">QA Review</button>
             <button class="cctablinks " onclick="openCity(event, 'CCForm4')">QA/CQA Approval</button>
             <button class="cctablinks " onclick="openCity(event, 'CCForm5')">Evaluation</button>
@@ -699,10 +699,9 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 
-                <div id="CCForm2" class="inner-block cctabcontent">
+                <!-- <div id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            <!-- Employee Name -->
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="select-state">Name of Employee</label>
@@ -853,7 +852,6 @@ document.addEventListener("DOMContentLoaded", function() {
                                 </div>
                             </div>
 
-                            <!-- Reason for Revision Field -->
                             <div class="col-lg-6" id="revision_reason_container" style="display: none;">
                                 <div class="group-input">
                                     <label for="reason_for_revision">Reason For Revision</label>
@@ -929,17 +927,17 @@ document.addEventListener("DOMContentLoaded", function() {
                         </div>
                                         
 
-    </div>
+    </div> -->
 
                 
 
-    <div class="button-block">
+    <!-- <div class="button-block">
         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
         <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
         <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                 Exit </a> </button>
 
-    </div>
+    </div> -->
 
 
 

@@ -165,7 +165,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Management Review Single Report
+                    Management Review Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -476,7 +476,7 @@
 
 
                 <div class="inner-block">
-                    <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">QA review comment
+                    <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">QA Head Review comment
                     </label>
                     <span style="font-size: 0.8rem; margin-left: 70px;">
 
@@ -719,6 +719,34 @@
 
 
             </div>
+        </div>
+
+        <div class="border-table">
+            <div class="block-head">
+                Meetings and Summary Attachment
+            </div>
+            <table>
+
+                <tr class="table_bg">
+                    <th class="w-20">S.N.</th>
+                    <th class="w-60">Batch No</th>
+                </tr>
+                @if ($managementReview->meeting_and_summary_attachment)
+                    @foreach (json_decode($managementReview->meeting_and_summary_attachment) as $key => $file)
+                        <tr>
+                            <td class="w-20">{{ $key + 1 }}</td>
+                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td class="w-20">1</td>
+                        <td class="w-20">Not Applicable</td>
+                    </tr>
+                @endif
+
+            </table>
         </div>
         <div class="block">
             <div class="head">
@@ -4565,7 +4593,7 @@
                     </div>
                     <div class="border-table">
                         <div class="block-head">
-                            Action Item Status Attachments
+                            QA Verification Attachments
                         </div>
                         <table>
 

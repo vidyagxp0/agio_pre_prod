@@ -174,7 +174,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Change Control Single Report
+                    Change Control Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -459,7 +459,7 @@
     </td>
 </tr> -->
                     <tr>
-                        <th class="w-20">comments</th>
+                        <th class="w-20">Comments</th>
                         <td class="w-80" colspan="3">
                             <div>
                                 {{ $data->migration_action }}

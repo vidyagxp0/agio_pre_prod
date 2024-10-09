@@ -876,7 +876,7 @@ class MarketComplaintController extends Controller
         if (!empty($marketComplaint->in_case_Invalide_com)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'In case of Invalide complain then provision shall  be provided to handle the invalide complaints )';
+            $history->activity_type = 'Comments';
             $history->previous = "Null";
             $history->current = $marketComplaint->in_case_Invalide_com;
             $history->comment = "Not Applicable";
@@ -1167,7 +1167,7 @@ class MarketComplaintController extends Controller
         if (!empty($marketComplaint->complainant_gi)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Complainant';
+            $history->activity_type = 'Complaint';
             $history->previous = "Null";
             $history->current = $marketComplaint->complainant_gi;
             $history->comment = "Not Applicable";
@@ -1350,7 +1350,7 @@ class MarketComplaintController extends Controller
         if (!empty($marketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Review of Raw materials used in batch man';
+            $history->activity_type = 'Review of Raw materials used in batch manufacturing';
             $history->previous = "Null";
             $history->current = $marketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi;
             $history->comment = "Not Applicable";
@@ -1401,7 +1401,7 @@ class MarketComplaintController extends Controller
         if (!empty($marketComplaint->review_of_batch_manufacturing_record_BMR_gi)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Review of Batch manufacturing record';
+            $history->activity_type = 'Review of Batch Manufacturing Record (BMR) ';
             $history->previous = "Null";
             $history->current = $marketComplaint->review_of_batch_manufacturing_record_BMR_gi;
             $history->comment = "Not Applicable";
@@ -1748,7 +1748,7 @@ class MarketComplaintController extends Controller
         if (!empty($marketComplaint->interpretation_on_complaint_sample_ifrecieved_ca)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Interpretation on compalint sample(if recieved)';
+            $history->activity_type = 'Interpretation on Complaint sample(if recieved)';
             $history->previous = "Null";
             $history->current = $marketComplaint->interpretation_on_complaint_sample_ifrecieved_ca;
             $history->comment = "Not Applicable";
@@ -1968,6 +1968,7 @@ class MarketComplaintController extends Controller
         $lastCft = MarketComplaintCft::where('mc_id', $lastmarketComplaint->id)->first();
 
         $marketComplaint = MarketComplaint::find($id);
+
         if (!$marketComplaint) {
             return redirect()->back()->with('error', 'Market Complaint not found.');
         }
@@ -2926,7 +2927,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->in_case_Invalide_com != $marketComplaint->in_case_Invalide_com) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'In case of Invalide complain then provision shall  be provided to handle the invalide complaints )';
+            $history->activity_type = 'Comments';
             $history->previous = $lastmarketComplaint->in_case_Invalide_com;
             $history->current = $marketComplaint->in_case_Invalide_com;
             $history->comment = $request->in_case_Invalide_com_comment;
@@ -3165,7 +3166,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi != $marketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Review of Raw materials used in batch man';
+            $history->activity_type = 'Review of Raw materials used in batch manufacturing';
             $history->previous = $lastmarketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi;
             $history->current = $marketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi;
             $history->comment = $request->review_of_raw_materials_used_in_batch_manufacturing_gi_comment;
@@ -3207,7 +3208,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->review_of_batch_manufacturing_record_BMR_gi != $marketComplaint->review_of_batch_manufacturing_record_BMR_gi) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Review of Batch manufacturing record';
+            $history->activity_type = 'Review of Batch Manufacturing Record (BMR)';
             $history->previous = $lastmarketComplaint->review_of_batch_manufacturing_record_BMR_gi;
             $history->current = $marketComplaint->review_of_batch_manufacturing_record_BMR_gi;
             $history->comment = $request->review_of_batch_manufacturing_record_BMR_gi_comment;
@@ -3419,7 +3420,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->complainant_gi != $marketComplaint->complainant_gi) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Complainant';
+            $history->activity_type = 'Complaint';
             $history->previous = $lastmarketComplaint->complainant_gi;
             $history->current = $marketComplaint->complainant_gi;
             $history->comment = $request->complainant_gi_comment;
@@ -3488,6 +3489,32 @@ class MarketComplaintController extends Controller
             $history->save();
         }
 
+
+        if ($lastmarketComplaint->stability_study_data_review_ca != $marketComplaint->stability_study_data_review_ca) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Stablity Study Data Review';
+            $history->previous = $lastmarketComplaint->stability_study_data_review_ca;
+            $history->current = $marketComplaint->stability_study_data_review_ca;
+            $history->comment = $request->stability_study_data_review_ca_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+
+            // New condition added here
+            if (is_null($lastmarketComplaint->stability_study_data_review_ca) || $lastmarketComplaint->stability_study_data_review_ca === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
+            $history->save();
+        }
+
+
         if ($lastmarketComplaint->categorization_of_complaint_gi != $marketComplaint->categorization_of_complaint_gi) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
@@ -3516,7 +3543,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->qa_head_comment != $marketComplaint->qa_head_comment) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'QA/CQA Head Approval Comment';
+            $history->activity_type = 'QA/CQA Head Comment';
             $history->previous = $lastmarketComplaint->qa_head_comment;
             $history->current = $marketComplaint->qa_head_comment;
             $history->comment = $request->qa_head_comment_comment;
@@ -4039,7 +4066,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->interpretation_on_complaint_sample_ifrecieved_ca != $marketComplaint->interpretation_on_complaint_sample_ifrecieved_ca) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Interpretation on compalint sample(if recieved)';
+            $history->activity_type = 'Interpretation on Complaint sample(if recieved)';
             $history->previous = $lastmarketComplaint->interpretation_on_complaint_sample_ifrecieved_ca;
             $history->current = $marketComplaint->interpretation_on_complaint_sample_ifrecieved_ca;
             $history->comment = $request->interpretation_on_complaint_sample_ifrecieved_ca_comment;
@@ -4432,7 +4459,7 @@ class MarketComplaintController extends Controller
          if ($lastCft->ProductionLiquid_Review != $request->ProductionLiquid_Review && $request->ProductionLiquid_Review != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Production Liquid/Ointment Review Required';
+            $history->activity_type = 'Production Liquid Required ?';
             $history->previous = $lastCft->ProductionLiquid_Review;
             $history->current = $request->ProductionLiquid_Review;
             $history->comment = "Not Applicable";
@@ -7046,6 +7073,8 @@ class MarketComplaintController extends Controller
             try {
                 if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
                     $marketstat = MarketComplaint::find($id);
+                    $marketComplaint = MarketComplaint::find($id);
+            $Cft = marketComplaintCft::withoutTrashed()->where('mc_id', $id)->first();
                     $updateCFT = MarketComplaintCft::where('mc_id', $id)->latest()->first();
                     $lastDocument = MarketComplaint::find($id);
                     $cftDetails = MarketComplaintcftResponce::withoutTrashed()->where(['status' => 'In-progress', 'mc_id' => $id])->distinct('cft_user_id')->count();
@@ -7180,10 +7209,25 @@ class MarketComplaintController extends Controller
 
                     if ($marketstat->stage == 3) {
 
-                        if (!$marketstat->review_of_batch_manufacturing_record_BMR_gi) {
+                        if (!$marketstat->review_of_batch_manufacturing_record_BMR_gi ) {
                             Session::flash('swal', [
                                 'title' => 'Mandatory Fields Required!',
-                                'message' => 'Review of Batch Manufacturing Record (BMR) Tab is yet to be filled!',
+                                'message' => 'Preliminary Investigation Tab is yet to be filled!',
+                                'type' => 'warning',
+                            ]);
+
+                            return redirect()->back();
+                        } else {
+                            Session::flash('swal', [
+                                'type' => 'success',
+                                'title' => 'Success',
+                                'message' => 'CFT Reviews'
+                            ]);
+                        }
+                         if (!$Cft->Production_Table_Review || !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review || !$Cft->ContractGiver_Review || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
+                            Session::flash('swal', [
+                                'title' => 'Mandatory Fields Required!',
+                                'message' => 'CFT Tab is yet to be filled!',
                                 'type' => 'warning',
                             ]);
 
@@ -8458,9 +8502,11 @@ class MarketComplaintController extends Controller
             return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'cft','relatedRecords'));
         } elseif ($request->revision == "Action-Item") {
             // return "test";
+              $p_record = MarketComplaint::find($id);
+              $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
             $parentRecord = MarketComplaint::where('id', $id)->value('record');
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.action-item.action-item', compact('record','parentRecord', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id'));
+            return view('frontend.action-item.action-item', compact('record','parentRecord', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'data_record'));
         } elseif ($request->revision == "rca") {
             // return "test";
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -8517,11 +8563,13 @@ class MarketComplaintController extends Controller
         } elseif ($request->child_type == "Action_Item") {
             $parent_name = "CAPA";
             $actionchild = MarketComplaint::find($id);
+            // $p_record = OutOfCalibration::find($id);
+            $data_record = Helpers::getDivisionName($actionchild->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($actionchild->record, 4, '0', STR_PAD_LEFT);
             $actionchild->actionchild = $record_number;
             $parent_id = $id;
             $actionchild->save();
 
-            return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.action-item.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type', 'data_record'));
         } elseif ($request->child_type == "effectiveness_check") {
             $parent_name = "CAPA";
             $effectivenesschild = MarketComplaint::find($id);
@@ -8692,7 +8740,7 @@ class MarketComplaintController extends Controller
     {
         $doc = MarketComplaint::find($id);
         $doc->originator = User::where('id', $doc->initiator_id)->value('name');
-        $data = MarketComplaintAuditTrial::where('market_id', $doc->id)->orderByDesc('id')->paginate();
+        $data = MarketComplaintAuditTrial::where('market_id', $doc->id)->orderByDesc('id')->paginate(1000);
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
         $data = $data->sortBy('created_at');
@@ -8878,6 +8926,7 @@ class MarketComplaintController extends Controller
 
         $data = MarketComplaint::find($id);
         // $data1 = MarketComplaintCft::where('mc_id', $id)->first();
+        
         // dd($data1)
         // $prductgigrid = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'ProductDetails'])->first();
         $product_materialDetails = MarketComplaintGrids::where('mc_id', $id)->where('identifer', 'Product_MaterialDetails')->first();

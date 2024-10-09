@@ -193,7 +193,7 @@
 
             <div class="division-bar">
                 <strong>Site Division/Project</strong> :
-                {{ Helpers::getDivisionName(session()->get('division')) }} / Risk Assesment
+                {{ Helpers::getDivisionName(session()->get('division')) }} / Risk Assessment
             </div>
         </div>
         @php
@@ -212,7 +212,7 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm12')">HOD/Designee</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">CFT Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA/CQA Review</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm11')">CQA/QA Head</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm11')">QA/CQA Head Approval</button>
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Work Group Assignment</button> --}}
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk/Opportunity Analysis</button> --}}
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Residual Risk</button> --}}
@@ -396,13 +396,13 @@
                                             <label for="Type..">Type</label>
                                             <select name="type" id="type">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="Business_Risk">Business Risk</option>
-                                                <option value="customer_Related">Customer-Related Risk (Complaint)</option>
+                                                <option value="Business Risk">Business Risk</option>
+                                                <option value="Customer Related">Customer-Related Risk (Complaint)</option>
                                                 <option value="Opportunity">Opportunity</option>
                                                 <option value="Market">Market</option>
-                                                <option value="Operational_Risk">Operational Risk</option>
-                                                <option value="Strategic_Risk">Strategic Risk</option>
-                                                <option value="Other_data">Other</option>
+                                                <option value="Operational Risk">Operational Risk</option>
+                                                <option value="Strategic Risk">Strategic Risk</option>
+                                                <option value="Other Data">Other</option>
                                             </select>
                                         </div>
                                     </div>
@@ -611,7 +611,7 @@
                                             <select name="root_cause_methodology[]" multiple data-search="false" data-silent-initial-value-set="true" id="root-cause-methodology">
                                                 <option value="Why-Why Chart">Why-Why Chart</option>
                                                 <option value="Failure Mode and Effect Analysis">Failure Mode and Effect Analysis</option>
-                                                <option value="Other_Detail">Other</option>
+                                                <option value="Other Detail">Other</option>
                                             </select>
                                         </div>
                                     </div>
@@ -686,7 +686,6 @@
                                                                 <th>Probability (P)</th>
                                                                 <th>Detection (D)</th>
                                                                 <th>RPN</th>
-
                                                                 <th>Category of Risk Level (Low, Medium and High)</th>
                                                                 <th>Risk Acceptance (Y/N)</th>
                                                                 <th>Traceability document</th>
@@ -699,9 +698,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
-
 
                                     <div class="col-12" id="fishbone-section" style="display:none;">
                                         <div class="group-input">
@@ -1022,7 +1018,7 @@
                                     </div>
                                 </div>
 
-                              </div>
+
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1031,6 +1027,7 @@
                                 </div>
                             </div>
                         </div>
+
 
 
                          <!-------------------------------------------- Hod/ Designee------------------------------------------------->
@@ -1237,7 +1234,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Injection"> Production Injection </label>
+                                        <label for="Production Injection"> Production Injection Review Required ? </label>
                                         <select name="Production_Injection_Review" id="Production_Injection_Review"
                                             disabled>
                                             <option value="">-- Select --</option>
@@ -1282,7 +1279,8 @@
                                 </div>
                                 <div class="col-md-12 mb-3 productionInjection">
                                     <div class="group-input">
-                                        <label for="Production Injection feedback">Production Injection Feedback </label>
+                                        <label for="Production Injection feedback">Production Injection Feedback (By Production
+                                            Injection) </label>
                                         <textarea class="summernote Production_Injection_Feedback" name="Production_Injection_Feedback" id="summernote-18"></textarea>
                                     </div>
                                 </div>
@@ -1666,7 +1664,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Store"> Store</label>
+                                        <label for="Store"> Store Required ?</label>
                                         <select name="Store_Review" id="Store_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -2076,7 +2074,7 @@
 
 
                                 <div class="sub-head">
-                                    Production (Liquid/Externa Preparation)
+                                    Production (Liquid/External Preparation)
                                 </div>
                                 <script>
                                     $(document).ready(function() {
@@ -2096,7 +2094,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Liquid"> Production Liquid/Externa Preparation Required </label>
+                                        <label for="Production Liquid"> Production Liquid/External Preparation Required ? </label>
                                         <select name="ProductionLiquid_Review" id="ProductionLiquid_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -2134,19 +2132,19 @@
                                 <div class="col-md-12 mb-3 productionLiquid">
                                     <div class="group-input">
                                         <label for="Production Liquid assessment">Impact Assessment (By Production
-                                            Liquid/Externa Preparation)</label>
+                                            Liquid/External Preparation)</label>
                                         <textarea class="summernote ProductionLiquid_assessment" name="ProductionLiquid_assessment" id="summernote-17"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 productionLiquid">
                                     <div class="group-input">
-                                        <label for="Production Liquid feedback">Production Liquid/Externa Preparation Feedback</label>
+                                        <label for="Production Liquid feedback">Production Liquid/External Preparation Feedback</label>
                                         <textarea class="summernote ProductionLiquid_feedback" name="ProductionLiquid_feedback" id="summernote-18"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 productionLiquid">
                                     <div class="group-input">
-                                        <label for="Production Liquid attachment">Production Liquid/Externa Preparation  Attachments</label>
+                                        <label for="Production Liquid attachment">Production Liquid/External Preparation Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div> ProductionLiquid_attachment
                                         <div class="file-attachment-field">
@@ -2163,14 +2161,14 @@
                                 </div>
                                 <div class="col-md-6 mb-3 productionLiquid">
                                     <div class="group-input">
-                                        <label for="Production Liquid Completed By">Production Liquid/Externa preparation Completed By</label>
+                                        <label for="Production Liquid Completed By">Production Liquid/External preparation Completed By</label>
                                         <input readonly type="text" name="ProductionLiquid_by"
                                             id="ProductionLiquid_by">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 productionLiquid">
                                     <div class="group-input ">
-                                        <label for="Production Liquid Completed On">Production Liquid/Externa Preparation Completed On</label>
+                                        <label for="Production Liquid Completed On">Production Liquid/External Preparation Completed On</label>
                                         <input type="date" id="ProductionLiquid_on" name="ProductionLiquid_on">
                                     </div>
                                 </div>
@@ -2397,7 +2395,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Safety Review Required">Safety Review Required
+                                        <label for="Safety Review Required">Safety Required
                                             ?</label>
                                         <select name="Environment_Health_review" id="Environment_Health_review"
                                             disabled>
@@ -3457,7 +3455,7 @@
                                 </div>
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    In Approval
+                                      Approved
                                 </div>
 
                                 <div class="col-lg-4">

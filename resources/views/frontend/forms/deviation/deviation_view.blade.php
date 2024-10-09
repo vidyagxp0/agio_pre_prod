@@ -1068,8 +1068,12 @@
                 <div class="cctab">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA/CQA Initial assesmnent</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA/CQA Initial Assessment</button>
                     <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT</button>
+                    <button class="cctablinks " onclick="openCity(event, 'CCForm16')">QA/CQA Final Assessment</button>
+                    <button class="cctablinks " onclick="openCity(event, 'CCForm17')">QA/CQA Head/ Designee Approval</button>
+                    
+
                     <button class="cctablinks " id="Investigation_button" onclick="openCity(event, 'CCForm9')"
                         style="display: none">Investigation</button>
                     <button class="cctablinks " id="QRM_button" onclick="openCity(event, 'CCForm11')"
@@ -1079,7 +1083,7 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Pending Initiator Update</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm15')">HOD Final Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Implementation Verification</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QAH/Designee Approval</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Head QA/CQA / Designee Closure Approval</button>
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Extension</button> --}}
 
                     <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
@@ -1131,8 +1135,8 @@
                                         </div>
                                     </div>
                                     <?php
-                                    // Calculate the due date (30 days from the initiation date)
-                                    $initiationDate = date('Y-m-d'); // Current date as initiation date
+
+                                    $initiationDate = date('Y-m-d');
                                     $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
                                     ?>
 
@@ -1384,142 +1388,123 @@
                                         }
                                     </script>
 
-                                    <div class="col-6 new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="severity-level">Deviation Observed On <span
-                                                    class="text-danger">*</span></label>
-                                            <div class="calenderauditee">
-                                                <input type="text"
-                                                    {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                    id="Deviation_date" readonly placeholder="DD-MMM-YYYY"
-                                                    value="{{ Helpers::getdateFormat($data->Deviation_date) }}" />
-                                                <input type="date" name="Deviation_date"
-                                                    max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                    {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                    value="{{ $data->Deviation_date }}" class="hide-input"
-                                                    oninput="handleDateInput(this, 'Deviation_date')" />
-                                            </div>
-                                            @error('Deviation_date')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
+                                <div class="col-6 new-date-data-field">
+    <div class="group-input input-date">
+        <label for="severity-level">Deviation Observed On <span class="text-danger">*</span></label>
+        <div class="calenderauditee">
+            <input type="text" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="Deviation_date" readonly placeholder="DD-MMM-YYYY"
+                value="{{ Helpers::getdateFormat($data->Deviation_date) }}" />
+            <input type="date" name="Deviation_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} value="{{ $data->Deviation_date }}"
+                class="hide-input" oninput="handleDateInput(this, 'Deviation_date')" />
+        </div>
+        @error('Deviation_date')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
 
+<div class="col-lg-6 new-time-data-field">
+    <div class="group-input input-time">
+        <label for="deviation_time">Deviation Observed On (Time) <span class="text-danger">*</span></label>
+        <input type="text" name="deviation_time" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="deviation_time"
+            value="{{ old('deviation_time') ? old('deviation_time') : $data->deviation_time }}">
+        @error('deviation_time')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
 
-                                    <div class="col-lg-6 new-time-data-field">
-                                        <div class="group-input input-time">
-                                            <label for="deviation_time">Deviation Observed On (Time) <span
-                                                    class="text-danger">*</span></label>
-                                            <input type="text"
-                                                name="deviation_time"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                id="deviation_time"
-                                                value="{{ old('deviation_time') ? old('deviation_time') : $data->deviation_time }}">
-                                            @error('deviation_time')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
+<div class="col-lg-6 new-time-data-field">
+    <div class="group-input input-time delayJustificationBlock">
+        <label for="deviation_time">Delay Justification <span class="text-danger">*</span></label>
+        <textarea id="Delay_Justification" name="Delay_Justification">{{ $data->Delay_Justification }}</textarea>
+    </div>
+    @error('Delay_Justification')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
 
+<script>
+    flatpickr("#deviation_time", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i", // 24-hour format with date and time
+        time_24hr: true, // Enable 24-hour time format
+        minuteIncrement: 1 // Set minute increment to 1
+    });
+</script>
 
-                                    <div class="col-lg-6 new-time-data-field">
-                                        <div
-                                            class="group-input input-time @if ($data->Delay_Justification) style="display: block !important" @endif @error('Delay_Justification') @else delayJustificationBlock @enderror">
-                                            <label for="deviation_time">Delay Justification <span
-                                                    class="text-danger">*</span></label>
-                                            <textarea id="Delay_Justification" name="Delay_Justification">{{ $data->Delay_Justification }}</textarea>
-                                        </div>
-                                        @error('Delay_Justification')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+<div class="col-lg-6">
+    <div class="group-input">
+        @php
+            $users = DB::table('users')->get();
+        @endphp
+        <label for="If Other">Deviation Observed By <span class="text-danger">*</span></label>
+        <input type="text" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} name="Facility" placeholder="Select Facility Name"
+            value="{{ $data->Facility }}">
+        @error('Facility')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
 
+<div class="col-6 new-date-data-field">
+    <div class="group-input input-date">
+        <label for="Initiator Group">Deviation Reported On <span class="text-danger">*</span></label>
+        <div class="calenderauditee">
+            <input type="text" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="Deviation_reported_date" readonly placeholder="DD-MMM-YYYY"
+                value="{{ Helpers::getdateFormat($data->Deviation_reported_date) }}" />
+            <input type="date" name="Deviation_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} value="{{ $data->Deviation_reported_date }}"
+                class="hide-input" oninput="handleDateInput(this, 'Deviation_reported_date')" />
+        </div>
+        @error('Deviation_reported_date')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
 
+<script>
+    $(document).ready(function() {
+        // Hide the delayJustificationBlock initially
+        $('.delayJustificationBlock').hide();
 
-                                    <script>
-                                        flatpickr("#deviation_time", {
-                                            enableTime: true,
-                                            noCalendar: true,
-                                            dateFormat: "H:i", // 24-hour format with date and time
-                                            time_24hr: true, // Enable 24-hour time format
-                                            minuteIncrement: 1 // Set minute increment to 1
+        // Check the condition on page load
+        checkDateDifference();
+    });
 
-                                        });
-                                    </script>
+    function checkDateDifference() {
+        let deviationDate = $('input[name=Deviation_date]').val();
+        let reportedDate = $('input[name=Deviation_reported_date]').val();
+        let deviationTime = $('#deviation_time').val();
 
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            @php
-                                                $users = DB::table('users')->get();
-                                            @endphp
+        if (!deviationDate || !reportedDate || !deviationTime) {
+            console.error('Deviation date, reported date, or deviation time is missing.');
+            return;
+        }
 
-                                            <label for="If Other">Deviation Observed By<span
-                                                    class="text-danger">*</span></label>
-                                            <input
-                                                type="text"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                name="Facility" placeholder="Select Facility Name"
-                                                value="{{ $data->Facility }}">
-                                            @error('Facility')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
+        // Combine date and time for accurate difference calculation
+        let deviationDateTime = moment(deviationDate + ' ' + deviationTime, 'YYYY-MM-DD HH:mm');
+        let reportedDateTime = moment(reportedDate + ' ' + moment().format('HH:mm'), 'YYYY-MM-DD HH:mm');
 
-                                    <div class="col-6 new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="Initiator Group">Deviation Reported On <span
-                                                    class="text-danger">*</span></label>
-                                            <div class="calenderauditee">
-                                                <input type="text"
-                                                    {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                    id="Deviation_reported_date" readonly placeholder="DD-MMM-YYYY"
-                                                    value="{{ Helpers::getdateFormat($data->Deviation_reported_date) }}" />
-                                                <input type="date" name="Deviation_reported_date"
-                                                    max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                    {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                    value="{{ $data->Deviation_reported_date }}" class="hide-input"
-                                                    oninput="handleDateInput(this, 'Deviation_reported_date')" />
-                                            </div>
-                                            @error('Deviation_reported_date')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
+        let diffInHours = reportedDateTime.diff(deviationDateTime, 'hours');
+        let diffInDays = reportedDateTime.diff(deviationDateTime, 'days');
 
-                                    <script>
-                                        $(document).ready(function() {
-                                            // Hide the delayJustificationBlock initially
-                                            $('.delayJustificationBlock').hide();
+        // Show delay justification if the difference is 24 hours or more OR if more than 2 days
+        if (diffInHours > = 24 || diffInDays >= 2) {
+            $('.delayJustificationBlock').show();
+        } else {
+            $('.delayJustificationBlock').hide();
+        }
+    }
 
-                                            // Check the condition on page load
-                                            checkDateDifference();
-                                        });
+    // Call checkDateDifference whenever the values are changed
+    $('input[name=Deviation_date], input[name=Deviation_reported_date], #deviation_time').on('change', function() {
+        checkDateDifference();
+    });
+</script>
 
-                                        function checkDateDifference() {
-                                            let deviationDate = $('input[name=Deviation_date]').val();
-                                            let reportedDate = $('input[name=Deviation_reported_date]').val();
-
-                                            if (!deviationDate || !reportedDate) {
-                                                console.error('Deviation date or reported date is missing.');
-                                                return;
-                                            }
-
-                                            let deviationDateMoment = moment(deviationDate);
-                                            let reportedDateMoment = moment(reportedDate);
-
-                                            let diffInDays = reportedDateMoment.diff(deviationDateMoment, 'days');
-
-                                            if (diffInDays > 0) {
-                                                $('.delayJustificationBlock').show();
-                                            } else {
-                                                $('.delayJustificationBlock').hide();
-                                            }
-                                        }
-
-                                        // Call checkDateDifference whenever the values are changed
-                                        $('input[name=Deviation_date], input[name=Deviation_reported_date]').on('change', function() {
-                                            checkDateDifference();
-                                        });
-                                    </script>
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -2140,7 +2125,7 @@
                                                 <option value="">Select a value</option>
                                                 @if ($users->isNotEmpty())
                                                     @foreach ($users as $value)
-                                                        <option {{ $data->Hod_person_to == $value->id ? 'selected' : '' }}
+                                                        <option {{ $data->Hod_person_to == $value->name ? 'selected' : '' }}
                                                             value='{{ $value->name }}'>{{ $value->name }}</option>
                                                     @endforeach
                                                 @endif
@@ -2157,7 +2142,7 @@
                                                 <option value="">Select a value</option>
                                                 @if ($users->isNotEmpty())
                                                     @foreach ($users as $value)
-                                                        <option {{ $data->Reviewer_to == $value->id ? 'selected' : '' }}
+                                                        <option {{ $data->Reviewer_to == $value->name ? 'selected' : '' }}
                                                             value='{{ $value->name }}'>{{ $value->name }}</option>
                                                     @endforeach
                                                 @endif
@@ -2173,7 +2158,7 @@
                                                 <option value="">Select a value</option>
                                                 @if ($users->isNotEmpty())
                                                     @foreach ($users as $value)
-                                                        <option {{ $data->Approver_to == $value->id ? 'selected' : '' }}
+                                                        <option {{ $data->Approver_to == $value->name ? 'selected' : '' }}
                                                             value='{{ $value->name }}'>{{ $value->name }}</option>
                                                     @endforeach
                                                 @endif
@@ -2757,7 +2742,7 @@
                         <div id="CCForm2" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 @if ($data->stage == 3)
-                                    <div class="row">
+                                    <!-- <div class="row">
 
                                         <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
                                             <div class="group-input input-date">
@@ -2782,6 +2767,51 @@
                                                     <select id="Deviation_category"
                                                         name="Deviation_category"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
                                                         onchange="handleDeviationCategoryChange()"
+                                                        value="{{ $data->Deviation_category }}">
+                                                        <option value="0">-- Select --</option>
+                                                        <option @if ($data->Deviation_category == 'minor') selected @endif
+                                                            value="minor">Minor</option>
+                                                        <option @if ($data->Deviation_category == 'major') selected @endif
+                                                            value="major">Major</option>
+                                                        <option @if ($data->Deviation_category == 'critical') selected @endif
+                                                            value="critical">Critical</option>
+                                                    </select>
+                                                @endif
+
+                                                @error('Deviation_category')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div> -->
+
+
+
+
+                                        <div class="row">
+
+                                        <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
+                                            <div class="group-input input-date">
+
+                                                @if ($data->stage == 3)
+                                                    <label for="Deviation category">Initial Deviation category <span
+                                                            class="text-danger">*</span></label>
+                                                    <select id="Deviation_category1"
+                                                        name="Deviation_category"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                        value="{{ $data->Deviation_category }}"
+                                                        onchange="handleDeviationCategoryChange1()" required>
+                                                        <option value="0">-- Select --</option>
+                                                        <option @if ($data->Deviation_category == 'minor') selected @endif
+                                                            value="minor">Minor</option>
+                                                        <option @if ($data->Deviation_category == 'major') selected @endif
+                                                            value="major">Major</option>
+                                                        <option @if ($data->Deviation_category == 'critical') selected @endif
+                                                            value="critical">Critical</option>
+                                                    </select>
+                                                @else
+                                                    <label for="Deviation category">Initial Deviation category</label>
+                                                    <select id="Deviation_category1"
+                                                        name="Deviation_category"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                        onchange="handleDeviationCategoryChange1()"
                                                         value="{{ $data->Deviation_category }}">
                                                         <option value="0">-- Select --</option>
                                                         <option @if ($data->Deviation_category == 'minor') selected @endif
@@ -2956,7 +2986,7 @@
 
                                     <div class="col-md-12">
                                         <div class="group-input">
-                                            <label for="QAInitialRemark">QA/CQA Initial Remarks <span
+                                            <label for="QAInitialRemark">QA/CQA Initial Remark<span
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
@@ -2969,7 +2999,7 @@
                                     </div>
                                     {{-- <div class="col-12">
                                         <div class="group-input">
-                                            <label for="QA Initial Attachments">QA Initial Attachments</label>
+                                            <label for="QA Initial Attachments">QA/CQA initial Attachments</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
                                             <div class="file-attachment-field">
@@ -3002,7 +3032,7 @@
                                     </div> --}}
                                         <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Initial_attachment">QA Initial Attachments</label>
+                                        <label for="Initial_attachment">QA/CQA initial Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="Initial_attachment">
@@ -8119,7 +8149,7 @@
                                 @if ($data->stage == 3 || $data->stage == 4)
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Contract Giver">Contract Required ? <span
+                                            <label for="Contract Giver">Contract Giver Required <span
                                                     class="text-danger">*</span></label>
                                             <select name="ContractGiver_Review" id="ContractGiver_Review">
                                                 <option value="">-- Select --</option>
@@ -8257,7 +8287,7 @@
                                 @else
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Contract Giver">Contract Giver Required ?</label>
+                                            <label for="Contract Giver">Contract Giver Required</label>
                                             <select name="ContractGiver_Review" disabled id="ContractGiver_Review">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->ContractGiver_Review == 'yes') selected @endif
@@ -8455,26 +8485,30 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 Other1_reviews">
-                                        <div class="group-input">
-                                            <label for="Department1">Other's 1 Department
-                                                <span id="asteriskod1"
-                                                    style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span>
-                                            </label>
-                                            <select name="Other1_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
-                                                id="Other1_Department_person">
-                                                <option value="">-- Select --</option>
-                                                @foreach (Helpers::getDepartments() as $key => $name)
-                                                    <option value="{{ $key }}"
-                                                        @if ($data1->Other1_Department_person == $key) selected @endif>
-                                                        {{ $name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
+                                    <div class="col-12 other1_reviews">
+
+
+                                            <div class="col-lg-12 Other1_reviews">
+
+                                                <div class="group-input">
+                                                    <label for="Department1">Other's 1 Department
+                                                        <span id="asteriskod5"
+                                                            style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                                            class="text-danger">*</span>
+                                                    </label>
+                                                    <select name="Other1_Department_person"
+                                                        @if ($data->stage == 4) disabled @endif
+                                                        id="Other1_Department_person">
+                                                        <option value="">-- Select --</option>
+                                                        @foreach (Helpers::getDepartments() as $key => $name)
+                                                            <option value="{{ $key }}"
+                                                                @if ($data1->Other1_Department_person == $key) selected @endif>
+                                                                {{ $name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
                                     <div class="col-md-12 mb-3 other1_reviews ">
                                         <div class="group-input">
                                             <label for="Impact Assessment12">Impact Assessment (By Other's 1)
@@ -8584,6 +8618,7 @@
                                             @enderror
                                         </div>
                                     </div>
+                                      </div>
 
                                     <div class="sub-head">
                                         Other's 2 ( Additional Person Review From Departments If Required)
@@ -10101,6 +10136,414 @@
             </div>
 
 
+
+
+
+
+            <div id="CCForm16" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @if ($data->stage == 5)
+                                    <div class="group-input">
+                                        <label for="HOD Remarks">QA/CQA Final Assessment Comment <span
+                                                class="text-danger">*</span></label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                does not require completion</small></div>
+                                        <textarea class="tiny" name="qa_final_assement" id="summernote-4" required>{{ $data->qa_final_assement }}</textarea>
+                                    </div>
+                                @else
+                                    <div class="group-input">
+                                        <label for="HOD Remarks">QA/CQA Final Assessment Comment</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                does not require completion</small></div>
+                                        <textarea  class="tiny" name="qa_final_assement" id="summernote-4">{{ $data->qa_final_assement }}</textarea>
+                                    </div>
+                                @endif
+                                @error('qa_final_assement')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                           <div class="col-12">
+    @if ($data->stage == 5)
+        <div class="group-input">
+            <label for="Inv Attachments">QA/CQA Final Assessment attachment</label>
+            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+            <div class="file-attachment-field">
+                <div class="file-attachment-list" id="qa_final_assement_attach">
+                    @if ($data->qa_final_assement_attach)
+                        @foreach (json_decode($data->qa_final_assement_attach) as $file)
+                            <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                <b>{{ $file }}</b>
+                                <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                </a>
+                                <a class="remove-file" data-file-name="{{ $file }}">
+                                    <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                </a>
+                                <input type="hidden" name="existing_qa_final_assement_attach[]" value="{{ $file }}">
+                            </h6>
+                        @endforeach
+                    @endif
+                </div>
+                <div class="add-btn">
+                    <div>Add</div>
+                    <input type="file" id="qa_final_assement_attach" name="qa_final_assement_attach[]"
+                        {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                        oninput="addMultipleFiles(this, 'qa_final_assement_attach')" multiple>
+                </div>
+            </div>
+        </div>
+    @else
+        <div class="group-input">
+            <label for="Inv Attachments">QA/CQA Final Assessment attachment</label>
+            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+            <div class="file-attachment-field">
+                <div class="file-attachment-list" id="qa_final_assement_attach">
+                    @if ($data->qa_final_assement_attach)
+                        @foreach (json_decode($data->qa_final_assement_attach) as $file)
+                            <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                <b>{{ $file }}</b>
+                                <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                </a>
+                                <a class="remove-file" data-file-name="{{ $file }}">
+                                    <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                </a>
+                                <input type="hidden" name="existing_qa_final_assement_attach[]" value="{{ $file }}">
+                            </h6>
+                        @endforeach
+                    @endif
+                </div>
+                <div class="add-btn">
+                    <div>Add</div>
+                    <input type="file" id="qa_final_assement_attach" name="qa_final_assement_attach[]"
+                        {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                        oninput="addMultipleFiles(this, 'qa_final_assement_attach')" multiple>
+                </div>
+            </div>
+        </div>
+    @endif
+</div>
+
+<!-- Hidden field to keep track of files to be deleted -->
+<input type="hidden" id="deleted_qa_final_assement_attach" name="deleted_qa_final_assement_attach" value="">
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const removeButtons = document.querySelectorAll('.remove-file');
+
+        removeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const fileName = this.getAttribute('data-file-name');
+                const fileContainer = this.closest('.file-container');
+
+                // Hide the file container
+                if (fileContainer) {
+                    fileContainer.style.display = 'none';
+                    // Remove hidden input associated with this file
+                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                    if (hiddenInput) {
+                        hiddenInput.remove();
+                    }
+
+                    // Add the file name to the deleted files list
+                    const deletedFilesInput = document.getElementById('deleted_qa_final_assement_attach');
+                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                    deletedFiles.push(fileName);
+                    deletedFilesInput.value = deletedFiles.join(',');
+                }
+            });
+        });
+    });
+
+    function addMultipleFiles(input, id) {
+        const fileListContainer = document.getElementById(id);
+        const files = input.files;
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const fileName = file.name;
+            const fileContainer = document.createElement('h6');
+            fileContainer.classList.add('file-container', 'text-dark');
+            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+            const fileText = document.createElement('b');
+            fileText.textContent = fileName;
+
+            const viewLink = document.createElement('a');
+            viewLink.href = '#'; // You might need to adjust this to handle local previews
+            viewLink.target = '_blank';
+            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+
+            const removeLink = document.createElement('a');
+            removeLink.classList.add('remove-file');
+            removeLink.dataset.fileName = fileName;
+            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+            removeLink.addEventListener('click', function() {
+                fileContainer.style.display = 'none';
+            });
+
+            fileContainer.appendChild(fileText);
+            fileContainer.appendChild(viewLink);
+            fileContainer.appendChild(removeLink);
+
+            fileListContainer.appendChild(fileContainer);
+        }
+    }
+</script>
+
+
+
+                        </div>
+                        <div class="button-block">
+
+                            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
+                                type="submit"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                class="saveButton saveAuditFormBtn d-flex" style="align-items: center;"
+                                id="ChangesaveButton02222">
+                                <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
+                                    role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                Save
+                            </button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+
+                            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
+                                type="button"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                class="nextButton" onclick="nextStep()">Next</button>
+                            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a
+                                    href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a>
+                            </button>
+                            @if (
+                                $data->stage == 2 ||
+                                    $data->stage == 3 ||
+                                    $data->stage == 4 ||
+                                    $data->stage == 5 ||
+                                    $data->stage == 6 ||
+                                    $data->stage == 7)
+                                {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                                                class="button  launch_extension" data-bs-toggle="modal"
+                                                data-bs-target="#launch_extension">
+                                                Launch Extension
+                                            </a> --}}
+                            @endif
+                            <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                                                                                                                                                                                                        data-bs-target="#effectivenss_extension">
+                                                                                                                                                                                                                                                                                                        Launch Effectiveness Check
+                                                                                                                                                                                                                                                                                                    </a> -->
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+                <div id="CCForm17" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @if ($data->stage == 6)
+                                    <div class="group-input">
+                                        <label for="HOD Remarks">QA/CQA Head/Designee Approval comment <span
+                                                class="text-danger">*</span></label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                does not require completion</small></div>
+                                        <textarea class="tiny" name="qa_head_designe_comment" id="summernote-4" required>{{ $data->qa_head_designe_comment }}</textarea>
+                                    </div>
+                                @else
+                                    <div class="group-input">
+                                        <label for="HOD Remarks">QA/CQA Head/Designee Approval comment</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                does not require completion</small></div>
+                                        <textarea  class="tiny" name="qa_head_designe_comment" id="summernote-4">{{ $data->qa_head_designe_comment }}</textarea>
+                                    </div>
+                                @endif
+                                @error('qa_head_designe_comment')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                           <div class="col-12">
+    @if ($data->stage == 6)
+        <div class="group-input">
+            <label for="Inv Attachments">QA/CQA Head/ Designee Approval attachment</label>
+            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+            <div class="file-attachment-field">
+                <div class="file-attachment-list" id="qa_head_designee_attach">
+                    @if ($data->qa_head_designee_attach)
+                        @foreach (json_decode($data->qa_head_designee_attach) as $file)
+                            <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                <b>{{ $file }}</b>
+                                <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                </a>
+                                <a class="remove-file" data-file-name="{{ $file }}">
+                                    <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                </a>
+                                <input type="hidden" name="existing_qa_head_designee_attach[]" value="{{ $file }}">
+                            </h6>
+                        @endforeach
+                    @endif
+                </div>
+                <div class="add-btn">
+                    <div>Add</div>
+                    <input type="file" id="HOD_Attachments" name="qa_head_designee_attach[]"
+                        {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                        oninput="addMultipleFiles(this, 'qa_head_designee_attach')" multiple>
+                </div>
+            </div>
+        </div>
+    @else
+        <div class="group-input">
+            <label for="Inv Attachments">QA/CQA Head/ Designee Approval attachment</label>
+            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+            <div class="file-attachment-field">
+                <div class="file-attachment-list" id="qa_head_designee_attach">
+                    @if ($data->qa_head_designee_attach)
+                        @foreach (json_decode($data->qa_head_designee_attach) as $file)
+                            <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                <b>{{ $file }}</b>
+                                <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                </a>
+                                <a class="remove-file" data-file-name="{{ $file }}">
+                                    <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                </a>
+                                <input type="hidden" name="existing_qa_head_designee_attach[]" value="{{ $file }}">
+                            </h6>
+                        @endforeach
+                    @endif
+                </div>
+                <div class="add-btn">
+                    <div>Add</div>
+                    <input type="file" id="qa_head_designee_attachs" name="qa_head_designee_attach[]"
+                        {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                        oninput="addMultipleFiles(this, 'qa_head_designee_attach')" multiple>
+                </div>
+            </div>
+        </div>
+    @endif
+</div>
+
+<!-- Hidden field to keep track of files to be deleted -->
+<input type="hidden" id="deleted_qa_head_designee_attach" name="deleted_qa_head_designee_attach" value="">
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const removeButtons = document.querySelectorAll('.remove-file');
+
+        removeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const fileName = this.getAttribute('data-file-name');
+                const fileContainer = this.closest('.file-container');
+
+                // Hide the file container
+                if (fileContainer) {
+                    fileContainer.style.display = 'none';
+                    // Remove hidden input associated with this file
+                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                    if (hiddenInput) {
+                        hiddenInput.remove();
+                    }
+
+                    // Add the file name to the deleted files list
+                    const deletedFilesInput = document.getElementById('deleted_qa_head_designee_attach');
+                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                    deletedFiles.push(fileName);
+                    deletedFilesInput.value = deletedFiles.join(',');
+                }
+            });
+        });
+    });
+
+    function addMultipleFiles(input, id) {
+        const fileListContainer = document.getElementById(id);
+        const files = input.files;
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const fileName = file.name;
+            const fileContainer = document.createElement('h6');
+            fileContainer.classList.add('file-container', 'text-dark');
+            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+            const fileText = document.createElement('b');
+            fileText.textContent = fileName;
+
+            const viewLink = document.createElement('a');
+            viewLink.href = '#'; // You might need to adjust this to handle local previews
+            viewLink.target = '_blank';
+            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+
+            const removeLink = document.createElement('a');
+            removeLink.classList.add('remove-file');
+            removeLink.dataset.fileName = fileName;
+            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+            removeLink.addEventListener('click', function() {
+                fileContainer.style.display = 'none';
+            });
+
+            fileContainer.appendChild(fileText);
+            fileContainer.appendChild(viewLink);
+            fileContainer.appendChild(removeLink);
+
+            fileListContainer.appendChild(fileContainer);
+        }
+    }
+</script>
+
+
+
+                        </div>
+                        <div class="button-block">
+
+                            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
+                                type="submit"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                class="saveButton saveAuditFormBtn d-flex" style="align-items: center;"
+                                id="ChangesaveButton02222">
+                                <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
+                                    role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                Save
+                            </button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+
+                            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
+                                type="button"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                class="nextButton" onclick="nextStep()">Next</button>
+                            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a
+                                    href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a>
+                            </button>
+                            @if (
+                                $data->stage == 2 ||
+                                    $data->stage == 3 ||
+                                    $data->stage == 4 ||
+                                    $data->stage == 5 ||
+                                    $data->stage == 6 ||
+                                    $data->stage == 7)
+                                {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                                                class="button  launch_extension" data-bs-toggle="modal"
+                                                data-bs-target="#launch_extension">
+                                                Launch Extension
+                                            </a> --}}
+                            @endif
+                            <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                                                                                                                                                                                                        data-bs-target="#effectivenss_extension">
+                                                                                                                                                                                                                                                                                                        Launch Effectiveness Check
+                                                                                                                                                                                                                                                                                                    </a> -->
+                        </div>
+                    </div>
+                </div>
+
+
+
             <!-- investigation -->
             <div id="CCForm9" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -10241,9 +10684,9 @@
                                     <option value="Why-Why Chart"
                                         {{ strpos($data->investigation_approach, 'Why-Why Chart') !== false ? 'selected' : '' }}>
                                         Why-Why Chart</option>
-                                    <option value="Failure Mode and Efect Analysis"
-                                        {{ strpos($data->investigation_approach, 'Failure Mode and Efect Analysis') !== false ? 'selected' : '' }}>
-                                        Failure Mode and Efect Analysis</option>
+                                    <option value="Category Of Human Error"
+                                        {{ strpos($data->investigation_approach, 'Category Of Human Error') !== false ? 'selected' : '' }}>
+                                        Category Of Human Error </option>
                                     <option value="Fishbone or Ishikawa Diagram"
                                         {{ strpos($data->investigation_approach, 'Fishbone or Ishikawa Diagram') !== false ? 'selected' : '' }}>
                                         Fishbone or Ishikawa Diagram</option>
@@ -10437,10 +10880,10 @@
                                                                     Methods</option>
                                                                 <option value="Environment"
                                                                     {{ $inference_type == 'Environment' ? 'selected' : '' }}>
-                                                                    Environment</option>
+                                                                    Mother Environment</option>
                                                                 <option value="Manpower"
                                                                     {{ $inference_type == 'Manpower' ? 'selected' : '' }}>
-                                                                    Manpower</option>
+                                                                    Man</option>
                                                                 <option value="Machine"
                                                                     {{ $inference_type == 'Machine' ? 'selected' : '' }}>
                                                                     Machine</option>
@@ -10498,11 +10941,14 @@
                                     } else {
                                         $('.Is-not').hide();
                                     }
-                                    if ($('#investigation_approach').val().includes('Failure Mode and Efect Analysis')) {
+                                    if ($('#investigation_approach').val().includes('Category Of Human Error')) {
                                         $('.Category-human').show();
                                     } else {
                                         $('.Category-human').hide();
                                     }
+
+
+                                    
                                 }
 
                                 // Initial check on page load
@@ -10908,7 +11354,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th style="background:rgb(222 220 220 / 58%)">Coverage</th>
+                                                    <th style="background:rgb(222 220 220 / 58%)">Why</th>
                                                     <td>
                                                         <textarea name="coverage_will_be">{{ $data->coverage_will_be }}</textarea>
                                                     </td>
@@ -12022,6 +12468,15 @@
                                     <table class="table table-bordered" style="width: 200%"
                                         id="risk-assessment-risk-management">
                                         <thead>
+                                        <tr>
+                                                            <th colspan="1"style="text-align:center;"></th>
+                                                            <th colspan="2"style="text-align:center;">Risk Identification</th>
+                                                            <th colspan="1"style="text-align:center;">Risk Analysis</th>
+                                                            <th colspan="4"style="text-align:center;">Risk Evaluation</th>
+                                                            <th colspan="1"style="text-align:center;">Risk Control</th>
+                                                            <th colspan="6"style="text-align:center;">Risk Evaluation</th>
+                                                            <th colspan="2"style="text-align:center;"></th>
+                                                        </tr> 
                                             <tr>
                                                 <th>Row #</th>
                                                 <th>Activity</th>
@@ -12475,7 +12930,7 @@
 
                                                                                                                                                                                                                                                                                                 </div>
                                                                                                                                                                                                                                                                                             </div> -->
-                            <div class="col-lg-12">
+                            <!-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group"><b>Name of the Department</b></label>
                                     <select name="department_capa" id="department_capa"
@@ -12617,7 +13072,7 @@
                                     <label for="Description_of_Discrepancy">Description of Discrepancy </label>
                                     <textarea class="tiny" name="Description_of_Discrepancy" id="Description_of_Discrepancy" value="">{{ $data->Description_of_Discrepancy }}</textarea>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Root_Cause">Root Cause</label>
@@ -12654,13 +13109,11 @@
                                     <textarea class="tiny" name="Preventive_Action_Details" id="Preventive_Action_Details" value="">{{ $data->Preventive_Action_Details }}</textarea>
                                 </div>
                             </div>
-                            <div class="col-lg-6 new-date-data-field">
+                            <!-- <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Audit Schedule End Date">Target Completion Date</label>
                                     <div class="calenderauditee">
-                                        <!-- <input  type="date" value="{{ $data->capa_completed_date ? $data->capa_completed_date : '' }}" name="capa_completed_date"id="capa_completed_date"
-                                                                                                                                                                                                                                                                                    oninput="handleDateInput(this, 'Capa_reported_date')">
-                                                                                                                                                                                                                                                                                    <input type="hidden" value="{{ date('Y-m-d') }}" name="capa_completed_date">  -->
+                                       
 
                                         <input readonly type="text" id="Capa_reported_date"
                                             value="{{ date('d-M-Y') }}" name="capa_completed_date"
@@ -12714,12 +13167,12 @@
                                             require
                                             completion</small></div>
                                     <textarea class="" name="CAPA_Closure_Comments" id="CAPA_Closure_Comments" value="">{{ $data->CAPA_Closure_Comments }}</textarea>
-                                </div>
+                                </div> -->
 
                                 {{-- <div class="col-lg-12">
                                     @if ($data->stage == 7)
                                         <div class="group-input">
-                                            <label for="CAPA_Closure_attachment Attachment">CAPA Closure
+                                            <label for="CAPA_Closure_attachment Attachment">CAPA
                                                 Attachment</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
@@ -12755,7 +13208,7 @@
                                         </div>
                                     @else
                                         <div class="group-input">
-                                            <label for="CAPA_Closure_attachment Attachment">CAPA Closure
+                                            <label for="CAPA_Closure_attachment Attachment">CAPA 
                                                 Attachment</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
@@ -12796,7 +13249,7 @@
                                 </div> --}}
                                     <div class="col-12">
                                     <div class="group-input">
-                                        <label for="CAPA_Closure_attachment">CAPA Closure
+                                        <label for="CAPA_Closure_attachment">CAPA 
                                                 Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
@@ -13779,7 +14232,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="group-input">
-                                    <label for="Closure Comments">QAH/Designee Closure Comments
+                                    <label for="Closure Comments">Head QA/CQA / Designee Closure Approval Comments
 
                                         </span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
@@ -13838,7 +14291,7 @@
                             </div> --}}
        <div class="col-12">
                                     <div class="group-input">
-                                        <label for="closure_attachment">QAH/Designee Closure Attachments</label>
+                                        <label for="closure_attachment">Head QA/CQA / Designee Closure Approval Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="closure_attachment">
@@ -14127,25 +14580,6 @@
                                     <div class="">{{ $data->QA_Initial_Review_Comments }}</div>
                                 </div>
                             </div>
-                             <div class="sub-head">CFT Review Not Required</div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="CFT Review Complete By">CFT Review Not Required By :-</label>
-                                    <div class="static">{{ $data->cft_review_not_req_by }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="CFT Review Not Required On">CFT Review Not Required On :-</label>
-                                    <div class="static">{{ $data->cft_review_not_req_on }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                    <label for="CFT Review Comments">CFT Review Not Required Comment :-</label>
-                                    <div class="">{{ $data->cft_review_not_req_comment }}</div>
-                                </div>
-                            </div>
 
                             <div class="sub-head">CFT Review Complete</div>
                             <div class="col-lg-3">
@@ -14167,91 +14601,112 @@
                                 </div>
                             </div>
 
-                            <div class="sub-head"> QA/CQA Final Review Complete</div>
+
+                             <div class="sub-head">CFT Review Not Required</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="QA/CQA Final Review Complete By"> QA/CQA Final Review Complete By
+                                    <label for="CFT Review Complete By">CFT Review Not Required By :-</label>
+                                    <div class="static">{{ $data->cft_review_not_req_by }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="CFT Review Not Required On">CFT Review Not Required On :-</label>
+                                    <div class="static">{{ $data->cft_review_not_req_on }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                    <label for="CFT Review Comments">CFT Review Not Required Comment :-</label>
+                                    <div class="">{{ $data->cft_review_not_req_comment }}</div>
+                                </div>
+                            </div>
+
+                           
+
+                            <div class="sub-head"> QA/CQA Final Assessement Complete</div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="QA/CQA Final Review Complete By"> QA/CQA Final Assessement Complete By
                                         :-</label>
                                     <div class="static">{{ $data->QA_Final_Review_Complete_By }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="QA/CQA Final Review Complete On"> QA/CQA Final Review Complete On
+                                    <label for="QA/CQA Final Review Complete On">QA/CQA Final Assessement Complete On
                                         :-</label>
                                     <div class="static">{{ $data->QA_Final_Review_Complete_On }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                    <label for="QA/CQA Final Review Comments"> QA/CQA Final Review Complete Comment :-</label>
+                                    <label for="QA/CQA Final Review Comments"> QA/CQA Final Assessement Complete Comment :-</label>
                                     <div class="">{{ $data->QA_Final_Review_Comments }}</div>
                                 </div>
                             </div>
 
-                            <div class="sub-head">QA/CQA Head/Manager Designee Approval</div>
+                            <div class="sub-head">Approved</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="QA/CQA Final Review Complete By">QA/CQA Head/Manager Designee Approval
-                                        Complete By
+                                    <label for="QA/CQA Final Review Complete By">Approved By
                                         :-</label>
                                     <div class="static">{{ $data->QA_head_approved_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="QA/CQA Final Review Complete On">QA/CQA Head/Manager Designee Approval
-                                        Complete On
+                                    <label for="QA/CQA Final Review Complete On">Approved On
                                         :-</label>
                                     <div class="static">{{ $data->QA_head_approved_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                    <label for="QA/CQA Final Review Comments">QA/CQA Head/Manager Designee Approval Complete
+                                    <label for="QA/CQA Final Review Comments">Approved
                                         Comment
                                         :-</label>
                                     <div class="">{{ $data->QA_head_approved_comment }}</div>
                                 </div>
                             </div>
 
-                            <div class="sub-head">Initiator Update Complete</div>
+                            <div class="sub-head">Initiator Update Completed</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="CFT Review Complete By">Initiator Update Complete By :-</label>
+                                    <label for="CFT Review Complete By">Initiator Update Completed By :-</label>
                                     <div class="static">{{ $data->pending_initiator_approved_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="CFT Review Complete On">Initiator Update Complete On :-</label>
+                                    <label for="CFT Review Complete On">Initiator Update Completed On :-</label>
                                     <div class="static">{{ $data->pending_initiator_approved_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="CFT Review Comments">Initiator Update Complete Comment :-</label>
+                                    <label for="CFT Review Comments">Initiator Update Completed Comment :-</label>
                                     <div class="">{{ $data->pending_initiator_approved_comment }}</div>
                                 </div>
                             </div>
 
 
-                            <div class="sub-head">HOD Final Approval</div>
+                            <div class="sub-head">HOD Final Review Complete</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Approved By">HOD Final Approved By :-</label>
+                                    <label for="Approved By">HOD Final Review Complete By :-</label>
                                     <div class="static">{{ $data->Hod_final_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Approved On">HOD Final Approved On :-</label>
+                                    <label for="Approved On">HOD Final Review Complete On :-</label>
                                     <div class="static">{{ $data->Hod_final_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                    <label for="Approved Comments">HOD Final Approved Comment :-</label>
+                                    <label for="Approved Comments">HOD Final Review Complete Comment :-</label>
                                     <div class="">{{ $data->Hod_final_comment }}</div>
                                 </div>
                             </div>

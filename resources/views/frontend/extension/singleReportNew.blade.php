@@ -173,7 +173,7 @@
     <header>
         <table>
             <tr>
-                <td class="w-70 head">Extension Single Report</td>
+                <td class="w-70 head">Extension Report</td>
                 <td class="w-30">
                     <div class="logo">
                         <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt=""
@@ -469,7 +469,7 @@
 
             </div>
             <div class="block">
-                <div class="block-head">QA/CQA Approval Attachment</div>
+                <div class="block-head">QA/CQA Approval Attachments</div>
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
@@ -512,20 +512,28 @@
                         <th class="w-20">Cancel Comment</th>
                         <td class="w-80">{{ $data->reject_comment }}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">More Information Required By</th>
                         <td class="w-80">{{ $data->more_info_review_by }}</td>
                         <th class="w-20">More Information Required On</th>
                         <td class="w-80">{{ $data->more_info_review_on }}</td>
                         <th class="w-20">More Information Required Comment</th>
                         <td class="w-80">{{ $data->more_info_review_comment }}</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th class="w-20">Review By</th>
                         <td class="w-80">{{ $data->submit_by_review }}</td>
                         <th class="w-20">Review On</th>
                         <td class="w-80">{{ $data->submit_on_review }}</td>
                         <th class="w-20">Review Comment</th>
+                        <td class="w-80">{{ $data->submit_comment_review }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">System By</th>
+                        <td class="w-80">{{ $data->submit_by_review }}</td>
+                        <th class="w-20">System On</th>
+                        <td class="w-80">{{ $data->submit_on_review }}</td>
+                        <th class="w-20">System Comment</th>
                         <td class="w-80">{{ $data->submit_comment_review }}</td>
                     </tr>
                     <tr>
@@ -536,14 +544,14 @@
                         <th class="w-20">Reject Comment</th>
                         <td class="w-80">{{ $data->submit_commen_inapproved }}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">More Information Required By</th>
                         <td class="w-80">{{ $data->more_info_inapproved_by }}</td>
                         <th class="w-20">More Information Required On</th>
                         <td class="w-80">{{ $data->more_info_inapproved_on }}</td>
                         <th class="w-20">More Information Required Comment</th>
                         <td class="w-80">{{ $data->more_info_inapproved_comment }}</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th class="w-20">Send for CQA By</th>
                         <td class="w-80">{{ $data->send_cqa_by }}</td>

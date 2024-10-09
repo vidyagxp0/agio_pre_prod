@@ -93,19 +93,19 @@
                                     data-bs-target="#cancel-modal">
                                     Cancel
                                 </button></a>
-                        @elseif($data->stage == 2 && $data->assign_to)
-                            <a href="#cancel-modal"> <button class="button_theme1" data-bs-toggle="modal"
+                        @elseif($data->stage == 2 )
+                           @if (Auth::user()->id == $data->assign_to || Helpers::check_roles($data->division_id, 'Action Item', 18))
+                           <a href="#cancel-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#more-info-required-modal">
                                     More Information Required
                                 </button></a>
-                            {{-- <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button></a> --}}
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
                                     Acknowledge Complete
                                 </button></a>
-                        @elseif($data->stage == 3 && $data->assign_to)
+                           @endif
+                        @elseif($data->stage == 3)
+                        @if (Auth::user()->id == $data->assign_to || Helpers::check_roles($data->division_id, 'Action Item', 18))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
                                     Complete
@@ -113,6 +113,7 @@
                             {{-- <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
                             </button></a> --}}
+                            @endif
                         @elseif($data->stage == 4 && (Helpers::check_roles($data->division_id, 'Action Item', 7) || Helpers::check_roles($data->division_id, 'Action Item', 66)))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
@@ -213,7 +214,7 @@
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input type="hidden" name="record_number">
                                         <input disabled type="text"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                            value="{{ Helpers::getDivisionName($data->division_id) }}/AI/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
 
                                     </div>
                                 </div>
@@ -257,9 +258,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Parent Record Number</b></label>
+                                        @if($data->parent_record_number)
                                         <input readonly type="text" name="parent_record_number"
                                             value="{{ $data->parent_record_number }}">
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                        @else
+                                        <input type="text" name="parent_record_number_edit"
+                                        value="{{ $data->parent_record_number_edit }}">
+                                        @endif
                                     </div>
                                 </div>
 
@@ -272,7 +277,7 @@
                                                 id="select-state" placeholder="Select..." name="assign_to">
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $value)
-                                                    <option {{ $data->assign_to == $value->name ? 'selected' : '' }}
+                                                    <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
                                                         value="{{ $value->id }}">{{ $value->name }}</option>
                                                 @endforeach
                                             </select>

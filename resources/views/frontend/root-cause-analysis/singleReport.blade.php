@@ -167,7 +167,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Root Cause Analysis Single Report
+                    Root Cause Analysis  Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -844,12 +844,10 @@
 
       
  <div class="block">
-    <div class="block-head">
-        QAH/CQAH Final Approval
-    </div>
+    
     <div class="inner-block">
         <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
-            QAH/CQAH Final Approval Comment
+            QAH/CQAH/designee Final Approval Comment
 
 </label>
         <span style="font-size: 0.8rem; margin-left: 60px;">
@@ -862,7 +860,7 @@
     </div>
     <div class="border-table">
         <div class="block-head">
-            QAH/CQAH Final Approval Attachment
+            QAH/CQAH/designee Final Approval Attachment
 
         </div>
         <table>
@@ -1682,7 +1680,7 @@ Not Applicable
                                         </tr>
                                     --}}
                                     <tr>
-                                        <th class="w-20">Submitted By</th>
+                                        <th class="w-20">Submit By</th>
                                         <td class="w-30">
                                             @if ($data->submitted_by)
                                                 {{ $data->submitted_by }}
@@ -1690,7 +1688,7 @@ Not Applicable
                                                 Not Applicable
                                             @endif
                                         </td>
-                                        <th class="w-20">Submitted On</th>
+                                        <th class="w-20">Submit On</th>
                                         <td class="w-30">
                                             @if ($data->submitted_on)
                                                 {{ Helpers::getdateFormat($data->submitted_on) }}
@@ -1698,7 +1696,7 @@ Not Applicable
                                                 Not Applicable
                                             @endif
                                         </td>
-                                        <th class="w-20">Submitted Comment</th>
+                                        <th class="w-20">Submit Comment</th>
                                         <td class="w-30">
                                             @if ($data->qa_comments_new)
                                                 {{ $data->qa_comments_new }}

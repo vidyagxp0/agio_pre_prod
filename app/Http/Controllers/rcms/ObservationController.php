@@ -12,6 +12,7 @@ use App\Models\Capa;
 use Carbon\Carbon;
 use Helpers;
 use App\Models\RoleGroup;
+use App\Models\ObseravtionSingleGrid;
 use App\Models\ObservationGrid;
 use App\Models\InternalAuditGrid;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use PDF;
+use Illuminate\Support\Facades\Session;
+
 
 class ObservationController extends Controller
 {
@@ -257,6 +260,32 @@ if(!empty($request->attach_files2)){
         }
         $data1->save();
 
+
+        $observation_id = $data->id;
+        $observationSingleGrid = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'observation'])->firstOrCreate();
+        $observationSingleGrid->obs_id = $observation_id;
+        $observationSingleGrid->identifier = 'observation';
+        $observationSingleGrid->data = $request->observation;
+        $observationSingleGrid->save();
+
+        $observationSingleResponse = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'response'])->firstOrCreate();
+        $observationSingleResponse->obs_id = $observation_id;
+        $observationSingleResponse->identifier = 'response';
+        $observationSingleResponse->data = $request->response;
+        $observationSingleResponse->save();
+        
+        $observationSingleCorrect = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'corrective'])->firstOrCreate();
+        $observationSingleCorrect->obs_id = $observation_id;
+        $observationSingleCorrect->identifier = 'corrective';
+        $observationSingleCorrect->data = $request->corrective;
+        $observationSingleCorrect->save();
+
+        $observationSingleCorrect = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'preventive'])->firstOrCreate();
+        $observationSingleCorrect->obs_id = $observation_id;
+        $observationSingleCorrect->identifier = 'preventive';
+        $observationSingleCorrect->data = $request->preventive;
+        $observationSingleCorrect->save();
+
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
@@ -309,6 +338,25 @@ if(!empty($request->attach_files2)){
         $history->action_name = 'Create';
         $history->save();
     }
+
+    if (!empty($data->initiator_id)) {
+        // dd(Auth::user()->name);
+        $history = new AuditTrialObservation();
+        $history->Observation_id = $data->id;
+        $history->activity_type = 'Initiator';
+        $history->previous = "Null";
+        $history->current = Auth::user()->name;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+        $history->save();
+    }
+
     if (!empty($data->division_code)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -667,7 +715,7 @@ if(!empty($request->attach_files2)){
     if (!empty($data->impact_analysis)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Response Verification Attachements';
+        $history->activity_type = 'Response and Summary Attachment';
         $history->previous = "Null";
         $history->current = $data->impact_analysis;
         $history->comment = "NA";
@@ -698,7 +746,7 @@ if(!empty($request->attach_files2)){
         $data->parent_type = $request->parent_type;
         // $data->division_code = $request->division_code;
         // $data->intiation_date = $request->intiation_date;
-        // $data->due_date = $request->due_date;
+        $data->due_date = $request->due_date;
         $data->short_description = $request->short_description;
         $data->assign_to = $request->assign_to;
         $data->grading = $request->grading;
@@ -934,6 +982,32 @@ if(!empty($request->attach_files2)){
         }
         $data1->update();
 
+        $observation_id = $data->id;
+        $observationSingleGrid = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'observation'])->firstOrCreate();
+        $observationSingleGrid->obs_id = $observation_id;
+        $observationSingleGrid->identifier = 'observation';
+        $observationSingleGrid->data = $request->observation;
+        $observationSingleGrid->save();
+
+        
+        $observationSingleResponse = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'response'])->firstOrCreate();
+        $observationSingleResponse->obs_id = $observation_id;
+        $observationSingleResponse->identifier = 'response';
+        $observationSingleResponse->data = $request->response;
+        $observationSingleResponse->save();
+
+        $observationSingleCorrect = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'corrective'])->firstOrCreate();
+        $observationSingleCorrect->obs_id = $observation_id;
+        $observationSingleCorrect->identifier = 'corrective';
+        $observationSingleCorrect->data = $request->corrective;
+        $observationSingleCorrect->save();
+
+        $observationSingleCorrect = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'preventive'])->firstOrCreate();
+        $observationSingleCorrect->obs_id = $observation_id;
+        $observationSingleCorrect->identifier = 'preventive';
+        $observationSingleCorrect->data = $request->preventive;
+        $observationSingleCorrect->save();
+
         if ($lastDocument->assign_to != $data->assign_to || !empty($request->assign_to_comment)) {
 
             $history = new AuditTrialObservation();
@@ -971,6 +1045,28 @@ if(!empty($request->attach_files2)){
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->auditee_department) || $lastDocument->auditee_department === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastDocument->due_date != $data->due_date || !empty($request->auditee_department_comment)) {
+
+            $history = new AuditTrialObservation();
+            $history->Observation_id = $id;
+            $history->activity_type = 'Observation Due Date';
+            $history->previous = Helpers::getdateFormat($lastDocument->due_date);
+            $history->current = Helpers::getdateFormat($data->due_date);
+            $history->comment = $request->auditee_department_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->due_date) || $lastDocument->due_date === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -1335,7 +1431,7 @@ if(!empty($request->attach_files2)){
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Response Verification Attachements';
+            $history->activity_type = 'Response and Summary Attachment';
             $history->previous = $lastDocument->impact_analysis;
             $history->current = $data->impact_analysis;
             $history->comment = $request->action_taken_comment;
@@ -1368,8 +1464,16 @@ if(!empty($request->attach_files2)){
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        // return $data;
-        return view('frontend.observation.view', compact('data','griddata','grid_data','due_date'));
+        $observation_id = $id;
+        // $grid_Data = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'observation'])->first();
+        $grid_Data = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'observation'])->firstOrCreate();
+        $grid_Data2 = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'response'])->firstOrCreate();
+        $grid_Data3 = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'corrective'])->firstOrCreate();
+        $grid_Data4 = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'preventive'])->firstOrCreate();
+
+        // dd($grid_Data);
+        // return $grid_Data;
+        return view('frontend.observation.view', compact('data','griddata','grid_data','due_date', 'grid_Data','grid_Data2', 'grid_Data3', 'grid_Data4'));
     }
     public function observation_send_stage(Request $request, $id)
     {
@@ -1378,6 +1482,8 @@ if(!empty($request->attach_files2)){
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changestage = Observation::find($id);
             $lastDocument = Observation::find($id);
+            $observation_id = $id;
+            $grid_Data2 = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'response'])->firstOrCreate();
             $capaRequired = $request->capaNotReq;
             // dd($capaRequired);
             if ($changestage->stage == 1) {
@@ -1392,7 +1498,7 @@ if(!empty($request->attach_files2)){
                 $history->previous = "";
                 $history->current = $changestage->submitted_by;
                 $history->comment = $request->comment;
-                $history->action = 'Report Issue';
+                $history->action = 'Report Issued';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1423,6 +1529,23 @@ if(!empty($request->attach_files2)){
 
             if($capaRequired == "Yes"){
                 if ($changestage->stage == 2) {
+                    if (empty($grid_Data2->data) || !is_array($grid_Data2->data) || empty($grid_Data2->data[0]['response_detail']))
+                    {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'Response and CAPA Tab is yet to be filled'
+                        ]);
+    
+                        return redirect()->back();
+                    }
+                     else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for Response Verification state'
+                        ]);
+                    }
                     $changestage->stage = "3";
                     $changestage->status = "Response Verification";
                     $changestage->complete_By = Auth::user()->name;
@@ -1462,6 +1585,23 @@ if(!empty($request->attach_files2)){
                 }
             } else {
                 if ($changestage->stage == 2) {
+                    if (empty($grid_Data2->data) || !is_array($grid_Data2->data) || empty($grid_Data2->data[0]['response_detail']))
+                    {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'Response and CAPA Tab is yet to be filled'
+                        ]);
+    
+                        return redirect()->back();
+                    }
+                     else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for Response Verification state'
+                        ]);
+                    }
                     $changestage->stage = "3";
                     $changestage->status = "Response Verification";
                     $changestage->qa_approval_without_capa_by = Auth::user()->name;
@@ -1520,6 +1660,23 @@ if(!empty($request->attach_files2)){
             
             
             if ($changestage->stage == 3) {
+                if (empty($changestage->impact))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Response Verification Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for Closed - Done state'
+                    ]);
+                }
                 $changestage->stage = "4";
                 $changestage->status = "Closed - Done";
                 $changestage->Final_Approval_By = Auth::user()->name;
@@ -1606,6 +1763,7 @@ if(!empty($request->attach_files2)){
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Observation::find($id);
+            $lastDocument = Observation::find($id);
 
 
             if ($changeControl->stage == 2) {
@@ -1618,9 +1776,9 @@ if(!empty($request->attach_files2)){
 
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $changeControl->submitted_by;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
                 $history->comment = $request->comment;
                 $history->action = 'More Info Required';
                 $history->user_id = Auth::user()->id;
@@ -1628,7 +1786,7 @@ if(!empty($request->attach_files2)){
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $changeControl->status;
                 $history->change_to =   "Opened";
-                $history->change_from = $changeControl->status;
+                $history->change_from = $lastDocument->status;
                 $history->stage = '';
                 $history->save();
                 $changeControl->update();
@@ -1839,14 +1997,19 @@ if(!empty($request->attach_files2)){
 
     public function ObservationSingleReport($id){
         $data = Observation::find($id);
+        $observation_id = $id;
         $griddata = ObservationGrid::where('observation_id',$data->id)->first();
+        $grid_Data = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'observation'])->firstOrCreate();
+        $grid_Data2 = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'response'])->firstOrCreate();
+        $grid_Data3 = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'corrective'])->firstOrCreate();
+        $grid_Data4 = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'preventive'])->firstOrCreate();
         if (!empty($data)) {
             // $data->data = ObservationGrid::where('e_id', $id)->where('identifier', "details")->first();
             // dd($data->all());
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.observation.obs_single_report', compact('data','griddata'))
+            $pdf = PDF::loadview('frontend.observation.obs_single_report', compact('data','griddata', 'grid_Data', 'grid_Data2', 'grid_Data3', 'grid_Data4'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

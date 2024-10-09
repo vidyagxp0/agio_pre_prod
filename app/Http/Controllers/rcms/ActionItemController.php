@@ -70,6 +70,7 @@ class ActionItemController extends Controller
         $openState->parent_id = $request->parent_id;
         $openState->division_code = $request->division_code;
         $openState->parent_record_number = $request->parent_record_number;
+        $openState->parent_record_number_edit = $request->parent_record_number_edit;
         $openState->parent_type = $request->parent_type;
         $openState->division_id = $request->division_id;
         $openState->parent_id = $request->parent_id;
@@ -660,6 +661,7 @@ class ActionItemController extends Controller
         // }
         $openState->short_description = $request->short_description;
         $openState->parent_record_number = $request->parent_record_number;
+        $openState->parent_record_number_edit = $request->parent_record_number_edit;
 
 
 

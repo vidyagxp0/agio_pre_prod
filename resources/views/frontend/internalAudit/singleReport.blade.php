@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   Internal Audit Single Report
+                   Internal Audit  Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -2882,7 +2882,7 @@
                         <td class="w-30">{{ $data->audit_schedule_by }}</td>
                         <th class="w-20">Schedule Audit On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_schedule_on) }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20"> Schedule Audit Comment</th>
                         <td class="w-30">{{ $data->sheduled_audit_comment }}</td>
                     </tr>
                     <tr>
@@ -2890,7 +2890,7 @@
                         <td class="w-30">{{ $data->cancelled_1_by }}</td>
                         <th class="w-20">Cancelled On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_1_on) }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20"> Cancelled Comment</th>
                         <td class="w-30">{{ $data->cancel_1_comment }}</td>
                     </tr>
                     <tr>
@@ -2898,7 +2898,7 @@
                         <td class="w-30">{{ $data->audit_preparation_completed_by }}</td>
                         <th class="w-20">Acknowledement On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_preparation_completed_on) }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20"> Acknowledement Comment</th>
                         <td class="w-30">{{ $data->acknowledge_commnet }}</td>
                     </tr>
                     <tr>
@@ -2906,23 +2906,23 @@
                         <td class="w-30">{{ $data->more_info_2_by }}</td>
                         <th class="w-20">More Info Required On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->more_info_2_on) }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20"> More Info Required Comment</th>
                         <td class="w-30">{{ $data->more_info_2_comment }}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Cancelled By</th>
                         <td class="w-30">{{ $data->cancelled_2_by }}</td>
                         <th class="w-20">Cancelled On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_2_on) }}</td>
                         <th class="w-20">Comment</th>
                         <td class="w-30">{{ $data->cancel_2_comment }}</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th class="w-20">Issue Report By</th>
                         <td class="w-30">{{ $data->audit_mgr_more_info_reqd_by }}</td>
                         <th class="w-20">Issue Report On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_mgr_more_info_reqd_on) }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20"> Issue Report Comment</th>
                         <td class="w-30">{{ $data->issue_report_comment }}</td>
                     </tr>
                     <tr>
@@ -2931,7 +2931,7 @@
                         <td class="w-30">{{ $data->more_info_3_by }}</td>
                         <th class="w-20">More Info Required On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->more_info_3_on) }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20"> More Info Required Comment</th>
                         <td class="w-30">{{ $data->more_info_3_comment }}</td>
                     </tr>
                     <tr>
@@ -2939,7 +2939,7 @@
                         <td class="w-30">{{ $data->cancelled_by }}</td>
                         <th class="w-20">Cancelled On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20"> Cancelled Comment</th>
                         <td class="w-30">{{ $data->cancel_3_comment }}</td>
                     </tr>
                     <tr>
@@ -2948,7 +2948,7 @@
                         <th class="w-20">
                             CAPA Plan Proposed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_observation_submitted_on) }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20"> CAPA Plan Proposed Comment</th>
                         <td class="w-30">{{ $data->capa_plan_comment }}</td>
                     
                     </tr>
@@ -2958,7 +2958,7 @@
                         <th class="w-20">
                             No CAPAs Required On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->no_capa_plan_on) }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20"> No CAPAs Required Comment</th>
                         <td class="w-30">{{ $data->no_capa_plan_required_comment }}</td>
                     
                     </tr>
@@ -2968,7 +2968,7 @@
                         <th class="w-20">
                             Response Reviewed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->response_feedback_verified_on) }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20"> Response Reviewed Comment</th>
                         <td class="w-30">{{ $data->response_reviewd_comment }}</td>
                     
                     </tr>

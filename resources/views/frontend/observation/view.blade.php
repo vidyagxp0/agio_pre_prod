@@ -42,10 +42,21 @@
             width: 100%;
         }
     </style>
+     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+     integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+ @if (Session::has('swal'))
+     <script>
+         swal("{{ Session::get('swal')['title'] }}", "{{ Session::get('swal')['message'] }}",
+             "{{ Session::get('swal')['type'] }}")
+     </script>
+ @endif
 
     <div class="form-field-head">
         <div class="division-bar">
-            <strong>Site Division/Project</strong> : {{ Helpers::getDivisionName(session()->get('division')) }}/Observation
+            <strong>Site Division/Project</strong> : {{ Helpers::getDivisionName($data->division_code) }}/Observation
         </div>
     </div>
 
@@ -69,14 +80,14 @@
                                 href="{{ route('ShowObservationAuditTrial', $data->id) }}">
                                 Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(12, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_code, 'Observation', 12))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Report Issued
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-model">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && (in_array(11, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_code, 'Observation', 11))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
@@ -89,7 +100,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                        @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 3 && (Helpers::check_roles($data->division_code, 'Observation', 13) || Helpers::check_roles($data->division_code, 'Observation', 7) || Helpers::check_roles($data->division_code, 'Observation', 66)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Response Reviewed
                             </button>
@@ -251,7 +262,7 @@
 
                     <!-- Tab links -->
                     <div class="cctab">
-                        <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Observation</button>
+                        <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Response & CAPA</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Summary</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Response Verification</button>
@@ -273,14 +284,14 @@
                                                 <label for="RLS Record Number"><b>Record Number</b></label>
                                                 <input type="hidden" name="record_number">
                                                 <input disabled type="text"
-                                                    value="{{  Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                                    value="{{  Helpers::getDivisionName($data->division_code) }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Division Code"><b>Site/Location Code</b></label>
                                                 <input readonly type="text" name="division_id"
-                                                    value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                                    value="{{ Helpers::getDivisionName($data->division_code) }}">
                                                 <input type="hidden" name="division_id"
                                                     value="{{ session()->get('division') }}">
                                             </div>
@@ -332,12 +343,9 @@
                                             </div>
                                         </div>
 
-                                <div class="col-lg-6  new-date-data-field">
+                                <!-- <div class="col-lg-6  new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="actual_end_date">Observation Due Date</lable>
-                                            <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                reason in "Due Date Extension Justification" data field.</small>
-                                        </div>  
                                             <div class="calenderauditee">
                                                 <input disabled type="text" id="due_date"
                                                     placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->due_date) }}" />
@@ -351,24 +359,47 @@
 
 
                                     </div>
-                                </div>
-                                        {{-- <div class="col-md-6">
-                                            <div class="group-input">
-                                                <label for="due-date"> Date Due <span class="text-danger"></span></label>
-                                                <div><small class="text-primary">If revising Due Date, kindly mention
-                                                        revision reason in "Due Date Extension Justification" data
-                                                        field.</small></div> --}}
-
-                                            {{-- <input disabled type="text" name="due_date" id="due_date" value="{{ \Carbon\Carbon::now()->addDays(30)->format('d-M-Y') }}" /> --}}
-
-                                                {{-- <input readonly type="text"
-                                                    value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                    name="due_date" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> --}}
-                                                {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
-                                                {{-- <div class="static"> {{ $due_date }}</div> --}}
-{{--
+                                </div> -->
+                                
+                                
+                                <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="Due Date">Observation Due Date</label>
+                                                <div><small class="text-primary">
+                                                </small></div>
+                                                <div class="calenderauditee">
+                                                    <input disabled type="text" id="due_date" readonly placeholder="DD-MMM-YYYY"
+                                                        value="{{ $data->due_date ? \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') : '' }}" />
+                                                    <input type="date" name="due_date"
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? "disabled" : "" }}
+                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'due_date')" />
+                                                </div>
+                                            
                                             </div>
-                                        </div> --}}
+                                        </div>
+                                
+                                <script>
+                                    function handleDateInput(dateInput, displayId) {
+                                        const date = new Date(dateInput.value);
+                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                        document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                    }
+                                    
+                                    // Call this function initially to ensure the correct format is shown on page load
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dateInput = document.querySelector('input[name="due_date"]');
+                                        handleDateInput(dateInput, 'due_date_display');
+                                    });
+                                    </script>
+                                    
+                                    <style>
+                                    .hide-input {
+                                        display: none;
+                                    }
+                                    </style>
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description<span
@@ -681,12 +712,110 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="non_compliance">Observation (+)</label>
                                                 <textarea name="non_compliance"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->non_compliance }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> -->
+                                        <!-- <div class="col-12">
+                                            <div class="group-input" id="input-grid">
+                                                <label for="non_compliance">Observation 
+                                                    <button type="button" id="add-row">+</button>
+                                                </label>
+
+                                                @if ($grid_Data && is_array($grid_Data->data))
+                                                    @foreach ($grid_Data->data as $datas)
+                                                        <div class="grid-item" style="padding-bottom: 30px;">
+                                                            <textarea name="observation[{{ $loop->index }}][non_compliance]">{{ isset($datas['non_compliance']) ? $datas['non_compliance'] : '' }}</textarea>
+                                                            <button type="button" class="remove-btn">Remove</button>
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        </div> -->
+
+                                        <div class="group-input">
+                                            <label for="audit-agenda-grid">
+                                                <div class="sub-head">Observation
+                                                    <button type="button" name="details" id="Details-add" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
+                                                </div>
+                                            </label>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="Details-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 8%">Row#</th>
+                                                            <th style="width: 80%">Observation</th>
+                                                            <th style="width: 12%">Action</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    @if ($grid_Data && is_array($grid_Data->data))
+                                                    @foreach ($grid_Data->data as $datas)
+                                                                <tr>
+                                                                    <td><input disabled type="text"
+                                                                            name="observation[{{ $loop->index }}][serial]"
+                                                                            value="{{ $loop->index + 1 }}">
+                                                                    </td>
+                                                                    <td><input type="text"
+                                                                            name="observation[{{ $loop->index }}][non_compliance]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                            value="{{ isset($datas['non_compliance']) ? $datas['non_compliance'] : '' }}">
+                                                                    </td>
+                                                                    <td><button type="text"
+                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                            </div>
+
+
+                                            <script>
+                                                    $(document).ready(function() {
+                                                        $('#Details-add').click(function(e) {
+                                                            function generateTableRow(serialNumber) {
+                                                                var data = @json($grid_Data);
+                                                                var html = '';
+                                                                html += '<tr>' +
+                                                                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                                                                    '"></td>' +
+                                                                    '<td><input type="text" name="observation[' + serialNumber +
+                                                                    '][non_compliance]"></td>' +
+                                                                    '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+
+                                                                    '</tr>';
+
+                                                                    for (var i = 0; i < data.length; i++) {
+                                                                        html += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+                                                                    }
+
+                                                                html += '</select></td>' +
+                                                                    '</tr>';
+
+                                                                return html;
+                                                            }
+
+                                                            var tableBody = $('#Details-table tbody');
+                                                            var rowCount = tableBody.children('tr').length;
+                                                            var newRow = generateTableRow(rowCount + 1);
+                                                            tableBody.append(newRow);
+                                                        });
+                                                    });
+                                                </script>
+
+    <script>
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        })
+    </script>
+
+
                                         <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="recommend_action">Recommended Action</label>
@@ -766,25 +895,253 @@
                                         </div>
                                     </div>
                                 </div> --}}
-                                        <div class="col-md-12 new-date-data-field">
+                                        <!-- <div class="col-md-12 new-date-data-field">
                                             <div class="group-input input-date ">
-                                                <label for="date_Response_due1">Response Details (+) </label>
+                                                <label for="date_Response_due1">Response Details (+)  @if($data->stage == 2)<span class="text-danger">*</span>@endif</label>
                                                 <textarea name="response_detail" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} id="">{{ $data->response_detail }}</textarea>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-12 new-date-data-field">
+                                        </div> -->
+
+                                        <div class="group-input">
+                                            <label for="audit-agenda-grid">
+                                                <div class="sub-head">Response Details @if ($data->stage == 2)
+                                                <span class="text-danger">*</span>
+                                                @endif
+                                                    <button type="button" name="details" id="Details-add8" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
+                                                </div>
+                                            </label>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="Details-table8">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 8%">Row#</th>
+                                                            <th style="width: 80%">Response Details</th>
+                                                            <th style="width: 12%">Action</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    @if ($grid_Data2 && is_array($grid_Data2->data))
+                                                    @foreach ($grid_Data2->data as $datas)
+                                                                <tr>
+                                                                    <td><input disabled type="text"
+                                                                            name="response[{{ $loop->index }}][serial]"
+                                                                            value="{{ $loop->index + 1 }}">
+                                                                    </td>
+                                                                    <td><input type="text"
+                                                                            name="response[{{ $loop->index }}][response_detail]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                            value="{{ isset($datas['response_detail']) ? $datas['response_detail'] : '' }}">
+                                                                    </td>
+                                                                    <td><button type="text"
+                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                            </div>
+
+
+                                            <script>
+                                                    $(document).ready(function() {
+                                                        $('#Details-add8').click(function(e) {
+                                                            function generateTableRow(serialNumber) {
+                                                                var data = @json($grid_Data2);
+                                                                var html = '';
+                                                                html += '<tr>' +
+                                                                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                                                                    '"></td>' +
+                                                                    '<td><input type="text" name="response[' + serialNumber +
+                                                                    '][response_detail]"></td>' +
+                                                                    '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+
+                                                                    '</tr>';
+
+                                                                    for (var i = 0; i < data.length; i++) {
+                                                                        html += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+                                                                    }
+
+                                                                html += '</select></td>' +
+                                                                    '</tr>';
+
+                                                                return html;
+                                                            }
+
+                                                            var tableBody = $('#Details-table8 tbody');
+                                                            var rowCount = tableBody.children('tr').length;
+                                                            var newRow = generateTableRow(rowCount + 1);
+                                                            tableBody.append(newRow);
+                                                        });
+                                                    });
+                                                </script>
+
+                                        <!-- <div class="col-lg-12 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="date_due">Corrective Actions (+)</label>
                                                 <textarea name="corrective_action" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} id="">{{ $data->corrective_action }}</textarea>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-12">
+                                        </div> -->
+
+
+                                        <div class="group-input">
+                                            <label for="audit-agenda-grid">
+                                                <div class="sub-head">Corrective Actions
+                                                    <button type="button" name="details" id="Details-add4" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
+                                                </div>
+                                            </label>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="Details-table4">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 8%">Row#</th>
+                                                            <th style="width: 80%">Corrective Actions</th>
+                                                            <th style="width: 12%">Action</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    @if ($grid_Data3 && is_array($grid_Data3->data))
+                                                    @foreach ($grid_Data3->data as $datas)
+                                                                <tr>
+                                                                    <td><input disabled type="text"
+                                                                            name="corrective[{{ $loop->index }}][serial]"
+                                                                            value="{{ $loop->index + 1 }}">
+                                                                    </td>
+                                                                    <td><input type="text"
+                                                                            name="corrective[{{ $loop->index }}][corrective_action]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                            value="{{ isset($datas['corrective_action']) ? $datas['corrective_action'] : '' }}">
+                                                                    </td>
+                                                                    <td><button type="text"
+                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                            </div>
+
+
+                                            <script>
+                                                    $(document).ready(function() {
+                                                        $('#Details-add4').click(function(e) {
+                                                            function generateTableRow(serialNumber) {
+                                                                var data = @json($grid_Data3);
+                                                                var html = '';
+                                                                html += '<tr>' +
+                                                                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                                                                    '"></td>' +
+                                                                    '<td><input type="text" name="corrective[' + serialNumber +
+                                                                    '][corrective_action]"></td>' +
+                                                                    '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+
+                                                                    '</tr>';
+
+                                                                    for (var i = 0; i < data.length; i++) {
+                                                                        html += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+                                                                    }
+
+                                                                html += '</select></td>' +
+                                                                    '</tr>';
+
+                                                                return html;
+                                                            }
+
+                                                            var tableBody = $('#Details-table4 tbody');
+                                                            var rowCount = tableBody.children('tr').length;
+                                                            var newRow = generateTableRow(rowCount + 1);
+                                                            tableBody.append(newRow);
+                                                        });
+                                                    });
+                                                </script>
+
+                                        <!-- <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="assign_to2">Preventive Action (+)</label>
                                                     <textarea name="preventive_action" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->preventive_action }}</textarea>
                                             </div>
-                                        </div>
-                                        {{-- <div class="col-lg-6">
+                                        </div> -->
+
+                                        <div class="group-input">
+                                            <label for="audit-agenda-grid">
+                                                <div class="sub-head">Preventive Action
+                                                    <button type="button" name="details" id="Details-add5" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
+                                                </div>
+                                            </label>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="Details-table5">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 8%">Row#</th>
+                                                            <th style="width: 80%">Preventive Action</th>
+                                                            <th style="width: 12%">Action</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    @if ($grid_Data4 && is_array($grid_Data4->data))
+                                                    @foreach ($grid_Data4->data as $datas)
+                                                                <tr>
+                                                                    <td><input disabled type="text"
+                                                                            name="preventive[{{ $loop->index }}][serial]"
+                                                                            value="{{ $loop->index + 1 }}">
+                                                                    </td>
+                                                                    <td><input type="text"
+                                                                            name="preventive[{{ $loop->index }}][preventive_action]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                            value="{{ isset($datas['preventive_action']) ? $datas['preventive_action'] : '' }}">
+                                                                    </td>
+                                                                    <td><button type="text"
+                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                            </div>
+
+
+                                            <script>
+                                                    $(document).ready(function() {
+                                                        $('#Details-add5').click(function(e) {
+                                                            function generateTableRow(serialNumber) {
+                                                                var data = @json($grid_Data4);
+                                                                var html = '';
+                                                                html += '<tr>' +
+                                                                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                                                                    '"></td>' +
+                                                                    '<td><input type="text" name="preventive[' + serialNumber +
+                                                                    '][preventive_action]"></td>' +
+                                                                    '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+
+                                                                    '</tr>';
+
+                                                                    for (var i = 0; i < data.length; i++) {
+                                                                        html += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+                                                                    }
+
+                                                                html += '</select></td>' +
+                                                                    '</tr>';
+
+                                                                return html;
+                                                            }
+
+                                                            var tableBody = $('#Details-table5 tbody');
+                                                            var rowCount = tableBody.children('tr').length;
+                                                            var newRow = generateTableRow(rowCount + 1);
+                                                            tableBody.append(newRow);
+                                                        });
+                                                    });
+                                                </script>
+
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="cro_vendor">CRO/Vendor</label>
                                         <select name="cro_vendor" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>
@@ -910,8 +1267,9 @@
     $value = isset($item_status[$key]) ? $item_status[$key] : '';
     @endphp
     <input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $value }}">
-</td> --}} <td><button type="text"
-    class="removeRowBtn">Remove</button></td>
+</td> --}} 
+                                    <td><button type="text"
+                                        class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
 
                                                             </tr>
                                                         @endforeach
@@ -1010,7 +1368,6 @@
                                                     <input type="text" id="actual_start_date" readonly
                                                         placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->actual_start_date) }}" />
                                                     <input type="date"
-                                                        max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         value="{{ $data->actual_start_date }}"
                                                         id="actual_start_date_checkdate"
                                                          {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
@@ -1026,7 +1383,6 @@
                                                         <input type="text" id="actual_end_date"
                                                             placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->actual_end_date) }}" />
                                                         <input type="date"
-                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                             value="{{ $data->actual_end_date }}"
                                                             id="actual_end_date_checkdate"
                                                              {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
@@ -1088,44 +1444,36 @@
                                         <input type="file" name="attach_files2" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->attach_files2 }}">
                                     </div>
                                 </div> --}}
-                                        <div class="col-12">
+                                <div class="col-12">
                                             <div class="group-input">
-                                                <label for="attach_files2">Response Verification Attachements</label>
-                                                <div><small class="text-primary">Please Attach all relevant or supporting
-                                                        documents</small></div>
-                                                <div class="file-attachment-field">
-                                                    <div disabled class="file-attachment-list" id="attach_files2">
-                                                        @if ($data->attach_files2)
-                                                            @foreach (json_decode($data->attach_files2) as $file)
-                                                                <h6 type="button" class="file-container text-dark"
-                                                                    style="background-color: rgb(243, 242, 240);">
+                                                <label for="Attachments">Response and Summary Attachment</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                <div class="file-attachment-field"> 
+                                                    <div class="file-attachment-list" id="impact_analysis">
+                                                        @if ($data->impact_analysis)
+                                                            @foreach(json_decode($data->impact_analysis) as $file)
+                                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                                     <b>{{ $file }}</b>
-                                                                    <a href="{{ asset('upload/' . $file) }}"
-                                                                        target="_blank"><i class="fa fa-eye text-primary"
-                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
-                                                                            class="fa-solid fa-circle-xmark"
-                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                    <input type="hidden" name="existing_impact_analysis[]" value="{{ $file }}">
                                                                 </h6>
                                                             @endforeach
                                                         @endif
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input
-                                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                            value="{{ $data->attach_files2 }}" type="file"
-                                                            id="myfile" name="attach_files2[]"
-                                                            oninput="addMultipleFiles(this, 'attach_files2')" multiple>
+                                                        <input type="file" id="myfile" name="impact_analysis[]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} oninput="addMultipleFiles(this, 'impact_analysis')" multiple>
                                                     </div>
-                                                </div>
-                                            </div>
                                         </div>
+                                    </div>
+                                </div>
+
+
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="related_url">Related URL</label>
-                                                <input type="url" name="related_url"
+                                                <input type="text" name="related_url"
                                                      {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                     value="{{ $data->related_url }}">
                                             </div>
@@ -1242,26 +1590,26 @@
                                         </div>
 
                                         <div class="col-12">
-                                            <div class="sub-head">No CAPAs Plan Proposed</div>
+                                            <div class="sub-head">No CAPA's Required</div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="QA Approval Without CAPA By">No CAPAs Plan Proposed
+                                                <label for="QA Approval Without CAPA By">No CAPA's Required
                                                     By</label>
                                                 <div class="static">{{ $data->qa_approval_without_capa_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="No CAPA's Plan Proposed On">No CAPAs Plan Proposed
+                                                <label for="No CAPA's Required On">No CAPA's Required
                                                     On</label>
                                                 <div class="static">{{ $data->qa_approval_without_capa_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted on">No CAPAs Plan Proposed Comment</label>
+                                                <label for="Submitted on">No CAPA's Required Comment</label>
                                                 <div class="Date">{{ $data->qa_approval_without_capa_comment }}</div>
                                             </div>
                                         </div>
@@ -1316,36 +1664,44 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="impact">Response Verification Comment</label>
+                                                <label for="impact">Response Verification Comment  @if($data->stage == 3)<span class="text-danger">*</span>@endif</label>
                                                 <textarea name="impact" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->impact }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Attachments">Response Verification Attachements</label>
-                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                <div class="file-attachment-field"> 
-                                                    <div class="file-attachment-list" id="impact_analysis">
-                                                        @if ($data->impact_analysis)
-                                                            @foreach(json_decode($data->impact_analysis) as $file)
-                                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                <label for="attach_files2">Response Verification Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                                        documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list" id="attach_files2">
+                                                        @if ($data->attach_files2)
+                                                            @foreach (json_decode($data->attach_files2) as $file)
+                                                                <h6 type="button" class="file-container text-dark"
+                                                                    style="background-color: rgb(243, 242, 240);">
                                                                     <b>{{ $file }}</b>
-                                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                                    <input type="hidden" name="existing_impact_analysis[]" value="{{ $file }}">
+                                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                                        target="_blank"><i class="fa fa-eye text-primary"
+                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a type="button" class="remove-file"
+                                                                        data-file-name="{{ $file }}"><i
+                                                                            class="fa-solid fa-circle-xmark"
+                                                                            style="color:red; font-size:20px;"></i></a>
                                                                 </h6>
                                                             @endforeach
                                                         @endif
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input type="file" id="myfile" name="impact_analysis[]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} oninput="addMultipleFiles(this, 'impact_analysis')" multiple>
+                                                        <input
+                                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                            value="{{ $data->attach_files2 }}" type="file"
+                                                            id="myfile" name="attach_files2[]"
+                                                            oninput="addMultipleFiles(this, 'attach_files2')" multiple>
                                                     </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-
-
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"

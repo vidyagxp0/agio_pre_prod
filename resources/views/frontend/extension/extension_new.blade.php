@@ -166,13 +166,16 @@
                                         <label for="Extension Number">
                                             Extension Number
                                         </label>
-                                        <select id="Extension" placeholder="Select..." name="Extension">
-                                            <option value="">Select Extension Number</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-
-                                        </select>
+                                        @if(!empty($countData))
+                                        <input id="docname" type="text" value="{{ $countData }}" readonly>
+                                        @else
+                                        <select name="count" id="">
+                                                <option value="">--Select Extension Number--</option>
+                                                <option value="number1">1</option>
+                                                <option value="number2">2</option>
+                                                <option value="number">3</option>
+                                                </select>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -194,7 +197,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="related_records">Parent Records Number</label>
                                         <select multiple name="related_records[]" placeholder="Select Parent Record Number"
@@ -227,6 +230,19 @@
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
+                                </div> --}}
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="RLS Record Number"><b>Parent Records Number</b></label>
+                                        @if (!empty($extension_record))
+                                            <input readonly type="text" name="related_records"
+                                                value="{{ $extension_record }}">
+                                        @else
+                                            <input readonly type="text" name="related_records" value="">
+                                        @endif
+                                    </div>
+
                                 </div>
 
 
@@ -366,7 +382,8 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="myfile" name="file_attachment_reviewer[]"
-                                                oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple disabled>
+                                                oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple
+                                                disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -404,7 +421,8 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="myfile" name="file_attachment_approver[]"
-                                                oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple disabled>
+                                                oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple
+                                                disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -461,7 +479,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-4">
+                            {{-- <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for=" Rejected By">More Information Required By</label>
                                     <div class="static"></div>
@@ -478,7 +496,7 @@
                                     <label for="Rejected On">More Information Required Comment</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> --}}
 
 
                             <div class="col-lg-4">
@@ -503,6 +521,26 @@
 
                             <div class="col-lg-4">
                                 <div class="group-input">
+                                    <label for=" Rejected By">System By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Rejected On">System On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Rejected On">System Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-4">
+                                <div class="group-input">
                                     <label for=" Rejected By">Reject By</label>
                                     <div class="static"></div>
                                 </div>
@@ -520,7 +558,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-4">
+                            {{-- <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for=" Rejected By">More Information Required By</label>
                                     <div class="static"></div>
@@ -537,7 +575,7 @@
                                     <label for="Rejected On">More Information Required Comment</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-lg-4">
                                 <div class="group-input">
