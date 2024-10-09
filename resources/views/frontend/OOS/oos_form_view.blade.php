@@ -477,7 +477,7 @@
                     <button class="cctablinks button1" style="display:none;" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
                     <button class="cctablinks button2" style="display:none;" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
                     <button class="cctablinks button3" style="display:none;" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
-                    <button class="cctablinks button4" style="display:none;" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
+                    <button class="cctablinks button4" style="display:none;" onclick="openCity(event, 'CCForm47')">CheckList - General Checklist</button>
                     <button class="cctablinks button5" style="display:none;" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
                     <button class="cctablinks button6" style="display:none;" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
 
@@ -522,8 +522,8 @@
                     @endif  
                     <button class="cctablinks button7" style="display:none;" onclick="openCity(event, 'CCForm50')">Checklist - Bacterial Endotoxin Test</button>
                     <button class="cctablinks button8" style="display:none;" onclick="openCity(event, 'CCForm51')">Checklist - Sterility</button>
-                    <button class="cctablinks button9" style="display:none;" onclick="openCity(event, 'CCForm52')">Checklist - Microbial limit test/Bioburden and Water Test</button>
-                    <button class="cctablinks button10" style="display:none;"  onclick="openCity(event, 'CCForm53')">Checklist - Microbial assay</button>
+                    <button class="cctablinks button9" style="display:none;" onclick="openCity(event, 'CCForm52')">Checklist - Microbial Limit Test/Bioburden And Water Test</button>
+                    <button class="cctablinks button10" style="display:none;"  onclick="openCity(event, 'CCForm53')">Checklist - Microbial Assay</button>
                     <button class="cctablinks button11" style="display:none;"  onclick="openCity(event, 'CCForm54')">Checklist - Environmental Monitoring</button>
                     <button class="cctablinks button12" style="display:none;"  onclick="openCity(event, 'CCForm55')">Checklist - Media Suitability Test</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Review</button>
@@ -916,6 +916,18 @@
 
             @include('frontend.OOS.comps.preliminary')
 
+            @php
+            $ph_meter_questions = array(
+                    "Was instrument calibrated before start of analysis?",
+                    "Was temperature sensor working efficiently?",
+                    "Was pH electrode stored properly?",
+                    "Was sampled prepared as per STP?",
+                    "Was sufficient quantity of sample to ensure that the sensor is properly dipped?",
+                    "Was electrode filling solution sufficient inside the electrode?",
+                    "Were instrument properly connected at the time of analysis?",
+                );
+        @endphp
+
             <div id="CCForm44" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
@@ -923,22 +935,8 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-
-
-
-                         @php
-                                    $ph_meter_questions = array(
-                                            "Was instrument calibrated before start of analysis?",
-                                            "Was temperature sensor working efficiently?",
-                                            "Was pH electrode stored properly?",
-                                            "Was sampled prepared as per STP?",
-                                            "Was sufficient quantity of sample to ensure that the sensor is properly dipped?",
-                                            "Was electrode filling solution sufficient inside the electrode?",
-                                            "Were instrument properly connected at the time of analysis?",
-                                        );
-                                @endphp
                       <div class="col-12">
-                        <label for="Reference Recores">PHASE II OOS INVESTIGATION </label>
+                        <label style="font-weight: bold; for="Audit Attachments">pH-Viscometer-MP</label>
                         <div class="group-input">
                             <div class="why-why-chart">
                                 <table class="table table-bordered">
@@ -959,7 +957,7 @@
                                                     <td>
                                                         <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                             <select name="ph_meter[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getArrayKey($ph_meters->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getArrayKey($ph_meters->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
                                                                 <option value="N/A" {{ Helpers::getArrayKey($ph_meters->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
@@ -1639,7 +1637,7 @@
             <div id="CCForm50" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Analyst Training and Procedure
+                        Checklist For Analyst Training And Procedure
                     </div>
                     @php
                         $check_analyst_training_procedures = [
@@ -1759,7 +1757,7 @@
                         </div>
                     </div>
 
-                    <div class="sub-head">Sample receiving & verification in lab</div>
+                    <div class="sub-head">Sample Receiving & Verification In Lab</div>
 
                     @php
                         $check_sample_receiving_vars = [
@@ -1858,7 +1856,7 @@
                     </div>
                 </div>
 
-                <div class="sub-head">Method /procedure used during analysis</div>
+                <div class="sub-head">Method /Procedure Used During Analysis</div>
 
                                 @php
                                 $check_method_procedure_during_analysis = [
@@ -2228,7 +2226,7 @@
                             </div>
                         </div>
 
-                        <div class="sub-head">Results and Calculation</div>
+                        <div class="sub-head">Results And Calculation</div>
 
                         @php
                         $Results_and_Calculation = [
@@ -2333,7 +2331,7 @@
 
             <div id="CCForm51" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head"> Checklist for Review of Training records Analyst Involved in Testing </div>
+                    <div class="sub-head"> Checklist For Review Of Training Records Analyst Involved In Testing </div>
                                 @php
                                 $Training_records_Analyst_Involveds = [
                                     [
@@ -2443,7 +2441,7 @@
 
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Review of sample intactness before analysis ? </div>
+                        Checklist For Review Of Sample Intactness Before Analysis ? </div>
                         @php
                         $sample_intactness_before_analysis = [
                         [
@@ -2553,7 +2551,7 @@
 
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Review of test methods & Procedures </div>
+                        Review Of Test Methods & Procedures </div>
                                     @php
                                     $test_methods_Procedures = [
                                         [
@@ -2658,7 +2656,7 @@
 
                 <div class="inner-block-content">
                     <div class="sub-head">
-                    Checklist For Review of Media, Buffer, Standards preparation & test accessories </div>
+                    Checklist For Review of Media, Buffer, Standards Preparation & Test Accessories </div>
                                 @php
                                 $Review_of_Media_Buffer_Standards_prepar = [
                                 [
@@ -2791,7 +2789,7 @@
                 </div>
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Review of Media, Buffer, Standards preparation & test accessories </div>
+                        Checklist For Review Of Media, Buffer, Standards Preparation & Test Accessories </div>
                                     @php
                                     $Checklist_for_Revi_of_Media_Buffer_Stand_preps = [
                                         [
@@ -2905,7 +2903,7 @@
                 </div>
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Disinfectant Details: </div>
+                        Checklist For Disinfectant Details: </div>
                         @php
                         $check_for_disinfectant_details = [
                         [
@@ -3033,7 +3031,7 @@
                 </div>
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Review of instrument/equipment </div>
+                        Checklist For Review Of Instrument/Equipment </div>
                         @php
                         $Checklist_for_Review_of_instrument_equips = [
                         [
@@ -3152,7 +3150,7 @@
 
                     <div class="col-12">
                         <div class="group-input">
-                            <label for="Audit Attachments">If Yes, Provide attachment details</label>
+                            <label for="Audit Attachments">If Yes, Provide Attachment Details</label>
                             <small class="text-primary">
                                 Please Attach all relevant or supporting documents
                             </small>
@@ -3199,7 +3197,7 @@
             <div id="CCForm52" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                    Checklist for Review of Training records Analyst Involved in Testing
+                    Checklist For Review Of Training Records Analyst Involved In Testing
                     </div>
                         @php
                             $Checklist_for_Review_of_Training_records_Analysts = [
@@ -3321,7 +3319,7 @@
 
                 <div class="inner-block-content">
                     <div class="sub-head">
-                    Checklist for Review of sampling and Transportation procedures </div>
+                    Checklist For Review Of Sampling And Transportation Procedures </div>
                         @php
                         $Checklist_for_Review_of_sampling_and_Transports = [
                         [
@@ -3470,7 +3468,7 @@
 
                 <div class="inner-block-content">
                     <div class="sub-head">
-                    Checklist for Review of Test Method & procedure: </div>
+                    Checklist For Review Of Test Method & Procedure: </div>
                         @php
                             $Checklist_Review_of_Test_Method_proceds = [
                             [
@@ -3614,7 +3612,7 @@
 
                 <div class="inner-block-content">
                     <div class="sub-head">
-                    Checklist for Review of microbial isolates /Contamination </div>
+                    Checklist For Review Of Microbial Isolates /Contamination </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="group-input">
@@ -3798,7 +3796,7 @@
 
                 <div class="inner-block-content">
                     <div class="sub-head">
-                    Checklist for Review of Media preparation, RTU media and Test Accessories </div>
+                    Checklist For Review Of Media Preparation, RTU Media And Test Accessories </div>
                             @php
                                 $Checklist_for_Review_Media_prepara_RTU_medias = [
                                     [
@@ -4048,7 +4046,7 @@
 
                 <div class="inner-block-content">
                     <div class="sub-head">
-                    Checklist for Review of Environmental condition in the testing area :</div>
+                    Checklist For Review Of Environmental Condition In The Testing Area :</div>
                         @php
                         $Checklist_Review_Environment_condition_in_tests = [
                                                     [
@@ -4156,7 +4154,7 @@
 
                     <div class="inner-block-content">
                     <div class="sub-head">
-                    Checklist for Review of Instrument/Equipment:</div>
+                    Checklist For Review Of Instrument/Equipment:</div>
                         @php
                             $review_of_instrument_bioburden_and_waters = [
                             [
@@ -4314,7 +4312,7 @@
                 </div>
                 <div class="inner-block-content">
                     <div class="sub-head">
-                    Checklist for Disinfectant Details:</div>
+                    Checklist For Disinfectant Details:</div>
                         @php
                         $disinfectant_details_of_bioburden_and_water_tests = [
                         [
@@ -4412,7 +4410,7 @@
                 </div>
                 <div class="col-12">
                     <div class="group-input">
-                        <label for="Audit Attachments">If Yes, Provide attachment details</label>
+                        <label for="Audit Attachments">If Yes, Provide Attachment Details</label>
                         <small class="text-primary">
                             Please Attach all relevant or supporting documents
                         </small>
@@ -4461,7 +4459,7 @@
 
                     <div class="sub-head">
 
-                        Checklist for Review of Training records Analyst Involved in Testing
+                        Checklist For Review Of Training Records Analyst Involved In Testing
 
                     </div>
                         @php
@@ -4564,7 +4562,7 @@
                     </div>
                         <div class="inner-block-content">
 
-                                    <div class="sub-head">Checklist for Review of sample intactness before analysis ? </div>
+                                    <div class="sub-head">Checklist For Review Of Sample Intactness Before Analysis ? </div>
                                         @php
                                         $sample_intactness_before_analysis2 = [
                                             [
@@ -4687,7 +4685,7 @@
                                 </div>
                                 <div class="inner-block-content">
 
-                                    <div class="sub-head">Checklist for Review of test methods & Procedures</div>
+                                    <div class="sub-head">Checklist For Review Of Test Methods & Procedures</div>
                                             @php
                                         $checklist_for_review_of_test_method_IMAs = [
                                                 [
@@ -4821,7 +4819,7 @@
 
                                     <div class="sub-head">
 
-                                        Checklist for Review of Media, Buffer, Standards preparation & test accessories </div>
+                                        Checklist For Review Of Media, Buffer, Standards Preparation & Test Accessories </div>
                                     @php
                                         $cr_of_media_buffer_st_IMAs = [
                                         [
@@ -5054,7 +5052,7 @@
 
                                     <div class="sub-head">
 
-                                        Checklist for Review of Microbial cultures/Inoculation (Test organism) </div>
+                                        Checklist For Review Of Microbial Cultures/Inoculation (Test Organism) </div>
                                         @php
                                         $CR_of_microbial_cultures_inoculation_IMAs = [
                         [
@@ -5187,7 +5185,7 @@
 
                                     <div class="sub-head">
 
-                                        Checklist for Review of Environmental conditions in the testing area </div>
+                                        Checklist For Review Of Environmental Conditions In The Testing Area </div>
                                         @php
                                         $CR_of_Environmental_condition_in_testing_IMAs = [
                         [
@@ -5311,7 +5309,7 @@
 
                                     <div class="sub-head">
 
-                                        Checklist for Review of instrument/equipment </div>
+                                        Checklist For Review Of Instrument/Equipment </div>
                                                 @php
                                                 $CR_of_instru_equipment_IMAs = [
                                                             [
@@ -5589,7 +5587,7 @@
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Audit Attachments">If Yes, Provide attachment details</label>
+                                            <label for="Audit Attachments">If Yes, Provide Attachment Details</label>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents
                                             </small>
@@ -5635,7 +5633,7 @@
             <div id="CCForm54" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for review of Training records Analyst Involved in monitoring
+                        Checklist For Review Of Training Records Analyst Involved In Monitoring
                     </div>
                         @php
                             $CR_of_training_rec_anaylst_in_monitoring_CIEMs = [
@@ -5752,7 +5750,7 @@
                         </div>
                     </div>
                     <div class="sub-head">
-                    Checklist for sample details:
+                    Checklist For Sample Details:
                     </div>
                         @php
                             $Check_for_Sample_details_CIEMs = [
@@ -5854,7 +5852,7 @@
                         </div>
                     </div>
                     <div class="sub-head">
-                        Checklist for comparison of results with other parameters:
+                        Checklist For Comparison Of Results With Other Parameters:
                     </div>
                             @php
                                 $Check_for_comparision_of_results_CIEMs = [
@@ -5972,7 +5970,7 @@
                         </div>
                     </div>
                     <div class="sub-head">
-                    Checklist for details of media dehydrated media used:
+                    Checklist For Details Of Media Dehydrated Media Used:
                     </div>
                             @php
                                $checklist_for_media_dehydrated_CIEMs = [
@@ -6075,7 +6073,7 @@
                         </div>
                     </div>
                     <div class="sub-head">
-                    Checklist for media preparation details and sterilization :
+                    Checklist For Media Preparation Details And Sterilization :
                     </div>
                             @php
                                $checklist_for_media_prepara_sterilization_CIEMs = [
@@ -6193,7 +6191,7 @@
                         </div>
                     </div>
                     <div class="sub-head">
-                    Checklist for review of environmental conditions in the testing area
+                    Checklist For Review Of Environmental Conditions In The Testing Area
                     </div>
                         @php
                            $CR_of_En_condition_in_testing_CIEMs = [
@@ -6285,7 +6283,7 @@
                         </div>
                     </div>
                     <div class="sub-head">
-                    Checklist for disinfectant Details:
+                    Checklist For Disinfectant Details:
                     </div>
                         @php
                            $check_for_disinfectant_CIEMs = [
@@ -6383,7 +6381,7 @@
                         </div>
                     </div>
                     <div class="sub-head">
-                    Checklist for fogging details :
+                    Checklist For Fogging Details :
                     </div>
                             @php
                               $checklist_for_fogging_CIEMs = [
@@ -6480,7 +6478,7 @@
                         </div>
                     </div>
                     <div class="sub-head">
-                    Checklist for review of Test Method & procedure:
+                    Checklist For Review Of Test Method & Pprocedure:
                     </div>
                         @php
                           $CR_of_test_method_CIEMs = [
@@ -6567,7 +6565,7 @@
                         </div>
                     </div>
                     <div class="sub-head">
-                    Checklist for review of microbial isolates /Contamination (If completed at the time of filling of checklist, if not then this details shall be updated upon completion of identification)
+                    Checklist For Review Of Microbial Isolates /Contamination (If completed at the time of filling of checklist, if not then this details shall be updated upon completion of identification)
                     </div>
                             @php
                               $CR_microbial_isolates_contamination_CIEMs = [
@@ -6674,7 +6672,7 @@
                         </div>
                     </div>
                     <div class="sub-head">
-                    Checklist for review of Instrument/Equipment:
+                    Checklist For Review Of Instrument/Equipment:
                     </div>
                         @php
                             $CR_of_instru_equip_CIEMs = [
@@ -6832,7 +6830,7 @@
                         </div>
                     </div>
                     <div class="sub-head">
-                    Checklist for trend Analysis:
+                    Checklist For Trend Analysis:
                     </div>
                             @php
                               $Ch_Trend_analysis_CIEMs = [
@@ -6969,7 +6967,7 @@
             <div id="CCForm55" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Analyst training & Procedure
+                        Checklist For Analyst Training & Procedure
                     </div>
                         @php
                             $checklist_for_analyst_training_CIMTs = [
@@ -7081,7 +7079,7 @@
                 </div>
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Comparison of results (With same & Previous Day Media GPT) :
+                        Checklist For Comparison Of Results (With same & Previous Day Media GPT) :
                     </div>
                         @php
                         $checklist_for_comp_results_CIMTs = [
@@ -7199,7 +7197,7 @@
                 </div>
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Culture verification ?
+                        Checklist For Culture Verification ?
                     </div>
                         @php
                         $checklist_for_Culture_verification_CIMTs = [
@@ -7316,7 +7314,7 @@
                 </div>
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Sterilize Accessories :
+                        Checklist For Sterilize Accessories :
                     </div>
                             @php
                                 $sterilize_accessories_CIMTs = [
@@ -7418,7 +7416,7 @@
                 </div>
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Instrument/Equipment Details:
+                        Checklist For Instrument/Equipment Details:
                     </div>
                         @php
                         $checklist_for_intrument_equip_last_CIMTs = [
@@ -7582,7 +7580,7 @@
                 </div>
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Disinfectant Details:
+                        Checklist For Disinfectant Details:
                     </div>
                         @php
                         $disinfectant_details_last_CIMTs = [
@@ -7684,7 +7682,7 @@
                 </div>
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Checklist for Results and Calculation :
+                        Checklist For Results And Calculation :
                     </div>
                         @php
                         $checklist_for_result_calculation_CIMTs = [
@@ -7773,7 +7771,7 @@
                                     </table>
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Audit Attachments">If Yes, Provide attachment details</label>
+                                            <label for="Audit Attachments">If Yes, Provide Attachment Details</label>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents
                                             </small>
@@ -7829,13 +7827,13 @@
                          <!-- Others Field -->
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Outcome of Phase IA investigation<span class="text-danger">*</span></label>
+                                <label for="If Others">Outcome Of Phase IA Investigation<span class="text-danger">*</span></label>
                                 <textarea id="outcome_phase_IA" name="outcome_phase_IA" {{ $data->stage == 9 ? 'required' : 'readonly' }}>{{ $data->outcome_phase_IA }} </textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Reason for proceeding to Phase IB investigation</label>
+                                <label for="If Others">Reason For Proceeding To Phase IB investigation</label>
                                 <textarea id="reason_for_proceeding" name="reason_for_proceeding" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->reason_for_proceeding }}</textarea>
                             </div>
                         </div>
@@ -7921,7 +7919,7 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Summary of Review</label>
+                                <label for="If Others">Summary Of Review</label>
                                 <textarea id="summaryy_of_review" name="summaryy_of_review" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->summaryy_of_review }}</textarea>
                             </div>
                         </div>
@@ -7946,7 +7944,7 @@
                         </div> --}}
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="checklists">Proposal for Phase IB hypothesis</label>
+                                <label for="checklists">Proposal For Phase IB hypothesis</label>
                                 @php
                                 $ChecklistData = $data->proposal_for_hypothesis_IB;
 
@@ -7975,13 +7973,13 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Details of results (Including original OOS/OOT results for side by side comparison)</label>
+                                <label for="If Others">Details Of Results (Including original OOS/OOT results for side by side comparison)</label>
                                 <textarea id="details_of_result" name="details_of_result" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->details_of_result }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="If Others">Probable Cause Identified in Phase IB investigation</label>
+                                <label for="If Others">Probable Cause Identified In Phase IB investigation</label>
                                     <select name="Probable_Cause_Identified" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->Probable_Cause_Identified == 'Yes' ? 'selected' : '' }}>Yes</option>
@@ -7991,19 +7989,19 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Any other Comments/ Probable Cause Evidence</label>
+                                <label for="If Others">Any Other Comments/ Probable Cause Evidence</label>
                                 <textarea id="Any_other_Comments" name="Any_other_Comments" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Any_other_Comments }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Proposal for Hypothesis testing to confirm Probable Cause identified</label>
+                                <label for="If Others">Proposal For Hypothesis Testing To Confirm Probable Cause Identified</label>
                                 <textarea id="Proposal_for_Hypothesis" name="Proposal_for_Hypothesis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Proposal_for_Hypothesis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Summary of Hypothesis</label>
+                                <label for="If Others">Summary Of Hypothesis</label>
                                 <textarea id="Summary_of_Hypothesis" name="Summary_of_Hypothesis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Summary_of_Hypothesis }}</textarea>
                             </div>
                         </div>
@@ -8019,7 +8017,7 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="If Others">Types of assignable cause</label>
+                                <label for="If Others">Types Of Assignable Cause</label>
                                     <select name="Types_of_assignable" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Analyst error" {{ $data->Types_of_assignable == 'Analyst error' ? 'selected' : '' }}>Analyst error</option>
@@ -8040,13 +8038,13 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Evaluation of Phase IB investigation Timeline</label>
+                                <label for="If Others">Evaluation Of Phase IB investigation Timeline</label>
                                 <textarea id="Evaluation_Timeline" name="Evaluation_Timeline" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Evaluation_Timeline }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="If Others">Is Phase IB investigation timeline met</label>
+                                <label for="If Others">Is Phase IB Investigation Timeline Met</label>
                                     <select name="timeline_met" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->timeline_met == 'Yes' ? 'selected' : '' }}>Yes</option>
@@ -8056,7 +8054,7 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">If No, Justify for timeline extension</label>
+                                <label for="If Others">If No, Justify For Timeline Extension</label>
                                 <textarea id="timeline_extension" name="timeline_extension" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->timeline_extension }}</textarea>
                             </div>
                         </div>
@@ -8068,7 +8066,7 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="If Others">Resampling required</label>
+                                <label for="If Others">Resampling Required</label>
                                     <select name="resampling_required_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->resampling_required_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
@@ -8078,7 +8076,7 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="If Others">Repeat testing required </label>
+                                <label for="If Others">Repeat Testing Required </label>
                                     <select name="repeat_testing_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->repeat_testing_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
@@ -8088,13 +8086,13 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Repeat testing plan</label>
+                                <label for="If Others">Repeat Testing Plan</label>
                                 <textarea id="Repeat_testing_plan" name="Repeat_testing_plan" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Repeat_testing_plan }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="If Others">Phase II investigation required</label>
+                                <label for="If Others">Phase II Investigation Required</label>
                                     <select name="phase_ii_inv_req_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->phase_ii_inv_req_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
@@ -8131,19 +8129,19 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Repeat analysis method/resampling</label>
+                                <label for="If Others">Repeat Analysis Method/Resampling</label>
                                 <textarea id="Repeat_analysis_method" name="Repeat_analysis_method" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Repeat_analysis_method }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Details of repeat analysis</label>
+                                <label for="If Others">Details Of Repeat Analysis</label>
                                 <textarea id="Details_repeat_analysis" name="Details_repeat_analysis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Details_repeat_analysis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Impact assessment</label>
+                                <label for="If Others">Impact Assessment</label>
                                 <textarea id="Impact_assessment1" name="Impact_assessment1" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Impact_assessment1 }}</textarea>
                             </div>
                         </div>
@@ -8346,7 +8344,7 @@
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Assignable cause found">Phase IA Assignable cause found</label>
+                                <label for="Assignable cause found">Phase IA Assignable Cause Found</label>
                                 <select name="assign_cause_found" id="assign_cause_found">
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="Yes" {{ $data->assign_cause_found == 'Yes' ? 'selected' : '' }}>Yes</option>
@@ -8561,7 +8559,7 @@
                          <!-- Others Field -->
                          <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="If Others">Escalation required</label>
+                                <label for="If Others">Escalation Required</label>
                                 <select id="escalation_required" name="escalation_required" {{ Helpers::isOOSChemical($data->stage) }} {{ $data->stage == 12 ? '' : 'readonly' }}>
                                     <option value="">--Select---</option>
                                     <option value="Yes" {{ $data->escalation_required == 'Yes' ? 'selected' : '' }}>Yes</option>
@@ -8773,19 +8771,6 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                         <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Report Attachments">Phase II A Assinable Cause Found</label>
-                                <select name="phase_ii_a_assi_cause" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'readonly' }}>
-                                    <option value="">Enter Your Selection Here</option>
-                                    <option value="Yes" {{ $data->phase_ii_a_assi_cause === 'Yes' ? 'selected' :
-                                            '' }}>Yes</option>
-                                    <option value="No" {{ $data->phase_ii_a_assi_cause === 'No' ? 'selected' : ''
-                                            }}>No</option>
-                                </select>
-                            </div>
-                        </div>
-
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase II A CQA/QA Remark<span class="text-danger">*</span></label>
@@ -8859,7 +8844,18 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-
+                         <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Report Attachments">Phase II A Assinable Cause Found</label>
+                                <select name="phase_ii_a_assi_cause" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'readonly' }}>
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="Yes" {{ $data->phase_ii_a_assi_cause === 'Yes' ? 'selected' :
+                                            '' }}>Yes</option>
+                                    <option value="No" {{ $data->phase_ii_a_assi_cause === 'No' ? 'selected' : ''
+                                            }}>No</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase II A QAH/CQAH Remark<span class="text-danger">*</span></label>
@@ -8961,7 +8957,7 @@
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Report Attachments">Resampling required IIB Inv.</label>
+                                <label for="Report Attachments">Resampling Required IIB Inv.</label>
                                 <select name="resampling_req_IIB" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'readonly' }}>
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="Yes" {{ $data->resampling_req_IIB === 'Yes' ? 'selected' :
@@ -8973,7 +8969,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Audit Attachments">Repeat testing required IIB Inv.</label>
+                                <label for="Audit Attachments">Repeat Testing Required IIB Inv.</label>
                                 <select name="Repeat_testing_IIB" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'readonly' }}>
                                    <option value="" {{ $data->Repeat_testing_IIB == '0' ? 'selected' : ''
                                         }}>Enter Your Selection Here</option>
@@ -8986,19 +8982,19 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Results Of Repeat testing IIB Inv.</label>
+                                <label for="If Others">Results Of Repeat Testing IIB Inv.</label>
                                 <textarea id="result_of_rep_test_IIB" name="result_of_rep_test_IIB" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->result_of_rep_test_IIB }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Laboratory Investigation Hypothesis details<span class="text-danger">*</span></label>
+                                <label for="If Others">Laboratory Investigation Hypothesis Details<span class="text-danger">*</span></label>
                                 <textarea id="Laboratory_Investigation_Hypothesis" name="Laboratory_Investigation_Hypothesis" {{ $data->stage == 17 ? 'required' : 'readonly' }}>{{ $data->Laboratory_Investigation_Hypothesis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Outcome of Laboratory Investigation</label>
+                                <label for="If Others">Outcome Of Laboratory Investigation</label>
                                 <textarea id="Outcome_of_Laboratory" name="Outcome_of_Laboratory" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->Outcome_of_Laboratory }}</textarea>
                             </div>
                         </div>
@@ -9021,7 +9017,7 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">If assignable cause identified perform re-testing</label>
+                                <label for="If Others">If Assignable Cause Identified Perform Re-testing</label>
                                 <textarea id="If_assignable_cause" name="If_assignable_cause" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->If_assignable_cause }}</textarea>
                             </div>
                         </div>
@@ -9033,36 +9029,39 @@
                         </div>
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Audit Attachments">Phase IIB inv. Attachments</label>
+                                <label for="Audit Attachments">Phase IIB inv. Attachment</label>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="phase_IIB_attachment">
-
-                                        @if ($data->phase_IIB_attachment)
-                                        @foreach ($data->phase_IIB_attachment as $file)
-                                        <h6 type="button" class="file-container text-dark"
-                                            style="background-color: rgb(243, 242, 240);">
-                                            <b>{{ $file }}</b>
-                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                    class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                        </h6>
-                                        @endforeach
+                        
+                                        @if (is_array($data->phase_IIB_attachment)) <!-- Ensure it's an array -->
+                                            @foreach ($data->phase_IIB_attachment as $file)
+                                                <h6 type="button" class="file-container text-dark"
+                                                    style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                    </a>
+                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                    </a>
+                                                </h6>
+                                            @endforeach
                                         @endif
-
+                        
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="phase_IIB_attachment[]"
-                                            oninput="addMultipleFiles(this, 'phase_IIB_attachment')" {{ $data->stage == 15 ? '' : 'readonly' }} multiple>
+                                            oninput="addMultipleFiles(this, 'phase_IIB_attachment')"
+                                            {{ $data->stage == 15 ? '' : 'readonly' }} multiple>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
 

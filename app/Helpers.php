@@ -620,6 +620,8 @@ class Helpers
             'DC' => 'Document Cell',
             'RA' => 'Regulatory Affairs',
             'PV' => 'Pharmacovigilance',
+            'Other' => 'Other Department',
+
         ];
 
         return $departments;

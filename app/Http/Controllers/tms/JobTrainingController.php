@@ -551,6 +551,10 @@ public function trainingQuestions($id){
                 if ($jobTraining->stage == 1) {
                     $jobTraining->stage = "2";
                     $jobTraining->status = "QA/CQA Head Approval";
+                    $jobTraining->submit_by = Auth::user()->name;
+                    $jobTraining->submit_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->submit_comment = $request->comment;
+
                     $history = new JobTrainingAudit();
                     $history->job_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -572,6 +576,9 @@ public function trainingQuestions($id){
                 if ($jobTraining->stage == 2) {
                     $jobTraining->stage = "3";
                     $jobTraining->status = "Employee Answers";
+                    $jobTraining->approval_complete_by = Auth::user()->name;
+                    $jobTraining->approval_complete_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->approval_complete_comment = $request->comment;
 
                     $history = new JobTrainingAudit();
                     $history->job_id = $id;
@@ -594,6 +601,10 @@ public function trainingQuestions($id){
                 if ($jobTraining->stage == 3) {
                     $jobTraining->stage = "4";
                     $jobTraining->status = "Evaluation";
+                    $jobTraining->answer_submit_by = Auth::user()->name;
+                    $jobTraining->answer_submit_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->answer_submit_comment = $request->comment;
+
                     $history = new JobTrainingAudit();
                     $history->job_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -636,6 +647,10 @@ public function trainingQuestions($id){
                 if ($jobTraining->stage == 4) {
                     $jobTraining->stage = "5";
                     $jobTraining->status = "QA/CQA Head Final Review";
+                    $jobTraining->evaluation_complete_by = Auth::user()->name;
+                    $jobTraining->evaluation_complete_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->evaluation_complete_comment = $request->comment;
+
                     $history = new JobTrainingAudit();
                     $history->job_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -657,6 +672,10 @@ public function trainingQuestions($id){
                 if ($jobTraining->stage == 5) {
                     $jobTraining->stage = "6";
                     $jobTraining->status = "Verification and Approval";
+                    $jobTraining->qa_head_review_complete_by = Auth::user()->name;
+                    $jobTraining->qa_head_review_complete_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->qa_head_review_complete_comment = $request->comment;
+                    
                     $history = new JobTrainingAudit();
                     $history->job_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -720,6 +739,9 @@ public function trainingQuestions($id){
                 if ($jobTraining->stage == 6) {
                     $jobTraining->stage = "7";
                     $jobTraining->status = "Closed-Done";
+                    $jobTraining->verification_approval_complete_by = Auth::user()->name;
+                    $jobTraining->verification_approval_complete_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->verification_approval_complete_comment = $request->comment;
 
                     $history = new JobTrainingAudit();
                     $history->job_id = $id;

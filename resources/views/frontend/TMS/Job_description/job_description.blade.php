@@ -333,18 +333,12 @@ $departments = DB::table('departments')->select('id', 'name')->get();
             <div id="CCForm1" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
+                 
+
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="select-state">Name of Employee</label>
-                                    <select id="select-state" placeholder="Select..." name="name_employee" required>
-                                        <option value="">Select an employee</option>
-                                        @foreach ($employees as $employee)
-                                        <option value="{{ $employee->id }}" data-name="{{ $employee->employee_name }}">{{ $employee->employee_name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('employee_id')
-                                    <p class="text-danger">{{ $message }}</p>
-                                    @enderror
+                                    <label for="location">Name of Employee</label>
+                                    <input id="selected_employee_id" type="text" value ="{{ $mainvalue->employee_name}}" name="name_employee" readonly>
                                 </div>
                             </div>
 
@@ -361,24 +355,30 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
+                            <!-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="employee_id">Employee Code </label>
                                     <input type="text" name="employee_id" id="employee_ids" readonly>
+                                </div>
+                            </div> -->
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="employee_id">Employee Code </label>
+                                    <input type="text" name="employee_id" value ="{{$mainvalue->full_employee_id}}" id="employee_id"  readonly>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="department_location">Department</label>
-                                    <input type="text" name="new_department" id="departments" readonly>
+                                    <input type="text" name="new_department" value="{{ Helpers::getDepartments()[$mainvalue->department]}}" id="departments" readonly>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="designation">Designation </label>
-                                    <input type="text" name="designation" id="designees"  readonly>
+                                    <input type="text" name="designation" value="{{$mainvalue->job_title}}" id="designees"  readonly>
                                 </div>
                             </div>
                             <input type="hidden" name="employee_name" id="employee_name">
