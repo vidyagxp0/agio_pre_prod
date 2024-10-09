@@ -207,7 +207,7 @@ class ExtensionNewController extends Controller
             $extensionNew->count = str_replace('number',1,$existingRecord->count) + 1;
         } else {
             $extensionNew->count = $count;
-        }   
+        }
 
         $extensionNew->save();
 
@@ -1210,6 +1210,28 @@ class ExtensionNewController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
+
+                    //$list = Helpers::getHodUserList($extensionNew->division_id); // Notify HOD
+                    //foreach ($list as $u) {
+                    //    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                    //        $email = Helpers::getUserEmail($u->user_id);
+                    //            if ($email !== null) {
+                    //                try {
+                    //                    Mail::send(
+                    //                        'mail.view-mail',
+                    //                        ['data' => $extensionNew, 'site' => "CC", 'history' => "Send For Submit", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                    //                        function ($message) use ($email, $extensionNew) {
+                    //                            $message->to($email)
+                    //                            ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send For Submit Performed");
+                    //                        }
+                    //                    );
+                    //                } catch(\Exception $e) {
+                    //                    info('Error sending mail', [$e]);
+                    //                }
+                    //        }
+                    //    // }
+                    //}
+
 
 
                     // $list = Helpers::getHodUserList();

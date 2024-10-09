@@ -85,7 +85,7 @@
             <div class="inner-block state-block">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="main-head">Record Workflow </div>
-                    @php
+                    {{--@php
                         $userRoles = DB::table('user_roles')
                             ->where([
                                 'user_id' => Auth::user()->id,
@@ -93,27 +93,37 @@
                             ])
                             ->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-                    @endphp
+                    @endphp--}}
+                    @php
+                    $userRoles = DB::table('user_roles')
+                        ->where([
+                            'user_id' => Auth::user()->id,
+                            'q_m_s_divisions_id' => $extensionNew->site_location_code,
+                        ])
+                        ->get();
+                    $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                @endphp
                     <div class="d-flex" style="gap:20px;">
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
+
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('rcms/audit_trailNew', $extensionNew->id) }}"> Audit Trail </a> </button>
-                        @if ($extensionNew->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($extensionNew->stage == 1 && Helpers::check_roles($extensionNew->site_location_code, 'Extension', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#reject-required-modal">
                                 Cancel
                             </button>
-                        @elseif($extensionNew->stage == 2 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($extensionNew->stage == 2 && Helpers::check_roles($extensionNew->site_location_code, 'Extension', 4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Review
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
-                        @elseif($extensionNew->stage == 3 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($extensionNew->stage == 3 && Helpers::check_roles($extensionNew->site_location_code, 'Extension', 67))
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                Approved
                             </button> --}}
@@ -211,7 +221,7 @@
                                 @elseif($extensionNew->count == 'number')
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
                                     Send for CQA
-                                </button>    
+                                </button>
                             @endif
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Reject
@@ -219,13 +229,13 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
-                        @elseif($extensionNew->stage == 5 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($extensionNew->stage == 5 && Helpers::check_roles($extensionNew->site_location_code, 'Extension', 64))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
                                 CQA Approval Complete
                             </button>
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
-                            </button> --}}
+                            </button> (in_array(10, $userRoleIds) || in_array(18, $userRoleIds))--}}
                         @endif
                         <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"><button class="button_theme1"> Exit
                             </button> </a>
@@ -412,7 +422,7 @@
                                         <label for="Assigned To">HOD Review</label>
                                         <select id="choices-multiple-remove" class="choices-multiple-reviewe"
                                             name="reviewers" placeholder="Select Reviewers"
-                                            {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}>
+                                            {{ $extensionNew->stage == 0 || $extensionNew->stage == 5 || $extensionNew->stage == 6 ? 'disabled' : '' }}>
                                             <option value="">-- Select --</option>
                                             @if (!empty(Helpers::getHODDropdown()))
                                                 @foreach (Helpers::getHODDropdown() as $listHod)
@@ -546,7 +556,7 @@
                                         <label for="Assigned To">QA Approval </label>
                                         <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
                                             name="approvers" placeholder="Select Approvers"
-                                            {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}>
+                                            {{ $extensionNew->stage == 0 || $extensionNew->stage == 5 || $extensionNew->stage == 6 ? 'disabled' : '' }}>
                                             <option value="">-- Select --</option>
 
                                             @if (!empty($users))
@@ -713,7 +723,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                <button type="submit" id="ChangesaveButton" class="saveButton" {{ $extensionNew->stage == 0 || $extensionNew->stage == 5 || $extensionNew->stage == 6 ? 'disabled' : '' }}>Save</button>
 
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -781,7 +791,7 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                             oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple>
                                                                                                                                                                                                                                                                                                                                                                                                                                                     </div>
                                                                                                                                                                                                                                                                                                                                                                                                                                                 </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                          </div>
                                                                                                                                                                                                                                                                                                                                                                                                                                         </div> -->
                             @if ($extensionNew->file_attachment_reviewer)
                                 @foreach (json_decode($extensionNew->file_attachment_reviewer) as $file)
@@ -827,7 +837,7 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="submit" id="ChangesaveButton" class="saveButton" {{ $extensionNew->stage == 0 || $extensionNew->stage == 5 || $extensionNew->stage == 6 ? 'disabled' : '' }}>Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -891,7 +901,7 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="submit" id="ChangesaveButton" class="saveButton" {{ $extensionNew->stage == 0 || $extensionNew->stage == 5 || $extensionNew->stage == 6 ? 'disabled' : '' }}>Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -941,8 +951,6 @@
                                     <div class="static">{{ $extensionNew->reject_comment }}</div>
                                 </div>
                             </div>
-
-
 
 
                             <div class="col-lg-4">
@@ -1074,7 +1082,7 @@
                     </div> --}}
 
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="submit" id="ChangesaveButton" class="saveButton" {{ $extensionNew->stage == 0 || $extensionNew->stage == 5 || $extensionNew->stage == 6 ? 'disabled' : '' }}>Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
 
                             <button type="button">
