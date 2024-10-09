@@ -2101,8 +2101,7 @@ class EmployeeController extends Controller
 
     public function Employee_Child(Request $request, $id)
     {
-        $employee = Employee::find($id); // Child se employee ka data
-    
+        $employee = Employee::find($id); 
         $record = ((RecordNumber::first()->value('counter')) + 1);
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -2110,8 +2109,10 @@ class EmployeeController extends Controller
         $due_date = $formattedDate->format('Y-m-d');
         $employees = Employee::all();
         $data = Document::all();
+        $hods = User::get();
+
         if ($request->child_type == 'induction_training') {
-            return view('frontend.TMS.Induction_training.induction_training', compact('employee','due_date','record','data'));
+            return view('frontend.TMS.Induction_training.induction_training', compact('employee','due_date','record','data','hods'));
         } else {
             return view('frontend.forms.classroom-training');
         }

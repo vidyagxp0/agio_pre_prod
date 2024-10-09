@@ -133,7 +133,7 @@
 
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Short Description"> Initiation department Group <span
+                    <label for="Short Description"> Initiation Department Group <span
                             class="text-danger"></span></label>
                     <select name="initiator_group" id="initiator_group"  {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'readonly' }}>
                         <option value="">-- Select --</option>
@@ -171,7 +171,7 @@
                                                             @if ($data->initiator_group == 'FD') selected @endif>Formulation  Development
                                                         </option>
                                                         <option value="AL"
-                                                            @if ($data->initiator_group == 'AL') selected @endif>Analytical research and Development Laboratory
+                                                            @if ($data->initiator_group == 'AL') selected @endif>Analytical Research and Development Laboratory
                                                         </option>
                                                         <option value="PD"
                                                             @if ($data->initiator_group == 'PD') selected @endif>Packaging Development
@@ -194,7 +194,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Short Description">Initiation department Code <span
+                    <label for="Short Description">Initiation Department Code <span
                             class="text-danger"></span></label>
                     <input type="text" name="initiator_group_code"  id="initiator_group_code" readonly
                         value="{{ $data->initiator_group_code ?? '' }}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'readonly' }}>
@@ -292,7 +292,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="reference_document">Reference document</label>
+                    <label for="reference_document">Reference Document</label>
                     <input type="text" name="reference_document"  id="reference_document"
                         value="{{ $data->reference_document ?? '' }}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'readonly' }}>
                 </div>
@@ -339,7 +339,7 @@
 
             <div class="col-lg-6 new-date-data-field">
                 <div class="group-input input-date">
-                    <label for="Deviation Occurred On"> OOS/OOT Reported on </label>
+                    <label for="Deviation Occurred On"> OOS/OOT Reported On </label>
                     <div><small class="text-primary"></small></div>
                     <div class="calenderauditee">
                         <input type="text" id="oos_reported_date" readonly  value="{{ Helpers::getdateFormat($data['oos_reported_date'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" />
@@ -603,7 +603,7 @@
                                 <th style="width: 12%">Condition: Temperature & RH</th>
                                 <th style="width: 12%">Interval</th>
                                 <th style="width: 16%">Orientation</th>
-                                <th style="width: 16%">Pack Details (if any)</th>
+                                <th style="width: 16%">Pack Details (if Any)</th>
                                 <th style="width: 16%">Specification No.</th>
                                 <th style="width: 16%">Sample Description</th>
                                 <th style="width: 4%"> Action </th>
@@ -706,7 +706,7 @@
 
              <div class="group-input">
                 <label for="audit-agenda-grid">
-                    Product details
+                    Product Details
                     <button type="button" name="audit-agenda-grid" id="products_details" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                     <span class="text-primary" data-bs-toggle="modal"
                         data-bs-target="#document-details-field-instruction-modal"
@@ -721,10 +721,10 @@
                                 <th style="width: 4%">Row#</th>
                                 <th style="width: 8%"> Name of Product</th>
                                 <th style="width: 8%"> A.R.No </th>
-                                <th style="width: 8%"> Sampled on </th>
-                                <th style="width: 8%"> Sample by</th>
-                                <th style="width: 8%"> Analyzed on</th>
-                                <th style="width: 8%"> Observed on </th>
+                                <th style="width: 8%"> Sampled On </th>
+                                <th style="width: 8%"> Sample By</th>
+                                <th style="width: 8%"> Analyzed On</th>
+                                <th style="width: 8%"> Observed On </th>
                                 <th style="width: 5%"> Action</th>
                             </tr>
                         </thead>
@@ -783,7 +783,7 @@
 
             <div class="group-input">
                 <label for="audit-agenda-grid">
-                    Instrument details
+                    Instrument Details
                     <button type="button" name="audit-agenda-grid" id="instrument_detail" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                     <span class="text-primary" data-bs-toggle="modal"
                         data-bs-target="#document-details-field-instruction-modal"
