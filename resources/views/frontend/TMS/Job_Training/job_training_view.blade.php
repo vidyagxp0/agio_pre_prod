@@ -228,7 +228,7 @@
             <button class="cctablinks " onclick="openCity(event, 'CCForm8')">QA/CQA Head Final Review</button>
             
             <button class="cctablinks " onclick="openCity(event, 'CCForm9')">QA Final Approval</button>
-
+            <button class="cctablinks " onclick="openCity(event, 'CCForm10')">Activity Log</button>
         </div>
 
         <script>
@@ -264,8 +264,8 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="employee_id">Employee Code</label>
-                                        <input id="employee_id" name="empcode" type="text"
-                                            value="{{ $jobTraining->empcode }}" readonly>
+                                        <input id="employee_id" name="employee_id" type="text"
+                                            value="{{ $jobTraining->employee_id }}" readonly>
                                         @error('empcode')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
@@ -289,38 +289,39 @@
                                         </select> 
                                     </div>
                                 </div> --}}
-                                {{-- <div class="col-lg-6">
+
+                                <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="type_of_training">SOP Document</label>
+                                        <label for="Department">Department</label>
+                                        <input type="text" name="department" id="department" value="{{ $jobTraining->department }}" readonly>
+                                        {{-- <select name="department" readonly >
+                                            <option value="">-- Select Dept --</option>
+                                
+                                            @php
+                                                $savedDepartmentId = old('department', $jobTraining->department);
+                                            @endphp
 
-                                        <select name="sopdocument" id="sopdocument" onchange="fetchQuestions(this.value)">
-                                            <option value="">---Select SOP Document---</option>
-
-                                            @foreach ($data as $dat)
-                                                <option
-                                                    value="{{ $dat->id }}"
-                                                    {{ $savedSop == $dat->id ? 'selected' : '' }}>
-                                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                            @foreach (Helpers::getDepartments() as $code => $department)
+                                                <option value="{{ $code }}"
+                                                    @if ($savedDepartmentId == $code) selected @endif>{{ $department }}
                                                 </option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
                                     </div>
-                                </div> --}}
-                                
+                                </div>
 
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Job Title">Designation</label>
+                                        <input type="text" name="designation" id="designation" value="{{ $jobTraining->designation }}" readonly>
+                                    </div>
+                                </div>
 
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="type_of_training">Type of Training</label>
-                                        <select name="type_of_training" id="type_of_training">
-                                            <option value="">----Select Training----</option>
-                                            <option value="on the job"
-                                                {{ $jobTraining->type_of_training == 'on the job' ? 'selected' : '' }}>On
-                                                The Job</option>
-                                            <option value="classroom"
-                                                {{ $jobTraining->type_of_training == 'classroom' ? 'selected' : '' }}>
-                                                Classroom</option>
-                                        </select>
+                                        <label for="Division Code">Location</label>
+                                        <input type="text" name="location" value="{{ $jobTraining->location }}" readonly>
                                     </div>
                                 </div> --}}
 
@@ -342,32 +343,6 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Department">Department</label>
-                                        <select name="department" readonly>
-                                            <option value="">-- Select Dept --</option>
-                                
-                                            @php
-                                                $savedDepartmentId = old('department', $jobTraining->department);
-                                            @endphp
-
-                                            @foreach (Helpers::getDepartments() as $code => $department)
-                                                <option value="{{ $code }}"
-                                                    @if ($savedDepartmentId == $code) selected @endif>{{ $department }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Division Code">Location</label>
-                                        <input type="text" name="location" value="{{ $jobTraining->location }}" readonly>
-                                    </div>
-                                </div> --}}
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
                                         <label for="HOD Persons">HOD</label>
                                         <select name="hod" id="hod">
                                             <option value="">-- Select HOD --</option>
@@ -381,21 +356,6 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="hod">Revision Purpose</label>
-                                    <select name="revision_purpose" id="" >
-                                        <option value="">----Select---</option>
-                                            <option value="New"
-                                                {{ $jobTraining->revision_purpose == 'New' ? 'selected' : '' }}>New
-                                                </option>
-                                            <option value="Old"
-                                                {{ $jobTraining->revision_purpose == 'Old' ? 'selected' : '' }}>
-                                                Old</option>
-
-                                    </select>
-                                </div>
-                            </div> --}}
 
 <div class="col-lg-6">
     <div class="group-input">
@@ -439,21 +399,53 @@
 
 
 
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="hod">Evaluation Required</label>
-                                    <select name="evaluation_required" id="" >
-                                        <option value="">----Select---</option>
-                                        <option value="Yes"
-                                                {{ $jobTraining->evaluation_required == 'Yes' ? 'selected' : '' }}>Yes
-                                                </option>
-                                            <option value="No"
-                                                {{ $jobTraining->evaluation_required == 'No' ? 'selected' : '' }}>
-                                                No</option>
-                                    
-                                    </select>
-                                </div>
-                            </div>
+<div class="col-lg-6" id="evaluationContainer" style="display: none;">
+    <div class="group-input">
+        <label for="evaluation">Evaluation Required</label>
+        <select name="evaluation_required" id="evaluationRequired">
+            <option value="">----Select---</option>
+            <option value="Yes" {{ $jobTraining->evaluation_required == 'Yes' ? 'selected' : '' }}>Yes</option>
+            <option value="No" {{ $jobTraining->evaluation_required == 'No' ? 'selected' : '' }}>No</option>
+        </select>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const lowerDesignations = ['Trainee', 'Officer', 'Sr. Officer', 'Executive', 'Sr. Executive'];
+        const higherDesignations = ['Asst. manager', 'Manager', 'Sr. manager', 'Deputy GM', 'AGM and GM', 'Head quality', 'VP quality', 'Plant head'];
+
+        const designationInput = document.getElementById('designation');
+        const evaluationContainer = document.getElementById('evaluationContainer');
+        const evaluationSelect = document.getElementById('evaluationRequired');
+        const questionnaireSection = document.getElementById('questionnaireSection');
+
+        // Check the designation and show/hide the evaluation dropdown
+        function checkDesignation() {
+            const designation = designationInput.value;
+
+            if (higherDesignations.includes(designation)) {
+                evaluationContainer.style.display = 'block'; // Show evaluation dropdown for higher designations
+            } else {
+                evaluationContainer.style.display = 'none'; // Hide for lower designations
+                questionnaireSection.style.display = 'none'; // Also hide questionnaire section if evaluation is hidden
+                evaluationSelect.value = ''; // Reset evaluation selection
+            }
+        }
+
+        // Add an event listener to handle evaluation selection
+        evaluationSelect.addEventListener('change', function () {
+            if (this.value === 'Yes') {
+                questionnaireSection.style.display = 'block'; // Show questionnaire if 'Yes' is selected
+            } else {
+                questionnaireSection.style.display = 'none'; // Hide if 'No' is selected
+            }
+        });
+
+        // Initial check when the page loads
+        checkDesignation();
+    });
+</script>
 
 
                                 <div class="col-12">
@@ -550,8 +542,16 @@
         @endforeach
     </select>
 </td>
-<td><input type="text" name="type_of_training_1" value="{{ old('type_of_training_1', $jobTraining->type_of_training_1 ?? '') }}"></td>
-<td><input type="text" name="reference_document_no_1" id="document_number" value="{{ old('reference_document_no_1', $jobTraining->reference_document_no_1 ?? '') }}" readonly></td>
+<td>
+    <input type="text" name="type_of_training_1" value="{{ old('type_of_training_1', $jobTraining->type_of_training_1 ?? '') }}">
+</td>
+<td>
+    <input type="hidden" name="reference_document_no_1" id="reference_document_no_1" 
+           value="{{ old('reference_document_no_1', $jobTraining->reference_document_no_1 ?? '') }}">
+    <input type="text" id="document_number" 
+           value="{{ old('document_number', $jobTraining->reference_document_no_1 ? 
+           $jobTraining->sop_type_short . '/' . $jobTraining->department_id . '/000' . $jobTraining->reference_document_no_1 . '/R' . $jobTraining->major : '') }}" readonly>
+</td>
 <td>
     <select name="trainer_1" id="trainer_1">
         <option value="">-- Select --</option>
@@ -560,19 +560,32 @@
         @endforeach
     </select>
 </td>
-<td><input type="date" name="startdate_1" id="startdate_1" value="{{ old('startdate_1', $jobTraining->startdate_1 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-<td><input type="date" name="enddate_1" id="enddate_1" value="{{ old('enddate_1', $jobTraining->enddate_1 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
 <td>
-    <a href="{{ $jobTraining->reference_document_no_1 ? '/documents/viewpdf/' . $jobTraining->reference_document_no_1 : '#' }}" id="view_sop" target="_blank" style="display: {{ $jobTraining->reference_document_no_1 ? 'inline' : 'none' }};">View SOP</a>
+    <input type="date" name="startdate_1" id="startdate_1" 
+           value="{{ old('startdate_1', $jobTraining->startdate_1 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+</td>
+<td>
+    <input type="date" name="enddate_1" id="enddate_1" 
+           value="{{ old('enddate_1', $jobTraining->enddate_1 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+</td>
+<td>
+    <a href="{{ $jobTraining->reference_document_no_1 ? '/documents/viewpdf/' . $jobTraining->reference_document_no_1 : '#' }}" 
+       id="view_sop" target="_blank" 
+       style="display: {{ $jobTraining->reference_document_no_1 ? 'inline' : 'none' }};">
+        View SOP
+    </a>
 </td>
 
-<input type="hidden" name="reference_document_no_1" id="selected_document_id" value="{{ old('reference_document_no_1', $jobTraining->reference_document_no_1 ?? '') }}">
-</tr>
+
+
+<!-- <input type="hidden" name="reference_document_no_1" id="selected_document_id" 
+       value="{{ old('reference_document_no_1', $jobTraining->reference_document_no_1 ?? '') }}"> -->
+       </tr>
 
                                                     <tr>
                                                     <td>2</td>
-                                                    <td>
-    <select name="subject_2" id="sopdocument" onchange="fetchDocumentDetails2(this)">
+<td>
+    <select name="subject_2" id="sopdocument2" onchange="fetchDocumentDetails2(this)">
         <option value="">---Select Document Name---</option>
         @foreach ($data as $dat)
         <option value="{{ $dat->document_name }}" 
@@ -584,8 +597,16 @@
         @endforeach
     </select>
 </td>
-<td><input type="text" name="type_of_training_2" value="{{ old('type_of_training_2', $jobTraining->type_of_training_2 ?? '') }}"></td>
-<td><input type="text" name="reference_document_no_2" id="document_number2" value="{{ old('reference_document_no_2', $jobTraining->reference_document_no_2 ?? '') }}" readonly></td>
+<td>
+    <input type="text" name="type_of_training_2" value="{{ old('type_of_training_2', $jobTraining->type_of_training_2 ?? '') }}">
+</td>
+<td>
+    <input type="hidden" name="reference_document_no_2" id="reference_document_no_2" 
+           value="{{ old('reference_document_no_2', $jobTraining->reference_document_no_2 ?? '') }}">
+    <input type="text" id="document_number2" 
+           value="{{ old('document_number2', $jobTraining->reference_document_no_2 ? 
+           $jobTraining->sop_type_short . '/' . $jobTraining->department_id . '/000' . $jobTraining->reference_document_no_2 . '/R' . $jobTraining->major : '') }}" readonly>
+</td>
 <td>
     <select name="trainer_2" id="trainer_2">
         <option value="">-- Select --</option>
@@ -594,19 +615,27 @@
         @endforeach
     </select>
 </td>
-<td><input type="date" name="startdate_2" id="startdate_2" value="{{ old('startdate_2', $jobTraining->startdate_2 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-<td><input type="date" name="enddate_2" id="enddate_2" value="{{ old('enddate_2', $jobTraining->enddate_2 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
 <td>
-    <a href="{{ $jobTraining->reference_document_no_2 ? '/documents/viewpdf/' . $jobTraining->reference_document_no_2 : '#' }}" id="view_sop2" target="_blank" style="display: {{ $jobTraining->reference_document_no_2 ? 'inline' : 'none' }};">View SOP</a>
+    <input type="date" name="startdate_2" id="startdate_2" 
+           value="{{ old('startdate_2', $jobTraining->startdate_2 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
 </td>
-<!-- Hidden field to store the document ID (which will go to the database) -->
-<input type="hidden" name="reference_document_no_2" id="selected_document_id2" value="{{ old('reference_document_no_2', $jobTraining->reference_document_no_2 ?? '') }}">
+<td>
+    <input type="date" name="enddate_2" id="enddate_2" 
+           value="{{ old('enddate_2', $jobTraining->enddate_2 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+</td>
+<td>
+    <a href="{{ $jobTraining->reference_document_no_2 ? '/documents/viewpdf/' . $jobTraining->reference_document_no_2 : '#' }}" 
+       id="view_sop" target="_blank" 
+       style="display: {{ $jobTraining->reference_document_no_2 ? 'inline' : 'none' }};">
+        View SOP
+    </a>
+</td>
 </tr>
 
 <tr>
 <td>3</td>
 <td>
-    <select name="subject_3" id="sopdocument" onchange="fetchDocumentDetails3(this)">
+    <select name="subject_3" id="sopdocument3" onchange="fetchDocumentDetails3(this)">
         <option value="">---Select Document Name---</option>
         @foreach ($data as $dat)
         <option value="{{ $dat->document_name }}" 
@@ -619,7 +648,13 @@
     </select>
 </td>
 <td><input type="text" name="type_of_training_3" value="{{ old('type_of_training_3', $jobTraining->type_of_training_3 ?? '') }}"></td>
-<td><input type="text" name="reference_document_no_3" id="document_number3" value="{{ old('reference_document_no_3', $jobTraining->reference_document_no_3 ?? '') }}" readonly></td>
+<td>
+    <input type="hidden" name="reference_document_no_3" id="reference_document_no_3" 
+           value="{{ old('reference_document_no_3', $jobTraining->reference_document_no_3 ?? '') }}">
+    <input type="text" id="document_number3" 
+           value="{{ old('document_number3', $jobTraining->reference_document_no_3 ? 
+           $jobTraining->sop_type_short . '/' . $jobTraining->department_id . '/000' . $jobTraining->reference_document_no_3 . '/R' . $jobTraining->major : '') }}" readonly>
+</td>
 <td>
     <select name="trainer_3" id="trainer_3">
         <option value="">-- Select --</option>
@@ -631,16 +666,18 @@
 <td><input type="date" name="startdate_3" id="startdate_3" value="{{ old('startdate_3', $jobTraining->startdate_3 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
 <td><input type="date" name="enddate_3" id="enddate_3" value="{{ old('enddate_3', $jobTraining->enddate_3 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
 <td>
-    <a href="{{ $jobTraining->reference_document_no_3 ? '/documents/viewpdf/' . $jobTraining->reference_document_no_3 : '#' }}" id="view_sop3" target="_blank" style="display: {{ $jobTraining->reference_document_no_3 ? 'inline' : 'none' }};">View SOP</a>
+    <a href="{{ $jobTraining->reference_document_no_3 ? '/documents/viewpdf/' . $jobTraining->reference_document_no_3 : '#' }}" 
+       id="view_sop3" target="_blank" 
+       style="display: {{ $jobTraining->reference_document_no_3 ? 'inline' : 'none' }};">
+        View SOP
+    </a>
 </td>
-<!-- Hidden field to store the document ID (which will go to the database) -->
-<input type="hidden" name="reference_document_no_3" id="selected_document_id3" value="{{ old('reference_document_no_3', $jobTraining->reference_document_no_3 ?? '') }}">
 </tr>
 
 <tr>
 <td>4</td>
 <td>
-    <select name="subject_4" id="sopdocument" onchange="fetchDocumentDetails4(this)">
+    <select name="subject_4" id="sopdocument4" onchange="fetchDocumentDetails4(this)">
         <option value="">---Select Document Name---</option>
         @foreach ($data as $dat)
         <option value="{{ $dat->document_name }}" 
@@ -653,7 +690,13 @@
     </select>
 </td>
 <td><input type="text" name="type_of_training_4" value="{{ old('type_of_training_4', $jobTraining->type_of_training_4 ?? '') }}"></td>
-<td><input type="text" name="reference_document_no_4" id="document_number4" value="{{ old('reference_document_no_4', $jobTraining->reference_document_no_4 ?? '') }}" readonly></td>
+<td>
+    <input type="hidden" name="reference_document_no_4" id="reference_document_no_4" 
+           value="{{ old('reference_document_no_4', $jobTraining->reference_document_no_4 ?? '') }}">
+    <input type="text" id="document_number4" 
+           value="{{ old('document_number4', $jobTraining->reference_document_no_4 ? 
+           $jobTraining->sop_type_short . '/' . $jobTraining->department_id . '/000' . $jobTraining->reference_document_no_4 . '/R' . $jobTraining->major : '') }}" readonly>
+</td>
 <td>
     <select name="trainer_4" id="trainer_4">
         <option value="">-- Select --</option>
@@ -665,15 +708,18 @@
 <td><input type="date" name="startdate_4" id="startdate_4" value="{{ old('startdate_4', $jobTraining->startdate_4 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
 <td><input type="date" name="enddate_4" id="enddate_4" value="{{ old('enddate_4', $jobTraining->enddate_4 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
 <td>
-    <a href="{{ $jobTraining->reference_document_no_4 ? '/documents/viewpdf/' . $jobTraining->reference_document_no_4 : '#' }}" id="view_sop4" target="_blank" style="display: {{ $jobTraining->reference_document_no_4 ? 'inline' : 'none' }};">View SOP</a>
+    <a href="{{ $jobTraining->reference_document_no_4 ? '/documents/viewpdf/' . $jobTraining->reference_document_no_4 : '#' }}" 
+       id="view_sop4" target="_blank" 
+       style="display: {{ $jobTraining->reference_document_no_4 ? 'inline' : 'none' }};">
+        View SOP
+    </a>
 </td>
-<input type="hidden" name="reference_document_no_4" id="selected_document_id4" value="{{ old('reference_document_no_4', $jobTraining->reference_document_no_4 ?? '') }}">
 </tr>
 
 <tr>
 <td>5</td>
 <td>
-    <select name="subject_5" id="sopdocument" onchange="fetchDocumentDetails5(this)">
+    <select name="subject_5" id="sopdocument5" onchange="fetchDocumentDetails5(this)">
         <option value="">---Select Document Name---</option>
         @foreach ($data as $dat)
         <option value="{{ $dat->document_name }}" 
@@ -686,7 +732,13 @@
     </select>
 </td>
 <td><input type="text" name="type_of_training_5" value="{{ old('type_of_training_5', $jobTraining->type_of_training_5 ?? '') }}"></td>
-<td><input type="text" name="reference_document_no_5" id="document_number5" value="{{ old('reference_document_no_5', $jobTraining->reference_document_no_5 ?? '') }}" readonly></td>
+<td>
+    <input type="hidden" name="reference_document_no_5" id="reference_document_no_5" 
+           value="{{ old('reference_document_no_5', $jobTraining->reference_document_no_5 ?? '') }}">
+    <input type="text" id="document_number5" 
+           value="{{ old('document_number5', $jobTraining->reference_document_no_5 ? 
+           $jobTraining->sop_type_short . '/' . $jobTraining->department_id . '/000' . $jobTraining->reference_document_no_5 . '/R' . $jobTraining->major : '') }}" readonly>
+</td>
 <td>
     <select name="trainer_5" id="trainer_5">
         <option value="">-- Select --</option>
@@ -698,9 +750,12 @@
 <td><input type="date" name="startdate_5" id="startdate_5" value="{{ old('startdate_5', $jobTraining->startdate_5 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
 <td><input type="date" name="enddate_5" id="enddate_5" value="{{ old('enddate_5', $jobTraining->enddate_5 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
 <td>
-    <a href="{{ $jobTraining->reference_document_no_5 ? '/documents/viewpdf/' . $jobTraining->reference_document_no_5 : '#' }}" id="view_sop5" target="_blank" style="display: {{ $jobTraining->reference_document_no_5 ? 'inline' : 'none' }};">View SOP</a>
+    <a href="{{ $jobTraining->reference_document_no_5 ? '/documents/viewpdf/' . $jobTraining->reference_document_no_5 : '#' }}" 
+       id="view_sop5" target="_blank" 
+       style="display: {{ $jobTraining->reference_document_no_5 ? 'inline' : 'none' }};">
+        View SOP
+    </a>
 </td>
-<input type="hidden" name="reference_document_no_5" id="selected_document_id5" value="{{ old('reference_document_no_5', $jobTraining->reference_document_no_5 ?? '') }}">
 </tr>
 
                                                 </tbody>
@@ -816,71 +871,97 @@
   function fetchDocumentDetails(selectElement) {
     var selectedOption = selectElement.options[selectElement.selectedIndex];
 
-    var documentName = selectedOption.value;
     var documentNumber = selectedOption.getAttribute('data-doc-number');
     var documentId = selectedOption.getAttribute('data-sop-id');
+    document.getElementById('reference_document_no_1').value = documentId;
 
     document.getElementById('document_number').value = documentNumber;
-    document.getElementById('selected_document_id').value = documentId;
 
-    // Update the "View SOP" link's href based on the selected document's ID
     var sopAnchor = document.getElementById('view_sop');
     if (documentId) {
-        sopAnchor.href = '/documents/viewpdf/' + documentId; // Correct SOP path
-        sopAnchor.style.display = 'inline'; // Show the "View SOP" link
-    } else {
-        sopAnchor.style.display = 'none'; // Hide the "View SOP" link if no document is selected
-    }
-
-    // Log values for debugging
-    console.log("Document Name:", documentName);
-    console.log("Document Number (displayed):", documentNumber);
-    console.log("Document ID (stored):", documentId);
-}
-
-</script>
-<script>
-    function fetchDocumentDetails2(selectElement) {
-    var selectedOption = selectElement.options[selectElement.selectedIndex];
-
-    var documentName = selectedOption.value; 
-    var documentNumber = selectedOption.getAttribute('data-doc-number');
-    var documentId = selectedOption.getAttribute('data-sop-id');
-    
-    // Update document number input (this shows the document number, but ID will be stored in the database)
-    document.getElementById('document_number2').value = documentNumber;
-
-    // Update the hidden field where the actual document ID will be stored for the database
-    document.getElementById('selected_document_id2').value = documentId;
-
-    // Update the "View SOP" link's href based on the selected document's ID
-    var sopAnchor = document.getElementById('view_sop2');
-    if (documentId) {
-        sopAnchor.href = '/documents/viewpdf/' + documentId; // Correct SOP path
-        sopAnchor.style.display = 'inline'; // Show the "View SOP" link
+        sopAnchor.href = '/documents/viewpdf/' + documentId;
+        sopAnchor.style.display = 'inline';
     } else {
         sopAnchor.style.display = 'none';
     }
 
-    console.log("Document Name:", documentName);
     console.log("Document Number (displayed):", documentNumber);
     console.log("Document ID (stored):", documentId);
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    var existingDocId = document.getElementById('reference_document_no_1').value;
+    var selectElement = document.getElementById('sopdocument');
+
+    if (existingDocId) {
+        for (var i = 0; i < selectElement.options.length; i++) {
+            var option = selectElement.options[i];
+            if (option.getAttribute('data-sop-id') == existingDocId) {
+                selectElement.selectedIndex = i;
+                fetchDocumentDetails(selectElement);
+                break;
+            }
+        }
+    }
+});
 </script>
 
 <script>
-     function fetchDocumentDetails3(selectElement) {
+   function fetchDocumentDetails2(selectElement) {
     var selectedOption = selectElement.options[selectElement.selectedIndex];
 
-    var documentName = selectedOption.value; 
+    var documentNumber = selectedOption.getAttribute('data-doc-number');
+    var documentId = selectedOption.getAttribute('data-sop-id');
+
+    // Update the hidden input field with document ID
+    document.getElementById('reference_document_no_2').value = documentId;
+
+    // Update the document number input field with full document number
+    document.getElementById('document_number2').value = documentNumber;
+
+    // Update the "View SOP" link
+    var sopAnchor = document.getElementById('view_sop2'); // Corrected to view_sop2
+    if (documentId) {
+        sopAnchor.href = '/documents/viewpdf/' + documentId;
+        sopAnchor.style.display = 'inline';
+    } else {
+        sopAnchor.style.display = 'none';
+    }
+
+    console.log("Document Number (displayed):", documentNumber);
+    console.log("Document ID (stored):", documentId);
+}
+
+// Load the document details based on the existing job training record (if any)
+document.addEventListener("DOMContentLoaded", function() {
+    var existingDocId = document.getElementById('reference_document_no_2').value;
+    var selectElement = document.getElementById('sopdocument2');
+
+    if (existingDocId) {
+        // Find the corresponding option based on the existing document ID
+        for (var i = 0; i < selectElement.options.length; i++) {
+            var option = selectElement.options[i];
+            if (option.getAttribute('data-sop-id') == existingDocId) {
+                selectElement.selectedIndex = i; // Select the option
+                fetchDocumentDetails2(selectElement); // Call the correct function
+                break;
+            }
+        }
+    }
+});
+
+</script>
+
+<script>
+    function fetchDocumentDetails3(selectElement) {
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
+
     var documentNumber = selectedOption.getAttribute('data-doc-number');
     var documentId = selectedOption.getAttribute('data-sop-id');
     
+    document.getElementById('reference_document_no_3').value = documentId;
     document.getElementById('document_number3').value = documentNumber;
 
-    document.getElementById('selected_document_id3').value = documentId;
-
-    // Update the "View SOP" link's href based on the selected document's ID
     var sopAnchor = document.getElementById('view_sop3');
     if (documentId) {
         sopAnchor.href = '/documents/viewpdf/' + documentId;
@@ -888,26 +969,35 @@
     } else {
         sopAnchor.style.display = 'none';
     }
-
-    console.log("Document Name:", documentName);
-    console.log("Document Number (displayed):", documentNumber);
-    console.log("Document ID (stored):", documentId);
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    var existingDocId = document.getElementById('reference_document_no_3').value;
+    var selectElement = document.getElementById('sopdocument3');
+
+    if (existingDocId) {
+        for (var i = 0; i < selectElement.options.length; i++) {
+            var option = selectElement.options[i];
+            if (option.getAttribute('data-sop-id') == existingDocId) {
+                selectElement.selectedIndex = i;
+                fetchDocumentDetails3(selectElement);
+                break;
+            }
+        }
+    }
+});
 </script>
 
 <script>
-     function fetchDocumentDetails4(selectElement) {
+    function fetchDocumentDetails4(selectElement) {
     var selectedOption = selectElement.options[selectElement.selectedIndex];
 
-    var documentName = selectedOption.value; 
     var documentNumber = selectedOption.getAttribute('data-doc-number');
     var documentId = selectedOption.getAttribute('data-sop-id');
     
+    document.getElementById('reference_document_no_4').value = documentId;
     document.getElementById('document_number4').value = documentNumber;
 
-    document.getElementById('selected_document_id4').value = documentId;
-
-    // Update the "View SOP" link's href based on the selected document's ID
     var sopAnchor = document.getElementById('view_sop4');
     if (documentId) {
         sopAnchor.href = '/documents/viewpdf/' + documentId;
@@ -915,24 +1005,34 @@
     } else {
         sopAnchor.style.display = 'none';
     }
-
-    console.log("Document Name:", documentName);
-    console.log("Document Number (displayed):", documentNumber);
-    console.log("Document ID (stored):", documentId);
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    var existingDocId = document.getElementById('reference_document_no_4').value;
+    var selectElement = document.getElementById('sopdocument4');
+
+    if (existingDocId) {
+        for (var i = 0; i < selectElement.options.length; i++) {
+            var option = selectElement.options[i];
+            if (option.getAttribute('data-sop-id') == existingDocId) {
+                selectElement.selectedIndex = i;
+                fetchDocumentDetails4(selectElement);
+                break;
+            }
+        }
+    }
+});
 </script>
 
 <script>
-     function fetchDocumentDetails5(selectElement) {
+  function fetchDocumentDetails5(selectElement) {
     var selectedOption = selectElement.options[selectElement.selectedIndex];
 
-    var documentName = selectedOption.value; 
     var documentNumber = selectedOption.getAttribute('data-doc-number');
     var documentId = selectedOption.getAttribute('data-sop-id');
     
+    document.getElementById('reference_document_no_5').value = documentId;
     document.getElementById('document_number5').value = documentNumber;
-
-    document.getElementById('selected_document_id5').value = documentId;
 
     var sopAnchor = document.getElementById('view_sop5');
     if (documentId) {
@@ -941,11 +1041,23 @@
     } else {
         sopAnchor.style.display = 'none';
     }
-
-    console.log("Document Name:", documentName);
-    console.log("Document Number (displayed):", documentNumber);
-    console.log("Document ID (stored):", documentId);
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    var existingDocId = document.getElementById('reference_document_no_5').value;
+    var selectElement = document.getElementById('sopdocument5');
+
+    if (existingDocId) {
+        for (var i = 0; i < selectElement.options.length; i++) {
+            var option = selectElement.options[i];
+            if (option.getAttribute('data-sop-id') == existingDocId) {
+                selectElement.selectedIndex = i;
+                fetchDocumentDetails5(selectElement);
+                break;
+            }
+        }
+    }
+});
 </script>
 
 
@@ -1792,6 +1904,152 @@ if (marks >= percentageRequired) {
                         </div>
                     </div>
                 </div>
+
+                <div id="CCForm10" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Activated By">Submit By</label>
+                                <div class="static">{{ $jobTraining->submit_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Activated On">Submit On</label>
+                                <div class="static">
+                                    {{ $jobTraining->submit_on }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Activated On">Submit Comment</label>
+                                <div class="static">
+                                    {{ $jobTraining->submit_comment }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for=" Rejected By">Approval Complete By</label>
+                                <div class="static">{{ $jobTraining->approval_complete_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Approval Complete On</label>
+                                <div class="static">{{ $jobTraining->approval_complete_on }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Approval Complete Comment</label>
+                                <div class="static">{{ $jobTraining->approval_complete_comment }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Answer Submit By</label>
+                                <div class="static">{{ $jobTraining->answer_submit_by }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Answer Submit On</label>
+                                <div class="static">{{ $jobTraining->answer_submit_on }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Answer Submit Comment</label>
+                                <div class="static">{{ $jobTraining->answer_submit_comment }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Evaluation Complete By</label>
+                                <div class="static">{{ $jobTraining->evaluation_complete_by }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Evaluation Complete On</label>
+                                <div class="static">{{ $jobTraining->evaluation_complete_on }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Evaluation Complete Comment</label>
+                                <div class="static">{{ $jobTraining->evaluation_complete_comment }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">QA/CQA Head Review Complete By</label>
+                                <div class="static">{{ $jobTraining->qa_head_review_complete_by }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">QA/CQA Head Review Complete On</label>
+                                <div class="static">{{ $jobTraining->qa_head_review_complete_on }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">QA/CQA Head Review Complete Comment</label>
+                                <div class="static">{{ $jobTraining->qa_head_review_complete_comment }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Verification and Approval Complete By</label>
+                                <div class="static">{{ $jobTraining->verification_approval_complete_by }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Verification and Approval Complete On</label>
+                                <div class="static">{{ $jobTraining->verification_approval_complete_on }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Verification and Approval Complete Comment</label>
+                                <div class="static">{{ $jobTraining->verification_approval_complete_comment }}
+                                </div>
+                            </div>
+                        </div>
+                       
+
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" class="saveButton"> <a href="{{ url('TMS') }}" class="text-white">
+                                Save </a></button>
+                        {{-- <button type="button" class="backButton">Back</button> --}}
+                        </a>
+                        {{-- <button type="submit">Submit</button> --}}
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
+                                Exit </a> </button>
+                    </div>
+                </div>
+            </div>
+            </div>
         </form>
 
     </div>

@@ -230,6 +230,8 @@ $users = DB::table('users')->get();
                 @endif
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">On The Job Training</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Activity Log</button>
+
         </div>
 
         <script>
@@ -282,7 +284,8 @@ $users = DB::table('users')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Division Code">Department</label>
-                                    <select disabled name="department">
+                                    <input disabled type="text" name="department" value="{{ $inductionTraining->department }}">
+                                    {{-- <select disabled name="department">
                                             <option value="">-- Select Dept --</option>
                                             @php
                                                 $savedDepartmentId = old('department', $inductionTraining->department);
@@ -293,7 +296,7 @@ $users = DB::table('users')->get();
                                                     @if ($savedDepartmentId == $code) selected @endif>{{ $department }}
                                                 </option>
                                             @endforeach
-                                        </select>
+                                    </select> --}}
                                 </div>
                             </div>
                             {{-- <div class="col-lg-6">
@@ -315,29 +318,14 @@ $users = DB::table('users')->get();
                             <div class="col-lg-6">
     <div class="group-input">
         <label for="Job Title">Designation<span class="text-danger">*</span></label>
-        <select name="designation" id="job_title" required onchange="checkDesignation()">
-            <option value="">----Select---</option>
-            <option value="Trainee" {{ $inductionTraining->designation == 'Trainee' ? 'selected' : '' }}>Trainee</option>
-            <option value="Officer" {{ $inductionTraining->designation == 'Officer' ? 'selected' : '' }}>Officer</option>
-            <option value="Sr. Officer" {{ $inductionTraining->designation == 'Sr. Officer' ? 'selected' : '' }}>Sr. Officer</option>
-            <option value="Executive" {{ $inductionTraining->designation == 'Executive' ? 'selected' : '' }}>Executive</option>
-            <option value="Sr. Executive" {{ $inductionTraining->designation == 'Sr. Executive' ? 'selected' : '' }}>Sr. Executive</option>
-            <option value="Asst. manager" {{ $inductionTraining->designation == 'Asst. manager' ? 'selected' : '' }}>Asst. Manager</option>
-            <option value="Manager" {{ $inductionTraining->designation == 'Manager' ? 'selected' : '' }}>Manager</option>
-            <option value="Sr. manager" {{ $inductionTraining->designation == 'Sr. manager' ? 'selected' : '' }}>Sr. Manager</option>
-            <option value="Deputy GM" {{ $inductionTraining->designation == 'Deputy GM' ? 'selected' : '' }}>Deputy GM</option>
-            <option value="AGM and GM" {{ $inductionTraining->designation == 'AGM and GM' ? 'selected' : '' }}>AGM and GM</option>
-            <option value="Head quality" {{ $inductionTraining->designation == 'Head quality' ? 'selected' : '' }}>Head quality</option>
-            <option value="VP quality" {{ $inductionTraining->designation == 'VP quality' ? 'selected' : '' }}>VP quality</option>
-            <option value="Plant head" {{ $inductionTraining->designation == 'Plant head' ? 'selected' : '' }}>Plant head</option>
-        </select>
+        <input type="text" name="designation_visible" id="job_title" required oninput="checkDesignation()" value="{{ $inductionTraining->designation }}" readonly>
+        <input type="hidden" name="designation" id="hidden_designation" value="{{ $inductionTraining->designation }}" readonly>
     </div>
 </div>
 
-<!-- The "Is Questionaries Required?" input field -->
 <div class="col-lg-6" id="yesNoField" style="display: none;">
     <div class="group-input">
-        <label for="questionariesRequired">Evaluation Required Required?<span class="text-danger">*</span></label>
+        <label for="questionariesRequired">Evaluation Required?<span class="text-danger">*</span></label>
         <select name="questionaries_required" id="questionaries_required" onchange="checkYesNo()">
             <option value="">Select</option>
             <option value="Yes" {{ $inductionTraining->questionaries_required == 'Yes' ? 'selected' : '' }}>Yes</option>
@@ -347,32 +335,24 @@ $users = DB::table('users')->get();
 </div>
 
 <script>
-    // Arrays to identify lower and higher designations
-    const lowerDesignations = ['Trainee', 'Officer', 'Sr. Officer', 'Executive', 'Sr. Executive'];
     const higherDesignations = ['Asst. manager', 'Manager', 'Sr. manager', 'Deputy GM', 'AGM and GM', 'Head quality', 'VP quality', 'Plant head'];
 
-    // Function to check the selected designation and control the visibility of the Yes/No field and Questionaries tab
+    // Function to check the designation and control the fields
     function checkDesignation() {
-        const selectedDesignation = document.getElementById('job_title').value;
+        const selectedDesignation = document.getElementById('job_title').value.trim();
         const yesNoField = document.getElementById('yesNoField');
-        const questionariesTab = document.getElementById('questionariesTab');
 
-        if (lowerDesignations.includes(selectedDesignation)) {
-            // For lower designations, always show the Questionaries tab
-            questionariesTab.style.display = 'inline';
-            yesNoField.style.display = 'none';  // No need to show the Yes/No field
-        } else if (higherDesignations.includes(selectedDesignation)) {
-            // For higher designations, show the Yes/No field to ask if Questionaries is required
+        // Show or hide Evaluation Required? field based on the entered designation
+        if (higherDesignations.includes(selectedDesignation)) {
             yesNoField.style.display = 'block';
-            // Hide the Questionaries tab initially until user selects "Yes"
-            questionariesTab.style.display = 'none';
         } else {
-            // If no valid designation is selected, hide both fields
             yesNoField.style.display = 'none';
-            questionariesTab.style.display = 'none';
         }
+
+        document.getElementById('hidden_designation').value = selectedDesignation;
     }
 
+    // Function to check if 'Yes' is selected in Evaluation Required
     function checkYesNo() {
         const questionariesRequired = document.getElementById('questionaries_required').value;
         const questionariesTab = document.getElementById('questionariesTab');
@@ -384,17 +364,24 @@ $users = DB::table('users')->get();
         }
     }
 
-    // Initial check on page load (to handle pre-selected values)
     document.addEventListener("DOMContentLoaded", function() {
+        const hiddenDesignation = document.getElementById('hidden_designation').value;
+        const jobTitleInput = document.getElementById('job_title');
+
+        // Set the input field to the pre-selected designation (from the database)
+        jobTitleInput.value = hiddenDesignation;
+
+        // Call checkDesignation after setting the value
         checkDesignation();
-        // If higher designation and "Yes" is already selected, show the Questionaries tab
+
+        // Check if Evaluation Required? field should be shown based on the saved data
         if (document.getElementById('questionaries_required').value === 'Yes') {
-            document.getElementById('questionariesTab').style.display = 'inline';
+            document.getElementById('yesNoField').style.display = 'block';
         }
     });
 </script>
 
- 
+
                             
                             <div class="col-6">
                                 <div class="group-input">
@@ -438,21 +425,7 @@ $users = DB::table('users')->get();
                                     </div>
                                 </div>
 
-                            {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="hod">Evaluation Required</label>
-                                    <select name="evaluation_required" id="" >
-                                        <option value="">----Select---</option>
-                                        <option value="Yes"
-                                                {{ $inductionTraining->evaluation_required == 'Yes' ? 'selected' : '' }}>Yes
-                                        </option>
-                                        <option value="No"
-                                                {{ $inductionTraining->evaluation_required == 'No' ? 'selected' : '' }}>
-                                                No
-                                        </option>
-                                    </select>
-                                </div>
-                            </div> --}}
+
 
                             <div class="col-12">
                                 <div class="group-input">
@@ -1459,17 +1432,15 @@ $users = DB::table('users')->get();
         fetchSopLink(sopSelect);
     };
 </script>
-                            <div class="col-6">
+                            {{-- <div class="col-6">
                                 <div class="group-input">
                                     <label for="severity-level">HR Department</label>
-
                                     <select name="hr_name" value="{{ $inductionTraining->hr_name }}">
                                         <option value="0">-- Select --</option>
                                         <option value="hr" {{ $inductionTraining->hr_name == "hr" ? 'selected' : '' }}>HR </option>
-
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -1478,12 +1449,27 @@ $users = DB::table('users')->get();
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="HOD Persons">HOD</label>
+                                        <select name="trainee_name" id="hod">
+                                            <option value="">-- Select HOD --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}"
+                                                    {{ $user->id == old('trainee_name', $inductionTraining->trainee_name) ? 'selected' : '' }}>
+                                                    {{ $user->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="trainer_name">Trainer Name</label>
                                     <input type="text" value="{{ $inductionTraining->trainee_name }}" readonly>
                                 </div>
-                            </div>
+                            </div> --}}
                             {{-- <div class="col-6">
                                 <div class="group-input">
                                     <label for="severity-level">Trainer Name</label>
@@ -1873,185 +1859,152 @@ if (marks >= percentageRequired) {
                 </div>
 
                 @if ($inductionTraining->stage >= 5)
-                <div id="CCForm8" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                <div class="button-block">
-                                    <button type="button" class="printButton" onclick="printCertificate()">
-                                        <i class="fas fa-print"></i>Print
-                                    </button>
-                                </div>
+<div id="CCForm8" class="inner-block cctabcontent">
+    <div class="inner-block-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="button-block">
+                    <button type="button" class="printButton" onclick="printCertificate()">
+                        <i class="fas fa-print"></i>Print
+                    </button>
+                </div>
 
-                                <div class="certificate-container">
-                                <h1 class="certificate-title">TRAINER CERTIFICATE</h1>
-                                <!-- <h2 class="certificate-subtitle">Certificate of Trainer</h2> -->
-                                <p class="certificate-content">
-                                    This is to certify that Mr. / Ms. / Mrs. <strong>{{ \App\Models\Employee::find($inductionTraining->name_employee)?->employee_name ?? 'Employee not found' }}</strong> has appropriate Qualification / skill / thorough knowledge/ and experience in the <strong>{{ Helpers::getFullDepartmentName($inductionTraining->department ) }}</strong> section/Department for more than <strong>{{$inductionTraining->experience_if_any}}</strong> years, and hence is declared as the trainer of <strong>{{ Helpers::getFullDepartmentName($inductionTraining->department ) }}</strong> Department.
-                                </p>
-                                <div class="signature-section">
-                                    <div class="signature">
-                                        <div class="signature-line"></div>
-                                        Sign / Date: _______________ <br>Head of Department 
-                                    </div>
-                                    <div class="signature">
-                                        <div class="signature-line"></div>
-                                        Sign / Date: _______________ <br>  Head QA/CQA
-                                    </div>
-                                </div>
-                            </div>
-                
-                                <div style="margin-top: 40px;" class="button-block">
-                                <button type="submit" class=" btn btn saveButton">Save</button>
-                                <button type="button" id="ChangeNextButton" class=" btn btn nextButton">Next</button>
-                                </div>
-                            </div>
+                <div class="certificate-container">
+                    <h1 class="certificate-title">TRAINER CERTIFICATE</h1>
+                    <p class="certificate-content">
+                        This is to certify that Mr. / Ms. / Mrs. <strong>{{ \App\Models\Employee::find($inductionTraining->name_employee)?->employee_name ?? 'Employee not found' }}</strong> has appropriate Qualification / skill / thorough knowledge/ and experience in the <strong>{{ Helpers::getFullDepartmentName($inductionTraining->department ) }}</strong> section/Department for more than <strong>{{$inductionTraining->experience_if_any}}</strong> years, and hence is declared as the trainer of <strong>{{ Helpers::getFullDepartmentName($inductionTraining->department ) }}</strong> Department.
+                    </p>
+                    <div class="signature-section">
+                        <div class="signature">
+                            <div class="signature-line"></div>
+                            Sign / Date: _______________ <br>Head of Department
+                        </div>
+                        <div class="signature">
+                            <div class="signature-line"></div>
+                            Sign / Date: _______________ <br>Head QA/CQA
                         </div>
                     </div>
-                @endif
-                <style>
+                </div>
 
-           .certificate-container {
-            width: 800px;
-            height: 425px;
-            border: 4px solid #0c0d0d;
-            padding: 18px;
-            background-color: white;
-            position: relative;
-            margin: auto;
-            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+                <div style="margin-top: 40px;" class="button-block">
+                    <button type="submit" class="btn btn saveButton">Save</button>
+                    <button type="button" id="ChangeNextButton" class="btn btn nextButton">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
 
-        
-        }
-        .certificate-container h1, .certificate-container h2, .certificate-container p {
-            text-align: center;
-        }
-        .certificate-title {
-            /* font-size: 30px;
-            font-weight: bold;
-            color: #677078;
-            display: flex;
-            justify-content: center; */
-            font-size: 36px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .certificate-subtitle {
-            /* font-size: 18px;
-            color: #555; */
-            font-size: 24px;
-            margin-bottom: 40px;
-        }
-        .certificate-description {
-            margin-top: 30px;
-            font-size: 18px;
-            color: #333;
-        }
-       
-        .certificate-content {
-            /* font-size: 18px; */
-            line-height: 1.5;
-            margin: 0 20px;
-            text-align: left;
-        }
-        .signature-section {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 50px;
-            margin-left: 50px;
-            margin-right: 50px;
-        }
-        .signature {
-            text-align: center;
-            font-size: 16px;
-        }
-
-        .signature-line {
-            margin-top: 40px;
-            /* border-top: 1px solid #000; */
-            width: 200px;
-            height: 0;
-        }
-          
-        @media print {
-            .button-block {
-                display: none !important; 
-            }
-
-            body * {
-                visibility: hidden;
-            }
-
-            #CCForm4, #CCForm4 * {
-                visibility: visible;
-            }
-
-            #CCForm4 {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-            }
-        }
-        .button-block {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 50px;
-        }
-
-        .printButton {
-            background-color: #2c3e50;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-            float: right; 
-        }
-
-        .printButton:hover {
-            background-color: #1a252f;
-        }
-
-        .printButton i {
-            margin-right: 8px; 
-        }
-
-        @media print {
-    .button-block {
-        display: none !important; 
-    }
-
-    body * {
-        visibility: hidden;
-    }
-
-    .certificate-container, .certificate-container * {
-        visibility: visible;
-    }
-
+<!-- CSS Styling -->
+<style>
     .certificate-container {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
+        width: 800px;
+        height: 425px;
+        border: 4px solid #0c0d0d;
+        padding: 18px;
+        background-color: white;
+        position: relative;
+        margin: auto;
+        box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
     }
-}
 
-            </style>
+    .certificate-container h1,
+    .certificate-container h2,
+    .certificate-container p {
+        text-align: center;
+    }
 
+    .certificate-title {
+        font-size: 36px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
 
-                <script>
-                        function printCertificate() {
-                        var buttons = document.querySelector(".button-block");
-                        buttons.style.display = 'none';
-                        window.print();
-                        buttons.style.display = 'block';
-                    }
+    .certificate-content {
+        line-height: 1.5;
+        margin: 0 20px;
+        text-align: left;
+    }
 
-                </script>
+    .signature-section {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+
+    .signature {
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .signature-line {
+        margin-top: 40px;
+        width: 200px;
+        height: 0;
+    }
+
+    @media print {
+        .button-block {
+            display: none !important;
+        }
+
+        body * {
+            visibility: hidden;
+        }
+
+        .certificate-container,
+        .certificate-container * {
+            visibility: visible;
+        }
+
+        .certificate-container {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+    }
+
+    .button-block {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 50px;
+    }
+
+    .printButton {
+        background-color: #2c3e50;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        float: right;
+    }
+
+    .printButton:hover {
+        background-color: #1a252f;
+    }
+
+    .printButton i {
+        margin-right: 8px;
+    }
+</style>
+
+<!-- JavaScript -->
+<script>
+    function printCertificate() {
+        var buttons = document.querySelector(".button-block");
+        buttons.style.display = 'none';  // Buttons ko hide karenge
+        window.print();  // Print dialog ko open karenge
+        buttons.style.display = 'flex';  // Print ke baad buttons wapas visible karenge
+    }
+</script>
+
                 <script>
                     document.getElementById("saveForm").addEventListener("click", function(event) {
                         let questionInputs = document.querySelectorAll(".question-input");
@@ -2103,6 +2056,174 @@ if (marks >= percentageRequired) {
                         </div>
                     </div>
                 </div>
+
+            <!-- Activity Log content -->
+            <div id="CCForm10" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Activated By">Submit By</label>
+                                <div class="static">{{ $inductionTraining->submit_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Activated On">Submit On</label>
+                                <div class="static">
+                                    {{ $inductionTraining->submit_on }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Activated On">Submit Comment</label>
+                                <div class="static">
+                                    {{ $inductionTraining->submit_comment }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for=" Rejected By">Answer Submit By</label>
+                                <div class="static">{{ $inductionTraining->answer_submit_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Answer Submit On</label>
+                                <div class="static">{{ $inductionTraining->answer_submit_on }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Answer Submit Comment</label>
+                                <div class="static">{{ $inductionTraining->answer_submit_comment }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Evaluation Complete By</label>
+                                <div class="static">{{ $inductionTraining->evaluation_complete_by }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Evaluation Complete On</label>
+                                <div class="static">{{ $inductionTraining->evaluation_complete_on }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Evaluation Complete Comment</label>
+                                <div class="static">{{ $inductionTraining->evaluation_complete_comment }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Approval Complete By</label>
+                                <div class="static">{{ $inductionTraining->approval_complete_by }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Approval Complete On</label>
+                                <div class="static">{{ $inductionTraining->approval_complete_on }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Approval Complete Comment</label>
+                                <div class="static">{{ $inductionTraining->approval_complete_comment }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">QA/CQA Head Approval Complete By</label>
+                                <div class="static">{{ $inductionTraining->qa_head_approval_complete_by }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">QA/CQA Head Approval Complete On</label>
+                                <div class="static">{{ $inductionTraining->qa_head_approval_complete_on }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">QA/CQA Head Approval Complete Comment</label>
+                                <div class="static">{{ $inductionTraining->qa_head_approval_complete_comment }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Send To OJT By</label>
+                                <div class="static">{{ $inductionTraining->Send_To_OJT_by }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Send To OJT On</label>
+                                <div class="static">{{ $inductionTraining->Send_To_OJT_on }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Send To OJT Comment</label>
+                                <div class="static">{{ $inductionTraining->Send_To_OJT_comment }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Creation Complete By</label>
+                                <div class="static">{{ $inductionTraining->creation_complete_by }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Creation Complete On</label>
+                                <div class="static">{{ $inductionTraining->creation_complete_on }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Creation Complete Comment</label>
+                                <div class="static">{{ $inductionTraining->creation_complete_comment }}
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" class="saveButton"> <a href="{{ url('TMS') }}" class="text-white">
+                                Save </a></button>
+                        <!-- <a href="/rcms/qms-dashboard"> -->
+                        {{-- <button type="button" class="backButton">Back</button> --}}
+                        </a>
+                        {{-- <button type="submit">Submit</button> --}}
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
+                                Exit </a> </button>
+                    </div>
+                </div>
+            </div>
 
             </div>
         </form>
@@ -2296,6 +2417,10 @@ if (marks >= percentageRequired) {
                             <label style="display: flex;" for="major">
                                 <input type="radio" name="child_type" id="major" value="job_training">
                                 On The Job Training
+                            </label>
+                            <label style="display: flex;" for="major">
+                                <input type="radio" name="child_type" id="major" value="job_description">
+                                Job Description
                             </label>
 
                         </div>
