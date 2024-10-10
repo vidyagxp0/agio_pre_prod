@@ -2220,7 +2220,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                     <div class="group-input">
-                                                        <label for="HOD Remarks">Review Of Incident And Verification Of Effectiveness Of Corrcetion</label>
+                                                        <label for="HOD Remarks">Review Of Incident And Verification Of Effectiveness Of Correction</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="review_of_verific" {{ $data->stage == 2 ? '' : 'readonly' }}>{{ $data->review_of_verific }}</textarea>
