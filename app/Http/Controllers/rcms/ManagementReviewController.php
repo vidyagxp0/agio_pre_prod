@@ -740,8 +740,8 @@ class ManagementReviewController extends Controller
         $hodCft->hod_CorporateQualityAssurance_assessment = $request->hod_CorporateQualityAssurance_assessment;
         $hodCft->hod_CorporateQualityAssurance_feedback = $request->hod_CorporateQualityAssurance_feedback;
         $hodCft->hod_CorporateQualityAssurance_by = $request->hod_CorporateQualityAssurance_by;
+        // dd($hodCft->hod_CorporateQualityAssurance_by);
         $hodCft->hod_CorporateQualityAssurance_on = $request->hod_CorporateQualityAssurance_on;
-
         $hodCft->hod_ContractGiver_Review = $request->hod_ContractGiver_Review;
         $hodCft->hod_ContractGiver_person = $request->hod_ContractGiver_person;
         $hodCft->hod_ContractGiver_assessment = $request->hod_ContractGiver_assessment;
@@ -5663,8 +5663,8 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 1 Department';
-            $history->previous = $lastCft->Other1_Department_person;
-            $history->current = $request->Other1_Department_person;
+            $history->previous = Helpers::getFullDepartmentName ($lastCft->Other1_Department_person);
+            $history->current =Helpers::getFullDepartmentName ($request->Other1_Department_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5846,8 +5846,8 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 2 Department';
-            $history->previous = $lastCft->Other2_Department_person;
-            $history->current = $request->Other2_Department_person;
+            $history->previous = Helpers::getFullDepartmentName($lastCft->Other2_Department_person);
+            $history->current = Helpers::getFullDepartmentName($request->Other2_Department_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6028,8 +6028,8 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 3 Department';
-            $history->previous = $lastCft->Other3_Department_person;
-            $history->current = $request->Other3_Department_person;
+            $history->previous = Helpers::getFullDepartmentName($lastCft->Other3_Department_person);
+            $history->current = Helpers::getFullDepartmentName($request->Other3_Department_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6210,8 +6210,8 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Others 4 Department';
-            $history->previous = $lastCft->Other4_Department_person;
-            $history->current = $request->Other4_Department_person;
+            $history->previous =Helpers::getFullDepartmentName( $lastCft->Other4_Department_person);
+            $history->current = Helpers::getFullDepartmentName($request->Other4_Department_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6393,8 +6393,8 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 5 Department';
-            $history->previous = $lastCft->Other5_Department_person;
-            $history->current = $request->Other5_Department_person;
+            $history->previous = Helpers::getFullDepartmentName($lastCft->Other5_Department_person);
+            $history->current =Helpers::getFullDepartmentName ($request->Other5_Department_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -9447,40 +9447,42 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             // }
 
               if ($changeControl->stage == 5) {
-
-                    // CFT review state update form_progress
-                    // if ($changeControl->form_progress !== 'cft')
-                    // {
+                  
+                  // CFT review state update form_progress
+                  // if ($changeControl->form_progress !== 'cft')
+                  // {
                     //     Session::flash('swal', [
-                    //         'type' => 'warning',
-                    //         'title' => 'Mandatory Fields!',
-                    //         'message' => 'CFT Tab is yet to be filled'
-                    //     ]);
-
-                    //     return redirect()->back();
-                    // }
-                    //  else {
+                        //         'type' => 'warning',
+                        //         'title' => 'Mandatory Fields!',
+                        //         'message' => 'CFT Tab is yet to be filled'
+                        //     ]);
+                        
+                        //     return redirect()->back();
+                        // }
+                        //  else {
                     //     Session::flash('swal', [
-                    //         'type' => 'success',
-                    //         'title' => 'Success',
-                    //         'message' => 'Sent for Investigation and CAPA review state'
-                    //     ]);
+                        //         'type' => 'success',
+                        //         'title' => 'Success',
+                        //         'message' => 'Sent for Investigation and CAPA review state'
+                        //     ]);
                     // }
 
-
+                    
                     $IsCFTRequired = hodmanagementCft_Response::withoutTrashed()->where(['is_required' => 1, 'ManagementReview_id' => $id])->latest()->first();
                     $hodcftUsers = DB::table('hodmanagement_cfts')->where(['ManagementReview_id' => $id])->first();
+                    // dd($hodcftUsers);
                     // Define the column names
                     $columns2 = ['hod_Quality_Control_Person', 'hod_QualityAssurance_person', 'hod_Engineering_person', 'hod_Environment_Health_Safety_person', 'hod_Human_Resource_person', 'hod_Other1_person', 'hod_Other2_person', 'hod_Other3_person', 'hod_Other4_person', 'hod_Other5_person', 'hod_Production_Table_Person','hod_ProductionLiquid_person','hod_Production_Injection_Person','hod_Store_person','hod_ResearchDevelopment_person','hod_Microbiology_person','hod_RegulatoryAffair_person','hod_CorporateQualityAssurance_person','hod_ContractGiver_person'];
                     // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
-
+                    
                     // Initialize an array to store the values
                     $valuesArray = [];
-
+                    
                     // Iterate over the columns and retrieve the values
                     foreach ($columns2 as $index => $column) {
                         $value = $hodcftUsers->$column;
-                       if ($index == 0 && $hodcftUsers->$column == Auth::user()->name) {
+                        if ($index == 0 && $hodcftUsers->$column == Auth::user()->name) {
+                           
     $updatehodCFT->hod_Quality_Control_by = Auth::user()->name;
     $updatehodCFT->hod_Quality_Control_on = Carbon::now()->format('Y-m-d');
 
@@ -9666,7 +9668,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     // }
                     //         $history->save();
                     //     }
-                        if($index == 6 && $hodcftUsers->$column == Auth::user()->name){
+                        if($index == 5 && $hodcftUsers->$column == Auth::user()->name){
                             $updatehodCFT->hod_Other1_by = Auth::user()->name;
                             $updatehodCFT->hod_Other1_on = Carbon::now()->format('Y-m-d');
                             $history = new ManagementAuditTrial();
@@ -9695,7 +9697,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     }
                             $history->save();
                         }
-                        if($index == 7 && $hodcftUsers->$column == Auth::user()->name){
+                        if($index == 6 && $hodcftUsers->$column == Auth::user()->name){
                             $updatehodCFT->hod_Other2_by = Auth::user()->name;
                             $updatehodCFT->hod_Other2_on = Carbon::now()->format('Y-m-d');
                             $history = new ManagementAuditTrial();
@@ -9725,7 +9727,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     }
                             $history->save();
                         }
-                        if($index == 8 && $hodcftUsers->$column == Auth::user()->name){
+                        if($index == 7 && $hodcftUsers->$column == Auth::user()->name){
                             $updatehodCFT->hod_Other3_by = Auth::user()->name;
                             $updatehodCFT->hod_Other3_on = Carbon::now()->format('Y-m-d');
                             $history = new ManagementAuditTrial();
@@ -9754,7 +9756,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     }
                             $history->save();
                         }
-                        if($index == 9 && $hodcftUsers->$column == Auth::user()->name){
+                        if($index == 8 && $hodcftUsers->$column == Auth::user()->name){
                             $updatehodCFT->hod_Other4_by = Auth::user()->name;
                             $updatehodCFT->hod_Other4_on = Carbon::now()->format('Y-m-d');
                             $history = new ManagementAuditTrial();
@@ -9782,7 +9784,7 @@ $history->activity_type = 'HOD Others 4 Completed By,HOD Others 4 Completed On';
                     }
                             $history->save();
                         }
-                        if($index == 10 && $hodcftUsers->$column == Auth::user()->name){
+                        if($index == 9 && $hodcftUsers->$column == Auth::user()->name){
                             $updatehodCFT->hod_Other5_by = Auth::user()->name;
                             $updatehodCFT->hod_Other5_on = Carbon::now()->format('Y-m-d');
                             $history = new ManagementAuditTrial();
@@ -9830,9 +9832,10 @@ $history->activity_type = 'HOD Others 4 Completed By,HOD Others 4 Completed On';
                         //     $history->action_name = "Update";
                         //     $history->save();
                         // }
-                        if($index == 12 && $hodcftUsers->$column == Auth::user()->name){
+                        if($index == 10 && $hodcftUsers->$column == Auth::user()->name){
                             $updatehodCFT->hod_Production_Table_By = Auth::user()->name;
                             $updatehodCFT->hod_Production_Table_On = Carbon::now()->format('Y-m-d');
+                            
                             $history = new ManagementAuditTrial();
                             $history->ManagementReview_id = $id;
                            $history->activity_type = 'HOD Production Table Completed By,HOD Production Table Completed On';
@@ -9858,7 +9861,7 @@ $history->activity_type = 'HOD Others 4 Completed By,HOD Others 4 Completed On';
                     }
                             $history->save();
                         }
-                        if($index == 13 && $hodcftUsers->$column == Auth::user()->name){
+                        if($index == 11 && $hodcftUsers->$column == Auth::user()->name){
                             $updatehodCFT->hod_ProductionLiquid_by = Auth::user()->name;
                             $updatehodCFT->hod_ProductionLiquid_on = Carbon::now()->format('Y-m-d');
                             $history = new ManagementAuditTrial();
@@ -9887,7 +9890,7 @@ $history->activity_type = 'HOD Others 4 Completed By,HOD Others 4 Completed On';
                     }
                             $history->save();
                         }
-                        if($index == 14 && $hodcftUsers->$column == Auth::user()->name){
+                        if($index == 12 && $hodcftUsers->$column == Auth::user()->name){
                             $updatehodCFT->hod_Production_Injection_By = Auth::user()->name;
                             $updatehodCFT->hod_Production_Injection_On = Carbon::now()->format('Y-m-d');
                             $history = new ManagementAuditTrial();
@@ -9916,7 +9919,7 @@ $history->activity_type = 'HOD Others 4 Completed By,HOD Others 4 Completed On';
                     }
                             $history->save();
                         }
-                        if($index == 15 && $hodcftUsers->$column == Auth::user()->name){
+                        if($index == 13 && $hodcftUsers->$column == Auth::user()->name){
                             $updatehodCFT->hod_Store_by = Auth::user()->name;
                             $updatehodCFT->hod_Store_on = Carbon::now()->format('Y-m-d');
                             $history = new ManagementAuditTrial();
@@ -9945,7 +9948,7 @@ $history->activity_type = 'HOD Others 4 Completed By,HOD Others 4 Completed On';
                     }
                             $history->save();
                         }
-                        if($index == 16 && $hodcftUsers->$column == Auth::user()->name){
+                        if($index == 14 && $hodcftUsers->$column == Auth::user()->name){
                             $updatehodCFT->hod_ResearchDevelopment_by = Auth::user()->name;
                             $updatehodCFT->hod_ResearchDevelopment_on = Carbon::now()->format('Y-m-d');
                             $history = new ManagementAuditTrial();
@@ -9974,7 +9977,8 @@ $history->activity_type = 'HOD Others 4 Completed By,HOD Others 4 Completed On';
                     }
                             $history->save();
                         }
-                        if($index == 17 && $hodcftUsers->$column == Auth::user()->name){
+                        // dd($index == 15 && $hodcftUsers->$column == Auth::user()->name);
+                        if($index == 15 && $hodcftUsers->$column == Auth::user()->name){
                             $updatehodCFT->hod_Microbiology_by = Auth::user()->name;
                             $updatehodCFT->hod_Microbiology_on = Carbon::now()->format('Y-m-d');
                             $history = new ManagementAuditTrial();
@@ -10003,8 +10007,9 @@ $history->activity_type = 'HOD Others 4 Completed By,HOD Others 4 Completed On';
                     }
                             $history->save();
                         }
-                        if($index == 18 && $hodcftUsers->$column == Auth::user()->name){
+                        if($index == 16 && $hodcftUsers->$column == Auth::user()->name){
                             $updatehodCFT->hod_RegulatoryAffair_by = Auth::user()->name;
+
                             $updatehodCFT->hod_RegulatoryAffair_on = Carbon::now()->format('Y-m-d');
                             $history = new ManagementAuditTrial();
                             $history->ManagementReview_id = $id;
@@ -10032,10 +10037,12 @@ $history->activity_type = 'HOD Others 4 Completed By,HOD Others 4 Completed On';
                     }
                             $history->save();
                         }
-
-                        if($index == 19 && $hodcftUsers->$column == Auth::user()->name){
-                            $updatehodCFT->hod_CorporateQualityAssurance_by = Auth::user()->name;
+                        
+                          
+                        if($index == 17 && $hodcftUsers->$column == Auth::user()->name){
+                            $updatehodCFT->hod_CorporateQualityAssurance_by= Auth::user()->name;
                             $updatehodCFT->hod_CorporateQualityAssurance_on = Carbon::now()->format('Y-m-d');
+
                             $history = new ManagementAuditTrial();
                             $history->ManagementReview_id = $id;
                             $history->activity_type = 'HOD Corporate Quality Assurance Completed By,HOD Corporate Quality Assurance Completed On';
@@ -10062,7 +10069,7 @@ $history->activity_type = 'HOD Others 4 Completed By,HOD Others 4 Completed On';
                     }
                             $history->save();
                         }
-                        if($index == 20 && $hodcftUsers->$column == Auth::user()->name){
+                        if($index == 18 && $hodcftUsers->$column == Auth::user()->name){
                             $updatehodCFT->hod_ContractGiver_by = Auth::user()->name;
                             $updatehodCFT->hod_ContractGiver_on = Carbon::now()->format('Y-m-d');
                             $history = new ManagementAuditTrial();
