@@ -1205,16 +1205,14 @@
                          @php
                          $HPLC_GC_questions = array(
                                  "Was analyst used correct column as per mentioned in STP?",
-                                 "Was Chromatography Condition/Instrument Parameter like Retention time, wavelength,
-                                  flow rate, injection volume, column temperature and autos ampler temperature as per mentioned in STP?",
+                                 "Was Chromatography Condition/Instrument Parameter like Retention time, wavelength, flow rate, injection volume, column temperature and autos ampler temperature as per mentioned in STP?",
                                  "Was inlet filter sonicated before start of analysis?",
                                  "Was suction of port A,port B,port C,port D and rinse port are working correctly?",
                                  "Was corrected rinse solution used for analysis as per SOP? ",
                                  "Was Buffer prepared as per mentioned in STP?",
                                  "Is mobile phase within validity periods?",
                                  "Is seal wash performed properly?",
-                                 "Whether analyst used corrected solution for column wash/seal wash before start of
-                                  analysis as per SOP ?",
+                                 "Whether analyst used corrected solution for column wash/seal wash before start of analysis as per SOP ?",
                                  "Was buffer solution filtered before start of analysis?",
                                  "Was mobile phase maintained in recommended storage condition as per SOP/STP?",
                                  "Was mobile phase sonicated before start of analysis?",
@@ -4140,7 +4138,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="Checklist_Review_Environment_condition_in_tests1[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Checklist_Review_Environment_condition_in_tests1', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ is_string(Helpers::getChemicalGridData($data, 'Checklist_Review_Environment_condition_in_tests1', true, 'response', true, $index)) ? Helpers::getChemicalGridData($data, 'Checklist_Review_Environment_condition_in_tests1', true, 'response', true, $index) : '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>

@@ -297,7 +297,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
 <div class="form-field-head">
 
     <div class="division-bar">
-        <strong>JOb Description</strong>
+        <strong>Job Description</strong>
         {{-- <strong>Site Division/Project</strong> : --}}
     </div>
 </div>
@@ -386,7 +386,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="Short Description">Qualification </label>
-                                    <input id="qualifications" type="text" name="qualification" readonly>
+                                    <input id="qualifications" type="text" name="qualification" value="{{$mainvalue->qualification}}" readonly>
                                 </div>
                             </div>
 
@@ -397,15 +397,22 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                                 </div>
                             </div>
 
-                            <div class="col-6">
+                            {{-- <div class="col-6">
                                 <div class="new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="repeat_nature">Date of Joining<span class="text-danger d-none">*</span></label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="date_joining_displays" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="date_joining_displays"  placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="date_joining" id="date_joinings" class="hide-input" oninput="handleDateInput(this, 'date_joining_display')" />
                                         </div>
                                     </div>
+                                </div>
+                            </div> --}}
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="employee_id">Date of Joining </label>
+                                    <input type="date" name="date_joining" id="">
                                 </div>
                             </div>
 

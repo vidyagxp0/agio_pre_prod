@@ -347,11 +347,11 @@
                             <div class="col-lg-6">
                                 <div class="group-input" id="repeat_nature">
                                     <label for="repeat_nature">OutSide Experience In Years</label>
-                                    <input type="text" name="total_experience" value="{{ old('total_experience', $jobTraining->total_experience) }}" @if($jobTraining->stage != 2) disabled @endif>
+                                    <input type="text" name="total_experience" value="{{ old('total_experience', $jobTraining->total_experience) }}" >
                                 </div>
                             </div>
 
-                            <div class="col-6">
+                            {{-- <div class="col-6">
                                 <div class="new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="repeat_nature">Date of Joining<span class="text-danger d-none">*</span></label>
@@ -360,6 +360,13 @@
                                             <input type="date" name="date_joining" id="date_joinings" class="hide-input" oninput="handleDateInput(this, 'date_joining_display')" value="{{ $jobTraining->date_joining }}" >
                                         </div>
                                     </div>
+                                </div>
+                            </div> --}}
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="end_date">Date of Joining</label>
+                                    <input id="end_date" type="date" value="{{ old('date_joining', $jobTraining->date_joining) }}" name="date_joining" >
                                 </div>
                             </div>
 
@@ -410,19 +417,19 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="For Revision">Experience With Agio Pharma </label>
-                                    <input type="text" name="experience_with_agio" value="{{ old('experience_with_agio', $jobTraining->experience_with_agio) }}" @if($jobTraining->stage != 2) disabled @endif>
+                                    <input type="text" name="experience_with_agio" value="{{ old('experience_with_agio', $jobTraining->experience_with_agio) }}" >
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="For Revision">Total Years of Experience </label>
-                                    <input type="text" name="experience_if_any" id="" value="{{ $jobTraining->experience_if_any }}" readonly>
+                                    <input type="text" name="experience_if_any" id="" value="{{ $jobTraining->experience_if_any }}" >
                                 </div>
                             </div>
                             {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="For Revision">Reason For Revision </label>
-                                    <input type="text" name="reason_for_revision" value="{{ old('reason_for_revision', $jobTraining->reason_for_revision) }}" @if($jobTraining->stage != 2) disabled @endif>
+                                    <input type="text" name="reason_for_revision" value="{{ old('reason_for_revision', $jobTraining->reason_for_revision) }}" >
                                 </div>
                             </div> --}}
 
