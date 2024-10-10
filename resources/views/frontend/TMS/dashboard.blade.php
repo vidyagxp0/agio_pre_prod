@@ -130,6 +130,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                 <table class="table table-bordered">
                     <thead>
                         <tr>
+                            <th style="width:10%;">S.No</th>
                             <th style="width:10%;">Employee ID</th>
                             <th>Employee Name</th>
                             <th>Department</th>
@@ -141,9 +142,10 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($employees->sortByDesc('id') as $employee)
+                        @foreach ($employees as $index => $employee)
                         <tr>
-                            <td>
+                        <td>{{ $index + 1 }}</td>                            
+                        <td>
                                 <a>
                                 {{-- @php
                                     $prefixAbbreviation = '';
@@ -741,6 +743,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                     <table class="table table-bordered">
                         <thead>
                             <tr>
+                                <th>S.No</th>
                                 <th>Name</th>
                                 <th>Department</th>
                                 <!-- <th>Site Location</th> -->
@@ -751,8 +754,9 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ( $jobTrainings ->sortbyDesc('id') as $job_training)
+                            @foreach ( $jobTrainings->sortByDesc('id') as $index => $job_training)
                             <tr>
+                            <td>{{ $index + 1 }}</td>       
                                 <td>{{ DB::table('job_trainings')->where('id', $job_training->id)->value('name') }}</td>
                                 {{-- <td>{{ DB::table('departments')->where('id', $job_training->department)->value('name') }}</td> --}}
                                 <td>{{ $job_training->department}}</td>
@@ -800,6 +804,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                 <table class="table table-bordered">
                     <thead>
                         <tr>
+                            <th>S.NO</th>
                             <th>Employee ID</th>
                             <th>Name Of Employee</th>
                             <th>Department</th>
@@ -811,9 +816,10 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                         </tr>
                     </thead>
                     <tbody>
-            @foreach ($inductionTraining->sortByDesc('id') as $induction)
+            @foreach ($inductionTraining->sortByDesc('id') as $index => $induction)
             <tr>
-                <td>
+            <td>{{ $index + 1 }}</td>       
+                            <td>
                     @php
                         $employee = \App\Models\Employee::where('employee_id', $induction->employee_id)->first();
                         
