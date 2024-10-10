@@ -69,12 +69,13 @@
 
                                         {{-- <button ><a href="{{ route('documents.edit', $document->id) }}">Edit</a></button> --}}
                                     @endif
-
+                                    @if(Helpers::checkControlAccess())
                                     <button onclick="location.href='{{ url('documents/generatePdf', $document->id) }}';">Download
                                     </button>
                                     <button onclick="location.href='{{ url('documents/printPDF', $document->id) }}';"
                                             target="__blank">Print
                                     </button>
+                                    @endif
                                 </div>
                             </div>
                             <div class="bottom-block">
