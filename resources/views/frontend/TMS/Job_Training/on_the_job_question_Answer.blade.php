@@ -107,7 +107,7 @@
         <form action="{{ route('check_answer_otj') }}" method="POST"> 
             @csrf 
             <input type="hidden"  name="training_id" value="{{ $onthejobid->id }}">
-            <input type="hidden"  name="emp_id" value="{{ $onthejobid->empcode }}">
+            <input type="hidden"  name="emp_id" value="{{ $onthejobid->employee_id }}">
             <input type="hidden"  name="employee_name" value="{{ $onthejobid->name }}">
             <input type="hidden"  name="training_type" value="Induction Training">
             <input type="hidden"  name="attempt_count" value="{{ $onthejobid->attempt_count }}">

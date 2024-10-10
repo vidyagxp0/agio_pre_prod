@@ -426,7 +426,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                 @endphp
                                 @if($temp->stage >= 3)
                                 <tr>
-                                    <td>{{ $temp->empcode }}</td>
+                                    <td>{{ $temp->employee_id }}</td>
                                     <td>{{ $temp->name }}</td>
                                     <td>{{ $commaSeparatedStartDates }}</td>
                                     <td>{{  Helpers::getdateFormat($temp->start_date) }}</td>
@@ -921,13 +921,13 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                     </a> -->
                     <div class="action-buttons">
     
-                        <a href="{{ route('induction_training_view', $induction->id) }}">
+                        <a href="{{ route('job_description_view', $induction->id) }}">
                             <i class="fa-solid fa-pencil"></i>
                         </a>
                         </td>
                         <td>
                         
-                        <button type="button" class="view-report-btn"onclick="window.location.href='{{ url('rcms/induction_report/' . $induction->id) }}'" >
+                        <button type="button" class="view-report-btn"onclick="window.location.href='{{ url('rcms/report/' . $induction->id) }}'" >
                             View Report
                         </button>
                     </div>

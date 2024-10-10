@@ -108,7 +108,7 @@ class TMSController extends Controller
             if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
             {
                 $train = [];
-                $useDocFromJobTraining = JobTraining::where('empcode' , 'PW1')->get();
+                $useDocFromJobTraining = JobTraining::where('employee_id' , 'PW1')->get();
                 $useDocFromInductionTraining = Induction_training::where('employee_id' , 'PW1')->get();
                     $training = Training::all();
                     foreach($training as $temp){
