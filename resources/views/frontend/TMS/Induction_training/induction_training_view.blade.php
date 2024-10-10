@@ -223,11 +223,11 @@ $users = DB::table('users')->get();
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Evaluation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">HR Head Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QA/CQA Head Approval</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">In HR Final Review</button>
-
                 @if ($inductionTraining->stage >= 6)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Certificate</button>
                 @endif
+                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">In HR Final Review</button>
+
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">On The Job Training</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Activity Log</button>
@@ -1878,7 +1878,7 @@ if (marks >= percentageRequired) {
                        </strong> has undergone Induction Training</br>including the requirement of cGMP and has shown a good attitude and thorough</br>understanding in thè subject.</br></br>
                     </p> 
                     <p class="certificate-content">
-                       Therefore we certify that Mr. Ms. / Mrs. <strong>{{ \App\Models\Employee::find($inductionTraining->name_employee)?->employee_name ?? 'Employee not found' }}</strong>is capable of performing his /her </br>assigned duties in the <strong>{{$inductionTraining->department}}</strong> Department </br>indeperndently. 
+                       Therefore we certify that Mr. Ms. / Mrs. <strong>{{ \App\Models\Employee::find($inductionTraining->name_employee)?->employee_name ?? 'Employee not found' }}</strong> is capable of performing his /her </br>assigned duties in the <strong>{{$inductionTraining->department}}</strong> Department </br>indeperndently. 
 
                     </p>
                     <div class="signature-section">
@@ -1907,7 +1907,7 @@ if (marks >= percentageRequired) {
 <style>
     .certificate-container {
         width: 800px;
-        height: 425px;
+        height: 450px;
         border: 4px solid #0c0d0d;
         padding: 18px;
         background-color: white;
@@ -1923,7 +1923,7 @@ if (marks >= percentageRequired) {
     }
 
     .certificate-title {
-        font-size: 32px;
+        font-size: 26px;
         font-weight: bold;
         margin-bottom: 20px;
     }
@@ -1944,7 +1944,7 @@ if (marks >= percentageRequired) {
 
     .signature {
         text-align: center;
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .signature-line {
