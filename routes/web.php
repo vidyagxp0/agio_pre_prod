@@ -650,11 +650,14 @@ Route::get('extension_newshow/{id}', [ExtensionNewController::class, 'show']);
 
 Route::put('extension_new/{id}', [ExtensionNewController::class, 'update'])->name('extension_new.update');
 Route::post('extension_send_stage/{id}', [ExtensionNewController::class, 'sendstage'])->name('extension_send_stage');
+Route::post('extension_reject_stage/{id}', [ExtensionNewController::class, 'rejectStage'])->name('extension_reject_stage');
 Route::post('moreinfoState_extension/{id}', [ExtensionNewController::class, 'moreinfoStateChange'])->name('moreinfoState_extension');
 Route::post('RejectState_extension/{id}', [ExtensionNewController::class, 'reject'])->name('RejectState_extension');
 Route::post('send-cqa/{id}', [ExtensionNewController::class, 'sendCQA'])->name('send-cqa');
 Route::post('send-approved/{id}', [ExtensionNewController::class, 'sendApproved'])->name('send-approved');
+Route::get('extension-filter-data/{id}', [ExtensionNewController::class, 'audit_trail_filter'])->name('extension-filter');
 // Route::get('RejectState_extension/{id}', [ExtensionNewController::class, 'reject'])->name('RejectState_extension');
+
 
 
 Route::get('trainer_qualification', [TrainerController::class, 'index'])->name('trainer_qualification');

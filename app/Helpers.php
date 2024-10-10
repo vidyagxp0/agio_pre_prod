@@ -1419,10 +1419,21 @@ class Helpers
         return $relatedRecords;
     }
 
-
-
-
-
+    public static function extensionCount($count) { 
+        switch ($count) {
+            case 'number1':
+                $count = 1;
+                break;
+            case 'number2':
+                $count = 2;
+                break;
+            case 'number':
+                $count = 3;
+                break;
+        }
+        return $count;
+    }
+    
 
 }
 
