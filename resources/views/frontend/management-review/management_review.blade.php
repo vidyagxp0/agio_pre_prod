@@ -2170,9 +2170,7 @@
                                     </div>
                                     <div class="col-md-6 mb-3 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet Completed By">Production Tablet/Capsule Powder
-                                                Completed
-                                                By</label>
+                                            <label for="Production Tablet Completed By">Production Tablet/Capsule PowderCompleted By</label>
                                             <input readonly type="text" value="{{ $data1->Production_Table_By }}"
                                                 name="Production_Table_By" id="Production_Table_By">
 
@@ -3512,8 +3510,7 @@
                                     </div>
                                     <div class="col-lg-6 CQA">
                                         <div class="group-input">
-                                            <label for="Corporate Quality Assurance notification">HOD Corporate Quality
-                                                Assurance Person <span id="asteriskPT"
+                                            <label for="Corporate Quality Assurance notification">HOD Corporate Quality Assurance Person <span id="asteriskPT"
                                                     style="display: {{ $data1->CorporateQualityAssurance_Review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
@@ -8892,11 +8889,10 @@
                                         </div>
                                     </div>
                                 </div>
+                              
                                 <div class="col-md-6 mb-3 productionTable">
                                     <div class="group-input">
-                                        <label for="Production Tablet Completed By">HOD Production Tablet/Capsule Powder
-                                            Completed
-                                            By</label>
+                                        <label for="Production Tablet Completed By">HOD Production Tablet/Capsule Powder Completed By</label>
                                         <input readonly type="text" value="{{ $data5->hod_Production_Table_By }}"
                                             name="hod_Production_Table_By"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
                                             id="hod_Production_Table_By">
@@ -9940,7 +9936,7 @@
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
 
-
+                   
                                 <div class="col-md-12 mb-3 CQA">
                                     <div class="group-input">
                                         <label for="Corporate Quality Assurance feedback">HOD Corporate Quality Assurance
@@ -9994,11 +9990,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- @php
+                                dd( $data5->hod_CorporateQualityAssurance_by);
+                            @endphp --}}
                                 <div class="col-md-6 mb-3 CQA">
                                     <div class="group-input">
-                                        <label for="Corporate Quality Assurance Completed By">HOD Corporate Quality
-                                            Assurance Completed
-                                            By</label>
+                                        <label for="Corporate Quality Assurance Completed By">HOD Corporate Quality Assurance Completed By</label>
                                         <input readonly type="text"
                                             value="{{ $data5->hod_CorporateQualityAssurance_by }}"
                                             name="hod_CorporateQualityAssurance_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
@@ -10146,11 +10143,10 @@
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div class="col-md-6 mb-3 CQA">
                                     <div class="group-input">
-                                        <label for="Corporate Quality Assurance Completed By">HOD Corporate Quality
-                                            Assurance Completed
-                                            By</label>
+                                        <label for="Corporate Quality Assurance Completed By">HOD Corporate Quality Assurance Completed By</label>
                                         <input readonly type="text"
                                             value="{{ $data5->hod_CorporateQualityAssurance_by }}"
                                             name="hod_CorporateQualityAssurance_by"
