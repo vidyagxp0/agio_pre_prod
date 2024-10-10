@@ -116,9 +116,9 @@
                             Approval Complete
                             </button>
                         @elseif($jobTraining->stage == 3)
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             Answer Submit
-                            </button>
+                            </button> -->
                         @elseif($jobTraining->stage == 4)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             Evaluation Complete

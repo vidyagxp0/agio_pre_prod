@@ -13,6 +13,7 @@ use App\Models\Quize;
 use App\Models\Question;
 use App\Models\RoleGroup;
 use App\Models\User;
+use App\Models\EmpTrainingQuizResult;
 use Illuminate\Support\Facades\App;
 use PDF;
 use App\Models\Document;
@@ -22,7 +23,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class InductionTrainingController extends Controller
+class InductionTrainingcontroller extends Controller
 {
     // Method to display the form
     public function index()
@@ -997,20 +998,96 @@ class InductionTrainingController extends Controller
     
 
     public function viewrendersopinduction($id){
-
         return view('frontend.TMS.induction_training_detail', compact('id'));
     }
 
     public function inductionquestionshow($sopids, $inductiontrainingid){
         $inductiontrainingid = Induction_training::find($inductiontrainingid);
-        $inductiontrainingid->attempt_count = $inductiontrainingid->attempt_count == 0 ? 0 : $inductiontrainingid->attempt_count - 1;
+        $inductiontrainingid->attempt_count = $inductiontrainingid->attempt_count == -1 ? 0 : ( $inductiontrainingid->attempt_count == 0 ? 0 : $inductiontrainingid->attempt_count - 1);
         $inductiontrainingid->save();
-        $sopidsArray = explode(',', $sopids);
+        
+        // Convert the sopids string to an array and trim any extra whitespace
+        $sopids = array_map('trim', explode(',', $sopids));
 
-        $sopidsArray = array_map('trim', $sopidsArray);
-        $questions = Question::where('document_id', $sopidsArray)
-            ->get();
-        return view('frontend.TMS.induction_training.Induction_training_question_Answer', compact('questions', 'inductiontrainingid'));
+        // Fetch all questions based on cleaned sopids
+        $questions = Question::whereIn('document_id', $sopids)
+        ->inRandomOrder() // Randomize the order
+        ->take(10)        // Limit to 10 records
+        ->get();
+        // Dump the questions for debugging
+            return view('frontend.TMS.Induction_training.Induction_training_question_Answer', compact('questions', 'inductiontrainingid'));
+    }
 
+    public function checkAnswerInduction(Request $request)
+    {
+        // Fetch all questions in a random order
+
+        $allQuestions = Question::inRandomOrder()->get();
+
+        // Filter questions to include only Single and Multi Selection Questions
+        $filteredQuestions = $allQuestions->filter(function ($question) {
+            return in_array($question->type, ['Single Selection Questions', 'Multi Selection Questions']);
+        });
+
+        // Take the first 10 questions from the filtered list
+        $questions = $filteredQuestions->take(10);
+
+        $correctCount = 0; // Initialize correct answer count
+        $totalQuestions = count($questions); // Total number of selected questions (should be 10)
+
+        foreach ($questions as $question) {
+            // Retrieve user's answer for each question
+            $userAnswer = $request->input('question_' . $question->id);
+            $correctAnswers = unserialize($question->answers); // Correct answers for the question
+            $questionType = $question->type;
+
+            if ($questionType === 'Single Selection Questions') {
+                // If it's a single selection question, check if the user's answer matches the correct answer
+                if ($userAnswer == $correctAnswers[0]) {
+                    $correctCount++;
+                }
+            } elseif ($questionType === 'Multi Selection Questions') {
+                // If it's a multi-selection question, check if the user's answer matches exactly with the correct answer set
+                if (is_array($userAnswer)) {
+                    // Check if the user's answer matches exactly with the correct answer set
+                    if (count(array_diff($correctAnswers, $userAnswer)) === 0 && count(array_diff($userAnswer, $correctAnswers)) === 0) {
+                        $correctCount++;
+                    }
+                }
+            }
+        }
+
+        // Calculate the correct percentage for the 10 questions
+        $score = ($correctCount / $totalQuestions) * 100; // This will be based on 10 questions
+
+    
+        $result = $score >= 80 ? 'Pass' : 'Fail';
+
+        if($request->attempt_count == 0 || $result == 'Pass'){
+            $induction = Induction_training::find($request->training_id);
+            $induction->stage = 3;
+            $induction->status = "Evaluation";
+            $induction->update();
+        }
+
+            $storeResult = new EmpTrainingQuizResult();
+            $storeResult->emp_id = $request->emp_id;
+            $storeResult->training_id = $request->training_id;
+            $storeResult->employee_name = $request->employee_name;
+            $storeResult->training_type = "Induction Training";
+            $storeResult->correct_answers = $correctCount;
+            $storeResult->incorrect_answers = $totalQuestions - $correctCount;
+            $storeResult->total_questions = $totalQuestions;
+            $storeResult->score = $score."%";
+            $storeResult->result = $result;
+            $storeResult->attempt_number = $request->attempt_count + 1;
+            $storeResult->save();        
+
+        return view('frontend.TMS.Job_Training.job_quiz_result', [
+            'totalQuestions' => $totalQuestions, // Total questions shown
+            'correctCount' => $correctCount, // Number of correctly answered questions
+            'score' => $score, // Final score for these 10 questions
+            'result' => $result // Pass or Fail based on 80%
+        ]);
     }
 }

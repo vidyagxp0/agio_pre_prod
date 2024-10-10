@@ -177,15 +177,28 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6 new-date-data-field">
+                        {{-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Observation Due Date</label>
+                                        <label for="due-date">Observation Report Due Date</label>
                                         <div class="calenderauditee">
                                             <!-- Display the manually selectable date input -->
-                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
                                 
                                             <!-- Editable date input (hidden) -->
                                             <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
+                                    </div>
+                                </div> --}}
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due-date">Observation Report Due Date</label>
+                                        <div class="calenderauditee">
+                                            <!-- Display the manually selectable date input -->
+                                            <input type="text" id="due_date_display" name="due_date" value="{{ date('d-M-Y') }}" placeholder="DD-MMM-YYYY" />
+                                
+                                            <!-- Editable date input (hidden) -->
+                                            <input type="date" value="{{ date('Y-m-d') }}" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date_display')" />
                                         </div>
                                     </div>
@@ -438,7 +451,7 @@
                                         <table class="table table-bordered" id="Details-table">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 8%">Row#</th>
+                                                    <th style="width: 8%">Sr.No</th>
                                                     <th style="width: 80%">Observation</th>
                                                     <th style="width: 12%">Action</th>
 
@@ -516,7 +529,7 @@
                                         <table class="table table-bordered" id="Details-table2">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 8%">Row#</th>
+                                                    <th style="width: 8%">Sr.No</th>
                                                     <th style="width: 80%">Response</th>
                                                     <th style="width: 12%">Action</th>
 
@@ -574,7 +587,7 @@
                                         <table class="table table-bordered" id="Details-table3">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 8%">Row#</th>
+                                                    <th style="width: 8%">Sr.No</th>
                                                     <th style="width: 80%">Corrective Actions</th>
                                                     <th style="width: 12%">Action</th>
 
@@ -631,7 +644,7 @@
                                         <table class="table table-bordered" id="Details-table4">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 8%">Row#</th>
+                                                    <th style="width: 8%">Sr.No</th>
                                                     <th style="width: 80%">Preventive Action</th>
                                                     <th style="width: 12%">Action</th>
 

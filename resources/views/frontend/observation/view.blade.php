@@ -343,28 +343,11 @@
                                             </div>
                                         </div>
 
-                                <!-- <div class="col-lg-6  new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="actual_end_date">Observation Due Date</lable>
-                                            <div class="calenderauditee">
-                                                <input disabled type="text" id="due_date"
-                                                    placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->due_date) }}" />
-                                                <input disabled type="date"
-                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                    value="{{ $data->due_date }}"
-                                                    id="actual_end_date_checkdate"
-                                                    name="due_date" class="hide-input"
-                                                    oninput="handleDateInput(this, 'due_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
-                                            </div>
-
-
-                                    </div>
-                                </div> -->
+                              
                                 
-                                
-                                <div class="col-lg-6 new-date-data-field">
+                                {{-- <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="Due Date">Observation Due Date</label>
+                                                <label for="Due Date">Observation Report Due Date</label>
                                                 <div><small class="text-primary">
                                                 </small></div>
                                                 <div class="calenderauditee">
@@ -378,8 +361,26 @@
                                                 </div>
                                             
                                             </div>
+                                        </div> --}}
+                                        
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="Due Date"> Observation Report Due Date</label>
+                                                <div><small class="text-primary">
+                                                    </small></div>
+                                                <div class="calenderauditee">
+                                                    <input disabled type="text" id="due_date" readonly
+                                                        placeholder="DD-MMM-YYYY"
+                                                        value="{{ Helpers::getdateFormat($data->due_date) }}" />
+                                                    <input type="date" name="due_date"
+                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} {{ $data->stage !=1? 'disabled' : '' }}
+                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                         value="{{ $data->due_date}}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'due_date')" />
+                                                </div>
+                                            
+                                            </div>
                                         </div>
-                                
                                 <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const date = new Date(dateInput.value);
@@ -387,7 +388,7 @@
                                         document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
                                     }
                                     
-                                    // Call this function initially to ensure the correct format is shown on page load
+                                    Call this function initially to ensure the correct format is shown on page load
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const dateInput = document.querySelector('input[name="due_date"]');
                                         handleDateInput(dateInput, 'due_date_display');
@@ -745,7 +746,7 @@
                                                 <table class="table table-bordered" id="Details-table">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width: 8%">Row#</th>
+                                                            <th style="width: 8%">Sr.No</th>
                                                             <th style="width: 80%">Observation</th>
                                                             <th style="width: 12%">Action</th>
 
@@ -914,7 +915,7 @@
                                                 <table class="table table-bordered" id="Details-table8">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width: 8%">Row#</th>
+                                                            <th style="width: 8%">Sr.No</th>
                                                             <th style="width: 80%">Response Details</th>
                                                             <th style="width: 12%">Action</th>
 
@@ -996,7 +997,7 @@
                                                 <table class="table table-bordered" id="Details-table4">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width: 8%">Row#</th>
+                                                            <th style="width: 8%">Sr.No</th>
                                                             <th style="width: 80%">Corrective Actions</th>
                                                             <th style="width: 12%">Action</th>
 
@@ -1077,7 +1078,7 @@
                                                 <table class="table table-bordered" id="Details-table5">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width: 8%">Row#</th>
+                                                            <th style="width: 8%">Sr.No</th>
                                                             <th style="width: 80%">Preventive Action</th>
                                                             <th style="width: 12%">Action</th>
 

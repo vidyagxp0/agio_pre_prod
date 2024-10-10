@@ -94,7 +94,7 @@
 
 <div class="quiz-container">
 
-    @if ($inductiontrainingid->attempt_count == 0)
+    @if ($inductiontrainingid->attempt_count == -1)
         <h1>Your attempts are over</h1>
     @else
         <div class="instruction-note">
@@ -108,8 +108,13 @@
 
         <h1>Induction Training Quiz</h1>
 
-        <form action="{{ route('check_answer_otj') }}" method="POST"> <!-- Change to your actual form action -->
+        <form action="{{ route('check_answer_induction') }}" method="POST"> <!-- Change to your actual form action -->
             @csrf <!-- Include CSRF token for security -->
+            <input type="hidden"  name="training_id" value="{{ $inductiontrainingid->id }}">
+            <input type="hidden"  name="emp_id" value="{{ $inductiontrainingid->employee_id }}">
+            <input type="hidden"  name="employee_name" value="{{ Helpers::getInitiatorName($inductiontrainingid->name_employee) }}">
+            <input type="hidden"  name="training_type" value="Induction Training">
+            <input type="hidden"  name="attempt_count" value="{{ $inductiontrainingid->attempt_count }}">
 
             @foreach ($questions as $question)
                 <div class="question">

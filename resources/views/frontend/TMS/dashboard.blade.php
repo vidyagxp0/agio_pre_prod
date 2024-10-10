@@ -130,7 +130,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th style="width:10%;">Employee Code</th>
+                            <th style="width:10%;">Employee ID</th>
                             <th>Employee Name</th>
                             <th>Department</th>
                             <th>Job Title</th>
@@ -166,7 +166,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             <!-- <button type="button"  class="view-report-btn" onclick="window.location.href='{{ url('rcms/report/' . $employee->id) }}'" >
                                 View Report
                             </button> -->
-                            <button type="button" class="view-report-btn" onclick="window.location.href='{{ url('rcms/reports/' . $employee->id) }}'">
+                            <button type="button" class="view-report-btn" onclick="window.location.href='{{ url('rcms/report/' . $employee->id) }}'">
                                 View Report
                             </button>
 
@@ -296,51 +296,52 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             </thead>
                             <tbody id="searchTable">
                             @foreach ($paginatedData as $temp)
-                            @php
-                                $getSOPNo = ['document_number_1', 'document_number_2', 'document_number_3', 'document_number_4', 'document_number_5','document_number_6', 'document_number_7', 'document_number_8', 'document_number_9', 'document_number_10', 'document_number_11', 'document_number_12', 'document_number_13', 'document_number_14', 'document_number_15','document_number_16'];
-                                $dateValue = []; // Initialize an empty array to store dates
+                                @php
+                                    $getSOPNo = ['document_number_1', 'document_number_2', 'document_number_3', 'document_number_4', 'document_number_5','document_number_6', 'document_number_7', 'document_number_8', 'document_number_9', 'document_number_10', 'document_number_11', 'document_number_12', 'document_number_13', 'document_number_14', 'document_number_15','document_number_16'];
+                                    $dateValue = []; // Initialize an empty array to store dates
 
-                                if ($temp) {
-                                    foreach ($getSOPNo as $key => $document) {
-                                        // Construct the corresponding startdate column name
-                                        $startDateColumn = 'document_number_' .($key + 1); // This will create document_number_1, document_number_2, etc.
+                                    if ($temp) {
+                                        foreach ($getSOPNo as $key => $document) {
+                                            // Construct the corresponding startdate column name
+                                            $startDateColumn = 'document_number_' .($key + 1); // This will create document_number_1, document_number_2, etc.
 
-                                        // Check if the start date exists and is not null
-                                        if (isset($temp->$startDateColumn) && !is_null($temp->$startDateColumn)) {
-                                            $dateValue[] = $temp->$startDateColumn; // Add the date to the array
+                                            // Check if the start date exists and is not null
+                                            if (isset($temp->$startDateColumn) && !is_null($temp->$startDateColumn)) {
+                                                $dateValue[] = $temp->$startDateColumn; // Add the date to the array
+                                            }
                                         }
                                     }
-                                }
-
-                                // Join the non-null start dates into a comma-separated string
-                                $commaSeparatedStartDates = implode(', ', $dateValue);
-                            @endphp
-                            
-                            <!-- You can output the commaSeparatedStartDates here if needed -->
-                            
-                     
-                                       
-                                <tr>
-                                <td>{{ $temp->employee_id }}</td>
-                                    <td>{{ $temp->name_employee }}</td>
-                                    <td>{{ $temp->designation }}</td>
-                                    <td>{{ $commaSeparatedStartDates }}</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>{{ $temp->attempt_count }}</td>
-                                 
-                                    <td><a href="{{ url('induction_training-details', $commaSeparatedStartDates) }}"><i class="fa-solid fa-eye"></i></a></td> 
+                                    $inductionResult = DB::table('emp_training_quiz_results')->where(['training_id' => $temp->id, 'training_type' => "Induction Training", 'emp_id' => 'PW1', 'result' => 'Pass'])->latest()->first();
+                                    // Join the non-null start dates into a comma-separated string
+                                    $commaSeparatedStartDates = implode(', ', $dateValue);
+                                @endphp
+                                @if($temp->stage >= 2)
+                                    <tr>
+                                        <td>{{ $temp->employee_id }}</td>
+                                        <td>{{ Helpers::getEmpNameByCode($temp->employee_id) }}</td>
+                                        <td>{{ $temp->designation }}</td>
+                                        <td>{{ $commaSeparatedStartDates }}</td>
+                                        <td>{{  Helpers::getdateFormat($temp->start_date) }}</td>
+                                        <td>{{  Helpers::getdateFormat($temp->end_date) }}</td>
+                                        <td>{{ $temp->attempt_count == -1 ? 0 : $temp->attempt_count }}</td>
+                                        <td>{{ $inductionResult ? Helpers::getdateFormat1($inductionResult->created_at): "-" }}</td>
+                                        <td><a href="{{ url("induction_training-details/$commaSeparatedStartDates") }}"><i class="fa-solid fa-eye"></i></a></td>
+                                        <td>
+                                                @if ($inductionResult && $inductionResult->result == "Pass")
+                                                    Pass
+                                                @elseif($temp->attempt_count <= 0)
+                                                    Attempts completed (Failed)
+                                                @else
+                                                    <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" onclick="window.location.href='/induction_question_training/{{$commaSeparatedStartDates}}/{{$temp->id}}';">
+                                                        Attempt Quiz
+                                                    </button>
+                                                @endif
+                                        </td>
+                                        
+                                        
                                     
-                                    <td>
-                                        <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" onclick="window.location.href='/induction_question_training/{{$commaSeparatedStartDates}}/{{$temp->id}}';">
-                                            Attempt Quiz
-                                        </button>
-                                    </td>
-                                  
-                                    
-                                  
-                                </tr>
+                                    </tr>
+                                @endif
                                 @endforeach
                             </tbody>
                         </table>
@@ -405,12 +406,12 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             <tbody id="searchTable">
                                 @foreach ($paginatedData as $temp)
                                 @php
-                                    $getSOPNo = ['subject_1', 'subject_2', 'subject_3', 'subject_4', 'subject_5'];
+                                    $getSOPNo = ['reference_document_no_1', 'reference_document_no_2', 'reference_document_no_3', 'reference_document_no_4', 'reference_document_no_5'];
                                     $dateValue = null; // Variable to store the date
                                 if ($temp) {
                                             foreach ($getSOPNo as $key => $subject) {
                                                 // Construct the corresponding startdate column name
-                                                $startDateColumn = 'subject_' . ($key + 1); // This will create startdate_1, startdate_2, etc.
+                                                $startDateColumn = 'reference_document_no_' . ($key + 1); // This will create startdate_1, startdate_2, etc.
 
                                                 // Check if the start date exists and is not null
                                                 if (isset($temp->$startDateColumn) && !is_null($temp->$startDateColumn)) {
@@ -418,32 +419,40 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                                 }
                                             }
                                         }
-
                                         // Join the non-null start dates into a comma-separated string
                                         $commaSeparatedStartDates = implode(', ', $dateValue);
-                                        
+                                        $jobTrainingResult = DB::table('emp_training_quiz_results')->where(['training_id' => $temp->id, 'training_type' => "On The Job Training", 'emp_id' => 'PW1', 'result' => 'Pass'])->latest()->first();
                                         
                                 @endphp
+                                @if($temp->stage >= 3)
                                 <tr>
-                                    <td>{{ $temp->empcode }}</td>
-                                    <td>{{ $temp->name_employee }}</td>
+                                    <td>{{ $temp->employee_id }}</td>
+                                    <td>{{ $temp->name }}</td>
                                     <td>{{ $commaSeparatedStartDates }}</td>
-                                    <td>{{ $temp->start_date }}</td>
-                                    <td>{{ $temp->enddate_1 }}</td>
-                                    <td>{{ $temp->attempt_count }}</td>
-                                    <td>{{$temp->start_date}} </td>
-                                           
-                                    
-                                    
+                                    <td>{{  Helpers::getdateFormat($temp->start_date) }}</td>
+                                    <td>{{  Helpers::getdateFormat($temp->end_date) }}</td>
+                                    <td>{{ $temp->attempt_count == -1 ? 0 : $temp->attempt_count }}</td>
+                                    <td>{{ $jobTrainingResult ? Helpers::getdateFormat1($jobTrainingResult->created_at): "-" }}</td>
                                     <td><a href="{{ url('job_training-details', $commaSeparatedStartDates) }}"><i class="fa-solid fa-eye"></i></a></td>
                                     
                                     <td>
-                                        <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" onclick="window.location.href='/on_the_job_question_training/{{$commaSeparatedStartDates}}/{{$temp->id}}';">
+                                        @if ($jobTrainingResult && $jobTrainingResult->result == "Pass")
+                                                    Pass
+                                                @elseif($temp->attempt_count <= 0)
+                                                    Attempts completed (Failed)
+                                                @else
+                                                    <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" onclick="window.location.href='/on_the_job_question_training/{{$commaSeparatedStartDates}}/{{$temp->id}}';">
+                                                        Attempt Quiz
+                                                    </button>
+                                                @endif
+
+                                        {{-- <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" onclick="window.location.href='/on_the_job_question_training/{{$commaSeparatedStartDates}}/{{$temp->id}}';">
                                             Attempt Quiz
-                                        </button>
+                                        </button> --}}
                                     </td>
                                                              
                                 </tr>
+                                @endif
                                 @endforeach
                             </tbody>
                         </table>
@@ -736,7 +745,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                 <!-- <td>{{ $job_training->location}}</td> -->
                                 <!-- @for ($i = 1; $i <= 1; $i++)  -->
                                 <td>{{ \Carbon\Carbon::parse($job_training->{"start_date"})->format('d-M-Y') }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($job_training->{"end_date"})->format('d-M-Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($job_training->{"enddate_1"})->format('d-M-Y') }}</td>
                                     <!-- @endfor -->
 
                                     <td>
@@ -777,7 +786,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Employee Code</th>
+                            <th>Employee ID</th>
                             <th>Name Of Employee</th>
                             <th>Department</th>
                             <!-- <th>Site Location</th> -->
@@ -864,17 +873,18 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
         </table>
     </div>
 </div>
-<!-- @php
+@php
   $jobTraining = DB::table('job_descriptions')->get();
-@endphp -->
+@endphp
 <div id="CCForm7" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
             <div>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Employee Code</th>
+                            <th>Employee ID</th>
                             <th>Name Of Employee</th>
                             <th>Department</th>
+                            <!-- <th>Site Location</th> -->
                             <th>Action</th>
                             <th>Report</th>
                         </tr>
@@ -883,7 +893,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
             @foreach ($jobTraining->sortByDesc('id') as $induction)
             <tr>
                 <td>
-                    {{-- @php
+                    @php
                         $employee = \App\Models\Employee::where('employee_id', $induction->employee_id)->first();
                         
                         $prefixAbbreviation = '';
@@ -896,8 +906,8 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                 $prefixAbbreviation = 'OS';
                             }
                         }
-                    @endphp --}}
-                    {{ $induction->employee_id }}
+                    @endphp
+                    {{ $prefixAbbreviation . $induction->employee_id }}
                 </td>
                 <td>
                     {{$induction->name_employee }}

@@ -1174,21 +1174,30 @@
                                         @enderror
                                     </div>
                                 </div> --}}
-                                
+{{--                                 
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Investigation Team">Investigation Team</label>
                                         <select
                                             multiple id="investigation_team" placeholder="Select..." name="investigation_team[]">
-                                            @foreach ($users as $value)
-                                             {{-- <option {{ $data->investigation_team == $value->id ? 'selected' : '' }}  value="{{ $value->id }}">{{ $value->name }}</option>  --}}
-                                                <option value="{{ $value->id }}"{{ in_array($value->id, explode(',', $data->investigation_team)) ? 'selected' : '' }}>
-                                                           {{ $value->name }}
-                                                </option>
-                                            @endforeach
+                                            
+                                            @foreach ($users as $data)
+                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                        @endforeach
                                         </select>
 
 
+                                    </div>
+                                </div> --}}
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="CAPA Team">Investigation Team</label>
+                                        <select multiple name="investigation_team[]" placeholder="Select Investigation Team"
+                                            data-search="false" data-silent-initial-value-set="true" id="investigation_team">
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-12">
