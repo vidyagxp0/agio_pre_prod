@@ -762,8 +762,10 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                 <td>{{ $job_training->department}}</td>
                                 <!-- <td>{{ $job_training->location}}</td> -->
                                 <!-- @for ($i = 1; $i <= 1; $i++)  -->
-                                <td>{{ \Carbon\Carbon::parse($job_training->{"start_date"})->format('d-M-Y') }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($job_training->{"enddate_1"})->format('d-M-Y') }}</td>
+                                {{-- <td>{{ \Carbon\Carbon::parse($job_training->{"start_date"})->format('d-M-Y') }}</td> --}}
+                                    {{-- <td>{{ \Carbon\Carbon::parse($job_training->{"enddate_1"})->format('d-M-Y') }}</td> --}}
+                                    <td>{{ Helpers::getdateFormat($job_training->start_date) }}</td>
+                                    <td>{{ Helpers::getdateFormat($job_training->end_date) }}</td>
                                     <!-- @endfor -->
 
                                     <td>

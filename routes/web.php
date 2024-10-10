@@ -392,9 +392,6 @@ Route::post('/check-answer-otj', [JobTrainingController::class, 'checkAnswerOtj'
 Route::post('/check-answer-induction', [InductionTrainingcontroller::class, 'checkAnswerInduction'])->name('check_answer_induction');
 
 
-
-
-
 Route::get('induction_training-details/{id}', [InductionTrainingController::class, 'viewrendersopinduction']);
 Route::get('induction_question_training/{id}/{induction_id}', [InductionTrainingController::class, 'inductionquestionshow']);
 Route::get('induction_training_certificate/{id}', [InductionTrainingController::class, 'showCertificate']);
@@ -406,6 +403,7 @@ Route::put('induction_training/{id}', [InductionTrainingController::class, 'upda
 Route::get('/employees/{id}', [InductionTrainingController::class, 'getEmployeeDetails']);
 
 Route::get('/fetch-question/{documentId}', [InductionTrainingController::class, 'fetchQuestion']);
+Route::get('/documents/view/{id}', [InductionTrainingController::class, 'viewSop'])->name('documents.view');
 
 
 
