@@ -4088,28 +4088,28 @@
                             <div class="col-md-12 mb-4">
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
-                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                    <textarea class="summernote" name="Description_Deviation_VI" id="summernote-1">
                                         </textarea>
                                 </div>
                             </div>
 
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Audit Attachments"> Supporting Attachment </label>
-                                    <small class="text-primary">
-                                        Please Attach all relevant or supporting documents
-                                    </small>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="file_attach"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="file_attach[]"
-                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                            <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initial Attachments">Supporting Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="sp_attachment_i"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="sp_attachment_i"
+                                                    name="sp_attachment_i[]"
+                                                    oninput="addMultipleFiles(this, 'sp_attachment_i')" multiple>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -5475,7 +5475,7 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                    <textarea class="summernote" name="Description_DeviationVII" id="summernote-1">
                                         </textarea>
                                 </div>
                             </div>
@@ -6818,7 +6818,7 @@
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                        <textarea class="summernote" name="Description_DeviationVIII" id="summernote-1">
                                             </textarea>
                                     </div>
                                 </div>
@@ -7565,7 +7565,7 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                    <textarea class="summernote" name="Description_DeviationIX" id="summernote-1">
                                         </textarea>
                                 </div>
                             </div>
@@ -8862,8 +8862,7 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                        </textarea>
+                                    <textarea class="summernote" name="Description_Deviation_IIIII" id="summernote-1"></textarea>
                                 </div>
                             </div>
 
@@ -10571,7 +10570,7 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                    <textarea class="summernote" name="Description_Deviation_III" id="summernote-1">
                                         </textarea>
                                 </div>
                             </div>
@@ -11939,7 +11938,7 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                    <textarea class="summernote" name="Description_Deviation_IV" id="summernote-1">
                                         </textarea>
                                 </div>
                             </div>
@@ -13298,8 +13297,7 @@
                             <div class="col-md-12 mb-4">
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
-                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                    <textarea class="summernote" name="Description_DeviationV" id="summernote-1">
                                         </textarea>
                                 </div>
                             </div>
@@ -14471,7 +14469,7 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                    <textarea class="summernote" name="Description_DeviationX" id="summernote-1">
                                         </textarea>
                                 </div>
                             </div>
@@ -17396,7 +17394,7 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                    <textarea class="summernote" name="Description_DeviationXI" id="summernote-1">
                                         </textarea>
                                 </div>
                             </div>
@@ -18162,7 +18160,7 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                    <textarea class="summernote" name="Description_DeviationXII" id="summernote-1">
                                         </textarea>
                                 </div>
                             </div>
@@ -19092,7 +19090,7 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                    <textarea class="summernote" name="Description_DeviationXIII" id="summernote-1">
                                         </textarea>
                                 </div>
                             </div>
@@ -20893,7 +20891,7 @@
                                                         <div class="group-input">
                                                             <label for="Description Deviation">Final Comments</label>
                                                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                                            <textarea class="summernote" name="Description_DeviationXIV" id="summernote-1">
                                                                 </textarea>
                                                         </div>
                                                     </div>
@@ -22176,7 +22174,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Final Comments</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="Description_DeviationXV" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -23780,7 +23778,7 @@
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                        <textarea class="summernote" name="Description_DeviationXVI" id="summernote-1">
                                             </textarea>
                                     </div>
                                 </div>
@@ -24477,7 +24475,7 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                    <textarea class="summernote" name="Description_DeviationXVII" id="summernote-1">
                                         </textarea>
                                 </div>
                             </div>
@@ -25128,7 +25126,7 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                    <textarea class="summernote" name="Description_DeviationXVIII" id="summernote-1">
                                         </textarea>
                                 </div>
                             </div>

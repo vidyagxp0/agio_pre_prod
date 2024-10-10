@@ -5380,7 +5380,7 @@
                                 <div class="col-md-12 mb-4">
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
-                                        <textarea   name="Description_Deviation">{{ $data->Description_Deviation }}</textarea>
+                                        <textarea   name="Description_Deviation_VI">{{ $data->Description_Deviation_VI }}</textarea>
                                     </div>
                                 </div>
 

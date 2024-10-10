@@ -61,6 +61,25 @@ class InternalauditController extends Controller
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assign_to = $request->assign_to;
         $internalAudit->due_date = $request->due_date;
+
+        $internalAudit->Description_Deviation_IIIII = $request->Description_Deviation_IIIII;
+        $internalAudit->Description_Deviation_III = $request->Description_Deviation_III;
+        $internalAudit->Description_Deviation_IV = $request->Description_Deviation_IV;
+        $internalAudit->Description_Deviation_V = $request->Description_Deviation_V;
+        $internalAudit->Description_Deviation_VI = $request->Description_Deviation_VI;
+        $internalAudit->Description_DeviationVII = $request->Description_DeviationVII;
+        $internalAudit->Description_DeviationVIII = $request->Description_DeviationVIII;
+        $internalAudit->Description_DeviationIX = $request->Description_DeviationIX;
+        $internalAudit->Description_DeviationX = $request->Description_DeviationX;
+        $internalAudit->Description_DeviationXI = $request->Description_DeviationXI;
+        $internalAudit->Description_DeviationXII = $request->Description_DeviationXII;
+        $internalAudit->Description_DeviationXIII = $request->Description_DeviationXIII;
+        $internalAudit->Description_DeviationXIV = $request->Description_DeviationXIV;
+        $internalAudit->Description_DeviationXV = $request->Description_DeviationXV;
+        $internalAudit->Description_DeviationXVI = $request->Description_DeviationXVI;
+        $internalAudit->Description_DeviationXVII = $request->Description_DeviationXVII;
+        $internalAudit->Description_DeviationXVIII = $request->Description_DeviationXVIII;
+    
         // dd($internalAudit->due_date);
         $internalAudit->audit_schedule_start_date= $request->audit_schedule_start_date;
         $internalAudit->audit_schedule_end_date= $request->audit_schedule_end_date;
@@ -88,6 +107,20 @@ class InternalauditController extends Controller
         // $internalAudit->file_attachment_guideline = $request->file_attachment_guideline;
         $internalAudit->Audit_Category= $request->Audit_Category;
         $internalAudit->res_ver = $request->res_ver;
+
+        if (!empty($request->sp_attachment_i)) {
+            $files = [];
+            if ($request->hasfile('sp_attachment_i')) {
+                foreach ($request->file('sp_attachment_i') as $file) {
+                    $name = $request->name . 'sp_attachment_i' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->sp_attachment_i = json_encode($files);
+        }
+
+
         if (!empty($request->attach_file_rv)) {
             $files = [];
             if ($request->hasfile('attach_file_rv')) {
@@ -272,6 +305,8 @@ class InternalauditController extends Controller
         $internalAudit->remark_63 = $request->remark_63;
         
         $internalAudit->save();
+
+        // dd($internalAudit);
         
         // dd($internalAudit);
 
@@ -1510,6 +1545,25 @@ $newDataGridInitialClosure->save();
         $internalAudit->audit_agenda = $request->audit_agenda;
         //$internalAudit->Facility =  implode(',', $request->Facility);
         // $internalAudit->Group = implode(',', $request->Group);
+
+        $internalAudit->Description_Deviation_IIIII = $request->Description_Deviation_IIIII;
+        $internalAudit->Description_Deviation_III = $request->Description_Deviation_III;
+        $internalAudit->Description_Deviation_IV = $request->Description_Deviation_IV;
+        $internalAudit->Description_Deviation_V = $request->Description_Deviation_V;
+        $internalAudit->Description_Deviation_VI = $request->Description_Deviation_VI;
+        $internalAudit->Description_DeviationVII = $request->Description_DeviationVII;
+        $internalAudit->Description_DeviationVIII = $request->Description_DeviationVIII;
+        $internalAudit->Description_DeviationIX = $request->Description_DeviationIX;
+        $internalAudit->Description_DeviationX = $request->Description_DeviationX;
+        $internalAudit->Description_DeviationXI = $request->Description_DeviationXI;
+        $internalAudit->Description_DeviationXII = $request->Description_DeviationXII;
+        $internalAudit->Description_DeviationXIII = $request->Description_DeviationXIII;
+        $internalAudit->Description_DeviationXIV = $request->Description_DeviationXIV;
+        $internalAudit->Description_DeviationXV = $request->Description_DeviationXV;
+        $internalAudit->Description_DeviationXVI = $request->Description_DeviationXVI;
+        $internalAudit->Description_DeviationXVII = $request->Description_DeviationXVII;
+        $internalAudit->Description_DeviationXVIII = $request->Description_DeviationXVIII;
+    
         $internalAudit->external_agencies = $request->external_agencies;
         $internalAudit->material_name = $request->material_name;
         $internalAudit->if_comments = $request->if_comments;
@@ -2099,6 +2153,8 @@ $newDataGridInitialClosure->save();
                     $files[] = $name;
                 }
             }
+
+            
  if (!empty($request->inv_attachment)) {
             $files = [];
             if ($request->hasfile('inv_attachment')) {
@@ -2404,6 +2460,20 @@ $newDataGridInitialClosure->save();
 
 
             $internalAudit->file_attach = json_encode($files);
+        }
+
+
+
+        if (!empty($request->sp_attachment_i)) {
+            $files = [];
+            if ($request->hasfile('sp_attachment_i')) {
+                foreach ($request->file('sp_attachment_i') as $file) {
+                    $name = $request->name . 'sp_attachment_i' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->sp_attachment_i = json_encode($files);
         }
 
 

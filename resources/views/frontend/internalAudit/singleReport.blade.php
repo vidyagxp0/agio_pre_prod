@@ -206,7 +206,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Department </th>
-                        <td class="w-30">@if($data->Initiator_Group){{ $data->Initiator_Group }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->Initiator_Group){{ Helpers::getFullDepartmentName($data->Initiator_Group) }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Department  Code</th>
                         <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                     </tr>
@@ -448,11 +448,23 @@
                                     @if($data->audit_start_date){{ $data->audit_start_date }}@else Not Applicable @endif
                                 </div>
                             </td>
+
+
                             <th class="w-20">Audit End Date</th>
                             <td class="w-30">
                                 <div>
                                     @if($data->audit_end_date){{ $data->audit_end_date }}@else Not Applicable @endif
                                 </div>
+                            </td>
+
+
+                            <th class="w-20">Final Comments</th>
+                            <td class="w-30">
+                                <div>
+                                @if($data->Description_Deviation_VI){{ $data->Description_Deviation_VI }}@else Not Applicable @endif
+
+                                </div>
+
                             </td>
                         </tr>
 
@@ -489,9 +501,9 @@
 
                 </table>
             </div> 
-                {{-- <div class="border-table">
+                 <div class="border-table">
                     <div class="block-head">
-                        Audit Attachments
+                        Production Attachments( Tablet Dispensing & Tablet Granulation )
                     </div>
                     <table>
 
@@ -499,8 +511,8 @@
                             <th class="w-20">S.N.</th>
                             <th class="w-60">Batch No</th>
                         </tr>
-                            @if($data->Audit_file)
-                            @foreach(json_decode($data->Audit_file) as $key => $file)
+                            @if($data->file_attach)
+                            @foreach(json_decode($data->file_attach) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
                                     <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
@@ -514,7 +526,7 @@
                         @endif
 
                     </table>
-                </div>--}}
+                </div>
 
 
 
