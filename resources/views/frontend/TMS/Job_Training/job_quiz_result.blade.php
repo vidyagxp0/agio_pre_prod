@@ -1,17 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @extends('frontend.layout.main')
 
 @section('container')
@@ -107,8 +93,8 @@
             <p>Better luck next time!</p>
         </div>
     @endif
-
-    <button >Go Back to Home</button>
+    <button type="button"> <a class="text-white" href="{{ url('TMS') }}"> Go Back to Home </a> </button>
+    {{-- <button onclick="{{url("TMS") }}"></button> --}}
 </div>
 
 @endsection

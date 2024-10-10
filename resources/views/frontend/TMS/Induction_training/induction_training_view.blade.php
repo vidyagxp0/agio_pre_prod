@@ -102,9 +102,9 @@ $users = DB::table('users')->get();
                        Question-Answers
                     </button> --}}
                     @elseif($inductionTraining->stage == 2)
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Answer Submit
-                    </button>
+                    </button> --}}
                     @elseif($inductionTraining->stage == 3)
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Evaluation Complete
