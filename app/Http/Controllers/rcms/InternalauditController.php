@@ -110,54 +110,54 @@ class InternalauditController extends Controller
         $internalAudit->lead_auditor = $request->lead_auditor;
         // $internalAudit->Audit_team =  implode(',', $request->Audit_team);
         // if (is_array($request->Audit_team)) {
-        //     $internalAudit->Audit_team = implode(',', $request->Audit_team);
-        // } else {
-        //     $internalAudit->Audit_team = $request->Audit_team; 
-        // }
-        if (is_array($request->checklists)) {
-            $internalAudit->checklists = implode(',', $request->checklists);
-        } else {
-            $internalAudit->checklists = $request->checklists; 
-        }
-        // $internalAudit->Auditee =  implode(',', $request->Auditee);
-        // if (is_array($request->Auditee)) {
-        //     $internalAudit->Auditee = implode(',', $request->Auditee);
-        // } else {
-        //     $internalAudit->Auditee = $request->Auditee; 
-        // }
-        $internalAudit->Auditor_Details = $request->Auditor_Details;
-        $internalAudit->Comments = $request->Comments;
-        $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
-        $internalAudit->Remarks = $request->Remarks;
-        // $internalAudit->refrence_record=  implode(',', $request->refrence_record);
-        if (is_array($request->refrence_record)) {
-            $internalAudit->refrence_record = implode(',', $request->refrence_record);
-        } else {
-            $internalAudit->refrence_record = $request->refrence_record; 
-        }
-        $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
-        $internalAudit->due_date = $request->due_date;
-        $internalAudit->audit_start_date= $request->audit_start_date;
-
-        $internalAudit->audit_end_date = $request->audit_end_date;
-        // $internalAudit->external_others=$request->external_others;
-        $internalAudit->response_1 = $request->response_1;
-        
-        $internalAudit->response_2 = $request->response_2;
-        $internalAudit->response_3 = $request->response_3;
-        $internalAudit->response_4 = $request->response_4;
-        $internalAudit->response_5 = $request->response_5;
-        $internalAudit->response_6 = $request->response_6;
-        $internalAudit->response_7 = $request->response_7;
-        $internalAudit->response_8 = $request->response_8;
-        $internalAudit->response_9 = $request->response_9;
-        $internalAudit->response_10 = $request->response_10;
-        $internalAudit->response_11 = $request->response_11;
-        $internalAudit->response_12 = $request->response_12;
-        $internalAudit->response_13 = $request->response_13;
-        $internalAudit->response_14 = $request->response_14;
-        $internalAudit->response_15 = $request->response_15;
-        $internalAudit->response_16 = $request->response_16;
+            //     $internalAudit->Audit_team = implode(',', $request->Audit_team);
+            // } else {
+                //     $internalAudit->Audit_team = $request->Audit_team; 
+                // }
+                if (is_array($request->checklists)) {
+                    $internalAudit->checklists = implode(',', $request->checklists);
+                } else {
+                    $internalAudit->checklists = $request->checklists; 
+                }
+                // $internalAudit->Auditee =  implode(',', $request->Auditee);
+                // if (is_array($request->Auditee)) {
+                    //     $internalAudit->Auditee = implode(',', $request->Auditee);
+                    // } else {
+                        //     $internalAudit->Auditee = $request->Auditee; 
+                        // }
+                        $internalAudit->Auditor_Details = $request->Auditor_Details;
+                        $internalAudit->Comments = $request->Comments;
+                        $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
+                        $internalAudit->Remarks = $request->Remarks;
+                        // $internalAudit->refrence_record=  implode(',', $request->refrence_record);
+                        if (is_array($request->refrence_record)) {
+                            $internalAudit->refrence_record = implode(',', $request->refrence_record);
+                        } else {
+                            $internalAudit->refrence_record = $request->refrence_record; 
+                        }
+                        $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
+                        $internalAudit->due_date = $request->due_date;
+                        $internalAudit->audit_start_date= $request->audit_start_date;
+                        
+                        $internalAudit->audit_end_date = $request->audit_end_date;
+                        // $internalAudit->external_others=$request->external_others;
+                        $internalAudit->response_1 = $request->response_1;
+                        
+                        $internalAudit->response_2 = $request->response_2;
+                        $internalAudit->response_3 = $request->response_3;
+                        $internalAudit->response_4 = $request->response_4;
+                        $internalAudit->response_5 = $request->response_5;
+                        $internalAudit->response_6 = $request->response_6;
+                        $internalAudit->response_7 = $request->response_7;
+                        $internalAudit->response_8 = $request->response_8;
+                        $internalAudit->response_9 = $request->response_9;
+                        $internalAudit->response_10 = $request->response_10;
+                        $internalAudit->response_11 = $request->response_11;
+                        $internalAudit->response_12 = $request->response_12;
+                        $internalAudit->response_13 = $request->response_13;
+                        $internalAudit->response_14 = $request->response_14;
+                        $internalAudit->response_15 = $request->response_15;
+                        $internalAudit->response_16 = $request->response_16;
         $internalAudit->response_17 = $request->response_17;
         $internalAudit->response_18 = $request->response_18;
         $internalAudit->response_19 = $request->response_19;
@@ -272,6 +272,8 @@ class InternalauditController extends Controller
         $internalAudit->remark_63 = $request->remark_63;
         
         $internalAudit->save();
+        
+        // dd($internalAudit);
 
         $Summary = $internalAudit->id;
 
@@ -713,7 +715,7 @@ $newDataGridInitialClosure->save();
             $history->InternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Initiator Department ';
             $history->previous = "Null";
-            $history->current = Helpers::getInitiatorGroupFullName($internalAudit->Initiator_Group);
+            $history->current = Helpers::getFullDepartmentName($internalAudit->Initiator_Group);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1480,21 +1482,16 @@ $newDataGridInitialClosure->save();
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assign_to = $request->assign_to;
         $internalAudit->due_date= $request->due_date;
-        // dd($internalAudit->due_date);
-        // $internalAudit->initiator_group= $request->initiator_group;
         $internalAudit->initiator_group_code= $request->initiator_group_code;
         $internalAudit->short_description = $request->short_description;
         $internalAudit->audit_type = $request->audit_type;
         $internalAudit->if_other = $request->if_other;
         $internalAudit->Others= $request->Others;
-        // $internalAudit->external_others=$request->external_others;
         $internalAudit->Relevant_Guideline= $request->Relevant_Guideline;
         $internalAudit->initiated_through = $request->initiated_through;
-        // dd($internalAudit->initiated_through);
         $internalAudit->initiated_if_other = $request->initiated_if_other;
         $internalAudit->repeat = $request->repeat;
         $internalAudit->QA_Comments= $request->QA_Comments;
-        // $internalAudit->file_attachment_guideline = $request->file_attachment_guideline;
         $internalAudit->Supplier_Details= $request->Supplier_Details;
         $internalAudit->Supplier_Site= $request->Supplier_Site;
         $internalAudit->Audit_Category= $request->Audit_Category;
@@ -1672,19 +1669,19 @@ $newDataGridInitialClosure->save();
         $internalAudit->remark_61 = $request->remark_61;
         $internalAudit->remark_62 = $request->remark_62;
         $internalAudit->remark_63 = $request->remark_63;
-        $internalAudit->Description_Deviation = $request->Description_Deviation;
-
+        $internalAudit->Description_Deviation_II = $request->Description_Deviation_II;
+        
         // =======================new teblet compresion ====
         $checklistTabletCompression = IA_checklist_tablet_compression::where(['ia_id' => $id])->firstOrCreate();
         $checklistTabletCompression->ia_id = $id;
-
-
+        
+        
         for ($i = 1; $i <= 49; $i++)
         {
             $string = 'tablet_compress_response_'. $i;
             $checklistTabletCompression->$string = $request->$string;
         }
-
+        
         for ($i = 1; $i <= 49; $i++)
         {
             $string = 'tablet_compress_remark_'. $i;
@@ -1693,19 +1690,19 @@ $newDataGridInitialClosure->save();
         // dd($checklistTabletCompression->tablet_compress_remark_1)
         $checklistTabletCompression->tablet_compress_response_final_comment = $request->tablet_compress_response_final_comment;
         $checklistTabletCompression->save();
-
-
+        
+        
         // =======================new teblet coating ====
         $checklistTabletCoating = IA_checklist_tablet_coating::where(['ia_id' => $id])->firstOrCreate();
         $checklistTabletCoating->ia_id = $id;
-
-
+        
+        
         for ($i = 1; $i <= 49; $i++)
         {
             $string = 'tablet_coating_response_'. $i;
             $checklistTabletCoating->$string = $request->$string;
         }
-
+        
         for ($i = 1; $i <= 49; $i++)
         {
             $string = 'tablet_coating_remark_'. $i;
@@ -1714,64 +1711,64 @@ $newDataGridInitialClosure->save();
         // dd($checklistTabletCompression->tablet_compress_remark_1)
         $checklistTabletCoating->tablet_coating_remark_comment = $request->tablet_coating_remark_comment;
         $checklistTabletCoating->save();
-
-
+        
+        
         //==================== onitnment controller==================================================================
-$liquid_ointments = IA_liquid_ointment::where(['ia_id' => $id])->firstOrCreate();
-$liquid_ointments->ia_id = $id;
-
-
- for ($i = 1; $i <= 48; $i++)
- {
-     $string = 'liquid_ointments_response_'. $i;
-    $liquid_ointments->$string = $request->$string;
- }
-
- for ($i = 1; $i <= 48; $i++)
- {
-    $string = 'liquid_ointments_remark_'. $i;
-     $liquid_ointments->$string = $request->$string;
- }
- // dd($checklistTabletCompression->tablet_compress_remark_1)
- $liquid_ointments->Description_oinments_comment = $request->Description_oinments_comment;
-$liquid_ointments->save();
-
-//======================================  Checklist_Capsule==========================================================================================================================================================
-
-$Checklist_Capsule = Checklist_Capsule::where(['ia_id' => $id])->firstOrCreate();
-$Checklist_Capsule->ia_id = $id;
-
-
-for ($i = 1; $i <= 50; $i++)
-{
-    $string = 'capsule_response_'. $i;
-    $Checklist_Capsule->$string = $request->$string;
-}
-
-for ($i = 1; $i <= 50; $i++)
-{
-    $string = 'capsule_remark_'. $i;
-    $Checklist_Capsule->$string = $request->$string;
-}
-// dd($checklistTabletCompression->tablet_compress_remark_1)
-$Checklist_Capsule->Description_Deviation = $request->Description_Deviation;
-$Checklist_Capsule->save();
-
-//=========================================================================================
-
-
-
+        $liquid_ointments = IA_liquid_ointment::where(['ia_id' => $id])->firstOrCreate();
+        $liquid_ointments->ia_id = $id;
+        
+        
+        for ($i = 1; $i <= 48; $i++)
+        {
+            $string = 'liquid_ointments_response_'. $i;
+            $liquid_ointments->$string = $request->$string;
+        }
+        
+        for ($i = 1; $i <= 48; $i++)
+        {
+            $string = 'liquid_ointments_remark_'. $i;
+            $liquid_ointments->$string = $request->$string;
+        }
+        // dd($checklistTabletCompression->tablet_compress_remark_1)
+        $liquid_ointments->Description_oinments_comment = $request->Description_oinments_comment;
+        $liquid_ointments->save();
+        
+        //======================================  Checklist_Capsule==========================================================================================================================================================
+        
+        $Checklist_Capsule = Checklist_Capsule::where(['ia_id' => $id])->firstOrCreate();
+        $Checklist_Capsule->ia_id = $id;
+        
+        
+        for ($i = 1; $i <= 50; $i++)
+        {
+            $string = 'capsule_response_'. $i;
+            $Checklist_Capsule->$string = $request->$string;
+        }
+        
+        for ($i = 1; $i <= 50; $i++)
+        {
+            $string = 'capsule_remark_'. $i;
+            $Checklist_Capsule->$string = $request->$string;
+        }
+        // dd($checklistTabletCompression->tablet_compress_remark_1)
+        $Checklist_Capsule->Description_Deviation = $request->Description_Deviation;
+        $Checklist_Capsule->save();
+        
+        //=========================================================================================
+        
+        
+        
         // =======================new teblet paking====
         $checklistTabletPaking = IA_checklist_capsule_paking::where(['ia_id' => $id])->firstOrCreate();
         $checklistTabletPaking->ia_id = $id;
-
-
+        
+        
         for ($i = 1; $i <= 49; $i++)
         {
             $string = 'tablet_capsule_packing_'. $i;
             $checklistTabletPaking->$string = $request->$string;
         }
-
+        
         for ($i = 1; $i <= 49; $i++)
         {
             $string = 'tablet_capsule_packing_remark_'. $i;
@@ -1780,22 +1777,23 @@ $Checklist_Capsule->save();
         // dd($checklistTabletCompression->tablet_compress_remark_1)
         $checklistTabletPaking->tablet_capsule_packing_comment = $request->tablet_capsule_packing_comment;
         $checklistTabletPaking->save();
+        
+        // =======================new teblet dispencing_and_manufactuirng ====
+        $dispencing_and_manufactuirng = IA_dispencing_manufacturing::where(['ia_id' => $id])->firstOrCreate();
+        $dispencing_and_manufactuirng->ia_id = $id;
+        
+        
+        for ($i = 1; $i <= 66; $i++)
+        {
+            $string = 'dispensing_and_manufacturing_'. $i;
+            $dispencing_and_manufactuirng->$string = $request->$string;
+        }
 
-  // =======================new teblet dispencing_and_manufactuirng ====
-  $dispencing_and_manufactuirng = IA_dispencing_manufacturing::where(['ia_id' => $id])->firstOrCreate();
-  $dispencing_and_manufactuirng->ia_id = $id;
-
-
-  for ($i = 1; $i <= 66; $i++)
-  {
-      $string = 'dispensing_and_manufacturing_'. $i;
-      $dispencing_and_manufactuirng->$string = $request->$string;
-  }
-
-  for ($i = 1; $i <= 66; $i++)
-  {
-      $string = 'dispensing_and_manufacturing_remark_'. $i;
-      $dispencing_and_manufactuirng->$string = $request->$string;
+        
+        for ($i = 1; $i <= 66; $i++)
+        {
+            $string = 'dispensing_and_manufacturing_remark_'. $i;
+            $dispencing_and_manufactuirng->$string = $request->$string;
   }
   // dd($checklistTabletCompression->tablet_compress_remark_1)
   $dispencing_and_manufactuirng->dispensing_and_manufacturing_comment = $request->dispensing_and_manufacturing_comment;
@@ -2715,25 +2713,6 @@ $Checklist_Capsule->save();
         }
 
 
-        // if ($lastDocument->Initiator_Group!= $internalAudit->Initiator_Group|| !empty($request->Initiator_Group_comment)) {
-
-        //     $history = new InternalAuditTrial();
-        //     $history->InternalAudit_id = $id;
-        //     $history->activity_type = 'Initiator Department ';
-        //     $history->previous = $lastDocument->Initiator_Group;
-        //     $history->current = $internalAudit->Initiator_Group;
-        //     $history->comment = $request->date_comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->save();
-        // }
-
-
-        // dd(Helpers::getInitiatorGroupData($internalAudit->Initiator_Group));
-        // dd($request->Initiator_Group);
-        // dd($request->Initiator_Group);
         if($lastDocument->Initiator_Group != $request->Initiator_Group){
             $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
             ->where('activity_type', 'Initiator Department ')
@@ -2746,7 +2725,7 @@ $Checklist_Capsule->save();
             } else{
                 $history->previous = $lastDocument->Initiator_Group;
             }
-            $history->current = Helpers::getInitiatorGroupFullName($request->Initiator_Group);
+            $history->current = Helpers::getFullDepartmentName($request->Initiator_Group);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4886,62 +4865,6 @@ if ($areIniAttachmentsSame2 != true) {
         }
 
 
-    // public static function singleReport($id)
-    // {
-    //     $data = InternalAudit::find($id);
-    //     $checklist1 = IA_checklist_tablet_compression::where('ia_id', $id)->first();
-    //     $checklist2 = IA_checklist_tablet_coating::where('ia_id', $id)->first();
-    //     $checklist3 = IA_checklist_capsule_paking::where('ia_id', $id)->first();
-    //     $checklist4 = Checklist_Capsule::where('ia_id', $id)->first();
-    //     $checklist5 = IA_liquid_ointment::where('ia_id', $id)->first();
-    //     $checklist6 = IA_dispencing_manufacturing::where('ia_id', $id)->first();
-    //     $checklist7 = IA_ointment_paking::where('ia_id', $id)->first();
-    //     $checklist9 = IA_checklist_engineering::where('ia_id', $id)->first();
-    //     $checklist10 = IA_quality_control::where('ia_id', $id)->first();
-    //     $checklist11 = IA_checklist_stores::where('ia_id', $id)->first();
-    //     $checklist12 = IA_checklist_hr::where('ia_id', $id)->first();
-    //     $checklist13 = IA_checklist_dispensing::where('ia_id', $id)->first();
-    //     $checklist14 = IA_checklist_production_injection::where('ia_id', $id)->first();
-    //     $checklist15 = IA_checklist_manufacturing_filling::where('ia_id', $id)->first();
-    //     $checklist16 = IA_checklist_analytical_research::where('ia_id', $id)->first();
-    //     $checklist17 = IA_checklist__formulation_research::where('ia_id', $id)->first();
-    //     $auditAssessmentChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditAssessmentChecklist'])->first();
-    //     $auditPersonnelChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditPersonnelChecklist'])->firstOrNew();
-    //     $auditfacilityChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditfacilityChecklist'])->firstOrNew();
-    //     $auditMachinesChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditMachinesChecklist'])->firstOrNew();
-    //     $auditProductionChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditProductionChecklist'])->firstOrNew();
-    //     $auditMaterialsChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditMaterialsChecklist'])->firstOrNew();
-    //     $auditQualityControlChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditQualityControlChecklist'])->firstOrNew();
-    //     $auditQualityAssuranceChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditQualityAssuranceChecklist'])->firstOrNew();
-    //     $auditPackagingChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditPackagingChecklist'])->firstOrNew();
-    //     $auditSheChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditSheChecklist'])->firstOrNew();
-        
-    
-
-
-
-
-    //     if (!empty($data)) {
-    //         $data->originator = User::where('id', $data->initiator_id)->value('name');
-    //         $pdf = App::make('dompdf.wrapper');
-    //         $time = Carbon::now();
-    //         $pdf = PDF::loadview('frontend.internalAudit.singleReport', compact('data','checklist1','checklist2','checklist3','checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','auditAssessmentChecklist','auditPersonnelChecklist','auditfacilityChecklist','auditMachinesChecklist','auditProductionChecklist','auditMaterialsChecklist','auditQualityControlChecklist','auditQualityAssuranceChecklist','auditPackagingChecklist','auditSheChecklist'))
-    //             ->setOptions([
-    //                 'defaultFont' => 'sans-serif',
-    //                 'isHtml5ParserEnabled' => true,
-    //                 'isRemoteEnabled' => true,
-    //                 'isPhpEnabled' => true,
-    //             ]);
-    //         $pdf->setPaper('A4');
-    //         $pdf->render();
-    //         $canvas = $pdf->getDomPDF()->getCanvas();
-    //         $height = $canvas->get_height();
-    //         $width = $canvas->get_width();
-    //         $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-    //         $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
-    //         return $pdf->stream('Internal-Audit' . $id . '.pdf');
-    //     }
-    // }
     public static function singleReport($id)
     {
         $data = InternalAudit::find($id);

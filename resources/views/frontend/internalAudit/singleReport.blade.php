@@ -240,9 +240,9 @@
                         <td class="w-30">@if($data->assign_to){{ $data->assign_to }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Audit type</th>
-                        <td class="w-30">@if($data->audit_type){{ $data->audit_type }}@else Not Applicable @endif</td>
-                        <th class="w-20">If Other</th>
+                        <th class="w-20">Audit Category</th>
+                        <td class="w-30">@if($data->audit_type){{ Helpers::getAuditTypeName($data->audit_type) }}@else Not Applicable @endif</td>
+                            <th class="w-20">If Other</th>
                         <td class="w-30">@if($data->if_other){{ $data->if_other }}@else Not Applicable @endif</td>
                         
                     </tr>
@@ -456,12 +456,12 @@
                             </td>
                         </tr>
 
-                        <tr>
+                        <!-- <tr>
                             <th class="w-20">Audit Comments</th>
                             <td class="w-80"> @if($data->Audit_Comments2){{ $data->Audit_Comments2 }}@else Not Applicable @endif</td>
                             <th class="w-20">Comments</th>
                             <td class="w-30">@if($data->Comments){{ $data->Comments }}@else Not Applicable @endif</td>
-                        </tr>
+                        </tr> -->
                    </table>
                 </div>
                  <div class="border-table">
@@ -550,7 +550,7 @@
                    </table>
                    <div class="border-table">
                     <div class="block-head">
-                        Report  Attachment
+                        Report  Attachments
                     </div>
                     <table>
 
@@ -2886,11 +2886,11 @@
                         <td class="w-30">{{ $data->sheduled_audit_comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Cancelled By</th>
+                        <th class="w-20">Cancel By</th>
                         <td class="w-30">{{ $data->cancelled_1_by }}</td>
-                        <th class="w-20">Cancelled On</th>
+                        <th class="w-20">Cancel On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_1_on) }}</td>
-                        <th class="w-20"> Cancelled Comment</th>
+                        <th class="w-20"> Cancel Comment</th>
                         <td class="w-30">{{ $data->cancel_1_comment }}</td>
                     </tr>
                     <tr>
@@ -2901,18 +2901,18 @@
                         <th class="w-20"> Acknowledement Comment</th>
                         <td class="w-30">{{ $data->acknowledge_commnet }}</td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <th class="w-20">More Info Required by</th>
                         <td class="w-30">{{ $data->more_info_2_by }}</td>
                         <th class="w-20">More Info Required On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->more_info_2_on) }}</td>
                         <th class="w-20"> More Info Required Comment</th>
                         <td class="w-30">{{ $data->more_info_2_comment }}</td>
-                    </tr>
+                    </tr> -->
                     {{-- <tr>
-                        <th class="w-20">Cancelled By</th>
+                        <th class="w-20">Cancel By</th>
                         <td class="w-30">{{ $data->cancelled_2_by }}</td>
-                        <th class="w-20">Cancelled On</th>
+                        <th class="w-20">Cancel On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_2_on) }}</td>
                         <th class="w-20">Comment</th>
                         <td class="w-30">{{ $data->cancel_2_comment }}</td>
@@ -2925,7 +2925,7 @@
                         <th class="w-20"> Issue Report Comment</th>
                         <td class="w-30">{{ $data->issue_report_comment }}</td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <th class="w-20">More Info Required By
                         </th>
                         <td class="w-30">{{ $data->more_info_3_by }}</td>
@@ -2933,13 +2933,13 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->more_info_3_on) }}</td>
                         <th class="w-20"> More Info Required Comment</th>
                         <td class="w-30">{{ $data->more_info_3_comment }}</td>
-                    </tr>
+                    </tr> -->
                     <tr>
-                        <th class="w-20">Cancelled By</th>
+                        <th class="w-20">Cancel By</th>
                         <td class="w-30">{{ $data->cancelled_by }}</td>
-                        <th class="w-20">Cancelled On</th>
+                        <th class="w-20">Cancel On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
-                        <th class="w-20"> Cancelled Comment</th>
+                        <th class="w-20"> Cancel Comment</th>
                         <td class="w-30">{{ $data->cancel_3_comment }}</td>
                     </tr>
                     <tr>

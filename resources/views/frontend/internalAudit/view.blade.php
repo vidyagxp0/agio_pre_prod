@@ -1001,15 +1001,15 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Audit Category">Audit Category</label>
-                                                <select name="Audit_Category" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <select name="audit_type" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="0">-- Select --</option>
-                                                    <option @if ($data->Audit_Category == '1') selected @endif
+                                                    <option @if ($data->audit_type == '1') selected @endif
                                                          value="1">Internal Audit/Self Inspection</option>
-                                                    <option  @if ($data->Audit_Category == '2') selected @endif
+                                                    <option  @if ($data->audit_type == '2') selected @endif
                                                          value="2">Supplier Audit</option>
-                                                    <option @if ($data->Audit_Category == '3') selected @endif
+                                                    <option @if ($data->audit_type == '3') selected @endif
                                                          value="3">Regulatory Audit</option>
-                                                    <option @if ($data->Audit_Category == '4') selected @endif
+                                                    <option @if ($data->audit_type == '4') selected @endif
                                                          value="4">Consultant Audit</option>
                                                 </select>
                                             </div>
@@ -1149,12 +1149,7 @@
                             <div id="CCForm29" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
-                                        {{-- <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="External Auditor Details">Auditee Comment</label>
-                                                <textarea  name="Auditee_comment"></textarea>
-                                            </div>
-                                        </div> --}}
+ 
                                         <div class="col-12">
                                             @if ($data->stage == 2)
                                                 <div class="group-input">
@@ -1187,12 +1182,7 @@
 
                                         </div>
 
-                                        {{-- <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="External Auditor Details">Auditor Comment</label>
-                                                <textarea  name="Auditor_comment"></textarea>
-                                            </div>
-                                        </div> --}}
+
 
                                         <div class="col-12">
                                             @if ($data->stage == 2)
@@ -3129,7 +3119,7 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Audit Schedule On"> Cancelled Comment</label>
+                                            <label for="Audit Schedule On"> Cancel Comment</label>
                                             <div class="static">{{ $data->cancel_1_comment }}</div>
                                         </div>
                                     </div>
@@ -3180,13 +3170,13 @@
 
                                     {{-- <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Cancelled By">Cancelled By</label>
+                                            <label for="Cancelled By">Cancel By</label>
                                             <div class="static">{{ $data->cancelled_2_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Cancelled On">Cancelled On</label>
+                                            <label for="Cancelled On">Cancel On</label>
                                             <div class="static">{{ $data->cancelled_2_on }}</div>
                                         </div>
                                     </div>
@@ -3243,13 +3233,13 @@
 
                                     {{-- <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Cancelled By">Cancelled By</label>
+                                            <label for="Cancelled By">Cancel By</label>
                                             <div class="static">{{ $data->cancelled_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Cancelled On">Cancelled On</label>
+                                            <label for="Cancelled On">Cancel On</label>
                                             <div class="static">{{ $data->cancelled_on }}</div>
                                         </div>
                                     </div>
@@ -3277,14 +3267,14 @@
                                             <div class="static">{{ $data->audit_observation_submitted_on }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-12 sub-head" style="font-size: 16px">
-                                        No CAPAs Required
-                                    </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Audit Schedule On"> CAPA Plan Proposed Comment</label>
                                             <div class="static">{{ $data->capa_plan_comment }}</div>
                                         </div>
+                                    </div>
+                                    <div class="col-12 sub-head" style="font-size: 16px">
+                                        No CAPAs Required
                                     </div>
 
                                     <div class="col-lg-4">
@@ -5390,8 +5380,7 @@
                                 <div class="col-md-12 mb-4">
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
-                                        <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea   name="Description_Deviation">{{ $data->Description_Deviation }} </textarea>
+                                        <textarea   name="Description_Deviation">{{ $data->Description_Deviation }}</textarea>
                                     </div>
                                 </div>
 
@@ -11561,9 +11550,7 @@
                                 <div class="col-md-12 mb-4">
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
-                                        <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea  name="Description_Deviation[]" >
-                    </textarea>
+                                        <textarea  name="Description_Deviation" ></textarea>
                                     </div>
                                 </div>
 

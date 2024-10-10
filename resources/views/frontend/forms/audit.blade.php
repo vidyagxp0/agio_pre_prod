@@ -782,13 +782,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="audit_type">Audit Category</label>
-                                        <select name="audit_type"
-                                            onchange="otherController(this.value, 'others', 'type_of_audit_req')">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="R&D">Scheduled Internal Audit</option>
-                                            <option value="GLP">Unscheduled Internal Audit</option>
-                                            <option value="GCP">Surprise Internal Audit</option>
+                                        <select name="audit_type"onchange="otherController(this.value, 'others', 'type_of_audit_req')">
+                                        <option value="1">Internal Audit/Self Inspection</option>
+                                                    <option  value="2">Supplier Audit</option>
+                                                    <option value="3">Regulatory Audit</option>
+                                                    <option value="4">Consultant Audit</option>
                                         </select>
+                                        
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-6">
@@ -1521,7 +1521,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Audit Category">Audit Category</label>
-                                        <select name="Audit_Category">
+                                        <select name="audit_type">
                                             <option value="0">-- Select --</option>
                                             <option value="1">Internal Audit/Self Inspection</option>
                                             <option value="2">Supplier Audit</option>
@@ -1879,141 +1879,7 @@
                             }
             </script>
 
-                    <!-- Audit Execution content -->
-                    {{-- <div id="CCForm4" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                {{-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        <input type="hidden" value="{{ $due_date }}" name="due_date">
-                                        <input disabled type="text"
-                                            value="{{ Helpers::getdateFormat($due_date) }}">
-                                    </div>
-                                </div> -
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Audit Start Date">Audit Start Date</label>
-                                        {{-- <input type="date" name="audit_start_date"> -
-                                        <div class="calenderauditee">
-                                            <input type="text" id="audit_start_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="audit_start_date" id="audit_start_date_checkdate"
-                                                class="hide-input"
-                                                oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Audit End Date">Audit End Date</label>
-                                        {{-- <input type="date" name="audit_end_date"> -
-                                        <div class="calenderauditee">
-                                            <input type="text" id="audit_end_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" id="audit_end_date_checkdate" name="audit_end_date"
-                                                class="hide-input"
-                                                oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
-                                        </div>
-                                    </div>
-                                </div>
-                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="severity-level">Observation Category </label>
-                                        {{-- <span class="text-primary">Severity levels in a QMS record gauge issue seriousness,
-                                            guiding priority for corrective actions. Ranging from low to high, they ensure
-                                            quality standards and mitigate critical risks.</span> --}
-                                        <select name="severity_level_form">
-                                            <option value="0">-- Select --</option>
-                                            <option value="minor">Minor</option>
-                                            <option value="major">Major</option>
-                                            <option value="critical">Critical</option>
-                                        </select>
-                                    </div>
-                                </div> 
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="audit-agenda-grid">
-                                            Observation Details
-                                            <button type="button" name="audit-agenda-grid"
-                                                id="ObservationAdd">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#observation-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="onservation-field-table"
-                                                style="width: 100%;">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Row#</th>
-                                                        <th>Observation Details</th>
-                                                        {{-- <th>Date</th> --}}
-                                                        {{-- <th>Auditor</th> --}}
-                                                        {{-- <th>Auditee</th> --
-                                                        <th>Pre Comments</th>
-                                                        {{-- <th>Severity Level</th> --}}
-                                                        <!-- <th>CAPA Details if any</th> -->
-                                                        {{-- <th>Observation Category</th> --}}
-                                                        {{-- <th>CAPA Required</th> -
-                                                        <th>Post Comments</th>
-                                                        {{-- <th>Auditor Review on Response</th> --}}
-                                                        {{-- <th>QA Comments</th> --}}
-                                                        {{-- <th>CAPA Details</th> --}}
-                                                        {{-- <th>CAPA Due Date</th> --}}
-                                                        {{-- <th>CAPA Owner</th> --}}
-                                                        {{-- <th>Action Taken</th> --}}
-                                                        {{-- <th>CAPA Completion Date</th> --}}
-                                                        {{-- <th>Status</th> --}}
-                                                        {{-- <th>Remarks</th> --
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="observationDetail">
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Audit Attachments">Audit Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="Audit_file[]" multiple> --}}
-                                        {{-- <div class="file-attachment-field">
-                                            <div id="audit_attachment"></div>
-                                            <input type="file" id="myfile" name="Audit_file[]"
-                                            oninput="addMultipleFiles(this, 'audit_attachment')" multiple>
-                                        </div> --
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="audit_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Audit_file[]"
-                                                    oninput="addMultipleFiles(this, 'audit_attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Audit Comments">Audit Comments</label>
-                                        <textarea name="Audit_Comments1"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                        Exit </a> </button>
-                            </div>
-                        </div>
-                    </div> --}}
+                    
 
               
 
@@ -2415,13 +2281,13 @@
 
                                         {{-- <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Cancelled By">Cancelled By</label>
+                                        <label for="Cancelled By">Cancel By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Cancelled On">Cancelled On</label>
+                                        <label for="Cancelled On">Cancel On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -2457,20 +2323,20 @@
 
                                 {{-- <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Cancelled By">Cancelled By</label>
+                                        <label for="Cancelled By">Cancel By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Cancelled On">Cancelled On</label>
+                                        <label for="Cancelled On">Cancel On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Schedule On"> Cancelled Comment</label>
+                                                <label for="Audit Schedule On"> Cancell Comment</label>
                                                 <div class="static"></div>
                                             </div>
                                         </div> --}}

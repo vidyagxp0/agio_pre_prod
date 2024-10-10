@@ -13,6 +13,7 @@ use App\Models\RoleGroup;
 use App\Models\Deviation;
 use App\Models\LabIncident;
 use App\Models\OOS_micro;
+use App\Models\InternalAudit;
 use App\Models\OOS;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +22,28 @@ use Illuminate\Support\Facades\Auth;
 
 class Helpers
 {
+
+
+        /**
+         * Get Audit Type Name by ID.
+         *
+         * @param int $auditTypeId
+         * @return string
+         */
+        public static function getAuditTypeName($auditTypeId)
+        {
+            $auditTypes = [
+                0 => '-- Select --',
+                1 => 'Internal Audit/Self Inspection',
+                2 => 'Supplier Audit',
+                3 => 'Regulatory Audit',
+                4 => 'Consultant Audit',
+            ];
+    
+            return $auditTypes[$auditTypeId] ?? 'Not Applicable';
+        }
+    
+    
     public static function getArrayKey(array $array, $key)
     {
         return $array && is_array($array) && array_key_exists($key, $array) ? $array[$key] : '';
@@ -37,6 +60,8 @@ class Helpers
         return $res;
     }
 
+
+    
     public static function getDueDate($days = 30, $formatDate = true)
     {
         try {
