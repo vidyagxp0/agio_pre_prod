@@ -1435,8 +1435,9 @@ class Helpers
                 break;
         }
         return $count;
-    }    public static function checkControlAccess()
-{
+    }  
+          public static function checkControlAccess()
+        {
     // Retrieve the user's roles
     $userRoles = UserRole::where('user_id', Auth::user()->id)->pluck('role_id')->toArray();
 
