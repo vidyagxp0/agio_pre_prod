@@ -292,21 +292,23 @@
                 <table>
                     <tr>
                         <th class="w-20">Type</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->type)
                                 {{ $data->type }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Type(Others)</th>
-                        <td class="w-30">
+                      @if ($data->through_req == 'Other')
+                      <th class="w-20">Type(Others)</th>
+                        <td class="w-80">
                             @if ($data->through_req)
                                 {{ $data->through_req }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
+                      @endif
                     </tr>
                 </table>
                 <!-- <div class="inner-block">
@@ -323,21 +325,23 @@
                 <table>
                     <tr>
                         <th class="w-20">Initiated through</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->year)
                                 {{ $data->year }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
+                        @if ($data->yearly_other == 'Other')
                         <th class="w-20">Initiated through(Others)</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->yearly_other)
                                 {{ $data->yearly_other }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
+                        @endif
                     </tr>
                     <tr>
                         <th class="w-20">Comments</th>

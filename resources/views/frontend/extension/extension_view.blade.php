@@ -59,9 +59,9 @@
         }
 
         /* #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(4) {
-                                                                                                                                                                                                                                                                                                                                                                                    border-radius: 0px 20px 20px 0px;
+                                                                                                                                                                                                                                                                                                                                                                                                                            border-radius: 0px 20px 20px 0px;
 
-                                                                                                                                                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                                                                                                                        } */
         .new-moreinfo {
             width: 100%;
             border-radius: 5px;
@@ -208,6 +208,10 @@
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
                                     Send for CQA
                                 </button>
+                                @elseif($extensionNew->count == 'number')
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                    Send for CQA
+                                </button>    
                             @endif
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Reject
@@ -348,7 +352,7 @@
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         Characters remaining
                                         <input id="docname" type="text" name="short_description"
-                                        {{ $extensionNew->stage == 1 ? '' : 'readonly' }}
+                                            {{ $extensionNew->stage == 1 ? '' : 'readonly' }}
                                             value="{{ $extensionNew->short_description }}" maxlength="255" required>
                                     </div>
                                     {{-- @error('short_description')
@@ -363,40 +367,44 @@
                                     });
                                 </script>
                                 <!-- <div class="col-lg-6">
-                                                                                                                                                                                                                                                                                                                                                                                                        <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                            <label for="Assigned To">HOD review  </label>
-                                                                                                                                                                                                                                                                                                                                                                                                            <select id="choices-multiple-remove" class="choices-multiple-reviewe"
-                                                                                                                                                                                                                                                                                                                                                                                                                name="reviewers" placeholder="Select Reviewers" >
-                                                                                                                                                                                                                                                                                                                                                                                                                <option value="">-- Select --</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                @if (!empty($reviewers))
+                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label for="Assigned To">HOD review  </label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    <select id="choices-multiple-remove" class="choices-multiple-reviewe"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        name="reviewers" placeholder="Select Reviewers" >
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="">-- Select --</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        @if (!empty($reviewers))
     @foreach ($reviewers as $lan)
     @if (Helpers::checkUserRolesreviewer($lan))
     <option value="{{ $lan->id }}" @if ($lan->id == $extensionNew->reviewers) selected @endif>
-                                                                                                                                                                                                                                                                                                                                                                                                                                {{ $lan->name }}
-                                                                                                                                                                                                                                                                                                                                                                                                                            </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ $lan->name }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </option>
     @endif
     @endforeach
     @endif
-                                                                                                                                                                                                                                                                                                                                                                                                            </select>
-                                                                                                                                                                                                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    </select>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
 
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="Extension Number">
                                             Extension Number<span class="text-danger"></span>
                                         </label>
-                                        <select name="Extension"
-                                            {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}
-                                            id="Extension">
-                                            <option value="">Select Extension Number</option>
-                                            <option @if ($extensionNew->Extension == '1') selected @endif value="1">
-                                                1</option>
-                                            <option @if ($extensionNew->Extension == '2') selected @endif value="2">
-                                                2</option>
-                                            <option @if ($extensionNew->Extension == '3') selected @endif value="3">
-                                                3</option>
-                                        </select>
+                                            @if (empty($extensionNew->parent_type) || $extensionNew->parent_type == 'number' || $extensionNew->parent_type == 'number1' || $extensionNew->parent_type == 'number2')
+                                            <select name="count" id="" {{$extensionNew->stage == 1 ? '' : 'disabled'}}>
+                                                <option value="">--Select Extension Number--</option>
+                                                <option value="number1" @if ($extensionNew->count == 'number1') selected @endif>1</option>
+                                                <option value="number2" @if ($extensionNew->count == 'number2') selected @endif>2</option>
+                                                <option value="number" @if ($extensionNew->count == 'number') selected @endif>3</option>
+                                                </select>
+                                            @else
+                                                <select name="count" id="" disabled {{$extensionNew->stage == 1 ? '' : 'disabled'}}>
+                                                <option value="" >--Select Extension Number--</option>
+                                                <option value="1" @if ($extensionNew->count == '1') selected @endif>1</option>
+                                                <option value="2" @if ($extensionNew->count == '2') selected @endif>2</option>
+                                                <option value="3" @if ($extensionNew->count == '3' || $extensionNew->count == 'number') selected @endif>3</option>
+                                                </select>
+                                            @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -419,23 +427,23 @@
                                 </div>
 
                                 <!-- <div class="col-lg-6">
-                                                                                                                                                                                                                                                                                                                                                                                                        <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                            <label for="Assigned To">QA approval </label>
-                                                                                                                                                                                                                                                                                                                                                                                                            <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
-                                                                                                                                                                                                                                                                                                                                                                                                                name="approvers" placeholder="Select Approvers" >
-                                                                                                                                                                                                                                                                                                                                                                                                                <option value="">-- Select --</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                @if (!empty($approvers))
+                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label for="Assigned To">QA approval </label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        name="approvers" placeholder="Select Approvers" >
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="">-- Select --</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        @if (!empty($approvers))
     @foreach ($approvers as $lan)
     @if (Helpers::checkUserRolesApprovers($lan))
     <option value="{{ $lan->id }}" @if ($lan->id == $extensionNew->approvers) selected @endif>
-                                                                                                                                                                                                                                                                                                                                                                                                                                {{ $lan->name }}
-                                                                                                                                                                                                                                                                                                                                                                                                                            </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ $lan->name }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </option>
     @endif
     @endforeach
     @endif
-                                                                                                                                                                                                                                                                                                                                                                                                            </select>
-                                                                                                                                                                                                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    </select>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="related_records">Related Records</label>
@@ -451,7 +459,7 @@
                                         </select>
                                     </div>
                                 </div> --}}
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="related_records">Parent Records Number</label>
 
@@ -492,6 +500,18 @@
                                                 @endif
                                             </select>
                                         </div>
+                                    </div>
+                                </div> --}}
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="RLS Record Number"><b>Parent Records Number</b></label>
+                                        @if ($extensionNew->related_records)
+                                            <input readonly type="text" name="related_records"
+                                                value="{{ $extensionNew->related_records }}">
+                                        @else
+                                            <input type="text" name="related_records"
+                                                value="{{ $extensionNew->related_records }}">
+                                        @endif
                                     </div>
                                 </div>
 
@@ -600,7 +620,7 @@
                                     <div class="group-input">
                                         <label for="Short Description"> Description</label>
                                         <textarea id="docname" type="text" name="description" value=""
-                                        {{ $extensionNew->stage == 1 ? '' : 'readonly' }}>{{ $extensionNew->description }}</textarea>
+                                            {{ $extensionNew->stage == 1 ? '' : 'readonly' }}>{{ $extensionNew->description }}</textarea>
                                     </div>
                                     {{-- @error('short_description')
                                     <div class="text-danger">{{ $message }}</div>
@@ -611,44 +631,44 @@
                                         <label for="Short Description"> Justification / Reason </label>
 
                                         <textarea id="docname" type="text" name="justification_reason" value=""
-                                        {{ $extensionNew->stage == 1 ? '' : 'readonly' }}>{{ $extensionNew->justification_reason }}</textarea>
+                                            {{ $extensionNew->stage == 1 ? '' : 'readonly' }}>{{ $extensionNew->justification_reason }}</textarea>
                                     </div>
                                     {{-- @error('short_description')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror --}}
                                 </div>
                                 <!-- <div class="col-12">
-                                                                                    <div class="group-input">
-                                                                                        <label for="Inv Attachments"> Extension Attachment</label>
-                                                                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                                                                documents</small></div>
-                                                                                        <div class="file-attachment-field">
-                                                                                            <div disabled class="file-attachment-list" id="file_attachment_extension">
-                                                                                                @if ($extensionNew->file_attachment_extension)
+                                                                                                                            <div class="group-input">
+                                                                                                                                <label for="Inv Attachments"> Extension Attachment</label>
+                                                                                                                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                                                                                                                        documents</small></div>
+                                                                                                                                <div class="file-attachment-field">
+                                                                                                                                    <div disabled class="file-attachment-list" id="file_attachment_extension">
+                                                                                                                                        @if ($extensionNew->file_attachment_extension)
     @foreach (json_decode($extensionNew->file_attachment_extension) as $file)
     <h6 class="file-container text-dark"
-                                                                                                                style="background-color: rgb(243, 242, 240);">
-                                                                                                                <b>{{ $file }}</b>
-                                                                                                                <a href="{{ asset('upload/' . $file) }}"
-                                                                                                                    target="_blank"><i class="fa fa-eye text-primary"
-                                                                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                                                                <a class="remove-file"
-                                                                                                                    data-file-name="{{ $file }}"><i
-                                                                                                                        class="fa-solid fa-circle-xmark"
-                                                                                                                        style="color:red; font-size:20px;"></i></a>
-                                                                                                            </h6>
+                                                                                                                                                        style="background-color: rgb(243, 242, 240);">
+                                                                                                                                                        <b>{{ $file }}</b>
+                                                                                                                                                        <a href="{{ asset('upload/' . $file) }}"
+                                                                                                                                                            target="_blank"><i class="fa fa-eye text-primary"
+                                                                                                                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                                                                                                        <a class="remove-file"
+                                                                                                                                                            data-file-name="{{ $file }}"><i
+                                                                                                                                                                class="fa-solid fa-circle-xmark"
+                                                                                                                                                                style="color:red; font-size:20px;"></i></a>
+                                                                                                                                                    </h6>
     @endforeach
     @endif
-                                                                                                        </div>
-                                                                                                        <div class="add-btn">
-                                                                                                            <div>Add</div>
-                                                                                                            <input type="file" id="Extension_Attachments"
-                                                                                                                name="file_attachment_extension[]" {{ $extensionNew->stage == 1 ? '' : 'disabled' }}
-                                                                                                                oninput="addMultipleFiles(this, 'file_attachment_extension')" multiple>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div> -->
+                                                                                                                                                </div>
+                                                                                                                                                <div class="add-btn">
+                                                                                                                                                    <div>Add</div>
+                                                                                                                                                    <input type="file" id="Extension_Attachments"
+                                                                                                                                                        name="file_attachment_extension[]" {{ $extensionNew->stage == 1 ? '' : 'disabled' }}
+                                                                                                                                                        oninput="addMultipleFiles(this, 'file_attachment_extension')" multiple>
+                                                                                                                                                </div>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                    </div> -->
 
                                 @if ($extensionNew->file_attachment_extension)
                                     @foreach (json_decode($extensionNew->file_attachment_extension) as $file)
@@ -684,9 +704,8 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input
-                                                    {{ $extensionNew->stage == 1 ? '' : 'disabled' }}
-                                                    type="file" id="myfile" name="file_attachment_extension[]"
+                                                <input {{ $extensionNew->stage == 1 ? '' : 'disabled' }} type="file"
+                                                    id="myfile" name="file_attachment_extension[]"
                                                     oninput="addMultipleFiles(this, 'file_attachment_extension')" multiple>
                                             </div>
                                         </div>
@@ -714,7 +733,7 @@
                                 <div class="group-input">
                                     <label for="Assigned To">HOD Remarks</label>
                                     <textarea name="reviewer_remarks" id="reviewer_remarks" cols="30"
-                                    {{ $extensionNew->stage == 2 ? '' : 'readonly' }}>{{ $extensionNew->reviewer_remarks }}</textarea>
+                                        {{ $extensionNew->stage == 2 ? '' : 'readonly' }}>{{ $extensionNew->reviewer_remarks }}</textarea>
                                 </div>
                             </div>
                             {{-- <div class="col-12">
@@ -733,37 +752,37 @@
                             </div>
                         </div> --}}
                             <!-- <div class="col-12">
-                                                                                                                                                                                                                                                                                                                                                                                                    <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                        <label for="Inv Attachments">HOD Attachment </label>
-                                                                                                                                                                                                                                                                                                                                                                                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                                                                                                                                                                                                                                                                                                                                                                                documents</small></div>
-                                                                                                                                                                                                                                                                                                                                                                                                        <div class="file-attachment-field">
-                                                                                                                                                                                                                                                                                                                                                                                                            <div disabled class="file-attachment-list" id="file_attachment_reviewer">
-                                                                                                                                                                                                                                                                                                                                                                                                                @if ($extensionNew->file_attachment_reviewer)
+                                                                                                                                                                                                                                                                                                                                                                                                                                            <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="Inv Attachments">HOD Attachment </label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        documents</small></div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="file-attachment-field">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div disabled class="file-attachment-list" id="file_attachment_reviewer">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        @if ($extensionNew->file_attachment_reviewer)
     @foreach (json_decode($extensionNew->file_attachment_reviewer) as $file)
     <h6 class="file-container text-dark"
-                                                                                                                                                                                                                                                                                                                                                                                                                            style="background-color: rgb(243, 242, 240);">
-                                                                                                                                                                                                                                                                                                                                                                                                                            <b>{{ $file }}</b>
-                                                                                                                                                                                                                                                                                                                                                                                                                            <a href="{{ asset('upload/' . $file) }}"
-                                                                                                                                                                                                                                                                                                                                                                                                                                target="_blank"><i class="fa fa-eye text-primary"
-                                                                                                                                                                                                                                                                                                                                                                                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                                                                                                                                                                                                                                                                                                                                                                            <a class="remove-file"
-                                                                                                                                                                                                                                                                                                                                                                                                                                data-file-name="{{ $file }}"><i
-                                                                                                                                                                                                                                                                                                                                                                                                                                    class="fa-solid fa-circle-xmark"
-                                                                                                                                                                                                                                                                                                                                                                                                                                    style="color:red; font-size:20px;"></i></a>
-                                                                                                                                                                                                                                                                                                                                                                                                                        </h6>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    style="background-color: rgb(243, 242, 240);">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <b>{{ $file }}</b>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        target="_blank"><i class="fa fa-eye text-primary"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <a class="remove-file"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        data-file-name="{{ $file }}"><i
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            class="fa-solid fa-circle-xmark"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                </h6>
     @endforeach
     @endif
-                                                                                                                                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                                                                                                                                            <div class="add-btn">
-                                                                                                                                                                                                                                                                                                                                                                                                                <div>Add</div>
-                                                                                                                                                                                                                                                                                                                                                                                                                <input type="file" id="HOD_Attachments"
-                                                                                                                                                                                                                                                                                                                                                                                                                    name="file_attachment_reviewer[]"
-                                                                                                                                                                                                                                                                                                                                                                                                                    oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple>
-                                                                                                                                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div class="add-btn">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div>Add</div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        <input type="file" id="HOD_Attachments"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            name="file_attachment_reviewer[]"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
                             @if ($extensionNew->file_attachment_reviewer)
                                 @foreach (json_decode($extensionNew->file_attachment_reviewer) as $file)
                                     <input id="EFREFEFile-{{ $loop->index }}" type="hidden"
@@ -798,8 +817,7 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input
-                                                {{ $extensionNew->stage == 2 ? '' : 'disabled' }}
+                                            <input {{ $extensionNew->stage == 2 ? '' : 'disabled' }}
                                                 value="{{ $extensionNew->file_attachment_reviewer }}" type="file"
                                                 id="myfile" name="file_attachment_reviewer[]"
                                                 oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple>
@@ -826,7 +844,7 @@
                                 <div class="group-input">
                                     <label for="Assigned To">QA/CQA Approval Comments</label>
                                     <textarea name="approver_remarks" id="approver_remarks" cols="30"
-                                    {{ in_array($extensionNew->stage, [3, 4]) ? '' : 'readonly' }}>{{ $extensionNew->approver_remarks }}</textarea>
+                                        {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'readonly' }}>{{ $extensionNew->approver_remarks }}</textarea>
                                 </div>
                             </div>
 
@@ -865,7 +883,8 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="HOD_Attachments" name="file_attachment_approver[]"
-                                                oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple {{ in_array($extensionNew->stage, [3, 4]) ? '' : 'disabled' }}>
+                                                oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple
+                                                {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'disabled' }}>
                                         </div>
                                     </div>
                                 </div>
@@ -923,24 +942,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for=" Rejected By">More Information Required By</label>
-                                    <div class="static">{{ $extensionNew->more_info_review_by }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="Rejected On">More Information Required On</label>
-                                    <div class="static">{{ $extensionNew->more_info_review_on }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="Rejected On">More Information Required Comment</label>
-                                    <div class="static">{{ $extensionNew->more_info_review_comment }}</div>
-                                </div>
-                            </div>
+
 
 
                             <div class="col-lg-4">
@@ -962,6 +964,25 @@
                                 </div>
                             </div>
 
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for=" Rejected By">System By</label>
+                                    <div class="static">{{ $extensionNew->submit_by_review }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Rejected On">System On</label>
+                                    <div class="static">{{ $extensionNew->submit_on_review }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Rejected On">System Comment</label>
+                                    <div class="static">{{ $extensionNew->submit_comment_review }}</div>
+                                </div>
+                            </div>
+
 
                             <div class="col-lg-4">
                                 <div class="group-input">
@@ -972,7 +993,7 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected On">Reject On</label>
-                                    <div class="static">{{ $extensionNew->submit_on_approved }}</div>
+                                    <div class="static">{{ $extensionNew->submit_on_inapproved }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -982,24 +1003,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for=" Rejected By">More Information Required By</label>
-                                    <div class="static">{{ $extensionNew->more_info_inapproved_by }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="Rejected On">More Information Required On</label>
-                                    <div class="static">{{ $extensionNew->more_info_inapproved_on }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="Rejected On">More Information Required Comment</label>
-                                    <div class="static">{{ $extensionNew->more_info_inapproved_comment }}</div>
-                                </div>
-                            </div>
+
 
                             <div class="col-lg-4">
                                 <div class="group-input">
@@ -1244,9 +1248,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                    <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                            <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">
                             Submit
@@ -1292,9 +1296,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                    <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                            <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">
                             Submit

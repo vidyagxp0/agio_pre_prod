@@ -120,7 +120,8 @@ class ExtensionNewController extends Controller
         $extensionNew->parent_record = $request->parent_record;
 
         $extensionNew->initiation_date = $request->initiation_date;
-        $extensionNew->related_records = implode(',', $request->related_records);
+        $extensionNew->related_records = $request->related_records;
+        // $extensionNew->related_records = implode(',', $request->related_records);
         $extensionNew->short_description = $request->short_description;
 
         $extensionNew->Extension = $request->Extension;
@@ -199,6 +200,14 @@ class ExtensionNewController extends Controller
             $extensionNew->file_attachment_approver = json_encode($files);
         }
 
+        $count = 1;
+        $existingRecord = extension_new::where(['parent_id' => $request->parent_id, 'parent_type' => $request->parent_type])->latest()->first();
+        // dd($existingRecord);
+        if($existingRecord){
+            $extensionNew->count = str_replace('number',1,$existingRecord->count) + 1;
+        } else {
+            $extensionNew->count = $count;
+        }   
 
         $extensionNew->save();
 
@@ -405,7 +414,7 @@ class ExtensionNewController extends Controller
         if (!empty($request->justification_reason)) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'Justification / Reason';
+            $history->activity_type = 'Justification/Reason';
             $history->previous = "Null";
             $history->current = $extensionNew->justification_reason;
             $history->comment = "Not Applicable";
@@ -490,7 +499,7 @@ class ExtensionNewController extends Controller
         if (!empty($request->file_attachment_approver)) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'QA/CQA Approval Attachment';
+            $history->activity_type = 'QA/CQA Approval Attachments';
             $history->previous = "Null";
             $history->current = $extensionNew->file_attachment_approver;
             $history->comment = "Not Applicable";
@@ -513,7 +522,13 @@ class ExtensionNewController extends Controller
     public function show(Request $request, $id)
     {
         $extensionNew = extension_new::find($id);
-        $count = extension_new::where('parent_type', 'LabIncident')->get()->count();
+        // if ($extensionNew->parent_type == "LabIncident") {
+        //     $count = extension_new::where('parent_type', 'LabIncident')->count();
+        // }
+        // elseif($extensionNew->parent_type == "OOC"){
+        //     $count = extension_new::where('parent_type', 'OOC')->count();
+        // }
+
         $pre = [
             'DEV' => \App\Models\Deviation::class,
             'AP' => \App\Models\AuditProgram::class,
@@ -571,7 +586,9 @@ class ExtensionNewController extends Controller
             ->where('user_roles.q_m_s_roles_id', 1)
             ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the group by clause
             ->get();
-        return view('frontend.extension.extension_view', compact('extensionNew', 'reviewers', 'approvers', 'count', 'relatedRecords'));
+
+            // return $extensionNew;
+        return view('frontend.extension.extension_view', compact('extensionNew', 'reviewers', 'approvers', 'relatedRecords'));
     }
 
     public function update(Request $request, $id)
@@ -585,10 +602,17 @@ class ExtensionNewController extends Controller
 
         // dd($request->initiator);
         $extensionNew->initiation_date = $request->initiation_date;
-        $extensionNew->related_records = implode(',', $request->related_records);
+        // $extensionNew->related_records = implode(',', $request->related_records);
+        $extensionNew->related_records = $request->related_records;
+
         $extensionNew->short_description = $request->short_description;
 
         $extensionNew->Extension = $request->Extension;
+        if($extensionNew->stage == 1){
+            $extensionNew->count = $request->count;
+            $extensionNew->parent_type = $request->count;
+            // dd($request->count);
+        }
 
         $extensionNew->reviewers = $request->reviewers;
         $extensionNew->approvers = $request->approvers;
@@ -977,7 +1001,7 @@ class ExtensionNewController extends Controller
         if ($lastDocument->file_attachment_approver != $extensionNew->file_attachment_approver) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'QA/CQA Approval Attachment';
+            $history->activity_type = 'QA/CQA Approval Attachments';
             $history->previous = str_replace(',', ', ', $lastDocument->file_attachment_approver);
             $history->current = str_replace(',', ', ', $extensionNew->file_attachment_approver);
             $history->comment = $request->file_attachment_approver_comment;
@@ -1231,7 +1255,48 @@ class ExtensionNewController extends Controller
                     $extensionNew->update();
                     return back();
                 }
+                if(($extensionNew->parent_type == 'LabIncident' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'OOC' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Deviation' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'OOT' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Management Review' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'CAPA' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Action Item' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Resampling' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Observation' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'RCA' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Risk Assesment' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'External Audit' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Audit Program' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'CC' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'New Documnet' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'Effectiveness Check' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'OOS Micro' && $extensionNew->count == 3)
+                || ($extensionNew->parent_type == 'OOS Chemical' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Market Complaint' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'Failure Investigation' && $extensionNew->count == 3 || $extensionNew->count == 'number')
+                ){
                 if ($extensionNew->stage == 2) {
+                    $extensionNew->stage = "5";
+                    $extensionNew->status = "In CQA Approval";
+                    $extensionNew->submit_by_review = Auth::user()->name;
+                    $extensionNew->submit_on_review = Carbon::now()->format('d-M-Y');
+                    $extensionNew->submit_comment_review = $request->comment;
+                    $history = new ExtensionNewAuditTrail();
+                    $history->extension_id = $id;
+                    // $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'System By, System On';
+                    if (is_null($lastDocument->submit_by_review) || $lastDocument->submit_by_review === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->submit_by_review . ' , ' . $lastDocument->submit_on_review;
+                    }
+                    $history->current = $extensionNew->submit_by_review . ' , ' . $extensionNew->submit_on_review;
+                    $history->comment = $request->comment;
+                    $history->action = 'Review';
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "In Approved";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'In Approved';
+                    if (is_null($lastDocument->submit_by_review) || $lastDocument->submit_by_review === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+
+                    $extensionNew->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }
+            }
+                else{
+                    if ($extensionNew->stage == 2) {
                     $extensionNew->stage = "3";
                     $extensionNew->status = "In Approved";
                     $extensionNew->submit_by_review = Auth::user()->name;
@@ -1264,6 +1329,7 @@ class ExtensionNewController extends Controller
                     }
                     $history->save();
 
+                }
                     // dd($history->action);
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {

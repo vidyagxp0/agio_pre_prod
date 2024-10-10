@@ -1125,7 +1125,7 @@
                                                 placeholder="DD-MMM-YYYY" />
                                             <input type="date" id="external_supplier_performance_checkdate"
                                                 name="external_supplier_performance"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'external_supplier_performance');checkDate('external_supplier_performance_checkdate','customer_satisfaction_level_checkdate')" />
                                         </div>
                                     </div>
@@ -1210,6 +1210,21 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Inv Attachments">Meetings and Summary Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="meeting_and_summary_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="meeting_and_summary_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'meeting_and_summary_attachment')" multiple>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -2651,108 +2666,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="sub-head">
-                                    Contract Giver
-                                </div>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('.ContractGiver').hide();
-
-                                        $('[name="ContractGiver_Review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-
-                                                $('.ContractGiver').show();
-                                                $('.ContractGiver span').show();
-                                            } else {
-                                                $('.ContractGiver').hide();
-                                                $('.ContractGiver span').hide();
-                                            }
-                                        });
-                                    });
-                                </script>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Contract Giver"> Contract Giver Required ? </label>
-                                        <select name="ContractGiver_Review" id="ContractGiver_Review" disabled>
-                                            <option value="">-- Select --</option>
-                                            <option value='yes'>
-                                                Yes</option>
-                                            <option value='no'>
-                                                No</option>
-                                            <option value='na'>
-                                                NA</option>
-                                        </select>
-
-                                    </div>
-                                </div>
-                                @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-                                <div class="col-lg-6 store">
-                                    <div class="group-input">
-                                        <label for="Contract Giver notification">Contract Giver Person</label>
-                                        <select name="ContractGiver_Person" class="ContractGiver_Person"
-                                            id="ContractGiver_Person">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">
-                                                    {{ $user->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 store">
-                                    <div class="group-input">
-                                        <label for="Contract Giver assessment">Impact Assessment (By Contract
-                                            Giver)</label>
-                                        <textarea class="summernote ContractGiver_assessment" name="ContractGiver_assessment" id="summernote-17"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 store">
-                                    <div class="group-input">
-                                        <label for="Contract Giver feedback">Contract Giver Feedback</label>
-                                        <textarea class="summernote ContractGiver_feedback" name="ContractGiver_feedback" id="summernote-18"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12 store">
-                                    <div class="group-input">
-                                        <label for="Contract Giver attachment">Contract Giver Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="ContractGiver_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="ContractGiver_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'ContractGiver_attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3 store">
-                                    <div class="group-input">
-                                        <label for="Contract Giver Completed By">Contract Giver Completed
-                                            By</label>
-                                        <input readonly type="text" name="ContractGiver_by" id="ContractGiver_by">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 store">
-                                    <div class="group-input ">
-                                        <label for="Contract Giver Completed On">Contract Giver Completed On</label>
-                                        <input type="date"id="ContractGiver_on" name="ContractGiver_on">
-                                    </div>
-                                </div>
-
-
-
 
 
 
@@ -4816,111 +4729,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="sub-head">
-                                    Contract Giver
-                                </div>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('.ContractGiver').hide();
-
-                                        $('[name="ContractGiver_Review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-
-                                                $('.ContractGiver').show();
-                                                $('.ContractGiver span').show();
-                                            } else {
-                                                $('.ContractGiver').hide();
-                                                $('.ContractGiver span').hide();
-                                            }
-                                        });
-                                    });
-                                </script>
-
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Contract Giver"> Contract Giver Required ? </label>
-                                        <select name="ContractGiver_Review" id="ContractGiver_Review" disabled>
-                                            <option value="">-- Select --</option>
-                                            <option value='yes'>
-                                                Yes</option>
-                                            <option value='no'>
-                                                No</option>
-                                            <option value='na'>
-                                                NA</option>
-                                        </select>
-
-                                    </div>
-                                </div> --}}
-                                @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-                                <div class="col-lg-6 store">
-                                    <div class="group-input">
-                                        <label for="Contract Giver notification">Contract Giver Person</label>
-                                        <select name="ContractGiver_Person" class="ContractGiver_Person"
-                                            id="ContractGiver_Person">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">
-                                                    {{ $user->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 store">
-                                    <div class="group-input">
-                                        <label for="Contract Giver assessment">Impact Assessment (By Contract
-                                            Giver)</label>
-                                        <textarea class="summernote ContractGiver_assessment" name="ContractGiver_assessment" id="summernote-17"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 store">
-                                    <div class="group-input">
-                                        <label for="Contract Giver feedback">Contract Giver Feedback</label>
-                                        <textarea class="summernote ContractGiver_feedback" name="ContractGiver_feedback" id="summernote-18"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12 store">
-                                    <div class="group-input">
-                                        <label for="Contract Giver attachment">Contract Giver Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="ContractGiver_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="ContractGiver_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'ContractGiver_attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3 store">
-                                    <div class="group-input">
-                                        <label for="Contract Giver Completed By">Contract Giver Completed
-                                            By</label>
-                                        <input readonly type="text" name="ContractGiver_by" id="ContractGiver_by">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 store">
-                                    <div class="group-input ">
-                                        <label for="Contract Giver Completed On">Contract Giver Completed On</label>
-                                        <input type="date"id="ContractGiver_on" name="ContractGiver_on">
-                                    </div>
-                                </div>
-
-
-
-
-
-
 
                                 <script>
                                     $(document).ready(function() {
@@ -5610,7 +5418,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Inv Attachments">Action Item Status Attachment</label>
+                                    <label for="Inv Attachments">QA Verification Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">

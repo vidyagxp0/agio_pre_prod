@@ -565,7 +565,7 @@
 
                         <tr>
 
-                            <th class="w-20">Production Tablet/Capsule/Powder Review Required ?
+                            <th class="w-20">Production Tablet/Capsule Powder Review Comment Required ? 
                             </th>
                             <td class="w-30">
                                 <div>
@@ -591,7 +591,8 @@
 
                         <tr>
 
-                            <th class="w-20">Review comment (By Production Tablet/Capsule/Powder)</th>
+                            <th class="w-20">Review comment (By Production Tablet/Capsule Powder)
+                            </th>
                             <td class="w-80" colspan="3">
                                 <div>
                                     @if ($data1->Production_Table_Assessment)
@@ -616,7 +617,7 @@ Not Applicable
                         </tr>
                         <tr>
 
-                            <th class="w-20">Production Tablet/Capsule/Powder Review Completed By</th>
+                            <th class="w-20">Production Tablet/Capsule Powder Review Completed By</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data1->Production_Table_By)
@@ -680,7 +681,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Production Injection Review Required ?
+                                <th class="w-20">Production Injection Review Comment Required ? 
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -745,7 +746,7 @@ Not Applicable
 
                     <div class="border-table">
                         <div class="block-head">
-                            Production Injection Attachments 2
+                            Production Injection Attachments 
                         </div>
                         <table>
 
@@ -780,7 +781,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Research & Development Review Required ?
+                                <th class="w-20">Research Development Review  Comment  Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -819,7 +820,7 @@ Not Applicable
                             </tr>
                             <tr>
 
-                                <th class="w-20">Research & Development Review Completed By</th>
+                                <th class="w-20">Research  Development Review Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->ResearchDevelopment_by)
@@ -829,7 +830,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Research & Development Review Completed On</th>
+                                <th class="w-20">Research Development Review Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->ResearchDevelopment_on)
@@ -879,7 +880,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Human Resource Review Required ?
+                                <th class="w-20">Human Resource Review Comment Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -979,7 +980,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Corporate Quality Assurance Review Required ?
+                                <th class="w-20">Corporate Quality Assurance  Review Comment Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -1079,7 +1080,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Stores Review Required ?
+                                <th class="w-20">Store Review Comment  Required ? 
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -1179,7 +1180,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Engineering Review Required ?
+                                <th class="w-20">Engineering Review Comment Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -1278,7 +1279,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Regulatory Affair Review Required ?
+                                <th class="w-20">Regulatory Affair Review Comment Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -1378,12 +1379,12 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Quality Assurance Review Required ?
+                                <th class="w-20">Quality Assurance Review Comment Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
-                                        @if ($data1->Quality_Assurance)
-                                            {{ $data1->Quality_Assurance }}
+                                        @if ($data1->Quality_Assurance_Review)
+                                            {{ $data1->Quality_Assurance_Review }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1478,7 +1479,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Production (Liquid/Ointment) Review Required ?
+                                <th class="w-20">Production Liquid/ointment Review Comment Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -1577,7 +1578,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Quality Control Review Required ?
+                                <th class="w-20">Quality Control Review Comment Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -1619,8 +1620,8 @@ Not Applicable
                                 <th class="w-20">Quality Control Review Completed By</th>
                                 <td class="w-30">
                                     <div>
-                                        @if ($data1->Quality_Control_on)
-                                            {{ $data1->Quality_Control_on }}
+                                        @if ($data1->Quality_Control_by)
+                                            {{ $data1->Quality_Control_by }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1677,7 +1678,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Microbiology Review Required ?
+                                <th class="w-20">Microbiology Review Comment  Required ? 
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -1781,7 +1782,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Safety Review Required ?
+                                <th class="w-20">Safety Review Comment Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -1983,7 +1984,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Other's 1 Review Required ?
+                                <th class="w-20">Other's 1 Review Comment Required?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -2008,7 +2009,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other1_Department_person)
-                                            {{ $data1->Other1_Department_person }}
+                                            {{  Helpers::getFullDepartmentName($data1->Other1_Department_person) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2092,7 +2093,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Other's 2 Review Required ?
+                                <th class="w-20">Other's 2 Review Comment Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -2117,7 +2118,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other2_Department_person)
-                                            {{ $data1->Other2_Department_person }}
+                                            {{ Helpers::getFullDepartmentName($data1->Other2_Department_person) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2201,7 +2202,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Other's 3 Review Required ?
+                                <th class="w-20">Other's 3 Review Comment Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -2226,7 +2227,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other3_Department_person)
-                                            {{ $data1->Other3_Department_person }}
+                                            {{ Helpers::getFullDepartmentName($data1->Other3_Department_person) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2310,7 +2311,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Other's 4 Review Required ?
+                                <th class="w-20">Other's 4 Review Comment Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -2335,7 +2336,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other4_Department_person)
-                                            {{ $data1->Other4_Department_person }}
+                                            {{Helpers::getFullDepartmentName($data1->Other4_Department_person) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2419,7 +2420,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Other's 5 Review Required ?
+                                <th class="w-20">Other's 5 Review Comment Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -2444,7 +2445,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other5_Department_person)
-                                            {{ $data1->Other5_Department_person }}
+                                            {{ Helpers::getFullDepartmentName($data1->Other5_Department_person) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2636,6 +2637,16 @@ Not Applicable
                             <th class="w-20">CFT Review Complete Comment</th>
                             <td class="w-30">{{ $data->cft_review_complete_comment }}</td>
                         </tr>
+
+
+                        <tr>
+                            <th class="w-20">Send to Opened By</th>
+                            <td class="w-30">{{ $data->send_to_opened_by }}</td>
+                            <th class="w-20">Send to Opened On</th>
+                            <td class="w-30">{{ Helpers::getdateFormat($data->send_to_opened_on) }}</td>
+                            <th class="w-20">Send to Opened Comment</th>
+                            <td class="w-30">{{ $data->send_to_opened_comment }}</td>
+                        </tr>
                         <tr>
                             <th class="w-20">Approval Complete By
                             </th>
@@ -2645,14 +2656,7 @@ Not Applicable
                             <th class="w-20">Approval Complete Comment</th>
                             <td class="w-30">{{ $data->approval_complete_on_comment }}</td>
                         </tr>
-                        <tr>
-                            <th class="w-20">Send to Opened By</th>
-                            <td class="w-30">{{ $data->send_to_opened_by }}</td>
-                            <th class="w-20">Send to Opened On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->send_to_opened_on) }}</td>
-                            <th class="w-20">Send to Opened Comment</th>
-                            <td class="w-30">{{ $data->send_to_opened_comment }}</td>
-                        </tr>
+                       
 
 
                     </table>

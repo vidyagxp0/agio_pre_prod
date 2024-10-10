@@ -606,8 +606,13 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA/CQA Initial assesmnent</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA/CQA Initial assessment</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT</button>
+
+                <button class="cctablinks " onclick="openCity(event, 'CCForm16')">QA/CQA Final Assessment</button>
+                <button class="cctablinks " onclick="openCity(event, 'CCForm17')">QA/CQA Head/ Designee Approval</button>
+                    
+
                 {{-- <button class="cctablinks " id="Investigation_button" style="display: none"
                     onclick="openCity(event, 'CCForm9')">Investigation</button>
                 <button id="QRM_button" class="cctablinks" style="display: none"
@@ -619,7 +624,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Pending Initiator Update</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm15')">HOD Final Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Implementation Verification</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QAH/Designee Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Head QA/CQA / Designee Closure Approval</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Extension</button> --}}
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
@@ -1850,7 +1855,7 @@
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="QAInitialRemark">QA/CQA Initial Remarks</label>
+                                        <label for="QAInitialRemark">QA/CQA Initial Remark</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="tiny" name="QAInitialRemark" id="summernote-7"></textarea>
@@ -1858,7 +1863,7 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="QA Initial Attachments">QA Initial Attachments</label>
+                                        <label for="QA Initial Attachments">QA/CQA initial Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -4274,6 +4279,129 @@
                     </div>
 
 
+                    <div id="CCForm16" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="HOD Remarks">QA/CQA Final Assessment Comment </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="tiny" name="qa_final_assement" id="summernote-4"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Audit Attachments">QA/CQA Final Assessment Comment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="qa_final_assement_attach"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="pending_attachment" name="qa_final_assement_attach[]"
+                                                    oninput="addMultipleFiles(this, 'qa_final_assement_attach')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
+                                    class="saveButton">Save </button>
+                                {{-- <a href="/rcms/qms-dashboard"
+                                    style=" justify-content: center; width: 4rem; margin-left: 1px;">
+                                    <button type="button"
+                                        style=" justify-content: center; width: 4rem; margin-left: 1px;"
+                                        class="backButton">Back</button>
+                                </a> --}}
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
+                                    class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;">
+                                    <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                                <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
+                                                                                                                            class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                            data-bs-target="#launch_extension">
+                                                                                                                            Launch Extension
+                                                                                                                        </a> -->
+                                {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
+                                        data-bs-target="#effectivenss_extension">
+                                        Launch Effectiveness Check
+                                    </a> --}}
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    
+                    <div id="CCForm17" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="HOD Remarks">QA/CQA Head/Designee Approval comment </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="tiny" name="qa_head_designe_comment" id="summernote-4"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Audit Attachments">QA/CQA Head/ Designee Approval attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="qa_head_designee_attach"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="pending_attachment" name="qa_head_designee_attach[]"
+                                                    oninput="addMultipleFiles(this, 'qa_head_designee_attach')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
+                                    class="saveButton">Save </button>
+                                {{-- <a href="/rcms/qms-dashboard"
+                                    style=" justify-content: center; width: 4rem; margin-left: 1px;">
+                                    <button type="button"
+                                        style=" justify-content: center; width: 4rem; margin-left: 1px;"
+                                        class="backButton">Back</button>
+                                </a> --}}
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
+                                    class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;">
+                                    <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                                <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
+                                                                                                                            class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                            data-bs-target="#launch_extension">
+                                                                                                                            Launch Extension
+                                                                                                                        </a> -->
+                                {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
+                                        data-bs-target="#effectivenss_extension">
+                                        Launch Effectiveness Check
+                                    </a> --}}
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- investigation -->
                     {{-- <div id="CCForm9" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -5590,7 +5718,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Remarks">QAH/Designee Closure Comments</label>
+                                        <label class="mt-4" for="Remarks">Head QA/CQA / Designee Closure Approval Comments</label>
                                         <textarea class="tiny" name="Closure_Comments" id="summernote-15"></textarea>
                                     </div>
                                 </div>
@@ -5602,7 +5730,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="closure attachment">QAH/Designee Closure Attachments </label>
+                                        <label for="closure attachment">Head QA/CQA / Designee Closure Approval Attachments </label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small>
                                         </div>
@@ -5674,25 +5802,7 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="sub-head">Request For Cancellation</div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="Approved By">Request For Cancellation By :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="Approved On">Request For Cancellation On :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input ">
-                                        <label for="Approved Comments">Request For Cancellation Comment :-</label>
-                                        <div class=""></div>
-                                    </div>
-                                </div>
+                               
 
 
                                 <div class="sub-head">HOD Review Complete</div>
@@ -5712,6 +5822,26 @@
                                     <div class="group-input">
                                         <label for="HOD Review Comment">HOD Review Comment :-</label>
                                         <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="sub-head">Request For Cancellation</div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="Approved By">Request For Cancellation By :-</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="Approved On">Request For Cancellation On :-</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input ">
+                                        <label for="Approved Comments">Request For Cancellation Comment :-</label>
+                                        <div class=""></div>
                                     </div>
                                 </div>
 
@@ -5738,26 +5868,7 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="sub-head">CFT Review Not Required </div>
-
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="CFT Review Complete By">CFT Review Not Required By :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="CFT Review Complete On">CFT Review Not Required On :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="CFT Review Comment">CFT Review Not Required Comment :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
+                               
                                 <div class="sub-head">CFT Review Complete</div>
 
                                 <div class="col-lg-3">
@@ -5778,45 +5889,46 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="sub-head">Initiator Update Complete</div>
+
+                                <div class="sub-head">CFT Review Not Required </div>
 
                                 <div class="col-lg-3">
                                     <div class="group-input">
-                                        <label for="CFT Review Complete By">Initiator Update Complete By :-</label>
+                                        <label for="CFT Review Complete By">CFT Review Not Required By :-</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
-                                        <label for="CFT Review Complete On">Initiator Update Complete On :-</label>
+                                        <label for="CFT Review Complete On">CFT Review Not Required On :-</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="CFT Review Comment">Initiator Update Complete Comment :-</label>
+                                        <label for="CFT Review Comment">CFT Review Not Required Comment :-</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-
-                                <div class="sub-head"> QA/CQA Final Review Completed</div>
+                              
+                                <div class="sub-head"> QA/CQA Final Assessement Complete</div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
-                                        <label for="QA/CQA Final Review Complete By"> QA/CQA Final Review Complete By
+                                        <label for="QA/CQA Final Review Complete By">QA/CQA Final Assessement Complete By
                                             :-</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
-                                        <label for="QA/CQA Final Review Complete On"> QA/CQA Final Review Complete On
+                                        <label for="QA/CQA Final Review Complete On">QA/CQA Final Assessement Complete On
                                             :-</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="QA/CQA Final Review Comment"> QA/CQA Final Review Complete Comment
+                                        <label for="QA/CQA Final Review Comment">QA/CQA Final Assessement Complete Comment
                                             :-</label>
                                         <div class="static"></div>
                                     </div>
@@ -5838,6 +5950,52 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Approved Comment">Approved Comment :-</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+
+                                <div class="sub-head">Initiator Update Complete</div>
+
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="CFT Review Complete By">Initiator Update Complete By :-</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="CFT Review Complete On">Initiator Update Complete On :-</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="CFT Review Comment">Initiator Update Complete Comment :-</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="sub-head">HOD Final Review Complete</div>
+
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="CFT Review Complete By">HOD Final Review Complete By :-</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="CFT Review Complete On">HOD Final Review Complete On :-</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="CFT Review Comment">HOD Final Review Complete Comment :-</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>

@@ -130,7 +130,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th style="width:10%;">Employee ID</th>
+                            <th style="width:10%;">Employee Code</th>
                             <th>Employee Name</th>
                             <th>Department</th>
                             <th>Job Title</th>
@@ -166,7 +166,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             <!-- <button type="button"  class="view-report-btn" onclick="window.location.href='{{ url('rcms/report/' . $employee->id) }}'" >
                                 View Report
                             </button> -->
-                            <button type="button" class="view-report-btn" onclick="window.location.href='{{ url('rcms/report/' . $employee->id) }}'">
+                            <button type="button" class="view-report-btn" onclick="window.location.href='{{ url('rcms/reports/' . $employee->id) }}'">
                                 View Report
                             </button>
 
@@ -736,7 +736,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                 <!-- <td>{{ $job_training->location}}</td> -->
                                 <!-- @for ($i = 1; $i <= 1; $i++)  -->
                                 <td>{{ \Carbon\Carbon::parse($job_training->{"start_date"})->format('d-M-Y') }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($job_training->{"enddate_1"})->format('d-M-Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($job_training->{"end_date"})->format('d-M-Y') }}</td>
                                     <!-- @endfor -->
 
                                     <td>
@@ -777,7 +777,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Employee ID</th>
+                            <th>Employee Code</th>
                             <th>Name Of Employee</th>
                             <th>Department</th>
                             <!-- <th>Site Location</th> -->
@@ -864,18 +864,17 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
         </table>
     </div>
 </div>
-@php
+<!-- @php
   $jobTraining = DB::table('job_descriptions')->get();
-@endphp
+@endphp -->
 <div id="CCForm7" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
             <div>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Employee ID</th>
+                            <th>Employee Code</th>
                             <th>Name Of Employee</th>
                             <th>Department</th>
-                            <!-- <th>Site Location</th> -->
                             <th>Action</th>
                             <th>Report</th>
                         </tr>
@@ -884,7 +883,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
             @foreach ($jobTraining->sortByDesc('id') as $induction)
             <tr>
                 <td>
-                    @php
+                    {{-- @php
                         $employee = \App\Models\Employee::where('employee_id', $induction->employee_id)->first();
                         
                         $prefixAbbreviation = '';
@@ -897,8 +896,8 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                 $prefixAbbreviation = 'OS';
                             }
                         }
-                    @endphp
-                    {{ $prefixAbbreviation . $induction->employee_id }}
+                    @endphp --}}
+                    {{ $induction->employee_id }}
                 </td>
                 <td>
                     {{ \App\Models\Employee::find($induction->name_employee)?->employee_name ?? 'Employee not found' }}
@@ -912,13 +911,13 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                     </a> -->
                     <div class="action-buttons">
     
-                        <a href="{{ route('induction_training_view', $induction->id) }}">
+                        <a href="{{ route('job_description_view', $induction->id) }}">
                             <i class="fa-solid fa-pencil"></i>
                         </a>
                         </td>
                         <td>
                         
-                        <button type="button" class="view-report-btn"onclick="window.location.href='{{ url('rcms/induction_report/' . $induction->id) }}'" >
+                        <button type="button" class="view-report-btn"onclick="window.location.href='{{ url('rcms/report/' . $induction->id) }}'" >
                             View Report
                         </button>
                     </div>

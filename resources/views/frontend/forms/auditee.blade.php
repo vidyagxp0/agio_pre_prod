@@ -1445,7 +1445,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Tablet"> Production Tablet</label>
+                                        <label for="Production Tablet">Production Tablet/Capsule Powder Review Comment Required</label>
                                         <select name="Production_Table_Review" id="Production_Table_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -1545,7 +1545,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Injection"> Production Injection </label>
+                                        <label for="Production Injection">Production Injection Review Comment Required ? </label>
                                         <select name="Production_Injection_Review" id="Production_Injection_Review"
                                             disabled>
                                             <option value="">-- Select --</option>
@@ -1651,7 +1651,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Research Development"> Research Development Required ?</label>
+                                        <label for="Research Development"> Research Development Review Comment Required ?</label>
                                         <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review"
                                             disabled>
                                             <option value="">-- Select --</option>
@@ -1754,8 +1754,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Administration Review Required">Human Resource
-                                            Required ?</label>
+                                        <label for="Administration Review Required">Human Resource Review Comment Required ?</label>
                                         <select name="Human_Resource_review" id="Human_Resource_review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -1860,8 +1859,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Corporate Quality Assurance"> Corporate Quality Assurance Required
-                                            ?</label>
+                                        <label for="Corporate Quality Assurance"> Corporate Quality Assurance Review Comment Required ?</label>
                                         <select name="CorporateQualityAssurance_Review"
                                             id="CorporateQualityAssurance_Review" disabled>
                                             <option value="">-- Select --</option>
@@ -1974,7 +1972,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Store"> Store</label>
+                                        <label for="Store"> Store Review Comment Required ?</label>
                                         <select name="Store_Review" id="Store_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -2069,7 +2067,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Engineering Review Required">Engineering Review Required ?</label>
+                                        <label for="Engineering Review Required">Engineering Review Comment Required </label>
                                         <select name="Engineering_review" id="Engineering_review" disabled>
                                             <option value="0">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -2192,7 +2190,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="RegulatoryAffair"> Regulatory Affair Required ?</label>
+                                        <label for="RegulatoryAffair"> Regulatory Affair Review Comment Required</label>
                                         <select name="RegulatoryAffair_Review" id="RegulatoryAffair_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -2291,7 +2289,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Customer notification">Quality Assurance Review Required ?</label>
+                                        <label for="Customer notification">Quality Assurance Review Comment Required</label>
                                         <select name="Quality_Assurance" id="QualityAssurance_review" disabled>
                                             <option value="0">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -2404,7 +2402,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Liquid"> Production Liquid </label>
+                                        <label for="Production Liquid">Production Liquid/ointment Review Comment Required </label>
                                         <select name="ProductionLiquid_Review" id="ProductionLiquid_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -2502,8 +2500,8 @@
                                 </div>
                                 <div class="col-lg-6 quality_control">
                                     <div class="group-input">
-                                        <label for="Quality Control Review Required">Quality Control Review Required
-                                            ?</label>
+                                        <label for="Quality Control Review Required">Quality Control Review Comment Required ?
+                                            </label>
                                         <select name="Quality_review" id="Quality_review" disabled>
                                             <option value="0">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -2526,7 +2524,7 @@
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Quality Control Person">Quality Control Person</label>
+                                        <label for="Quality Control Person">Quality Control Review Comment Required</label>
                                         <select name="Quality_Control_Person" id="Quality_Control_Person" disabled>
                                             <option value="0">-- Select --</option>
                                             @foreach ($users as $user)
@@ -2609,7 +2607,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Microbiology"> Microbiology Required ?</label>
+                                        <label for="Microbiology">Microbiology Review Comment Required  ?</label>
                                         <select name="Microbiology_Review" id="Microbiology_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -2705,7 +2703,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Safety Review Required">Safety Review Required
+                                        <label for="Safety Review Required">Safety Review Comment Required
                                             ?</label>
                                         <select name="Environment_Health_review" id="Environment_Health_review"
                                             disabled>
@@ -2796,7 +2794,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="sub-head">
+
+
+
+                                <!-- <div class="sub-head">
                                     Contract Giver
                                 </div>
                                 <script>
@@ -2894,7 +2895,7 @@
                                         <label for="Contract Giver Completed On">Contract Giver Completed On</label>
                                         <input type="date"id="ContractGiver_on" name="ContractGiver_on">
                                     </div>
-                                </div>
+                                </div> -->
 
 
 
@@ -2922,7 +2923,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Customer notification"> Other's 1 Review Required ?</label>
+                                        <label for="Customer notification"> Other's 1 Review Comment Required ?</label>
                                         <select name="Other1_review" id="Other1_review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -3049,7 +3050,7 @@
                                 </div>
                                 <div class="col-lg-6 ">
                                     <div class="group-input">
-                                        <label for="Customer notification"> Other's 2 Review Required ?</label>
+                                        <label for="Customer notification"> Other's 2 Review Comment Required ?</label>
                                         <select name="Other2_review" id="Other2_review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -3178,7 +3179,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Customer notification"> Other's 3 Review Required ?</label>
+                                        <label for="Customer notification"> Other's 3 Review Comment Required ?</label>
                                         <select name="Other3_review" id="Other3_review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -3307,7 +3308,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="review4"> Other's 4 Review Required ?</label>
+                                        <label for="review4"> Other's 4 Review Comment Required ?</label>
                                         <select name="Other4_review" id="Other4_review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -3437,7 +3438,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="review5"> Other's 5 Review Required ?</label>
+                                        <label for="review5">Other's 5 Review Comment Required ?</label>
                                         <select name="Other5_review" id="Other5_review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -3644,9 +3645,9 @@
                                     </div>
                                 </div>
 
-                                <!-- <div class="col-12 sub-head"  style="font-size: 16px">
+                                <div class="col-12 sub-head"  style="font-size: 16px">
                                             Cancel
-                                                 </div> -->
+                                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancel By</label>
@@ -3694,9 +3695,9 @@
                                 </div>
 
 
-                                <!-- <div class="col-12 sub-head"  style="font-size: 16px">
+                                <div class="col-12 sub-head"  style="font-size: 16px">
                                             CFT Review Not Required
-                                                 </div> -->
+                                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -3746,6 +3747,29 @@
 
 
 
+                                <div class="col-12 sub-head"  style="font-size: 16px">
+                                                Send to Opened
+                                                 </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="CFT Review Not Required By">Send to Opened By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="CFT Review Not Required On">Send to Opened On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comments">Send to Opened Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
 
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
@@ -3773,30 +3797,7 @@
                                 </div>
 
 
-                                <!-- <div class="col-12 sub-head"  style="font-size: 16px">
-                                                Send to Opened
-                                                 </div> -->
-
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="CFT Review Not Required By">Send to Opened By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="CFT Review Not Required On">Send to Opened On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Comments">Send to Opened Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
+                              
                                 <div>
 
 

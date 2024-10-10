@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   Internal Audit Single Report
+                   Internal Audit  Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
