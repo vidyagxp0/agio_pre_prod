@@ -22,8 +22,10 @@
             <div class="training-head-block">
                 <div class="btns">
                     <a href="{{ route('TMS.index') }}"><button style="background: Black">Close Training</button></a>
-
                 </div>
+                <button id="completeBtn" style="display: none; margin-left: 10px" data-bs-toggle="modal" data-bs-target="#trainee-sign">
+                  Submit Signature<i class="fa-regular fa-paper-plane"></i>
+              </button>
             </div>
 
             <div class="inner-block question-block">
@@ -123,6 +125,7 @@
         var backBtn = document.getElementById('back-btn');
         var nextBtn = document.getElementById('next-btn');
         var submitBtn = document.getElementById('submit-btn');
+        var completeBtn = document.getElementById('completeBtn');
         var summaryElement = document.getElementById('summary-container');
         var totalMarksElement = document.getElementById('total-marks');
 
@@ -130,7 +133,7 @@
         var currentQuestion = 0;
         var userAnswers = [];
 
-
+// Local Serve
 fetch("{{ url('example',$document->id) }}")
   .then(function(response) {
     return response.json();
@@ -143,7 +146,7 @@ fetch("{{ url('example',$document->id) }}")
     console.log('Error fetching quiz data:', error);
   });
 
-  // serve api https
+  // Live serve api https
 
 // fetch("{{ url()->secure('example', $document->id) }}")
 //   .then(function(response) {
@@ -224,39 +227,46 @@ function previousQuestion() {
 
 
 function displaySummary(marks) {
-  // Hide the question UI and show the summary
+  var percentageScore = ((marks / quizData.length) * 100).toFixed(2);
+
+  if (percentageScore >= 80) {
+    completeBtn.style.display = 'block';
+  } else {
+    completeBtn.style.display = 'none'; 
+  }
+
   questionElement.style.display = 'none';
   choicesElement.style.display = 'none';
   backBtn.style.display = 'none';
   nextBtn.style.display = 'none';
   submitBtn.style.display = 'none';
   summaryElement.style.display = 'block';
-  totalMarksElement.textContent = 'Total Marks: ' + marks + '/' + quizData.length;
+  totalMarksElement.textContent = `Total Marks: ${marks} / ${quizData.length} (${percentageScore}%)`;
 
-  // Clear the previous summary content
+  
   var summaryList = document.getElementById('summary');
   summaryList.innerHTML = '';
 
-  // Loop through all the questions to display the summary
+  
   for (var i = 0; i < quizData.length; i++) {
     var li = document.createElement('li');
     var question = quizData[i].question;
     var userAnswer = userAnswers[i];
-    var correctAnswer = parseCorrectAnswer(quizData[i].answers, quizData[i].type); // Get the correct answer based on type
+    var correctAnswer = parseCorrectAnswer(quizData[i].answers, quizData[i].type); 
 
     var summaryText = `Question ${i + 1}: ${question} - `;
 
-    // For Single Selection Questions, show Correct/Incorrect
+
     if (quizData[i].type === 'Single Selection Questions') {
-      if (correctAnswer === quizData[i].choices[userAnswer[0]]) { // Compare single selection based on the value
+      if (correctAnswer === quizData[i].choices[userAnswer[0]]) { 
         summaryText += 'Correct';
       } else {
         summaryText += 'Incorrect';
       }
     } 
-    // For Multi Selection Questions, show only Correct or Incorrect
+    
     else if (quizData[i].type === 'Multi Selection Questions') {
-      var userSelectedChoices = userAnswer.map(index => quizData[i].choices[index]); // Convert indexes to values
+      var userSelectedChoices = userAnswer.map(index => quizData[i].choices[index]); 
       if (arraysEqual(correctAnswer, userSelectedChoices)) {
         summaryText += 'Correct';
       } else {
@@ -264,7 +274,6 @@ function displaySummary(marks) {
       }
     }
 
-    // Append the summary text to the list item
     li.textContent = summaryText;
     summaryList.appendChild(li);
   }
@@ -274,54 +283,36 @@ function displaySummary(marks) {
 
 
 function parseCorrectAnswer(serializedAnswer, questionType) {
-  // Check if the serializedAnswer format is valid
   if (!serializedAnswer) return [];
 
-  // Extract the correct answer from the serialized format using a regex pattern
   var match = serializedAnswer.match(/s:\d+:"(.*?)";/);
   if (match && match[1]) {
     var answerString = match[1].trim();
 
-    // For single selection questions, return the value directly
     if (questionType === 'Single Selection Questions') {
-      return answerString; // Return the single correct answer as a string
-    }
-    // For multi-selection questions, split into multiple elements
-    else if (questionType === 'Multi Selection Questions') {
+      return answerString; 
+    } else if (questionType === 'Multi Selection Questions') {
       return answerString.split(',').map(answer => answer.trim());
     }
   }
   return [];
-}
+} 
 
 
 
 
 function arraysEqual(arr1, arr2) {
-  // First, check if both arrays are of the same length
-  if (arr1.length !== arr2.length) {
-    return false;
-  }
-
-  // Sort both arrays before comparing (order may not matter in multiple select questions)
-  arr1 = arr1.sort();
-  arr2 = arr2.sort();
-
-  // Compare element by element
+  if (arr1.length !== arr2.length) return false;
+  arr1.sort();
+  arr2.sort();
   for (var i = 0; i < arr1.length; i++) {
-    if (arr1[i] !== arr2[i]) {
-      return false;
-    }
+    if (arr1[i] !== arr2[i]) return false;
   }
-
   return true;
 }
 
 
 
-
-
-// Function to save the user's answer
 function saveAnswer() {
   var inputs = document.getElementsByName('answer');
   var answer = [];
@@ -329,7 +320,7 @@ function saveAnswer() {
   if (quizData[currentQuestion].type === 'Single Selection Questions') {
     for (var i = 0; i < inputs.length; i++) {
       if (inputs[i].checked) {
-        answer = [i]; // Save selected radio button (single answer)
+        answer = [i]; 
         break;
       }
     }
@@ -337,43 +328,40 @@ function saveAnswer() {
   else if (quizData[currentQuestion].type === 'Multi Selection Questions') {
     for (var i = 0; i < inputs.length; i++) {
       if (inputs[i].checked) {
-        answer.push(i); // Save selected checkboxes (multiple answers)
+        answer.push(i); 
       }
     }
   }
 
-  userAnswers[currentQuestion] = answer; // Save answer in the array
+  userAnswers[currentQuestion] = answer;
   console.log(`Saved answer for question ${currentQuestion}`, answer);
 }
 
 
-// Function to submit the quiz and check answers
 function submitQuiz() {
-  saveAnswer(); // Save the last answer
+  saveAnswer(); 
   var marks = 0;
 
   for (var i = 0; i < quizData.length; i++) {
-    var correctAnswer = quizData[i].answer;
+    var correctAnswer = parseCorrectAnswer(quizData[i].answers, quizData[i].type); 
     var userAnswer = userAnswers[i];
 
     if (quizData[i].type === 'Single Selection Questions') {
-      if (correctAnswer == userAnswer[0]) {
+      if (quizData[i].choices[userAnswer[0]] === correctAnswer) { 
         marks++; 
       }
     } 
     else if (quizData[i].type === 'Multi Selection Questions') {
-      console.log(`Question ${i + 1} - Checking Multi Selection:`, userAnswer);
-      if (arraysEqual(correctAnswer, userAnswer)) {
+      var userSelectedChoices = userAnswer.map(index => quizData[i].choices[index]); 
+      if (arraysEqual(correctAnswer, userSelectedChoices)) {
         marks++; 
       }
     }
   }
 
   displaySummary(marks); 
+
 }
-
-
-
 
 
 
