@@ -267,7 +267,7 @@
                     </tr>
                 </table>
                 <div class="block-head">
-                    Attachments
+                    Attachment
                 </div>
                 <div class="border-table">
                     <table>
@@ -411,7 +411,7 @@
         <table>
 
             <tr>
-                <th class="w-20">HOD Review Comment</th>
+                <th class="w-20">HOD Review Comments</th>
                 <td class="w-80">
                     @if ($data->Comments)
                         {{ $data->Comments }}
