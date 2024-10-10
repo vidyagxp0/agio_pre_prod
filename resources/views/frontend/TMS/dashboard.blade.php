@@ -136,6 +136,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             <th>Job Title</th>
                             <th>Joining Date</th>
                             <th>Status</th>
+                            <th>Action</th>
                             <th>Report</th>
                         </tr>
                     </thead>
@@ -143,7 +144,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                         @foreach ($employees->sortByDesc('id') as $employee)
                         <tr>
                             <td>
-                                <a href="{{ url('employee_view', $employee->id) }}">
+                                <a>
                                 {{-- @php
                                     $prefixAbbreviation = '';
                                     if ($employee->prefix === 'PermanentWorkers') {
@@ -162,12 +163,12 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             <!-- <td>{{ $employee->user_assigned ? $employee->user_assigned->name : 'NA' }}</td> -->
                             <td>{{ Helpers::getdateFormat($employee->joining_date) }}</td>
                             <td>{{ $employee->status }}</td>
+                            <td>     <a href="{{url('employee_view', $employee->id)}}">
+                            <i class="fa-solid fa-pencil" style="color: #355cab;"></i> </td>
                             <td>
-                            <!-- <button type="button"  class="view-report-btn" onclick="window.location.href='{{ url('rcms/report/' . $employee->id) }}'" >
-                                View Report
-                            </button> -->
+                           
                             <button type="button" class="view-report-btn" onclick="window.location.href='{{ url('rcms/report/' . $employee->id) }}'">
-                                View Report
+                            <i class="fa fa-file-alt"></i>
                             </button>
 
                         </td>                  
@@ -179,8 +180,12 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
             </div>
          
                   <style>
+     #CCForm3 .table thead th {
+        background-color: #4274daba;
+        color: black; 
+    }
         .view-report-btn {
-            background-color: #4274da; 
+            background-color: #355cab; 
             color: white; 
             border: none; 
             padding: 10px 20px;
@@ -191,8 +196,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
 
         .view-report-btn:hover {
             background-color: #000; 
-            color: white;
-            transform: scale(1.05);
+         
             
         }
     </style>
@@ -260,6 +264,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
           
             <div id="CCForm2" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
             <div class="heading-tms">Induction Training</div>
+            <br>
             @php
                         // Convert the array to a collection
                         $documentsCollection = collect($useDocFromInductionTraining);
@@ -291,6 +296,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                     <th>Training Completion date</th>
                                     <th>Preview SOP</th>
                                     <th>Quiz</th>
+                                    <th>Certificate</th>
                                    
                                 </tr>
                             </thead>
@@ -337,7 +343,14 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                                     </button>
                                                 @endif
                                         </td>
-                                        
+                                        <td>
+                                        <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" onclick="window.location.href='/induction_training_certificate/{{$employee->id}}';">
+                                            <i class="fa fa-certificate"></i>
+                                        </button>
+
+
+
+                                        </td>
                                         
                                     
                                     </tr>
@@ -370,6 +383,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                     </div>
 
             <div class="heading-tms">On The Job Training</div>
+            <br>
                    @php
                         // Convert the array to a collection
                         $documentsCollection = collect($useDocFromJobTraining);
@@ -480,7 +494,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                         </nav>
                     </div>
             <div class="heading-tms">SOP Training</div>
-
+                   <br>
                 @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
                     <!-- <div>
                         <table class="table table-bordered">
@@ -665,7 +679,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                 <td>{{ Helpers::getdateFormat($trainer->training_date) }}</td>
                                 <td>{{ $trainer->status }}</td>
                                 <td>     <button type="button" class="view-report-btn" onclick="window.location.href='{{ url('rcms/trainer_report/' . $trainer->id) }}'">
-                                                View Report
+                                <i class="fa fa-file-alt"></i>
                                             </button></td>
                             </tr>
                             @endforeach
@@ -762,7 +776,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                                </td>
                                                <td>
                                             <button type="button" class="view-report-btn"onclick="window.location.href='{{ url('rcms/job_training_report/' . $job_training->id) }}'" >
-                                                View Report
+                                            <i class="fa fa-file-alt"></i>
                                             </button>
                                         </div>
 
@@ -837,7 +851,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                         <td>
                         
                         <button type="button" class="view-report-btn"onclick="window.location.href='{{ url('rcms/induction_report/' . $induction->id) }}'" >
-                            View Report
+                        <i class="fa fa-file-alt"></i>
                         </button>
                     </div>
                     </td>
@@ -928,7 +942,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                         <td>
                         
                         <button type="button" class="view-report-btn"onclick="window.location.href='{{ url('rcms/report/' . $induction->id) }}'" >
-                            View Report
+                        <i class="fa fa-file-alt"></i>
                         </button>
                     </div>
                     </td>

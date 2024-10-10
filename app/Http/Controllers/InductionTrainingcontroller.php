@@ -1001,6 +1001,15 @@ class InductionTrainingcontroller extends Controller
         return view('frontend.TMS.induction_training_detail', compact('id'));
     }
 
+    
+    public function showCertificate($id)
+    {
+        
+        return view('frontend.TMS.Induction_training.Induction_training_certificate');
+    }
+
+
+
     public function inductionquestionshow($sopids, $inductiontrainingid){
         $inductiontrainingid = Induction_training::find($inductiontrainingid);
         $inductiontrainingid->attempt_count = $inductiontrainingid->attempt_count == -1 ? 0 : ( $inductiontrainingid->attempt_count == 0 ? 0 : $inductiontrainingid->attempt_count - 1);
