@@ -168,19 +168,31 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             </div>
 
                             <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="start_date">Start Date</label>
-                                        <input id="start_date" type="date" name="start_date">
-                                    </div>
+                                <div class="group-input">
+                                    <label for="start_date">Start Date</label>
+                                    <input id="start_date" type="date" name="start_date" onchange="setMinEndDate()">
                                 </div>
+                            </div>
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="end_date">End Date</label>
-                                        <input id="end_date" type="date" name="end_date">
-                                           
-                                    </div>
+                            <div class="col-lg-6">  
+                                <div class="group-input">
+                                    <label for="end_date">End Date</label>
+                                    <input id="end_date" type="date" name="end_date" onchange="setMaxStartDate()">
                                 </div>
+                            </div>
+
+                            <script>
+                                function setMinEndDate() {
+                                    var startDate = document.getElementById('start_date').value;
+                                    document.getElementById('end_date').min = startDate; 
+                                }
+
+                                function setMaxStartDate() {
+                                    var endDate = document.getElementById('end_date').value;
+                                    document.getElementById('start_date').max = endDate;
+                                }
+                            </script>
+
 
                             <script>
                                 document.getElementById('select-state').addEventListener('change', function() {
@@ -231,7 +243,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                            <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="hod">Evaluation Required</label>
-                                    <select name="evaluation_required" id="" >
+                                    <select name="questionaries_required" id="" >
                                         <option value="">----Select---</option>
                                         <option value="Yes">Yes</option>
                                         <option value="No">No</option>
@@ -832,12 +844,12 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     var sopLink = document.getElementById('view_sop_link');
                                     
                                     if (documentId) {
-                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.href = `/documents/view/${documentId}`;
                                         sopLink.style.display = 'inline';
                                     } else {
                                         sopLink.style.display = 'none';
                                     }
-                                    console.log('Selected Document ID: ', documentId); // For debugging to check selected ID
+                                    console.log('Selected Document ID: ', documentId);
                                 }
                             </script>
 
@@ -848,7 +860,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     var sopLink = document.getElementById('view_sop_link2');
                                     
                                     if (documentId) {
-                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.href = `/documents/view/${documentId}`;
                                         sopLink.style.display = 'inline';
                                     } else {
                                         sopLink.style.display = 'none';
@@ -864,7 +876,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     var sopLink = document.getElementById('view_sop_link3');
                                     
                                     if (documentId) {
-                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.href = `/documents/view/${documentId}`;
                                         sopLink.style.display = 'inline';
                                     } else {
                                         sopLink.style.display = 'none';
@@ -880,7 +892,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     var sopLink = document.getElementById('view_sop_link4');
                                     
                                     if (documentId) {
-                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.href = `/documents/view/${documentId}`;
                                         sopLink.style.display = 'inline';
                                     } else {
                                         sopLink.style.display = 'none';
@@ -896,7 +908,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     var sopLink = document.getElementById('view_sop_link5');
                                     
                                     if (documentId) {
-                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.href = `/documents/view/${documentId}`;
                                         sopLink.style.display = 'inline';
                                     } else {
                                         sopLink.style.display = 'none';
@@ -912,7 +924,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     var sopLink = document.getElementById('view_sop_link6');
                                     
                                     if (documentId) {
-                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.href = `/documents/view/${documentId}`;
                                         sopLink.style.display = 'inline';
                                     } else {
                                         sopLink.style.display = 'none';
@@ -928,7 +940,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     var sopLink = document.getElementById('view_sop_link7');
                                     
                                     if (documentId) {
-                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.href = `/documents/view/${documentId}`;
                                         sopLink.style.display = 'inline';
                                     } else {
                                         sopLink.style.display = 'none';
@@ -944,7 +956,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     var sopLink = document.getElementById('view_sop_link8');
                                     
                                     if (documentId) {
-                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.href = `/documents/view/${documentId}`;
                                         sopLink.style.display = 'inline';
                                     } else {
                                         sopLink.style.display = 'none';
@@ -960,7 +972,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     var sopLink = document.getElementById('view_sop_link9');
                                     
                                     if (documentId) {
-                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.href = `/documents/view/${documentId}`;
                                         sopLink.style.display = 'inline';
                                     } else {
                                         sopLink.style.display = 'none';
@@ -976,7 +988,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     var sopLink = document.getElementById('view_sop_link10');
                                     
                                     if (documentId) {
-                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.href = `/documents/view/${documentId}`;
                                         sopLink.style.display = 'inline';
                                     } else {
                                         sopLink.style.display = 'none';
@@ -992,7 +1004,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     var sopLink = document.getElementById('view_sop_link11');
                                     
                                     if (documentId) {
-                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.href = `/documents/view/${documentId}`;
                                         sopLink.style.display = 'inline';
                                     } else {
                                         sopLink.style.display = 'none';
@@ -1008,7 +1020,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     var sopLink = document.getElementById('view_sop_link12');
                                     
                                     if (documentId) {
-                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.href = `/documents/view/${documentId}`;
                                         sopLink.style.display = 'inline';
                                     } else {
                                         sopLink.style.display = 'none';
@@ -1024,7 +1036,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     var sopLink = document.getElementById('view_sop_link13');
                                     
                                     if (documentId) {
-                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.href = `/documents/view/${documentId}`;
                                         sopLink.style.display = 'inline';
                                     } else {
                                         sopLink.style.display = 'none';
@@ -1040,7 +1052,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     var sopLink = document.getElementById('view_sop_link14');
                                     
                                     if (documentId) {
-                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.href = `/documents/view/${documentId}`;
                                         sopLink.style.display = 'inline';
                                     } else {
                                         sopLink.style.display = 'none';
@@ -1056,7 +1068,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     var sopLink = document.getElementById('view_sop_link15');
                                     
                                     if (documentId) {
-                                        sopLink.href = `/documents/viewpdf/${documentId}`;
+                                        sopLink.href = `/documents/view/${documentId}`;
                                         sopLink.style.display = 'inline';
                                     } else {
                                         sopLink.style.display = 'none';

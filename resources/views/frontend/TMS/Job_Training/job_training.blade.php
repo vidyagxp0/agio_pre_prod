@@ -571,7 +571,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
 
     var sopAnchor = document.getElementById('view_sop');
     if (documentId) {
-        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+        sopAnchor.href = `/documents/view/${documentId}`;
         sopAnchor.style.display = 'inline';
     } else {
         sopAnchor.style.display = 'none';
@@ -583,7 +583,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var sopAnchor = document.getElementById('view_sop');
     
     if (selectedDocumentId) {
-        sopAnchor.href = `/documents/viewpdf/${selectedDocumentId}`;
+        sopAnchor.href = `/documents/view/${selectedDocumentId}`;
         sopAnchor.style.display = 'inline';
     }
 });
@@ -603,7 +603,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var sopAnchor = document.getElementById('view_sop2');
     if (documentId) {
-        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+        sopAnchor.href = `/documents/view/${documentId}`;
         sopAnchor.style.display = 'inline';
     } else {
         sopAnchor.style.display = 'none';
@@ -615,7 +615,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var sopAnchor = document.getElementById('view_sop2');
     
     if (selectedDocumentId) {
-        sopAnchor.href = `/documents/viewpdf/${selectedDocumentId}`;
+        sopAnchor.href = `/documents/view/${selectedDocumentId}`;
         sopAnchor.style.display = 'inline';
     }
 });
@@ -634,7 +634,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var sopAnchor = document.getElementById('view_sop3');
     if (documentId) {
-        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+        sopAnchor.href = `/documents/view/${documentId}`;
         sopAnchor.style.display = 'inline';
     } else {
         sopAnchor.style.display = 'none';
@@ -646,7 +646,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var sopAnchor = document.getElementById('view_sop3');
     
     if (selectedDocumentId) {
-        sopAnchor.href = `/documents/viewpdf/${selectedDocumentId}`;
+        sopAnchor.href = `/documents/view/${selectedDocumentId}`;
         sopAnchor.style.display = 'inline';
     }
 });
@@ -665,7 +665,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var sopAnchor = document.getElementById('view_sop4');
     if (documentId) {
-        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+        sopAnchor.href = `/documents/view/${documentId}`;
         sopAnchor.style.display = 'inline';
     } else {
         sopAnchor.style.display = 'none';
@@ -677,7 +677,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var sopAnchor = document.getElementById('view_sop4');
     
     if (selectedDocumentId) {
-        sopAnchor.href = `/documents/viewpdf/${selectedDocumentId}`;
+        sopAnchor.href = `/documents/view/${selectedDocumentId}`;
         sopAnchor.style.display = 'inline';
     }
 });
@@ -696,7 +696,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var sopAnchor = document.getElementById('view_sop5');
     if (documentId) {
-        sopAnchor.href = `/documents/viewpdf/${documentId}`;
+        sopAnchor.href = `/documents/view/${documentId}`;
         sopAnchor.style.display = 'inline';
     } else {
         sopAnchor.style.display = 'none';
@@ -708,7 +708,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var sopAnchor = document.getElementById('view_sop5');
     
     if (selectedDocumentId) {
-        sopAnchor.href = `/documents/viewpdf/${selectedDocumentId}`;
+        sopAnchor.href = `/documents/view/${selectedDocumentId}`;
         sopAnchor.style.display = 'inline';
     }
 });

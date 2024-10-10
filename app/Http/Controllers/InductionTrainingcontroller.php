@@ -39,6 +39,12 @@ class InductionTrainingController extends Controller
         return view('frontend.TMS.Induction_training.induction_training', compact('due_date','data', 'record', 'employees','hods'));
     }
 
+    public function viewSop($id)
+    {
+        $document = Document::findOrFail($id);
+        return view('frontend.TMS.Induction_training.sop-view', compact('document'));
+    }
+
     public function fetchQuestion($id)
     {
         $document_training = DocumentTraining::where('document_id', $id)->first();
@@ -73,7 +79,6 @@ class InductionTrainingController extends Controller
         return response()->json($employee);
     }
 
-
     
     public function store(Request $request)
     {
@@ -93,6 +98,7 @@ class InductionTrainingController extends Controller
         $inductionTraining->date_joining = $request->date_joining;
         $inductionTraining->start_date = $request->start_date;
         $inductionTraining->end_date = $request->end_date;
+        $inductionTraining->questionaries_required = $request->questionaries_required;
 
         $inductionTraining->training_date_1 = $request->training_date_1;
         $inductionTraining->training_date_2 = $request->training_date_2;
@@ -933,7 +939,6 @@ class InductionTrainingController extends Controller
         $mainvalue = Employee::where('id', $induction->name_employee)->first();
         $employee = Employee::find($id); 
 
-        // Initialize other necessary data
         $record = str_pad((RecordNumber::first()->value('counter') + 1), 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $due_date = $currentDate->addDays(30)->format('Y-m-d');
