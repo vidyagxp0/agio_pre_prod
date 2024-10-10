@@ -392,7 +392,7 @@ if(!empty($request->attach_files2)){
     if (!empty($data->due_date)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Observation Due Date';
+        $history->activity_type = 'Observation Report Due Date';
         $history->previous ="Null";
         $history->current =  Helpers::getdateFormat($data->due_date);
         $history->comment = "NA";
@@ -1056,7 +1056,7 @@ if(!empty($request->attach_files2)){
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Observation Due Date';
+            $history->activity_type = 'Observation Report Due Date';
             $history->previous = Helpers::getdateFormat($lastDocument->due_date);
             $history->current = Helpers::getdateFormat($data->due_date);
             $history->comment = $request->auditee_department_comment;

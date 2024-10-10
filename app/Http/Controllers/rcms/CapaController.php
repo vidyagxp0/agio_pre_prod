@@ -1817,8 +1817,9 @@ if (!empty($capa->qa_attachmentc)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'Due Date';
-            $history->previous = $lastDocument->due_date;
-            $history->current = $capa->due_date;
+            // Helpers::getdateFormat($data->due_date)
+            $history->previous = Helpers::getdateFormat($lastDocument->due_date);
+            $history->current = Helpers::getdateFormat($capa->due_date);
             $history->comment =$request->due_date_comment ;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2180,28 +2181,28 @@ if (!empty($capa->qa_attachmentc)) {
             $history->save();
         }
 
-        if ($lastDocument->due_date_extension != $capa->due_date_extension || !empty($request->due_date_extension_comment)) {
-            $history = new CapaAuditTrial();
-            $history->capa_id = $id;
-            $history->activity_type = 'Interim Containment';
-            $history->previous = $lastDocument->due_date_extension;
-            $history->current = $capa->due_date_extension;
-            $history->comment = $request->due_date_extension_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
+        // if ($lastDocument->due_date_extension != $capa->due_date_extension || !empty($request->due_date_extension_comment)) {
+        //     $history = new CapaAuditTrial();
+        //     $history->capa_id = $id;
+        //     $history->activity_type = 'Interim Containment';
+        //     $history->previous = $lastDocument->due_date_extension;
+        //     $history->current = $capa->due_date_extension;
+        //     $history->comment = $request->due_date_extension_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
         
-            if (is_null($lastDocument->due_date_extension) || $lastDocument->due_date_extension === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+        //     if (is_null($lastDocument->due_date_extension) || $lastDocument->due_date_extension === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
         
-            $history->save();
-        }
+        //     $history->save();
+        // }
 
         ///////////////////////////////////CAPA Clousure//////////////////////////////////////////////////
 
@@ -3143,7 +3144,7 @@ foreach ($pre as $processName => $modelClass) {
                     // Flash message for success (when the form is filled correctly)
                     Session::flash('swal', [
                         'title' => 'Success!',
-                        'message' => 'Sent for QA/CQA Review state',
+                        'message' => 'Sent for HOD Review state',
                         'type' => 'success',
                     ]);
                 }
@@ -3217,7 +3218,7 @@ foreach ($pre as $processName => $modelClass) {
                     // Flash message for success (when the form is filled correctly)
                     Session::flash('swal', [
                         'title' => 'Success!',
-                        'message' => 'Sent for QA/CQA Approval state',
+                        'message' => 'Sent for QA/CQA Review state',
                         'type' => 'success',
                     ]);
                 }
@@ -3289,7 +3290,7 @@ foreach ($pre as $processName => $modelClass) {
                     // Flash message for success (when the form is filled correctly)
                     Session::flash('swal', [
                         'title' => 'Success!',
-                        'message' => 'Sent for CAPA In progress state',
+                        'message' => 'Sent for QA/CQA Approval state',
                         'type' => 'success',
                     ]);
                 }
@@ -3330,6 +3331,23 @@ foreach ($pre as $processName => $modelClass) {
                 return back();
             }
             if ($capa->stage == 4) {
+                if (!$capa->qah_cq_comments) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'QA/CQA Approval Comment is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for CAPA In progress state',
+                        'type' => 'success',
+                    ]);
+                }
                 $capa->stage = "5";
                 $capa->status = "CAPA In progress";
                 $capa->approved_by = Auth::user()->name;
@@ -3368,6 +3386,23 @@ foreach ($pre as $processName => $modelClass) {
                 return back();
             }
             if ($capa->stage == 5) {
+                if (!$capa->initiator_comment) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'Initiator CAPA Update Comment is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for HOD Final Review state',
+                        'type' => 'success',
+                    ]);
+                }
                 $capa->stage = "6";
                 $capa->status = "HOD Final Review";
                 $capa->completed_by = Auth::user()->name;
@@ -3419,7 +3454,7 @@ foreach ($pre as $processName => $modelClass) {
                     // Flash message for success (when the form is filled correctly)
                     Session::flash('swal', [
                         'title' => 'Success!',
-                        'message' => 'Sent for QAH/CQA Approval state',
+                        'message' => 'Sent for QA/CQA Closure Review state',
                         'type' => 'success',
                     ]);
                 }

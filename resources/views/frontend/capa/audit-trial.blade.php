@@ -176,6 +176,7 @@
             </style>
 
             <body>
+                
                 @php
                      $auditCollect = DB::table('audit_reviewers_details')
                             ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id])->latest()->first();
@@ -191,7 +192,11 @@
                                                 
                 
                      <a class="button_theme1 text-white" href="{{ url('rcms/qms-dashboard') }}"style="margin-right: 10px"> Exit
-                </a> </button></div>
+                </a> 
+                {{-- <button class="button_theme1" onclick="window.print();">
+                    Print
+                </button> --}}
+            </div>
                 </div>
                 <header>
                     <table>
@@ -209,10 +214,10 @@
                         <div class="heading">
                            
 
-                                <div class="division-bar" style="color: black">
+                                {{-- <div class="division-bar" style="color: black">
                                     <strong>Site Division/Project</strong> :
                                     {{ $document->division_code }} / CAPA
-                                </div>
+                                </div> --}}
                            
                             <div class="heading-new">
                                 Audit Trail
@@ -226,7 +231,7 @@
                                 @php
                                 use Carbon\Carbon;
                                 @endphp
-                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ Carbon::parse($document->due_date)->format('j F Y') }}</div>
+                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ Helpers::getdateFormat($document->due_date)}}</div>
 
                         </div>
         </div>
@@ -301,7 +306,8 @@
                                 </div>
                                 <div style="margin-top: 5px;">
                                     <strong>Performed On:</strong>
-                                    {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('j F Y H:i') : 'Not Applicable' }}
+                                    {{-- Helpers::getdateFormat1($audits->created_at) }} --}}
+                                    {{ $dataDemo->created_at ?   Helpers::getdateFormat1( $dataDemo->created_at) : 'Not Applicable' }}
                                 </div>
                                 
                                 <div style="margin-top: 5px;"><strong> Comments

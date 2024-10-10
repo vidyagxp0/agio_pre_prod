@@ -369,7 +369,7 @@ class RootCauseController extends Controller
             $history->activity_type = 'Record Number';
             $history->previous = "Null";
             $history->current = Helpers::getDivisionName(session()->get('division')) . "/RCA/" . Helpers::year($root->created_at) . "/" . str_pad($root->record, 4, '0', STR_PAD_LEFT);
-            $history->comment = "Null";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -386,7 +386,7 @@ class RootCauseController extends Controller
             $history->activity_type = 'Site/Location Code';
             $history->previous = "Null";
             $history->current = $root->division_code;
-            $history->comment = "Null";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -403,7 +403,7 @@ class RootCauseController extends Controller
             $history->activity_type = 'Initiator';
             $history->previous = "Null";
             $history->current = $request->originator_id;
-            $history->comment = "Null";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -420,7 +420,7 @@ class RootCauseController extends Controller
             $history->activity_type = 'Date Of Initiation';
             $history->previous = "Null";
             $history->current =  Helpers::getdateFormat($request->intiation_date);
-            $history->comment = "Null";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -471,7 +471,7 @@ class RootCauseController extends Controller
             $history->activity_type = 'Short Description';
             $history->previous = "Null";
             $history->current = $root->short_description;
-            $history->comment = "Null";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -584,22 +584,22 @@ class RootCauseController extends Controller
             $history->save();
         }
 
-        if (!empty($request->Type)) {
-            $history = new RootAuditTrial();
-            $history->root_id = $root->id;
-            $history->activity_type = 'Type';
-            $history->previous = "Null";
-            $history->current =  $root->Type;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $root->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
+        // if (!empty($request->Type)) {
+        //     $history = new RootAuditTrial();
+        //     $history->root_id = $root->id;
+        //     $history->activity_type = 'Type';
+        //     $history->previous = "Null";
+        //     $history->current =  $root->Type;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $root->status;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->save();
+        // }
 
         if (!empty($request->priority_level)) {
             $history = new RootAuditTrial();
@@ -804,7 +804,7 @@ class RootCauseController extends Controller
             $history->save();
         }
 
-        if (!empty($request->investigation_team)) {
+        if (!empty($root->investigation_team)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
             $history->activity_type = 'Investigation Team';
@@ -2065,27 +2065,27 @@ class RootCauseController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->Type != $root->Type || !empty($request->comment)) {
+        // if ($lastDocument->Type != $root->Type || !empty($request->comment)) {
 
-            $history = new RootAuditTrial();
-            $history->root_id = $id;
-            $history->activity_type = 'Type';
-            $history->previous = $lastDocument->Type;
-            $history->current = $root->Type;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->Type) || $lastDocument->Type === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        //     $history = new RootAuditTrial();
+        //     $history->root_id = $id;
+        //     $history->activity_type = 'Type';
+        //     $history->previous = $lastDocument->Type;
+        //     $history->current = $root->Type;
+        //     $history->comment = $request->comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     if (is_null($lastDocument->Type) || $lastDocument->Type === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastDocument->department != $root->department || !empty($request->comment)) {
 
             $history = new RootAuditTrial();
