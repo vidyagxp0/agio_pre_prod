@@ -834,7 +834,7 @@
                                     <select name="initiator_group"
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                         id="initiator_group">
-                                        {{-- <option value="">-- Select --</option> --}}
+                                        <option value="">-- Select --</option>
                                         <option value="CQA" @if ($data->initiator_group == 'CQA') selected @endif>Corporate
                                             Quality Assurance</option>
                                         <option value="QA" @if ($data->initiator_group == 'QA') selected @endif>Quality
@@ -1354,7 +1354,7 @@
     });
                             </script>
 
-                           
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="root_cause">
@@ -2334,8 +2334,7 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="" name="batch_record_review_observation_ca" id=""
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->batch_record_review_observation_ca }}
-                                </textarea>
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->batch_record_review_observation_ca }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
@@ -2345,8 +2344,7 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="" name="analytical_data_review_observation_ca" id=""
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->analytical_data_review_observation_ca }}
-                                </textarea>
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->analytical_data_review_observation_ca }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
@@ -2941,6 +2939,7 @@
                             </div>
 
                             <div class="col-md-12 mb-3">
+                                @if ($data->stage == 3)
                                 <div class="group-input">
                                     <label
                                         for="Review of Raw materials used in batch
@@ -2953,9 +2952,25 @@
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }}
                                     </textarea>
                                 </div>
+                                @else
+                                <div class="group-input">
+                                    <label
+                                        for="Review of Raw materials used in batch
+                                        manufacturing">Review
+                                        Of Raw Materials Used In Batch
+                                        Manufacturing </label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea readonly class="" name="review_of_raw_materials_used_in_batch_manufacturing_gi" id=""
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }}
+                                    </textarea>
+                                </div>
+                                @endif
+
                             </div>
 
                             <div class="col-md-12 mb-3">
+                                @if ($data->stage == 3)
                                 <div class="group-input">
                                     <label for="Review of Batch Packing record (BPR)">Review of Batch Packing Record
                                         (BPR)</label>
@@ -2965,9 +2980,22 @@
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_Batch_Packing_record_bpr_gi }}
                                     </textarea>
                                 </div>
+                                @else
+                                <div class="group-input">
+                                    <label for="Review of Batch Packing record (BPR)">Review of Batch Packing Record
+                                        (BPR)</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea readonly class="summernote" name="review_of_Batch_Packing_record_bpr_gi" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_Batch_Packing_record_bpr_gi }}
+                                    </textarea>
+                                </div>
+                                @endif
+
                             </div>
 
                             <div class="col-md-12 mb-3">
+                                @if ($data->stage == 3)
                                 <div class="group-input">
                                     <label for="Review of packing materials used in batch packing">Review Of Packing
                                         Materials Used In Batch
@@ -2978,9 +3006,24 @@
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_packing_materials_used_in_batch_packing_gi }}
                                     </textarea>
                                 </div>
+                                @else
+                                <div class="group-input">
+                                    <label for="Review of packing materials used in batch packing">Review Of Packing
+                                        Materials Used In Batch
+                                        Packing</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea readonly class="" name="review_of_packing_materials_used_in_batch_packing_gi" id=""
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_packing_materials_used_in_batch_packing_gi }}
+                                    </textarea>
+                                </div>
+                                @endif
+
                             </div>
 
                             <div class="col-md-12 mb-3">
+
+                                @if ($data->stage == 3)
                                 <div class="group-input">
                                     <label for="Review of Analytical Data">Review of Analytical Data</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -2989,9 +3032,20 @@
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_analytical_data_gi }}
                                     </textarea>
                                 </div>
+                                @else
+                                <div class="group-input">
+                                    <label for="Review of Analytical Data">Review of Analytical Data</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea readonly class="summernote" name="review_of_analytical_data_gi" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_analytical_data_gi }}
+                                    </textarea>
+                                </div>
+                                @endif
                             </div>
 
                             <div class="col-md-12 mb-3">
+                                @if ($data->stage  == 3)
                                 <div class="group-input">
                                     <label for="Review of training record of Concern Persons">Review Of Training Record
                                         Of Concern Persons</label>
@@ -3001,9 +3055,22 @@
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_training_record_of_concern_persons_gi }}
                                     </textarea>
                                 </div>
+                                @else
+                                <div class="group-input">
+                                    <label for="Review of training record of Concern Persons">Review Of Training Record
+                                        Of Concern Persons</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea readonly class="summernote" name="review_of_training_record_of_concern_persons_gi" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_training_record_of_concern_persons_gi }}
+                                    </textarea>
+                                </div>
+                                @endif
+
                             </div>
 
                             <div class="col-md-12 mb-3">
+                                @if ($data->stage == 3)
                                 <div class="group-input">
                                     <label for="Review of Equipment/Instrument qualification/Calibration record">Review
                                         of Equipment/Instrument qualification/Calibration Record</label>
@@ -3013,9 +3080,22 @@
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->rev_eq_inst_qual_calib_record_gi }}
                                     </textarea>
                                 </div>
+                                @else
+                                <div class="group-input">
+                                    <label for="Review of Equipment/Instrument qualification/Calibration record">Review
+                                        of Equipment/Instrument qualification/Calibration Record</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea class="summernote" name="rev_eq_inst_qual_calib_record_gi" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->rev_eq_inst_qual_calib_record_gi }}
+                                    </textarea>
+                                </div>
+                                @endif
+
                             </div>
 
                             <div class="col-md-12 mb-3">
+                                @if ($data->stage == 3 )
                                 <div class="group-input">
                                     <label for="Review of Equipment Break-down and Maintainance Record">Review of
                                         Equipment Break-down and Maintainance Record</label>
@@ -3025,9 +3105,22 @@
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_equipment_break_down_and_maintainance_record_gi }}
                                     </textarea>
                                 </div>
+                                @else
+                                <div class="group-input">
+                                    <label for="Review of Equipment Break-down and Maintainance Record">Review of
+                                        Equipment Break-down and Maintainance Record</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea readonly class="summernote" name="review_of_equipment_break_down_and_maintainance_record_gi" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_equipment_break_down_and_maintainance_record_gi }}
+                                    </textarea>
+                                </div>
+                                @endif
+
                             </div>
 
                             <div class="col-md-12 mb-3">
+                                @if ($data->stage == 3)
                                 <div class="group-input">
                                     <label for="Review of Past history of product">Review Of Past History Of
                                         Product</label>
@@ -3037,6 +3130,18 @@
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_past_history_of_product_gi }}
                                     </textarea>
                                 </div>
+                                @else
+                                <div class="group-input">
+                                    <label for="Review of Past history of product">Review Of Past History Of
+                                        Product</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea readonly class="summernote" name="review_of_past_history_of_product_gi" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_past_history_of_product_gi }}
+                                    </textarea>
+                                </div>
+                                @endif
+
                             </div>
 
 
@@ -3150,6 +3255,7 @@
                             </script>
 
                             <div class="col-md-12 mb-3">
+                                @if ($data->stage == 3)
                                 <div class="group-input">
                                     <label
                                         for="Conclusion (A dedicated provision must be established to record the inference or outcome of brainstorming sessions) ">Conclusion
@@ -3158,10 +3264,24 @@
                                             not require completion</small></div>
                                     <textarea class="summernote" name="conclusion_pi" id="summernote-1"
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->conclusion_pi }}
-                            </textarea>
+                                     </textarea>
                                 </div>
+                                @else
+                                <div class="group-input">
+                                    <label
+                                        for="Conclusion (A dedicated provision must be established to record the inference or outcome of brainstorming sessions) ">Conclusion
+                                    </label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea readonly class="summernote" name="conclusion_pi" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->conclusion_pi }}
+                                     </textarea>
+                                </div>
+                                @endif
                             </div>
+
                             <div class="col-md-12 mb-3">
+                                @if ($data->stage == 3)
                                 <div class="group-input">
                                     <label for="Conclusion">Root Cause Analysis</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -3170,8 +3290,20 @@
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->conclusion_hodsr }}
                                     </textarea>
                                 </div>
+                                @else
+                                <div class="group-input">
+                                    <label for="Conclusion">Root Cause Analysis</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea readonly class="summernote" name="conclusion_hodsr" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->conclusion_hodsr }}
+                                    </textarea>
+                                </div>
+                                @endif
                             </div>
+
                             <div class="col-md-12 mb-3">
+                                @if ($data->stage == 3)
                                 <div class="group-input">
                                     <label for="Root Cause Analysis">Other Methodology</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -3180,8 +3312,20 @@
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->root_cause_analysis_hodsr }}
                                     </textarea>
                                 </div>
+                                @else
+                                <div class="group-input">
+                                    <label for="Root Cause Analysis">Other Methodology</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea readonly class="summernote" name="root_cause_analysis_hodsr" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->root_cause_analysis_hodsr }}
+                                    </textarea>
+                                </div>
+                                @endif
+
                             </div>
                             <div class="col-md-12 mb-3">
+                                @if ($data->stage == 3)
                                 <div class="group-input">
                                     <label for="The probable root causes or Root Cause">The probable root causes or Root
                                         Cause </label>
@@ -3189,8 +3333,20 @@
                                             not require completion</small></div>
                                     <textarea class="summernote" name="the_probable_root" id="summernote-1"
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->the_probable_root }}
-                            </textarea>
+                                    </textarea>
                                 </div>
+                                @else
+                                <div class="group-input">
+                                    <label for="The probable root causes or Root Cause">The probable root causes or Root
+                                        Cause </label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea readonly class="summernote" name="the_probable_root" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->the_probable_root }}
+                                     </textarea>
+                                </div>
+                                @endif
+
                             </div>
                             {{-- <div class="sub-head col-12">HOD Review</div>
 
@@ -3220,6 +3376,7 @@
                             </div> --}}
 
                             <div class="col-md-12 mb-3">
+                                @if ($data->stage == 3)
                                 <div class="group-input">
                                     <label for="Impact Assessment">Impact Assessment :</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -3228,11 +3385,23 @@
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->impact_assessment_hodsr }}
                                     </textarea>
                                 </div>
+                                @else
+                                <div class="group-input">
+                                    <label for="Impact Assessment">Impact Assessment :</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea readonly class="summernote" name="impact_assessment_hodsr" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->impact_assessment_hodsr }}
+                                    </textarea>
+                                </div>
+                                @endif
+
                             </div>
 
 
 
                             <div class="col-md-12 mb-3">
+                                @if ($data->stage == 3)
                                 <div class="group-input">
                                     <label for="Corrective Action">Corrective Action :</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -3241,10 +3410,22 @@
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->corrective_action_hodsr }}
                                     </textarea>
                                 </div>
+                                @else
+                                <div class="group-input">
+                                    <label for="Corrective Action">Corrective Action :</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea readonly class="summernote" name="corrective_action_hodsr" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->corrective_action_hodsr }}
+                                    </textarea>
+                                </div>
+                                @endif
+
                             </div>
 
 
                             <div class="col-md-12 mb-3">
+                                @if ($data->stage == 3)
                                 <div class="group-input">
                                     <label for="Preventive Action">Preventive Action :</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -3253,9 +3434,21 @@
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->preventive_action_hodsr }}
                                     </textarea>
                                 </div>
+                                @else
+                                <div class="group-input">
+                                    <label for="Preventive Action">Preventive Action :</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea readonly class="summernote" name="preventive_action_hodsr" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->preventive_action_hodsr }}
+                                    </textarea>
+                                </div>
+                                @endif
+
                             </div>
 
                             <div class="col-md-12 mb-3">
+                                @if ($data->stage == 3)
                                 <div class="group-input">
                                     <label for="Summary and Conclusion">Summary And Conclusion</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -3264,6 +3457,17 @@
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->summary_and_conclusion_hodsr }}
                                     </textarea>
                                 </div>
+                                @else
+                                <div class="group-input">
+                                    <label for="Summary and Conclusion">Summary And Conclusion</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea readonly class="summernote" name="summary_and_conclusion_hodsr" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->summary_and_conclusion_hodsr }}
+                                    </textarea>
+                                </div>
+                                @endif
+
                             </div>
 
 
@@ -6128,6 +6332,7 @@
 
                                 });
                             </script>
+                            @if ($data->stage == 2 || $data->stage == 4)
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Quality Assurance Review Required">Quality Assurance Review Required ?
@@ -6276,6 +6481,157 @@
                                     @enderror
                                 </div>
                             </div>
+                            @else
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Quality Assurance Review Required">Quality Assurance Review Required ?
+                                        <span class="text-danger"></span></label>
+                                    <select name="Quality_Assurance_Review" id="Quality_Assurance_Review"
+                                        @if ($data->stage == 4) disabled @endif>
+                                        <option value="">-- Select --</option>
+                                        <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif value="yes">
+                                            Yes</option>
+                                        <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif value="no">
+                                            No
+                                        </option>
+                                        <option @if ($data1->Quality_Assurance_Review == 'na') selected @endif value="na">
+                                            NA
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            @php
+                                $userRoles = DB::table('user_roles')
+                                    ->where(['q_m_s_roles_id' => 26, 'q_m_s_divisions_id' => $data->division_id])
+                                    ->get();
+                                $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                            @endphp
+                            <div class="col-lg-6 quality_assurance">
+                                <div class="group-input">
+                                    <label for="Quality Assurance Person">Quality Assurance Person <span
+                                            id="asteriskQQA"
+                                            style="display: {{ $data1->Quality_Assurance_Review == 'yes' ? 'inline' : 'none' }}"
+                                            class="text-danger">*</span></label>
+                                    <select name="QualityAssurance_person" class="QualityAssurance_person"
+                                        id="QualityAssurance_person"
+                                        @if ($data->stage == 4) disabled @endif>
+                                        <option value="">-- Select --</option>
+                                        @foreach ($users as $user)
+                                            <option {{ $data1->QualityAssurance_person == $user->name ? 'selected' : '' }}
+                                                value="{{ $user->name }}">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3 quality_assurance">
+                                <div class="group-input">
+                                    <label for="Impact Assessment3">Impact Assessment (By Quality Assurance) <span
+                                            id="asteriskQQA1"
+                                            style="display: {{ $data1->Quality_Assurance_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            class="text-danger">*</span></label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif class=" QualityAssurance_assessment"
+                                        name="QualityAssurance_assessment" @if ($data->stage == 3 || Auth::user()->name != $data1->QualityAssurance_person) readonly @endif id="summernote-23">{{ $data1->QualityAssurance_assessment }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3 quality_assurance">
+                                <div class="group-input">
+                                    <label for="Quality Assurance Feedback">Quality Assurance Feedback <span
+                                            id="asteriskQQA2"
+                                            style="display: {{ $data1->Quality_Assurance_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            class="text-danger">*</span></label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif class=" QualityAssurance_feedback"
+                                        name="QualityAssurance_feedback" @if ($data->stage == 3 || Auth::user()->name != $data1->QualityAssurance_person) readonly @endif id="summernote-24">{{ $data1->QualityAssurance_feedback }}</textarea>
+                                </div>
+                            </div>
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    var selectField = document.getElementById('Quality_Assurance_Review');
+                                    var inputsToToggle = [];
+
+                                    // Add elements with class 'facility-name' to inputsToToggle
+                                    var facilityNameInputs = document.getElementsByClassName('QualityAssurance_person');
+                                    for (var i = 0; i < facilityNameInputs.length; i++) {
+                                        inputsToToggle.push(facilityNameInputs[i]);
+                                    }
+
+                                    selectField.addEventListener('change', function() {
+                                        var isRequired = this.value === 'yes';
+
+                                        inputsToToggle.forEach(function(input) {
+                                            input.required = isRequired;
+                                        });
+
+                                        // Show or hide the asterisk icon based on the selected value
+                                        var asteriskIcon = document.getElementById('asteriskQQA');
+                                        asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+                                    });
+                                });
+                            </script>
+                            <div class="col-12 quality_assurance">
+                                <div class="group-input">
+                                    <label for="Quality Assurance Attachments">Quality Assurance Attachments</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div disabled class="file-attachment-list" id="Quality_Assurance_attachment">
+                                            @if ($data1->Quality_Assurance_attachment)
+                                                @foreach (json_decode($data1->Quality_Assurance_attachment) as $file)
+                                                    <h6 type="button" class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                                class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file"
+                                                            data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark"
+                                                                style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                type="file" id="myfile" name="Quality_Assurance_attachment[]"
+                                                oninput="addMultipleFiles(this, 'Quality_Assurance_attachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3 quality_assurance">
+                                <div class="group-input">
+                                    <label for="Quality Assurance Review Completed By">Quality Assurance Review
+                                        Completed By</label>
+                                    <input type="text" name="QualityAssurance_by" id="QualityAssurance_by"
+                                        value="{{ $data1->QualityAssurance_by }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-3 quality_assurance new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="Quality Assurance Review Completed On">Quality Assurance Review
+                                        Completed On</label>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="QualityAssurance_on" readonly
+                                            placeholder="DD-MMM-YYYY"
+                                            value="{{ Helpers::getdateFormat($data1->QualityAssurance_on) }}" />
+                                        <input type="date" name="QualityAssurance_on"
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                            class="hide-input" oninput="handleDateInput(this, 'QualityAssurance_on')" />
+                                    </div>
+                                    @error('QualityAssurance_on')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            @endif
+
 
 
                             <div class="sub-head">
@@ -9600,6 +9956,7 @@
                             Closure
                         </div>
                         <div class="row">
+                            @if ($data->stage==7)
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Closure Comment">Closure Comment <span class="text-danger">*</span>
@@ -9611,6 +9968,20 @@
                                     </textarea>
                                 </div>
                             </div>
+                            @else
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Closure Comment">Closure Comment <span class="text-danger"></span>
+                                    </label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                            require completion</small></div>
+                                    <textarea class="summernote" name="closure_comment_c" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->closure_comment_c }}
+                                    </textarea>
+                                </div>
+                            </div>
+                            @endif
+
 
                             {{-- <div class="col-12">
                             <div class="group-input">
@@ -9776,6 +10147,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 mb-3">
+                                @if ($data->stage == 5)
                                 <div class="group-input">
                                     <label for="Closure Comment">QA/CQA Comment <span
                                             class="text-danger">*</span></label>
@@ -9785,6 +10157,18 @@
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_cqa_comments }}
                                     </textarea>
                                 </div>
+                                @else
+                                <div class="group-input">
+                                    <label for="Closure Comment">QA/CQA Comment <span
+                                            class="text-danger"></span></label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                            require completion</small></div>
+                                    <textarea class="summernote" name="qa_cqa_comments" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_cqa_comments }}
+                                    </textarea>
+                                </div>
+                                @endif
+
                             </div>
 
                             {{-- <div class="col-12">

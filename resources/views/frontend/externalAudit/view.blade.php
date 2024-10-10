@@ -2550,8 +2550,8 @@
                                             </div>
                                             <div class="col-md-6 mb-3 productionTable">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet Completed By">Production Tablet Completed
-                                                        By</label>
+                                                    <label for="Production Tablet Completed By">Production Tablet/Capsule Powder Review Completed By
+                                                    </label>
                                                     <input readonly type="text"
                                                         value="{{ $data1->Production_Table_By }}"
                                                         name="Production_Table_By" id="Production_Table_By">
@@ -2561,8 +2561,8 @@
                                             </div>
                                             <div class="col-6 mb-3 productionTable new-date-data-field">
                                                 <div class="group-input input-date">
-                                                    <label for="Production Tablet Completed On">Production Tablet
-                                                        Completed On</label>
+                                                    <label for="Production Tablet Completed On">Production Tablet/Capsule Powder Review Completed By
+                                                    On</label>
                                                     <div class="calenderauditee">
                                                         <input type="text" id="Production_Table_On" readonly
                                                             placeholder="DD-MMM-YYYY"
@@ -2615,11 +2615,10 @@
                                                         id="Production_Injection_Review"
                                                         @if ($data->stage == 3) disabled @endif>
                                                         <option value="">-- Select --</option>
-                                                        <option @if ($data1->Production_Injection_Review == 'yes') selected @endif
-                                                            value='yes'>
-                                                            Yes</option>
-                                                        
-                                                        <option @if ($data1->Production_Injection_Review == 'no' || empty($data1->Production_Injection_Review)) selected @endif value='no'>No</option>    
+                                                        <option @if ($data1->Production_Injection_Review == 'yes' || empty($data1->Production_Injection_Review)) selected @endif value='yes'>Yes</option>  
+                                                            <option @if ($data1->Production_Injection_Review == 'no') selected @endif
+                                                            value='no'>
+                                                            No</option>      
                                                         <option @if ($data1->Production_Injection_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -2801,10 +2800,12 @@
                                                     <select name="Production_Injection_Review" disabled
                                                         id="Production_Injection_Review">
                                                         <option value="">-- Select --</option>
-                                                        <option @if ($data1->Production_Injection_Review == 'yes') selected @endif
-                                                            value='yes'>
-                                                            Yes</option>
-                                                            <option @if ($data1->Production_Injection_Review == 'no' || empty($data1->Production_Injection_Review)) selected @endif value='no'>No</option>
+                                                        
+                                                            <option @if ($data1->Production_Injection_Review == 'yes' || empty($data1->Production_Injection_Review)) selected @endif value='yes'>Yes</option>  
+                                                            <option @if ($data1->Production_Injection_Review == 'no') selected @endif
+                                                            value='no'>
+                                                            No</option>  
+                                                           
                                                         <option @if ($data1->Production_Injection_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -2871,8 +2872,8 @@
                                             @else
                                                 <div class="col-md-12 mb-3 productionInjection">
                                                     <div class="group-input">
-                                                        <label for="Production Injection assessment">Impact Assessment (By
-                                                            Production Injection)
+                                                        <label for="Production Injection assessment">Review Comment (By
+                                                        Production Injection)
                                                             <!-- <span
                                                                                                                                                                                                                             id="asteriskInvi12" style="display: none"
                                                                                                                                                                                                                             class="text-danger">*</span> -->
@@ -2939,8 +2940,7 @@
                                             </div>
                                             <div class="col-md-6 mb-3 productionInjection">
                                                 <div class="group-input">
-                                                    <label for="Production Injection Completed By">Production Injection
-                                                        Completed
+                                                    <label for="Production Injection Completed By">Production Injection Review Completed By
                                                         By</label>
                                                     <input readonly type="text"
                                                         value="{{ $data1->Production_Injection_By }}"
@@ -2951,8 +2951,7 @@
                                             </div>
                                             <div class="col-6 productionInjection new-date-data-field">
                                                 <div class="group-input input-date">
-                                                    <label for="Production Injection Completed On">Production Injection
-                                                        Completed On</label>
+                                                    <label for="Production Injection Completed On">Production Injection Review Completed  On</label>
                                                     <div class="calenderauditee">
                                                         <input type="text" id="Production_Injection_On" readonly
                                                             placeholder="DD-MMM-YYYY"
@@ -4037,8 +4036,7 @@
                                             @else
                                                 <div class="col-md-12 mb-3 CQA">
                                                     <div class="group-input">
-                                                        <label for="Corporate Quality Assurance assessment">Impact
-                                                            Assessment (By
+                                                        <label for="Corporate Quality Assurance assessment">Review Comment (By
                                                             Corporate
                                                             Quality Assurance)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
@@ -8413,7 +8411,7 @@
 
                                             <div class="col-md-12 mb-3">
                                                 <div class="group-input">
-                                                    <label for="Impact Assessment12">Impact Assessment (By Other's
+                                                    <label for="Impact Assessment12">Review Comment (By Other's
                                                         1)</label>
                                                     <textarea disabled class="tiny"
                                                         name="Other1_assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
@@ -8566,7 +8564,7 @@
 
                                             <div class="col-md-12 mb-3">
                                                 <div class="group-input">
-                                                    <label for="Impact Assessment13">Impact Assessment (By Other's
+                                                    <label for="Impact Assessment13">Review Comment(By Other's
                                                         2)</label>
                                                     <textarea disabled ="summernote"
                                                         name="Other2_Assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-43">{{ $data1->Other2_Assessment }}</textarea>

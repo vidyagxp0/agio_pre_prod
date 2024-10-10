@@ -269,6 +269,8 @@
                                     <td>
                                     @if ($process == 'Lab Incident')
                                     {{ $data->short_desc }}
+                                    @elseif($process == 'OOC')
+                                    {{ $data->description_ooc }}
                                     @else
                                     {{ $data->short_description }}
                                     @endif

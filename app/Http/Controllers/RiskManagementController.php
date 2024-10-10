@@ -4341,7 +4341,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Production_Table_Review != $request->Production_Table_Review && $request->Production_Table_Review != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule/Powder Required ?';
+            $history->activity_type = 'Production Tablet Required ?';
             $history->previous = $lastCft->Production_Table_Review;
             $history->current = $request->Production_Table_Review;
             $history->comment = "Not Applicable";
@@ -4678,7 +4678,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Production_Injection_Review != $request->Production_Injection_Review && $request->Production_Injection_Review != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Production Injection Review Required';
+            $history->activity_type = 'Production Injection Required';
             $history->previous = $lastCft->Production_Injection_Review;
             $history->current = $request->Production_Injection_Review;
             $history->comment = "Not Applicable";

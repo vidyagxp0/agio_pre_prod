@@ -8,6 +8,9 @@ use App\Models\extension_new;
 use App\Models\QMSDivision;
 use App\Models\QMSProcess;
 use App\Models\User;
+use App\Models\PrintControl;
+use App\Models\UserRole;
+use App\Models\Employee;
 use App\Models\Deviation;
 use App\Models\LabIncident;
 use App\Models\OOS_micro;
@@ -988,30 +991,30 @@ class Helpers
 
     }
 
-    public static function getChemicalGridData(OOS $data , $identifier, $getKey = false, $keyName = null, $byIndex = false, $index = 0)
+    public static function getChemicalGridData(OOS $data, $identifier, $getKey = false, $keyName = null, $byIndex = false, $index = 0)
     {
         $res = $getKey ? '' : [];
-            try {
-                $grid = $data->grids()->where('identifier', $identifier)->first();
 
-                if($grid && is_array($grid->data)){
+        try {
+            $grid = $data->grids()->where('identifier', $identifier)->first();
 
-                    $res = $grid->data;
+            if ($grid && is_array($grid->data)) {
+                $res = $grid->data;
 
-                    if ($getKey && !$byIndex) {
-                        $res = array_key_exists($keyName, $grid->data) ? $grid->data[$keyName] : '';
-                    }
-
-                    if ($getKey && $byIndex && is_array($grid->data[$index])) {
-                        $res = array_key_exists($keyName, $grid->data[$index]) ? $grid->data[$index][$keyName] : '';
-                    }
+                if ($getKey && !$byIndex) {
+                    $res = array_key_exists($keyName, $grid->data) ? $grid->data[$keyName] : '';
                 }
 
-            } catch(\Exception $e){
-
+                if ($getKey && $byIndex && isset($grid->data[$index]) && is_array($grid->data[$index])) {
+                    $res = array_key_exists($keyName, $grid->data[$index]) ? $grid->data[$index][$keyName] : '';
+                }
             }
-        return $res;
+        } catch (\Exception $e) {
+            
+        }
+        return is_array($res) ? '' : $res;
     }
+
     public function getChecklistData(){
         $checklists = [
             '1' => 'Checklist - Tablet Dispensing & Granulation',
@@ -1432,7 +1435,22 @@ class Helpers
                 break;
         }
         return $count;
-    }
+    }    public static function checkControlAccess()
+{
+    // Retrieve the user's roles
+    $userRoles = UserRole::where('user_id', Auth::user()->id)->pluck('role_id')->toArray();
+
+    // Check if any of the user roles exist in the PrintControl table
+    $controls = PrintControl::whereIn('role_id', $userRoles)->exists();
+
+    // Return true if controls exist, false otherwise
+    return $controls;
+}
+
+public static function getEmpNameByCode($code){
+    return   Employee::where('full_employee_id',$code)->value('employee_name');
+}
+
     
 
 }

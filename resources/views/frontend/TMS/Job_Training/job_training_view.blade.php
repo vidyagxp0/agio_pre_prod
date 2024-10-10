@@ -116,9 +116,9 @@
                             Approval Complete
                             </button>
                         @elseif($jobTraining->stage == 3)
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             Answer Submit
-                            </button>
+                            </button> -->
                         @elseif($jobTraining->stage == 4)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             Evaluation Complete
@@ -195,7 +195,7 @@
                                 <div class="">Verification and Approval</div>
                             @endif
 
-                            @if ($jobTraining->stage >= 9)
+                            @if ($jobTraining->stage >= 7)
                                 <div class="bg-danger">Closed - Done</div>
                             @else
                                 <div class="">Closed - Done</div>
@@ -233,7 +233,7 @@
 
         <script>
             $(document).ready(function() {
-                <?php if (in_array($jobTraining->stage, [9])) : ?>
+                <?php if (in_array($jobTraining->stage, [7])) : ?>
                 $("#target :input").prop("disabled", true);
                 <?php endif; ?>
             });
@@ -569,7 +569,7 @@
            value="{{ old('enddate_1', $jobTraining->enddate_1 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
 </td>
 <td>
-    <a href="{{ $jobTraining->reference_document_no_1 ? '/documents/viewpdf/' . $jobTraining->reference_document_no_1 : '#' }}" 
+    <a href="{{ $jobTraining->reference_document_no_1 ? '/documents/view/' . $jobTraining->reference_document_no_1 : '#' }}" 
        id="view_sop" target="_blank" 
        style="display: {{ $jobTraining->reference_document_no_1 ? 'inline' : 'none' }};">
         View SOP
@@ -624,7 +624,7 @@
            value="{{ old('enddate_2', $jobTraining->enddate_2 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
 </td>
 <td>
-    <a href="{{ $jobTraining->reference_document_no_2 ? '/documents/viewpdf/' . $jobTraining->reference_document_no_2 : '#' }}" 
+    <a href="{{ $jobTraining->reference_document_no_2 ? '/documents/view/' . $jobTraining->reference_document_no_2 : '#' }}" 
        id="view_sop" target="_blank" 
        style="display: {{ $jobTraining->reference_document_no_2 ? 'inline' : 'none' }};">
         View SOP
@@ -666,7 +666,7 @@
 <td><input type="date" name="startdate_3" id="startdate_3" value="{{ old('startdate_3', $jobTraining->startdate_3 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
 <td><input type="date" name="enddate_3" id="enddate_3" value="{{ old('enddate_3', $jobTraining->enddate_3 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
 <td>
-    <a href="{{ $jobTraining->reference_document_no_3 ? '/documents/viewpdf/' . $jobTraining->reference_document_no_3 : '#' }}" 
+    <a href="{{ $jobTraining->reference_document_no_3 ? '/documents/view/' . $jobTraining->reference_document_no_3 : '#' }}" 
        id="view_sop3" target="_blank" 
        style="display: {{ $jobTraining->reference_document_no_3 ? 'inline' : 'none' }};">
         View SOP
@@ -708,7 +708,7 @@
 <td><input type="date" name="startdate_4" id="startdate_4" value="{{ old('startdate_4', $jobTraining->startdate_4 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
 <td><input type="date" name="enddate_4" id="enddate_4" value="{{ old('enddate_4', $jobTraining->enddate_4 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
 <td>
-    <a href="{{ $jobTraining->reference_document_no_4 ? '/documents/viewpdf/' . $jobTraining->reference_document_no_4 : '#' }}" 
+    <a href="{{ $jobTraining->reference_document_no_4 ? '/documents/view/' . $jobTraining->reference_document_no_4 : '#' }}" 
        id="view_sop4" target="_blank" 
        style="display: {{ $jobTraining->reference_document_no_4 ? 'inline' : 'none' }};">
         View SOP
@@ -750,7 +750,7 @@
 <td><input type="date" name="startdate_5" id="startdate_5" value="{{ old('startdate_5', $jobTraining->startdate_5 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
 <td><input type="date" name="enddate_5" id="enddate_5" value="{{ old('enddate_5', $jobTraining->enddate_5 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
 <td>
-    <a href="{{ $jobTraining->reference_document_no_5 ? '/documents/viewpdf/' . $jobTraining->reference_document_no_5 : '#' }}" 
+    <a href="{{ $jobTraining->reference_document_no_5 ? '/documents/view/' . $jobTraining->reference_document_no_5 : '#' }}" 
        id="view_sop5" target="_blank" 
        style="display: {{ $jobTraining->reference_document_no_5 ? 'inline' : 'none' }};">
         View SOP
@@ -879,7 +879,7 @@
 
     var sopAnchor = document.getElementById('view_sop');
     if (documentId) {
-        sopAnchor.href = '/documents/viewpdf/' + documentId;
+        sopAnchor.href = '/documents/view/' + documentId;
         sopAnchor.style.display = 'inline';
     } else {
         sopAnchor.style.display = 'none';
@@ -922,7 +922,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Update the "View SOP" link
     var sopAnchor = document.getElementById('view_sop2'); // Corrected to view_sop2
     if (documentId) {
-        sopAnchor.href = '/documents/viewpdf/' + documentId;
+        sopAnchor.href = '/documents/view/' + documentId;
         sopAnchor.style.display = 'inline';
     } else {
         sopAnchor.style.display = 'none';
@@ -964,7 +964,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var sopAnchor = document.getElementById('view_sop3');
     if (documentId) {
-        sopAnchor.href = '/documents/viewpdf/' + documentId;
+        sopAnchor.href = '/documents/view/' + documentId;
         sopAnchor.style.display = 'inline';
     } else {
         sopAnchor.style.display = 'none';
@@ -1000,7 +1000,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var sopAnchor = document.getElementById('view_sop4');
     if (documentId) {
-        sopAnchor.href = '/documents/viewpdf/' + documentId;
+        sopAnchor.href = '/documents/view/' + documentId;
         sopAnchor.style.display = 'inline';
     } else {
         sopAnchor.style.display = 'none';
@@ -1036,7 +1036,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var sopAnchor = document.getElementById('view_sop5');
     if (documentId) {
-        sopAnchor.href = '/documents/viewpdf/' + documentId;
+        sopAnchor.href = '/documents/view/' + documentId;
         sopAnchor.style.display = 'inline';
     } else {
         sopAnchor.style.display = 'none';
@@ -1659,18 +1659,24 @@ if (marks >= percentageRequired) {
                                 </div>
 
                                 <div class="certificate-container">
-                                <h1 class="certificate-title">TRAINER CERTIFICATE</h1>
+                                <h1 class="certificate-title">JOB TRAINING CERTIFICATE</h1>
+                                </br>
                                 <p class="certificate-content">
-                                    This is to certify that Mr. / Ms. / Mrs. <strong>{{($jobTraining->name) }}</strong> has appropriate Qualification / skill / thorough knowledge/ and experience in the <strong>{{ Helpers::getFullDepartmentName($jobTraining->department ) }}</strong> section/Department for more than <strong>{{$jobTraining->experience_if_any}}</strong> years, and hence is declared as the trainer of <strong>{{ Helpers::getFullDepartmentName($jobTraining->department ) }}</strong> Department.
+                                This is to certify that Mr. / Ms. / Mrs  <strong> {{ $jobTraining->name}}
+                                    
+                                </strong> has undergone On The Job Training</br>including the requirement of cGMP and has shown a good attitude and thorough</br>understanding in thè subject.</br></br>
+                                </p> 
+                                <p class="certificate-content">
+                                Therefore we certify that Mr. Ms. / Mrs. <strong>{{ $jobTraining->name}}</strong>is capable of performing his /her </br>assigned duties in the <strong>{{$jobTraining->department}}</strong> Department </br>indeperndently. 
                                 </p>
                                 <div class="signature-section">
                                     <div class="signature">
                                         <div class="signature-line"></div>
-                                        Sign / Date: _______________ <br>Head of Department 
+                                        Sign / Date: <strong>{{ $jobTraining->evaluation_complete_by }} / {{ \Carbon\Carbon::parse($jobTraining->evaluation_complete_on)->format('d-M-Y') }}</strong> <br>Head of Department 
                                     </div>
                                     <div class="signature">
                                         <div class="signature-line"></div>
-                                        Sign / Date: _______________ <br>  Head QA/CQA
+                                        Sign / Date: <strong>{{ $jobTraining->approval_complete_by }}/{{ \Carbon\Carbon::parse($jobTraining->approval_complete_on)->format('d-M-Y') }}</strong> <br>  Head QA/CQA
                                     </div>
                                 </div>
                             </div>
@@ -1682,6 +1688,8 @@ if (marks >= percentageRequired) {
                             </div>
                         </div>
                     </div>
+                    </div>
+
                 @endif
                 <style>
 
@@ -1701,12 +1709,8 @@ if (marks >= percentageRequired) {
             text-align: center;
         }
         .certificate-title {
-            /* font-size: 30px;
-            font-weight: bold;
-            color: #677078;
-            display: flex;
-            justify-content: center; */
-            font-size: 36px;
+ 
+            font-size: 32px;
             font-weight: bold;
             margin-bottom: 20px;
         }
@@ -1878,6 +1882,8 @@ if (marks >= percentageRequired) {
                         </div>
                     </div>
                 </div>
+                </div>
+
 
                 <div id="CCForm9" class="inner-block cctabcontent">
                     <div class="inner-block-content">
@@ -2054,6 +2060,8 @@ if (marks >= percentageRequired) {
 
     </div>
     </div>
+
+
 
     <style>
         #step-form>div {
