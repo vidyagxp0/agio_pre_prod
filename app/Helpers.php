@@ -8,6 +8,9 @@ use App\Models\extension_new;
 use App\Models\QMSDivision;
 use App\Models\QMSProcess;
 use App\Models\User;
+use App\Models\PrintControl;
+use App\Models\UserRole;
+use App\Models\Employee;
 use App\Models\Deviation;
 use App\Models\LabIncident;
 use App\Models\OOS_micro;
@@ -1421,6 +1424,21 @@ class Helpers
 
 
 
+    public static function checkControlAccess()
+{
+    // Retrieve the user's roles
+    $userRoles = UserRole::where('user_id', Auth::user()->id)->pluck('role_id')->toArray();
+
+    // Check if any of the user roles exist in the PrintControl table
+    $controls = PrintControl::whereIn('role_id', $userRoles)->exists();
+
+    // Return true if controls exist, false otherwise
+    return $controls;
+}
+
+public static function getEmpNameByCode($code){
+    return   Employee::where('full_employee_id',$code)->value('employee_name');
+}
 
 
 

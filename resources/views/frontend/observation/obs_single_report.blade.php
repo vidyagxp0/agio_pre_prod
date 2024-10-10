@@ -270,7 +270,7 @@
                 </tr>
                 <tr>
 
-                    <th class="w-20">Observation Due Date</th>
+                    <th class="w-20">Observation Report Due Date</th>
                     <td class="w-80">
                         @if ($data->due_date)
                             {{ Helpers::getdateFormat($data->due_date) }} 
@@ -538,7 +538,9 @@
            </div>
 
         </div>
-       
+        <div class="block-head">
+            Summary
+         </div>
             <div class="block-head">
                 Action Summary
             </div>
@@ -573,7 +575,7 @@
                         Not Applicable
                     @endif
                 </div>
-
+ 
             <div class="block-head">
                 Response Summary
             </div>
