@@ -163,6 +163,18 @@
         .page-break {
             page-break-before: always;
         }
+
+        .head-number {
+            font-weight: bold;
+            font-size: 13px;
+            padding-left: 10px;
+        }
+
+        .div-data {
+            font-size: 13px;
+            padding-left: 10px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 
@@ -207,7 +219,7 @@
                     <tr> {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Record Number</th>
                         <td class="w-30">
-                            {{ Helpers::getDivisionName($data->division_id) }}/RA/{{ date('Y') }}/{{ $data->record }}
+                            {{ Helpers::getDivisionName($data->division_id) }}/RA/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                         </td>
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">
@@ -254,19 +266,18 @@
                         <td class="w-80"> @if ($data->due_date) {{ \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') }} @else Not Applicable @endif</td>
                     </tr> --}}
 
+                </table>
 
-                    <tr>
-                        {{-- <th class="w-20">Department(s)</th> --}}
-                        {{-- <td class="w-80">@if ($data->departments){{ ($data->departments) }}@else Not Applicable @endif</td> --}}
-                        <th class="w-20">Short Description</th>
-                        <td class="w-30">
-                            @if ($data->short_description)
-                                {{ $data->short_description }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
+                <label class="head-number" for="Short Description">Short Description</label>
+                <div class="div-data">
+                    @if ($data->short_description)
+                        {{ $data->short_description }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
+
+                <table>
                     <tr>
                         <th class="w-20">Source Of Risk/Opportunity</th>
                         <td class="w-80">
@@ -323,77 +334,52 @@
 
                     </tr>
                 </table>
-            </div>
 
+                <label class="head-number" for="Purpose">Purpose</label>
+                <div class="div-data">
+                    @if ($data->purpose)
+                        {{ $data->purpose }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
 
-            <div class="border">
-                <table>
+                <label class="head-number" for="Scope">Scope</label>
+                <div class="div-data">
+                    @if ($data->scope)
+                        {{ $data->scope }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
 
-                    {{-- <tr>
-                        <th class="w-20">Risk/Opportunity Description</th>
-                        <td class="w-80">@if ($data->description){{ $data->description }}@else Not Applicable @endif</td>
+                <label class="head-number" for="Reason for Revision">Reason for Revision</label>
+                <div class="div-data">
+                    @if ($data->reason_for_revision)
+                        {{ $data->reason_for_revision }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
 
-                    </tr> --}}
-                    <tr>
-                        <th class="w-20">Purpose</th>
-                        <td class="w-80">
-                            @if ($data->purpose)
-                                {{ $data->purpose }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
+                <label class="head-number" for="Brief Description / Procedure">Brief Description / Procedure</label>
+                <div class="div-data">
+                    @if ($data->Brief_description)
+                        {{ $data->Brief_description }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
 
-
-                    <tr>
-                        <th class="w-20">Scope</th>
-                        <td class="w-80">
-                            @if ($data->scope)
-                                {{ $data->scope }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th class="w-20">Reason for Revision</th>
-                        <td class="w-80">
-                            @if ($data->reason_for_revision)
-                                {{ $data->reason_for_revision }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Brief Description / Procedure</th>
-                        <td class="w-80">
-                            @if ($data->Brief_description)
-                                {{ $data->Brief_description }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Documents Used For Risk Management</th>
-                        <td class="w-80">
-                            @if ($data->document_used_risk)
-                                {{ $data->document_used_risk }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-
-                    {{-- <tr>
-                        <th class="w-20">Risk/Opportunity Comments</th>
-                        <td class="w-80">@if ($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
-
-                    </tr> --}}
-                </table>
+                <label class="head-number" for="Documents Used For Risk Management">Documents Used For Risk
+                    Management</label>
+                <div class="div-data">
+                    @if ($data->document_used_risk)
+                        {{ $data->document_used_risk }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
             </div>
 
             <div class="border-table">
@@ -608,7 +594,25 @@
             <div class="block">
                 <div class="block-head">Risk Assesment</div>
 
-                <table>
+                <label class="head-number" for="Root Cause Methodology">Root Cause Methodology</label>
+                <div class="div-data">
+                    @if ($data->root_cause_methodology)
+                        {{ str_replace(',', ', ', $data->root_cause_methodology) }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
+
+                <label class="head-number" for="Other (Root Cause Methodology)">Other (Root Cause Methodology)</label>
+                <div class="div-data">
+                    @if ($data->root_cause_methodology)
+                        {{ $data->root_cause_methodology }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
+
+                {{-- <table>
                     <tr>
                         <th class="w-20">Root Cause Methodology</th>
                         <td class="w-30">
@@ -631,7 +635,7 @@
 
                         </td>
                     </tr>
-                </table>
+                </table> --}}
 
                 <div class="block-head"> Failure Mode And Effect Analysis </div>
 
@@ -1244,12 +1248,17 @@
                         <th class="w-20">CFT Reviewer Selection</th>
                         <td class="w-80">{!! Helpers::getInitiatorName($data->reviewer_person_value) ?? 'Not Applicable' !!}</td>
                     </tr>
-                    <tr>
-                        <th class="w-20">HOD/Designee Review Comment</th>
-                        <td class="w-80">{!! $data->hod_des_rev_comm ?? 'Not Applicable' !!}</td>
-                        <!-- Add more rows for the remaining fields in the same format -->
-                    </tr>
+
                 </table>
+
+                <label class="head-number" for="HOD/Designee Review Comment">HOD/Designee Review Comment</label>
+                <div class="div-data">
+                    @if ($data->hod_des_rev_comm)
+                        {{ $data->hod_des_rev_comm }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
                 <div class="border-table">
                     <div class="block-head">
                         Hod/Designee Attachment
@@ -1286,16 +1295,17 @@
                 <table>
                     <tr>
                         <th class="w-20">Production Tablet/Capsule/Powder Review Required?</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Production_Table_Review)
                                 {{ $data1->Production_Table_Review }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
+
                         {{-- <td class="w-30"> <div> @if ($data1->Production_Review)  {{ $data1->Production_Review }} @else Not Applicable  @endif </div>  </td> --}}
                         <th class="w-20">Production Tablet/Capsule/Powder Person</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Production_Table_Person)
                                 {{ $data1->Production_Table_Person }}
                             @else
@@ -1305,15 +1315,18 @@
                     </tr>
                     <tr>
                         <th class="w-20">Impact Assesment(By Production Tablet/Capsule/Powder)</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Production_Table_Assessment)
                                 {{ strip_tags($data1->Production_Table_Assessment) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
+                    </tr>
+
+                    <tr>
                         <th class="w-20">Production Tablet/Capsule/Powder Feedback</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Production_Table_Feedback)
                                 {{ strip_tags($data1->Production_Table_Feedback) }}
                             @else
@@ -1324,15 +1337,16 @@
 
                     <tr>
                         <th class="w-20">Production Tablet/Capsule/Powder Review Completed By</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Production_Table_By)
                                 {{ $data1->Production_Table_By }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
+
                         <th class="w-20">Production Tablet/Capsule/Powder Review Completed On</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Production_Table_On)
                                 {{ $data1->Production_Table_On }}
                             @else
@@ -1373,7 +1387,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Production Injection Review Required </th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Production_Injection_Review)
                                 {{ $data1->Production_Injection_Review }}
                             @else
@@ -1382,7 +1396,7 @@
                         </td>
                         {{-- <td class="w-30"> <div> @if ($data1->Production_Review)  {{ $data1->Production_Review }} @else Not Applicable  @endif </div>  </td> --}}
                         <th class="w-20">Production Injection Person</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Production_Injection_Person)
                                 {{ $data1->Production_Injection_Person }}
                             @else
@@ -1416,7 +1430,7 @@
 
                     <tr>
                         <th class="w-20">Production Injection Completed by</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Production_Injection_By)
                                 {{ $data1->Production_Injection_By }}
                             @else
@@ -1424,7 +1438,7 @@
                             @endif
                         </td>
                         <th class="w-20">Production Injection Completed on</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Production_Injection_On)
                                 {{ $data1->Production_Injection_On }}
                             @else
@@ -1466,7 +1480,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Research Development Required? </th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->ResearchDevelopment_Review)
                                 {{ $data1->ResearchDevelopment_Review }}
                             @else
@@ -1474,7 +1488,7 @@
                             @endif
                         </td>
                         <th class="w-20">Reasearch & Developmemt Person</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Human_Resource_person)
                                 {{ $data1->Production_Injection_Person }}
                             @else
@@ -1508,7 +1522,7 @@
 
                     <tr>
                         <th class="w-20">Reasearch & Development Completed By</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->ResearchDevelopment_by)
                                 {{ $data1->ResearchDevelopment_by }}
                             @else
@@ -1516,7 +1530,7 @@
                             @endif
                         </td>
                         <th class="w-20">Reasearch & Development Completed On</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->ResearchDevelopment_on)
                                 {{ $data1->ResearchDevelopment_on }}
                             @else
@@ -1557,15 +1571,15 @@
                 <table>
                     <tr>
                         <th class="w-20">Human Resource Required?</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Human_Resource_review)
                                 {{ $data1->Human_Resource_review }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Humane Resource Person</th>
-                        <td class="w-30">
+                        <th class="w-20">Human Resource Person</th>
+                        <td class="w-80">
                             @if ($data1->Human_Resource_person)
                                 {{ $data1->Production_Injection_Person }}
                             @else
@@ -1575,7 +1589,7 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">Impact Assessment (By Humane Resource)</th>
+                        <th class="w-20">Impact Assessment (By Human Resource)</th>
                         <td class="w-80">
                             @if ($data1->Human_Resource_assessment)
                                 {{ strip_tags($data1->Human_Resource_assessment) }}
@@ -1586,7 +1600,7 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">Humane Resource Feedback</th>
+                        <th class="w-20">Human Resource Feedback</th>
                         <td class="w-80">
                             @if ($data1->Human_Resource_feedback)
                                 {{ strip_tags($data1->Human_Resource_feedback) }}
@@ -1598,16 +1612,16 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">Humane Resource Completed By</th>
-                        <td class="w-30">
+                        <th class="w-20">Human Resource Completed By</th>
+                        <td class="w-80">
                             @if ($data1->Human_Resource_by)
                                 {{ $data1->Human_Resource_by }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Humane Resource Completed On</th>
-                        <td class="w-30">
+                        <th class="w-20">Human Resource Completed On</th>
+                        <td class="w-80">
                             @if ($data1->Human_Resource_on)
                                 {{ $data1->Human_Resource_on }}
                             @else
@@ -1648,7 +1662,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Corporate Quality Assurance Required?</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->CorporateQualityAssurance_Review)
                                 {{ $data1->CorporateQualityAssurance_Review }}
                             @else
@@ -1656,7 +1670,7 @@
                             @endif
                         </td>
                         <th class="w-20">Corporate Quality Assurance Person</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->CorporateQualityAssurance_person)
                                 {{ $data1->CorporateQualityAssurance_person }}
                             @else
@@ -1690,7 +1704,7 @@
 
                     <tr>
                         <th class="w-20">Corporate Quality Assurance Completed By</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->CorporateQualityAssurance_by)
                                 {{ $data1->CorporateQualityAssurance_by }}
                             @else
@@ -1698,7 +1712,7 @@
                             @endif
                         </td>
                         <th class="w-20">Corporate Quality Assurance Completed On</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->CorporateQualityAssurance_on)
                                 {{ $data1->CorporateQualityAssurance_on }}
                             @else
@@ -1739,7 +1753,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Store Required?</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Store_Review)
                                 {{ $data1->Store_Review }}
                             @else
@@ -1747,7 +1761,7 @@
                             @endif
                         </td>
                         <th class="w-20">Store Person</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Store_person)
                                 {{ $data1->Store_person }}
                             @else
@@ -1781,7 +1795,7 @@
 
                     <tr>
                         <th class="w-20">Store Completed By</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Store_by)
                                 {{ $data1->Store_by }}
                             @else
@@ -1789,7 +1803,7 @@
                             @endif
                         </td>
                         <th class="w-20">Store Completed On</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Store_on)
                                 {{ $data1->Store_on }}
                             @else
@@ -1830,7 +1844,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Engineering Required?</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Engineering_review)
                                 {{ $data1->Engineering_review }}
                             @else
@@ -1838,7 +1852,7 @@
                             @endif
                         </td>
                         <th class="w-20">Engineering Person</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Engineering_person)
                                 {{ $data1->Engineering_person }}
                             @else
@@ -1871,7 +1885,7 @@
 
                     <tr>
                         <th class="w-20">Engineering Completed By</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Engineering_by)
                                 {{ $data1->Engineering_by }}
                             @else
@@ -1879,7 +1893,7 @@
                             @endif
                         </td>
                         <th class="w-20">Engineering Completed On</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Store_on)
                                 {{ $data1->Store_on }}
                             @else
@@ -1920,7 +1934,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Regulatory affair Required?</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->RegulatoryAffair_Review)
                                 {{ $data1->RegulatoryAffair_Review }}
                             @else
@@ -1928,7 +1942,7 @@
                             @endif
                         </td>
                         <th class="w-20">Regularory Affair Person</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->RegulatoryAffair_person)
                                 {{ $data1->RegulatoryAffair_person }}
                             @else
@@ -1938,7 +1952,7 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">Impact Assessment(Regulatory Affair)</th>
+                        <th class="w-20">Impact Assessment (Regulatory Affair)</th>
                         <td class="w-80">
                             @if ($data1->RegulatoryAffair_assessment)
                                 {{ strip_tags($data1->RegulatoryAffair_assessment) }}
@@ -1962,7 +1976,7 @@
 
                     <tr>
                         <th class="w-20">Regulatory Affair Completed By</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->RegulatoryAffair_by)
                                 {{ $data1->RegulatoryAffair_by }}
                             @else
@@ -1970,7 +1984,7 @@
                             @endif
                         </td>
                         <th class="w-20">Regulatory Affair Completed On</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->RegulatoryAffair_on)
                                 {{ $data1->RegulatoryAffair_on }}
                             @else
@@ -2011,7 +2025,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Quality Assurance Review Required?</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Quality_Assurance_Review)
                                 {{ $data1->Quality_Assurance_Review }}
                             @else
@@ -2019,7 +2033,7 @@
                             @endif
                         </td>
                         <th class="w-20">Quality Assurance Person</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->QualityAssurance_person)
                                 {{ $data1->QualityAssurance_person }}
                             @else
@@ -2053,7 +2067,7 @@
 
                     <tr>
                         <th class="w-20">Quality Assurance Review Completed By</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->QualityAssurance_by)
                                 {{ $data1->QualityAssurance_by }}
                             @else
@@ -2061,7 +2075,7 @@
                             @endif
                         </td>
                         <th class="w-20">Quality Assurance Review Completed On</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->QualityAssurance_on)
                                 {{ $data1->QualityAssurance_on }}
                             @else
@@ -2102,7 +2116,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Production Liquid/Externa Preparation Required?</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->ProductionLiquid_Review)
                                 {{ $data1->ProductionLiquid_Review }}
                             @else
@@ -2110,7 +2124,7 @@
                             @endif
                         </td>
                         <th class="w-20">Production Liquid Person</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->ProductionLiquid_person)
                                 {{ $data1->ProductionLiquid_person }}
                             @else
@@ -2144,7 +2158,7 @@
 
                     <tr>
                         <th class="w-20">Production Liquid/Externa Preparation Completed By</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->ProductionLiquid_by)
                                 {{ $data1->ProductionLiquid_by }}
                             @else
@@ -2152,7 +2166,7 @@
                             @endif
                         </td>
                         <th class="w-20">Production Liquid/Externa Preparation Completed On</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->ProductionLiquid_on)
                                 {{ $data1->ProductionLiquid_on }}
                             @else
@@ -2193,7 +2207,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Quality Control Required?</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Quality_review)
                                 {{ $data1->Quality_review }}
                             @else
@@ -2201,7 +2215,7 @@
                             @endif
                         </td>
                         <th class="w-20">Quality Control Person</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Quality_Control_Person)
                                 {{ $data1->Quality_Control_Person }}
                             @else
@@ -2235,7 +2249,7 @@
 
                     <tr>
                         <th class="w-20">Quality Control Completed By</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Quality_Control_by)
                                 {{ $data1->Quality_Control_by }}
                             @else
@@ -2243,7 +2257,7 @@
                             @endif
                         </td>
                         <th class="w-20">Quality Control Completed On</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Quality_Control_on)
                                 {{ $data1->Quality_Control_on }}
                             @else
@@ -2285,7 +2299,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Microbiology Required?</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Microbiology_Review)
                                 {{ $data1->Microbiology_Review }}
                             @else
@@ -2293,7 +2307,7 @@
                             @endif
                         </td>
                         <th class="w-20">Microbiology Person</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Microbiology_person)
                                 {{ $data1->Microbiology_person }}
                             @else
@@ -2327,7 +2341,7 @@
 
                     <tr>
                         <th class="w-20">Microbiology Completed By</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Microbiology_by)
                                 {{ $data1->Microbiology_by }}
                             @else
@@ -2335,7 +2349,7 @@
                             @endif
                         </td>
                         <th class="w-20">Microbiology Completed On</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Microbiology_on)
                                 {{ $data1->Microbiology_on }}
                             @else
@@ -2376,7 +2390,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Safety Required?</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Environment_Health_review)
                                 {{ $data1->Environment_Health_review }}
                             @else
@@ -2384,7 +2398,7 @@
                             @endif
                         </td>
                         <th class="w-20">Sefety Person</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Environment_Health_Safety_person)
                                 {{ $data1->Environment_Health_Safety_person }}
                             @else
@@ -2418,7 +2432,7 @@
 
                     <tr>
                         <th class="w-20">Saftey Completed By</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Environment_Health_Safety_by)
                                 {{ $data1->Environment_Health_Safety_by }}
                             @else
@@ -2426,7 +2440,7 @@
                             @endif
                         </td>
                         <th class="w-20">Saftey Completed On</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Environment_Health_Safety_on)
                                 {{ $data1->Environment_Health_Safety_on }}
                             @else
@@ -2468,7 +2482,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Other's 1 Review Required?</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Other1_review)
                                 {{ $data1->Other1_review }}
                             @else
@@ -2476,7 +2490,7 @@
                             @endif
                         </td>
                         <th class="w-20">Other's 1 Person </th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Other1_person)
                                 {{ $data1->Other1_person }}
                             @else
@@ -2521,7 +2535,7 @@
 
                     <tr>
                         <th class="w-20">Other's 1 Review Completed By</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Other1_by)
                                 {{ $data1->Other1_by }}
                             @else
@@ -2529,7 +2543,7 @@
                             @endif
                         </td>
                         <th class="w-20">Others 1 Completed On</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Other1_on)
                                 {{ $data1->Other1_on }}
                             @else
@@ -2571,7 +2585,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Other's 2 Review Required?</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Other2_review)
                                 {{ $data1->Other2_review }}
                             @else
@@ -2579,7 +2593,7 @@
                             @endif
                         </td>
                         <th class="w-20">Other's 2 Person </th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Other2_person)
                                 {{ $data1->Other2_person }}
                             @else
@@ -2624,7 +2638,7 @@
 
                     <tr>
                         <th class="w-20">Other's 2 Review Completed By</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Other2_by)
                                 {{ $data1->Other2_by }}
                             @else
@@ -2632,7 +2646,7 @@
                             @endif
                         </td>
                         <th class="w-20">Others 2 Completed On</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Other2_on)
                                 {{ $data1->Other2_on }}
                             @else
@@ -2674,7 +2688,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Other's 3 Review Required?</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Other3_review)
                                 {{ $data1->Other3_review }}
                             @else
@@ -2682,7 +2696,7 @@
                             @endif
                         </td>
                         <th class="w-20">Other's 3 Person </th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Other3_person)
                                 {{ $data1->Other3_person }}
                             @else
@@ -2727,7 +2741,7 @@
 
                     <tr>
                         <th class="w-20">Other's 3 Review Completed By</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Other3_by)
                                 {{ $data1->Other3_by }}
                             @else
@@ -2735,7 +2749,7 @@
                             @endif
                         </td>
                         <th class="w-20">Others 3 Completed On</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Other3_on)
                                 {{ $data1->Other3_on }}
                             @else
@@ -2777,7 +2791,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Other's 4 Review Required?</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Other4_review)
                                 {{ $data1->Other4_review }}
                             @else
@@ -2785,7 +2799,7 @@
                             @endif
                         </td>
                         <th class="w-20">Other's 4 Person </th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Other4_person)
                                 {{ $data1->Other4_person }}
                             @else
@@ -2830,7 +2844,7 @@
 
                     <tr>
                         <th class="w-20">Other's 4 Review Completed By</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Other4_by)
                                 {{ $data1->Other4_by }}
                             @else
@@ -2838,7 +2852,7 @@
                             @endif
                         </td>
                         <th class="w-20">Others 4 Completed On</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Other4_on)
                                 {{ $data1->Other4_on }}
                             @else
@@ -2880,7 +2894,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Other's 5 Review Required?</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Other5_review)
                                 {{ $data1->Other5_review }}
                             @else
@@ -2888,7 +2902,7 @@
                             @endif
                         </td>
                         <th class="w-20">Other's 5 Person </th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Other5_person)
                                 {{ $data1->Other5_person }}
                             @else
@@ -2933,7 +2947,7 @@
 
                     <tr>
                         <th class="w-20">Other's 5 Review Completed By</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Other5_by)
                                 {{ $data1->Other5_by }}
                             @else
@@ -2941,7 +2955,7 @@
                             @endif
                         </td>
                         <th class="w-20">Others 5 Completed On</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data1->Other5_on)
                                 {{ $data1->Other5_on }}
                             @else
@@ -3041,13 +3055,16 @@
 
             <div class="block">
                 <div class="block-head">QA/CQA Review</div>
-                <table>
-                    <tr>
-                        <th class="w-20">QA/CQA Review Comment</th>
-                        <td class="w-80">{!! $data->qa_cqa_comments ?? 'Not Applicable' !!}</td>
-                        <!-- Add more rows for the remaining fields in the same format -->
-                    </tr>
-                </table>
+
+                <label class="head-number" for="QA/CQA Review Comment">QA/CQA Review Comment</label>
+                <div class="div-data">
+                    @if ($data->qa_cqa_comments)
+                        {{ $data->qa_cqa_comments }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
+
                 <div class="border-table">
                     <div class="block-head">
                         QA/CQA Review Attachment
@@ -3077,13 +3094,15 @@
 
             <div class="block">
                 <div class="block-head">QA/CQA Head Approval</div>
-                <table>
-                    <tr>
-                        <th class="w-20">QA/CQA Head Approval Comment</th>
-                        <td class="w-80">{!! $data->qa_cqa_head_comm ?? 'Not Applicable' !!}</td>
-                        <!-- Add more rows for the remaining fields in the same format -->
-                    </tr>
-                </table>
+                <label class="head-number" for="QA/CQA Head Approval Comment">QA/CQA Head Approval Comment</label>
+                <div class="div-data">
+                    @if ($data->qa_cqa_head_comm)
+                        {{ $data->qa_cqa_head_comm }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
+
                 <div class="border-table">
                     <div class="block-head">
                         QA/CQA Head Attachment
