@@ -738,7 +738,7 @@
             var myarr = departmentCode;
             var url = "{{ route('data', [':myarr']) }}";
             url = url.replace(':myarr', myarr);
-            
+            // url = url.replace('http:', 'https:');
             $('#question-list').empty();
             $.ajax({
                 url: url,
@@ -755,6 +755,7 @@
         var quesData = selectQuestion;
         var url = "{{ route('questiondata', [':quesData']) }}";
         url = url.replace(':quesData', quesData);
+        // url = url.replace('http:', 'https:');
         $('#selected-list').empty();
         $.ajax({
             url: url,
@@ -770,6 +771,7 @@
         var question = question;
         var url = "{{ route('datag', [':question']) }}";
         url = url.replace(':question', question);
+        // url = url.replace('http:', 'https:');
         $('#selected-question').empty();
         $.ajax({
             url: url,

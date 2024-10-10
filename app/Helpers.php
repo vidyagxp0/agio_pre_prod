@@ -991,30 +991,30 @@ class Helpers
 
     }
 
-    public static function getChemicalGridData(OOS $data , $identifier, $getKey = false, $keyName = null, $byIndex = false, $index = 0)
+    public static function getChemicalGridData(OOS $data, $identifier, $getKey = false, $keyName = null, $byIndex = false, $index = 0)
     {
         $res = $getKey ? '' : [];
-            try {
-                $grid = $data->grids()->where('identifier', $identifier)->first();
 
-                if($grid && is_array($grid->data)){
+        try {
+            $grid = $data->grids()->where('identifier', $identifier)->first();
 
-                    $res = $grid->data;
+            if ($grid && is_array($grid->data)) {
+                $res = $grid->data;
 
-                    if ($getKey && !$byIndex) {
-                        $res = array_key_exists($keyName, $grid->data) ? $grid->data[$keyName] : '';
-                    }
-
-                    if ($getKey && $byIndex && is_array($grid->data[$index])) {
-                        $res = array_key_exists($keyName, $grid->data[$index]) ? $grid->data[$index][$keyName] : '';
-                    }
+                if ($getKey && !$byIndex) {
+                    $res = array_key_exists($keyName, $grid->data) ? $grid->data[$keyName] : '';
                 }
 
-            } catch(\Exception $e){
-
+                if ($getKey && $byIndex && isset($grid->data[$index]) && is_array($grid->data[$index])) {
+                    $res = array_key_exists($keyName, $grid->data[$index]) ? $grid->data[$index][$keyName] : '';
+                }
             }
-        return $res;
+        } catch (\Exception $e) {
+            
+        }
+        return is_array($res) ? '' : $res;
     }
+
     public function getChecklistData(){
         $checklists = [
             '1' => 'Checklist - Tablet Dispensing & Granulation',

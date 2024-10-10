@@ -130,6 +130,8 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::get('dashboard', [DashboardController::class, 'index']);
     Route::get('analytics', [DashboardController::class, 'analytics']);
     Route::post('subscribe', [DashboardController::class, 'subscribe']);
+   
+
     Route::resource('TMS', TMSController::class);
     Route::get('TMS-details/{id}/{sopId}', [TMSController::class, 'viewTraining']);
     Route::get('training/{id}/', [TMSController::class, 'training']);
@@ -390,11 +392,9 @@ Route::post('/check-answer-otj', [JobTrainingController::class, 'checkAnswerOtj'
 Route::post('/check-answer-induction', [InductionTrainingcontroller::class, 'checkAnswerInduction'])->name('check_answer_induction');
 
 
-
-
-
 Route::get('induction_training-details/{id}', [InductionTrainingController::class, 'viewrendersopinduction']);
 Route::get('induction_question_training/{id}/{induction_id}', [InductionTrainingController::class, 'inductionquestionshow']);
+Route::get('induction_training_certificate/{id}', [InductionTrainingController::class, 'showCertificate']);
 Route::get('induction_training', [InductionTrainingController::class, 'index'])->name('induction_training.index');
 Route::get('induction_training/show/{id}', [InductionTrainingController::class, 'edit'])->name('induction_training_view');
 Route::post('induction_training', [InductionTrainingController::class, 'store'])->name('induction_training.store');
@@ -403,6 +403,8 @@ Route::put('induction_training/{id}', [InductionTrainingController::class, 'upda
 Route::get('/employees/{id}', [InductionTrainingController::class, 'getEmployeeDetails']);
 
 Route::get('/fetch-question/{documentId}', [InductionTrainingController::class, 'fetchQuestion']);
+Route::get('/documents/view/{id}', [InductionTrainingController::class, 'viewSop'])->name('documents.view');
+
 
 
 

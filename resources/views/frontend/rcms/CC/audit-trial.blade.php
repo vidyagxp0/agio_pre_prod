@@ -498,7 +498,8 @@
                 fetchDataAudit();
             });
         });
-
+</script>
+<script>
             $('#auditTable').on('click', '.viewdetails', function() {
                 var auditid = $(this).attr('data-id');
 
