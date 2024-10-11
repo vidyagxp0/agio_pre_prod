@@ -798,7 +798,7 @@
                                         <label for="HOD Remarks">HOD Primary Review Remarks</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="HOD_Remarks" id="summernote-1"></textarea>
+                                        <textarea class="summernote" name="HOD_Remarks" id="summernote-1" disabled></textarea>
                                     </div>
                                 </div>
 
@@ -815,7 +815,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="attachments_hod_ooc"
-                                                    name="attachments_hod_ooc[]"
+                                                    name="attachments_hod_ooc[]" disabled
                                                     oninput="addMultipleFiles(this, 'attachments_hod_ooc')" multiple>
                                             </div>
                                         </div>
@@ -880,7 +880,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group">QA Head Primary Review Remarks </label>
-                                        <textarea name="qaheadremarks" placholder="enter review"></textarea>
+                                        <textarea name="qaheadremarks" placholder="enter review" disabled></textarea>
                                     </div>
                                 </div>
 
@@ -895,7 +895,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="initial_attachment_capa_ooc"
-                                                    name="initial_attachment_capa_ooc[]"
+                                                    name="initial_attachment_capa_ooc[]" disabled
                                                     oninput="addMultipleFiles(this, 'initial_attachment_capa_ooc')"
                                                     multiple>
                                             </div>
@@ -1081,21 +1081,21 @@
                                         <label for="Analyst Remarks">Analyst Interview</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="analysis_remarks_stage_ooc" id="summernote-1"></textarea>
+                                        <textarea class="summernote" name="analysis_remarks_stage_ooc" disabled id="summernote-1"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="qa_comments">Evaluation Remarks</label>
-                                        <textarea name="qa_comments_ooc"></textarea>
+                                        <textarea name="qa_comments_ooc" disabled ></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="qa_comments">Description of Cause for OOC Results (If
                                             Identified)</label>
-                                        <textarea name="qa_comments_description_ooc"></textarea>
+                                        <textarea name="qa_comments_description_ooc" disabled></textarea>
                                     </div>
                                 </div>
 
@@ -1103,7 +1103,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group">Root Cause identified</label>
-                                        <select name="is_repeat_assingable_ooc" id="assignableSelect"
+                                        <select name="is_repeat_assingable_ooc" disabled id="assignableSelect"
                                             onchange="toggleRootCauseInput()">
                                             <option value=" ">Select</option>
                                             <option value="YES">YES</option>
@@ -1115,7 +1115,7 @@
                                 <div class="col-lg-12" id="rootCauseGroup" style="display: none;">
                                     <div class="group-input">
                                         <label for="RootCause">Phase IA Investigation Comment</label>
-                                        <textarea name="rootcausenewfield" id="rootCauseTextarea" rows="4" placeholder="Describe the root cause here"></textarea>
+                                        <textarea name="rootcausenewfield" disabled id="rootCauseTextarea" rows="4" placeholder="Describe the root cause here"></textarea>
                                     </div>
                                 </div>
                                 <script>
@@ -1141,7 +1141,7 @@
                                             Study</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="protocol_based_study_hypthesis_study_ooc" id="summernote-1"></textarea>
+                                        <textarea class="summernote" name="protocol_based_study_hypthesis_study_ooc" disabled id="summernote-1"></textarea>
                                     </div>
                                 </div>
 
@@ -1153,7 +1153,7 @@
                                             Protocol study/ Hypothesis Study</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="justification_for_protocol_study_hypothesis_study_ooc" id="summernote-1"></textarea>
+                                        <textarea class="summernote" name="justification_for_protocol_study_hypothesis_study_ooc" disabled id="summernote-1"></textarea>
                                     </div>
                                 </div>
 
@@ -1164,7 +1164,7 @@
                                             Hypothesis Study</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="plan_of_protocol_study_hypothesis_study" id="summernote-1"></textarea>
+                                        <textarea class="summernote" name="plan_of_protocol_study_hypothesis_study" disabled id="summernote-1"></textarea>
                                     </div>
                                 </div>
 
@@ -1179,7 +1179,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="attachments_hypothesis_ooc"
-                                                    name="attachments_hypothesis_ooc[]"
+                                                    name="attachments_hypothesis_ooc[]" disabled
                                                     oninput="addMultipleFiles(this, 'attachments_hypothesis_ooc')"
                                                     multiple>
                                             </div>
@@ -1194,7 +1194,7 @@
                                             Protocol based Study/Hypothesis Study</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="conclusion_of_protocol_based_study_hypothesis_study_ooc" id="summernote-1"></textarea>
+                                        <textarea class="summernote" name="conclusion_of_protocol_based_study_hypothesis_study_ooc" disabled id="summernote-1"></textarea>
                                     </div>
                                 </div>
 
@@ -1216,7 +1216,7 @@
                                                 <label for="Calibration Results">Calibration Results</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
-                                                <textarea class="summernote" name="calibration_results_stage_ooc" id="summernote-1"></textarea>
+                                                <textarea class="summernote" name="calibration_results_stage_ooc" disabled id="summernote-1"></textarea>
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-12">
@@ -1240,7 +1240,7 @@
                                                     Results of Analyst</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
-                                                <textarea class="summernote" name="review_of_calibration_results_of_analyst_ooc" id="summernote-1"></textarea>
+                                                <textarea class="summernote" name="review_of_calibration_results_of_analyst_ooc" disabled id="summernote-1"></textarea>
                                             </div>
                                         </div>
 
@@ -1255,7 +1255,7 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input type="file" id="attachments_stage_ooc"
-                                                            name="attachments_stage_ooc[]"
+                                                            name="attachments_stage_ooc[]" disabled
                                                             oninput="addMultipleFiles(this, 'attachments_stage_ooc')"
                                                             multiple>
                                                     </div>
@@ -1270,13 +1270,13 @@
                                                 <label for="Results Criteria">Result Criteria</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
-                                                <textarea class="summernote" name="results_criteria_stage_ooc" id="summernote-1"></textarea>
+                                                <textarea class="summernote" name="results_criteria_stage_ooc" disabled id="summernote-1"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Initiator Group">Result</label>
-                                                <select name="is_repeat_stae_ooc">
+                                                <select name="is_repeat_stae_ooc" disabled>
                                                     <option value="">-- Select --</option>
                                                     <option value="Validated"
                                                         {{ old('is_repeat_stae_ooc') == 'Validated' ? 'selected' : '' }}>
@@ -1293,7 +1293,7 @@
                                                 <label for="Additinal Remarks (if any)">Additional Remarks (if any)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
-                                                <textarea class="summernote" name="additional_remarks_stage_ooc" id="summernote-1"></textarea>
+                                                <textarea class="summernote" name="additional_remarks_stage_ooc" disabled id="summernote-1"></textarea>
                                             </div>
                                         </div>
 
@@ -1302,7 +1302,7 @@
                                                 <label for="Corrective Action">Corrective Action</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
-                                                <textarea name="initiated_through_capas_ooc" id="summernote-1"></textarea>
+                                                <textarea name="initiated_through_capas_ooc" disabled id="summernote-1"></textarea>
                                             </div>
                                         </div>
 
@@ -1311,7 +1311,7 @@
                                                 <label for="Preventive Action">Preventive Action</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
-                                                <textarea name="initiated_through_capa_prevent_ooc" id="summernote-1"></textarea>
+                                                <textarea name="initiated_through_capa_prevent_ooc" disabled id="summernote-1"></textarea>
                                             </div>
                                         </div>
 
@@ -1321,7 +1321,7 @@
                                                     Action</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
-                                                <textarea name="initiated_through_capa_corrective_ooc" id="summernote-1"></textarea>
+                                                <textarea name="initiated_through_capa_corrective_ooc" disabled id="summernote-1"></textarea>
                                             </div>
                                         </div>
 
@@ -1330,7 +1330,7 @@
                                                 <label for="Cause for failure">Phase IA Summary</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
-                                                <textarea class="summernote" name="phase_ia_investigation_summary" id="summernote-1"></textarea>
+                                                <textarea class="summernote" name="phase_ia_investigation_summary" disabled id="summernote-1"></textarea>
                                             </div>
                                         </div>
 
@@ -1367,7 +1367,7 @@
                                         <label for="HOD Remarks">Phase IA HOD Remarks</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="phase_IA_HODREMARKS"></textarea>
+                                        <textarea class="summernote" name="phase_IA_HODREMARKS" disabled></textarea>
                                     </div>
                                 </div>
 
@@ -1385,7 +1385,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="attachments_hodIAHODPRIMARYREVIEW_ooc"
-                                                    name="attachments_hodIAHODPRIMARYREVIEW_ooc[]"
+                                                    name="attachments_hodIAHODPRIMARYREVIEW_ooc[]" disabled
                                                     oninput="addMultipleFiles(this, 'attachments_hodIAHODPRIMARYREVIEW_ooc')"
                                                     multiple>
                                             </div>
@@ -1415,7 +1415,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group">Phase IA QA Remarks</label>
-                                        <textarea name="qaremarksnewfield" placholder="enter review"></textarea>
+                                        <textarea name="qaremarksnewfield" disabled placholder="enter review"></textarea>
                                     </div>
                                 </div>
 
@@ -1430,7 +1430,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="initial_attachment_capa_post_ooc"
-                                                    name="initial_attachment_capa_post_ooc[]"
+                                                    name="initial_attachment_capa_post_ooc[]" disabled
                                                     oninput="addMultipleFiles(this, 'initial_attachment_capa_post_ooc')"
                                                     multiple>
                                             </div>
@@ -1460,7 +1460,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group">Assignable cause identified</label>
-                                        <select name="assignable_cause_identified" onchange="">
+                                        <select name="assignable_cause_identified" disabled onchange="">
                                             <option value="0">-- select --</option>
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
@@ -1470,7 +1470,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group">P-IA QAH Remarks</label>
-                                        <textarea name="qaHremarksnewfield" placholder="enter review"></textarea>
+                                        <textarea name="qaHremarksnewfield" disabled placholder="enter review"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -1484,7 +1484,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="initial_attachment_qah_post_ooc"
-                                                    name="initial_attachment_qah_post_ooc[]"
+                                                    name="initial_attachment_qah_post_ooc[]" disabled
                                                     oninput="addMultipleFiles(this, 'initial_attachment_qah_post_ooc')"
                                                     multiple>
                                             </div>
@@ -1515,7 +1515,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Rectification by Service Engineer required</label>
-                                        <select name="is_repeat_stageii_ooc" onchange="">
+                                        <select name="is_repeat_stageii_ooc" disabled onchange="">
                                             <option value=" ">-- select --</option>
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
@@ -1527,7 +1527,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Instrument is Out of Order</label>
-                                        <select name="is_repeat_stage_instrument_ooc" onchange="">
+                                        <select name="is_repeat_stage_instrument_ooc" disabled onchange="">
                                             <option value=" ">-- select --</option>
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
@@ -1551,7 +1551,7 @@
                                         <label for="Initiator Group">Details of instrument out of order</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="details_of_instrument_out_of_order" id="summernote-1"></textarea>
+                                        <textarea class="summernote" name="details_of_instrument_out_of_order" disabled id="summernote-1"></textarea>
                                     </div>
                                 </div>
 
@@ -1565,7 +1565,7 @@
                                             <option value="No">No</option>
                                         </select> -->
 
-                                        <input type = "text" name = "is_repeat_proposed_stage_ooc"
+                                        <input type = "text" name = "is_repeat_proposed_stage_ooc" disabled
                                             id = "is_repeat_proposed_stage_ooc" />
                                     </div>
                                 </div>
@@ -1583,7 +1583,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="initial_attachment_stageii_ooc"
-                                                    name="initial_attachment_stageii_ooc[]"
+                                                    name="initial_attachment_stageii_ooc[]" disabled
                                                     oninput="addMultipleFiles(this, 'initial_attachment_stageii_ooc')"
                                                     multiple>
                                             </div>
@@ -1603,7 +1603,7 @@
 
                                     </select> -->
 
-                                        <input type = "text" name = "is_repeat_compiled_stageii_ooc"
+                                        <input type = "text" name = "is_repeat_compiled_stageii_ooc" disabled
                                             id = "is_repeat_compiled_stageii_ooc" />
 
                                     </div>
@@ -1627,7 +1627,7 @@
                                         <label for="Impact Assessment at Stage II">Impact Assessment </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="initiated_throug_stageii_ooc" id="summernote-1"></textarea>
+                                        <textarea class="summernote" name="initiated_throug_stageii_ooc" disabled id="summernote-1"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3">
@@ -1635,7 +1635,7 @@
                                         <label for="Details of Impact Evaluation">Details of Impact Evaluation</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="initiated_through_stageii_ooc" id="summernote-1"></textarea>
+                                        <textarea class="summernote" name="initiated_through_stageii_ooc" disabled id="summernote-1"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3">
@@ -1643,7 +1643,7 @@
                                         <label for="Details of Impact Evaluation">Justification for Recalibration</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="justification_for_recalibration" id="summernote-1"></textarea>
+                                        <textarea class="summernote" name="justification_for_recalibration" disabled id="summernote-1"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3">
@@ -1651,7 +1651,7 @@
                                         <label for="Details of Impact Evaluation">Result of Recalibration</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="is_repeat_reanalysis_stageii_ooc" id="summernote-1"></textarea>
+                                        <textarea class="summernote" name="is_repeat_reanalysis_stageii_ooc" disabled id="summernote-1"></textarea>
                                     </div>
                                 </div>
 
@@ -1678,7 +1678,7 @@
                                         <label for="Cause for failure">Cause for failure</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="initiated_through_stageii_cause_failure_ooc" id="summernote-1"></textarea>
+                                        <textarea class="summernote" name="initiated_through_stageii_cause_failure_ooc" disabled id="summernote-1"></textarea>
                                     </div>
                                 </div>
 
@@ -1687,7 +1687,7 @@
                                         <label for="Corrective Action">Corrective action IB Inv.</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea name="initiated_through_capas_ooc_IB" id="summernote-1"></textarea>
+                                        <textarea name="initiated_through_capas_ooc_IB" disabled id="summernote-1"></textarea>
                                     </div>
                                 </div>
 
@@ -1696,7 +1696,7 @@
                                         <label for="Preventive Action">Preventive action IB Inv.</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea name="initiated_through_capa_prevent_ooc_IB" id="summernote-1"></textarea>
+                                        <textarea name="initiated_through_capa_prevent_ooc_IB" disabled id="summernote-1"></textarea>
                                     </div>
                                 </div>
 
@@ -1706,7 +1706,7 @@
                                             Inv.</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea name="initiated_through_capa_corrective_ooc_IB" id="summernote-1"></textarea>
+                                        <textarea name="initiated_through_capa_corrective_ooc_IB" disabled id="summernote-1"></textarea>
                                     </div>
                                 </div>
 
@@ -1715,7 +1715,7 @@
                                         <label for="Cause for failure">Phase IB Summary</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="phase_ib_investigation_summary" id="summernote-1"></textarea>
+                                        <textarea class="summernote" name="phase_ib_investigation_summary" disabled id="summernote-1"></textarea>
                                     </div>
                                 </div>
 
@@ -1731,7 +1731,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="initial_attachment_reanalysisi_ooc"
-                                                    name="initial_attachment_reanalysisi_ooc[]"
+                                                    name="initial_attachment_reanalysisi_ooc[]" disabled
                                                     oninput="addMultipleFiles(this, 'initial_attachment_reanalysisi_ooc')"
                                                     multiple>
                                             </div>
@@ -1766,7 +1766,7 @@
                                         <label for="HOD Remarks">Phase IB HOD Primary Remarks</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="phase_IB_HODREMARKS"></textarea>
+                                        <textarea class="summernote" name="phase_IB_HODREMARKS" disabled></textarea>
                                     </div>
                                 </div>
 
@@ -1784,7 +1784,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="attachments_hodIBBBHODPRIMARYREVIEW_ooc"
-                                                    name="attachments_hodIBBBHODPRIMARYREVIEW_ooc[]"
+                                                    name="attachments_hodIBBBHODPRIMARYREVIEW_ooc[]" disabled
                                                     oninput="addMultipleFiles(this, 'attachments_hodIBBBHODPRIMARYREVIEW_ooc')"
                                                     multiple>
                                             </div>
@@ -1812,7 +1812,7 @@
                                         <label for="HOD Remarks">Phase IB QA Remarks</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="phase_IB_qareviewREMARKS"></textarea>
+                                        <textarea class="summernote" name="phase_IB_qareviewREMARKS" disabled></textarea>
                                     </div>
                                 </div>
 
@@ -1829,7 +1829,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="attachments_QAIBBBREVIEW_ooc"
-                                                    name="attachments_QAIBBBREVIEW_ooc[]"
+                                                    name="attachments_QAIBBBREVIEW_ooc[]" disabled
                                                     oninput="addMultipleFiles(this, 'attachments_QAIBBBREVIEW_ooc')"
                                                     multiple>
                                             </div>
@@ -1859,7 +1859,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group">Release of Instrument for usage</label>
-                                        <select name="is_repeat_realease_stageii_ooc" onchange="">
+                                        <select name="is_repeat_realease_stageii_ooc" disabled onchange="">
                                             <option value="0">-- select --</option>
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
@@ -1873,7 +1873,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group">P-IB QAH Remarks</label>
-                                        <textarea name="qPIBaHremarksnewfield" placholder="enter review"></textarea>
+                                        <textarea name="qPIBaHremarksnewfield" disabled placholder="enter review"></textarea>
                                     </div>
                                 </div>
 
@@ -1887,7 +1887,7 @@
                                             <div class="file-attachment-list" id="Pib_attachements"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="Pib_attachements" name="Pib_attachements[]"
+                                                <input type="file" id="Pib_attachements" name="Pib_attachements[]" disabled
                                                     oninput="addMultipleFiles(this, 'Pib_attachements')" multiple>
                                             </div>
                                         </div>

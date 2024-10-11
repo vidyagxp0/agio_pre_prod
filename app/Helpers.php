@@ -1422,10 +1422,22 @@ class Helpers
         return $relatedRecords;
     }
 
-
-
-    public static function checkControlAccess()
-{
+    public static function extensionCount($count) { 
+        switch ($count) {
+            case 'number1':
+                $count = 1;
+                break;
+            case 'number2':
+                $count = 2;
+                break;
+            case 'number':
+                $count = 3;
+                break;
+        }
+        return $count;
+    }  
+          public static function checkControlAccess()
+        {
     // Retrieve the user's roles
     $userRoles = UserRole::where('user_id', Auth::user()->id)->pluck('role_id')->toArray();
 
@@ -1440,7 +1452,7 @@ public static function getEmpNameByCode($code){
     return   Employee::where('full_employee_id',$code)->value('employee_name');
 }
 
-
+    
 
 }
 

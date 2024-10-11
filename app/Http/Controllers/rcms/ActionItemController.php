@@ -560,7 +560,7 @@ class ActionItemController extends Controller
         if (!empty($openState->Support_doc)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
-            $history->activity_type = 'Completion Attachments';
+            $history->activity_type = 'Completion Attachment';
             $history->previous = "Null";
             $history->current =   str_replace(',', ', ',$openState->Support_doc);
             $history->comment = "Not Applicable";
@@ -918,6 +918,28 @@ class ActionItemController extends Controller
         
             $history->save();
         }
+
+        if ($lastopenState->parent_record_number_edit != $openState->parent_record_number_edit) { 
+            $history = new ActionItemHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Parent Record Number';
+            $history->previous = $lastopenState->parent_record_number_edit;
+            $history->current = $openState->parent_record_number_edit;
+            $history->comment = $request->dept_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->parent_record_number_edit)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+   
+            $history->save();
+        }  
         
         if ($lastopenState->assign_to != $openState->assign_to) {
             $history = new ActionItemHistory;
@@ -1235,7 +1257,7 @@ class ActionItemController extends Controller
         if ($lastopenState->Support_doc != $openState->Support_doc || !empty($request->Support_doc_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Completion Attachments';
+            $history->activity_type = 'Completion Attachment';
             $history->previous = $lastopenState->Support_doc;
             $history->current = str_replace(',', ', ',$openState->Support_doc);
             $history->comment = $request->Support_doc_comment;
@@ -1303,6 +1325,24 @@ class ActionItemController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
+
+
+                $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "AI", 'history' => "Submit", 'process' => 'Action Item', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Action Item, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
+                                }
+                            );
+                        }
+                    // }
+                }
                 $changeControl->update();
 
                 // $history = new ActionItemHistory;
@@ -1387,6 +1427,22 @@ class ActionItemController extends Controller
                 $history->change_to = "Work Completion";
                 $history->change_from = $lastopenState->status;
                 $history->save();
+                $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "AI", 'history' => "Acknowledge Complete", 'process' => 'Action Item', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Action Item, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Acknowledge Complete");
+                                }
+                            );
+                        }
+                    // }
+                }
                 $changeControl->update();
                 toastr()->success('Document Sent');
 
@@ -1425,7 +1481,22 @@ class ActionItemController extends Controller
                 $history->change_to = "QA/CQA Verification";
                 $history->change_from = $lastopenState->status;
                 $history->save();
-
+                $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "AI", 'history' => "Complete", 'process' => 'Action Item', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Action Item, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete");
+                                }
+                            );
+                        }
+                    // }
+                }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1482,7 +1553,22 @@ class ActionItemController extends Controller
                 $history->change_from = $lastopenState->status;
                 $history->save();
                 $changeControl->update();
-                
+                $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "AI", 'history' => "Verification Complete", 'process' => 'Action Item', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Action Item, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Verification Complete");
+                                }
+                            );
+                        }
+                    // }
+                }
                 $history->save();
                 toastr()->success('Document Sent');
                 return back();
@@ -1558,6 +1644,22 @@ public function actionStageCancel(Request $request, $id)
                 $history->action_name = 'Update';
             }
             $history->save();
+            $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "AI", 'history' => "Cancel", 'process' => 'Action Item', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Action Item, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
+                                }
+                            );
+                        }
+                    // }
+                }
             $changeControl->update();
             // $history = new CCStageHistory();
             // $history->type = "Action Item";
@@ -1625,6 +1727,22 @@ public function actionmoreinfo(Request $request, $id)
             $history->change_to = "Opened";
             $history->change_from = $lastopenState->status;
             $history->save();
+            $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "AI", 'history' => "More Information Required", 'process' => 'Action Item', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Action Item, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                }
+                            );
+                        }
+                    // }
+                }
             $changeControl->update();
            
             // $history->type = "Action Item";
@@ -1673,6 +1791,22 @@ public function actionmoreinfo(Request $request, $id)
             $history->origin_state = $lastopenState->status;
             $history->stage = "Acknowledgement";
             $history->save();
+            $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "AI", 'history' => "More Information Required", 'process' => 'Action Item', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Action Item, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                }
+                            );
+                        }
+                    // }
+                }
             $changeControl->update();
             // $history = new CCStageHistory();
             // $history->type = "Action Item";
@@ -1706,6 +1840,22 @@ public function actionmoreinfo(Request $request, $id)
             $history->origin_state = $lastopenState->status;
             $history->stage = "Acknowledge";
             $history->save();
+            $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "AI", 'history' => "More Information Required", 'process' => 'Action Item', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Action Item, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                }
+                            );
+                        }
+                    // }
+                }
             $changeControl->update();
             // $history = new CCStageHistory();
             // $history->type = "Action Item";

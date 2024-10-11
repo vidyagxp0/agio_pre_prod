@@ -240,7 +240,9 @@
                         <td class="w-80">
                             @if ($data->parent_record_number)
                                 {{ $data->parent_record_number }}
-                            @else
+                            @elseif($data->parent_record_number_edit)
+                                {{ $data->parent_record_number_edit }}
+                                @else
                                 Not Applicable
                             @endif
                         </td>
