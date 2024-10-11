@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\OpenStage;
 use App\Models\Capa;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Helpers;
 use App\Models\RoleGroup;
 use App\Models\ObseravtionSingleGrid;
@@ -1521,6 +1522,26 @@ if(!empty($request->attach_files2)){
                     $history->action_name = 'Update';
                 }
                 $history->save();
+                $list = Helpers::getHodUserList($changestage->division_id);
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                    // dd($email);
+                        if ($email !== null) {
+                            
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changestage, 'site' => "OBS", 'history' => "Report Issued", 'process' => 'Observation', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $changestage) {
+                                    $message->to($email)
+                                    ->subject("IPC Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Report Issued Performed");
+                                }
+                            );
+                        } catch(\Exception $e) {
+                            info('Error sending mail', [$e]);
+                        }
+                    }
+                }
 
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1529,6 +1550,7 @@ if(!empty($request->attach_files2)){
 
             if($capaRequired == "Yes"){
                 if ($changestage->stage == 2) {
+
                     if (empty($grid_Data2->data) || !is_array($grid_Data2->data) || empty($grid_Data2->data[0]['response_detail']))
                     {
                         Session::flash('swal', [
@@ -1546,6 +1568,7 @@ if(!empty($request->attach_files2)){
                             'message' => 'Sent for Response Verification state'
                         ]);
                     }
+
                     $changestage->stage = "3";
                     $changestage->status = "Response Verification";
                     $changestage->complete_By = Auth::user()->name;
@@ -1578,7 +1601,27 @@ if(!empty($request->attach_files2)){
                     } else {
                         $history->action_name = 'Update';
                     }
+
                     $history->save();
+               $list = Helpers::getLeadAuditeeUserList($changestage->division_id);
+                  foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changestage, 'site' => "OBS", 'history' => "Report Issued", 'process' => 'Observation', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $changestage) {
+                                    $message->to($email)
+                                    ->subject("IPC Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Report Issued Performed");
+                                }
+                            );
+                        } catch(\Exception $e) {
+                            info('Error sending mail', [$e]);
+                        }
+                    }
+                }
                     $changestage->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -1652,6 +1695,25 @@ if(!empty($request->attach_files2)){
                 //      }
                 //   }
                 $history->save();
+                $list = Helpers::getLeadAuditeeUserList($changestage->division_id);
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changestage, 'site' => "OBS", 'history' => "Report Issued", 'process' => 'Observation', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $changestage) {
+                                    $message->to($email)
+                                    ->subject("IPC Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Report Issued Performed");
+                                }
+                            );
+                        } catch(\Exception $e) {
+                            info('Error sending mail', [$e]);
+                        }
+                    }
+                }
                     $changestage->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -1728,6 +1790,25 @@ if(!empty($request->attach_files2)){
             //             }
             //      }
             //   }
+                    $list = Helpers::getLeadAuditeeUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                        $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changestage, 'site' => "OBS", 'history' => "Report Issued", 'process' => 'Observation', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                                    function ($message) use ($email, $changestage) {
+                                        $message->to($email)
+                                        ->subject("IPC Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Report Issued Performed");
+                                    }
+                                );
+                            } catch(\Exception $e) {
+                                info('Error sending mail', [$e]);
+                            }
+                        }
+                    }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1820,6 +1901,25 @@ if(!empty($request->attach_files2)){
             //             }
             //      }
             //   }
+                        $list = Helpers::getLeadAuditeeUserList($changestage->division_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                                    if ($email !== null) {
+                                    
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changestage, 'site' => "OBS", 'history' => "Report Issued", 'process' => 'Observation', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                                        function ($message) use ($email, $changestage) {
+                                            $message->to($email)
+                                            ->subject("IPC Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Report Issued Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        }
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -1887,6 +1987,25 @@ if(!empty($request->attach_files2)){
             //             }
             //      }
             //   }
+                        $list = Helpers::getLeadAuditeeUserList($changestage->division_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                                    if ($email !== null) {
+                                    
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changestage, 'site' => "OBS", 'history' => "Report Issued", 'process' => 'Observation', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                                        function ($message) use ($email, $changestage) {
+                                            $message->to($email)
+                                            ->subject("IPC Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Report Issued Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
