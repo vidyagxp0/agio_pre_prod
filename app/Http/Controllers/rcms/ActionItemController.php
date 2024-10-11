@@ -1327,7 +1327,7 @@ class ActionItemController extends Controller
                 $history->save();
 
 
-                $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
@@ -1427,7 +1427,7 @@ class ActionItemController extends Controller
                 $history->change_to = "Work Completion";
                 $history->change_from = $lastopenState->status;
                 $history->save();
-                $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
@@ -1481,7 +1481,7 @@ class ActionItemController extends Controller
                 $history->change_to = "QA/CQA Verification";
                 $history->change_from = $lastopenState->status;
                 $history->save();
-                $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
@@ -1553,7 +1553,7 @@ class ActionItemController extends Controller
                 $history->change_from = $lastopenState->status;
                 $history->save();
                 $changeControl->update();
-                $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
@@ -1644,7 +1644,7 @@ public function actionStageCancel(Request $request, $id)
                 $history->action_name = 'Update';
             }
             $history->save();
-            $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+            $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
@@ -1727,7 +1727,7 @@ public function actionmoreinfo(Request $request, $id)
             $history->change_to = "Opened";
             $history->change_from = $lastopenState->status;
             $history->save();
-            $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+            $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
@@ -1791,7 +1791,7 @@ public function actionmoreinfo(Request $request, $id)
             $history->origin_state = $lastopenState->status;
             $history->stage = "Acknowledgement";
             $history->save();
-            $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+            $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
@@ -1840,7 +1840,7 @@ public function actionmoreinfo(Request $request, $id)
             $history->origin_state = $lastopenState->status;
             $history->stage = "Acknowledge";
             $history->save();
-            $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+            $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
