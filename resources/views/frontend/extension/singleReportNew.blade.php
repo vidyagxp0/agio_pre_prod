@@ -272,7 +272,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">QA Approval</th>
+                        <th class="w-20">QA/CQA Approval</th>
                         <td class="w-80">
                             @if ($data->approvers)
                                 {{ Helpers::getInitiatorName($data->approvers) }}
@@ -443,7 +443,7 @@
             </div>
 
             <div class="block">
-                <div class="block-head">QA Approval</div>
+                <div class="block-head">QA/CQA Approval</div>
 
                 {{-- <table>
                     <tr>
@@ -528,14 +528,14 @@
                         <th class="w-20">Review Comment</th>
                         <td class="w-80">{{ $data->submit_comment_review }}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">System By</th>
                         <td class="w-80">{{ $data->submit_by_review }}</td>
                         <th class="w-20">System On</th>
                         <td class="w-80">{{ $data->submit_on_review }}</td>
                         <th class="w-20">System Comment</th>
                         <td class="w-80">{{ $data->submit_comment_review }}</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th class="w-20">Reject By</th>
                         <td class="w-80">{{ $data->submit_by_inapproved }}</td>

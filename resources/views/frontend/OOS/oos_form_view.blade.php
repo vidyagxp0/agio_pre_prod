@@ -9032,6 +9032,38 @@
                                     Please Attach all relevant or supporting documents
                                 </small>
                                 <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="phaseII_attachment">
+
+                                        @if ($data->phaseII_attachment)
+                                        @foreach ($data->phaseII_attachment as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="phaseII_attachment[]"
+                                            oninput="addMultipleFiles(this, 'phaseII_attachment')" {{ $data->stage == 16 ? '' : 'readonly' }} multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase IIB inv. Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="phase_IIB_attachment">
                         
                                         @if (is_array($data->phase_IIB_attachment)) <!-- Ensure it's an array -->
@@ -9058,7 +9090,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)

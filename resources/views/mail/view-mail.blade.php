@@ -231,7 +231,7 @@
                         <p>Comment:- {{ $comment }}.</p>
 
                     </div>
-                    <div style="margin-left: 200px" class="logo">
+                    <div style="margin-left: 250px" class="logo">
                         <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="...">
                         <!-- <img src="https://www.agio-pharma.com/wp-content/uploads/2019/10/logo-agio.png" alt="..."> -->
                     </div>
@@ -243,6 +243,9 @@
                                 <tr>
                                     <th style="width: 10%">Record ID</th>
                                     <th style="width: 10%">Division</th>
+                                    @if ($process == 'OOS/OOT')
+                                    <th style="width: 20%">Form Type</th>
+                                    @endif
                                     <th style="width: 50%">Short Description</th>
                                     <th style="width: 10%">Due Date</th>
                                     <th style="width: 20%">Status</th>
@@ -265,12 +268,18 @@
                                             {{ Helpers::getDivisionName($data->division_id) }}
                                         @endif
                                     </td>
-
+                                    @if ($process == 'OOS/OOT')
+                                    <td>
+                                        {{ $data->Form_type }}
+                                    </td>
+                                    @endif
                                     <td>
                                     @if ($process == 'Lab Incident')
                                     {{ $data->short_desc }}
                                     @elseif($process == 'OOC')
                                     {{ $data->description_ooc }}
+                                    @elseif($process == 'OOS/OOT')
+                                    {{ $data->description_gi }}
                                     @else
                                     {{ $data->short_description }}
                                     @endif
@@ -278,9 +287,11 @@
 
                                     <td>
                                         @if ($process == 'Extension')
-                                            Not Applicable
+                                        {{ Helpers::getDateFormat($data->due_date) }}    
+                                        @elseif($process == 'OOS/OOT')
+                                        {{ Helpers::getDateFormat($data->due_date) }}    
                                         @else
-                                            {{ Helpers::getDateFormat($data->due_date) }}
+                                        Not Applicable
                                         @endif
                                     </td>
                                     <td>{{ $data->status }}</td>
