@@ -25,6 +25,15 @@
         }
     </style>
 
+
+        @error('email')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+
+        @error('emp_id')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+
     <script>
         $(document).ready(function() {
             $('#ObservationAdd').click(function(e) {
@@ -430,7 +439,12 @@
                                         }
                                     });
                                 </script>
-
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter employee email" required>
+                                    </div>
+                                </div>
 
 
                                 <div class="col-12 sub-head">
