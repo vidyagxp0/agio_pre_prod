@@ -214,10 +214,11 @@
                                             href="{{ url('ooc_view' . $document->id) }}"> Back
                                         </a>
                                     </button>  -->
+                            <a class="button_theme1 text-white" href="{{ route('ShowOutofCalibration',$auditrecord->id) }}" style="margin-right: 10px"> Back </a>
 
-                            <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                            {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                     Back
-                                </a> </button>
+                                </a> </button> --}}
                             <button class="button_theme1" onclick="window.print();">
                                 Print
                             </button>

@@ -13,6 +13,7 @@ use App\Models\Quize;
 use App\Models\Question;
 use App\Models\RoleGroup;
 use App\Models\User;
+use App\Models\EmpTrainingQuizResult;
 use Illuminate\Support\Facades\App;
 use PDF;
 use App\Models\Document;
@@ -22,7 +23,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class InductionTrainingController extends Controller
+class InductionTrainingcontroller extends Controller
 {
     // Method to display the form
     public function index()
@@ -34,8 +35,15 @@ class InductionTrainingController extends Controller
         $due_date = $formattedDate->format('Y-m-d');
         $employees = Employee::all();
         $data = Document::all();
+        $hods = User::get();
 
-        return view('frontend.TMS.Induction_training.induction_training', compact('due_date','data', 'record', 'employees'));
+        return view('frontend.TMS.Induction_training.induction_training', compact('due_date','data', 'record', 'employees','hods'));
+    }
+
+    public function viewSop($id)
+    {
+        $document = Document::findOrFail($id);
+        return view('frontend.TMS.Induction_training.sop-view', compact('document'));
     }
 
     public function fetchQuestion($id)
@@ -72,11 +80,10 @@ class InductionTrainingController extends Controller
         return response()->json($employee);
     }
 
-
     
     public function store(Request $request)
     {
-
+        //  dd($request->all());
         $inductionTraining = new Induction_training();
 
 
@@ -92,6 +99,7 @@ class InductionTrainingController extends Controller
         $inductionTraining->date_joining = $request->date_joining;
         $inductionTraining->start_date = $request->start_date;
         $inductionTraining->end_date = $request->end_date;
+        $inductionTraining->questionaries_required = $request->questionaries_required;
 
         $inductionTraining->training_date_1 = $request->training_date_1;
         $inductionTraining->training_date_2 = $request->training_date_2;
@@ -302,12 +310,12 @@ class InductionTrainingController extends Controller
     
         // Fetch the employee details related to this training
         $employee = Employee::where('id', $inductionTraining->name_employee)->first();
-        $employee_name = $employee ? $employee->employee_name : ''; // If employee exists, get name, otherwise empty string
+        $employee_name = $employee ? $employee->employee_name : '';
     
         // Fetch all employees and documents
         $employees = Employee::all();
         $data = Document::all();
-    
+        $users = User::get();
         // Fetch the record and document training by ID
         $record = Induction_training::findOrFail($id);
         $document_training = DocumentTraining::where('document_id', $id)->first();
@@ -320,9 +328,13 @@ class InductionTrainingController extends Controller
         $savedSop = $record->sopdocument;
         $employee_grid_data = QuestionariesGrid::where(['induction_id' => $id, 'identifier' => 'Questionaries'])->first();
     
+        $higherDesignations = [
+            'Asst. manager', 'Manager', 'Sr. manager', 'Deputy GM', 
+            'AGM and GM', 'Head quality', 'VP quality', 'Plant head'
+        ];
         // Return the view with all necessary data
         return view('frontend.TMS.Induction_training.induction_training_view', compact(
-            'inductionTraining', 'employees', 'employee_grid_data', 'employee_name', 'data', 'savedSop', 'quize', 'document_training'
+            'inductionTraining', 'employees', 'employee_grid_data', 'employee_name', 'data', 'savedSop', 'quize', 'document_training','users','higherDesignations'
         ));
     }
     
@@ -708,29 +720,13 @@ class InductionTrainingController extends Controller
                 $jobTraining = Induction_training::find($id);
                 $lastjobTraining = Induction_training::find($id);
 
-                // if ($jobTraining->stage == 1) {
-                //     $jobTraining->stage = "2";
-                //     $jobTraining->status = "Question-Answer";
 
-                //     $history = new InductionTrainingAudit();
-                //     $history->induction_id = $id;
-                //     $history->activity_type = 'Activity Log';
-                //     $history->comment = $request->comment;
-                //     $history->user_id = Auth::user()->id;
-                //     $history->user_name = Auth::user()->name;
-                //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                //     $history->change_to = "Question-Answer";
-                //     $history->change_from = $lastjobTraining->status;
-                //     $history->action = 'Submit';
-                //     $history->stage = 'Submited';
-                //     $history->save();
-
-                //     $jobTraining->update();
-                //     return back();
-                // }
                 if ($jobTraining->stage == 1) {
                     $jobTraining->stage = "2";
                     $jobTraining->status = "Employee Answers";
+                    $jobTraining->submit_by = Auth::user()->name;
+                    $jobTraining->submit_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->submit_comment = $request->comment;
 
                     $history = new InductionTrainingAudit();
                     $history->induction_id = $id;
@@ -752,6 +748,9 @@ class InductionTrainingController extends Controller
                 if ($jobTraining->stage == 2) {
                     $jobTraining->stage = "3";
                     $jobTraining->status = "Evaluation";
+                    $jobTraining->answer_submit_by = Auth::user()->name;
+                    $jobTraining->answer_submit_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->answer_submit_comment = $request->comment;
 
                     $history = new InductionTrainingAudit();
                     $history->induction_id = $id;
@@ -773,6 +772,11 @@ class InductionTrainingController extends Controller
                 if ($jobTraining->stage == 3) {
                     $jobTraining->stage = "4";
                     $jobTraining->status = "HR Head Approval";
+                    $jobTraining->evaluation_complete_by = Auth::user()->name;
+                    $jobTraining->evaluation_complete_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->evaluation_complete_comment = $request->comment;
+
+
                     $history = new InductionTrainingAudit();
                     $history->induction_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -793,6 +797,10 @@ class InductionTrainingController extends Controller
                 if ($jobTraining->stage == 4) {
                     $jobTraining->stage = "5";
                     $jobTraining->status = "QA/CQA Head Approval";
+                    $jobTraining->approval_complete_by = Auth::user()->name;
+                    $jobTraining->approval_complete_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->approval_complete_comment = $request->comment;
+
 
                     $history = new InductionTrainingAudit();
                     $history->induction_id = $id;
@@ -814,6 +822,10 @@ class InductionTrainingController extends Controller
                 if ($jobTraining->stage == 5) {
                     $jobTraining->stage = "6";
                     $jobTraining->status = "In HR Final Review";
+                    $jobTraining->qa_head_approval_complete_by = Auth::user()->name;
+                    $jobTraining->qa_head_approval_complete_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->qa_head_approval_complete_comment = $request->comment;
+
 
                     $history = new InductionTrainingAudit();
                     $history->induction_id = $id;
@@ -834,6 +846,9 @@ class InductionTrainingController extends Controller
                 if ($jobTraining->stage == 6) {
                     $jobTraining->stage = "7";
                     $jobTraining->status = "OJT Creation";
+                    $jobTraining->Send_To_OJT_by= Auth::user()->name;
+                    $jobTraining->Send_To_OJT_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->Send_To_OJT_comment = $request->comment;
 
                     $history = new InductionTrainingAudit();
                     $history->induction_id = $id;
@@ -855,6 +870,9 @@ class InductionTrainingController extends Controller
                 if ($jobTraining->stage == 7) {
                     $jobTraining->stage = "8";
                     $jobTraining->status = "Closed-done";
+                    $jobTraining->creation_complete_by = Auth::user()->name;
+                    $jobTraining->creation_complete_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->creation_complete_comment = $request->comment;
 
                     $history = new InductionTrainingAudit();
                     $history->induction_id = $id;
@@ -917,25 +935,46 @@ class InductionTrainingController extends Controller
 
     public function Induction_Child(Request $request, $id)
     {
-        $employees = Employee::find($id);
-    
-        $data = Document::all();
+       $induction = Induction_training::find($id);
+
+        $mainvalue = Employee::where('id', $induction->name_employee)->first();
+        $employee = Employee::find($id); 
+
+        $record = str_pad((RecordNumber::first()->value('counter') + 1), 4, '0', STR_PAD_LEFT);
+        $currentDate = Carbon::now();
+        $due_date = $currentDate->addDays(30)->format('Y-m-d');
+        $employees = Employee::all(); 
+        $data = Document::all(); 
         $hods = User::get();
         $delegate = User::get();
-        $jobTraining = JobTraining::all();
-        $record = ((RecordNumber::first()->value('counter')) + 1);
-        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
-        $currentDate = Carbon::now();
-        $formattedDate = $currentDate->addDays(30);
-        $due_date = $formattedDate->format('Y-m-d');
-        $inductionTraining = Induction_training::all();
-    
-        if ($request->child_type == 'induction_training') {
-            return view('frontend.TMS.Job_Training.job_training', compact('employees','due_date','record','data','hods','jobTraining','delegate','inductionTraining'));
+        if ($request->child_type == 'job_training') {
+            return view('frontend.TMS.Job_Training.job_training', compact('induction','due_date','record','data','hods','delegate', 'mainvalue'));
         } else {
-            return view('frontend.TMS.Job_Training.job_training', compact('employees','due_date','record','data','hods','jobTraining','delegate','inductionTraining'));
+            return view('frontend.TMS.Job_description.job_description', compact('induction','due_date','record','data','hods','delegate', 'mainvalue'));
         }
     }
+
+    // public function Induction_Child(Request $request, $id)
+    // {
+    //     $employees = Employee::all(); // Fetch all employees for selection
+    //     $inductionTrainingDetails = Induction_training::where('employee_id', $id)->first(); // Fetch induction training details if available
+        
+    //     // Other existing code...
+    //     $data = Document::all();
+    //     $hods = User::get();
+    //     $delegate = User::get();
+    //     $jobTraining = JobTraining::all();
+    //     $record = ((RecordNumber::first()->value('counter')) + 1);
+    //     $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+    //     $currentDate = Carbon::now();
+    //     $formattedDate = $currentDate->addDays(30);
+    //     $due_date = $formattedDate->format('Y-m-d');
+        
+    //     return view('frontend.TMS.Job_Training.job_training', compact('employees', 'due_date', 'record', 'data', 'hods', 'jobTraining', 'delegate', 'inductionTrainingDetails', 'request'));
+    // }
+    
+
+    
     public static function inductionReport($id)
     {
         $data = Induction_training::find($id);
@@ -964,20 +1003,105 @@ class InductionTrainingController extends Controller
     
 
     public function viewrendersopinduction($id){
-
         return view('frontend.TMS.induction_training_detail', compact('id'));
     }
 
+    
+    public function showCertificate($id)
+    {
+        
+        return view('frontend.TMS.Induction_training.Induction_training_certificate');
+    }
+
+
+
     public function inductionquestionshow($sopids, $inductiontrainingid){
         $inductiontrainingid = Induction_training::find($inductiontrainingid);
-        $inductiontrainingid->attempt_count = $inductiontrainingid->attempt_count == 0 ? 0 : $inductiontrainingid->attempt_count - 1;
+        $inductiontrainingid->attempt_count = $inductiontrainingid->attempt_count == -1 ? 0 : ( $inductiontrainingid->attempt_count == 0 ? 0 : $inductiontrainingid->attempt_count - 1);
         $inductiontrainingid->save();
-        $sopidsArray = explode(',', $sopids);
+        
+        // Convert the sopids string to an array and trim any extra whitespace
+        $sopids = array_map('trim', explode(',', $sopids));
 
-        $sopidsArray = array_map('trim', $sopidsArray);
-        $questions = Question::where('document_id', $sopidsArray)
-            ->get();
-        return view('frontend.TMS.induction_training.Induction_training_question_Answer', compact('questions', 'inductiontrainingid'));
+        // Fetch all questions based on cleaned sopids
+        $questions = Question::whereIn('document_id', $sopids)
+        ->inRandomOrder() // Randomize the order
+        ->take(10)        // Limit to 10 records
+        ->get();
+        // Dump the questions for debugging
+            return view('frontend.TMS.Induction_training.Induction_training_question_Answer', compact('questions', 'inductiontrainingid'));
+    }
 
+    public function checkAnswerInduction(Request $request)
+    {
+        // Fetch all questions in a random order
+
+        $allQuestions = Question::inRandomOrder()->get();
+
+        // Filter questions to include only Single and Multi Selection Questions
+        $filteredQuestions = $allQuestions->filter(function ($question) {
+            return in_array($question->type, ['Single Selection Questions', 'Multi Selection Questions']);
+        });
+
+        // Take the first 10 questions from the filtered list
+        $questions = $filteredQuestions->take(10);
+
+        $correctCount = 0; // Initialize correct answer count
+        $totalQuestions = count($questions); // Total number of selected questions (should be 10)
+
+        foreach ($questions as $question) {
+            // Retrieve user's answer for each question
+            $userAnswer = $request->input('question_' . $question->id);
+            $correctAnswers = unserialize($question->answers); // Correct answers for the question
+            $questionType = $question->type;
+
+            if ($questionType === 'Single Selection Questions') {
+                // If it's a single selection question, check if the user's answer matches the correct answer
+                if ($userAnswer == $correctAnswers[0]) {
+                    $correctCount++;
+                }
+            } elseif ($questionType === 'Multi Selection Questions') {
+                // If it's a multi-selection question, check if the user's answer matches exactly with the correct answer set
+                if (is_array($userAnswer)) {
+                    // Check if the user's answer matches exactly with the correct answer set
+                    if (count(array_diff($correctAnswers, $userAnswer)) === 0 && count(array_diff($userAnswer, $correctAnswers)) === 0) {
+                        $correctCount++;
+                    }
+                }
+            }
+        }
+
+        // Calculate the correct percentage for the 10 questions
+        $score = ($correctCount / $totalQuestions) * 100; // This will be based on 10 questions
+
+    
+        $result = $score >= 80 ? 'Pass' : 'Fail';
+
+        if($request->attempt_count == 0 || $result == 'Pass'){
+            $induction = Induction_training::find($request->training_id);
+            $induction->stage = 3;
+            $induction->status = "Evaluation";
+            $induction->update();
+        }
+
+            $storeResult = new EmpTrainingQuizResult();
+            $storeResult->emp_id = $request->emp_id;
+            $storeResult->training_id = $request->training_id;
+            $storeResult->employee_name = $request->employee_name;
+            $storeResult->training_type = "Induction Training";
+            $storeResult->correct_answers = $correctCount;
+            $storeResult->incorrect_answers = $totalQuestions - $correctCount;
+            $storeResult->total_questions = $totalQuestions;
+            $storeResult->score = $score."%";
+            $storeResult->result = $result;
+            $storeResult->attempt_number = $request->attempt_count + 1;
+            $storeResult->save();        
+
+        return view('frontend.TMS.Job_Training.job_quiz_result', [
+            'totalQuestions' => $totalQuestions, // Total questions shown
+            'correctCount' => $correctCount, // Number of correctly answered questions
+            'score' => $score, // Final score for these 10 questions
+            'result' => $result // Pass or Fail based on 80%
+        ]);
     }
 }

@@ -130,6 +130,8 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::get('dashboard', [DashboardController::class, 'index']);
     Route::get('analytics', [DashboardController::class, 'analytics']);
     Route::post('subscribe', [DashboardController::class, 'subscribe']);
+   
+
     Route::resource('TMS', TMSController::class);
     Route::get('TMS-details/{id}/{sopId}', [TMSController::class, 'viewTraining']);
     Route::get('training/{id}/', [TMSController::class, 'training']);
@@ -387,21 +389,22 @@ Route::get('question_training/{id}', [JobTrainingController::class, 'questionren
 Route::get('on_the_job_question_training/{id}/{job_id}', [JobTrainingController::class, 'questionshow']);
 
 Route::post('/check-answer-otj', [JobTrainingController::class, 'checkAnswerOtj'])->name('check_answer_otj');
+Route::post('/check-answer-induction', [InductionTrainingcontroller::class, 'checkAnswerInduction'])->name('check_answer_induction');
 
 
-
-
-
-Route::get('induction_training-details/{id}', [InductionTrainingcontroller::class, 'viewrendersopinduction']);
-Route::get('induction_question_training/{id}/{induction_id}', [InductionTrainingcontroller::class, 'inductionquestionshow']);
-Route::get('induction_training', [InductionTrainingcontroller::class, 'index'])->name('induction_training.index');
-Route::get('induction_training/show/{id}', [InductionTrainingcontroller::class, 'edit'])->name('induction_training_view');
-Route::post('induction_training', [InductionTrainingcontroller::class, 'store'])->name('induction_training.store');
-Route::put('induction_training/{id}', [InductionTrainingcontroller::class, 'update'])->name('induction_training.update');
+Route::get('induction_training-details/{id}', [InductionTrainingController::class, 'viewrendersopinduction']);
+Route::get('induction_question_training/{id}/{induction_id}', [InductionTrainingController::class, 'inductionquestionshow']);
+Route::get('induction_training_certificate/{id}', [InductionTrainingController::class, 'showCertificate']);
+Route::get('induction_training', [InductionTrainingController::class, 'index'])->name('induction_training.index');
+Route::get('induction_training/show/{id}', [InductionTrainingController::class, 'edit'])->name('induction_training_view');
+Route::post('induction_training', [InductionTrainingController::class, 'store'])->name('induction_training.store');
+Route::put('induction_training/{id}', [InductionTrainingController::class, 'update'])->name('induction_training.update');
 //new route 
 Route::get('/employees/{id}', [InductionTrainingController::class, 'getEmployeeDetails']);
 
 Route::get('/fetch-question/{documentId}', [InductionTrainingController::class, 'fetchQuestion']);
+Route::get('/documents/view/{id}', [InductionTrainingController::class, 'viewSop'])->name('documents.view');
+
 
 
 
@@ -650,11 +653,14 @@ Route::get('extension_newshow/{id}', [ExtensionNewController::class, 'show']);
 
 Route::put('extension_new/{id}', [ExtensionNewController::class, 'update'])->name('extension_new.update');
 Route::post('extension_send_stage/{id}', [ExtensionNewController::class, 'sendstage'])->name('extension_send_stage');
+Route::post('extension_reject_stage/{id}', [ExtensionNewController::class, 'rejectStage'])->name('extension_reject_stage');
 Route::post('moreinfoState_extension/{id}', [ExtensionNewController::class, 'moreinfoStateChange'])->name('moreinfoState_extension');
 Route::post('RejectState_extension/{id}', [ExtensionNewController::class, 'reject'])->name('RejectState_extension');
 Route::post('send-cqa/{id}', [ExtensionNewController::class, 'sendCQA'])->name('send-cqa');
 Route::post('send-approved/{id}', [ExtensionNewController::class, 'sendApproved'])->name('send-approved');
+Route::get('extension-filter-data/{id}', [ExtensionNewController::class, 'audit_trail_filter'])->name('extension-filter');
 // Route::get('RejectState_extension/{id}', [ExtensionNewController::class, 'reject'])->name('RejectState_extension');
+
 
 
 Route::get('trainer_qualification', [TrainerController::class, 'index'])->name('trainer_qualification');

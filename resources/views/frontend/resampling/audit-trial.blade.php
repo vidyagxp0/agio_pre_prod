@@ -1,14 +1,6 @@
-
-
-
-
-
-
-
-
-
 @extends('frontend.layout.main')
 @section('container')
+
     <div id="audit-trial">
         <div class="container-fluid">
             <!DOCTYPE html>
@@ -175,6 +167,15 @@
                     justify-content: end;
                     gap: 10px;
                 }
+
+                .allow-wb {
+                   word-break: break-all;
+                   word-wrap: break-word;
+                }
+
+                
+
+                
             </style>
 
             <body>
@@ -366,84 +367,63 @@
         </header>
 
         <div class="inner-block">
-            <div class="division">
+
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label for="typedata">Type</label>
+                        <select class="form-control" id="typedata" name="typedata">
+                            <option value="">Select Type</option>
+                            <option value="cft_review">CFT Review</option>
+                            <option value="notification">Notification</option>
+                            <option value="business">Business Rules</option>
+                            <option value="stage">Stage Change</option>
+                            <option value="user_action">User Action</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="user">Perform By</label>
+                        <select class="form-control" id="user" name="user">
+                            <option value="">Select User</option>
+                            @foreach ($users as $user)
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="from_date">From Date</label>
+                        <input type="date" class="form-control" id="from_date" name="from_date">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="to_date">To Date</label>
+                        <input type="date" class="form-control" id="to_date" name="to_date">
+                    </div>
+                </div>
+
+
+                <div class="division">
+                </div>
+                <div class="second-table">
+                    <table>
+                        <thead>
+                            <tr class="table_bg">
+                                <th>S.No</th>
+                                <th>Flow Changed From</th>
+                                <th>Flow Changed To</th>
+                                <th>Data Field</th>
+                                <th>Action Type</th>
+                                <th>Performer</th>
+                            </tr>
+                        </thead>
+                        <tbody id="audit-data">
+                            @include('frontend.resampling.resampling_filter')
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="second-table">
-                <table>
-                    <tr class="table_bg">
-                        <th>S.No</th>
-                        <th>Flow Changed From</th>
-                        <th>Flow Changed To</th>
-                        <th>Data Field</th>
-                        <th>Action Type</th>
-                        <th>Performer</th>
-                    </tr>
 
-                    <tr>
-                        @php
-                            $previousItem = null;
-                        @endphp
 
-                        @foreach ($audit as $audits => $dataDemo)
-                            <td>{{ $dataDemo ? ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}
-                            </td>
 
-                            <td>
-                                <div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div>
-                            </td>
 
-                            <td>
-                                <div><strong>Changed To :</strong>{{ $dataDemo->change_to }}</div>
-                            </td>
-                            <td>
-                                <div>
-                                    <strong> Data Field Name :</strong><a
-                                        href="#">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
-                                </div>
-                                <div style="margin-top: 5px;">
-                                    @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change From :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
-                                    @else
-                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Null' }}
-                                    @endif
-
-                                    
-                                </div>
-                                <br>
-                                <div>
-                                    @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change To :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
-                                    @else
-                                        <strong>Change To :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
-                                    @endif
-                                </div>
-                                <div style="margin-top: 5px;">
-                                    <strong>Change Type :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
-                                </div>
-                            </td>
-                            <td>
-                                <div>
-                                    <strong> Action Name
-                                        :</strong>{{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}
-
-                                </div>
-                            </td>
-                            <td>
-                                <div><strong> Peformed By
-                                        :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
-                                </div>
-                                <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong> {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('j F Y H:i') : 'Not Applicable' }}
-                                </div>
-                                <div style="margin-top: 5px;"><strong> Comments
-                                        :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
-
-                            </td>
-                    </tr>
-                    @endforeach
-                </table>
-            </div>
-        </div>
         <!-- Pagination links -->
         <div style="float: inline-end; margin: 10px;">
             <style>
@@ -513,7 +493,50 @@
             </div>
         </div>
     </div>
-    <script type='text/javascript'>
+   
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(document).ready(function() {
+
+            function fetchDataAudit() {
+                var typedata = $('#typedata').val();
+                var user = $('#user').val();
+                var fromDate = $('#from_date').val();
+                var toDate = $('#to_date').val(); 
+    
+                $.ajax({
+                    url: "{{ route('api.resaplingFilter',$document->id) }}",
+                    method: "GET",
+                    data: {
+                        typedata: typedata,
+                        user: user,
+                        from_date: fromDate,
+                        to_date: toDate
+                    },
+                    success: function(response) {
+                        $('#audit-data').html(response.html);
+                    }
+                });
+            }
+    
+            $('#typedata, #user, #from_date, #to_date').on('change', function() {
+                fetchDataAudit();
+            });
+        });
+
+
+
+
+
+
+
+
         $(document).ready(function() {
 
             $('#auditTable').on('click', '.viewdetails', function() {

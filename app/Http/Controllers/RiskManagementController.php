@@ -1507,7 +1507,7 @@ class RiskManagementController extends Controller
             if (!empty($data->risk_ana_attach)) {
                 $history = new RiskAuditTrail();
                 $history->risk_id = $data->id;
-                $history->activity_type = 'Risk Assesment Attachments';
+                $history->activity_type = 'Attachments';
                 $history->previous = "Null";
                 $history->current = $data->risk_ana_attach;
                 $history->comment = "Not Applicable";
@@ -1650,7 +1650,7 @@ class RiskManagementController extends Controller
             if (!empty($data->qa_cqa_head_attach)) {
                 $history = new RiskAuditTrail();
                 $history->risk_id = $data->id;
-                $history->activity_type = 'QA/CQA Head Attachments';
+                $history->activity_type = 'QA/CQA Head Attachment';
                 $history->previous = "Null";
                 $history->current = $data->qa_cqa_head_attach;
                 $history->comment = "Not Applicable";
@@ -4211,7 +4211,7 @@ class RiskManagementController extends Controller
 
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'Risk Assesment Attachments';
+            $history->activity_type = 'Attachments';
 
             // Convert arrays to JSON strings if necessary
             $history->previous = is_array($lastDocument->risk_ana_attach) ? json_encode($lastDocument->risk_ana_attach) : $lastDocument->risk_ana_attach;
@@ -4341,7 +4341,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Production_Table_Review != $request->Production_Table_Review && $request->Production_Table_Review != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Production Tablet Review Required';
+            $history->activity_type = 'Production Tablet Required ?';
             $history->previous = $lastCft->Production_Table_Review;
             $history->current = $request->Production_Table_Review;
             $history->comment = "Not Applicable";
@@ -4678,7 +4678,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Production_Injection_Review != $request->Production_Injection_Review && $request->Production_Injection_Review != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Production Injection Review Required';
+            $history->activity_type = 'Production Injection Required';
             $history->previous = $lastCft->Production_Injection_Review;
             $history->current = $request->Production_Injection_Review;
             $history->comment = "Not Applicable";
@@ -7292,7 +7292,7 @@ class RiskManagementController extends Controller
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
-                $history->activity_type = 'QA/CQA Head Attachments';
+                $history->activity_type = 'QA/CQA Head Attachment';
 
                 // Convert arrays to strings if necessary
                 $history->previous = is_array($lastDocument->qa_cqa_head_attach) ? json_encode($lastDocument->qa_cqa_head_attach) : $lastDocument->qa_cqa_head_attach;

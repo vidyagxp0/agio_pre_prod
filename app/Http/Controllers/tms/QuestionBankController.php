@@ -131,7 +131,7 @@ class QuestionBankController extends Controller
     public function destroy($id)
     {
         $data = QuestionBank::withTrashed()->find($id);
-        $data->forceDelete();
+        $data->delete();
         toastr()->success('Deleted successfully');
         return back();
     }

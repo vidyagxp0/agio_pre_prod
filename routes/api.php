@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\Api\LogFilterController;
-
+use App\Http\Controllers\ResamplingController;
 
 
 /*
@@ -75,5 +75,10 @@ Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api
  Route::post('/incident',[LogFilterController::class,'IncidentFilter'])->name('api.incident.filter');
  Route::post('/oot',[LogFilterController::class,'OOT_Filter'])->name('api.oot.filter');
  Route::get('/chngecontrol-management/{id}',[CCController::class,'audit_trail_filter'])->name('api.Change_Control.filter');
+
+
+
+ Route::get('/resaplingFilter/{id}',[ResamplingController::class,'audit_trail_filter'])->name('api.resaplingFilter');
+
 //  Route::Post('/mcFilter/{id}',[CCController::class,'audit_filter'])->name('api.marketc.filter');
 

@@ -136,7 +136,7 @@
     <header>
         <table>
             <tr>
-                <td class="w-70 head">Effectiveness Check Audit Trial Report</td>
+                <td class="w-70 head">Effectiveness Check Audit Trail Report</td>
                 <td class="w-30">
                     <div class="logo">
                         <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="" class="w-100">
