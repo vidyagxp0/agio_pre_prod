@@ -2212,10 +2212,12 @@
                                                     <select name="Production_Table_Review" id="Production_Table_Review"
                                                         @if ($data->stage == 3) disabled @endif>
                                                         <option value="">-- Select --</option>
-                                                        <option @if ($data1->Production_Table_Review == 'yes') selected @endif
-                                                            value='yes'>
-                                                            Yes</option>
-                                                            <option @if ($data1->Production_Table_Review == 'no' || empty($data1->Production_Table_Review)) selected @endif value='no'>No</option>
+                                                       
+                                                        <option @if ($data1->Production_Table_Review == 'yes' || empty($data1->Production_Table_Review)) selected @endif value='yes'>Yes</option>
+                                                        <option @if ($data1->Production_Table_Review == 'no') selected @endif
+                                                            value='no'>
+                                                            No</option>
+
                                                         <option @if ($data1->Production_Table_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -2414,10 +2416,10 @@
                                                     <select name="Production_Table_Review" disabled
                                                         id="Production_Table_Review">
                                                         <option value="">-- Select --</option>
-                                                        <option @if ($data1->Production_Table_Review == 'yes') selected @endif
-                                                            value='yes'>
-                                                            Yes</option>
-                                                            <option @if ($data1->Production_Table_Review == 'no' || empty($data1->Production_Table_Review)) selected @endif value='no'>No</option>
+                                                        <option @if ($data1->Production_Table_Review == 'yes' || empty($data1->Production_Table_Review)) selected @endif value='yes'>Yes</option>
+                                                        <option @if ($data1->Production_Table_Review == 'no') selected @endif
+                                                            value='no'>
+                                                            No</option>
                                                         <option @if ($data1->Production_Table_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -2615,10 +2617,14 @@
                                                         id="Production_Injection_Review"
                                                         @if ($data->stage == 3) disabled @endif>
                                                         <option value="">-- Select --</option>
-                                                        <option @if ($data1->Production_Injection_Review == 'yes' || empty($data1->Production_Injection_Review)) selected @endif value='yes'>Yes</option>  
-                                                            <option @if ($data1->Production_Injection_Review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>      
+                                                         
+                                                        
+                                                        
+                                                        <option @if ($data1->Production_Injection_Review == 'yes') selected @endif
+                                                            value='yes'>
+                                                            yes</option> 
+                                                            <option @if ($data1->Production_Injection_Review == 'no' || empty($data1->Production_Injection_Review)) selected @endif value='no'>No</option>  
+                                                                 
                                                         <option @if ($data1->Production_Injection_Review == 'na') selected @endif
                                                             value='na'>
                                                             NA</option>
@@ -2801,10 +2807,11 @@
                                                         id="Production_Injection_Review">
                                                         <option value="">-- Select --</option>
                                                         
-                                                            <option @if ($data1->Production_Injection_Review == 'yes' || empty($data1->Production_Injection_Review)) selected @endif value='yes'>Yes</option>  
-                                                            <option @if ($data1->Production_Injection_Review == 'no') selected @endif
-                                                            value='no'>
-                                                            No</option>  
+                                                        <option @if ($data1->Production_Injection_Review == 'yes') selected @endif
+                                                            value='yes'>
+                                                            yes</option> 
+                                                        <option @if ($data1->Production_Injection_Review == 'no' || empty($data1->Production_Injection_Review)) selected @endif value='no'>No</option>  
+                                                                   
                                                            
                                                         <option @if ($data1->Production_Injection_Review == 'na') selected @endif
                                                             value='na'>

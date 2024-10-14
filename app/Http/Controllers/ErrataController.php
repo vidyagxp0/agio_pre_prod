@@ -119,7 +119,7 @@ class ErrataController extends Controller
         $data->QA_Comment1 = $request->QA_Comment1;
 
 
-        $data->Date_and_time_of_correction = $request->Date_and_time_of_correction ? Carbon::parse($request->Date_and_time_of_correction)->format('d-M-Y H:i') : '';
+        $data->Date_and_time_of_correction = $request->Date_and_time_of_correction ? Carbon::parse($request->Date_and_time_of_correction)->format('d-M-Y') : '';
         $data->QA_Feedbacks = $request->QA_Feedbacks;
 
         if (!empty($request->QA_Attachments)) {
@@ -2071,7 +2071,7 @@ class ErrataController extends Controller
 
 
         if ($request->has('Date_and_time_of_correction') && $request->Date_and_time_of_correction !== null) {
-            $data->Date_and_time_of_correction = $request->Date_and_time_of_correction ? Carbon::parse($request->Date_and_time_of_correction)->format('d-M-Y H:i') : '';
+            $data->Date_and_time_of_correction = $request->Date_and_time_of_correction ? Carbon::parse($request->Date_and_time_of_correction)->format('d-M-Y') : '';
         }
 
         $data->QA_Feedbacks = $request->QA_Feedbacks;
