@@ -4311,1241 +4311,1598 @@ class OOCController extends Controller
     
 
 
-public function OOCStateChange(Request $request, $id)
-{
-    if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-        $oocchange = OutOfCalibration::find($id);
-        $lastDocumentOOC = OutOfCalibration::find($id);
+    public function OOCStateChange(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $oocchange = OutOfCalibration::find($id);
+            $lastDocumentOOC = OutOfCalibration::find($id);
 
-        if ($oocchange->stage == 1) {
+            if ($oocchange->stage == 1) {
+                
+                if (!$oocchange->description_ooc) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'Short Description is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
             
-            if (!$oocchange->description_ooc) {
-                // Flash message for warning (field not filled)
-                Session::flash('swal', [
-                    'title' => 'Mandatory Fields Required!',
-                    'message' => 'Short Description is yet to be filled!',
-                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
-                ]);
-        
-                return redirect()->back();
-            } else {
-                // Flash message for success (when the form is filled correctly)
-                Session::flash('swal', [
-                    'title' => 'Success!',
-                    'message' => 'Sent for HOD Primary Review',
-                    'type' => 'success',
-                ]);
-            }
-            
-           $oocchange->stage = "2";
-            $oocchange->submitted_by = Auth::user()->name;
-            $oocchange->submitted_on = Carbon::now()->format('d-M-Y');
-            $oocchange->comment = $request->comment;
-            $oocchange->status = "HOD Primary Review";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'Submit By    ,   Submit On';
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for HOD Primary Review',
+                        'type' => 'success',
+                    ]);
+                }
+                
+                $oocchange->stage = "2";
+                $oocchange->submitted_by = Auth::user()->name;
+                $oocchange->submitted_on = Carbon::now()->format('d-M-Y');
+                $oocchange->comment = $request->comment;
+                $oocchange->status = "HOD Primary Review";
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                $history->activity_type = 'Submit By    ,   Submit On';
+                        if (is_null($lastDocumentOOC->submitted_by) || $lastDocumentOOC->submitted_by === '') {
+                            $history->previous = "Null";
+                        } else {
+                            $history->previous = $lastDocumentOOC->submitted_by . ' , ' . $lastDocumentOOC->submitted_on;
+                        }
+
+                    // $history->previous = $lastDocumentOOC->submitted_by;
+                    $history->current = $oocchange->submitted_by . ' , ' . $oocchange->submitted_on;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocumentOOC->status;
+                    $history->change_to = "HOD Primary Review";
+                    $history->change_from = $lastDocumentOOC->status;
+                    // $history->action_name = 'Submit';
                     if (is_null($lastDocumentOOC->submitted_by) || $lastDocumentOOC->submitted_by === '') {
-                        $history->previous = "Null";
+                        $history->action_name = 'New';
                     } else {
-                        $history->previous = $lastDocumentOOC->submitted_by . ' , ' . $lastDocumentOOC->submitted_on;
+                        $history->action_name = 'Update';
+                    }
+                    $history->action = 'Submit';
+
+                    $history->stage='Submit';
+                    $history->save();
+
+                    $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $oocchange, 'site' => "OOC", 'history' => "Submit", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $oocchange) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
+                                    }
+                                );
+                            }
+                        // }
                     }
 
-                // $history->previous = $lastDocumentOOC->submitted_by;
-                $history->current = $oocchange->submitted_by . ' , ' . $oocchange->submitted_on;
+                    
+                // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Opened', 'HOD Primary Review', $isInitial);
+                $oocchange->update();
+                toastr()->success('HOD Primary Review');
+                return back();
+            }
+            
+
+            if ($oocchange->stage == 2) {
+                if (!$oocchange->HOD_Remarks) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'HOD Primary Remarks is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for QA Head Primary Review',
+                        'type' => 'success',
+                    ]);
+                }
+                $oocchange->stage = "3";
+                $oocchange->initial_phase_i_investigation_completed_by = Auth::user()->name;
+                $oocchange->initial_phase_i_investigation_completed_on = Carbon::now()->format('d-M-Y');
+                $oocchange->initial_phase_i_investigation_comment = $request->comment;
+                $oocchange->status = "QA Head Primary Review";
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                $history->activity_type = 'HOD Primary Review Complete By     ,     HOD Primary Review Complete On';
+                if (is_null($lastDocumentOOC->initial_phase_i_investigation_completed_by) || $lastDocumentOOC->initial_phase_i_investigation_completed_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocumentOOC->initial_phase_i_investigation_completed_by . ' , ' . $lastDocumentOOC->initial_phase_i_investigation_completed_on;
+                }
+                $history->current = $oocchange->initial_phase_i_investigation_completed_by . ' , ' . $oocchange->initial_phase_i_investigation_completed_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocumentOOC->status;
-                $history->change_to = "HOD Primary Review";
+                $history->change_to = "QA Head Primary Review";
                 $history->change_from = $lastDocumentOOC->status;
-                // $history->action_name = 'Submit';
-                if (is_null($lastDocumentOOC->submitted_by) || $lastDocumentOOC->submitted_by === '') {
+                $history->action = 'HOD Primary Review Complete';
+                if (is_null($lastDocumentOOC->initial_phase_i_investigation_completed_by) || $lastDocumentOOC->initial_phase_i_investigation_completed_by === '') {
                     $history->action_name = 'New';
                 } else {
                     $history->action_name = 'Update';
                 }
-                $history->action = 'Submit';
-
-                $history->stage='Submit';
+                $history->stage='HOD Primary Review Complete';
                 $history->save();
 
                 $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
-                     foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $oocchange, 'site' => "OOC", 'history' => "Submit", 'process' => 'OOC', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $oocchange) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
-                                }
-                            );
-                        }
-                    // }
-                }
+                        foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $oocchange, 'site' => "OOC", 'history' => "HOD Primary Review Complete", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $oocchange) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Primary Review Complete");
+                                    }
+                                );
+                            }
+                        // }
+                    }
 
                 
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Opened', 'HOD Primary Review', $isInitial);
-            $oocchange->update();
-            toastr()->success('HOD Primary Review');
-            return back();
-        }
-        
-
-        if ($oocchange->stage == 2) {
-            if (!$oocchange->HOD_Remarks) {
-                // Flash message for warning (field not filled)
-                Session::flash('swal', [
-                    'title' => 'Mandatory Fields Required!',
-                    'message' => 'HOD Primary Remarks is yet to be filled!',
-                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
-                ]);
-        
-                return redirect()->back();
-            } else {
-                // Flash message for success (when the form is filled correctly)
-                Session::flash('swal', [
-                    'title' => 'Success!',
-                    'message' => 'Sent for QA Head Primary Review',
-                    'type' => 'success',
-                ]);
+                // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'HOD Primary Review', 'HOD Primary Review Complete');
+                $oocchange->update();
+                toastr()->success('QA Head Primary Review');
+                return back();
             }
-            $oocchange->stage = "3";
-            $oocchange->initial_phase_i_investigation_completed_by = Auth::user()->name;
-            $oocchange->initial_phase_i_investigation_completed_on = Carbon::now()->format('d-M-Y');
-            $oocchange->initial_phase_i_investigation_comment = $request->comment;
-            $oocchange->status = "QA Head Primary Review";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'HOD Primary Review Complete By     ,     HOD Primary Review Complete On';
-            if (is_null($lastDocumentOOC->initial_phase_i_investigation_completed_by) || $lastDocumentOOC->initial_phase_i_investigation_completed_by === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocumentOOC->initial_phase_i_investigation_completed_by . ' , ' . $lastDocumentOOC->initial_phase_i_investigation_completed_on;
-            }
-            $history->current = $oocchange->initial_phase_i_investigation_completed_by . ' , ' . $oocchange->initial_phase_i_investigation_completed_on;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "QA Head Primary Review";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action = 'HOD Primary Review Complete';
-            if (is_null($lastDocumentOOC->initial_phase_i_investigation_completed_by) || $lastDocumentOOC->initial_phase_i_investigation_completed_by === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-            $history->stage='HOD Primary Review Complete';
-            $history->save();
 
-            $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
-                     foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $oocchange, 'site' => "OOC", 'history' => "HOD Primary Review Complete", 'process' => 'OOC', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $oocchange) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Primary Review Complete");
-                                }
-                            );
-                        }
-                    // }
-                }
-
+            if ($oocchange->stage == 3) {
             
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'HOD Primary Review', 'HOD Primary Review Complete');
-            $oocchange->update();
-            toastr()->success('QA Head Primary Review');
-            return back();
-        }
-
-        if ($oocchange->stage == 3) {
-           
-            if (!$oocchange->qaheadremarks) {
-                // Flash message for warning (field not filled)
-                Session::flash('swal', [
-                    'title' => 'Mandatory Fields Required!',
-                    'message' => 'QA Head Primary Remarks is yet to be filled!',
-                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
-                ]);
-        
-                return redirect()->back();
-            } else {
-                // Flash message for success (when the form is filled correctly)
-                Session::flash('swal', [
-                    'title' => 'Success!',
-                    'message' => 'Sent for Under Phase-IA Investigation',
-                    'type' => 'success',
-                ]);
-            }
-
-
-            $oocchange->stage = "4";
-            $oocchange->assignable_cause_f_completed_by = Auth::user()->name;
-            $oocchange->assignable_cause_f_completed_on = Carbon::now()->format('d-M-Y');
-            $oocchange->assignable_cause_f_completed_comment = $request->comment;
-            $oocchange->status = "Under Phase-IA Investigation";
-
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = '';
-            if (is_null($lastDocumentOOC->assignable_cause_f_completed_by) || $lastDocumentOOC->assignable_cause_f_completed_by === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocumentOOC->assignable_cause_f_completed_by . ' , ' . $lastDocumentOOC->assignable_cause_f_completed_on;
-            }
-            $history->activity_type = 'QA Head Primary Review Complete By    ,     QA Head Primary Review Complete  On';
-            $history->current = $oocchange->assignable_cause_f_completed_by . ' , ' . $oocchange->assignable_cause_f_completed_on;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "Under Phase-IA Investigation";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action = 'QA Head Primary Review Complete';
-            $history->stage='QA Head Primary Review Complete';
-            if (is_null($lastDocumentOOC->assignable_cause_f_completed_by) || $lastDocumentOOC->assignable_cause_f_completed_by === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-
-            $history->save();
-            $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
-                     foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $oocchange, 'site' => "OOC", 'history' => "QA Head Primary Review Complete", 'process' => 'OOC', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $oocchange) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Primary Review Complete");
-                                }
-                            );
-                        }
-                    // }
-                }
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'CQA/QA Head Primary Review', 'CQA/QA Head Primary Review Complete');
-            $oocchange->update();
-            toastr()->success('Under Phase-IA Investigation');
-            return back();
-        }
-
-        if ($oocchange->stage == 4) {
-
-            if (!$oocchange->qa_comments_ooc) {
-                // Flash message for warning (field not filled)
-                Session::flash('swal', [
-                    'title' => 'Mandatory Fields Required! Phase IA Investigation',
-                    'message' => 'Evaluation Remarks is yet to be filled!',
-                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
-                ]);
-        
-                return redirect()->back();
-            } else {
-                // Flash message for success (when the form is filled correctly)
-                Session::flash('swal', [
-                    'title' => 'Success!',
-                    'message' => 'Sent for Phase IA HOD Primary Review',
-                    'type' => 'success',
-                ]);
-            }
-
-            $oocchange->stage = "5";
-            $oocchange->cause_f_completed_by = Auth::user()->name;
-            $oocchange->cause_f_completed_on = Carbon::now()->format('d-M-Y');
-            $oocchange->cause_f_completed_comment = $request->comment;
-            $oocchange->status = "Phase IA HOD Primary Review";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'Phase IA Investigation By     ,     Phase IA Investigation On';
-            if (is_null($lastDocumentOOC->cause_f_completed_by) || $lastDocumentOOC->cause_f_completed_by === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocumentOOC->cause_f_completed_by . ' , ' . $lastDocumentOOC->cause_f_completed_on;
-            }
-
-            // $history->previous = $lastDocumentOOC->cause_f_completed_by;
-            $history->current = $oocchange->cause_f_completed_by . ' , ' . $oocchange->cause_f_completed_on;
-            // $history->current = $oocchange->cause_f_completed_by;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "Phase IA HOD Primary Review";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action = 'Phase IA Investigation';
-            if (is_null($lastDocumentOOC->cause_f_completed_by) || $lastDocumentOOC->cause_f_completed_by === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-
-            $history->stage='Phase IA Investigation';
-            $history->save();
-            $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
-                     foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $oocchange, 'site' => "OOC", 'history' => "Phase IA Investigation", 'process' => 'OOC', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $oocchange) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Phase IA Investigation");
-                                }
-                            );
-                        }
-                    // }
-                }
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase IA Investigation', 'Phase IA HOD Primary Review');
-            $oocchange->update();
-            toastr()->success('Phase IA HOD Primary Review');
-            return redirect()->back();
-        }
-
-        if ($oocchange->stage == 5) {
-
-            if (!$oocchange->phase_IA_HODREMARKS) {
-                // Flash message for warning (field not filled)
-                Session::flash('swal', [
-                    'title' => 'Mandatory Fields Required! Phase IA HOD Primary Review',
-                    'message' => 'Phase IA HOD Remarks is yet to be filled!',
-                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
-                ]);
-        
-                return redirect()->back();
-            } else {
-                // Flash message for success (when the form is filled correctly)
-                Session::flash('swal', [
-                    'title' => 'Success!',
-                    'message' => 'Sent for Phase IA QA Review',
-                    'type' => 'success',
-                ]);
-            }
-
-
-            $oocchange->stage = "7";
-            $oocchange->obvious_r_completed_by = Auth::user()->name;
-            $oocchange->obvious_r_completed_on = Carbon::now()->format('d-M-Y');
-            $oocchange->cause_i_ncompleted_comment = $request->comment;
-            $oocchange->status = "Phase IA QA Review";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'Phase IA HOD Review Complete By   ,  Phase IA HOD Review Complete On';
-            // $history->previous = $lastDocumentOOC->obvious_r_completed_by;
-            if (is_null($lastDocumentOOC->obvious_r_completed_by) || $lastDocumentOOC->obvious_r_completed_by === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocumentOOC->obvious_r_completed_by . ' , ' . $lastDocumentOOC->obvious_r_completed_on;
-            }
-            $history->current = $oocchange->obvious_r_completed_by . ' , ' . $oocchange->obvious_r_completed_on;
-            // $history->current = $oocchange->obvious_r_completed_by;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "Phase IA QA Review";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action = 'Phase IA HOD Primary Review Complete';
-            if (is_null($lastDocumentOOC->obvious_r_completed_by) || $lastDocumentOOC->obvious_r_completed_by === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-            $history->stage='Phase IA HOD Primary Review Complete';
-            $history->save();
-            $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
-                     foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $oocchange, 'site' => "OOC", 'history' => "Phase IA HOD Primary Review Complete", 'process' => 'OOC', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $oocchange) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Phase IA HOD Primary Review Complete");
-                                }
-                            );
-                        }
-                    // }
-                }
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Obvious Results Not Found', 'Under Stage II B Investigation');
-            $oocchange->update();
-            toastr()->success('Phase IA QA Review');
-            return back();
-        }
-
-        if ($oocchange->stage == 7) {
-
-            if (!$oocchange->qaremarksnewfield) {
-                // Flash message for warning (field not filled)
-                Session::flash('swal', [
-                    'title' => 'Mandatory Fields Required! Phase IA QA Review',
-                    'message' => 'Phase IA QA Remarks is yet to be filled!',
-                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
-                ]);
-        
-                return redirect()->back();
-            } else {
-                // Flash message for success (when the form is filled correctly)
-                Session::flash('swal', [
-                    'title' => 'Success!',
-                    'message' => 'Sent for P-IA QAH Review',
-                    'type' => 'success',
-                ]);
-            }
-
-            $oocchange->stage = "8";
-            $oocchange->cause_i_completed_by = Auth::user()->name;
-            $oocchange->cause_i_completed_on = Carbon::now()->format('d-M-Y');
-            $oocchange->correction_ooc_comment = $request->comment;
-            $oocchange->status = "P-IA QAH Review";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'Phase IA QA Review Complete By   ,    Phase IA QA Review Complete On';
-            // $history->previous = $lastDocumentOOC->cause_i_completed_by;
-            if (is_null($lastDocumentOOC->cause_i_completed_by) || $lastDocumentOOC->cause_i_completed_by === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocumentOOC->cause_i_completed_by . ' , ' . $lastDocumentOOC->cause_i_completed_on;
-            }
-
-            // $history->current = $oocchange->cause_i_completed_by;
-            $history->current = $oocchange->cause_i_completed_by . ' , ' . $oocchange->cause_i_completed_on;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "P-IA QAH Review";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action = 'Phase IA QA Review Complete';
-            if (is_null($lastDocumentOOC->cause_i_completed_by) || $lastDocumentOOC->cause_i_completed_by === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-            $history->stage='Phase IA QA Review Complete';
-            $history->save();
-
-            $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
-                     foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $oocchange, 'site' => "OOC", 'history' => "Phase IA QA Review Complete", 'process' => 'OOC', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $oocchange) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Phase IA QA Review Complete");
-                                }
-                            );
-                        }
-                    // }
+                if (!$oocchange->qaheadremarks) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'QA Head Primary Remarks is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Under Phase-IA Investigation',
+                        'type' => 'success',
+                    ]);
                 }
 
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase IA QA Review Complete', 'P-IA CQAH/QAH Review');
-            $oocchange->update();
-            toastr()->success('P-IA QAH Review');
-            return back();
-        }
 
-        if ($oocchange->stage == 8) {
+                $oocchange->stage = "4";
+                $oocchange->assignable_cause_f_completed_by = Auth::user()->name;
+                $oocchange->assignable_cause_f_completed_on = Carbon::now()->format('d-M-Y');
+                $oocchange->assignable_cause_f_completed_comment = $request->comment;
+                $oocchange->status = "Under Phase-IA Investigation";
 
-            if (!$oocchange->qaHremarksnewfield) {
-                // Flash message for warning (field not filled)
-                Session::flash('swal', [
-                    'title' => 'Mandatory Fields Required! P-IA QAH Review',
-                    'message' => 'P-IA QAH Remarks is yet to be filled!',
-                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
-                ]);
-        
-                return redirect()->back();
-            } else {
-                // Flash message for success (when the form is filled correctly)
-                Session::flash('swal', [
-                    'title' => 'Success!',
-                    'message' => 'Sent for Closed-Done',
-                    'type' => 'success',
-                ]);
-            }
-
-
-            $oocchange->stage = "9";
-            $oocchange->approved_ooc_completed_by = Auth::user()->name;
-            $oocchange->approved_ooc_completed_on = Carbon::now()->format('d-M-Y');
-            $oocchange->approved_ooc_comment = $request->comment;
-            $oocchange->status = "Closed-Done";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'Assignable Cause Found By     ,    Assignable Cause Found On';
-            if (is_null($lastDocumentOOC->approved_ooc_completed_by) || $lastDocumentOOC->approved_ooc_completed_by === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocumentOOC->approved_ooc_completed_by . ' , ' . $lastDocumentOOC->approved_ooc_completed_on;
-            }
-            $history->current = $oocchange->approved_ooc_completed_by . ' , ' . $oocchange->approved_ooc_completed_on;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "Closed-Done";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action = 'Assignable Cause Found';
-            if (is_null($lastDocumentOOC->approved_ooc_completed_by) || $lastDocumentOOC->approved_ooc_completed_by === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-            $history->stage='Assignable Cause Found';
-            $history->save();
-            $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
-                     foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $oocchange, 'site' => "OOC", 'history' => "Assignable Cause Found", 'process' => 'OOC', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $oocchange) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Assignable Cause Found");
-                                }
-                            );
-                        }
-                    // }
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                $history->activity_type = '';
+                if (is_null($lastDocumentOOC->assignable_cause_f_completed_by) || $lastDocumentOOC->assignable_cause_f_completed_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocumentOOC->assignable_cause_f_completed_by . ' , ' . $lastDocumentOOC->assignable_cause_f_completed_on;
                 }
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Assignable Cause Found', 'Closed-Done');
-            $oocchange->update();
-            toastr()->success('Closed-Done');
-            return back();
-        }
+                $history->activity_type = 'QA Head Primary Review Complete By    ,     QA Head Primary Review Complete  On';
+                $history->current = $oocchange->assignable_cause_f_completed_by . ' , ' . $oocchange->assignable_cause_f_completed_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocumentOOC->status;
+                $history->change_to = "Under Phase-IA Investigation";
+                $history->change_from = $lastDocumentOOC->status;
+                $history->action = 'QA Head Primary Review Complete';
+                $history->stage='QA Head Primary Review Complete';
+                if (is_null($lastDocumentOOC->assignable_cause_f_completed_by) || $lastDocumentOOC->assignable_cause_f_completed_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
 
-        if ($oocchange->stage == 10) {
-
-            if (!$oocchange->is_repeat_stageii_ooc && !$oocchange->is_repeat_proposed_stage_ooc) {
-                // Flash message for warning (field not filled)
-                Session::flash('swal', [
-                    'title' => 'Mandatory Fields Required! Phase IB Investigation',
-                    'message' => 'Rectification by Service Engineer required and Proposed By is yet to be filled!',
-                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
-                ]);
-        
-                return redirect()->back();
-            } else {
-                // Flash message for success (when the form is filled correctly)
-                Session::flash('swal', [
-                    'title' => 'Success!',
-                    'message' => 'Sent for Phase IB HOD Primary Review',
-                    'type' => 'success',
-                ]);
+                $history->save();
+                $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $oocchange, 'site' => "OOC", 'history' => "QA Head Primary Review Complete", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $oocchange) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Primary Review Complete");
+                                    }
+                                );
+                            }
+                        // }
+                    }
+                // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'CQA/QA Head Primary Review', 'CQA/QA Head Primary Review Complete');
+                $oocchange->update();
+                toastr()->success('Under Phase-IA Investigation');
+                return back();
             }
 
-            // if (!$oocchange->is_repeat_proposed_stage_ooc) {
-            //     // Flash message for warning (field not filled)
-            //     Session::flash('swal', [
-            //         'title' => 'Mandatory Fields Required! Phase IB Investigation',
-            //         'message' => 'Proposed By is yet to be filled!',
-            //         'type' => 'warning',  // Type can be success, error, warning, info, etc.
-            //     ]);
+            if ($oocchange->stage == 4) {
+
+                if (!$oocchange->qa_comments_ooc) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required! Phase IA Investigation',
+                        'message' => 'Evaluation Remarks is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Phase IA HOD Primary Review',
+                        'type' => 'success',
+                    ]);
+                }
+
+                $oocchange->stage = "5";
+                $oocchange->cause_f_completed_by = Auth::user()->name;
+                $oocchange->cause_f_completed_on = Carbon::now()->format('d-M-Y');
+                $oocchange->cause_f_completed_comment = $request->comment;
+                $oocchange->status = "Phase IA HOD Primary Review";
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                $history->activity_type = 'Phase IA Investigation By     ,     Phase IA Investigation On';
+                if (is_null($lastDocumentOOC->cause_f_completed_by) || $lastDocumentOOC->cause_f_completed_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocumentOOC->cause_f_completed_by . ' , ' . $lastDocumentOOC->cause_f_completed_on;
+                }
+
+                // $history->previous = $lastDocumentOOC->cause_f_completed_by;
+                $history->current = $oocchange->cause_f_completed_by . ' , ' . $oocchange->cause_f_completed_on;
+                // $history->current = $oocchange->cause_f_completed_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocumentOOC->status;
+                $history->change_to = "Phase IA HOD Primary Review";
+                $history->change_from = $lastDocumentOOC->status;
+                $history->action = 'Phase IA Investigation';
+                if (is_null($lastDocumentOOC->cause_f_completed_by) || $lastDocumentOOC->cause_f_completed_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+
+                $history->stage='Phase IA Investigation';
+                $history->save();
+                $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $oocchange, 'site' => "OOC", 'history' => "Phase IA Investigation", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $oocchange) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Phase IA Investigation");
+                                    }
+                                );
+                            }
+                        // }
+                    }
+                // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase IA Investigation', 'Phase IA HOD Primary Review');
+                $oocchange->update();
+                toastr()->success('Phase IA HOD Primary Review');
+                return redirect()->back();
+            }
+
+            if ($oocchange->stage == 5) {
+
+                if (!$oocchange->phase_IA_HODREMARKS) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required! Phase IA HOD Primary Review',
+                        'message' => 'Phase IA HOD Remarks is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Phase IA QA Review',
+                        'type' => 'success',
+                    ]);
+                }
+
+
+                $oocchange->stage = "7";
+                $oocchange->obvious_r_completed_by = Auth::user()->name;
+                $oocchange->obvious_r_completed_on = Carbon::now()->format('d-M-Y');
+                $oocchange->cause_i_ncompleted_comment = $request->comment;
+                $oocchange->status = "Phase IA QA Review";
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                $history->activity_type = 'Phase IA HOD Review Complete By   ,  Phase IA HOD Review Complete On';
+                // $history->previous = $lastDocumentOOC->obvious_r_completed_by;
+                if (is_null($lastDocumentOOC->obvious_r_completed_by) || $lastDocumentOOC->obvious_r_completed_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocumentOOC->obvious_r_completed_by . ' , ' . $lastDocumentOOC->obvious_r_completed_on;
+                }
+                $history->current = $oocchange->obvious_r_completed_by . ' , ' . $oocchange->obvious_r_completed_on;
+                // $history->current = $oocchange->obvious_r_completed_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocumentOOC->status;
+                $history->change_to = "Phase IA QA Review";
+                $history->change_from = $lastDocumentOOC->status;
+                $history->action = 'Phase IA HOD Primary Review Complete';
+                if (is_null($lastDocumentOOC->obvious_r_completed_by) || $lastDocumentOOC->obvious_r_completed_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->stage='Phase IA HOD Primary Review Complete';
+                $history->save();
+                $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $oocchange, 'site' => "OOC", 'history' => "Phase IA HOD Review Complete", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $oocchange) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Phase IA HOD Review Complete");
+                                    }
+                                );
+                            }
+                        // }
+                    }
+                // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Obvious Results Not Found', 'Under Stage II B Investigation');
+                $oocchange->update();
+                toastr()->success('Phase IA QA Review');
+                return back();
+            }
+
+            if ($oocchange->stage == 7) {
+
+                if (!$oocchange->qaremarksnewfield) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required! Phase IA QA Review',
+                        'message' => 'Phase IA QA Remarks is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for P-IA QAH Review',
+                        'type' => 'success',
+                    ]);
+                }
+
+                $oocchange->stage = "8";
+                $oocchange->cause_i_completed_by = Auth::user()->name;
+                $oocchange->cause_i_completed_on = Carbon::now()->format('d-M-Y');
+                $oocchange->correction_ooc_comment = $request->comment;
+                $oocchange->status = "P-IA QAH Review";
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                $history->activity_type = 'Phase IA QA Review Complete By   ,    Phase IA QA Review Complete On';
+                // $history->previous = $lastDocumentOOC->cause_i_completed_by;
+                if (is_null($lastDocumentOOC->cause_i_completed_by) || $lastDocumentOOC->cause_i_completed_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocumentOOC->cause_i_completed_by . ' , ' . $lastDocumentOOC->cause_i_completed_on;
+                }
+
+                // $history->current = $oocchange->cause_i_completed_by;
+                $history->current = $oocchange->cause_i_completed_by . ' , ' . $oocchange->cause_i_completed_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocumentOOC->status;
+                $history->change_to = "P-IA QAH Review";
+                $history->change_from = $lastDocumentOOC->status;
+                $history->action = 'Phase IA QA Review Complete';
+                if (is_null($lastDocumentOOC->cause_i_completed_by) || $lastDocumentOOC->cause_i_completed_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->stage='Phase IA QA Review Complete';
+                $history->save();
+
+                $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $oocchange, 'site' => "OOC", 'history' => "Phase IA QA Review Complete", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $oocchange) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Phase IA QA Review Complete");
+                                    }
+                                );
+                            }
+                        // }
+                    }
+
+                // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase IA QA Review Complete', 'P-IA CQAH/QAH Review');
+                $oocchange->update();
+                toastr()->success('P-IA QAH Review');
+                return back();
+            }
+
+            if ($oocchange->stage == 8) {
+
+                if (!$oocchange->qaHremarksnewfield) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required! P-IA QAH Review',
+                        'message' => 'P-IA QAH Remarks is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Closed-Done',
+                        'type' => 'success',
+                    ]);
+                }
+
+
+                $oocchange->stage = "9";
+                $oocchange->approved_ooc_completed_by = Auth::user()->name;
+                $oocchange->approved_ooc_completed_on = Carbon::now()->format('d-M-Y');
+                $oocchange->approved_ooc_comment = $request->comment;
+                $oocchange->status = "Closed-Done";
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                $history->activity_type = 'Assignable Cause Found By     ,    Assignable Cause Found On';
+                if (is_null($lastDocumentOOC->approved_ooc_completed_by) || $lastDocumentOOC->approved_ooc_completed_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocumentOOC->approved_ooc_completed_by . ' , ' . $lastDocumentOOC->approved_ooc_completed_on;
+                }
+                $history->current = $oocchange->approved_ooc_completed_by . ' , ' . $oocchange->approved_ooc_completed_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocumentOOC->status;
+                $history->change_to = "Closed-Done";
+                $history->change_from = $lastDocumentOOC->status;
+                $history->action = 'Assignable Cause Found';
+                if (is_null($lastDocumentOOC->approved_ooc_completed_by) || $lastDocumentOOC->approved_ooc_completed_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->stage='Assignable Cause Found';
+                $history->save();
+                $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $oocchange, 'site' => "OOC", 'history' => "Assignable Cause Found", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $oocchange) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Assignable Cause Found");
+                                    }
+                                );
+                            }
+                        // }
+                    }
+                // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Assignable Cause Found', 'Closed-Done');
+                $oocchange->update();
+                toastr()->success('Closed-Done');
+                return back();
+            }
+
+            if ($oocchange->stage == 10) {
+
+                if (!$oocchange->is_repeat_stageii_ooc && !$oocchange->is_repeat_proposed_stage_ooc) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required! Phase IB Investigation',
+                        'message' => 'Rectification by Service Engineer required and Proposed By is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Phase IB HOD Primary Review',
+                        'type' => 'success',
+                    ]);
+                }
+
+                // if (!$oocchange->is_repeat_proposed_stage_ooc) {
+                //     // Flash message for warning (field not filled)
+                //     Session::flash('swal', [
+                //         'title' => 'Mandatory Fields Required! Phase IB Investigation',
+                //         'message' => 'Proposed By is yet to be filled!',
+                //         'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                //     ]);
+            
+                //     return redirect()->back();
+                // } else {
+                //     // Flash message for success (when the form is filled correctly)
+                //     Session::flash('swal', [
+                //         'title' => 'Success!',
+                //         'message' => 'Sent for Phase IB HOD Primary Review',
+                //         'type' => 'success',
+                //     ]);
+                // }
+                $oocchange->stage = "11";
+                $oocchange->correction_ooc_completed_by = Auth::user()->name;
+                $oocchange->correction_ooc_completed_on = Carbon::now()->format('d-M-Y');
+                $oocchange->correction_ooc_comment = $request->comment;
+                $oocchange->status = "Phase IB HOD Primary Review";
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                $history->activity_type = 'Phase IB Investigation By     ,      Phase IB Investigation On';
+                if (is_null($lastDocumentOOC->correction_ooc_completed_by) || $lastDocumentOOC->correction_ooc_completed_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocumentOOC->correction_ooc_completed_by . ' , ' . $lastDocumentOOC->correction_ooc_completed_on;
+                }
+                $history->current = $oocchange->correction_ooc_completed_by . ' , ' . $oocchange->correction_ooc_completed_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocumentOOC->status;
+                $history->change_to = "Phase IB HOD Primary Review";
+                $history->change_from = $lastDocumentOOC->status;
+                $history->action = 'Phase IB Investigation';
+                if (is_null($lastDocumentOOC->correction_ooc_completed_by) || $lastDocumentOOC->correction_ooc_completed_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->stage='Phase IB Investigation';
+                $history->save();
+
+                $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $oocchange, 'site' => "OOC", 'history' => "Phase IB Investigation", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $oocchange) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Phase IB Investigation");
+                                    }
+                                );
+                            }
+                        // }
+                    }
+                // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase IB Investigation', 'Phase IB HOD Primary Review');
+                $oocchange->update();
+                toastr()->success('Phase IB HOD Primary Review');
+                return back();
+            }
+
+            if ($oocchange->stage == 11) {
+
+                if (!$oocchange->phase_IB_HODREMARKS) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required! Phase IB HOD Primary Review',
+                        'message' => 'Phase IB HOD Primary Remarks is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Phase IB QA Review',
+                        'type' => 'success',
+                    ]);
+                }            
+                $oocchange->stage = "12";
+                $oocchange->Phase_IB_HOD_Review_Completed_BY = Auth::user()->name;
+                $oocchange->Phase_IB_HOD_Review_Completed_ON = Carbon::now()->format('d-M-Y');
+                $oocchange->Phase_IB_HOD_Review_Completed_Comment = $request->comment;
+                $oocchange->status = "Phase IB QA Review";
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                $history->activity_type = 'Phase IB HOD Review Complete By   ,    Phase IB HOD Review Complete On';
+                // $history->previous = $lastDocumentOOC->Phase_IB_HOD_Review_Completed_BY;
+                if (is_null($lastDocumentOOC->Phase_IB_HOD_Review_Completed_BY) || $lastDocumentOOC->Phase_IB_HOD_Review_Completed_BY === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocumentOOC->Phase_IB_HOD_Review_Completed_BY . ' , ' . $lastDocumentOOC->Phase_IB_HOD_Review_Completed_ON;
+                }
+                $history->current = $oocchange->Phase_IB_HOD_Review_Completed_BY . ' , ' . $oocchange->Phase_IB_HOD_Review_Completed_ON;
+                // $history->current = $oocchange->Phase_IB_HOD_Review_Completed_BY;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocumentOOC->status;
+                $history->change_to = "Phase IB QA Review";
+                $history->change_from = $lastDocumentOOC->status;
+                $history->action = 'Phase IB HOD Review Complete';
+                if (is_null($lastDocumentOOC->Phase_IB_HOD_Review_Completed_BY) || $lastDocumentOOC->Phase_IB_HOD_Review_Completed_BY === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->stage='Phase IB HOD Review Complete';
+                $history->save();
+
+                $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $oocchange, 'site' => "OOC", 'history' => "Phase IB HOD Review Complete", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $oocchange) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Phase IB HOD Review Complete");
+                                    }
+                                );
+                            }
+                        // }
+                    }
+                // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase IB HOD Review Complete ', 'Phase IB QA Review');
+                $oocchange->update();
+                toastr()->success('Phase IB QA Review');
+                return back();
+            }
+
+            if ($oocchange->stage == 12) {
+
+                if (!$oocchange->phase_IB_qareviewREMARKS) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required! Phase IB QA Review',
+                        'message' => 'Phase IB QA Remarks is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for P-IB QAH Review',
+                        'type' => 'success',
+                    ]);
+                }            
+
+                $oocchange->stage = "13";
+                $oocchange->Phase_IB_QA_Review_Complete_12_by = Auth::user()->name;
+                $oocchange->Phase_IB_QA_Review_Complete_12_on = Carbon::now()->format('d-M-Y');
+                $oocchange->Phase_IB_QA_Review_Complete_12_comment = $request->comment;
+                $oocchange->status = "P-IB QAH Review";
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                $history->activity_type = 'Phase IB QA Review Complete By   , Phase IB QA Review Complete On';
+                if (is_null($lastDocumentOOC->Phase_IB_QA_Review_Complete_12_by) || $lastDocumentOOC->Phase_IB_QA_Review_Complete_12_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocumentOOC->Phase_IB_QA_Review_Complete_12_by . ' , ' . $lastDocumentOOC->Phase_IB_QA_Review_Complete_12_on;
+                }
+                // $history->previous = $lastDocumentOOC->Phase_IB_QA_Review_Complete_12_by;
+                $history->current = $oocchange->Phase_IB_QA_Review_Complete_12_by . ' , ' . $oocchange->Phase_IB_QA_Review_Complete_12_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocumentOOC->status;
+                $history->change_to = "P-IB QAH Review";
+                $history->change_from = $lastDocumentOOC->status;
+                $history->action = 'Phase IA HOD Review Complete';
+                if (is_null($lastDocumentOOC->Phase_IB_QA_Review_Complete_12_by) || $lastDocumentOOC->Phase_IB_QA_Review_Complete_12_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->stage='Phase IA HOD Review Complete';
+                $history->save();
+                $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $oocchange, 'site' => "OOC", 'history' => "Phase IB QA Review Complete", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $oocchange) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Phase IB QA Review Complete");
+                                    }
+                                );
+                            }
+                        // }
+                    }
+                // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase IB QA Review Complete', 'P-IB CQAH/QAH Review');
+                $oocchange->update();
+                toastr()->success('P-IB QAH Review');
+                return back();
+            }
+            if ($oocchange->stage == 13) {
+
+                if (!$oocchange->qPIBaHremarksnewfield) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required! P-IB QAH Review',
+                        'message' => 'P-IB QAH Remarks is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Closed Done',
+                        'type' => 'success',
+                    ]);
+                }            
+                $oocchange->stage = "14";
+                $oocchange->P_IB_Assignable_Cause_Found_by = Auth::user()->name;
+                $oocchange->P_IB_Assignable_Cause_Found_on = Carbon::now()->format('d-M-Y');
+                $oocchange->P_IB_Assignable_Cause_Found_comment = $request->comment;
+                $oocchange->status = "Closed Done";
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                $history->activity_type = 'Approved By  ,  Approved On';
+                if (is_null($lastDocumentOOC->P_IB_Assignable_Cause_Found_by) || $lastDocumentOOC->P_IB_Assignable_Cause_Found_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocumentOOC->P_IB_Assignable_Cause_Found_by . ' , ' . $lastDocumentOOC->Phase_IB_QA_Review_Complete_12_on;
+                }
+                $history->current = $oocchange->P_IB_Assignable_Cause_Found_by . ' , ' . $oocchange->P_IB_Assignable_Cause_Found_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocumentOOC->status;
+                $history->change_to = "Closed Done";
+                $history->change_from = $lastDocumentOOC->status;
+                $history->action = 'Approved';
+                if (is_null($lastDocumentOOC->P_IB_Assignable_Cause_Found_by) || $lastDocumentOOC->P_IB_Assignable_Cause_Found_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->stage='Approved';
+                $history->save();
+                $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $oocchange, 'site' => "OOC", 'history' => "Approved", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $oocchange) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
+                                    }
+                                );
+                            }
+                        // }
+                    }
+                // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'P-IB Assignable Cause Found', 'Closed Done');
+                $oocchange->update();
+                toastr()->success('Closed Done');
+                return back();
+            }
         
-            //     return redirect()->back();
-            // } else {
-            //     // Flash message for success (when the form is filled correctly)
-            //     Session::flash('swal', [
-            //         'title' => 'Success!',
-            //         'message' => 'Sent for Phase IB HOD Primary Review',
-            //         'type' => 'success',
-            //     ]);
+
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
+
+
+    public function OOCStateChangetwo(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $oocchange = OutOfCalibration::find($id);
+            $lastDocumentOOC = OutOfCalibration::find($id);
+
+            if ($oocchange->stage == 8) {
+
+                if (!$oocchange->qaHremarksnewfield) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required! P-IA QAH Review',
+                        'message' => 'P-IA QAH Remarks is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Under Phase-IB Investigation',
+                        'type' => 'success',
+                    ]);
+                }
+
+                $oocchange->stage = "10";
+                $oocchange->correction_r_completed_by = Auth::user()->name;
+                $oocchange->correction_r_completed_on = Carbon::now()->format('d-M-Y');
+                $oocchange->correction_r_ncompleted_comment = $request->comment;
+                $oocchange->status = "Under Phase-IB Investigation";
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                $history->activity_type = 'Assignable Cause Not Found By  ,   Assignable Cause Not Found On';
+                if (is_null($lastDocumentOOC->correction_r_completed_by) || $lastDocumentOOC->correction_r_completed_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocumentOOC->correction_r_completed_by . ' , ' . $lastDocumentOOC->correction_r_completed_on;
+                }
+                
+                $history->current = $oocchange->correction_r_completed_by . ' , ' . $oocchange->correction_r_completed_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocumentOOC->status;
+                $history->change_to = "Under Phase-IB Investigation";
+                $history->change_from = $lastDocumentOOC->status;
+                // $history->action_name = 'Assignable Cause Not Found';
+                $history->action = 'Assignable Cause Not Found';
+                $history->stage='Assignable Cause Not Found';
+                if (is_null($lastDocumentOOC->correction_r_completed_by) || $lastDocumentOOC->correction_r_completed_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+
+                $history->save();
+
+                $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+            // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                $email = Helpers::getUserEmail($u->user_id);
+                    if ($email !== null) {
+                    Mail::send(
+                        'mail.view-mail',
+                        ['data' => $oocchange, 'site' => "OOC", 'history' => "Assignable Cause Not Found", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                        function ($message) use ($email, $oocchange) {
+                            $message->to($email)
+                            ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Assignable Cause Not Found");
+                        }
+                    );
+                }
             // }
-            $oocchange->stage = "11";
-            $oocchange->correction_ooc_completed_by = Auth::user()->name;
-            $oocchange->correction_ooc_completed_on = Carbon::now()->format('d-M-Y');
-            $oocchange->correction_ooc_comment = $request->comment;
-            $oocchange->status = "Phase IB HOD Primary Review";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'Phase IB Investigation By     ,      Phase IB Investigation On';
-            if (is_null($lastDocumentOOC->correction_ooc_completed_by) || $lastDocumentOOC->correction_ooc_completed_by === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocumentOOC->correction_ooc_completed_by . ' , ' . $lastDocumentOOC->correction_ooc_completed_on;
-            }
-            $history->current = $oocchange->correction_ooc_completed_by . ' , ' . $oocchange->correction_ooc_completed_on;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "Phase IB HOD Primary Review";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action = 'Phase IB Investigation';
-            if (is_null($lastDocumentOOC->correction_ooc_completed_by) || $lastDocumentOOC->correction_ooc_completed_by === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-            $history->stage='Phase IB Investigation';
-            $history->save();
-
-            $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
-                     foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $oocchange, 'site' => "OOC", 'history' => "Phase IB Investigation", 'process' => 'OOC', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $oocchange) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Phase IB Investigation");
-                                }
-                            );
-                        }
-                    // }
-                }
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase IB Investigation', 'Phase IB HOD Primary Review');
-            $oocchange->update();
-            toastr()->success('Phase IB HOD Primary Review');
-            return back();
         }
 
-        if ($oocchange->stage == 11) {
+                $oocchange->update();
+                toastr()->success('Under Phase-IB Investigation');
+                return back();
+            }
 
-            if (!$oocchange->phase_IB_HODREMARKS) {
-                // Flash message for warning (field not filled)
-                Session::flash('swal', [
-                    'title' => 'Mandatory Fields Required! Phase IB HOD Primary Review',
-                    'message' => 'Phase IB HOD Primary Remarks is yet to be filled!',
-                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
-                ]);
         
-                return redirect()->back();
-            } else {
-                // Flash message for success (when the form is filled correctly)
-                Session::flash('swal', [
-                    'title' => 'Success!',
-                    'message' => 'Sent for Phase IB QA Review',
-                    'type' => 'success',
-                ]);
-            }            
-            $oocchange->stage = "12";
-            $oocchange->Phase_IB_HOD_Review_Completed_BY = Auth::user()->name;
-            $oocchange->Phase_IB_HOD_Review_Completed_ON = Carbon::now()->format('d-M-Y');
-            $oocchange->Phase_IB_HOD_Review_Completed_Comment = $request->comment;
-            $oocchange->status = "Phase IB QA Review";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'Phase IB HOD Review Complete By   ,    Phase IB HOD Review Complete On';
-            // $history->previous = $lastDocumentOOC->Phase_IB_HOD_Review_Completed_BY;
-            if (is_null($lastDocumentOOC->Phase_IB_HOD_Review_Completed_BY) || $lastDocumentOOC->Phase_IB_HOD_Review_Completed_BY === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocumentOOC->Phase_IB_HOD_Review_Completed_BY . ' , ' . $lastDocumentOOC->Phase_IB_HOD_Review_Completed_ON;
-            }
-            $history->current = $oocchange->Phase_IB_HOD_Review_Completed_BY . ' , ' . $oocchange->Phase_IB_HOD_Review_Completed_ON;
-            // $history->current = $oocchange->Phase_IB_HOD_Review_Completed_BY;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "Phase IB QA Review";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action = 'Phase IB HOD Review Complete';
-            if (is_null($lastDocumentOOC->Phase_IB_HOD_Review_Completed_BY) || $lastDocumentOOC->Phase_IB_HOD_Review_Completed_BY === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-            $history->stage='Phase IB HOD Review Complete';
-            $history->save();
-
-            $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
-                     foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $oocchange, 'site' => "OOC", 'history' => "Phase IB HOD Review Complete", 'process' => 'OOC', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $oocchange) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Phase IB HOD Review Complete");
-                                }
-                            );
-                        }
-                    // }
-                }
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase IB HOD Review Complete ', 'Phase IB QA Review');
-            $oocchange->update();
-            toastr()->success('Phase IB QA Review');
+        } else {
+            toastr()->error('E-signature Not match');
             return back();
         }
-
-        if ($oocchange->stage == 12) {
-
-            if (!$oocchange->phase_IB_qareviewREMARKS) {
-                // Flash message for warning (field not filled)
-                Session::flash('swal', [
-                    'title' => 'Mandatory Fields Required! Phase IB QA Review',
-                    'message' => 'Phase IB QA Remarks is yet to be filled!',
-                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
-                ]);
-        
-                return redirect()->back();
-            } else {
-                // Flash message for success (when the form is filled correctly)
-                Session::flash('swal', [
-                    'title' => 'Success!',
-                    'message' => 'Sent for P-IB QAH Review',
-                    'type' => 'success',
-                ]);
-            }            
-
-            $oocchange->stage = "13";
-            $oocchange->Phase_IB_QA_Review_Complete_12_by = Auth::user()->name;
-            $oocchange->Phase_IB_QA_Review_Complete_12_on = Carbon::now()->format('d-M-Y');
-            $oocchange->Phase_IB_QA_Review_Complete_12_comment = $request->comment;
-            $oocchange->status = "P-IB QAH Review";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'Phase IB QA Review Complete By   , Phase IB QA Review Complete On';
-            if (is_null($lastDocumentOOC->Phase_IB_QA_Review_Complete_12_by) || $lastDocumentOOC->Phase_IB_QA_Review_Complete_12_by === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocumentOOC->Phase_IB_QA_Review_Complete_12_by . ' , ' . $lastDocumentOOC->Phase_IB_QA_Review_Complete_12_on;
-            }
-            // $history->previous = $lastDocumentOOC->Phase_IB_QA_Review_Complete_12_by;
-            $history->current = $oocchange->Phase_IB_QA_Review_Complete_12_by . ' , ' . $oocchange->Phase_IB_QA_Review_Complete_12_on;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "P-IB QAH Review";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action = 'Phase IA HOD Review Complete';
-            if (is_null($lastDocumentOOC->Phase_IB_QA_Review_Complete_12_by) || $lastDocumentOOC->Phase_IB_QA_Review_Complete_12_by === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-            $history->stage='Phase IA HOD Review Complete';
-            $history->save();
-            $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
-                     foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $oocchange, 'site' => "OOC", 'history' => "Phase IA HOD Review Complete", 'process' => 'OOC', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $oocchange) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Phase IA HOD Review Complete");
-                                }
-                            );
-                        }
-                    // }
-                }
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase IB QA Review Complete', 'P-IB CQAH/QAH Review');
-            $oocchange->update();
-            toastr()->success('P-IB QAH Review');
-            return back();
-        }
-        if ($oocchange->stage == 13) {
-
-            if (!$oocchange->qPIBaHremarksnewfield) {
-                // Flash message for warning (field not filled)
-                Session::flash('swal', [
-                    'title' => 'Mandatory Fields Required! P-IB QAH Review',
-                    'message' => 'P-IB QAH Remarks is yet to be filled!',
-                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
-                ]);
-        
-                return redirect()->back();
-            } else {
-                // Flash message for success (when the form is filled correctly)
-                Session::flash('swal', [
-                    'title' => 'Success!',
-                    'message' => 'Sent for Closed Done',
-                    'type' => 'success',
-                ]);
-            }            
-            $oocchange->stage = "14";
-            $oocchange->P_IB_Assignable_Cause_Found_by = Auth::user()->name;
-            $oocchange->P_IB_Assignable_Cause_Found_on = Carbon::now()->format('d-M-Y');
-            $oocchange->P_IB_Assignable_Cause_Found_comment = $request->comment;
-            $oocchange->status = "Closed Done";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'Approved By  ,  Approved On';
-            if (is_null($lastDocumentOOC->P_IB_Assignable_Cause_Found_by) || $lastDocumentOOC->P_IB_Assignable_Cause_Found_by === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocumentOOC->P_IB_Assignable_Cause_Found_by . ' , ' . $lastDocumentOOC->Phase_IB_QA_Review_Complete_12_on;
-            }
-            $history->current = $oocchange->P_IB_Assignable_Cause_Found_by . ' , ' . $oocchange->P_IB_Assignable_Cause_Found_on;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "Closed Done";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action = 'Approved';
-            if (is_null($lastDocumentOOC->P_IB_Assignable_Cause_Found_by) || $lastDocumentOOC->P_IB_Assignable_Cause_Found_by === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-            $history->stage='Approved';
-            $history->save();
-            $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
-                     foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $oocchange, 'site' => "OOC", 'history' => "Approved", 'process' => 'OOC', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $oocchange) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
-                                }
-                            );
-                        }
-                    // }
-                }
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'P-IB Assignable Cause Found', 'Closed Done');
-            $oocchange->update();
-            toastr()->success('Closed Done');
-            return back();
-        }
-       
-
-    } else {
-        toastr()->error('E-signature Not match');
-        return back();
     }
-}
 
+    public function RejectStateChangeTwo(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $ooc = OutOfCalibration::find($id);
+            $lastDocumentOOC = OutOfCalibration::find($id);
 
-public function OOCStateChangetwo(Request $request, $id)
-{
-    if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-        $oocchange = OutOfCalibration::find($id);
-        $lastDocumentOOC = OutOfCalibration::find($id);
+            if ($ooc->stage == 23) 
+            {
+                $ooc->stage = "4";
+                $ooc->status = "Phase II B QA Review ";
+                $ooc->new_stage_reject_by = Auth::user()->name;
+                $ooc->new_stage_reject_on = Carbon::now()->format('d-M-Y');
+                $ooc->new_stage_reject_comment = $request->comment;
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                $history->activity_type = 'P-II A Assignable Cause Not Found By  ,   P-II A Assignable Cause Not Found On';
+                if (is_null($lastDocumentOOC->new_stage_reject_by) || $lastDocumentOOC->new_stage_reject_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocumentOOC->new_stage_reject_by . ' , ' . $lastDocumentOOC->new_stage_reject_on;
+                }
+                $history->current = $ooc->new_stage_reject_by . ' , ' . $ooc->new_stage_reject_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocumentOOC->status;
+                $history->change_to = "Under Phase-II B Investigation";
+                $history->change_from = $lastDocumentOOC->status;
+                $history->action = 'P-II A Assignable Cause Not Found';
+                $history->stage='P-II A Assignable Cause Not Found';
+                if (is_null($lastDocumentOOC->new_stage_reject_by) || $lastDocumentOOC->new_stage_reject_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
 
-        if ($oocchange->stage == 8) {
-
-            if (!$oocchange->qaHremarksnewfield) {
-                // Flash message for warning (field not filled)
-                Session::flash('swal', [
-                    'title' => 'Mandatory Fields Required! P-IA QAH Review',
-                    'message' => 'P-IA QAH Remarks is yet to be filled!',
-                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
-                ]);
-        
-                return redirect()->back();
-            } else {
-                // Flash message for success (when the form is filled correctly)
-                Session::flash('swal', [
-                    'title' => 'Success!',
-                    'message' => 'Sent for Under Phase-IB Investigation',
-                    'type' => 'success',
-                ]);
+                $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
+                foreach ($list as $u)
+               {
+             // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                $email = Helpers::getUserEmail($u->user_id);
+                    if ($email !== null) 
+                    {
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $oocchange, 'site' => "OOC", 'history' => "P-II A Assignable Cause Not Found", 'process' => 'OOC', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                            function ($message) use ($email, $oocchange) {
+                                $message->to($email)
+                                ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: P-II A Assignable Cause Not Found");
+                            }
+                        );
+                    }
+              // }
+                }
+                $ooc->update();
+                toastr()->success('Document Sent');
+                return back();
             }
 
-            $oocchange->stage = "10";
-            $oocchange->correction_r_completed_by = Auth::user()->name;
-            $oocchange->correction_r_completed_on = Carbon::now()->format('d-M-Y');
-            $oocchange->correction_r_ncompleted_comment = $request->comment;
-            $oocchange->status = "Under Phase-IB Investigation";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'Assignable Cause Not Found By  ,   Assignable Cause Not Found On';
-            if (is_null($lastDocumentOOC->correction_r_completed_by) || $lastDocumentOOC->correction_r_completed_by === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocumentOOC->correction_r_completed_by . ' , ' . $lastDocumentOOC->correction_r_completed_on;
+        }
+
+    }
+
+    public function RejectoocStateChange(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password))
+         {
+            $ooc = OutOfCalibration::find($id);
+
+
+            if ($ooc->stage == 2) {
+                $ooc->stage = "1";
+                $ooc->status = "Opened";
+                $ooc->new_stage_reject_HOD_by = Auth::user()->name;
+                $ooc->new_stage_reject_HOD_on  = Carbon::now()->format('d-M-Y');
+                $ooc->new_stage_reject_HOD_comment = $request->comment;
+
+                $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
+                     foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $ooc) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                }
+                            );
+                        }
+                    // }
+                }
+
+                $ooc->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            if ($ooc->stage == 3) {
+                $ooc->stage = "2";
+                $ooc->status = "HOD Primary Review";
+                $ooc->new_stage_reject_HOD_by = Auth::user()->name;
+                $ooc->new_stage_reject_HOD_on = Carbon::now()->format('d-M-Y');
+                $ooc->new_stage_reject_HOD_comment = $request->comment;
+
+                $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $ooc) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                }
+                            );
+                        }
+                    // }
+                }
+
+                $ooc->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($ooc->stage == 4) {
+                $ooc->stage = "3";
+                $ooc->status = "QA Head Primary Review";
+                $ooc->new_stage_reject_CQA_by = Auth::user()->name;
+                $ooc->new_stage_reject__CQA_on = Carbon::now()->format('d-M-Y');
+                $ooc->new_stage_reject_CQA_comment = $request->comment;
+
+                $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $ooc, 'site' => "OOC", 'history' => "Request More Info", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $ooc) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info");
+                                }
+                            );
+                        }
+                    // }
+                }
+
+
+                $ooc->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($ooc->stage == 5) {
+                $ooc->stage = "4";
+                $ooc->status = "Under Phase-IA Investigation";
+                $ooc->new_stage_reject_UnderPhaseIA_by = Auth::user()->name;
+                $ooc->new_stage_reject_UnderPhaseIA_on = Carbon::now()->format('d-M-Y');
+                $ooc->new_stage_reject_UnderPhaseIA_comment = $request->comment;
+
+                $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $ooc) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                }
+                            );
+                        }
+                    // }
+                }
+                $ooc->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($ooc->stage == 7) {
+                $ooc->stage = "5";
+                $ooc->status = "Phase IA HOD Primary Review";
+                $ooc->new_stage_reject_Phase_IA_HOD_Primary_Review_by = Auth::user()->name;
+                $ooc->new_stage_reject_Phase_IA_HOD_Primary_Review_on = Carbon::now()->format('d-M-Y');
+                $ooc->new_stage_reject_Phase_IA_HOD_Primary_Review_comment = $request->comment;
+
+                $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $ooc) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                }
+                            );
+                        }
+                    // }
+                }
+                $ooc->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($ooc->stage == 8) {
+                $ooc->stage = "7";
+                $ooc->status = "Phase IA QA Review";
+                $ooc->new_stage_rejectUnder_Stage_II_B_Investigation_by = Auth::user()->name;
+                $ooc->new_stage_rejectUnder_Stage_II_B_Investigation_on = Carbon::now()->format('d-M-Y');
+                $ooc->new_stage_rejectUnder_Stage_II_B_Investigation_comment = $request->comment;
+
+                $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $ooc) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                }
+                            );
+                        }
+                    // }
+                }
+                $ooc->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($ooc->stage == 10) {
+                $ooc->stage = "8";
+                $ooc->status = "P-IA QAH Review";
+                $ooc->new_stage_rejectP_IA_CQAH_QAH_Reviewation_by = Auth::user()->name;
+                $ooc->new_stage_rejectP_IA_CQAH_QAH_Reviewation_on = Carbon::now()->format('d-M-Y');
+                $ooc->new_stage_rejectP_IA_CQAH_QAH_Review_comment = $request->comment;
+
+                $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $ooc) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                }
+                            );
+                        }
+                    // }
+                }
+                $ooc->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($ooc->stage == 11) {
+                $ooc->stage = "10";
+                $ooc->status = "Under Phase-IB Investigation";
+                $ooc->new_stage_rejectUnder_Phase_IB_Investigation_by = Auth::user()->name;
+                $ooc->new_stage_rejectUnder_Phase_IB_Investigation_on = Carbon::now()->format('d-M-Y');
+                $ooc->new_stage_rejectUnder_Phase_IB_Investigation_comment = $request->comment;
+
+                $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $ooc) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                }
+                            );
+                        }
+                    // }
+                }
+                $ooc->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($ooc->stage == 12) {
+                $ooc->stage = "11";
+                $ooc->status = "Phase IB HOD Primary Review";
+                $ooc->new_stage_rejectPhase_IB_HOD_Primary_Review_by = Auth::user()->name;
+                $ooc->new_stage_rejectPhase_IB_HOD_Primary_Review_on = Carbon::now()->format('d-M-Y');
+                $ooc->new_stage_rejectPhase_IB_HOD_Primary_Reviewcomment = $request->comment;
+
+                $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $ooc) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                }
+                            );
+                        }
+                    // }
+                }
+                $ooc->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($ooc->stage == 13) {
+                $ooc->stage = "12";
+                $ooc->status = "Phase IB QA Review";
+                $ooc->new_stage_rejectPhase_IB_QA_Review_by = Auth::user()->name;
+                $ooc->new_stage_rejectPhase_IB_QA_Review_on = Carbon::now()->format('d-M-Y');
+                $ooc->new_stage_rejectPhase_IB_QA_Review_comment = $request->comment;
+
+                $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $ooc) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                }
+                            );
+                        }
+                    // }
+                }
+                $ooc->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            if ($ooc->stage == 15)
+            {
+                $ooc->stage = "13";
+                $ooc->status = "P-IB QAH Review";
+                $ooc->new_stage_rejectP_IA_CQAH_QAH_Reviewation_by = Auth::user()->name;
+                $ooc->new_stage_rejectP_IA_CQAH_QAH_Reviewation_on = Carbon::now()->format('d-M-Y');
+                $ooc->new_stage_rejectP_IA_CQAH_QAH_Review_comment = $request->comment;
+
+                $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $ooc) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                }
+                            );
+                        }
+                    // }
+                }
+                $ooc->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($ooc->stage == 16) {
+                $ooc->stage = "15";
+                $ooc->status = "Under Phase-II A Investigation";
+                $ooc->new_stage_rejectUnder_Phase_II_A_Investigation_by = Auth::user()->name;
+                $ooc->new_stage_rejectUnder_Phase_II_A_Investigation_on = Carbon::now()->format('d-M-Y');
+                $ooc->new_stage_rejectUnder_Phase_II_A_Investigation_comment = $request->comment;
+
+                $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $ooc) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                }
+                            );
+                        }
+                    // }
+                }
+                $ooc->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($ooc->stage == 17) {
+                $ooc->stage = "16";
+                $ooc->status = "Phase II A HOD Primary Review";
+                $ooc->new_stage_rejectUnder_Phase_II_A_HOD17Investigation_by = Auth::user()->name;
+                $ooc->new_stage_rejectUnder_Phase_II_A_HOD17Investigation_on = Carbon::now()->format('d-M-Y');
+                $ooc->new_stage_rejectUnder_Phase_II_A_HOD17Investigation_comment = $request->comment;
+
+                $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $ooc) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                }
+                            );
+                        }
+                    // }
+                }
+                $ooc->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            if ($ooc->stage == 18) {
+                $ooc->stage = "17";
+                $ooc->status = "Phase IA QA Review";
+                $ooc->new_stage_rejectUnder_Phase_IA_HOD18Investigation_by = Auth::user()->name;
+                $ooc->new_stage_rejectUnder_Phase_IA_HOD18Investigation_on = Carbon::now()->format('d-M-Y');
+                $ooc->new_stage_rejectUnder_Phase_IA_HOD18Investigation_comment = $request->comment;
+
+                $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $ooc) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                }
+                            );
+                        }
+                    // }
+                }
+                $ooc->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($ooc->stage == 20) {
+                $ooc->stage = "18";
+                $ooc->status = "P-II A QAH/CQAH Review";
+                $ooc->new_stage_reject_P_II_A_QAH_CQAH_Review_by = Auth::user()->name;
+                $ooc->new_stage_reject_P_II_A_QAH_CQAH_Review_on = Carbon::now()->format('d-M-Y');
+                $ooc->new_stage_reject_P_II_A_QAH_CQAH_Review_comment = $request->comment;
+
+                $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $ooc) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                }
+                            );
+                        }
+                    // }
+                }
+                $ooc->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            if ($ooc->stage == 21) {
+                $ooc->stage = "20";
+                $ooc->status = "Under Phase-II B Investigation";
+                $ooc->new_stage_rejectUnder_Phase_II_B_Investigation_by = Auth::user()->name;
+                $ooc->new_stage_rejectUnder_Phase_II_B_Investigation_on = Carbon::now()->format('d-M-Y');
+                $ooc->new_stage_rejectUnder_Phase_II_B_Investigation_comment = $request->comment;
+
+                $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $ooc) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                }
+                            );
+                        }
+                    // }
+                }
+                $ooc->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            if ($ooc->stage == 22) {
+                $ooc->stage = "21";
+                $ooc->status = "Phase II B HOD Primary Review";
+                $ooc->new_stage_rejectUnder_Phase_II_B_HOD_Primary_Review_by = Auth::user()->name;
+                $ooc->new_stage_rejectUnder_Phase_II_B_HOD_Primary_Review_on = Carbon::now()->format('d-M-Y');
+                $ooc->new_stage_rejectUnder_Phase_II_B_HOD_Primary_Review_comment = $request->comment;
+
+                $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $ooc) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                }
+                            );
+                        }
+                    // }
+                }
+                $ooc->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($ooc->stage == 23) {
+                $ooc->stage = "22";
+                $ooc->status = "Phase II B QA Review ";
+                $ooc->new_stage_reject_by = Auth::user()->name;
+                $ooc->new_stage_reject_on = Carbon::now()->format('d-M-Y');
+                $ooc->new_stage_reject_comment = $request->comment;
+
+                $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $ooc) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                }
+                            );
+                        }
+                    // }
+                }
+                $ooc->update();
+                toastr()->success('Document Sent');
+                return back();
             }
             
-            $history->current = $oocchange->correction_r_completed_by . ' , ' . $oocchange->correction_r_completed_on;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "Under Phase-IB Investigation";
-            $history->change_from = $lastDocumentOOC->status;
-            // $history->action_name = 'Assignable Cause Not Found';
-            $history->action = 'Assignable Cause Not Found';
-            $history->stage='Assignable Cause Not Found';
-            if (is_null($lastDocumentOOC->correction_r_completed_by) || $lastDocumentOOC->correction_r_completed_by === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-
-            $history->save();
-
-            $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
-            foreach ($list as $u) {
-           // if($u->q_m_s_divisions_id == $extensionNew->division_id){
-               $email = Helpers::getUserEmail($u->user_id);
-                   if ($email !== null) {
-                   Mail::send(
-                       'mail.view-mail',
-                       ['data' => $oocchange, 'site' => "OOC", 'history' => "Assignable Cause Not Found", 'process' => 'OOC', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                       function ($message) use ($email, $oocchange) {
-                           $message->to($email)
-                           ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Assignable Cause Not Found");
-                       }
-                   );
-               }
-           // }
-       }
-
-            $oocchange->update();
-            toastr()->success('Under Phase-IB Investigation');
-            return back();
         }
-
-       
-    } else {
-        toastr()->error('E-signature Not match');
-        return back();
+         else {
+            toastr()->error('E-signature Not match');
+            return back();
+         }
     }
-}
 
-public function RejectStateChangeTwo(Request $request, $id)
-{
-    if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-        $ooc = OutOfCalibration::find($id);
-        $lastDocumentOOC = OutOfCalibration::find($id);
 
-        if ($ooc->stage == 23) {
-            $ooc->stage = "4";
-            $ooc->status = "Phase II B QA Review ";
-            $ooc->new_stage_reject_by = Auth::user()->name;
-            $ooc->new_stage_reject_on = Carbon::now()->format('d-M-Y');
-            $ooc->new_stage_reject_comment = $request->comment;
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'P-II A Assignable Cause Not Found By  ,   P-II A Assignable Cause Not Found On';
-            if (is_null($lastDocumentOOC->new_stage_reject_by) || $lastDocumentOOC->new_stage_reject_by === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocumentOOC->new_stage_reject_by . ' , ' . $lastDocumentOOC->new_stage_reject_on;
-            }
-            $history->current = $ooc->new_stage_reject_by . ' , ' . $ooc->new_stage_reject_on;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "Under Phase-II B Investigation";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action = 'P-II A Assignable Cause Not Found';
-            $history->stage='P-II A Assignable Cause Not Found';
-            if (is_null($lastDocumentOOC->new_stage_reject_by) || $lastDocumentOOC->new_stage_reject_by === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-            $history->save();
 
-            $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
-            foreach ($list as $u) {
-           // if($u->q_m_s_divisions_id == $extensionNew->division_id){
-               $email = Helpers::getUserEmail($u->user_id);
-                   if ($email !== null) {
-                   Mail::send(
-                       'mail.view-mail',
-                       ['data' => $oocchange, 'site' => "OOC", 'history' => "P-II A Assignable Cause Not Found", 'process' => 'OOC', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                       function ($message) use ($email, $oocchange) {
-                           $message->to($email)
-                           ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: P-II A Assignable Cause Not Found");
-                       }
-                   );
-               }
-           // }
-       }
 
-            
-            $ooc->update();
-            toastr()->success('Document Sent');
-            return back();
-        }
+
+
+    public function OOCAuditTrial($id){
+        $auditrecord = OutOfCalibration::find($id);
+        $audit = OOCAuditTrail::where('ooc_id',$id)->orderByDesc('id')->paginate();
+        $today = Carbon::now()->format('d-m-y');
+        $document = OOCAuditTrail::where('ooc_id',$id)->first();
+        $auditrecord->initiator = User::where('id',$auditrecord->initiator_id)->value('name');
+        // return $document;
+        return view('frontend.OOC.audit-trail',compact('audit','document','today','auditrecord'));
+
 
     }
 
-}
-
-public function RejectoocStateChange(Request $request, $id)
-{
-    if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-        $ooc = OutOfCalibration::find($id);
-
-
-        if ($ooc->stage == 2) {
-            $ooc->stage = "1";
-            $ooc->status = "Opened";
-            $ooc->new_stage_reject_HOD_by = Auth::user()->name;
-            $ooc->new_stage_reject_HOD_on  = Carbon::now()->format('d-M-Y');
-            $ooc->new_stage_reject_HOD_comment = $request->comment;
-            $ooc->update();
-            toastr()->success('Document Sent');
-            return back();
-        }
-
-        if ($ooc->stage == 3) {
-            $ooc->stage = "2";
-            $ooc->status = "HOD Primary Review";
-            $ooc->new_stage_reject_HOD_by = Auth::user()->name;
-            $ooc->new_stage_reject_HOD_on = Carbon::now()->format('d-M-Y');
-            $ooc->new_stage_reject_HOD_comment = $request->comment;
-            $ooc->update();
-            toastr()->success('Document Sent');
-            return back();
-        }
-        if ($ooc->stage == 4) {
-            $ooc->stage = "3";
-            $ooc->status = "CQA/QA Head Primary Review";
-            $ooc->new_stage_reject_CQA_by = Auth::user()->name;
-            $ooc->new_stage_reject__CQA_on = Carbon::now()->format('d-M-Y');
-            $ooc->new_stage_reject_CQA_comment = $request->comment;
-            $ooc->update();
-            toastr()->success('Document Sent');
-            return back();
-        }
-        if ($ooc->stage == 5) {
-            $ooc->stage = "4";
-            $ooc->status = "Under Phase-IA Investigation";
-            $ooc->new_stage_reject_UnderPhaseIA_by = Auth::user()->name;
-            $ooc->new_stage_reject_UnderPhaseIA_on = Carbon::now()->format('d-M-Y');
-            $ooc->new_stage_reject_UnderPhaseIA_comment = $request->comment;
-            $ooc->update();
-            toastr()->success('Document Sent');
-            return back();
-        }
-        if ($ooc->stage == 7) {
-            $ooc->stage = "5";
-            $ooc->status = "Phase IA HOD Primary Review";
-            $ooc->new_stage_reject_Phase_IA_HOD_Primary_Review_by = Auth::user()->name;
-            $ooc->new_stage_reject_Phase_IA_HOD_Primary_Review_on = Carbon::now()->format('d-M-Y');
-            $ooc->new_stage_reject_Phase_IA_HOD_Primary_Review_comment = $request->comment;
-            $ooc->update();
-            toastr()->success('Document Sent');
-            return back();
-        }
-        if ($ooc->stage == 8) {
-            $ooc->stage = "7";
-            $ooc->status = "Under Stage II B Investigation";
-            $ooc->new_stage_rejectUnder_Stage_II_B_Investigation_by = Auth::user()->name;
-            $ooc->new_stage_rejectUnder_Stage_II_B_Investigation_on = Carbon::now()->format('d-M-Y');
-            $ooc->new_stage_rejectUnder_Stage_II_B_Investigation_comment = $request->comment;
-            $ooc->update();
-            toastr()->success('Document Sent');
-            return back();
-        }
-        if ($ooc->stage == 10) {
-            $ooc->stage = "8";
-            $ooc->status = "P-IA CQAH/QAH Review";
-            $ooc->new_stage_rejectP_IA_CQAH_QAH_Reviewation_by = Auth::user()->name;
-            $ooc->new_stage_rejectP_IA_CQAH_QAH_Reviewation_on = Carbon::now()->format('d-M-Y');
-            $ooc->new_stage_rejectP_IA_CQAH_QAH_Review_comment = $request->comment;
-            $ooc->update();
-            toastr()->success('Document Sent');
-            return back();
-        }
-        if ($ooc->stage == 11) {
-            $ooc->stage = "10";
-            $ooc->status = "Under Phase-IB Investigation";
-            $ooc->new_stage_rejectUnder_Phase_IB_Investigation_by = Auth::user()->name;
-            $ooc->new_stage_rejectUnder_Phase_IB_Investigation_on = Carbon::now()->format('d-M-Y');
-            $ooc->new_stage_rejectUnder_Phase_IB_Investigation_comment = $request->comment;
-            $ooc->update();
-            toastr()->success('Document Sent');
-            return back();
-        }
-        if ($ooc->stage == 12) {
-            $ooc->stage = "11";
-            $ooc->status = "Phase IB HOD Primary Review";
-            $ooc->new_stage_rejectPhase_IB_HOD_Primary_Review_by = Auth::user()->name;
-            $ooc->new_stage_rejectPhase_IB_HOD_Primary_Review_on = Carbon::now()->format('d-M-Y');
-            $ooc->new_stage_rejectPhase_IB_HOD_Primary_Reviewcomment = $request->comment;
-            $ooc->update();
-            toastr()->success('Document Sent');
-            return back();
-        }
-        if ($ooc->stage == 13) {
-            $ooc->stage = "12";
-            $ooc->status = "Phase IB QA Review";
-            $ooc->new_stage_rejectPhase_IB_QA_Review_by = Auth::user()->name;
-            $ooc->new_stage_rejectPhase_IB_QA_Review_on = Carbon::now()->format('d-M-Y');
-            $ooc->new_stage_rejectPhase_IB_QA_Review_comment = $request->comment;
-            $ooc->update();
-            toastr()->success('Document Sent');
-            return back();
-        }
-        if ($ooc->stage == 15) {
-            $ooc->stage = "13";
-            $ooc->status = "P-IA CQAH/QAH Review";
-            $ooc->new_stage_rejectP_IA_CQAH_QAH_Reviewation_by = Auth::user()->name;
-            $ooc->new_stage_rejectP_IA_CQAH_QAH_Reviewation_on = Carbon::now()->format('d-M-Y');
-            $ooc->new_stage_rejectP_IA_CQAH_QAH_Review_comment = $request->comment;
-            $ooc->update();
-            toastr()->success('Document Sent');
-            return back();
-        }
-        if ($ooc->stage == 16) {
-            $ooc->stage = "15";
-            $ooc->status = "Under Phase-II A Investigation";
-            $ooc->new_stage_rejectUnder_Phase_II_A_Investigation_by = Auth::user()->name;
-            $ooc->new_stage_rejectUnder_Phase_II_A_Investigation_on = Carbon::now()->format('d-M-Y');
-            $ooc->new_stage_rejectUnder_Phase_II_A_Investigation_comment = $request->comment;
-            $ooc->update();
-            toastr()->success('Document Sent');
-            return back();
-        }
-        if ($ooc->stage == 17) {
-            $ooc->stage = "16";
-            $ooc->status = "Phase II A HOD Primary Review";
-            $ooc->new_stage_rejectUnder_Phase_II_A_HOD17Investigation_by = Auth::user()->name;
-            $ooc->new_stage_rejectUnder_Phase_II_A_HOD17Investigation_on = Carbon::now()->format('d-M-Y');
-            $ooc->new_stage_rejectUnder_Phase_II_A_HOD17Investigation_comment = $request->comment;
-            $ooc->update();
-            toastr()->success('Document Sent');
-            return back();
-        }
-
-        if ($ooc->stage == 18) {
-            $ooc->stage = "17";
-            $ooc->status = "Phase IA QA Review";
-            $ooc->new_stage_rejectUnder_Phase_IA_HOD18Investigation_by = Auth::user()->name;
-            $ooc->new_stage_rejectUnder_Phase_IA_HOD18Investigation_on = Carbon::now()->format('d-M-Y');
-            $ooc->new_stage_rejectUnder_Phase_IA_HOD18Investigation_comment = $request->comment;
-            $ooc->update();
-            toastr()->success('Document Sent');
-            return back();
-        }
-        if ($ooc->stage == 20) {
-            $ooc->stage = "18";
-            $ooc->status = "P-II A QAH/CQAH Review";
-            $ooc->new_stage_reject_P_II_A_QAH_CQAH_Review_by = Auth::user()->name;
-            $ooc->new_stage_reject_P_II_A_QAH_CQAH_Review_on = Carbon::now()->format('d-M-Y');
-            $ooc->new_stage_reject_P_II_A_QAH_CQAH_Review_comment = $request->comment;
-            $ooc->update();
-            toastr()->success('Document Sent');
-            return back();
-        }
-
-        if ($ooc->stage == 21) {
-            $ooc->stage = "20";
-            $ooc->status = "Under Phase-II B Investigation";
-            $ooc->new_stage_rejectUnder_Phase_II_B_Investigation_by = Auth::user()->name;
-            $ooc->new_stage_rejectUnder_Phase_II_B_Investigation_on = Carbon::now()->format('d-M-Y');
-            $ooc->new_stage_rejectUnder_Phase_II_B_Investigation_comment = $request->comment;
-            $ooc->update();
-            toastr()->success('Document Sent');
-            return back();
-        }
-
-        if ($ooc->stage == 22) {
-            $ooc->stage = "21";
-            $ooc->status = "Phase II B HOD Primary Review";
-            $ooc->new_stage_rejectUnder_Phase_II_B_HOD_Primary_Review_by = Auth::user()->name;
-            $ooc->new_stage_rejectUnder_Phase_II_B_HOD_Primary_Review_on = Carbon::now()->format('d-M-Y');
-            $ooc->new_stage_rejectUnder_Phase_II_B_HOD_Primary_Review_comment = $request->comment;
-            $ooc->update();
-            toastr()->success('Document Sent');
-            return back();
-        }
-        if ($ooc->stage == 23) {
-            $ooc->stage = "22";
-            $ooc->status = "Phase II B QA Review ";
-            $ooc->new_stage_reject_by = Auth::user()->name;
-            $ooc->new_stage_reject_on = Carbon::now()->format('d-M-Y');
-            $ooc->new_stage_reject_comment = $request->comment;
-            $ooc->update();
-            toastr()->success('Document Sent');
-            return back();
-        }
-        
-}
-else {
-    toastr()->error('E-signature Not match');
-    return back();
-}
-}
-
-
-
-
-
-
-public function OOCAuditTrial($id){
-    $auditrecord = OutOfCalibration::find($id);
-    $audit = OOCAuditTrail::where('ooc_id',$id)->orderByDesc('id')->paginate();
-    $today = Carbon::now()->format('d-m-y');
-    $document = OOCAuditTrail::where('ooc_id',$id)->first();
-    $auditrecord->initiator = User::where('id',$auditrecord->initiator_id)->value('name');
-    // return $document;
-    return view('frontend.OOC.audit-trail',compact('audit','document','today','auditrecord'));
-
-
-}
-
-public function OOCAuditReview(Request $request, $id){
-    $history = new AuditReviewersDetails;
-    $history->doc_id = $id;
-    $history->user_id = Auth::user()->id;
-    $history->type = $request->type;
-    $history->reviewer_comment = $request->reviewer_comment;
-    $history->reviewer_comment_by = Auth::user()->name;
-    $history->reviewer_comment_on = Carbon::now()->toDateString();
-    $history->save();
-return redirect()->back();
-}
+    public function OOCAuditReview(Request $request, $id){
+        $history = new AuditReviewersDetails;
+        $history->doc_id = $id;
+        $history->user_id = Auth::user()->id;
+        $history->type = $request->type;
+        $history->reviewer_comment = $request->reviewer_comment;
+        $history->reviewer_comment_by = Auth::user()->name;
+        $history->reviewer_comment_on = Carbon::now()->toDateString();
+        $history->save();
+        return redirect()->back();
+    }
 
     public function OOCStateCancel(Request $request , $id){
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $ooc = OutOfCalibration::find($id);
             $lastDocumentOOC = OutOfCalibration::find($id);
             $oocchange = OutOfCalibration::find($id);
-
-
-
+            
             $ooc->stage = "0";
             $ooc->status = "Closed - Cancelled";
             $ooc->cancelled_by = Auth::user()->name;
             $ooc->cancelled_on = Carbon::now()->format('d-M-Y');
             $ooc->cancell_comment =$request->comment;
+            
+            $history = new OOCAuditTrail();
+            $history->ooc_id = $id;
+            $history->activity_type = 'Cancel By  ,   Cancel On';
+            if (is_null($lastDocumentOOC->cancelled_by) || $lastDocumentOOC->cancelled_by === '') {
+                    $history->previous = "Null";
+            } else {
+                    $history->previous = $lastDocumentOOC->cancelled_by . ' , ' . $lastDocumentOOC->cancelled_on;
+            }
+            $history->current = $ooc->cancelled_by . ' , ' . $ooc->cancelled_on;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocumentOOC->status;
+            $history->change_to = "Closed - Cancelled";
+            $history->change_from = $lastDocumentOOC->status;
+            $history->action = 'Cancel';
+            $history->stage = 'Cancel';
+            if (is_null($lastDocumentOOC->cancelled_by) || $lastDocumentOOC->cancelled_by === '') {
+                    $history->action_name = 'New';
+            } else {
+                    $history->action_name = 'Update';
+            }
+            $history->save();
+
+            $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
+            foreach ($list as $u)
+            {
+                // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+              $email = Helpers::getUserEmail($u->user_id);
+                    if ($email !== null) 
+                    {
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $oocchange, 'site' => "OOC", 'history' => "Cancel", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                            function ($message) use ($email, $oocchange) {
+                                $message->to($email)
+                                ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
+                            }
+                        );
+                    }
+               // }
+            }
             $ooc->update();
             toastr()->success('Document Sent');
             return back();
+            
 
 
 
@@ -5593,7 +5950,7 @@ return redirect()->back();
     }
     public function OOCChildRoot(Request $request ,$id)
     {
-        $cc = OutOfCalibration::find($id);
+               $cc = OutOfCalibration::find($id);
                $cft = [];
                $parent_id = $id;
                $parent_type = "Out of Calibration";

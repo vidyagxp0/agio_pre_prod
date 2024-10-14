@@ -5608,9 +5608,9 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
 
 
         $lastCftAttachment = is_array($lastCft->intial_update_attach) ? implode(',', $lastCft->intial_update_attach) : $lastCft->intial_update_attach;
-            $requestAttachment = is_array($request->intial_update_attach) ? implode(',', $request->intial_update_attach) : $request->intial_update_attach;
+            $requestAttachment = is_array($cc_cfts->intial_update_attach) ? implode(',', $cc_cfts->intial_update_attach) : $cc_cfts->intial_update_attach;
 
-            if ($lastCftAttachment != $requestAttachment && $request->intial_update_attach != null) {
+            if ($lastCftAttachment != $requestAttachment && $cc_cfts->intial_update_attach != null) {
                 $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
                     ->where('activity_type', 'Initiator Update Attachments')
                     ->exists();
@@ -5633,9 +5633,9 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
 
 
         $lastCftAttachment = is_array($lastCft->hod_assessment_attachment) ? implode(',', $lastCft->hod_assessment_attachment) : $lastCft->hod_assessment_attachment;
-            $requestAttachment = is_array($request->hod_assessment_attachment) ? implode(',', $request->hod_assessment_attachment) : $request->hod_assessment_attachment;
+            $requestAttachment = is_array($cc_cfts->hod_assessment_attachment) ? implode(',', $cc_cfts->hod_assessment_attachment) : $cc_cfts->hod_assessment_attachment;
 
-            if ($lastCftAttachment != $requestAttachment && $request->hod_assessment_attachment != null) {
+            if ($lastCftAttachment != $requestAttachment && $cc_cfts->hod_assessment_attachment != null) {
                 $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
                     ->where('activity_type', 'HOD Assessment Attachments')
                     ->exists();
@@ -5799,14 +5799,14 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
 
 
 
-        if ($lastCft->RA_attachment_second != $request->RA_attachment_second && $request->RA_attachment_second != null) {
+        if ($lastCft->RA_attachment_second != $cc_cfts->RA_attachment_second && $cc_cfts->RA_attachment_second != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
                 ->where('activity_type', 'RA Attachments')
                 ->exists();
 
             // Convert array to a readable string format if necessary
             $previousAttachment = is_array($lastCft->RA_attachment_second) ? implode(", ", $lastCft->RA_attachment_second) : $lastCft->RA_attachment_second;
-            $currentAttachment = is_array($request->RA_attachment_second) ? implode(", ", $request->RA_attachment_second) : $request->RA_attachment_second;
+            $currentAttachment = is_array($cc_cfts->RA_attachment_second) ? implode(", ", $cc_cfts->RA_attachment_second) : $cc_cfts->RA_attachment_second;
 
             $history = new RcmDocHistory;
             $history->cc_id = $id;

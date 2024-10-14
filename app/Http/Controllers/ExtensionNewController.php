@@ -1251,7 +1251,7 @@ class ExtensionNewController extends Controller
                     }
                     $history->save();
 
-                    $list = Helpers::getCftUserList($extensionNew->division_id); // Notify CFT Person
+                    $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
                      foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
@@ -1307,7 +1307,7 @@ class ExtensionNewController extends Controller
                     $history->save();
                     
                     
-                    $list = Helpers::getCftUserList($extensionNew->division_id); // Notify CFT Person
+                    $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
                      foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
@@ -1365,7 +1365,7 @@ class ExtensionNewController extends Controller
 
                 }
 
-                $list = Helpers::getCftUserList($extensionNew->division_id); // Notify CFT Person
+                $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                    $email = Helpers::getUserEmail($u->user_id);
@@ -1440,7 +1440,7 @@ class ExtensionNewController extends Controller
             }
             $history->save();
 
-            $list = Helpers::getCftUserList($extensionNew->division_id); // Notify CFT Person
+            $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
              foreach ($list as $u) {
             // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                 $email = Helpers::getUserEmail($u->user_id);
@@ -1575,7 +1575,7 @@ class ExtensionNewController extends Controller
                     }
                     $history->save();
                    
-                    $list = Helpers::getCftUserList($extensionNew->division_id); // Notify CFT Person
+                    $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
                      foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
@@ -1648,7 +1648,7 @@ class ExtensionNewController extends Controller
                     }
                     $history->save();
 
-                    $list = Helpers::getCftUserList($extensionNew->division_id); // Notify CFT Person
+                    $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
                      foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);

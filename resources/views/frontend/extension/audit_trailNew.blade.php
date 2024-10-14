@@ -395,7 +395,32 @@
             </table>
         </div>
         </div>
+        <div style="float: inline-end; margin: 10px;">
+            <style>
+                .pagination>.active>span {
+                    background-color: #4274da !important;
+                    border-color: #4274da !important;
+                    color: #fff !important;
+                }
 
+                .pagination>.active>span:hover {
+                    background-color: #4274da !important;
+                    border-color: #4274da !important;
+                }
+
+                .pagination>li>a,
+                .pagination>li>span {
+                    color: #4274da !important;
+                }
+
+                .pagination>li>a:hover {
+                    background-color: #4274da !important;
+                    border-color: #4274da !important;
+                    color: #fff !important;
+                }
+            </style>
+            {{ $audit->links() }}
+        </div>
        
 
         </body>
