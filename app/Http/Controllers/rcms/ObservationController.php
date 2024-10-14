@@ -17,6 +17,7 @@ use App\Models\ObservationGrid;
 use App\Models\InternalAuditGrid;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use PDF;
@@ -1520,6 +1521,24 @@ if(!empty($request->attach_files2)){
                 } else {
                     $history->action_name = 'Update';
                 }
+
+                // $list = Helpers::getLeadAuditorUsersList($changestage->division_code); // Notify CFT Person
+                //      foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changestage->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changestage, 'site' => "Observation", 'history' => "Report Issued", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changestage) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Report Issued");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
                 $history->save();
 
                 $changestage->update();
@@ -1579,6 +1598,62 @@ if(!empty($request->attach_files2)){
                         $history->action_name = 'Update';
                     }
                     $history->save();
+
+
+                //     $list = Helpers::getAuditManagerUsersList($changestage->division_code); // Notify CFT Person
+                //      foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changestage->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changestage, 'site' => "Observation", 'history' => "CAPA Plan Proposed", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changestage) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: CAPA Plan Proposed");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
+
+                // $list = Helpers::getQAUserList($changestage->division_code); // Notify CFT Person
+                //      foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changestage->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changestage, 'site' => "Observation", 'history' => "CAPA Plan Proposed", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changestage) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: CAPA Plan Proposed");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
+
+                // $list = Helpers::getCQAUsersList($changestage->division_code); // Notify CFT Person
+                //      foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changestage->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changestage, 'site' => "Observation", 'history' => "CAPA Plan Proposed", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changestage) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: CAPA Plan Proposed");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
+
                     $changestage->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -1634,23 +1709,60 @@ if(!empty($request->attach_files2)){
                     } else {
                         $history->action_name = 'Update';
                     }
-                //     $list = Helpers::getLeadAuditeeUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changestage->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-    
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changestage],
-                //                 function ($message) use ($email) {
+                
+                //     $list = Helpers::getAuditManagerUsersList($changestage->division_code); // Notify CFT Person
+                //      foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changestage->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changestage, 'site' => "Observation", 'history' => "No CAPAs Required", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changestage) {
                 //                     $message->to($email)
-                //                         ->subject("Document sent ".Auth::user()->name);
+                //                     ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: No CAPAs Required");
                 //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                //             );
+                //         }
+                //     // }
+                // }
+
+
+                // $list = Helpers::getQAUserList($changestage->division_code); // Notify CFT Person
+                //      foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changestage->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changestage, 'site' => "Observation", 'history' => "No CAPAs Required", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changestage) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: No CAPAs Required");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
+
+                // $list = Helpers::getCQAUsersList($changestage->division_code); // Notify CFT Person
+                //      foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changestage->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changestage, 'site' => "Observation", 'history' => "No CAPAs Required", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changestage) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: No CAPAs Required");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
                 $history->save();
                     $changestage->update();
                     toastr()->success('Document Sent');
@@ -1710,24 +1822,95 @@ if(!empty($request->attach_files2)){
                 } else {
                     $history->action_name = 'Update';
                 }
-                $history->save();
-            //     $list = Helpers::getLeadAuditeeUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changestage->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
 
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changestage],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document sent ".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      }
-            //   }
+                // $list = Helpers::getAuditManagerUsersList($changestage->division_code); // Notify CFT Person
+                //      foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changestage->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changestage, 'site' => "Observation", 'history' => "Response Reviewed", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changestage) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Response Reviewed");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
+
+                // $list = Helpers::getQAUserList($changestage->division_code); // Notify CFT Person
+                //      foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changestage->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changestage, 'site' => "Observation", 'history' => "Response Reviewed", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changestage) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Response Reviewed");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
+
+                // $list = Helpers::getCQAUsersList($changestage->division_code); // Notify CFT Person
+                //      foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changestage->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changestage, 'site' => "Observation", 'history' => "Response Reviewed", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changestage) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Response Reviewed");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
+                // $list = Helpers::getLeadAuditeeUsersList($changestage->division_code); // Notify CFT Person
+                //      foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changestage->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changestage, 'site' => "Observation", 'history' => "Response Reviewed", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changestage) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Response Reviewed");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
+                // $list = Helpers::getLeadAuditorUsersList($changestage->division_code); // Notify CFT Person
+                //      foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changestage->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changestage, 'site' => "Observation", 'history' => "Response Reviewed", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changestage) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Response Reviewed");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
+                $history->save();
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1749,6 +1932,60 @@ if(!empty($request->attach_files2)){
                 $changeControl->cancel_by = Auth::user()->name;
                 $changeControl->cancel_on = Carbon::now()->format('d-M-Y');
                 $changeControl->cancel_comment = $request->comment;
+
+                // $list = Helpers::getLeadAuditeeUsersList($changeControl->division_code); // Notify CFT Person
+                //      foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "Observation", 'history' => "Cancel", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
+
+                // $list = Helpers::getQAUserList($changeControl->division_code); // Notify CFT Person
+                //      foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "Observation", 'history' => "Report Issued", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Report Issued");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
+
+                // $list = Helpers::getCQAUsersList($changeControl->division_code); // Notify CFT Person
+                //      foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "Observation", 'history' => "Report Issued", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Report Issued");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1789,9 +2026,28 @@ if(!empty($request->attach_files2)){
                 $history->change_from = $lastDocument->status;
                 $history->stage = '';
                 $history->save();
+
+                // $list = Helpers::getLeadAuditorUsersList($changeControl->division_code); // Notify CFT Person
+                //      foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "Observation", 'history' => "More Info Required", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
+
             }
 
             if ($changeControl->stage == 3) {
