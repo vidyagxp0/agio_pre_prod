@@ -3182,26 +3182,26 @@ foreach ($pre as $processName => $modelClass) {
                     }
                     $history->save();
 
-                    $list = Helpers::getHodUserList($capa->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $capa->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $capa, 'site'=>"CAPA", 'history' => "Propose Plan ", 'process' => 'Capa', 'comment' => $capa->comment, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $capa) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Propose Plan  Performed");
-                                        }
-                                    );
-                                } catch(\Exception $e) {
-                                    info('Error sending mail', [$e]);
-                                }
-                            }
-                        // }
-                    }
+                    // $list = Helpers::getHodUserList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "Propose Plan ", 'process' => 'Capa', 'comment' => $capa->comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Propose Plan  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
 
 
                 $capa->update();
@@ -3259,46 +3259,46 @@ foreach ($pre as $processName => $modelClass) {
                 }
                 $history->save();
 
-                $list = Helpers::getQAUserList($capa->division_id);
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $capa->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $capa, 'site'=>"CAPA", 'history' => "HOD Review Complete ", 'process' => 'Capa', 'comment' => $capa->hod_comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $capa) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete  Performed");
-                                    }
-                                );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
-                            }
-                        }
-                    // }
-                }
-                $list = Helpers::getCQAReviewerUsersList($capa->division_id);
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $capa->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $capa, 'site'=>"CAPA", 'history' => "HOD Review Complete ", 'process' => 'Capa', 'comment' => $capa->hod_comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $capa) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete  Performed");
-                                    }
-                                );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
-                            }
-                        }
-                    // }
-                }
+                // $list = Helpers::getQAUserList($capa->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "HOD Review Complete ", 'process' => 'Capa', 'comment' => $capa->hod_comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $capa) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete  Performed");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
+                // $list = Helpers::getCQAReviewerUsersList($capa->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "HOD Review Complete ", 'process' => 'Capa', 'comment' => $capa->hod_comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $capa) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete  Performed");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
 
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -3354,46 +3354,46 @@ foreach ($pre as $processName => $modelClass) {
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    $list = Helpers::getQAUserList($capa->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $capa->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $capa, 'site'=>"CAPA", 'history' => "QA/CQA Review Complete ", 'process' => 'Capa', 'comment' => $capa->qa_comment, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $capa) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Review Complete  Performed");
-                                        }
-                                    );
-                                } catch(\Exception $e) {
-                                    info('Error sending mail', [$e]);
-                                }
-                            }
-                        // }
-                    }
-                    $list = Helpers::getCQAApproverUsersList($capa->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $capa->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $capa, 'site'=>"CAPA", 'history' => "QA/CQA Review Complete ", 'process' => 'Capa', 'comment' => $capa->qa_comment, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $capa) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Review Complete  Performed");
-                                        }
-                                    );
-                                } catch(\Exception $e) {
-                                    info('Error sending mail', [$e]);
-                                }
-                            }
-                        // }
-                    }
+                    // $list = Helpers::getQAUserList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "QA/CQA Review Complete ", 'process' => 'Capa', 'comment' => $capa->qa_comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Review Complete  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
+                    // $list = Helpers::getCQAApproverUsersList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "QA/CQA Review Complete ", 'process' => 'Capa', 'comment' => $capa->qa_comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Review Complete  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3449,26 +3449,26 @@ foreach ($pre as $processName => $modelClass) {
                             $history->action_name = 'Update';
                         }
                         $history->save();
-                        $list = Helpers::getInitiatorUserList($capa->division_id);
-                        foreach ($list as $u) {
-                            // if($u->q_m_s_divisions_id == $capa->division_id){
-                                $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                    try {
-                                        Mail::send(
-                                            'mail.view-mail',
-                                            ['data' => $capa, 'site'=>"CAPA", 'history' => "Approved ", 'process' => 'Capa', 'comment' => $capa->approved_comment, 'user'=> Auth::user()->name],
-                                            function ($message) use ($email, $capa) {
-                                                $message->to($email)
-                                                ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved  Performed");
-                                            }
-                                        );
-                                    } catch(\Exception $e) {
-                                        info('Error sending mail', [$e]);
-                                    }
-                                }
-                            // }
-                        }
+                        // $list = Helpers::getInitiatorUserList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "Approved ", 'process' => 'Capa', 'comment' => $capa->approved_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
 
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -3525,26 +3525,26 @@ foreach ($pre as $processName => $modelClass) {
                             $history->action_name = 'Update';
                         }
                         $history->save();
-                        $list = Helpers::getHodUserList($capa->division_id);
-                        foreach ($list as $u) {
-                            // if($u->q_m_s_divisions_id == $capa->division_id){
-                                $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                    try {
-                                        Mail::send(
-                                            'mail.view-mail',
-                                            ['data' => $capa, 'site'=>"CAPA", 'history' => "Complete ", 'process' => 'Capa', 'comment' => $capa->com_comment, 'user'=> Auth::user()->name],
-                                            function ($message) use ($email, $capa) {
-                                                $message->to($email)
-                                                ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete  Performed");
-                                            }
-                                        );
-                                    } catch(\Exception $e) {
-                                        info('Error sending mail', [$e]);
-                                    }
-                                }
-                            // }
-                        }
+                        // $list = Helpers::getHodUserList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "Complete ", 'process' => 'Capa', 'comment' => $capa->com_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3600,46 +3600,46 @@ foreach ($pre as $processName => $modelClass) {
                             $history->action_name = 'Update';
                         }
                         $history->save();
-                        $list = Helpers::getQAUserList($capa->division_id);
-                        foreach ($list as $u) {
-                            // if($u->q_m_s_divisions_id == $capa->division_id){
-                                $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                    try {
-                                        Mail::send(
-                                            'mail.view-mail',
-                                            ['data' => $capa, 'site'=>"CAPA", 'history' => "HOD Final Complete ", 'process' => 'Capa', 'comment' => $capa->final_comment, 'user'=> Auth::user()->name],
-                                            function ($message) use ($email, $capa) {
-                                                $message->to($email)
-                                                ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Complete  Performed");
-                                            }
-                                        );
-                                    } catch(\Exception $e) {
-                                        info('Error sending mail', [$e]);
-                                    }
-                                }
-                            // }
-                        }
-                        $list = Helpers::getCQAUsersList($capa->division_id);
-                        foreach ($list as $u) {
-                            // if($u->q_m_s_divisions_id == $capa->division_id){
-                                $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                    try {
-                                        Mail::send(
-                                            'mail.view-mail',
-                                            ['data' => $capa, 'site'=>"CAPA", 'history' => "HOD Final Complete ", 'process' => 'Capa', 'comment' => $capa->final_comment, 'user'=> Auth::user()->name],
-                                            function ($message) use ($email, $capa) {
-                                                $message->to($email)
-                                                ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Complete  Performed");
-                                            }
-                                        );
-                                    } catch(\Exception $e) {
-                                        info('Error sending mail', [$e]);
-                                    }
-                                }
-                            // }
-                        }
+                        // $list = Helpers::getQAUserList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "HOD Final Complete ", 'process' => 'Capa', 'comment' => $capa->final_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Complete  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
+                        // $list = Helpers::getCQAUsersList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "HOD Final Complete ", 'process' => 'Capa', 'comment' => $capa->final_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Complete  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3695,26 +3695,26 @@ foreach ($pre as $processName => $modelClass) {
                             $history->action_name = 'Update';
                         }
                         $history->save();
-                        $list = Helpers::getQAHeadUserList($capa->division_id);
-                        foreach ($list as $u) {
-                            // if($u->q_m_s_divisions_id == $capa->division_id){
-                                $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                    try {
-                                        Mail::send(
-                                            'mail.view-mail',
-                                            ['data' => $capa, 'site'=>"CAPA", 'history' => "QA/CQA Closure Review Complete ", 'process' => 'Capa', 'comment' => $capa->qa_closure_comment, 'user'=> Auth::user()->name],
-                                            function ($message) use ($email, $capa) {
-                                                $message->to($email)
-                                                ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Closure Review Complete  Performed");
-                                            }
-                                        );
-                                    } catch(\Exception $e) {
-                                        info('Error sending mail', [$e]);
-                                    }
-                                }
-                            // }
-                        }
+                        // $list = Helpers::getQAHeadUserList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "QA/CQA Closure Review Complete ", 'process' => 'Capa', 'comment' => $capa->qa_closure_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Closure Review Complete  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3770,126 +3770,126 @@ foreach ($pre as $processName => $modelClass) {
                             $history->action_name = 'Update';
                         }
                         $history->save();
-                        $list = Helpers::getQAUserList($capa->division_id);
-                        foreach ($list as $u) {
-                            // if($u->q_m_s_divisions_id == $capa->division_id){
-                                $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                    try {
-                                        Mail::send(
-                                            'mail.view-mail',
-                                            ['data' => $capa, 'site'=>"CAPA", 'history' => "QAH/CQA Head Approval Complete ", 'process' => 'Capa', 'comment' => $capa->qah_comment, 'user'=> Auth::user()->name],
-                                            function ($message) use ($email, $capa) {
-                                                $message->to($email)
-                                                ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQA Head Approval Complete  Performed");
-                                            }
-                                        );
-                                    } catch(\Exception $e) {
-                                        info('Error sending mail', [$e]);
-                                    }
-                                }
-                            // }
-                        }
-                        $list = Helpers::getCQAReviewerUsersList($capa->division_id);
-                        foreach ($list as $u) {
-                            // if($u->q_m_s_divisions_id == $capa->division_id){
-                                $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                    try {
-                                        Mail::send(
-                                            'mail.view-mail',
-                                            ['data' => $capa, 'site'=>"CAPA", 'history' => "QAH/CQA Head Approval Complete ", 'process' => 'Capa', 'comment' => $capa->qah_comment, 'user'=> Auth::user()->name],
-                                            function ($message) use ($email, $capa) {
-                                                $message->to($email)
-                                                ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQA Head Approval Complete  Performed");
-                                            }
-                                        );
-                                    } catch(\Exception $e) {
-                                        info('Error sending mail', [$e]);
-                                    }
-                                }
-                            // }
-                        }
-                        $list = Helpers::getCQAUsersList($capa->division_id);
-                        foreach ($list as $u) {
-                            // if($u->q_m_s_divisions_id == $capa->division_id){
-                                $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                    try {
-                                        Mail::send(
-                                            'mail.view-mail',
-                                            ['data' => $capa, 'site'=>"CAPA", 'history' => "QAH/CQA Head Approval Complete ", 'process' => 'Capa', 'comment' => $capa->qah_comment, 'user'=> Auth::user()->name],
-                                            function ($message) use ($email, $capa) {
-                                                $message->to($email)
-                                                ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQA Head Approval Complete  Performed");
-                                            }
-                                        );
-                                    } catch(\Exception $e) {
-                                        info('Error sending mail', [$e]);
-                                    }
-                                }
-                            // }
-                        }
-                        $list = Helpers::getInitiatorUserList($capa->division_id);
-                        foreach ($list as $u) {
-                            // if($u->q_m_s_divisions_id == $capa->division_id){
-                                $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                    try {
-                                        Mail::send(
-                                            'mail.view-mail',
-                                            ['data' => $capa, 'site'=>"CAPA", 'history' => "QAH/CQA Head Approval Complete ", 'process' => 'Capa', 'comment' => $capa->qah_comment, 'user'=> Auth::user()->name],
-                                            function ($message) use ($email, $capa) {
-                                                $message->to($email)
-                                                ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQA Head Approval Complete  Performed");
-                                            }
-                                        );
-                                    } catch(\Exception $e) {
-                                        info('Error sending mail', [$e]);
-                                    }
-                                }
-                            // }
-                        }
-                        $list = Helpers::getCQAApproverUsersList($capa->division_id);
-                        foreach ($list as $u) {
-                            // if($u->q_m_s_divisions_id == $capa->division_id){
-                                $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                    try {
-                                        Mail::send(
-                                            'mail.view-mail',
-                                            ['data' => $capa, 'site'=>"CAPA", 'history' => "QAH/CQA Head Approval Complete ", 'process' => 'Capa', 'comment' => $capa->qah_comment, 'user'=> Auth::user()->name],
-                                            function ($message) use ($email, $capa) {
-                                                $message->to($email)
-                                                ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQA Head Approval Complete  Performed");
-                                            }
-                                        );
-                                    } catch(\Exception $e) {
-                                        info('Error sending mail', [$e]);
-                                    }
-                                }
-                            // }
-                        }
-                        $list = Helpers::getHodUserList($capa->division_id);
-                        foreach ($list as $u) {
-                            // if($u->q_m_s_divisions_id == $capa->division_id){
-                                $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                    try {
-                                        Mail::send(
-                                            'mail.view-mail',
-                                            ['data' => $capa, 'site'=>"CAPA", 'history' => "QAH/CQA Head Approval Complete ", 'process' => 'Capa', 'comment' => $capa->qah_comment, 'user'=> Auth::user()->name],
-                                            function ($message) use ($email, $capa) {
-                                                $message->to($email)
-                                                ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQA Head Approval Complete  Performed");
-                                            }
-                                        );
-                                    } catch(\Exception $e) {
-                                        info('Error sending mail', [$e]);
-                                    }
-                                }
-                            // }
-                        }
+                        // $list = Helpers::getQAUserList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "QAH/CQA Head Approval Complete ", 'process' => 'Capa', 'comment' => $capa->qah_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQA Head Approval Complete  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
+                        // $list = Helpers::getCQAReviewerUsersList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "QAH/CQA Head Approval Complete ", 'process' => 'Capa', 'comment' => $capa->qah_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQA Head Approval Complete  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
+                        // $list = Helpers::getCQAUsersList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "QAH/CQA Head Approval Complete ", 'process' => 'Capa', 'comment' => $capa->qah_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQA Head Approval Complete  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
+                        // $list = Helpers::getInitiatorUserList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "QAH/CQA Head Approval Complete ", 'process' => 'Capa', 'comment' => $capa->qah_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQA Head Approval Complete  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
+                        // $list = Helpers::getCQAApproverUsersList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "QAH/CQA Head Approval Complete ", 'process' => 'Capa', 'comment' => $capa->qah_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQA Head Approval Complete  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
+                        // $list = Helpers::getHodUserList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "QAH/CQA Head Approval Complete ", 'process' => 'Capa', 'comment' => $capa->qah_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQA Head Approval Complete  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3939,46 +3939,46 @@ foreach ($pre as $processName => $modelClass) {
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    $list = Helpers::getQAUserList($capa->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $capa->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $capa, 'site'=>"CAPA", 'history' => "Cancel ", 'process' => 'Capa', 'comment' => $capa->cancel_comment, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $capa) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel  Performed");
-                                        }
-                                    );
-                                } catch(\Exception $e) {
-                                    info('Error sending mail', [$e]);
-                                }
-                            }
-                        // }
-                    }
-                    $list = Helpers::getCQAUsersList($capa->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $capa->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $capa, 'site'=>"CAPA", 'history' => "Cancel ", 'process' => 'Capa', 'comment' => $capa->cancel_comment, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $capa) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel  Performed");
-                                        }
-                                    );
-                                } catch(\Exception $e) {
-                                    info('Error sending mail', [$e]);
-                                }
-                            }
-                        // }
-                    }
+                    // $list = Helpers::getQAUserList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "Cancel ", 'process' => 'Capa', 'comment' => $capa->cancel_comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
+                    // $list = Helpers::getCQAUsersList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "Cancel ", 'process' => 'Capa', 'comment' => $capa->cancel_comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
             $capa->update();
             $history = new CapaHistory();
             $history->type = "Capa";
@@ -4056,26 +4056,26 @@ foreach ($pre as $processName => $modelClass) {
                         //     $history->action_name = 'Update';
                         // }
                         $history->save();
-                        $list = Helpers::getInitiatorUserList($capa->division_id);
-                        foreach ($list as $u) {
-                            // if($u->q_m_s_divisions_id == $capa->division_id){
-                                $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                    try {
-                                        Mail::send(
-                                            'mail.view-mail',
-                                            ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->hod_comment1, 'user'=> Auth::user()->name],
-                                            function ($message) use ($email, $capa) {
-                                                $message->to($email)
-                                                ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
-                                            }
-                                        );
-                                    } catch(\Exception $e) {
-                                        info('Error sending mail', [$e]);
-                                    }
-                                }
-                            // }
-                        }
+                        // $list = Helpers::getInitiatorUserList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->hod_comment1, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
                 $capa->update();
                 $history = new CapaHistory();
                 $history->type = "Capa";
@@ -4125,26 +4125,26 @@ foreach ($pre as $processName => $modelClass) {
                     //     $history->action_name = 'Update';
                     // }
                     $history->save();
-                    $list = Helpers::getHodUserList($capa->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $capa->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->qa_commenta, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $capa) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
-                                        }
-                                    );
-                                } catch(\Exception $e) {
-                                    info('Error sending mail', [$e]);
-                                }
-                            }
-                        // }
-                    }
+                    // $list = Helpers::getHodUserList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->qa_commenta, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
             $capa->update();
             $history = new CapaHistory();
             $history->type = "Capa";
@@ -4208,47 +4208,47 @@ foreach ($pre as $processName => $modelClass) {
                     // } else {
                     //     $history->action_name = 'Update';
                     // }
-                    $history->save();
-                    $list = Helpers::getQAUserList($capa->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $capa->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->app_comment, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $capa) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
-                                        }
-                                    );
-                                } catch(\Exception $e) {
-                                    info('Error sending mail', [$e]);
-                                }
-                            }
-                        // }
-                    }
-                    $list = Helpers::getCQAReviewerUsersList($capa->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $capa->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->app_comment, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $capa) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
-                                        }
-                                    );
-                                } catch(\Exception $e) {
-                                    info('Error sending mail', [$e]);
-                                }
-                            }
-                        // }
-                    }
+                    // $history->save();
+                    // $list = Helpers::getQAUserList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->app_comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
+                    // $list = Helpers::getCQAReviewerUsersList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->app_comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
         $capa->update();
         $history = new CapaHistory();
         $history->type = "Capa";
@@ -4346,26 +4346,26 @@ foreach ($pre as $processName => $modelClass) {
                     //     $history->action_name = 'Update';
                     // }
                     $history->save();
-                    $list = Helpers::getInitiatorUserList($capa->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $capa->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->final_hod_comment, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $capa) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
-                                        }
-                                    );
-                                } catch(\Exception $e) {
-                                    info('Error sending mail', [$e]);
-                                }
-                            }
-                        // }
-                    }
+                    // $list = Helpers::getInitiatorUserList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->final_hod_comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
             $capa->update();
             $history = new CapaHistory();
             $history->type = "Capa";
@@ -4413,27 +4413,27 @@ foreach ($pre as $processName => $modelClass) {
                     // } else {
                     //     $history->action_name = 'Update';
                     // }
-                    $history->save();
-                    $list = Helpers::getHodUserList($capa->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $capa->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->closure_qa_comment, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $capa) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
-                                        }
-                                    );
-                                } catch(\Exception $e) {
-                                    info('Error sending mail', [$e]);
-                                }
-                            }
-                        // }
-                    }
+                    // $history->save();
+                    // $list = Helpers::getHodUserList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->closure_qa_comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
                      $capa->update();
                     $history = new CapaHistory();
                  $history->type = "Capa";
@@ -4482,46 +4482,46 @@ foreach ($pre as $processName => $modelClass) {
                     //     $history->action_name = 'Update';
                     // }
                     $history->save();
-                    $list = Helpers::getQAUserList($capa->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $capa->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->qah_comment1, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $capa) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
-                                        }
-                                    );
-                                } catch(\Exception $e) {
-                                    info('Error sending mail', [$e]);
-                                }
-                            }
-                        // }
-                    }
-                    $list = Helpers::getCQAUsersList($capa->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $capa->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->qah_comment1, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $capa) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
-                                        }
-                                    );
-                                } catch(\Exception $e) {
-                                    info('Error sending mail', [$e]);
-                                }
-                            }
-                        // }
-                    }
+                    // $list = Helpers::getQAUserList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->qah_comment1, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
+                    // $list = Helpers::getCQAUsersList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->qah_comment1, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
                      $capa->update();
                     $history = new CapaHistory();
                  $history->type = "Capa";

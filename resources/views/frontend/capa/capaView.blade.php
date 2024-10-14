@@ -1984,7 +1984,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments"> QA/CQA Approval Comment@if($data->stage == 4)<span class="text-danger">*</span> </label>
+                    <label for="Comments"> QA/CQA Approval Comment<span class="text-danger">*</span> </label>
                     <textarea name="qah_cq_comments" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->qah_cq_comments }}</textarea>
                 </div>
             </div>
