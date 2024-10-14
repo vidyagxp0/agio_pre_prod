@@ -219,85 +219,84 @@ table {
         <div class="container-fluid">
             <div class="process-tables-list">
                 <div class="process-table active" id="internal-audit">
-                    <div class="mt-1 mb-2 bg-white " style="height: auto; padding: 10px; margin: 5px;">
-                        <div class="d-flex align-items-center">
-                            <!-- <div class="scope-bar ml-3">
-                                    <button style="width: 70px;margin-left:5px"
-                                        class="print-btn btn btn-primary">Print</button>
-                                </div> -->
-                            <!-- <div class="flex-grow-2" style="margin-left:-50px; margin-bottom:12px"> -->
-                            <div class="filter-bar d-flex justify-content-between"
-                                style="flex-wrap: wrap;  display: flex;">
-                                <div class="filter-item">
-                                    <label for="process">Department</label>
-                                    <select name="Initiator_Group" id="initiator_group" style ="width:50%">
-                                        <option value="NA">Select Department</option>
-                                        <option value="CQA">Corporate Quality Assurance</option>
-                                        <option value="QA">Quality Assurance</option>
-                                        <option value="QC">Quality Control</option>
-                                        <option value="QM">Quality Control (Microbiology department)</option>
-                                        <option value="PG">Production General</option>
-                                        <option value="PL">Production Liquid Orals</option>
-                                        <option value="PT">Production Tablet and Powder</option>
-                                        <option value="PE">Production External (Ointment, Gels, Creams and Liquid)
-                                        </option>
-                                        <option value="PC">Production Capsules</option>
-                                        <option value="PI">Production Injectable</option>
-                                        <option value="EN">Engineering</option>
-                                        <option value="HR">Human Resource</option>
-                                        <option value="ST">Store</option>
-                                        <option value="IT">Electronic Data Processing</option>
-                                        <option value="FD">Formulation Development</option>
-                                        <option value="AL">Analytical research and Development Laboratory</option>
-                                        <option value="PD">Packaging Development</option>
-                                        <option value="PU">Purchase Department</option>
-                                        <option value="DC">Document Cell</option>
-                                        <option value="RA">Regulatory Affairs</option>
-                                        <option value="PV">Pharmacovigilance</option>
-                                    </select>
-                                </div>
-                                <div class="filter-item">
-                                    <label for="criteria">Division</label>
-                                    <select class="custom-select" id="division_id">
-                                        <option value="Null">Select Records</option>
-                                        <option value="1">Corporate</option>
-                                        <option value="2">Plant</option>
+                <div class="mt-1 mb-2 bg-white" style="height: auto; padding: 10px; margin: 5px;">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Department -->
+            <div class="col-md-6 col-lg-4 filter-item mb-3">
+                <label for="initiator_group" class="form-label">Department</label>
+                <select name="Initiator_Group" id="initiator_group" class="form-control">
+                    <option value="NA">Select Department</option>
+                    <option value="CQA">Corporate Quality Assurance</option>
+                    <option value="QA">Quality Assurance</option>
+                    <option value="QC">Quality Control</option>
+                    <option value="QM">Quality Control (Microbiology department)</option>
+                    <option value="PG">Production General</option>
+                    <option value="PL">Production Liquid Orals</option>
+                    <option value="PT">Production Tablet and Powder</option>
+                    <option value="PE">Production External (Ointment, Gels, Creams and Liquid)</option>
+                    <option value="PC">Production Capsules</option>
+                    <option value="PI">Production Injectable</option>
+                    <option value="EN">Engineering</option>
+                    <option value="HR">Human Resource</option>
+                    <option value="ST">Store</option>
+                    <option value="IT">Electronic Data Processing</option>
+                    <option value="FD">Formulation Development</option>
+                    <option value="AL">Analytical research and Development Laboratory</option>
+                    <option value="PD">Packaging Development</option>
+                    <option value="PU">Purchase Department</option>
+                    <option value="DC">Document Cell</option>
+                    <option value="RA">Regulatory Affairs</option>
+                    <option value="PV">Pharmacovigilance</option>
+                </select>
+            </div>
 
-                                    </select>
-                                </div>
-                                <div class="filter-item">
-                                    <label for="date_from">Date From</label>
-                                    <input type="date" class="custom-select" id="date_ooc_from_ooc">
-                                </div>
-                                <div class="filter-item">
-                                    <label for="date_to">Date To</label>
-                                    <input type="date" class="custom-select" id="date_ooc_to_ooc">
+            <!-- Division -->
+            <div class="col-md-6 col-lg-4 filter-item mb-3">
+                <label for="division_id" class="form-label">Division</label>
+                <select class="form-control" id="division_id">
+                    <option value="Null">Select Records</option>
+                    <option value="1">Corporate</option>
+                    <option value="2">Plant</option>
+                </select>
+            </div>
 
-                                    </select>
-                                </div>
-                                <div class="filter-item">
-                                    <label for="originator">Equipment / Instrument</label>
-                                    <select class="custom-select" id="instrument_equipment" style ="width:60%">
-                                        <option value="Null">Select Records</option>
-                                        <option value="instrument_name">Instrument Name</option>
-                                        <option value="instrument_id">Instrument Id</option>
+            <!-- Date From -->
+            <div class="col-md-6 col-lg-4 filter-item mb-3">
+                <label for="date_ooc_from_ooc" class="form-label">Date From</label>
+                <input type="date" class="form-control" id="date_ooc_from_ooc">
+            </div>
 
-                                    </select>
-                                </div>
-                                <div class="filter-item">
-                                    <label for="datewise">Select Period</label>
-                                    <select class="custom-select" id="datewise">
-                                        <option value="all">Select</option>
-                                        <option value="all">Yearly</option>
-                                        <option value="all">Quarterly</option>
-                                        <option value="all">Mothly</option>
+            <!-- Date To -->
+            <div class="col-md-6 col-lg-4 filter-item mb-3">
+                <label for="date_ooc_to_ooc" class="form-label">Date To</label>
+                <input type="date" class="form-control" id="date_ooc_to_ooc">
+            </div>
 
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- </div> -->
-                    </div>
+            <!-- Equipment / Instrument -->
+            <div class="col-md-6 col-lg-4 filter-item mb-3">
+                <label for="instrument_equipment" class="form-label">Equipment / Instrument</label>
+                <select class="form-control" id="instrument_equipment">
+                    <option value="Null">Select Records</option>
+                    <option value="instrument_name">Instrument Name</option>
+                    <option value="instrument_id">Instrument Id</option>
+                </select>
+            </div>
+
+            <!-- Select Period -->
+            <div class="col-md-6 col-lg-4 filter-item mb-3">
+                <label for="datewise" class="form-label">Select Period</label>
+                <select class="form-control" id="datewise">
+                    <option value="all">Select</option>
+                    <option value="yearly">Yearly</option>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="monthly">Monthly</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
 
                     <div class="table-block">
                         <div class="table-responsive" style="height: 300px">
@@ -312,8 +311,8 @@ table {
                                         <th>Originator</th>
                                         <th>Division</th>
                                         <th>Department</th>
-                                        <th>Calibration Discovered By </th>
-                                        <th>Calibration Discovered On</th>
+                                        <th>OOC Logged By</th>
+                                        <th>OOC Logged On</th>
                                         <th>Due Date</th>
                                         <th>Date of Clouser</th>
                                         <th>Status</th>

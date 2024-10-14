@@ -27,8 +27,8 @@ $productDetails= $marketlog->product_details;
     <td>{{$data['info_expiry_date']}}<td>
     {{-- <td>{{ $marketlog->details_of_nature_market_complaint_gi }}</td> --}}
     <td>{{ $marketlog->categorization_of_complaint_gi }}</td>
-    <td>{{ $marketlog->complaint_reported_on_gi->format('d-M-Y') }}</td>
-    <td>{{ $marketlog->due_date_gi->format('d-M-Y') }}</td>
+    <td>{{ carbon::parse($marketlog->complaint_reported_on_gi)->format('d-M-Y') }}</td>
+    <td>{{ carbon::parse($marketlog->due_date_gi)->format('d-M-Y') }}</td>
     <td>{{ $marketlog->closed_done_on }}</td>
     <td>{{ $marketlog->status }}</td>
 </tr>

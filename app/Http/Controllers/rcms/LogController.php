@@ -87,7 +87,11 @@ class LogController extends Controller
             case 'ooc':
             
                 $oocs = OutOfCalibration::with('InstrumentDetails', 'assignedUser')->get();
-                
+                // foreach($oocs as $ss)
+                // $sd = $ss->InstrumentDetails;
+                //  $sq = $sd->data;
+                //  foreach ($sq as $ds)
+                //  return $ds['instrument_name'];
                 $users = User::all();
                 
         
