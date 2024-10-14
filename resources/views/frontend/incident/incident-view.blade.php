@@ -753,7 +753,7 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                         Child
                                     </button>
-                                @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Incident', 7))
+                                @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Incident', 42))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                         More Info Required
                                     </button>
