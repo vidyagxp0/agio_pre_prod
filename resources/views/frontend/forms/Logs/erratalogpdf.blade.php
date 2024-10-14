@@ -120,11 +120,10 @@
 
     <!-- Footer with Printed by and Printed on -->
     <div class="footer">
+    <div>Printed by: {{ auth()->user()->name ?? 'Not Applicable' }}</div>
+    <div>Printed on: {{ \Carbon\Carbon::now()->format('d-M-Y H:i:s') }}</div>
+</div>
 
-        <div>Printed by: {{ $errata->initiator ? $errata->initiator->name : 'Not Applicable' }}</div>
-        <div>Printed on: {{ \Carbon\Carbon::now()->format('d-M-Y H:i:s') }}</div>
-        
-    </div>
 </div>
 
 </body>
