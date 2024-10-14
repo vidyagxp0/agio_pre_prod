@@ -349,7 +349,7 @@ class ExtensionNewController extends Controller
         if (!empty($request->approvers)) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'QA Approval';
+            $history->activity_type = 'QA/CQA Approval';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($extensionNew->approvers);
             $history->comment = "Not Applicable";
@@ -844,7 +844,7 @@ class ExtensionNewController extends Controller
         if ($lastDocument->approvers != $extensionNew->approvers) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'QA Approval';
+            $history->activity_type = 'QA/CQA Approval';
             $history->previous = Helpers::getInitiatorName($lastDocument->approvers);
             $history->current = Helpers::getInitiatorName($extensionNew->approvers);
             $history->comment = $request->approvers_comment;
@@ -1537,12 +1537,12 @@ class ExtensionNewController extends Controller
                     $history = new ExtensionNewAuditTrail();
                     $history->deviation_id = $id;
                     $history->activity_type = ' Send for CQA By,  Send for CQA On';
-                    if (is_null($lastDocument->send_cqa_by) || $lastDocument->send_cqa_by === '') {
+                    if (is_null(($lastDocument == 'System')) || ($lastDocument == 'System') === '') {
                         $history->previous = "Null";
                     } else {
-                        $history->previous = $lastDocument->send_cqa_by . ' , ' . $lastDocument->send_cqa_on;
+                        $history->previous = ($lastDocument == 'System' ). ' , ' . $lastDocument->send_cqa_on;
                     }
-                    $history->current = $extensionNew->send_cqa_by . ' , ' . $extensionNew->send_cqa_on;
+                    $history->current = $extensionNew == 'System' . ' , ' . $extensionNew->send_cqa_on;
                     $history->action = ' Send for CQA';
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
@@ -1552,7 +1552,7 @@ class ExtensionNewController extends Controller
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
                     $history->stage = 'In CQA Approval';
-                    if (is_null($lastDocument->send_cqa_by) || $lastDocument->send_cqa_by === '') {
+                    if (is_null(($lastDocument == 'System')) || ($lastDocument == 'System') === '') {
                         $history->action_name = 'New';
                     } else {
                         $history->action_name = 'Update';
