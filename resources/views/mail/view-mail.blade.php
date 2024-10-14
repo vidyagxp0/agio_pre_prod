@@ -218,12 +218,13 @@
                         <p>"{{ $history }}" activity was performed on the below listed {{ $process }}.</p>
 
                         <p>
-                            Originator Name :- {{ Helpers::getInitiatorName($data->initiator_id) }}
-                            <!-- @if ($data->initiator)
+                            Originator Name :-
+                             <!-- {{ Helpers::getInitiatorName($data->initiator_id) }} -->
+                            @if ($data->initiator)
                                 {{ Helpers::getInitiatorName($data->initiator) }}
                             @else
                                 {{ Helpers::getInitiatorName($data->initiator_id) }}
-                            @endif -->
+                            @endif
                         </p>
 
                         <p>Date Opened:- {{ $data->created_at->format('d-M-Y H:i:s') }}</p>
