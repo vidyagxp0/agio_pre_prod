@@ -64,7 +64,7 @@
             <!-- <strong>Site Division/Project</strong> :
                     {{ Helpers::getDivisionName(session()->get('division')) }} / Effectiveness-Check -->
             <strong>Site Division/Project :</strong>
-            {{ Helpers::getDivisionName(session()->get('division')) }} / Effectiveness-Check
+            {{ Helpers::getDivisionName($data->division_id) }} / Effectiveness-Check
         </div>
 
     </div>
@@ -291,7 +291,7 @@
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location code</b></label>
                                         <input disabled type="text" name="division_code"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                            value=" {{ Helpers::getDivisionName($data->division_id) }}">
 
                                     </div>
                                 </div>
