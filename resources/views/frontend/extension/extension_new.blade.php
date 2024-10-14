@@ -79,7 +79,7 @@
 
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm2')">HOD Review</button>
-                <button class="cctablinks " onclick="openCity(event, 'CCForm3')">QA Approval</button>
+                <button class="cctablinks " onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button>
 
@@ -248,7 +248,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Assigned To">QA Approval </label>
+                                        <label for="Assigned To">QA/CQA Approval </label>
                                         <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
                                             name="approvers" placeholder="Select Approvers">
                                             <option value="">-- Select --</option>
@@ -519,7 +519,7 @@
                             </div>
 
 
-                            <div class="col-lg-4">
+                            {{-- <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for=" Rejected By">System By</label>
                                     <div class="static"></div>
@@ -536,7 +536,7 @@
                                     <label for="Rejected On">System Comment</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> --}}
 
 
                             <div class="col-lg-4">
