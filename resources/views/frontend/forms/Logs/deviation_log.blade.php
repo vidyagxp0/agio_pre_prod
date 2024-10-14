@@ -122,7 +122,7 @@
     <div id="rcms-desktop">
         <div class="process-groups">
             <div class="scope-bar">
-                <button class="print-btn btn btn-primary">Print</button>
+            <button style="margin-left: 10px;" class="btn btn-primary" onclick="printTable(event)">Print</button>
             </div>
             <div class="active" onclick="openTab('internal-audit', this)">Deviation Log</div>
             <div class="third-div">Third Div Content</div>
@@ -175,7 +175,7 @@
                                     </div>
                                     <div class="filter-item">
                                         <label for="deviationRelate">Deviation Related to</label>
-                                        <select class="custom-select" id="deviationRelate">
+                                        <select class="custom-select" id="Deviation_category">
                                             <option value="">Select Option</option>
                                             <option value="Facility">Facility</option>
                                             <option value="Equipment/Instrument">Instrument</option>
@@ -267,7 +267,7 @@
             filterRecords();
         });
 
-        $('#deviationRelate').change(function() {
+        $('#Deviation_category').change(function() {
             filterData.audit_type = $(this).val();
             filterRecords();
         });
@@ -305,4 +305,37 @@
             $('#spinner').hide();
         }
     </script>
+
+    
+
+<script>
+function printTable(event) {
+    if (event) {
+        event.preventDefault();
+    }
+    
+    const Deviation_category = document.getElementById('Deviation_category').value;
+    const dateFromInput = document.getElementById('date_from_deviation').value;
+    const dateToInput = document.getElementById('date_to_deviation').value;
+
+    var dateFrom = formatDate(dateFromInput);
+    var dateTo = formatDate(dateToInput);
+
+    const url = `/api/Deviation-Log?Deviation_category=${Deviation_category}&date_from=${dateFrom}&date_to=${dateTo}`;
+
+    window.open(url, '_blank');
+}
+
+function formatDate(dateStr) {
+    if (!dateStr) return ''; 
+    var dateObj = new Date(dateStr);
+    var day = ("0" + dateObj.getDate()).slice(-2);
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var month = months[dateObj.getMonth()];
+    var year = dateObj.getFullYear();
+    return `${day}-${month}-${year}`;
+}
+
+</script>
+
 @endsection

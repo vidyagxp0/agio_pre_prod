@@ -14,6 +14,6 @@
 </tr>
 @empty
 <tr>
-<th colspan="12">Data Not Found</th>
+<th colspan="12" style = " background-color: #999793;" >Data Not Found</th>
 </tr>
 @endforelse

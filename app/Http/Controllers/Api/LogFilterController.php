@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Deviation;
 use App\Models\CC;
+use PDF;
 use App\Models\errata;
 use App\Models\FailureInvestigation;
 use App\Models\MarketComplaint;
@@ -16,6 +17,7 @@ use App\Models\InternalAudit;
 use Illuminate\Http\Request;
 use App\Models\OOS_micro;
 use App\Models\Ootc;
+use App\Models\CapaGrid;
 use Carbon\Carbon;
 use App\Models\Capa;
 use App\Http\Controllers\Controller;
@@ -38,16 +40,16 @@ class LogFilterController extends Controller
             
             if ($request->departmentCapa)
             {
-                $query->where('Initiator_Group', $request->departmentCapa);
+                $query->where('initiator_Group', $request->departmentCapa);
             }
 
-            if ($request->division_idCapa) {
-                $query->where('division_id', $request->division_idCapa);
+            if ($request->division_idcapa) {
+                $query->where('division_id', $request->division_idcapa);
             }
 
-            if($request->capa_types)
+            if($request->CapaInitionThrough)
             {
-                $query->where('capa_type',$request->capa_types);
+                $query->where('initiated_through',$request->CapaInitionThrough);
             }
 
             if ($request->date_fromCapa) {
@@ -66,8 +68,9 @@ class LogFilterController extends Controller
 
            
             $capa = $query->get();
+            $filtercapa = CapaGrid::where([ 'type'=>'Action_Item_details'])->get();
 
-            $htmlData = view('frontend.forms.Logs.filterData.capa_data', compact('capa'))->render();
+            $htmlData = view('frontend.forms.Logs.filterData.capa_data', compact('capa', 'filtercapa'))->render();
 
             $res['body'] = $htmlData;
 
@@ -80,6 +83,9 @@ class LogFilterController extends Controller
 
         return response()->json($res);
     }
+
+
+
 
     public function changecontrol_filter(Request $request)
 {
@@ -901,7 +907,7 @@ public function OOT_Filter(Request $request)
         }
 
         if ($request->audit_type) {
-            $query->where('audit_type', $request->audit_type);
+            $query->where('Deviation_category', $request->audit_type);
         }
 
         if ($request->period) {
@@ -1019,7 +1025,151 @@ public function IncidentFilter(Request $request)
 
 
 
+    public function printPDF(Request $request)
+{
+    $filter = $request->all();
+
+
+    $department = $filter['department'] ?? null; 
+    $changerelateTo = $filter['changerelateTo'] ?? null; 
+    $classification = $filter['nchange'] ?? null; 
+    $changeCategory = $filter['RadioActivtiyCCC'] ?? null;
+    $changeCategorytcc = $filter['RadioActivtiyTCC'] ?? null;
+
+    $query = Capa::query();
+
+    $query->when($department, function ($q) use ($department) {
+        return $q->where('initiator_Group', $department);
+    });
+
+    $query->when($changerelateTo, function ($q) use ($changerelateTo) {
+        return $q->where('severity', $changerelateTo);
+    });
+
+    $query->when($classification, function ($q) use ($classification) {
+        return $q->where('classification_of_change', $classification);
+    });
+
+
+    $filteredData = $query->get();
+    $filtercapa = CapaGrid::where([ 'type'=>'Action_Item_details'])->get();
+
+
     
+
+    $pdf = Pdf::loadView('frontend.forms.Logs.capalogpdf', compact('filteredData','filtercapa'))->setPaper('a4', 'landscape');
+
+    return $pdf->stream('report.pdf');
+}
+
+
+
+public function printPDFCC(Request $request)
+{
+    $filterCC = $request->all();
+
+
+    $department = $filterCC['department'] ?? null; 
+    $changerelateTo = $filterCC['changerelateTo'] ?? null; 
+    $classification = $filterCC['nchange'] ?? null; 
+    $changeCategory = $filterCC['RadioActivtiyCCC'] ?? null;
+    $changeCategorytcc = $filterCC['RadioActivtiyTCC'] ?? null;
+
+    $query = CC::query();
+
+    $query->when($department, function ($q) use ($department) {
+        return $q->where('initiator_Group', $department);
+    });
+
+    $query->when($changerelateTo, function ($q) use ($changerelateTo) {
+        return $q->where('severity', $changerelateTo);
+    });
+
+    $query->when($classification, function ($q) use ($classification) {
+        return $q->where('severity_level1', $classification);
+    });
+
+    if ($changeCategory) {
+        $categories = explode(',', $changeCategory); 
+        $query->whereIn('Change_related_category', $categories);
+    }
+
+    if ($changeCategorytcc) {
+        $categoriestcc = explode(',', $changeCategory); 
+        $query->whereIn('Change_related_category', $categoriestcc);
+    }
+
+    $filteredDataCC = $query->get();
+
+    
+
+    $pdf = Pdf::loadView('frontend.forms.Logs.cclogpdf', compact('filteredDataCC','changeCategory','changeCategorytcc'))->setPaper('a4', 'landscape');
+
+    return $pdf->stream('report.pdf');
+}
+
+
+public function printPDFDeviation (Request $request)
+{
+    $filterDD = $request->all();
+    // dd($filterDD);
+    $DeviationClassification = $filterDD['Deviation_category'] ?? null;
+    $dateFrom = isset($filterDD['date_from']) ? Carbon::parse($filterDD['date_from'])->startOfDay() : null;
+    $dateTo = isset($filterDD['date_to']) ? Carbon::parse($filterDD['date_to'])->endOfDay() : null;
+      
+    $query = Deviation::query(); 
+    
+    if ($DeviationClassification) {
+        $query->where('Deviation_category', $DeviationClassification);
+    }
+                    if ($dateFrom && $dateTo) {
+                        $query->whereBetween('created_at', [$dateFrom, $dateTo]);
+                    }
+                    
+                    $FilterDDD = $query->get();
+                    
+
+    $pdf = Pdf::loadView('frontend.forms.Logs.deviationlogpdf', compact('FilterDDD'))->setPaper('a4', 'landscape');
+
+    return $pdf->stream('report.pdf');
+}
+
+
+
+public function printErrata(Request $request)
+{
+    $filterDD = $request->all();
+   
+    $Department = $filterDD['department'] ?? null;
+    $Division = $filterDD['changerelateTo'] ?? null;
+    $dateFrom = isset($filterDD['date_from']) ? Carbon::parse($filterDD['date_from'])->startOfDay() : null;
+    $dateTo = isset($filterDD['date_to']) ? Carbon::parse($filterDD['date_to'])->endOfDay() : null;
+
+    $query = errata::query();
+
+    if ($Department) {
+        $query->where('department_code', $Department);
+    }
+
+    if ($Division) {
+        $query->where('division_id', $Division);
+    }
+
+    if ($dateFrom && $dateTo) {
+        $query->whereBetween('intiation_date', [$dateFrom, $dateTo]);
+    }
+
+    $FilterDDD = $query->get();
+    $printed = errata::all();
+    
+
+    $pdf = Pdf::loadView('frontend.forms.Logs.erratalogpdf', compact('FilterDDD','printed'))
+                ->setPaper('a4', 'landscape');
+
+    return $pdf->stream('report.pdf');
+}
+
+
 
     
 }    

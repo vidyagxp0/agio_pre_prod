@@ -80,5 +80,12 @@ Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api
 
  Route::get('/resaplingFilter/{id}',[ResamplingController::class,'audit_trail_filter'])->name('api.resaplingFilter');
 
+ Route::get('/print-report', [LogFilterController::class, 'printPDF'])->name('printReport');
+ Route::get('/Change-ControlLog', [LogFilterController::class, 'printPDFCC'])->name('printReportcc');
+ Route::get('/Deviation-Log', [LogFilterController::class, 'printPDFDeviation'])->name('printReportdeviation');
+ Route::get('/api/Deviation-Log-Excel', [DeviationController::class, 'printExcelDeviation'])->name('deviation.log.excel');
+ Route::get('/Errata-Log-Report', [LogFilterController::class, 'printErrata'])->name('errata.log.excel');
+
+
 //  Route::Post('/mcFilter/{id}',[CCController::class,'audit_filter'])->name('api.marketc.filter');
 

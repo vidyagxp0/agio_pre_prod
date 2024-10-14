@@ -1,8 +1,13 @@
+@php
+
+use Carbon\Carbon;
+ 
+@endphp
 @forelse($erratalog as $logs)
                                          <tr>
                                             
                                             <td>{{$loop->index+1}}</td>
-                                            <td>{{$logs->intiation_date ? $logs->intiation_date->format('d-M-Y') : 'NA'}}</td>
+                                            <td>{{carbon::parse($logs->intiation_date)->format('d-M-Y') ? carbon::parse($logs->intiation_date)->format('d-M-Y') : 'NA'}}</td>
                                             <td>{{ $logs->division_id ? $logs->division->name : '-'  }}/CC/{{ date('Y') }}/{{ str_pad($logs->record, 4, '0', STR_PAD_LEFT) }}</td>
                                             <td>{{$logs->short_description}}</td>
                                             <td>{{ $logs->initiator_id ? $logs->initiator->name : '-' }}</td>

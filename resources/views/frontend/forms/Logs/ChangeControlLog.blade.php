@@ -204,7 +204,7 @@
 
     <div class="process-groups">
             <div class="scope-bar">
-                <button class="print-btn btn btn-primary">Print</button>
+            <button style="margin-left: 10px;" class="btn btn-primary" onclick="printTable()">Print</button>
             </div>
             <div class="active" onclick="openTab('internal-audit', this)">Change Control Log</div>
             <div class="third-div">Third Div Content</div>
@@ -396,6 +396,34 @@
             
             $('#spinner').hide();
         }
+    </script>
+
+
+<script>
+     function printTable() {
+    const department = document.getElementById('initiator_group').value;
+    const changerelateTo = document.getElementById('division_id_cc').value;
+    const nchange = document.getElementById('naturechange').value;
+    let RadioActivtiyCCC = '';
+    const selectedCategory = document.querySelector('input[name="Change_related_category"]:checked');
+    if (selectedCategory) {
+        RadioActivtiyCCC = selectedCategory.value; // Set the value here
+    }
+
+    let RadioActivtiyTCC = '';
+
+    const selectedCategorytcc = document.querySelector('input[name="Type_of_change"]:checked');
+    if (selectedCategorytcc) {
+        RadioActivtiyTCC = selectedCategorytcc.value; // Set the value here
+    }
+
+
+    const url = `/api/Change-ControlLog?department=${department}&changerelateTo=${changerelateTo}&nchange=${nchange}&RadioActivtiyCCC=${RadioActivtiyCCC}&RadioActivtiyTCC=${RadioActivtiyTCC}`;
+    window.open(url, '_blank');
+
+}
+
+
     </script>
     
 @endsection

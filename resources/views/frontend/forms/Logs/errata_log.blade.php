@@ -120,7 +120,7 @@
     <div id="rcms-desktop">
         <div class="process-groups">
             <div class="scope-bar">
-                <button class="print-btn btn btn-primary">Print</button>
+                <button style="margin-left: 10px;" class="btn btn-primary" onclick="printTable(event)">Print</button>
             </div>
             <div class="active" onclick="openTab('internal-audit', this)">Errata Log</div>
             <div class="third-div">Third Div Content</div>
@@ -288,6 +288,16 @@
             }
 
             $('#spinner').hide();
+        }
+
+        function printTable() {
+            const department = document.getElementById('initiator_group').value;
+            const changerelateTo = document.getElementById('division_id').value;
+            const DateFrom = document.getElementById('date_from').value;
+            const DateTo = document.getElementById('date_to').value;
+
+            const url = `/api/Errata-Log-Report?department=${department}&changerelateTo=${changerelateTo}&date_from=${DateFrom}&date_to=${DateTo}`;
+            window.open(url, '_blank');
         }
     </script>
 @endsection
