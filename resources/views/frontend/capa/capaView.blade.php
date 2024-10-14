@@ -7,7 +7,7 @@
      <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
          integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
+
      @if (Session::has('swal'))
          <script>
              swal("{{ Session::get('swal')['title'] }}", "{{ Session::get('swal')['message'] }}",
@@ -98,7 +98,7 @@
                             <a href="#signature-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Propose Plan
                             </button> </a>
-                            
+
                         @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                            <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                 More Info Required
@@ -155,9 +155,9 @@
                                 data-bs-target="#child-modal">
                                 Child
                             </button></a>
-                            
+
                         @elseif($data->stage == 6 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
-                           
+
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 HOD Final Review Complete
 
@@ -169,10 +169,10 @@
                                 Child
                             </button></a>
                              @elseif($data->stage == 7 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                             
+
                               <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA/CQA Closure Review Complete
-  
+
                              </button></a>
                              <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                   More Info Required
@@ -182,12 +182,12 @@
                                 Child
                             </button></a>
                             @elseif($data->stage == 8 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                             
+
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA/CQA Approval  Complete
 
                            </button></a>
-                           
+
                            <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                 More Info Required
                            </button></a>
@@ -195,7 +195,7 @@
                             Child
                         </button></a>
                            @elseif($data->stage == 9&& (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                           
+
                          <a href="#child-modal"><button id="major" type="button" class="button_theme1" data-bs-toggle="modal"
                              data-bs-target="#child-modal1l">
                              Child
@@ -326,8 +326,8 @@
                                                     value="{{ $data->record }}"> --}}
                                                     <input disabled type="text" name="record" id="record"
                                                     value="{{Helpers::getDivisionName(session()->get('division'))}}/CAPA/{{ date('Y') }}/{{ $data->record}}">
-                                                    
-            
+
+
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-6">
@@ -335,7 +335,7 @@
                                                 <label for="Division Code">Site/Location Code</label>
                                                 <input disabled type="text" name="division_code"
                                                     value="{{ Helpers::getDivisionName($data->division_id) }}">
-                                              
+
                                             </div>
                                         </div> --}}
                                         <div class="col-lg-6">
@@ -368,7 +368,7 @@
                                                 <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date"> --}}
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="search">
@@ -409,13 +409,13 @@
                                         {{-- <div class="static"> {{ $due_date }}</div> --}}
 
                                     {{-- </div>
-                                </div> --}} 
+                                </div> --}}
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule Start Date">Due Date</label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision
                                             reason in "Due Date Extension Justification" data field.</small></div>
-                                         <div class="calenderauditee">                                     
+                                         <div class="calenderauditee">
                                             <input type="text"  id="due_dateq"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                 {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}/>
                                             <input type="date" id="due_dateq" name="due_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage !=1 ? 'readonly' : '' }} value="{{ $data->due_date }}" class="hide-input"
@@ -424,13 +424,13 @@
                                     </div>
                                 </div>
 
-                                
+
 
                                 <script>
                                     function handleDateInput(input, targetId) {
                                                     var dateInput = document.getElementById(targetId);
                                                     var originalValue = dateInput.getAttribute('data-original-value');
-                                                    
+
                                                     if (input.value !== originalValue) {
                                                         dateInput.value = input.value; // Update only if different from the original value
                                                     } else {
@@ -438,27 +438,27 @@
                                                     }
                                                 }
                                 </script>
-                                
+
                                 <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const date = new Date(dateInput.value);
                                         const options = { day: '2-digit', month: 'short', year: 'numeric' };
                                         document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
                                     }
-                                    
+
                                     // Call this function initially to ensure the correct format is shown on page load
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const dateInput = document.querySelector('input[name="due_date"]');
                                         handleDateInput(dateInput, 'due_date_display');
                                     });
                                     </script>
-                                    
+
                                     <style>
                                     .hide-input {
                                         display: none;
                                     }
                                     </style>
-                                    
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group"> 	Initiator Department @if($data->stage == 1)<span class="text-danger">*</span>@endif  </label>
@@ -522,7 +522,7 @@
                                         </div>
 
 
-                                       
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiated Through</label>
@@ -657,10 +657,10 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="related_records">Reference Records</label>
-        
+
                                                 <select multiple name="capa_related_record[]" placeholder="Select Reference Records"
                                                     data-silent-initial-value-set="true" id="capa_related_record"  {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9  ? 'disabled' : '' }}>
-        
+
                                                      @if (!empty($relatedRecords))
                                                             @foreach ($relatedRecords as $records)
                                                                 @php
@@ -677,10 +677,10 @@
                                                                         date('Y') .
                                                                         '/' .
                                                                         Helpers::recordFormat($records->record);
-        
+
                                                                     $selected = in_array(
                                                                         $recordValue,
-        
+
                                                                         explode(',', $data->capa_related_record),
                                                                     )
                                                                         ? 'selected'
@@ -694,7 +694,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                      
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Initial Observation">Initial Observation</label>
@@ -773,7 +773,7 @@
                                         </div> --}}
 
                                         <div class="col-12 sub-head">
-                                        Other Type Details 
+                                        Other Type Details
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
@@ -956,15 +956,15 @@
                                                         '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                                                         '</tr>');
                                                 }
-                                        
+
                                                 // Button click to add a new row
                                                 $('#material').click(function (e) {
                                                     e.preventDefault();
-                                                    
+
                                                     // Check if there are any rows in the table
                                                     var rowCount = $('#productmaterial tbody tr').length;
                                                     var newRow;
-                                        
+
                                                     if (rowCount === 0) {
                                                         // If no rows are present, create a new row starting with serial number 1
                                                         newRow = createNewRow(1);
@@ -983,15 +983,15 @@
                                                         newRow.find('input[name="material_remark[]"]').val('');
                                                         newRow.find('select.batch_status').val('');
                                                     }
-                                                    
+
                                                     // Append the new row to the table
                                                     $('#productmaterial tbody').append(newRow);
                                                 });
-                                        
+
                                                 // Remove row event
                                                 $(document).on('click', '.removeRowBtn', function () {
                                                     $(this).closest('tr').remove();
-                                        
+
                                                     // If all rows are removed, reset the serial numbers
                                                     if ($('#productmaterial tbody tr').length === 0) {
                                                         $('#material').trigger('click'); // Add a new row
@@ -1002,13 +1002,13 @@
                                                         });
                                                     }
                                                 });
-                                        
+
                                                 // Handling the date change for each row
                                                 $(document).on('change', 'input.material_mfg_date, input.material_expiry_date', function () {
                                                     var row = $(this).closest('tr'); // Get the row where the change happened
                                                     var mfgDate = new Date(row.find('input.material_mfg_date').val()); // Manufacturing date from the same row
                                                     var expiryDate = new Date(row.find('input.material_expiry_date').val()); // Expiry date from the same row
-                                        
+
                                                     // Compare the dates
                                                     if (mfgDate && expiryDate) {
                                                         if (expiryDate <= mfgDate) {
@@ -1019,66 +1019,66 @@
                                                 });
                                             });
                                         </script> -->
-                                       
-                                    
 
 
-                           
-                                        
+
+
+
+
                                         {{-- new added product table --}}
 
-                                    
+
                                         {{-- <script>
                                             $(document).ready(function() {
                                                 $('#add-row-btn').click(function() {
                                                     addRow('root-cause-first-table');
                                                 });
-                                    
+
                                                 $(document).on('click', '.removeRowBtn', function() {
                                                     $(this).closest('tr').remove();
                                                     updateSerialNumbers();
                                                 });
-                                    
+
                                                 updateSerialNumbers();
                                             });
-                                    
+
                                             function addRow(tableId) {
                                                 var table = document.getElementById(tableId);
                                                 var tbody = table.getElementsByTagName('tbody')[0];
                                                 var currentRowCount = tbody.rows.length;
-                                    
+
                                                 var newRow = tbody.insertRow(currentRowCount);
-                                    
+
                                                 var cell1 = newRow.insertCell(0);
                                                 cell1.innerHTML = '<input disabled type="text" name="serial_number[]" value="' + (currentRowCount + 1) + '">';
-                                    
+
                                                 var cell2 = newRow.insertCell(1);
                                                 cell2.innerHTML = '<input type="text" name="material_name[]">';
-                                    
+
                                                 var cell3 = newRow.insertCell(2);
                                                 cell3.innerHTML = '<input type="text" name="material_batch_no[]">';
-                                    
+
                                                 var cell4 = newRow.insertCell(3);
                                                 cell4.innerHTML = '<input type="text" name="material_mfg_date[]">';
-                                    
+
                                                 var cell5 = newRow.insertCell(4);
                                                 cell5.innerHTML = '<input type="text" name="material_expiry_date[]">';
-                                    
+
                                                 var cell6 = newRow.insertCell(5);
                                                 cell6.innerHTML = '<input type="text" name="material_batch_desposition[]">';
-                                    
+
                                                 var cell7 = newRow.insertCell(6);
                                                 cell7.innerHTML = '<input type="text" name="material_remark[]">';
-                                    
+
                                                 var cell8 = newRow.insertCell(7);
                                                 cell8.innerHTML = '<input type="text" name="material_batch_status[]">';
-                                    
+
                                                 var cell9 = newRow.insertCell(8);
                                                 cell9.innerHTML = '<button type="button" class="removeRowBtn">Remove</button>';
-                                    
+
                                                 updateSerialNumbers();
                                             }
-                                    
+
                                             function updateSerialNumbers() {
                                                 var table = document.getElementById('root-cause-first-table').getElementsByTagName('tbody')[0];
                                                 for (var i = 0; i < table.rows.length; i++) {
@@ -1086,11 +1086,11 @@
                                                 }
                                             }
                                         </script> --}}
-                                        
-                                        
-                                        
-                                        
-                                        
+
+
+
+
+
                                         <div class="col-12 sub-head">
                                             Equipment/Instruments Details
                                         </div>
@@ -1138,7 +1138,7 @@
                                                             </tr>
                                                         @endforeach
                                                     @endif
-                                                    
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -1147,9 +1147,9 @@
                                             document.getElementById('equipment_add').addEventListener('click', function() {
                                                 const tableBody = document.querySelector('#equi_details tbody');
                                                 const newRow = document.createElement('tr');
-                                    
+
                                                 const rowCount = tableBody.rows.length + 1;
-                                    
+
                                                 newRow.innerHTML = `
                                                     <td><input disabled type="text" name="serial_number[]" value="${rowCount}"></td>
                                                     <td><input type="text" name="equipment[]"></td>
@@ -1157,12 +1157,12 @@
                                                     <td><input type="text" name="equipment_comments[]"></td>
                                                     <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                 `;
-                                    
+
                                                 tableBody.appendChild(newRow);
-                                    
+
                                                 updateRemoveRowListeners();
                                             });
-                                    
+
                                             function updateRemoveRowListeners() {
                                                 document.querySelectorAll('.removeRowBtn').forEach(button => {
                                                     button.addEventListener('click', function() {
@@ -1171,17 +1171,17 @@
                                                     });
                                                 });
                                             }
-                                    
+
                                             function updateRowNumbers() {
                                                 document.querySelectorAll('#equipment_de tbody tr').forEach((row, index) => {
                                                     row.querySelector('input[name="serial_number[]"]').value = index + 1;
                                                 });
                                             }
-                                    
+
                                             // Initial call to set up the listeners for the existing row
                                             updateRemoveRowListeners();
                                         </script>
-                                        
+
 
                                         <div class="col-12 sub-head">
                                             Other type CAPA Details
@@ -1210,7 +1210,7 @@
                             </div>
 
                             <!-- Product Information content -->
-                           
+
                             <!-- Capa Detais-->
                             <div id="CCForm4" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
@@ -1288,13 +1288,13 @@
                                     </div>
                                 </div>
                             </div>
-                       
+
 
 
 
                             <!-- Project Study content -->
-                          
-                              
+
+
 
 
 
@@ -1387,8 +1387,8 @@
                     <textarea name="effective_check_plan"></textarea>
                 </div>
             </div> -->
-           
-          
+
+
         </div>
         <div class="button-block">
             <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
@@ -1489,8 +1489,8 @@
                     <textarea name="effective_check_plan"></textarea>
                 </div>
             </div> -->
-           
-          
+
+
         </div>
         <div class="button-block">
             <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
@@ -1520,7 +1520,7 @@
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            
+
                                             <div class="group-input">
                                                 <label for="QA Review & Closure">QA/CQA Head Closure Review Comment @if($data->stage == 8)<span class="text-danger">*</span>@endif</label>
                                                 <textarea name="qa_review" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->qa_review }}</textarea>
@@ -1627,7 +1627,7 @@
                                         </div> -->
                                         <div class="col-12 sub-head">
                                             Extension Justification
-                                        </div>  
+                                        </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="due_date_extension">Due Date Extension Justification</label>
@@ -1769,8 +1769,8 @@
                     <textarea name="effective_check_plan"></textarea>
                 </div>
             </div> -->
-           
-          
+
+
         </div>
         <div class="button-block">
             <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
@@ -1814,7 +1814,7 @@
                                             style="color:red; font-size:20px;"></i></a>
                                 </h6>
                             @endforeach
-                       
+
                         @endif
                         </div>
                         <div class="add-btn">
@@ -1823,7 +1823,7 @@
                                 oninput="addMultipleFiles(this, 'initiator_capa_attachment')" multiple {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                         </div>
                     </div>
-                   
+
                 </div>
             </div>
             <!-- <div class="col-12 sub-head">
@@ -1869,8 +1869,8 @@
                     <textarea name="effective_check_plan"></textarea>
                 </div>
             </div> -->
-           
-          
+
+
         </div>
         <div class="button-block">
             <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
@@ -1966,8 +1966,8 @@
                     <textarea name="effective_check_plan"></textarea>
                 </div>
             </div> -->
-           
-          
+
+
         </div>
         <div class="button-block">
             <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
@@ -1984,7 +1984,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments"> QA/CQA Approval Comment@if($data->stage == 4)<span class="text-danger">*</span>@endif </label>
+                    <label for="Comments"> QA/CQA Approval Comment@if($data->stage == 4)<span class="text-danger">*</span> </label>
                     <textarea name="qah_cq_comments" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->qah_cq_comments }}</textarea>
                 </div>
             </div>
@@ -2010,7 +2010,7 @@
                                             style="color:red; font-size:20px;"></i></a>
                                 </h6>
                             @endforeach
-         
+
                         @endif
                         </div>
                         <div class="add-btn">
@@ -2021,7 +2021,7 @@
                     </div>
                 </div>
             </div> -->
-            
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="CAPA Attachments">QA/CQA Approval Attachment</label>
@@ -2103,8 +2103,8 @@
                     <textarea name="effective_check_plan"></textarea>
                 </div>
             </div> -->
-           
-          
+
+
         </div>
         <div class="button-block">
             <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
@@ -2117,7 +2117,7 @@
 
 
 
-                          
+
 
 
                             <!-- Activity Log content -->
@@ -2173,7 +2173,7 @@
                                                 <div class="static">{{ $data->hod_review_completed_by }}</div>
                                             </div>
                                         </div>
-                                       
+
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Plan Approved On">HOD Review Complete On</label>
@@ -2211,7 +2211,7 @@
                                                 <div class="static">{{ $data->hod_comment1 }}</div>
                                             </div>
                                         </div> --}}
-                                        
+
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Completed By">QA/CQA Review Complete By</label>
@@ -2480,7 +2480,7 @@
                             </div>
 
                         </div>
-                        
+
                     </form>
 
                 </div>
@@ -2497,15 +2497,15 @@
                         </div>
                         <form action="{{ route('capa_child_changecontrol', $data->id) }}" method="POST">
                             @csrf
-                           
+
                             <div class="modal-body">
                                 <div class="group-input">
-                                    
+
                                     <label for="major">
                                        <input type="radio" name="child_type" value="extension">
                                           Extension
                                     </label>
-                            
+
 
                                 </div>
 
@@ -2554,7 +2554,7 @@
                                         <label for="major">
                                             <input type="radio" name="child_type" value="rca">
                                            RCA
-                                        </label> 
+                                        </label>
                                     @endif
                                     @if ($data->stage == 4)
                                         <label for="major">
@@ -2577,7 +2577,7 @@
                                     @endif
                                 </div>
 
-                            </div>--}} 
+                            </div>--}}
                             <div class="modal-body">
                                 <div class="group-input">
                                     <label for="major">
@@ -2954,5 +2954,5 @@
 
         @endsection
 
-        
-        
+
+

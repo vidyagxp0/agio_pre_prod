@@ -155,7 +155,7 @@ class DeviationController extends Controller
 
         $deviation->qa_final_assement = $request->qa_final_assement;
         $deviation->qa_head_designe_comment = $request->qa_head_designe_comment;
-        
+
 
         $deviation->QAInitialRemark = $request->QAInitialRemark;
 
@@ -1916,7 +1916,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
          $deviation->qa_final_assement = $request->qa_final_assement;
          $deviation->qa_head_designe_comment = $request->qa_head_designe_comment;
-         
+
 
         $deviation->Justification_for_categorization = !empty($request->Justification_for_categorization) ? $request->Justification_for_categorization : $deviation->Justification_for_categorization;
 
@@ -1982,7 +1982,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $data8->risk_acceptance_1 = serialize($request->input('risk_acceptance_1', []));
         $data8->risk_acceptance3 = serialize($request->input('risk_acceptance3', []));
         $data8->mitigation_proposal_1 = serialize($request->input('mitigation_proposal_1', []));
-    
+
         //dd($data8) ;
         $data8->save();
 
@@ -2636,8 +2636,8 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
             }
             $deviation->pending_attachment = json_encode($files);
         }
-    
-    
+
+
         if (!empty($request->hod_final_attachment) || !empty($request->deleted_hod_final_attachment)) {
        $existingFiles = json_decode($deviation->hod_final_attachment, true) ?? [];
 
@@ -2663,7 +2663,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
     $allFiles = array_merge($existingFiles, $newFiles);
     $deviation->hod_final_attachment = json_encode($allFiles);
 
-    
+
 }
 
 
@@ -2698,7 +2698,7 @@ if (!empty($request->qa_final_assement_attach) || !empty($request->deleted_qa_fi
  $allFiles = array_merge($existingFiles, $newFiles);
  $deviation->qa_final_assement_attach = json_encode($allFiles);
 
- 
+
 }
 
 
@@ -2730,7 +2730,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
  $allFiles = array_merge($existingFiles, $newFiles);
  $deviation->qa_head_designee_attach = json_encode($allFiles);
 
- 
+
 }
         // if (!empty($request->initial_file) || $request->removed_files) {
         //     $files = [];
@@ -7623,6 +7623,27 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
+                    $list = Helpers::getInitiatorUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "More Information Required", 'process' => 'Deviation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
+
                     $deviation->update();
                     return back();
                 }
@@ -7650,6 +7671,27 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
+                    $list = Helpers::getHodUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "More Information Required", 'process' => 'Deviation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
+
                     $deviation->update();
                     return back();
                 }
@@ -7677,6 +7719,46 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
+                    $list = Helpers::getQAUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "More Information Required", 'process' => 'Deviation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
+                    $list = Helpers::getCQAUsersList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "Send to HOD", 'process' => 'Deviation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to HOD Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
                     $deviation->update();
                     return back();
                 }
@@ -7732,6 +7814,46 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
+                    $list = Helpers::getQAUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "More Information Required", 'process' => 'Deviation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
+                    $list = Helpers::getCQAUsersList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "Send to HOD", 'process' => 'Deviation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to HOD Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
                     $deviation->update();
                     return back();
                 }
@@ -7759,6 +7881,27 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
+                    $list = Helpers::getInitiatorUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "More Information Required", 'process' => 'Deviation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
+
                     $deviation->update();
                     return back();
                 }
@@ -7855,6 +7998,27 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                     //     }
                     // }
                     // dd($deviation);
+                    $list = Helpers::getQAUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "Request For Cancellation", 'process' => 'Deviation', 'comment' => $deviation->pending_Cancel_comment, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request For Cancellation Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
+
                     $deviation->update();
                     return back();
                 }
@@ -7943,6 +8107,27 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                     //     }
                     // }
                     // dd($deviation);
+                    $list = Helpers::getInitiatorUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "Cancel", 'process' => 'Deviation', 'comment' => $deviation->cancelled_comment, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
+
                     $deviation->update();
                     return back();
                 }
@@ -8047,6 +8232,26 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                     $history->stage = 'Plan Proposed';
 
                     $history->save();
+                    $list = Helpers::getInitiatorUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "Send to Initiator", 'process' => 'Deviation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to Initiator Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
                     $deviation->update();
                     return back();
                 }
@@ -8090,6 +8295,26 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                     $history->stage = 'Plan Proposed';
 
                     $history->save();
+                    $list = Helpers::getHodUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "Send to HOD", 'process' => 'Deviation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to HOD Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
                     $deviation->update();
                     return back();
                 }
@@ -8137,6 +8362,46 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                     $history->stage = 'Plan Proposed';
 
                     $history->save();
+                    $list = Helpers::getQAUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "Send to QA/CQA Initial Review", 'process' => 'Deviation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to QA/CQA Initial Review Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
+                    $list = Helpers::getCQAUsersList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "Send to QA/CQA Initial Review", 'process' => 'Deviation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to QA/CQA Initial Review Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
                     $deviation->update();
                     return back();
                 }
@@ -8181,6 +8446,26 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                     $history->stage = 'Plan Proposed';
 
                     $history->save();
+                    $list = Helpers::getInitiatorUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "Send to Pending Initiator Update", 'process' => 'Deviation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to Pending Initiator Update Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
                     $deviation->update();
                     return back();
                 }
@@ -8212,6 +8497,26 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                     $history->stage = 'Plan Proposed';
 
                     $history->save();
+                    $list = Helpers::getInitiatorUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "Send to Pending Initiator Update", 'process' => 'Deviation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to Pending Initiator Update Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
                     $deviation->update();
                     return back();
                 }
@@ -8288,27 +8593,26 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                     $history->save();
 
 
-                    // $list = Helpers::getHodUserList();
-                    // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                    //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //         if ($email !== null) {
-
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $deviation],
-                    //                     function ($message) use ($email) {
-                    //                         $message->to($email)
-                    //                             ->subject("Activity Performed By " . Auth::user()->name);
-                    //                     }
-                    //                 );
-                    //             } catch (\Exception $e) {
-                    //                 //log error
-                    //             }
-                    //         }
-                    //     }
-                    // }
+                    $list = Helpers::getHodUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "Submit", 'process' => 'Deviation', 'comment' => $deviation->submit_comment, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
 
                     // $list = Helpers::getHeadoperationsUserList();
                     // foreach ($list as $u) {
@@ -8385,26 +8689,47 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                     }
                     $history->save();
                     // dd($history->action);
-                    // $list = Helpers::getQAUserList();
-                    // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                    //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //         if ($email !== null) {
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $deviation],
-                    //                     function ($message) use ($email) {
-                    //                         $message->to($email)
-                    //                             ->subject("Activity Performed By " . Auth::user()->name);
-                    //                     }
-                    //                 );
-                    //             } catch (\Exception $e) {
-                    //                 //log error
-                    //             }
-                    //         }
-                    //     }
-                    // }
+                    $list = Helpers::getQAUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "HOD Review Complete", 'process' => 'Deviation', 'comment' => $deviation->HOD_Review_Comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
+
+                    $list = Helpers::getCQAUsersList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "HOD Review Complete", 'process' => 'Deviation', 'comment' => $deviation->HOD_Review_Comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
 
 
                     $deviation->update();
@@ -8559,6 +8884,27 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
 
                                                 //         }
                                                 //     }
+                                                // }
+                                            }
+
+                                            $list = Helpers::getCftUserList($deviation->division_id);
+                                            foreach ($list as $u) {
+                                                // if($u->q_m_s_divisions_id == $deviation->division_id){
+                                                    $email = Helpers::getUserEmail($u->user_id);
+                                                        if ($email !== null) {
+                                                        try {
+                                                            Mail::send(
+                                                                'mail.view-mail',
+                                                                ['data' => $deviation, 'site'=>"DEV", 'history' => "QA/CQA Initial Review", 'process' => 'Deviation', 'comment' => $deviation->QA_Initial_Review_Comments, 'user'=> Auth::user()->name],
+                                                                function ($message) use ($email, $deviation) {
+                                                                    $message->to($email)
+                                                                    ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Initial Review Complete Performed");
+                                                                }
+                                                            );
+                                                        } catch(\Exception $e) {
+                                                            info('Error sending mail', [$e]);
+                                                        }
+                                                    }
                                                 // }
                                             }
 
@@ -9295,26 +9641,46 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $history->action_name = 'Update';
                     }
                         $history->save();
-                        // $list = Helpers::getQAUserList();
-                        // foreach ($list as $u) {
-                        //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                        //         $email = Helpers::getInitiatorEmail($u->user_id);
-                        //         if ($email !== null) {
-                        //             try {
-                        //                 Mail::send(
-                        //                     'mail.view-mail',
-                        //                     ['data' => $deviation],
-                        //                     function ($message) use ($email) {
-                        //                         $message->to($email)
-                        //                             ->subject("Activity Performed By " . Auth::user()->name);
-                        //                     }
-                        //                 );
-                        //             } catch (\Exception $e) {
-                        //                 //log error
-                        //             }
-                        //         }
-                        //     }
-                        // }
+                        $list = Helpers::getQAUserList($deviation->division_id);
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $deviation->division_id){
+                                $email = Helpers::getUserEmail($u->user_id);
+                                    if ($email !== null) {
+                                    try {
+                                        Mail::send(
+                                            'mail.view-mail',
+                                            ['data' => $deviation, 'site'=>"DEV", 'history' => "CFT Review Complete", 'process' => 'Deviation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                            function ($message) use ($email, $deviation) {
+                                                $message->to($email)
+                                                ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Review Complete Performed");
+                                            }
+                                        );
+                                    } catch(\Exception $e) {
+                                        info('Error sending mail', [$e]);
+                                    }
+                                }
+                            // }
+                        }
+                        $list = Helpers::getCQAUsersList($deviation->division_id);
+                                            foreach ($list as $u) {
+                                                // if($u->q_m_s_divisions_id == $deviation->division_id){
+                                                    $email = Helpers::getUserEmail($u->user_id);
+                                                        if ($email !== null) {
+                                                        try {
+                                                            Mail::send(
+                                                                'mail.view-mail',
+                                                                ['data' => $deviation, 'site'=>"DEV", 'history' => "CFT Review Complete", 'process' => 'Deviation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                                                function ($message) use ($email, $deviation) {
+                                                                    $message->to($email)
+                                                                    ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Review Complete Performed");
+                                                                }
+                                                            );
+                                                        } catch(\Exception $e) {
+                                                            info('Error sending mail', [$e]);
+                                                        }
+                                                    }
+                                                // }
+                                            }
                         $deviation->update();
                     }
                     toastr()->success('Document Sent');
@@ -9373,26 +9739,46 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getQAUserList();
-                    // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                    //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //         if ($email !== null) {
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $deviation],
-                    //                     function ($message) use ($email) {
-                    //                         $message->to($email)
-                    //                             ->subject("Activity Performed By " . Auth::user()->name);
-                    //                     }
-                    //                 );
-                    //             } catch (\Exception $e) {
-                    //                 //log error
-                    //             }
-                    //         }
-                    //     }
-                    // }
+                                         $list = Helpers::getCQAHeadUsersList($deviation->division_id);
+                                            foreach ($list as $u) {
+                                                // if($u->q_m_s_divisions_id == $deviation->division_id){
+                                                    $email = Helpers::getUserEmail($u->user_id);
+                                                        if ($email !== null) {
+                                                        try {
+                                                            Mail::send(
+                                                                'mail.view-mail',
+                                                                ['data' => $deviation, 'site'=>"DEV", 'history' => "QA/CQA Final Assessment Complete", 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Review_Comments, 'user'=> Auth::user()->name],
+                                                                function ($message) use ($email, $deviation) {
+                                                                    $message->to($email)
+                                                                    ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Final Assessment Complete Performed");
+                                                                }
+                                                            );
+                                                        } catch(\Exception $e) {
+                                                            info('Error sending mail', [$e]);
+                                                        }
+                                                    }
+                                                // }
+                                            }
+                                            $list = Helpers::getQAUserList($deviation->division_id);
+                                            foreach ($list as $u) {
+                                                // if($u->q_m_s_divisions_id == $deviation->division_id){
+                                                    $email = Helpers::getUserEmail($u->user_id);
+                                                        if ($email !== null) {
+                                                        try {
+                                                            Mail::send(
+                                                                'mail.view-mail',
+                                                                ['data' => $deviation, 'site'=>"DEV", 'history' => "QA/CQA Final Assessment Complete", 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Review_Comments, 'user'=> Auth::user()->name],
+                                                                function ($message) use ($email, $deviation) {
+                                                                    $message->to($email)
+                                                                    ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Final Assessment Complete Performed");
+                                                                }
+                                                            );
+                                                        } catch(\Exception $e) {
+                                                            info('Error sending mail', [$e]);
+                                                        }
+                                                    }
+                                                // }
+                                            }
                     $deviation->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -9451,27 +9837,27 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     } else {
                         $history->action_name = 'Update';
                     }
-                    $history->save();
-                    // $list = Helpers::getQAUserList();
-                    // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                    //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //         if ($email !== null) {
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $deviation],
-                    //                     function ($message) use ($email) {
-                    //                         $message->to($email)
-                    //                             ->subject("Activity Performed By " . Auth::user()->name);
-                    //                     }
-                    //                 );
-                    //             } catch (\Exception $e) {
-                    //                 //log error
-                    //             }
-                    //         }
-                    //     }
-                    // }
+                    $list = Helpers::getInitiatorUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "Approved", 'process' => 'Deviation', 'comment' => $deviation->QA_head_approved_comment, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
+
                     $deviation->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -9553,26 +9939,26 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getQAUserList();
-                    // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                    //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //         if ($email !== null) {
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $deviation],
-                    //                     function ($message) use ($email) {
-                    //                         $message->to($email)
-                    //                             ->subject("Activity Performed By " . Auth::user()->name);
-                    //                     }
-                    //                 );
-                    //             } catch (\Exception $e) {
-                    //                 //log error
-                    //             }
-                    //         }
-                    //     }
-                    // }
+                    $list = Helpers::getHodUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "Initiator Update Completed", 'process' => 'Deviation', 'comment' => $deviation->pending_initiator_approved_comment, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Initiator Update Completed Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
                     $deviation->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -9633,26 +10019,46 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getQAUserList();
-                    // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                    //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //         if ($email !== null) {
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $deviation],
-                    //                     function ($message) use ($email) {
-                    //                         $message->to($email)
-                    //                             ->subject("Activity Performed By " . Auth::user()->name);
-                    //                     }
-                    //                 );
-                    //             } catch (\Exception $e) {
-                    //                 //log error
-                    //             }
-                    //         }
-                    //     }
-                    // }
+                    $list = Helpers::getQAUserList($deviation->division_id);
+                                            foreach ($list as $u) {
+                                                // if($u->q_m_s_divisions_id == $deviation->division_id){
+                                                    $email = Helpers::getUserEmail($u->user_id);
+                                                        if ($email !== null) {
+                                                        try {
+                                                            Mail::send(
+                                                                'mail.view-mail',
+                                                                ['data' => $deviation, 'site'=>"DEV", 'history' => "HOD Final Review Complete", 'process' => 'Deviation', 'comment' => $deviation->Hod_final_comment, 'user'=> Auth::user()->name],
+                                                                function ($message) use ($email, $deviation) {
+                                                                    $message->to($email)
+                                                                    ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
+                                                                }
+                                                            );
+                                                        } catch(\Exception $e) {
+                                                            info('Error sending mail', [$e]);
+                                                        }
+                                                    }
+                                                // }
+                                            }
+                                            $list = Helpers::getCQAUsersList($deviation->division_id);
+                                            foreach ($list as $u) {
+                                                // if($u->q_m_s_divisions_id == $deviation->division_id){
+                                                    $email = Helpers::getUserEmail($u->user_id);
+                                                        if ($email !== null) {
+                                                        try {
+                                                            Mail::send(
+                                                                'mail.view-mail',
+                                                                ['data' => $deviation, 'site'=>"DEV", 'history' => "HOD Final Review Complete", 'process' => 'Deviation', 'comment' => $deviation->Hod_final_comment, 'user'=> Auth::user()->name],
+                                                                function ($message) use ($email, $deviation) {
+                                                                    $message->to($email)
+                                                                    ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
+                                                                }
+                                                            );
+                                                        } catch(\Exception $e) {
+                                                            info('Error sending mail', [$e]);
+                                                        }
+                                                    }
+                                                // }
+                                            }
                     $deviation->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -9714,26 +10120,46 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getQAUserList();
-                    // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                    //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //         if ($email !== null) {
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $deviation],
-                    //                     function ($message) use ($email) {
-                    //                         $message->to($email)
-                    //                             ->subject("Activity Performed By " . Auth::user()->name);
-                    //                     }
-                    //                 );
-                    //             } catch (\Exception $e) {
-                    //                 //log error
-                    //             }
-                    //         }
-                    //     }
-                    // }
+                    $list = Helpers::getQAHeadUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "Implementation verification Complete", 'process' => 'Deviation', 'comment' => $deviation->QA_final_approved_comment, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Implementation verification Complete Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
+                    $list = Helpers::getCQAHeadUsersList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "Implementation verification Complete", 'process' => 'Deviation', 'comment' => $deviation->QA_final_approved_comment, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Implementation verification Complete Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
                     $deviation->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -9776,26 +10202,126 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getQAUserList();
-                    // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                    //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //         if ($email !== null) {
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $deviation],
-                    //                     function ($message) use ($email) {
-                    //                         $message->to($email)
-                    //                             ->subject("Activity Performed By " . Auth::user()->name);
-                    //                     }
-                    //                 );
-                    //             } catch (\Exception $e) {
-                    //                 //log error
-                    //             }
-                    //         }
-                    //     }
-                    // }
+                    $list = Helpers::getQAHeadUserList($deviation->division_id);
+                                            foreach ($list as $u) {
+                                                // if($u->q_m_s_divisions_id == $deviation->division_id){
+                                                    $email = Helpers::getUserEmail($u->user_id);
+                                                        if ($email !== null) {
+                                                        try {
+                                                            Mail::send(
+                                                                'mail.view-mail',
+                                                                ['data' => $deviation, 'site'=>"DEV", 'history' => "Closure Approved", 'process' => 'Deviation', 'comment' => $deviation->comments, 'user'=> Auth::user()->name],
+                                                                function ($message) use ($email, $deviation) {
+                                                                    $message->to($email)
+                                                                    ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Closure Approved Performed");
+                                                                }
+                                                            );
+                                                        } catch(\Exception $e) {
+                                                            info('Error sending mail', [$e]);
+                                                        }
+                                                    }
+                                                // }
+                                            }
+                                            $list = Helpers::getQAUserList($deviation->division_id);
+                                            foreach ($list as $u) {
+                                                // if($u->q_m_s_divisions_id == $deviation->division_id){
+                                                    $email = Helpers::getUserEmail($u->user_id);
+                                                        if ($email !== null) {
+                                                        try {
+                                                            Mail::send(
+                                                                'mail.view-mail',
+                                                                ['data' => $deviation, 'site'=>"DEV", 'history' => "Closure Approved", 'process' => 'Deviation', 'comment' => $deviation->comments, 'user'=> Auth::user()->name],
+                                                                function ($message) use ($email, $deviation) {
+                                                                    $message->to($email)
+                                                                    ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Closure Approved Performed");
+                                                                }
+                                                            );
+                                                        } catch(\Exception $e) {
+                                                            info('Error sending mail', [$e]);
+                                                        }
+                                                    }
+                                                // }
+                                            }
+                                            $list = Helpers::getCQAUsersList($deviation->division_id);
+                                            foreach ($list as $u) {
+                                                // if($u->q_m_s_divisions_id == $deviation->division_id){
+                                                    $email = Helpers::getUserEmail($u->user_id);
+                                                        if ($email !== null) {
+                                                        try {
+                                                            Mail::send(
+                                                                'mail.view-mail',
+                                                                ['data' => $deviation, 'site'=>"DEV", 'history' => "Closure Approved", 'process' => 'Deviation', 'comment' => $deviation->comments, 'user'=> Auth::user()->name],
+                                                                function ($message) use ($email, $deviation) {
+                                                                    $message->to($email)
+                                                                    ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Closure Approved Performed");
+                                                                }
+                                                            );
+                                                        } catch(\Exception $e) {
+                                                            info('Error sending mail', [$e]);
+                                                        }
+                                                    }
+                                                // }
+                                            }
+                                            // $list = Helpers::getInitiatorUserList($deviation->division_id);
+                                            // foreach ($list as $u) {
+                                            //     // if($u->q_m_s_divisions_id == $deviation->division_id){
+                                            //         $email = Helpers::getUserEmail($u->user_id);
+                                            //             if ($email !== null) {
+                                            //             try {
+                                            //                 Mail::send(Close_comment
+                                            //                     'mail.view-mail',
+                                            //                     ['data' => $deviation, 'site'=>"DEV", 'history' => "Closure Approved", 'process' => 'Deviation', 'comment' => $deviation->Close_comment, 'user'=> Auth::user()->name],
+                                            //                     function ($message) use ($email, $deviation) {
+                                            //                         $message->to($email)
+                                            //                         ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Closure Approved Performed");
+                                            //                     }
+                                            //                 );
+                                            //             } catch(\Exception $e) {
+                                            //                 info('Error sending mail', [$e]);
+                                            //             }
+                                            //         }
+                                            //     // }
+                                            // }
+                                            // $list = Helpers::getCftUserList($deviation->division_id);
+                                            // foreach ($list as $u) {
+                                            //     // if($u->q_m_s_divisions_id == $deviation->division_id){
+                                            //         $email = Helpers::getUserEmail($u->user_id);
+                                            //             if ($email !== null) {
+                                            //             try {
+                                            //                 Mail::send(
+                                            //                     'mail.view-mail',
+                                            //                     ['data' => $deviation, 'site'=>"DEV", 'history' => "Closure Approved", 'process' => 'Deviation', 'comment' => $deviation->Close_comment, 'user'=> Auth::user()->name],
+                                            //                     function ($message) use ($email, $deviation) {
+                                            //                         $message->to($email)
+                                            //                         ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Closure Approved Performed");
+                                            //                     }
+                                            //                 );
+                                            //             } catch(\Exception $e) {
+                                            //                 info('Error sending mail', [$e]);
+                                            //             }
+                                            //         }
+                                            //     // }
+                                            // }
+                                            // $list = Helpers::getHodUserList($deviation->division_id);
+                                            // foreach ($list as $u) {
+                                            //     // if($u->q_m_s_divisions_id == $deviation->division_id){
+                                            //         $email = Helpers::getUserEmail($u->user_id);
+                                            //             if ($email !== null) {
+                                            //             try {
+                                            //                 Mail::send(
+                                            //                     'mail.view-mail',
+                                            //                     ['data' => $deviation, 'site'=>"DEV", 'history' => "Closure Approved", 'process' => 'Deviation', 'comment' => $deviation->Close_comment, 'user'=> Auth::user()->name],
+                                            //                     function ($message) use ($email, $deviation) {
+                                            //                         $message->to($email)
+                                            //                         ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Closure Approved Performed");
+                                            //                     }
+                                            //                 );
+                                            //             } catch(\Exception $e) {
+                                            //                 info('Error sending mail', [$e]);
+                                            //             }
+                                            //         }
+                                            //     // }
+                                            // }
                     $deviation->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -9855,6 +10381,47 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $history->action_name = 'Update';
                     }
                     $history->save();
+
+                    $list = Helpers::getQAUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "CFT Review Not Required", 'process' => 'Deviation', 'comment' => $deviation->cft_review_not_req_comment, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Review Not Required Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
+                    $list = Helpers::getCQAUsersList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "CFT Review Not Required", 'process' => 'Deviation', 'comment' => $deviation->cft_review_not_req_comment, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Review Not Required Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
                     $deviation->update();
                     return back();
                 }
@@ -9906,6 +10473,27 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $history->action_name = 'Update';
                     }
                     $history->save();
+
+                    $list = Helpers::getInitiatorUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "More Information Required", 'process' => 'Deviation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
                     $deviation->update();
                     return back();
                 }
@@ -9947,26 +10535,26 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $history->action_name = 'Update';
                     }
                 $history->save();
-                // $list = Helpers::getHodUserList();
-                // foreach ($list as $u) {
-                //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                //         $email = Helpers::getInitiatorEmail($u->user_id);
-                //         if ($email !== null) {
-                //             try {
-                //                 Mail::send(
-                //                     'mail.view-mail',
-                //                     ['data' => $deviation],
-                //                     function ($message) use ($email) {
-                //                         $message->to($email)
-                //                             ->subject("Activity Performed By " . Auth::user()->name);
-                //                     }
-                //                 );
-                //             } catch (\Exception $e) {
-                //                 //log error
-                //             }
-                //         }
-                //     }
-                // }
+                $list = Helpers::getHodUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "More Information Required", 'process' => 'Deviation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -9993,6 +10581,47 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->save();
+
+                $list = Helpers::getQAUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "More Information Required", 'process' => 'Deviation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
+                    $list = Helpers::getCQAUsersList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "More Information Required", 'process' => 'Deviation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
                 $deviation->update();
                 $history = new DeviationHistory();
                 $history->type = "Deviation";
@@ -10198,7 +10827,7 @@ public function audit_trail_filter(Request $request, $id)
             $grid_data2 = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Product")->first();
 
             // $data8 = DeviationGrid::where('deviation_grid_id', $id)->where('type', 'effect_analysis')->first();
-          
+
             $investigationTeam = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'TeamInvestigation'])->first();
             $investigation_data = json_decode($investigationTeam->data, true);
 
