@@ -1623,7 +1623,7 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Audit Start Date';
             $history->previous = "Null";
-            $history->current = $internalAudit->audit_start_date;
+            $history->current = Helpers::getdateFormat($internalAudit->audit_start_date);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1641,7 +1641,7 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Audit End Date';
             $history->previous = "Null";
-            $history->current = $internalAudit->audit_end_date;
+            $history->current = Helpers::getdateFormat($internalAudit->audit_end_date);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4003,7 +4003,7 @@ $AuditorShow->save();
         if ($lastCft->ProductionLiquid_assessment != $request->ProductionLiquid_assessment && $request->ProductionLiquid_assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Production Liquid/Ointment Assessment';
+            $history->activity_type = 'Review Comment (By Production Liquid)';
             $history->previous = $lastCft->ProductionLiquid_assessment;
             $history->current = $request->ProductionLiquid_assessment;
             $history->comment = "Not Applicable";
@@ -4145,7 +4145,7 @@ $AuditorShow->save();
         if ($lastCft->Production_Injection_Assessment != $request->Production_Injection_Assessment && $request->Production_Injection_Assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Production Injection Assessment';
+            $history->activity_type = 'Review Comment (By Production Injection)';
             $history->previous = $lastCft->Production_Injection_Assessment;
             $history->current = $request->Production_Injection_Assessment;
             $history->comment = "Not Applicable";
@@ -4287,7 +4287,7 @@ $AuditorShow->save();
         if ($lastCft->Store_assessment != $request->Store_assessment && $request->Store_assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Store Assessment';
+            $history->activity_type = 'Review Comment (By Store)';
             $history->previous = $lastCft->Store_assessment;
             $history->current = $request->Store_assessment;
             $history->comment = "Not Applicable";
@@ -4429,7 +4429,7 @@ $AuditorShow->save();
         if ($lastCft->Quality_Control_assessment != $request->Quality_Control_assessment && $request->Quality_Control_assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Quality Control Assessment';
+            $history->activity_type = 'Review Comment (By Quality Control)';
             $history->previous = $lastCft->Quality_Control_assessment;
             $history->current = $request->Quality_Control_assessment;
             $history->comment = "Not Applicable";
@@ -4571,7 +4571,7 @@ $AuditorShow->save();
         if ($lastCft->ResearchDevelopment_assessment != $request->ResearchDevelopment_assessment && $request->ResearchDevelopment_assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Research & Development Assessment';
+            $history->activity_type = 'Review Comment (By Research Development)';
             $history->previous = $lastCft->ResearchDevelopment_assessment;
             $history->current = $request->ResearchDevelopment_assessment;
             $history->comment = "Not Applicable";
@@ -4713,7 +4713,7 @@ $AuditorShow->save();
         if ($lastCft->Engineering_assessment != $request->Engineering_assessment && $request->Engineering_assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Engineering Assessment';
+            $history->activity_type = 'Review Comment (By Engineering)';
             $history->previous = $lastCft->Engineering_assessment;
             $history->current = $request->Engineering_assessment;
             $history->comment = "Not Applicable";
@@ -4855,7 +4855,7 @@ $AuditorShow->save();
         if ($lastCft->Human_Resource_assessment != $request->Human_Resource_assessment && $request->Human_Resource_assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Human Resource Assessment';
+            $history->activity_type = 'Review Comment (By Human Resource)';
             $history->previous = $lastCft->Human_Resource_assessment;
             $history->current = $request->Human_Resource_assessment;
             $history->comment = "Not Applicable";
@@ -4997,7 +4997,7 @@ $AuditorShow->save();
         if ($lastCft->Microbiology_assessment != $request->Microbiology_assessment && $request->Microbiology_assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Microbiology Assessment';
+            $history->activity_type = 'Review Comment (By Microbiology)';
             $history->previous = $lastCft->Microbiology_assessment;
             $history->current = $request->Microbiology_assessment;
             $history->comment = "Not Applicable";
@@ -5139,7 +5139,7 @@ $AuditorShow->save();
         if ($lastCft->RegulatoryAffair_assessment != $request->RegulatoryAffair_assessment && $request->RegulatoryAffair_assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Regulatory Affair Assessment';
+            $history->activity_type = 'Review Comment (By Regulatory Affair)';
             $history->previous = $lastCft->RegulatoryAffair_assessment;
             $history->current = $request->RegulatoryAffair_assessment;
             $history->comment = "Not Applicable";
@@ -5281,7 +5281,7 @@ $AuditorShow->save();
         if ($lastCft->CorporateQualityAssurance_assessment != $request->CorporateQualityAssurance_assessment && $request->CorporateQualityAssurance_assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Corporate Quality Assurance Assessment';
+            $history->activity_type = 'Review Comment (By Corporate Quality Assurance)';
             $history->previous = $lastCft->CorporateQualityAssurance_assessment;
             $history->current = $request->CorporateQualityAssurance_assessment;
             $history->comment = "Not Applicable";
@@ -5423,7 +5423,7 @@ $AuditorShow->save();
         if ($lastCft->Health_Safety_assessment != $request->Health_Safety_assessment && $request->Health_Safety_assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Safety Assessment';
+            $history->activity_type = 'Review Comment (By Safety)';
             $history->previous = $lastCft->Health_Safety_assessment;
             $history->current = $request->Health_Safety_assessment;
             $history->comment = "Not Applicable";
@@ -5727,7 +5727,7 @@ $AuditorShow->save();
         if ($lastCft->Other1_assessment != $request->Other1_assessment && $request->Other1_assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Other 1 Assessment';
+            $history->activity_type = 'Review Comment (By Others 1)';
             $history->previous = $lastCft->Other1_assessment;
             $history->current = $request->Other1_assessment;
             $history->comment = "Not Applicable";
@@ -5890,7 +5890,7 @@ $AuditorShow->save();
         if ($lastCft->Other2_assessment != $request->Other2_assessment && $request->Other2_assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Other 2 Assessment';
+            $history->activity_type = 'Review Comment (By Others 2)';
             $history->previous = $lastCft->Other2_assessment;
             $history->current = $request->Other2_assessment;
             $history->comment = "Not Applicable";
@@ -6052,7 +6052,7 @@ $AuditorShow->save();
         if ($lastCft->Other3_assessment != $request->Other3_assessment && $request->Other3_assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Other 3 Assessment';
+            $history->activity_type = 'Review Comment (By Others 3)';
             $history->previous = $lastCft->Other3_assessment;
             $history->current = $request->Other3_assessment;
             $history->comment = "Not Applicable";
@@ -6214,7 +6214,7 @@ $AuditorShow->save();
         if ($lastCft->Other4_assessment != $request->Other4_assessment && $request->Other4_assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Other 4 Assessment';
+            $history->activity_type = 'Review Comment (By Others 4)';
             $history->previous = $lastCft->Other4_assessment;
             $history->current = $request->Other4_assessment;
             $history->comment = "Not Applicable";
@@ -6377,7 +6377,7 @@ $AuditorShow->save();
         if ($lastCft->Other5_assessment != $request->Other5_assessment && $request->Other5_assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Other 5 Assessment';
+            $history->activity_type = 'Review Comment (By Others 5)';
             $history->previous = $lastCft->Other5_assessment;
             $history->current = $request->Other5_assessment;
             $history->comment = "Not Applicable";
@@ -6589,7 +6589,7 @@ $AuditorShow->save();
             //             'message' => 'Sent for CFT review state'
             //         ]);
             //     }
-                         if (!$Cft->Production_Table_Review || !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review  || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
+                         if (!$Cft->Production_Table_Review || !$Cft->Production_Injection_Person || !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review  || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
                             Session::flash('swal', [
                                 'title' => 'Mandatory Fields Required!',
                                 'message' => 'CFT Tab is yet to be filled!',
@@ -6729,7 +6729,7 @@ $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
 
 $history = new AuditTrialExternal();
 $history->ExternalAudit_id = $id;
-$history->activity_type = 'Quality Control Completed By, Quality Control Completed On';
+$history->activity_type = 'Quality Control Review Completed By, Quality Control Review Completed On';
 
 if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
     $history->previous = "";
@@ -6765,7 +6765,7 @@ $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d'); // Corrected l
 
 $history = new AuditTrialExternal();
 $history->ExternalAudit_id = $id;
-$history->activity_type = 'Quality Assurance Completed By, Quality Assurance Completed On';
+$history->activity_type = 'Quality Assurance Review Completed By, Quality Assurance Review Completed On';
 
 if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
     $history->previous = "";
@@ -6798,7 +6798,7 @@ $history->save();
                         $updateCFT->Engineering_on = Carbon::now()->format('Y-m-d');
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Engineering Completed By, Engineering Completed On';
+                        $history->activity_type = 'Engineering Review Completed  By, Engineering Review Completed  On';
                 if(is_null($lastDocument->Engineering_by) || $lastDocument->Engineering_on == ''){
                     $history->previous = "";
                 }else{
@@ -6827,7 +6827,7 @@ $history->save();
                         $updateCFT->Environment_Health_Safety_on = Carbon::now()->format('Y-m-d');
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Safety Completed By, Safety Completed On';
+                        $history->activity_type = 'Safety Completed Review By, Safety Completed Review On';
                 if(is_null($lastDocument->Environment_Health_Safety_by) || $lastDocument->Environment_Health_Safety_on == ''){
                     $history->previous = "";
                 }else{
@@ -6856,7 +6856,7 @@ $history->save();
                         $updateCFT->Human_Resource_on = Carbon::now()->format('Y-m-d');
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Human Resource Completed By, Human Resource Completed On';
+                        $history->activity_type = 'Human Resource Review Completed By, Human Resource Review Completed  On';
                 if(is_null($lastDocument->Human_Resource_by) || $lastDocument->Human_Resource_on == ''){
                     $history->previous = "";
                 }else{
@@ -6913,7 +6913,7 @@ $history->save();
                         $updateCFT->Other1_on = Carbon::now()->format('Y-m-d');
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Others 1 Completed By, Others 1 Completed On';
+                        $history->activity_type = 'Others 1 Review Completed By, Others 1 Review Completed On';
                 if(is_null($lastDocument->Other1_by) || $lastDocument->Other1_on == ''){
                     $history->previous = "";
                 }else{
@@ -6942,7 +6942,7 @@ $history->save();
                         $updateCFT->Other2_on = Carbon::now()->format('Y-m-d');
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Others 2 Completed By, Others 2 Completed On';
+                        $history->activity_type = 'Others 2 Review Completed By, Others 2 Review Completed On';
                 if(is_null($lastDocument->Other2_by) || $lastDocument->Other2_on == ''){
                     $history->previous = "";
                 }else{
@@ -6972,7 +6972,7 @@ $history->save();
                         $updateCFT->Other3_on = Carbon::now()->format('Y-m-d');
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Others 3 Completed By, Others 3 Completed On';
+                        $history->activity_type = 'Others 3 Review Completed By, Others 3 Review Completed On';
                 if(is_null($lastDocument->Other3_by) || $lastDocument->Other3_on == ''){
                     $history->previous = "";
                 }else{
@@ -7001,7 +7001,7 @@ $history->save();
                         $updateCFT->Other4_on = Carbon::now()->format('Y-m-d');
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-$history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
+$history->activity_type = 'Others 4 Review Completed By,Others 4 Review Completed';
                 if(is_null($lastDocument->Other4_by) || $lastDocument->Other4_on == ''){
                     $history->previous = "";
                 }else{
@@ -7029,7 +7029,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $updateCFT->Other5_on = Carbon::now()->format('Y-m-d');
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Others 5 Completed By, Others 5 Completed On';
+                        $history->activity_type = 'Others 5 Review Completed By, Others 5 Review Completed On';
                 if(is_null($lastDocument->Other5_by) || $lastDocument->Other5_on == ''){
                     $history->previous = "";
                 }else{
@@ -7077,7 +7077,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $updateCFT->Production_Table_On = Carbon::now()->format('Y-m-d');
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                       $history->activity_type = 'Production Table Completed By, Production Table Completed On';
+                       $history->activity_type = 'Production Tablet/Capsule Powder Review Completed By
+, Production Tablet/Capsule Powder Review Completed On';
                 if(is_null($lastDocument->Production_Table_By) || $lastDocument->Production_Table_On == ''){
                     $history->previous = "";
                 }else{
@@ -7105,7 +7106,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $updateCFT->ProductionLiquid_on = Carbon::now()->format('Y-m-d');
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Production Liquid Completed By, Production Liquid Completed On';
+                        $history->activity_type = 'Production Liquid/ointment Review Completed  Completed By, Production Liquid/ointment Review Completed  Completed On';
                 if(is_null($lastDocument->ProductionLiquid_by) || $lastDocument->ProductionLiquid_on == ''){
                     $history->previous = "";
                 }else{
@@ -7134,7 +7135,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $updateCFT->Production_Injection_On = Carbon::now()->format('Y-m-d');
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Production Injection Completed By, Production Injection Completed On';
+                        $history->activity_type = 'Production Injection Review Completed By, Production Injection Review Completed  On';
                 if(is_null($lastDocument->Production_Injection_By) || $lastDocument->Production_Injection_On == ''){
                     $history->previous = "";
                 }else{
@@ -7163,7 +7164,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $updateCFT->Store_on = Carbon::now()->format('Y-m-d');
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                       $history->activity_type = 'Stores Completed By, Stores Completed On';
+                       $history->activity_type = 'Store Review Completed By, Store Review Completed On';
                 if(is_null($lastDocument->Store_by) || $lastDocument->Store_on == ''){
                     $history->previous = "";
                 }else{
@@ -7192,7 +7193,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $updateCFT->ResearchDevelopment_on = Carbon::now()->format('Y-m-d');
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Research & Development Completed By, Research & Development Completed On';
+                        $history->activity_type = 'Research Development Review Completed By
+, Research Development Review Completed On';
                 if(is_null($lastDocument->ResearchDevelopment_by) || $lastDocument->ResearchDevelopment_on == ''){
                     $history->previous = "";
                 }else{
@@ -7221,7 +7223,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $updateCFT->Microbiology_on = Carbon::now()->format('Y-m-d');
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Microbiology Completed By, Microbiology Completed On';
+                        $history->activity_type = 'Microbiology Review Completed By, Microbiology Review Completed On';
                 if(is_null($lastDocument->Microbiology_by) || $lastDocument->Microbiology_on == ''){
                     $history->previous = "";
                 }else{
@@ -7250,7 +7252,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $updateCFT->RegulatoryAffair_on = Carbon::now()->format('Y-m-d');
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Regulatory Affair Completed By, Regulatory Affair Completed On';
+                        $history->activity_type = 'Regulatory Affair Review Completed By, Regulatory Affair Review Completed On';
                 if(is_null($lastDocument->RegulatoryAffair_by) || $lastDocument->RegulatoryAffair_on == ''){
                     $history->previous = "";
                 }else{
@@ -7280,7 +7282,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $updateCFT->CorporateQualityAssurance_on = Carbon::now()->format('Y-m-d');
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Corporate Quality Assurance Completed By, Corporate Quality Assurance Completed On';
+                        $history->activity_type = 'Corporate Quality Assurance Review Completed By, Corporate Quality Assurance Review Completed On';
                 if(is_null($lastDocument->CorporateQualityAssurance_by) || $lastDocument->CorporateQualityAssurance_on == ''){
                     $history->previous = "";
                 }else{

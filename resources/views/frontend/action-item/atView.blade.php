@@ -582,7 +582,7 @@
                                                 <option value="Formulation Development" @if ($data->departments == 'Formulation Development') selected @endif>
                                                     Formulation Development
                                                 </option>
-                                                <option value="AL" @if ($data->departments == 'AL') selected @endif>
+                                                <option value="Analytical research and Development Laboratory" @if ($data->departments == 'Analytical research and Development Laboratory') selected @endif>
                                                     Analytical research and Development Laboratory
                                                 </option>
                                                 <option value="Packaging Development" @if ($data->departments == 'Packaging Development') selected @endif>

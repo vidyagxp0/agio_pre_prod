@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-lg-12 mb-4">
                 <div class="group-input">
-                    <label for="Audit Schedule Start Date">Workbench evaluation<span class="text-danger">*</span></label>
+                    <label for="Audit Schedule Start Date">Workbench Evaluation<span class="text-danger">*</span></label>
                     <div class="col-md-12 4">
                         <div class="group-input">
                             <textarea class="summernote" name="Comments_plidata" value=""
@@ -13,6 +13,37 @@
                     </div>
                 </div>
             </div>
+            @if ($data->Form_type == 'OOS_Micro')
+            <div class="col-lg-12">
+                <div class="group-input">
+                    <label for="checklists">Checklists</label>
+                    @php
+                    $ChecklistData = $data->checklists;
+
+                    if (is_array($ChecklistData) && array_key_exists('0', $ChecklistData) && is_string($ChecklistData[0]) && !empty($ChecklistData[0])) {
+                        $selectedChecklist = explode(',', $ChecklistData[0]);
+                    } else {
+                        $selectedChecklist = is_array($ChecklistData) ? $ChecklistData : [];
+                    }
+                @endphp
+
+                    <select multiple id="checklists" class="abc" name="checklists[]">
+                        {{-- <option value="pH-Viscometer-MP" @if (in_array('pH-Viscometer-MP', $selectedChecklist)) selected @endif>CheckList - pH-Viscometer-MP</option>
+                        <option value="Dissolution" @if (in_array('Dissolution', $selectedChecklist)) selected @endif>CheckList - Dissolution</option>
+                        <option value="HPLC-GC" @if (in_array('HPLC-GC', $selectedChecklist)) selected @endif>CheckList - HPLC-GC</option>
+                        <option value="General-checklist" @if (in_array('General-checklist', $selectedChecklist)) selected @endif>CheckList - General checklist</option>
+                        <option value="KF-Potentiometer" @if (in_array('KF-Potentiometer', $selectedChecklist)) selected @endif>CheckList - KF-Potentiometer</option>
+                        <option value="RM-PM" @if (in_array('RM-PM', $selectedChecklist)) selected @endif>CheckList - RM-PM Sampling</option> --}}
+                        <option value="Bacterial-Endotoxin-Test" @if (in_array('Bacterial-Endotoxin-Test', $selectedChecklist)) selected @endif>Checklist - Bacterial Endotoxin Test</option>
+                        <option value="Sterility" @if (in_array('Sterility', $selectedChecklist)) selected @endif>Checklist - Sterility</option>
+                        <option value="Water-Test" @if (in_array('Water-Test', $selectedChecklist)) selected @endif>Checklist - Microbial limit test/Bioburden and Water Test</option>
+                        <option value="Microbial-assay" @if (in_array('Microbial-assay', $selectedChecklist)) selected @endif>Checklist - Microbial assay</option>
+                        <option value="Environmental-Monitoring" @if (in_array('Environmental-Monitoring', $selectedChecklist)) selected @endif>Checklist - Environmental Monitoring</option>
+                        <option value="Media-Suitability-Test" @if (in_array('Media-Suitability-Test', $selectedChecklist)) selected @endif>Checklist - Media Suitability Test</option>
+                    </select>
+                </div>
+            </div>
+            @else
             <div class="col-lg-12">
                 <div class="group-input">
                     <label for="checklists">Checklists</label>
@@ -33,18 +64,21 @@
                         <option value="General-checklist" @if (in_array('General-checklist', $selectedChecklist)) selected @endif>CheckList - General checklist</option>
                         <option value="KF-Potentiometer" @if (in_array('KF-Potentiometer', $selectedChecklist)) selected @endif>CheckList - KF-Potentiometer</option>
                         <option value="RM-PM" @if (in_array('RM-PM', $selectedChecklist)) selected @endif>CheckList - RM-PM Sampling</option>
-                        <option value="Bacterial-Endotoxin-Test" @if (in_array('Bacterial-Endotoxin-Test', $selectedChecklist)) selected @endif>Checklist - Bacterial Endotoxin Test</option>
+                        {{-- <option value="Bacterial-Endotoxin-Test" @if (in_array('Bacterial-Endotoxin-Test', $selectedChecklist)) selected @endif>Checklist - Bacterial Endotoxin Test</option>
                         <option value="Sterility" @if (in_array('Sterility', $selectedChecklist)) selected @endif>Checklist - Sterility</option>
                         <option value="Water-Test" @if (in_array('Water-Test', $selectedChecklist)) selected @endif>Checklist - Microbial limit test/Bioburden and Water Test</option>
                         <option value="Microbial-assay" @if (in_array('Microbial-assay', $selectedChecklist)) selected @endif>Checklist - Microbial assay</option>
                         <option value="Environmental-Monitoring" @if (in_array('Environmental-Monitoring', $selectedChecklist)) selected @endif>Checklist - Environmental Monitoring</option>
-                        <option value="Media-Suitability-Test" @if (in_array('Media-Suitability-Test', $selectedChecklist)) selected @endif>Checklist - Media Suitability Test</option>
+                        <option value="Media-Suitability-Test" @if (in_array('Media-Suitability-Test', $selectedChecklist)) selected @endif>Checklist - Media Suitability Test</option> --}}
                     </select>
                 </div>
             </div>
+                
+            @endif
+            
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">Checklist outcome</label>
+                    <label for="Description Deviation">Checklist Outcome</label>
                     <textarea class="summernote" name="justify_if_no_field_alert_pli" value=""
                         id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
               {{ $data->justify_if_no_field_alert_pli ? $data->justify_if_no_field_alert_pli : '' }} </textarea>
@@ -52,14 +86,14 @@
             </div>
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="RootCause">Immediate action taken</label>
+                    <label for="RootCause">Immediate Action Taken</label>
                     <textarea name="root_comment" id="rootCauseTextarea" rows="4" placeholder="Describe the root cause here" {{ $data->stage == 5 ? '' : 'readonly' }}> {{ $data->root_comment }}</textarea>
                 </div>
             </div>
 
             <div class="col-lg-12 mb-4">
                 <div class="group-input">
-                    <label for="Audit Schedule Start Date">Delay justification for investigation</label>
+                    <label for="Audit Schedule Start Date">Delay Justification For Investigation</label>
                     <textarea class="summernote" name="justify_if_no_analyst_int_pli" value=""
                         id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                   {{$data && $data->justify_if_no_analyst_int_pli ? $data->justify_if_no_analyst_int_pli : ''}}  </textarea>
@@ -69,7 +103,7 @@
 
             <div class="col-lg-12 mb-4">
                 <div class="group-input">
-                    <label for="Audit Schedule Start Date">Analyst interview details</label>
+                    <label for="Audit Schedule Start Date">Analyst Interview Details</label>
                     <textarea class="summernote" name="analyst_interview_pli" value=""
                         id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                   {{$data && $data->analyst_interview_pli ? $data->analyst_interview_pli : ''}}  </textarea>
@@ -79,7 +113,7 @@
 
             <div class="col-lg-12">
                 <div class="group-input">
-                    <label for="Initiator Group">Analyst interview Attachment</label>
+                    <label for="Initiator Group">Analyst Interview Attachment</label>
                     <small class="text-primary">
                         Please Attach all relevant or supporting documents
                     </small>
@@ -112,25 +146,25 @@
             </div>
             <div class="col-lg-12 new-time-data-field">
                 <div class="group-input input-time ">
-                    <label for="deviation_time">Any other cause/suspected cause<span class="text-danger">*</span></label>
+                    <label for="deviation_time">Any Other Cause/Suspected Cause<span class="text-danger">*</span></label>
                     <textarea id="Any_other_cause" name="Any_other_cause">{{ $data->Any_other_cause }}</textarea>
                 </div>
             </div>
             <div class="col-lg-12 new-time-data-field">
                 <div class="group-input input-time ">
-                    <label for="deviation_time">Any other batches analyzed</label>
+                    <label for="deviation_time">Any Other Batches Analyzed</label>
                     <textarea id="Any_other_batches" name="Any_other_batches">{{ $data->Any_other_batches }}</textarea>
                 </div>
             </div>
             <div class="col-lg-12 new-time-data-field">
                 <div class="group-input input-time ">
-                    <label for="deviation_time">Details of trend</label>
+                    <label for="deviation_time">Details Of Trend</label>
                     <textarea id="details_of_trend" name="details_of_trend">{{ $data->details_of_trend }}</textarea>
                 </div>
             </div>
             <div class="col-lg-12 new-time-data-field">
                 <div class="group-input input-time ">
-                    <label for="deviation_time">Assignable cause and rational for assignable cause</label>
+                    <label for="deviation_time">Assignable Cause And Rational For Assignable Cause</label>
                     <textarea id="rational_for_assingnable" name="rational_for_assingnable">{{ $data->rational_for_assingnable }}</textarea>
                 </div>
             </div>
@@ -145,7 +179,7 @@
             </div> --}}
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">Summary of investigation</label>
+                    <label for="Description Deviation">Summary Of Investigation</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="summary_of_prelim_investiga_plic"
                         id="summernote-1"  {{Helpers::isOOSChemical($data->stage)}} >
@@ -154,7 +188,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Product/Material Name">OOS cause identified</label>
+                    <label for="Product/Material Name">OOS Cause Identified</label>
                     <select name="phase_i_investigation_pli" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'readonly' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Yes"{{ $data->phase_i_investigation_pli ==
@@ -211,13 +245,14 @@
                             'Product/Material Related Error' ? 'selected' : '' }}>Product/Material Related Error</option>
                         <option value="Other Error"{{ $data->oos_category_root_cause_ident_plic ==
                             'Other Error' ? 'selected' : '' }}>Other Error</option>
-
+                        <option value="NA"{{ $data->oos_category_root_cause_ident_plic ==
+                            'NA' ? 'selected' : '' }}>NA</option>
                     </select>
                 </div>
             </div>
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">OOS/OOT Category(if Others)</label>
+                    <label for="Description Deviation">OOS/OOT Category(If Others)</label>
                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                             require completion</small></div>
                     <textarea class="summernote" name="oos_category_others_plic" id="summernote-1"
@@ -304,7 +339,7 @@
             </div> --}}
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">OOS/OOT review for Similar Nature</label>
+                    <label for="Description Deviation">OOS/OOT Review For Similar Nature</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="review_comments_plir" id="summernote-1"
                         value="" {{Helpers::isOOSChemical($data->stage)}}>{{  $data->review_comments_plir ?  $data->review_comments_plir : '' }}
@@ -417,7 +452,7 @@
 
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Audit Start Date">Retest/Re-measurement required</label>
+                    <label for="Audit Start Date">Retest/Re-measurement Required</label>
                     <select name="root_cause_identified_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'readonly' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="yes" {{ $data && $data->root_cause_identified_pia == 'yes' ?
@@ -429,7 +464,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Audit Start Date">Resampling required</label>
+                    <label for="Audit Start Date">Resampling Required</label>
                     <select name="is_repeat_assingable_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'readonly' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="YES" {{ $data && $data->is_repeat_assingable_pia == 'YES' ?
@@ -441,7 +476,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Audit Start Date">Repeat testing required</label>
+                    <label for="Audit Start Date">Repeat Testing Required</label>
                     <select name="repeat_testing_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'readonly' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="YES" {{ $data && $data->repeat_testing_pia == 'YES' ?
@@ -453,7 +488,7 @@
             </div>
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">Results of Retest/re-measurement</label>
+                    <label for="Description Deviation">Results Of Retest/Re-Measurement</label>
                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                             require completion </small></div>
                     <textarea class="summernote" name="Description_Deviation" id="summernote-1"
@@ -463,13 +498,13 @@
             </div>
             <div class="col-lg-12 new-time-data-field">
                 <div class="group-input input-time ">
-                    <label for="deviation_time">Results of Repeat testing</label>
+                    <label for="deviation_time">Results Of Repeat Testing</label>
                     <textarea id="result_of_repeat" name="result_of_repeat">{{ $data->result_of_repeat }}</textarea>
                 </div>
             </div>
             <div class="col-lg-12 new-time-data-field">
                 <div class="group-input input-time ">
-                    <label for="deviation_time">Impact assessment</label>
+                    <label for="deviation_time">Impact Assessment</label>
                     <textarea id="impact_assesment_pia" name="impact_assesment_pia">{{ $data->impact_assesment_pia }}</textarea>
                 </div>
             </div>

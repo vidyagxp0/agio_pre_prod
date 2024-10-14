@@ -13,6 +13,7 @@ use App\Models\JobDescriptionAudit;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\App;
 use PDF;
+use Helpers;
 use App\Models\SetDivision;
 use App\Models\RoleGroup;
 use App\Models\QMSProcess;
@@ -142,7 +143,7 @@ class JobDescriptionController extends Controller
             $validation2 = new JobDescriptionAudit();
             $validation2->job_id = $jobTraining->id;
             $validation2->previous = "Null";
-            $validation2->current = $request->effective_date;
+            $validation2->current = Helpers::getdateFormat($request->effective_date);
             $validation2->activity_type = 'Effective Date';
             $validation2->user_id = Auth::user()->id;
             $validation2->user_name = Auth::user()->name;
@@ -238,7 +239,7 @@ class JobDescriptionController extends Controller
             $validation2 = new JobDescriptionAudit();
             $validation2->job_id = $jobTraining->id;
             $validation2->previous = "Null";
-            $validation2->current = $request->date_joining;
+            $validation2->current = Helpers::getdateFormat($request->date_joining);
             $validation2->activity_type = 'Date of Joining';
             $validation2->user_id = Auth::user()->id;
             $validation2->user_name = Auth::user()->name;
@@ -540,8 +541,8 @@ class JobDescriptionController extends Controller
         if ($lastDocument->effective_date != $request->effective_date) {
             $validation2 = new JobDescriptionAudit();
             $validation2->job_id = $jobTraining->id;
-            $validation2->previous = $lastDocument->effective_date;
-            $validation2->current = $request->effective_date;
+            $validation2->previous = Helpers::getdateFormat($lastDocument->effective_date);
+            $validation2->current = Helpers::getdateFormat($request->effective_date);
             $validation2->activity_type = 'Effective Date';
             $validation2->user_id = Auth::user()->id;
             $validation2->user_name = Auth::user()->name;
@@ -660,8 +661,8 @@ class JobDescriptionController extends Controller
         if ($lastDocument->date_joining != $request->date_joining) {
             $validation2 = new JobDescriptionAudit();
             $validation2->job_id = $jobTraining->id;
-            $validation2->previous = $lastDocument->date_joining;
-            $validation2->current = $request->date_joining;
+            $validation2->previous = Helpers::getdateFormat($lastDocument->date_joining);
+            $validation2->current = Helpers::getdateFormat($request->date_joining);
             $validation2->activity_type = 'Date of Joining';
             $validation2->user_id = Auth::user()->id;
             $validation2->user_name = Auth::user()->name;
@@ -802,7 +803,7 @@ class JobDescriptionController extends Controller
             $validation2 = new JobDescriptionAudit();
             $validation2->job_id = $jobTraining->id;
             $validation2->previous = $lastDocument->qa_review_attachment;
-            $validation2->current = $request->qa_review_attachment;
+            $validation2->current = $jobTraining->qa_review_attachment;
             $validation2->activity_type = 'Attachment';
             $validation2->user_id = Auth::user()->id;
             $validation2->user_name = Auth::user()->name;
@@ -842,7 +843,7 @@ class JobDescriptionController extends Controller
             $validation2 = new JobDescriptionAudit();
             $validation2->job_id = $jobTraining->id;
             $validation2->previous = $lastDocument->qa_cqa_attachment;
-            $validation2->current = $request->qa_cqa_attachment;
+            $validation2->current = $jobTraining->qa_cqa_attachment;
             $validation2->activity_type = 'Attachment';
             $validation2->user_id = Auth::user()->id;
             $validation2->user_name = Auth::user()->name;
@@ -882,7 +883,7 @@ class JobDescriptionController extends Controller
             $validation2 = new JobDescriptionAudit();
             $validation2->job_id = $jobTraining->id;
             $validation2->previous = $lastDocument->responsible_person_attachment;
-            $validation2->current = $request->responsible_person_attachment;
+            $validation2->current = $jobTraining->responsible_person_attachment;
             $validation2->activity_type = 'Attachment';
             $validation2->user_id = Auth::user()->id;
             $validation2->user_name = Auth::user()->name;
@@ -922,7 +923,7 @@ class JobDescriptionController extends Controller
             $validation2 = new JobDescriptionAudit();
             $validation2->job_id = $jobTraining->id;
             $validation2->previous = $lastDocument->respected_department_attachment;
-            $validation2->current = $request->respected_department_attachment;
+            $validation2->current = $jobTraining->respected_department_attachment;
             $validation2->activity_type = 'Attachment';
             $validation2->user_id = Auth::user()->id;
             $validation2->user_name = Auth::user()->name;
@@ -962,7 +963,7 @@ class JobDescriptionController extends Controller
             $validation2 = new JobDescriptionAudit();
             $validation2->job_id = $jobTraining->id;
             $validation2->previous = $lastDocument->final_review_attachment;
-            $validation2->current = $request->final_review_attachment;
+            $validation2->current = $jobTraining->final_review_attachment;
             $validation2->activity_type = 'Attachment';
             $validation2->user_id = Auth::user()->id;
             $validation2->user_name = Auth::user()->name;
@@ -1066,6 +1067,10 @@ class JobDescriptionController extends Controller
                 if ($jobTraining->stage == 1) {
                     $jobTraining->stage = "2";
                     $jobTraining->status = "In Accept JD";
+                    $jobTraining->submit_by = Auth::user()->name;
+                    $jobTraining->submit_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->submit_comment = $request->comment;
+                    
                     $history = new JobDescriptionAudit();
                     $history->job_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -1087,6 +1092,9 @@ class JobDescriptionController extends Controller
                 if ($jobTraining->stage == 2) {
                     $jobTraining->stage = "3";
                     $jobTraining->status = "In Responsible Person Accept";
+                    $jobTraining->accept_JD_Complete_by = Auth::user()->name;
+                    $jobTraining->accept_JD_Complete_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->accept_JD_Complete_comment = $request->comment;
 
                     $history = new JobDescriptionAudit();
                     $history->job_id = $id;
@@ -1109,6 +1117,10 @@ class JobDescriptionController extends Controller
                 if ($jobTraining->stage == 3) {
                     $jobTraining->stage = "4";
                     $jobTraining->status = "QA/CQA Head Approval";
+                    $jobTraining->accept_by = Auth::user()->name;
+                    $jobTraining->accept_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->accept_comment = $request->comment;
+
                     $history = new JobDescriptionAudit();
                     $history->job_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -1130,6 +1142,10 @@ class JobDescriptionController extends Controller
                 if ($jobTraining->stage == 4) {
                     $jobTraining->stage = "5";
                     $jobTraining->status = "In Respected Department";
+                    $jobTraining->approval_Complete_by = Auth::user()->name;
+                    $jobTraining->approval_Complete_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->approval_Complete_comment = $request->comment;
+                    
                     $history = new JobDescriptionAudit();
                     $history->job_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -1150,7 +1166,11 @@ class JobDescriptionController extends Controller
 
                 if ($jobTraining->stage == 5) {
                     $jobTraining->stage = "6";
-                    $jobTraining->status = "Evaluation";
+                    $jobTraining->status = "In QA JD Number Allocate";
+                    $jobTraining->send_to_QA_by = Auth::user()->name;
+                    $jobTraining->send_to_QA_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->send_to_QA_comment = $request->comment;
+                    
                     $history = new JobDescriptionAudit();
                     $history->job_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -1159,7 +1179,7 @@ class JobDescriptionController extends Controller
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->change_to = "Evaluation";
+                    $history->change_to = "In QA JD Number Allocate";
                     $history->change_from = $lastjobTraining->status;
                     $history->action = 'Answer Submit';
                     $history->stage = 'Submited';
@@ -1169,51 +1189,58 @@ class JobDescriptionController extends Controller
                     return back();
                 }
 
+                // if ($jobTraining->stage == 6) {
+                //     $jobTraining->stage = "7";
+                //     $jobTraining->status = "QA/CQA Head Final Review";
+                //     // $jobTraining->closure_by = Auth::user()->name;
+                //     // $jobTraining->closure_on = Carbon::now()->format('d-m-Y');
+                //     // $jobTraining->closure_comment = $request->comment;
+
+                //     $history = new JobDescriptionAudit();
+                //     $history->job_id = $id;
+                //     $history->activity_type = 'Activity Log';
+                //     $history->current = $jobTraining->qualified_by;
+                //     $history->comment = $request->comment;
+                //     $history->user_id = Auth::user()->id;
+                //     $history->user_name = Auth::user()->name;
+                //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //     $history->change_to = "QA/CQA Head Final Review";
+                //     $history->change_from = $lastjobTraining->status;
+                //     $history->action = 'Evaluation Complete';
+                //     $history->stage = 'Submited';
+                //     $history->save();
+
+                //     $jobTraining->update();
+                //     return back();
+                // }
+
+                // if ($jobTraining->stage == 7) {
+                //     $jobTraining->stage = "8";
+                //     $jobTraining->status = "Verification and Approval";
+                //     $history = new JobDescriptionAudit();
+                //     $history->job_id = $id;
+                //     $history->activity_type = 'Activity Log';
+                //     $history->current = $jobTraining->qualified_by;
+                //     $history->comment = $request->comment;
+                //     $history->user_id = Auth::user()->id;
+                //     $history->user_name = Auth::user()->name;
+                //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //     $history->change_to = "Verification and Approval";
+                //     $history->change_from = $lastjobTraining->status;
+                //     $history->action = 'QA/CQA Head Review Complete';
+                //     $history->stage = 'Submited';
+                //     $history->save();
+
+                //     $jobTraining->update();
+                //     return back();
+                // }
+
                 if ($jobTraining->stage == 6) {
-                    $jobTraining->stage = "7";
-                    $jobTraining->status = "QA/CQA Head Final Review";
-                    $history = new JobDescriptionAudit();
-                    $history->job_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->current = $jobTraining->qualified_by;
-                    $history->comment = $request->comment;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->change_to = "QA/CQA Head Final Review";
-                    $history->change_from = $lastjobTraining->status;
-                    $history->action = 'Evaluation Complete';
-                    $history->stage = 'Submited';
-                    $history->save();
-
-                    $jobTraining->update();
-                    return back();
-                }
-
-                if ($jobTraining->stage == 7) {
-                    $jobTraining->stage = "8";
-                    $jobTraining->status = "Verification and Approval";
-                    $history = new JobDescriptionAudit();
-                    $history->job_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->current = $jobTraining->qualified_by;
-                    $history->comment = $request->comment;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->change_to = "Verification and Approval";
-                    $history->change_from = $lastjobTraining->status;
-                    $history->action = 'QA/CQA Head Review Complete';
-                    $history->stage = 'Submited';
-                    $history->save();
-
-                    $jobTraining->update();
-                    return back();
-                }
-
-                if ($jobTraining->stage == 8) {
                     $jobTraining->stage = "9";
                     $jobTraining->status = "Closed-Done";
+                    $jobTraining->closure_by = Auth::user()->name;
+                    $jobTraining->closure_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->closure_comment = $request->comment;
 
                     $history = new JobDescriptionAudit();
                     $history->job_id = $id;
@@ -1252,6 +1279,11 @@ class JobDescriptionController extends Controller
                 if ($jobTraining->stage == 2) {
                     $jobTraining->stage = "1";
                     $jobTraining->status = "Opened";
+                    $jobTraining->reject_by = Auth::user()->name;
+                    $jobTraining->reject_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->reject_comment = $request->comment;
+
+
                     $history = new JobTrainingAudit();
                     $history->job_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -1272,6 +1304,10 @@ class JobDescriptionController extends Controller
                 if ($jobTraining->stage == 3) {
                     $jobTraining->stage = "1";
                     $jobTraining->status = "Opened";
+                    $jobTraining->reject_by = Auth::user()->name;
+                    $jobTraining->reject_on = Carbon::now()->format('d-m-Y');
+                    $jobTraining->reject_comment = $request->comment;
+
                     $history = new JobTrainingAudit();
                     $history->job_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -1316,9 +1352,14 @@ class JobDescriptionController extends Controller
         $data = JobDescription::find($id);
         if (!empty($data)) {
             $data->originator_id = User::where('id', $data->initiator_id)->value('name');
+            $employee_grid_data = JobDescriptionGrid::where(['jobDescription_id' => $id, 'identifier' => 'jobResponsibilities'])->first();
+            if ($employee_grid_data) {
+                // Decode the JSON data into an associative array
+                $employee_grid_data->data = json_decode($employee_grid_data->data, true); // true converts it into an associative array
+            }
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadView('frontend.TMS.Job_description.job_description_report', compact('data'))
+            $pdf = PDF::loadView('frontend.TMS.Job_description.job_description_report', compact('data','employee_grid_data'))
             ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
