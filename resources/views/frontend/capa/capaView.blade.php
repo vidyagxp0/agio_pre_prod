@@ -325,7 +325,7 @@
                                                 {{-- <input disabled type="text" name="record"
                                                     value="{{ $data->record }}"> --}}
                                                     <input disabled type="text" name="record" id="record"
-                                                    value="{{Helpers::getDivisionName(session()->get('division'))}}/CAPA/{{ date('Y') }}/{{ $data->record}}">
+                                                    value=" {{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ date('Y') }}/{{ $data->record}}">
 
 
                                             </div>
@@ -342,7 +342,7 @@
                                             <div class="group-input">
                                                 <label for="Division Code">Site/Location Code</label>
                                                 <input readonly type="text" name="division_code"
-                                                    value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                                    value=" {{ Helpers::getDivisionName($data->division_id) }}">
                                                 <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                                 {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                             </div>
