@@ -2501,8 +2501,24 @@ $users = DB::table('users')
                                 <textarea id="If_assignable_error"  name="If_assignable_error" ></textarea>
                             </div>
                         </div>
-
                         <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase IIB inv. Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="phaseII_attachment"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="phaseII_attachment[]"
+                                            oninput="addMultipleFiles(this, 'phaseII_attachment')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        {{-- <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">Phase II A CQA/QA Attachment</label>
                                 <small class="text-primary">
@@ -2518,7 +2534,7 @@ $users = DB::table('users')
                                 </div>
 
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
