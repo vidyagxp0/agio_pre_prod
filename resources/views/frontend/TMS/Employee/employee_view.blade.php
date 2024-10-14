@@ -140,15 +140,15 @@
                             </a>
                         </button>
                         <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                                    Activate
-                                                </button> -->
+                                                        Activate
+                                                    </button> -->
                         @if ($employee->stage == 1)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Activate
                             </button>
                         @elseif($employee->stage == 2)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Send Induction-Training
+                                Send Induction to Training
                             </button>
                         @elseif($employee->stage == 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
@@ -260,16 +260,16 @@
 
 
                             <!-- <div class="col-lg-6">
-                                                    <div class="group-input">
-                                                        <label for="Assigned To">Assigned To</label>
-                                                        <select name="assigned_to">
-                                                            <option value="">-- Select --</option>
-                                                            @foreach ($users as $user)
+                                                        <div class="group-input">
+                                                            <label for="Assigned To">Assigned To</label>
+                                                            <select name="assigned_to">
+                                                                <option value="">-- Select --</option>
+                                                                @foreach ($users as $user)
     <option value="{{ $user->id }}" @if ($user->id == $employee->assigned_to) selected @endif>{{ $user->name }}</option>
     @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div> -->
+                                                            </select>
+                                                        </div>
+                                                    </div> -->
 
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
@@ -287,14 +287,14 @@
 
 
                             <!-- <div class="col-lg-6 new-date-data-field">
-                                                    <div class="group-input input-date">
-                                                        <label for="Actual Start Date">Actual Start Date</label>
-                                                        <div class="calenderauditee">
-                                                            <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ $employee->start_date ? \Carbon\Carbon::parse($employee->start_date)->format('d-M-Y') : '' }}" />
-                                                            <input type="date" name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $employee->start_date ?? '' }}" class="hide-input" oninput="handleDateInput(this, 'start_date')" />
+                                                        <div class="group-input input-date">
+                                                            <label for="Actual Start Date">Actual Start Date</label>
+                                                            <div class="calenderauditee">
+                                                                <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ $employee->start_date ? \Carbon\Carbon::parse($employee->start_date)->format('d-M-Y') : '' }}" />
+                                                                <input type="date" name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $employee->start_date ?? '' }}" class="hide-input" oninput="handleDateInput(this, 'start_date')" />
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div> -->
+                                                    </div> -->
 
                             {{-- <div class="col-lg-6">
                         <div class="group-input">
@@ -389,6 +389,13 @@
                                 </div>
                             </div> --}}
 
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="qualification">Qualification<span class="text-danger">*</span></label>
+                                    <input type="text" name="qualification" value="{{ $employee->qualification }}">
+                                </div>
+                            </div>
+
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -401,18 +408,57 @@
 
                                         @foreach (Helpers::getDepartments() as $code => $department)
                                             <option value="{{ $code }}"
-                                                @if ($savedDepartmentId == $code) selected @endif>{{ $department }}</option>
+                                                @if ($savedDepartmentId == $code) selected @endif>{{ $department }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
+                            
+                            @php
+                                $savedJobTitle = old('job_title', $employee->job_title);
+                            @endphp
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="qualification">Qualification<span class="text-danger">*</span></label>
-                                    <input type="text" name="qualification" value="{{ $employee->qualification }}">
+                                    <label for="job_title">Designation<span class="text-danger">*</span></label>
+                                    <select name="job_title" id="job_title" required onchange="toggleOtherDesignation()">
+                                        <option value="">Enter Your Selection Here</option>
+                                        <option value="Trainee" @if ($savedJobTitle == 'Trainee') selected @endif>Trainee
+                                        </option>
+                                        <option value="Officer" @if ($savedJobTitle == 'Officer') selected @endif>Officer
+                                        </option>
+                                        <option value="Sr. Officer" @if ($savedJobTitle == 'Sr. Officer') selected @endif>Sr.
+                                            Officer</option>
+                                        <option value="Executive" @if ($savedJobTitle == 'Executive') selected @endif>
+                                            Executive</option>
+                                        <option value="Sr.executive" @if ($savedJobTitle == 'Sr.executive') selected @endif>
+                                            Sr. Executive</option>
+                                        <option value="Asst. manager" @if ($savedJobTitle == 'Asst. manager') selected @endif>
+                                            Asst. Manager</option>
+                                        <option value="Manager" @if ($savedJobTitle == 'Manager') selected @endif>Manager
+                                        </option>
+                                        <option value="Sr.GM" @if ($savedJobTitle == 'Sr.GM') selected @endif>Sr. GM
+                                        </option>
+                                        <option value="Sr. manager" @if ($savedJobTitle == 'Sr. manager') selected @endif>Sr.
+                                            Manager</option>
+                                        <option value="Deputy GM" @if ($savedJobTitle == 'Deputy GM') selected @endif>
+                                            Deputy GM</option>
+                                        <option value="AGM and GM" @if ($savedJobTitle == 'AGM and GM') selected @endif>AGM
+                                            and GM</option>
+                                        <option value="Head quality" @if ($savedJobTitle == 'Head quality') selected @endif>
+                                            Head Quality</option>
+                                        <option value="VP quality" @if ($savedJobTitle == 'VP quality') selected @endif>VP
+                                            Quality</option>
+                                        <option value="Plant head" @if ($savedJobTitle == 'Plant head') selected @endif>
+                                            Plant Head</option>
+                                        <option value="Other designation"
+                                            @if ($savedJobTitle == 'Other designation') selected @endif>Other Designation</option>
+                                    </select>
                                 </div>
                             </div>
+
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Experience">Experience (No. of Years)</label>
@@ -423,35 +469,6 @@
                                                 @if ($experience == $employee->experience) selected @endif>{{ $experience }}
                                             </option>
                                         @endfor
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            @php
-                                $savedJobTitle = old('job_title', $employee->job_title);
-                            @endphp
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="job_title">Designation<span class="text-danger">*</span></label>
-                                    <select name="job_title" id="job_title" required onchange="toggleOtherDesignation()">
-                                        <option value="">Enter Your Selection Here</option>
-                                        <option value="Trainee" @if ($savedJobTitle == 'Trainee') selected @endif>Trainee</option>
-                                        <option value="Officer" @if ($savedJobTitle == 'Officer') selected @endif>Officer</option>
-                                        <option value="Sr. Officer" @if ($savedJobTitle == 'Sr. Officer') selected @endif>Sr. Officer</option>
-                                        <option value="Executive" @if ($savedJobTitle == 'Executive') selected @endif>Executive</option>
-                                        <option value="Sr.executive" @if ($savedJobTitle == 'Sr.executive') selected @endif>Sr. Executive</option>
-                                        <option value="Asst. manager" @if ($savedJobTitle == 'Asst. manager') selected @endif>Asst. Manager</option>
-                                        <option value="Manager" @if ($savedJobTitle == 'Manager') selected @endif>Manager</option>
-                                        <option value="Sr.GM" @if ($savedJobTitle == 'Sr.GM') selected @endif>Sr. GM</option>
-                                        <option value="Sr. manager" @if ($savedJobTitle == 'Sr. manager') selected @endif>Sr. Manager</option>
-                                        <option value="Deputy GM" @if ($savedJobTitle == 'Deputy GM') selected @endif>Deputy GM</option>
-                                        <option value="AGM and GM" @if ($savedJobTitle == 'AGM and GM') selected @endif>AGM and GM</option>
-                                        <option value="Head quality" @if ($savedJobTitle == 'Head quality') selected @endif>Head Quality</option>
-                                        <option value="VP quality" @if ($savedJobTitle == 'VP quality') selected @endif>VP Quality</option>
-                                        <option value="Plant head" @if ($savedJobTitle == 'Plant head') selected @endif>Plant Head</option>
-                                        <option value="Other designation" @if ($savedJobTitle == 'Other designation') selected @endif>Other Designation</option>
                                     </select>
                                 </div>
                             </div>
@@ -467,13 +484,15 @@
                             <div class="col-lg-6" id="other_department_container" style="display: none;">
                                 <div class="group-input">
                                     <label for="other_department">Other Department</label>
-                                    <input type="text" name="other_department" id="other_department" value="{{ old('other_department', $employee->other_department) }}">
+                                    <input type="text" name="other_department" id="other_department"
+                                        value="{{ old('other_department', $employee->other_department) }}">
                                 </div>
                             </div>
                             <div class="col-lg-6" id="other_designation_container" style="display: none;">
                                 <div class="group-input">
                                     <label for="other_designation">Other Designation</label>
-                                    <input type="text" name="other_designation" id="other_designation" value="{{ $employee->other_designation }}">
+                                    <input type="text" name="other_designation" id="other_designation"
+                                        value="{{ $employee->other_designation }}">
                                 </div>
                             </div>
 
@@ -518,9 +537,9 @@
                                     <a href="{{ asset('upload/' . $employee->attached_cv) }}"
                                         target="_blank">{{ $employee->attached_cv }}</a>
                                 </div>
-                            </div> 
+                            </div>
 
-                            {{--<div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="attached_cv">Attached CV</label>
                                     <input type="file" id="myfile" name="attached_cv">
@@ -544,9 +563,9 @@
                                     <a href="{{ asset('upload/' . $employee->certification) }}"
                                         target="_blank">{{ $employee->certification }}</a>
                                 </div>
-                            </div> 
+                            </div>
 
-                            {{--<div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Certification/Qualification">Certification/Qualification</label>
                                     <input type="file" id="myfile" name="certification">
@@ -558,22 +577,22 @@
                             </div> --}}
 
                             <!-- <div class="col-lg-6">
-                                                    <div class="group-input">
-                                                        <label for="Additional Medical Document">Medical Checkup Report?</label>
+                                                        <div class="group-input">
+                                                            <label for="Additional Medical Document">Medical Checkup Report?</label>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="col-lg-6">
-                                                    <div class="group-input">
-                                                        <label for="Attached Medical Document">Medical Checkup Report?</label>
-                                                        @if ($employee->has_additional_document === 'Yes')
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Attached Medical Document">Medical Checkup Report?</label>
+                                                            @if ($employee->has_additional_document === 'Yes')
     <input type="file" id="myfile" name="additional_document" value="{{ $employee->certification }}">
     @endif
-                                                    
-                                                            <p><a href="{{ asset('uploads/medical_docs/' . $employee->additional_document) }}" target="_blank">Download Document</a></p>
-                                                       
-                                                    </div>
-                                                </div> -->
+                                                        
+                                                                <p><a href="{{ asset('uploads/medical_docs/' . $employee->additional_document) }}" target="_blank">Download Document</a></p>
+                                                           
+                                                        </div>
+                                                    </div> -->
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -603,6 +622,13 @@
                                 </div>
                             @endif
 
+                            <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" value="{{$employee->email}}" readonly>
+                                    </div>
+                            </div>
+
 
 
 
@@ -630,7 +656,7 @@
                                     <label for="Country">Country</label>
                                     <select name="country" class="form-select country"
                                         aria-label="Default select example" disabled>
-                                        <option value="IN" selected>India</option>
+                                        <option value="India" data-code="IN">India</option>
                                     </select>
                                 </div>
                             </div>
@@ -656,18 +682,85 @@
                                 </div>
                             </div>
 
+                           {{-- <script>
+                                    var config = {
+                                        cUrl: 'https://api.countrystatecity.in/v1',
+                                        ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA=='
+                                    };
+                                
+                                    var countrySelect = document.querySelector('.country'),
+                                        stateSelect = document.querySelector('.state'),
+                                        citySelect = document.querySelector('.city');
+                                
+                                    function loadStates() {
+                                        stateSelect.disabled = false;
+                                        stateSelect.innerHTML = '<option value="">Select State</option>';
+                                
+                                        const selectedCountryCode = 'IN'; // Fixed country code for India
+                                
+                                        $.ajax({
+                                            url: `${config.cUrl}/countries/${selectedCountryCode}/states`,
+                                            headers: {
+                                                "X-CSCAPI-KEY": config.ckey
+                                            },
+                                            success: function(data) {
+                                                data.forEach(state => {
+                                                    const option = document.createElement('option');
+                                                    option.value = state.name;
+                                                    option.textContent = state.name;
+                                                    option.dataset.code = state.iso2;
+                                                    stateSelect.appendChild(option);
+                                                });
+                                            },
+                                            error: function(xhr, status, error) {
+                                                console.error('Error loading states:', error);
+                                            }
+                                        });
+                                    }
+                                
+                                    function loadCities() {
+                                        citySelect.disabled = false;
+                                        citySelect.innerHTML = '<option value="">Select City</option>';
+                                
+                                        const selectedCountryCode = 'IN'; // Fixed country code for India
+                                        const selectedStateCode = stateSelect.options[stateSelect.selectedIndex].dataset.code;
+                                
+                                        $.ajax({
+                                            url: `${config.cUrl}/countries/${selectedCountryCode}/states/${selectedStateCode}/cities`,
+                                            headers: {
+                                                "X-CSCAPI-KEY": config.ckey
+                                            },
+                                            success: function(data) {
+                                                data.forEach(city => {
+                                                    const option = document.createElement('option');
+                                                    option.value = city.name;
+                                                    option.textContent = city.name;
+                                                    citySelect.appendChild(option);
+                                                });
+                                            },
+                                            error: function(xhr, status, error) {
+                                                console.error('Error loading cities:', error);
+                                            }
+                                        });
+                                    }
+                                
+                                    $(document).ready(function() {
+                                        loadStates(); // Directly load states for India on page load
+                                    });
+                                </script> --}}
+
 
                             <!-- <div class="col-lg-6">
-                                                    <div class="group-input">
-                                                        <label for="Site Name">Site Name</label>
-                                                        <select name="site_name">
-                                                            <option value="">Enter Your Selection Here</option>
-                                                            <option value="Corporate" @if ($employee->site_name == 'Corporate') selected @endif>Corporate</option>
-                                                            <option value="Plant" @if ($employee->site_name == 'Plant') selected @endif>Plant</option>
-                                                         
-                                                        </select>
-                                                    </div>
-                                                </div> -->
+                                                        <div class="group-input">
+                                                            <label for="Site Name">Site Name</label>
+                                                            <select name="site_name">
+                                                                <option value="">Enter Your Selection Here</option>
+                                                                <option value="Corporate" @if ($employee->site_name == 'Corporate') selected @endif>Corporate</option>
+                                                                <option value="Plant" @if ($employee->site_name == 'Plant') selected @endif>Plant</option>
+                                                             
+                                                            </select>
+                                                        </div>
+                                                    </div> -->
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -702,7 +795,7 @@
                                 </div>
                             </div>
 
-                           {{-- <div class="col-6">
+                            {{-- <div class="col-6">
                                 <div class="group-input">
                                     <label for="Picture">Picture</label>
                                     <input type="file" id="myfile" name="picture">
@@ -723,7 +816,7 @@
                                 </div>
                             </div>
 
-                           {{-- <div class="col-6">
+                            {{-- <div class="col-6">
                                 <div class="group-input">
                                     <label for="Picture">Speciman Signature </label>
                                     <input type="file" id="myfile" name="specimen_signature">
@@ -776,7 +869,7 @@
                                 </div>
                             </div>
 
-                            {{--<div class="col-12">
+                            {{-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="File Attachment">File Attachment</label>
                                     <input type="file" id="myfile" name="file_attachment">
@@ -1077,7 +1170,7 @@
                             <div class="group-input">
                                 <label for="Activated On">Activate On</label>
                                 <div class="static">
-                                    {{ $employee->activated_on}}
+                                    {{ $employee->activated_on }}
                                 </div>
                             </div>
                         </div>
@@ -1149,92 +1242,6 @@
     </div>
 
 
-    <script>
-        var config = {
-            cUrl: 'https://api.countrystatecity.in/v1',
-            ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA=='
-        };
-
-        var countrySelect = document.querySelector('.country'),
-            stateSelect = document.querySelector('.state'),
-            citySelect = document.querySelector('.city');
-
-        function loadCountries() {
-            let apiEndPoint = `${config.cUrl}/countries`;
-
-            $.ajax({
-                url: apiEndPoint,
-                headers: {
-                    "X-CSCAPI-KEY": config.ckey
-                },
-                success: function(data) {
-                    data.forEach(country => {
-                        const option = document.createElement('option');
-                        option.value = country.iso2;
-                        option.textContent = country.name;
-                        countrySelect.appendChild(option);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error loading countries:', error);
-                }
-            });
-        }
-
-        function loadStates() {
-            stateSelect.disabled = false;
-            stateSelect.innerHTML = '<option value="">Select State</option>';
-
-            const selectedCountryCode = countrySelect.value;
-
-            $.ajax({
-                url: `${config.cUrl}/countries/${selectedCountryCode}/states`,
-                headers: {
-                    "X-CSCAPI-KEY": config.ckey
-                },
-                success: function(data) {
-                    data.forEach(state => {
-                        const option = document.createElement('option');
-                        option.value = state.iso2;
-                        option.textContent = state.name;
-                        stateSelect.appendChild(option);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error loading states:', error);
-                }
-            });
-        }
-
-        function loadCities() {
-            citySelect.disabled = false;
-            citySelect.innerHTML = '<option value="">Select City</option>';
-
-            const selectedCountryCode = countrySelect.value;
-            const selectedStateCode = stateSelect.value;
-
-            $.ajax({
-                url: `${config.cUrl}/countries/${selectedCountryCode}/states/${selectedStateCode}/cities`,
-                headers: {
-                    "X-CSCAPI-KEY": config.ckey
-                },
-                success: function(data) {
-                    data.forEach(city => {
-                        const option = document.createElement('option');
-                        option.value = city.id;
-                        option.textContent = city.name;
-                        citySelect.appendChild(option);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error loading cities:', error);
-                }
-            });
-        }
-        $(document).ready(function() {
-            loadCountries();
-        });
-    </script>
 
     {{-- Child   --}}
     <div class="modal fade" id="child-modal">
