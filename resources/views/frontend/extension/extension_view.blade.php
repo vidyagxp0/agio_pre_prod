@@ -211,7 +211,7 @@
                                 @elseif($extensionNew->count == 'number')
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
                                     Send for CQA
-                                </button>    
+                                </button>
                             @endif
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#reject-modal">
                                 Reject
@@ -287,8 +287,8 @@
             <div class="cctab">
 
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD review </button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD Review </button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button>
             </div>
             <form action="{{ route('extension_new.update', $extensionNew->id) }}" method="POST"
@@ -543,7 +543,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Assigned To">QA Approval </label>
+                                        <label for="Assigned To">QA/CQA Approval </label>
                                         <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
                                             name="approvers" placeholder="Select Approvers"
                                             {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}>
@@ -964,24 +964,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for=" Rejected By">System By</label>
-                                    <div class="static">{{ $extensionNew->submit_by_review }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="Rejected On">System On</label>
-                                    <div class="static">{{ $extensionNew->submit_on_review }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="Rejected On">System Comment</label>
-                                    <div class="static">{{ $extensionNew->submit_comment_review }}</div>
-                                </div>
-                            </div>
+
 
 
                             <div class="col-lg-4">
