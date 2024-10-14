@@ -6190,6 +6190,20 @@ $suitabilityReport->save();
             }
             $history->save();
 
+            // $list = Helpers::getCftUserList($labstate->division_id); // Notify CFT Person
+            // foreach ($list as $u) {
+            //         $email = Helpers::getUserEmail($u->user_id);
+            //             if ($email !== null) {
+            //             Mail::send(
+            //                 'mail.view-mail',
+            //                 ['data' => $labstate, 'site' => "LI", 'history' => "Approved", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+            //                 function ($message) use ($email, $labstate) {
+            //                     $message->to($email)
+            //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($labstate->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
+            //                 }
+            //             );
+            //         }
+            // }
 
             $labstate->update();
 
@@ -6245,12 +6259,11 @@ $suitabilityReport->save();
 
                 // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                 // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "view", 'history' => "Submit", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "Submit", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $changeControl) {
                 //                     $message->to($email)
                 //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
@@ -6291,7 +6304,7 @@ $suitabilityReport->save();
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
                 // $history->activity_type = 'Activity Log';
-                $history->activity_type = 'QA Head/HOD Initial Review Complete By, QA Head/HOD Initial Review Complete On';
+                $history->activity_type = 'QC Head/HOD Initial Review Complete By, QC Head/HOD Initial Review Complete On';
                 if (is_null($lastDocument->verification_complete_completed_by) || $lastDocument->verification_complete_completed_by === '') {
                     $history->previous = "";
                 } else {
@@ -6318,15 +6331,14 @@ $suitabilityReport->save();
                 $history->save();
                 // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                 // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "view", 'history' => "QA Head/HOD Initial Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "QC Head/HOD Initial Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $changeControl) {
                 //                     $message->to($email)
-                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head/HOD Initial Review Complete");
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QC Head/HOD Initial Review Complete");
                 //                 }
                 //             );
                 //         }
@@ -6391,12 +6403,11 @@ $suitabilityReport->save();
                 $history->save();
                 // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                 // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "view", 'history' => "QA Initial Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "QA Initial Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $changeControl) {
                 //                     $message->to($email)
                 //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Initial Review Complete");
@@ -6465,12 +6476,11 @@ $suitabilityReport->save();
 
                     // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                     // foreach ($list as $u) {
-                    //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                     //         $email = Helpers::getUserEmail($u->user_id);
                     //             if ($email !== null) {
                     //             Mail::send(
                     //                 'mail.view-mail',
-                    //                 ['data' => $changeControl, 'site' => "view", 'history' => "Pending Initiator Update Complete", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                    //                 ['data' => $changeControl, 'site' => "LI", 'history' => "Pending Initiator Update Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                     //                 function ($message) use ($email, $changeControl) {
                     //                     $message->to($email)
                     //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Pending Initiator Update Complete");
@@ -6522,10 +6532,10 @@ $suitabilityReport->save();
                 $history->change_to = "QA Secondary Review";
                 $history->change_from = $lastDocument->status;
                 $history->origin_state = $lastDocument->status;
-                $history->action='QA Head/HOD Secondary Review Complete';
-                $history->stage='QA Head/HOD Secondary Review Complete';
+                $history->action='Qc Head/HOD Secondary Review Complete';
+                $history->stage='Qc Head/HOD Secondary Review Complete';
 
-                $history->activity_type = 'QA Head/HOD Secondary Review Complete By, QA Head/HOD Secondary Review Complete On';
+                $history->activity_type = 'Qc Head/HOD Secondary Review Complete By, Qc Head/HOD Secondary Review Complete On';
                     if (is_null($lastDocument->review_completed_by) || $lastDocument->review_completed_by === '') {
                         $history->previous = "";
                     } else {
@@ -6541,12 +6551,11 @@ $suitabilityReport->save();
                 $history->save();
                 // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                 // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "view", 'history' => "QA Head/HOD Secondary Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "QA Head/HOD Secondary Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $changeControl) {
                 //                     $message->to($email)
                 //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head/HOD Secondary Review Complete");
@@ -6613,14 +6622,13 @@ $suitabilityReport->save();
 
                 $history->save();
 
-                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                // $list = Helpers::getCftUserList($changeControl->division_id);
                 // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "view", 'history' => "QA Secondry Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "QA Secondry Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $changeControl) {
                 //                     $message->to($email)
                 //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Secondry Review Complete");
@@ -6690,12 +6698,11 @@ $suitabilityReport->save();
                 $history->save();
                 // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                 // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "view", 'history' => "Root Cause Not Found", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "Root Cause Not Found", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $changeControl) {
                 //                     $message->to($email)
                 //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Root Cause Not Found");
@@ -6730,28 +6737,27 @@ $suitabilityReport->save();
                 $history->stage='QA Head/HOD Final Review Complete';
                 $history->action='QA Head/HOD Final Review Complete';
 
-                $history->activity_type = 'QA Head/HOD Final Review Complete By, QA Head/HOD Final Review Complete On';
-                    if (is_null($lastDocument->assesment_completed_by) || $lastDocument->assesment_completed_by === '') {
-                        $history->previous = "";
-                    } else {
-                        $history->previous = $lastDocument->assesment_completed_by . ' , ' . $lastDocument->assesment_completed_on;
-                    }
-                    $history->current = $changeControl->assesment_completed_by . ' , ' . $changeControl->assesment_completed_on;
-                    if (is_null($lastDocument->assesment_completed_by) || $lastDocument->assesment_completed_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                // $history->activity_type = 'QA Head/HOD Final Review Complete By, QA Head/HOD Final Review Complete On';
+                //     if (is_null($lastDocument->assesment_completed_by) || $lastDocument->assesment_completed_by === '') {
+                //         $history->previous = "";
+                //     } else {
+                //         $history->previous = $lastDocument->assesment_completed_by . ' , ' . $lastDocument->assesment_completed_on;
+                //     }
+                //     $history->current = $changeControl->assesment_completed_by . ' , ' . $changeControl->assesment_completed_on;
+                //     if (is_null($lastDocument->assesment_completed_by) || $lastDocument->assesment_completed_by === '') {
+                //         $history->action_name = 'New';
+                //     } else {
+                //         $history->action_name = 'Update';
+                //     }
 
                 $history->save();
                 // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                 // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "view", 'history' => "QA Head/HOD Final Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "QA Head/HOD Final Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $changeControl) {
                 //                     $message->to($email)
                 //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head/HOD Final Review Complete");
@@ -6803,12 +6809,11 @@ $suitabilityReport->save();
                 $history->save();
                 // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                 // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "view", 'history' => "QA Final Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "QA Final Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $changeControl) {
                 //                     $message->to($email)
                 //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Final Review Complete");
@@ -6861,12 +6866,11 @@ $suitabilityReport->save();
                 $history->save();
                 // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                 // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "view", 'history' => "Final Root Cause Found", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "Final Root Cause Found", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $changeControl) {
                 //                     $message->to($email)
                 //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final Root Cause Found");
@@ -6935,6 +6939,22 @@ $suitabilityReport->save();
                 // }
                 $history->action_name = 'Not Applicable';
                 $history->save();
+
+                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
                 $changeControl->update();
 
                 toastr()->success('Document Sent');
@@ -6974,6 +6994,21 @@ $suitabilityReport->save();
                 // }
                 $history->action_name = 'Not Applicable';
                 $history->save();
+                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -7012,6 +7047,21 @@ $suitabilityReport->save();
                 // }
                 $history->action_name = 'Not Applicable';
                 $history->save();
+                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -7050,6 +7100,21 @@ $suitabilityReport->save();
                 // }
                 $history->action_name = 'Not Applicable';
                 $history->save();
+                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -7088,6 +7153,21 @@ $suitabilityReport->save();
                 // }
                 $history->action_name = 'Not Applicable';
                 $history->save();
+                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -7126,6 +7206,21 @@ $suitabilityReport->save();
                 // }
                 $history->action_name = 'Not Applicable';
                 $history->save();
+                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -7164,6 +7259,21 @@ $suitabilityReport->save();
                 // }
                 $history->action_name = 'Not Applicable';
                 $history->save();
+                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -7225,6 +7335,21 @@ $suitabilityReport->save();
                     $history->action_name = 'Update';
                 }
                 $history->save();
+                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "Cancel", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
+                //                 }
+                //             );
+                //         }
+                // }
+
             $changeControl->update();
             toastr()->success('Document Sent');
             return back();

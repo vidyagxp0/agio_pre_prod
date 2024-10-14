@@ -1693,23 +1693,38 @@ class AuditProgramController extends Controller
                     $history->action_name = 'Update';
                 }
                     $history->save();
-                //     $list = Helpers::getInitiatorUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id ==$changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                          
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Submitted By ".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      } 
-                //   }
+
+                
+                $list = Helpers::getQAHeadUserList($changeControl->division_id);
+                foreach ($list as $u) {
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "AP", 'history' => "Submit", 'process' => 'Audit Program', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Audit Program, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
+                                }
+                            );
+                        }
+                }
+
+                $list = Helpers::getCQAHeadUsersList($changeControl->division_id);
+                foreach ($list as $u) {
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "AP", 'history' => "Submit", 'process' => 'Audit Program', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Audit Program, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
+                                }
+                            );
+                        }
+                }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1745,6 +1760,20 @@ class AuditProgramController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
+                    $list = Helpers::getCftUserList($changeControl->division_id);
+                    foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site' => "AP", 'history' => "Approve", 'process' => 'Audit Program', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: Audit Program, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approve");
+                                    }
+                                );
+                            }
+                    }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1780,7 +1809,20 @@ class AuditProgramController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                    
+                $list = Helpers::getCftUserList($changeControl->division_id);
+                foreach ($list as $u) {
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "AP", 'history' => "Audit Completed", 'process' => 'Audit Program', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Audit Program, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Audit Completed");
+                                }
+                            );
+                        }
+                }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1829,23 +1871,20 @@ class AuditProgramController extends Controller
                 }
                 $history->save();
                   
-                    //     $list = Helpers::getAuditManagerUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                              
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $changeControl],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Rejected By ".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      } 
-                    //   }
+                $list = Helpers::getCftUserList($changeControl->division_id);
+                foreach ($list as $u) {
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "AP", 'history' => "More Info Required", 'process' => 'Audit Program', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Audit Program, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required");
+                                }
+                            );
+                        }
+                }
                
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1894,6 +1933,20 @@ class AuditProgramController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
+                $list = Helpers::getHodUserList($changeControl->division_id);
+                    foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site' => "AP", 'history' => "Cancel", 'process' => 'Audit Program', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: Audit Program, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
+                                    }
+                                );
+                            }
+                    }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1929,6 +1982,20 @@ class AuditProgramController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
+                $list = Helpers::getHodUserList($changeControl->division_id);
+                    foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site' => "AP", 'history' => "Cancel", 'process' => 'Audit Program', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: Audit Program, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
+                                    }
+                                );
+                            }
+                    }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1964,6 +2031,20 @@ class AuditProgramController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
+                $list = Helpers::getHodUserList($changeControl->division_id);
+                    foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site' => "AP", 'history' => "Cancel", 'process' => 'Audit Program', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: Audit Program, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
+                                    }
+                                );
+                            }
+                    }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
