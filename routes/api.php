@@ -85,6 +85,10 @@ Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api
  Route::get('/Deviation-Log', [LogFilterController::class, 'printPDFDeviation'])->name('printReportdeviation');
  Route::get('/api/Deviation-Log-Excel', [DeviationController::class, 'printExcelDeviation'])->name('deviation.log.excel');
  Route::get('/Errata-Log-Report', [LogFilterController::class, 'printErrata'])->name('errata.log.excel');
+ Route::get('/Failure-Log-Report', [LogFilterController::class, 'printFailure'])->name('failure.log.excel');
+ Route::get('/Incident-Log-Report', [LogFilterController::class, 'printIncident'])->name('Incident.log.report');
+ Route::get('/InternalAudit-Log-Report', [LogFilterController::class, 'printInternalAudit'])->name('InternalAudit.log.report');
+ Route::get('/printLabIncident-Log-Report', [LogFilterController::class, 'printLabIncident'])->name('printLabIncident.log.report');
 
 
 //  Route::Post('/mcFilter/{id}',[CCController::class,'audit_filter'])->name('api.marketc.filter');

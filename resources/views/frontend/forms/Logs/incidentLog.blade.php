@@ -204,7 +204,7 @@ table {
 <div id="rcms-desktop">
     <div class="process-groups">
         <div class="scope-bar">
-            <button class="print-btn btn btn-primary">Print</button>
+        <button style="margin-left: 10px;" class="btn btn-primary" onclick="printTable()">Print</button>
         </div>
         <div class="active" onclick="openTab('internal-audit', this)">Incident Log</div>
         <div class="third-div">Third Div Content</div>
@@ -387,4 +387,21 @@ table {
     }
 })();
 </script>
+
+
+<script>
+       function printTable() {
+
+           const department = document.getElementById('initiator_group').value;
+           const division_idIncident = document.getElementById('division_id').value;
+           const dateFrom = document.getElementById('date_from').value;
+           const dateTo = document.getElementById('date_to').value;
+           
+           const url = `/api/Incident-Log-Report?department=${department}&division=${division_idIncident}&date_from=${dateFrom}&date_to=${dateTo}`;
+           
+
+    window.open(url, '_blank');
+}
+
+    </script>
 @endsection

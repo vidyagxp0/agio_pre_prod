@@ -205,7 +205,7 @@
 
     <div class="process-groups">
             <div class="scope-bar">
-                <button class="print-btn btn btn-primary">Print</button>
+            <button style="margin-left: 10px;" class="btn btn-primary" onclick="printTable()">Print</button>
             </div>
             <div class="active" onclick="openTab('internal-audit', this)">Failure Investigation Log</div>
             <div class="third-div">Third Div Content</div>
@@ -409,6 +409,23 @@ async function filterRecords()
     }
     
     $('#spinner').hide();
+}
+
+    </script>
+
+
+<script>
+       function printTable() {
+
+           const department = document.getElementById('initiator_group').value;
+           const division = document.getElementById('division_id').value;
+           const dateFrom = document.getElementById('date_from_failure').value;
+           const dateTo = document.getElementById('date_to_failure').value;
+           
+           const url = `/api/Failure-Log-Report?department=${department}&division=${division}&date_from=${dateFrom}&date_to=${dateTo}`;
+           
+
+    window.open(url, '_blank');
 }
 
     </script>

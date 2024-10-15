@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Change Control Log Report</title>
+    <title>Laboratory Incident Log Report</title>
     <style>
         @page {
             margin: 20px;
@@ -73,14 +73,15 @@
     <header>
         <table class="header-table" style="width: 100%;">
             <tr>
-                <td style="text-align: left; font-size: 20px;">
-                    <strong>Change Control Log Report</strong>
-                </td>
-                <td style="text-align: right;">
-                    <div class="logo">
-                        <img src="https://www.agio-pharma.com/wp-content/uploads/2019/10/logo-agio.png" alt="Logo">
-                    </div>
-                </td>
+                 <td>
+                <strong>Laboratory Incident Log</strong>
+            </td>
+            <td class="w-50">
+                <div class="logo">
+                <img src="https://www.agio-pharma.com/wp-content/uploads/2019/10/logo-agio.png" alt="" class="w-50 h-50" style="height: 100px; scale: 1;" >
+
+                </div>
+            </td>
             </tr>
         </table>
     </header>
@@ -92,16 +93,16 @@
                 <tr>
                     <th>Sr. No.</th>
                     <th>Date of Initiation</th>
-                    <th>Errata No.</th>
-                    <th>Short Description</th>
-                    <th>Initiator</th>
-                    <th>Division</th>
+                    <th>Incident Report No.</th>
+                    <th>Originator</th>
                     <th>Department</th>
-                    <th>Document Type</th>
-                    <th>Type of Error</th>
-                    <th>Date of Correction</th>
+                    <th>Division</th>
+                    <th>Description of Incident</th>
+                    <th>Type of  Incident</th>
+                    <th>Name of Product</th>
+                    <th>Batch Number / A.R No.</th>
                     <th>Due Date</th>
-                    <th>Closure Date</th>
+                    <th>Closure Date </th>
                     <th>Status</th>
                 </tr>
             </thead>
@@ -109,33 +110,31 @@
                 @php
                     use Carbon\Carbon;
                 @endphp
-                @foreach ($filteredDataCC as $index => $doc)
+                @foreach ($filteredDataLI as $index => $doc)
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ Carbon::parse($doc->intiation_date)->format('d-M-Y') }}</td>
-                    <td>{{ $doc->errata_no }}</td>
-                    <td>{{ $doc->short_description ?? 'N/A' }}</td>
-                    <td>{{ $doc->initiator ?? 'N/A' }}</td>
+                    <td>{{ $doc->failureinvestigationrecordno }}</td>
+                    <td>{{ $doc->initiator ? $doc->initiator->name :  'N/A' }}</td>
+                    <td>{{ $doc->department ?? 'N/A' }}
                     <td>{{ $doc->division->name ?? 'N/A' }}</td>
-                    <td>{{ $doc->department->name ?? 'N/A' }}</td>
-                    <td>{{ $doc->document_type ?? 'N/A' }}</td>
-                    <td>{{ $doc->type_of_error ?? 'N/A' }}</td>
-                    <td>{{ $doc->correction_date ?? 'N/A' }}</td>
+                    <td>{{ $doc->short_description ?? 'N/A' }}</td>
+                    <td>{{ $doc->status ?? 'N/A' }}</td>
+                    <td>{{ $doc->status ?? 'N/A' }}</td>
+                    <td>{{ $doc->status ?? 'N/A' }}</td>
                     <td>{{ $doc->due_date ?? 'N/A' }}</td>
                     <td>{{ $doc->closure_date ?? 'N/A' }}</td>
-                    <td>{{ $doc->status ?? 'N/A' }}</td>
-                </tr>
+                    <td>{{ $doc->status ?? 'N/A' }}</td></tr>
                 @endforeach
             </tbody>
         </table>
     </div>
-
     <!-- Footer Section -->
     <footer class="footer">
         <table style="width: 100%;">
             <tr>
                 <td class="w-30">
-                    <strong>Printed By:</strong> {{ auth()->user()->name }}
+                    <strong>Printed By:</strong>
                 </td>
                 <td class="w-40">
                     <strong>Printed On:</strong> {{ \Carbon\Carbon::now()->format('d-M-Y H:i:s') }}

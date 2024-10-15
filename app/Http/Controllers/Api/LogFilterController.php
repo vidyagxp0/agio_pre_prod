@@ -1169,6 +1169,140 @@ public function printErrata(Request $request)
     return $pdf->stream('report.pdf');
 }
 
+public function printFailure(Request $request)
+{
+    $filterDD = $request->all();
+    
+    $Department = $filterDD['department'] ?? null;
+    $Division = $filterDD['changerelateTo'] ?? null;
+    $dateFrom = isset($filterDD['date_from']) ? Carbon::parse($filterDD['date_from'])->startOfDay() : null;
+    $dateTo = isset($filterDD['date_to']) ? Carbon::parse($filterDD['date_to'])->endOfDay() : null;
+
+    $query = Failureinvestigation::query();
+
+    if ($Department) {
+        $query->where('Initiator_Group', $Department);
+    }
+
+    if ($Division) {
+        $query->where('division_id', $Division);
+    }
+
+    if ($dateFrom && $dateTo) {
+        $query->whereBetween('intiation_date', [$dateFrom, $dateTo]);
+    }
+
+    $filteredData = $query->get();
+    
+
+
+    $pdf = Pdf::loadView('frontend.forms.Logs.failurelogpdf', compact('filteredData'))
+                ->setPaper('a4', 'landscape');
+
+    return $pdf->stream('report.pdf');
+}
+
+
+public function printIncident(Request $request)
+{
+    $filterDD = $request->all();
+    
+    $Department = $filterDD['department'] ?? null;
+    $division_idIncident = $filterDD['division_idIncident'] ?? null;
+    $dateFrom = isset($filterDD['date_from']) ? Carbon::parse($filterDD['date_from'])->startOfDay() : null;
+    $dateTo = isset($filterDD['date_to']) ? Carbon::parse($filterDD['date_to'])->endOfDay() : null;
+
+    $query = Incident::query();
+
+    if ($Department) {
+        $query->where('Initiator_Group', $Department);
+    }
+
+    if ($division_idIncident) {
+        $query->where('division_id', $division_idIncident);
+    }
+
+    if ($dateFrom && $dateTo) {
+        $query->whereBetween('intiation_date', [$dateFrom, $dateTo]);
+    }
+
+    $filteredData = $query->get();
+    
+
+
+    $pdf = Pdf::loadView('frontend.forms.Logs.incidentlogpdf', compact('filteredData'))
+                ->setPaper('a4', 'landscape');
+
+    return $pdf->stream('report.pdf');
+}
+
+public function printInternalAudit(Request $request)
+{
+    $filterDD = $request->all();
+    
+    $Department = $filterDD['department'] ?? null;
+    $division_idInternalAudit = $filterDD['division_idInternalAudit'] ?? null;
+    $dateFrom = isset($filterDD['date_from']) ? Carbon::parse($filterDD['date_from'])->startOfDay() : null;
+    $dateTo = isset($filterDD['date_to']) ? Carbon::parse($filterDD['date_to'])->endOfDay() : null;
+
+    $query = InternalAudit::query();
+
+    if ($Department) {
+        $query->where('Initiator_Group', $Department);
+    }
+
+    if ($division_idInternalAudit) {
+        $query->where('division_id', $division_idInternalAudit);
+    }
+
+    if ($dateFrom && $dateTo) {
+        $query->whereBetween('intiation_date', [$dateFrom, $dateTo]);
+    }
+
+    $filteredData = $query->get();
+    
+
+
+    $pdf = Pdf::loadView('frontend.forms.Logs.InternalAuditlogpdf', compact('filteredData'))
+                ->setPaper('a4', 'landscape');
+
+    return $pdf->stream('report.pdf');
+}
+
+public function printLabIncident(Request $request)
+{
+    $filterDD = $request->all();
+    
+    $Department = $filterDD['department'] ?? null;
+    $division_idLI = $filterDD['division_idLI'] ?? null;
+    $dateFrom = isset($filterDD['date_from']) ? Carbon::parse($filterDD['date_from'])->startOfDay() : null;
+    $dateTo = isset($filterDD['date_to']) ? Carbon::parse($filterDD['date_to'])->endOfDay() : null;
+
+    $query = LabIncident::query();
+
+    if ($Department) {
+        $query->where('Initiator_Group', $Department);
+    }
+
+    if ($division_idLI) {
+        $query->where('division_id', $division_idLI);
+    }
+
+    if ($dateFrom && $dateTo) {
+        $query->whereBetween('intiation_date', [$dateFrom, $dateTo]);
+    }
+
+    $filteredDataLI = $query->get();
+    
+
+
+    $pdf = Pdf::loadView('frontend.forms.Logs.LaboratoryIncidentLogPdf', compact('filteredDataLI'))
+                ->setPaper('a4', 'landscape');
+
+    return $pdf->stream('report.pdf');
+}
+
+
 
 
     

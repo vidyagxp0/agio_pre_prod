@@ -85,11 +85,6 @@
         <table>
             <thead>
                 <tr>
-                    <th colspan="12" style="text-align: left; font-size: 13px; background-color: #e6e6e6;">
-                        Deviation Type: Product / General (Tick Mark)
-                    </th>
-                </tr>
-                <tr>
                     <th rowspan="2">Sr.No.</th>
             <th rowspan="2">Initiation Date</th>
             <th rowspan="2">Deviation No.</th>

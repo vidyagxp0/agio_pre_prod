@@ -230,7 +230,7 @@
 
     <div class="process-groups">
         <div class="scope-bar">
-            <button class="print-btn btn btn-primary">Print</button>
+        <button style="margin-left: 10px;" class="btn btn-primary" onclick="printTable()">Print</button>
         </div>
         <div class="active" onclick="openTab('internal-audit', this)">Laboratory Incident Log</div>
         <div class="third-div">Third Div Content</div>
@@ -458,6 +458,23 @@ async function filterRecords()
     }
     
     $('#spinner').hide();
+}
+
+    </script>
+
+    
+<script>
+       function printTable() {
+
+           const department = document.getElementById('initiator_group').value;
+           const division_idLI = document.getElementById('division_id').value;
+           const dateFrom = document.getElementById('date_from_lab').value;
+           const dateTo = document.getElementById('date_to_lab').value;
+           
+           const url = `/api/printLabIncident-Log-Report?department=${department}&division=${division_idLI}&date_from=${dateFrom}&date_to=${dateTo}`;
+           
+
+    window.open(url, '_blank');
 }
 
     </script>
