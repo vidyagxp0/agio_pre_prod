@@ -494,6 +494,57 @@
                 </div>
             </div>
             <div class="block">
+                <div class="block-head">CQA Approval</div>
+
+                {{-- <table>
+                    <tr>
+                        <th class="w-20">CQA Approval Comments </th>
+                        <td class="w-80">
+                            @if ($data->QAapprover_remarks)
+                                {{ $data->QAapprover_remarks }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table> --}}
+
+                <label class="Summer" for="QA/CQA Approval Comments">CQA Approval Comments</label>
+                <div class="div-data">
+                    @if ($data->QAapprover_remarks)
+                        {{ $data->QAapprover_remarks }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
+
+            </div>
+            <div class="block">
+                <div class="block-head">CQA Approval Attachments</div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-80">File</th>
+                        </tr>
+                        @if ($data->QAfile_attachment_approver)
+                            @foreach (json_decode($data->QAfile_attachment_approver) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-80"><a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><b>{{ $file }}</b></a></td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-80">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
+            </div>
+            <div class="block">
                 <div class="block-head">Activity Log</div>
                 <table>
                     <tr>

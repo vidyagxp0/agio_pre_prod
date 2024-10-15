@@ -261,8 +261,10 @@
                                 <div class="">In Review</div>
                             @endif
 
-                            @if ($extensionNew->stage >= 3)
+                            @if ($extensionNew->stage == 3 || $extensionNew->stage == 4 ||$extensionNew->stage >= 6)
                                 <div class="active">In Approved</div>
+                            @elseif($extensionNew->stage == 5)
+                                <div class="" style="display: none;">In Approved</div>
                             @else
                                 <div class="">In Approved</div>
                             @endif
@@ -299,6 +301,10 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD Review </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
+                @if($extensionNew->stage == 5)
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA Approval</button>
+                    @endif
+
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button>
             </div>
             <form action="{{ route('extension_new.update', $extensionNew->id) }}" method="POST"
@@ -911,6 +917,73 @@
                         </div>
                     </div>
                 </div>
+                  
+                @if($extensionNew->stage == 5)
+                <div id="CCForm5" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Assigned To">CQA Approval Comments</label>
+                                    <textarea name="QAapprover_remarks" id="QAapprover_remarks" cols="30"
+                                        {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'readonly' }}>{{ $extensionNew->QAapprover_remarks }}</textarea>
+                                </div>
+                            </div>
+
+                            @if ($extensionNew->QAfile_attachment_approver)
+                                @foreach (json_decode($extensionNew->QAfile_attachment_approver) as $file)
+                                    <input id="QAREFEFile-{{ $loop->index }}" type="hidden"
+                                        name="existing_QAfile_attachment_approver[{{ $loop->index }}]"
+                                        value="{{ $file }}">
+                                @endforeach
+                            @endif
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Inv Attachments">CQA Approval Attachments</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div disabled class="file-attachment-list" id="QAfile_attachment_approver">
+                                            @if ($extensionNew->QAfile_attachment_approver)
+                                                @foreach (json_decode($extensionNew->QAfile_attachment_approver) as $file)
+                                                    <h6 class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                                class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a class="remove-file"
+                                                            data-remove-id="QAREFEFile-{{ $loop->index }}"
+                                                            data-file-name="{{ $file }}"
+                                                            style="@if ($extensionNew->stage == 0 || $extensionNew->stage == 6) pointer-events: none; @endif"><i
+                                                                class="fa-solid fa-circle-xmark"
+                                                                style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="HOD_Attachments" name="QAfile_attachment_approver[]"
+                                                oninput="addMultipleFiles(this, 'QAfile_attachment_approver')" multiple
+                                                {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'disabled' }}>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton" {{ $extensionNew->stage == 0 || $extensionNew->stage == 5 || $extensionNew->stage == 6 ? 'disabled' : '' }}>Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+                            <button type="button">
+                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+                @endif
                 <!-- Activity Log content -->
                 <div id="CCForm4" class="inner-block cctabcontent">
                     <div class="inner-block-content">
