@@ -83,7 +83,7 @@ class JobDescriptionController extends Controller
         $jobTraining->revision_purpose = $request->input('revision_purpose');
         // $jobTraining->remark = $request->input('remark'); 
         $jobTraining->evaluation_required = $request->input('evaluation_required');
-        // $jobTraining->delegate = $request->input('delegate');
+        $jobTraining->delegate = $request->input('delegate');
         // $jobTraining->selected_document_id = $request->input('selected_document_id');
         $jobTraining->save();
 

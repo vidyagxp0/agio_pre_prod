@@ -10,6 +10,8 @@ use App\Models\RecordNumber;
 use App\Models\RoleGroup;
 use App\Models\Document;
 use App\Models\Training;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -38,26 +40,35 @@ class EmployeeController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $res = [
             'status' => 'ok',
             'message' => 'success',
             'body' => [],
         ];
+        // $request->validate([
+        //     'email' => 'required|email|unique:employees,email',
+        // ]);
+
+        $request->validate([
+            'email' => 'required|email|unique:employees,email',
+            'emp_id' => 'required|unique:employees,emp_id',
+        ], [
+            'email.unique' => 'The email address is already in use.',
+            'emp_id.unique' => 'The Employee ID is already in use.',
+        ]);
+    
 
         $lastEmployee = Employee::orderBy('id', 'desc')->first();
 
-        // Generate new Employee ID
         if ($lastEmployee) {
-            // Extract the numeric part from the last employee ID
             $lastIdNumber = (int) filter_var($lastEmployee->employee_id, FILTER_SANITIZE_NUMBER_INT);
             $newEmployeeId = '000' . ($lastIdNumber + 1);
         } else {
-            // If no employee exists, start with EMP1
             $newEmployeeId = '0001';
         }
 
 
+        $randomPassword = Str::random(6);
 
         $employee = new Employee();
         $employee->stage = '1';
@@ -71,7 +82,6 @@ class EmployeeController extends Controller
         $employee->emp_id = $request->emp_id;
         $employee->employee_id = $newEmployeeId;
         $employee->employee_name = $request->employee_name;
-        // dd($employee->employee_name);
         
         $employee->gender = $request->gender;
         $employee->department = $request->department;
@@ -85,16 +95,18 @@ class EmployeeController extends Controller
         $employee->full_employee_id = $fullEmployeeId;
         $employee->medical_checkup = $request->medical_checkup;
     
-        // Save the has_additional_document field ("Yes" or "No")
         $employee->has_additional_document = $request->has_additional_document;
+
+        $employee->email = $request->email;
+        $employee->employee_id = $newEmployeeId;
+        $employee->password = bcrypt($randomPassword);
     
-        // Check if "Yes" is selected and a file is uploaded
         if ($request->input('has_additional_document') === 'Yes' && $request->hasFile('additional_document')) {
             $fileName = time() . '.' . $request->additional_document->extension();
             $filePath = $request->additional_document->move(public_path('uploads/medical_docs'), $fileName);
-            $employee->additional_document = $fileName; // Save the filename in the database
+            $employee->additional_document = $fileName;
         } else {
-            $employee->additional_document = null; // No file uploaded for "No"
+            $employee->additional_document = null;
         }
 
         if ($request->hasFile('attached_cv')) {
@@ -105,17 +117,6 @@ class EmployeeController extends Controller
             $employee->attached_cv = $name; // Store only the file name
         }
 
-        // if (!empty($request->attached_cv)) {
-        //     $files = [];
-        //     if ($request->hasfile('attached_cv')) {
-        //         foreach ($request->file('attached_cv') as $file) {
-        //             $name = $request->name . 'attached_cv' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $employee->attached_cv = json_encode($files);
-        // }
 
         if ($request->hasFile('certification')) {
             $file = $request->file('certification');
@@ -124,19 +125,6 @@ class EmployeeController extends Controller
             $file->move(public_path('upload'), $name);
             $employee->certification = $name; // Store only the file name
         }
-
-        // if (!empty($request->certification)) {
-        //     $files = [];
-        //     if ($request->hasfile('certification')) {
-        //         foreach ($request->file('certification') as $file) {
-        //             $name = $request->name . 'certification' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $employee->certification = json_encode($files);
-        // }
-
 
         $employee->zone = $request->zone;
         $employee->country = $request->country;
@@ -153,42 +141,16 @@ class EmployeeController extends Controller
             // $file->move('upload/', $name);
             $file->move(public_path('upload'), $name);
             
-            $employee->picture = $name; // Store only the file name
+            $employee->picture = $name;
         }
-
-        // if (!empty($request->picture)) {
-        //     $files = [];
-        //     if ($request->hasfile('picture')) {
-        //         foreach ($request->file('picture') as $file) {
-        //             $name = $request->name . 'picture' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $employee->picture = json_encode($files);
-        // }
         
         if ($request->hasFile('specimen_signature')) {
             $file = $request->file('specimen_signature');
             $name = $request->employee_id . 'specimen_signature' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
             // $file->move('upload/', $name);
             $file->move(public_path('upload'), $name);
-            $employee->specimen_signature = $name; // Store only the file name
+            $employee->specimen_signature = $name;
         }
-
-        // if (!empty($request->specimen_signature)) {
-        //     $files = [];
-        //     if ($request->hasfile('specimen_signature')) {
-        //         foreach ($request->file('specimen_signature') as $file) {
-        //             $name = $request->name . 'specimen_signature' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $employee->specimen_signature = json_encode($files);
-        // }
-
-        
 
         $employee->hod = is_array($request->hod) ? implode(',', $request->hod) : '';
         $employee->designee = is_array($request->designee) ? implode(',', $request->designee) : '';
@@ -224,6 +186,13 @@ class EmployeeController extends Controller
             $employee->external_attachment = $name; // Store only the file name
         }
         $employee->save();
+
+
+        // Mail::send('frontend.TMS.Employee.employee_credentials', ['employee' => $employee, 'randomPassword' => $randomPassword], function ($message) use ($employee) {
+        //     $message->to($employee->email)
+        //         ->subject('Your Employee Credentials');
+        // });
+
 
         $employee_id = $employee->id;
 
@@ -1978,10 +1947,11 @@ class EmployeeController extends Controller
         try {
 
             if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            // if (strtolower($request->username) == strtolower(Auth::user()->email) && Hash::check($request->password, Auth::user()->password)) {
                 
                 $employee = Employee::find($id);
                 $lastEmployee = Employee::find($id);
+
+                $randomPassword = Str::random(6);
 
                 if ($employee->stage == 1) {
                     $employee->stage = "2";
@@ -2003,6 +1973,11 @@ class EmployeeController extends Controller
                     $history->action = 'Retire';
                     $history->stage = 'Submited';
                     $employee->update();
+
+                    Mail::send('frontend.TMS.Employee.employee_credentials', ['employee' => $employee, 'randomPassword' => $randomPassword], function ($message) use ($employee) {
+                        $message->to($employee->email)
+                            ->subject('Your Employee Credentials');
+                    });
 
                     toastr()->success('Employee Sent Successflly !');
 

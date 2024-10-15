@@ -1,34 +1,34 @@
 
-    <div class="col-lg-12">
+<div class="col-lg-12">
         <div class="button-block">
             <button type="button" class="printButton" onclick="saveAsPDF()">
                 <i class="fas fa-download"></i> Save as PDF
             </button>
         </div>
      
-                <div class="certificate-container" id="certificate">
-                    <h1 class="certificate-title">INDUCTION TRAINING CERTIFICATE</h1>
-                    </br>
-                    <p class="certificate-content">
-                       This is to certify that Mr. / Ms. / Mrs  <strong>{{\App\Models\Employee::find($induction->name_employee)?->employee_name ?? 'Employee not found'}}
-                        
-                       </strong> has undergone Induction Training</br>including the requirement of cGMP and has shown a good attitude and thorough</br>understanding in thè subject.</br></br>
-                    </p> 
-                    <p class="certificate-content">
-                       Therefore we certify that Mr. Ms. / Mrs. <strong>{{\App\Models\Employee::find($induction->name_employee)?->employee_name ?? 'Employee not found'}}</strong> is capable of performing his /her </br>assigned duties in the <strong>{{$induction->department}}</strong> Department </br>indeperndently. 
+                            <div class="certificate-container" id="certificate">
+                                <h1 class="certificate-title">JOB TRAINING CERTIFICATE</h1>
+                                </br>
+                                <p class="certificate-content">
+                                This is to certify that Mr. / Ms. / Mrs  <strong> {{ $jobTraining->name}}
+                                    
+                                </strong> has undergone On The Job Training</br>including the requirement of cGMP and has shown a good attitude and thorough</br>understanding in thè subject.</br></br>
+                                </p> 
+                                <p class="certificate-content">
+                                Therefore we certify that Mr. Ms. / Mrs. <strong>{{ $jobTraining->name}}</strong> is capable of performing his /her </br>assigned duties in the <strong>{{$jobTraining->department}}</strong> Department </br>indeperndently. 
+                                </p>
+                                <div class="signature-section">
+                                    <div class="signature">
+                                        <div class="signature-line"></div>
+                                        Sign / Date: <strong>{{ $jobTraining->evaluation_complete_by }} / {{ \Carbon\Carbon::parse($jobTraining->evaluation_complete_on)->format('d-M-Y') }}</strong> <br>Head of Department 
+                                    </div>
+                                    <div class="signature">
+                                        <div class="signature-line"></div>
+                                        Sign / Date: <strong>{{ $jobTraining->approval_complete_by }}/{{ \Carbon\Carbon::parse($jobTraining->approval_complete_on)->format('d-M-Y') }}</strong> <br>  Head QA/CQA
+                                    </div>
+                                </div>
+                            </div>
 
-                    </p>
-                    <div class="signature-section">
-                        <div class="signature">
-                            <div class="signature-line"></div>
-                            Sign / Date:  <strong>{{ $induction->evaluation_complete_by }} / {{ \Carbon\Carbon::parse($induction->evaluation_complete_on)->format('d-M-Y') }} </strong> <br>HR Head
-                        </div>
-                        <div class="signature">
-                            <div class="signature-line"></div>
-                            Sign / Date: <strong>{{ $induction->approval_complete_by }} / {{ \Carbon\Carbon::parse($induction->approval_complete_on)->format('d-M-Y') }}</strong><br>Head QA/CQA
-                        </div>
-                    </div>
-                </div>
     </div>
 
 
